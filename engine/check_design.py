@@ -40,6 +40,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, ROOT)
 from engine import io   # noqa: E402
+from engine import machine   # noqa: E402  옛 사이트 자리는 한 곳에서만
 
 NEW = os.environ.get('BADAGAJA_SITE', os.path.join(ROOT, 'site'))
 OLD = os.environ.get('BADAGAJA_OLD', r'D:\바다가자\badagaja-site')
@@ -272,6 +273,16 @@ def 안쓰는자료():
 
 
 def main():
+
+    # ★ **옛 사이트가 없으면 못 잽니다** (2026-09-28)
+    #   볼 것이 0개면 걸린 것도 0개입니다. 그것을 통과라
+    #   부르면 거짓말입니다. 끝난값 4 로 「잴 형편이 안 됨」.
+    _자리, _까닭 = machine.옛사이트()
+    if not _자리:
+        print('□ %s' % _까닭)
+        print('  **틀린 것이 아니라 못 잰 것입니다.**')
+        print('  BADAGAJA_OLD 로 옛 사이트 자리를 알려 주세요.')
+        return 4 if '--strict' in sys.argv else 0
     자세히 = '--자세히' in sys.argv
     print('옛 쪽이 가졌던 것을 새 쪽이 잃지 않았는가 (2026-09-28 주인 지시)')
     print('  옛  %s' % OLD)
