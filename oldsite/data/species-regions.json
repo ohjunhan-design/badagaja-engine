@@ -1,0 +1,7362 @@
+{
+ "_about": "대상별 전국 권역 — tools/species-regions.py 가 만듭니다. 손으로 고치지 마세요",
+ "species": {
+  "baekhap": [
+   {
+    "r": "sinan",
+    "name": "신안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "자은도 둔장해변을 대표하는 조개.",
+    "fishing": 76,
+    "gleaning": 34,
+    "fishHref": "point/01_sinan_fishing.html",
+    "gleanHref": "point/01_sinan_gleaning.html"
+   },
+   {
+    "r": "muan",
+    "name": "무안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "5월 – 9월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "모래 섞인 갯벌에서 나는 고급 조개. 탕과 찜 모두 잘 어울립니다.",
+    "fishing": 30,
+    "gleaning": 23,
+    "fishHref": "point/02_muan_fishing.html",
+    "gleanHref": "point/02_muan_gleaning.html"
+   },
+   {
+    "r": "yeonggwang",
+    "name": "영광",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "영광 갯벌 대표 조개, 가을철 특히 유명합니다.",
+    "fishing": 30,
+    "gleaning": 21,
+    "fishHref": "point/04_yeonggwang_fishing.html",
+    "gleanHref": "point/04_yeonggwang_gleaning.html"
+   },
+   {
+    "r": "hampyeong",
+    "name": "함평",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 9월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "함평만 갯벌 조개류.",
+    "fishing": 25,
+    "gleaning": 23,
+    "fishHref": "point/05_hampyeong_fishing.html",
+    "gleanHref": "point/05_hampyeong_gleaning.html"
+   },
+   {
+    "r": "jindo",
+    "name": "진도",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 9월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "모래 갯벌에서 나는 고급 조개.",
+    "fishing": 74,
+    "gleaning": 26,
+    "fishHref": "point/06_jindo_fishing.html",
+    "gleanHref": "point/06_jindo_gleaning.html"
+   },
+   {
+    "r": "haenam",
+    "name": "해남",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 9월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "모래 갯벌에서 나는 조개.",
+    "fishing": 49,
+    "gleaning": 22,
+    "fishHref": "point/07_haenam_fishing.html",
+    "gleanHref": "point/07_haenam_gleaning.html"
+   },
+   {
+    "r": "yeosu",
+    "name": "여수",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "5월 – 9월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "모래갯벌에서 나는 고급 조개. 탕과 찜에 두루 어울립니다.",
+    "fishing": 82,
+    "gleaning": 32,
+    "fishHref": "point/13_yeosu_fishing.html",
+    "gleanHref": "point/13_yeosu_gleaning.html"
+   },
+   {
+    "r": "seocheon",
+    "name": "서천",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "봄 – 가을",
+    "m": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "월하성의 고운 모래 갯벌에서 가끔 섞여 나오는 조개로, 마을 체험 규칙과 채취량 제한 안에서만 가져갈 수 있습니다.",
+    "fishing": 12,
+    "gleaning": 15,
+    "fishHref": "point/chungnam/seocheon_fishing.html",
+    "gleanHref": "point/chungnam/seocheon_gleaning.html"
+   }
+  ],
+  "bajirak": [
+   {
+    "r": "sinan",
+    "name": "신안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "국물 요리에 두루 쓰이는 대중적인 패류.",
+    "fishing": 76,
+    "gleaning": 34,
+    "fishHref": "point/01_sinan_fishing.html",
+    "gleanHref": "point/01_sinan_gleaning.html"
+   },
+   {
+    "r": "muan",
+    "name": "무안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "5월 – 9월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "초보자도 쉽게 채취 가능한 대중적인 패류.",
+    "fishing": 30,
+    "gleaning": 23,
+    "fishHref": "point/02_muan_fishing.html",
+    "gleanHref": "point/02_muan_gleaning.html"
+   },
+   {
+    "r": "mokpo",
+    "name": "목포",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "국물·볶음 요리에 두루 쓰이는 대중적인 패류.",
+    "fishing": 24,
+    "gleaning": 22,
+    "fishHref": "point/03_mokpo_fishing.html",
+    "gleanHref": "point/03_mokpo_gleaning.html"
+   },
+   {
+    "r": "hampyeong",
+    "name": "함평",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 9월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "돌머리·주포 갯벌에서 흔히 채취.",
+    "fishing": 25,
+    "gleaning": 23,
+    "fishHref": "point/05_hampyeong_fishing.html",
+    "gleanHref": "point/05_hampyeong_gleaning.html"
+   },
+   {
+    "r": "jindo",
+    "name": "진도",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "진도 갯벌 전역에서 나는 대중적인 패류.",
+    "fishing": 74,
+    "gleaning": 26,
+    "fishHref": "point/06_jindo_fishing.html",
+    "gleanHref": "point/06_jindo_gleaning.html"
+   },
+   {
+    "r": "haenam",
+    "name": "해남",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "대죽리·구성리 갯벌 대표 패류.",
+    "fishing": 49,
+    "gleaning": 22,
+    "fishHref": "point/07_haenam_fishing.html",
+    "gleanHref": "point/07_haenam_gleaning.html"
+   },
+   {
+    "r": "wando",
+    "name": "완도",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "완도 연안 갯벌 공통 패류.",
+    "fishing": 80,
+    "gleaning": 41,
+    "fishHref": "point/08_wando_fishing.html",
+    "gleanHref": "point/08_wando_gleaning.html"
+   },
+   {
+    "r": "gangjin",
+    "name": "강진",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "3월 – 10월",
+    "m": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "마량 서중마을 갯벌체험장 대표 패류.",
+    "fishing": 34,
+    "gleaning": 24,
+    "fishHref": "point/09_gangjin_fishing.html",
+    "gleanHref": "point/09_gangjin_gleaning.html"
+   },
+   {
+    "r": "jangheung",
+    "name": "장흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "3월 – 10월",
+    "m": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "수문마을 갯벌 대표 패류.",
+    "fishing": 31,
+    "gleaning": 21,
+    "fishHref": "point/10_jangheung_fishing.html",
+    "gleanHref": "point/10_jangheung_gleaning.html"
+   },
+   {
+    "r": "boseong",
+    "name": "보성",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "5월 – 9월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "초보자도 쉽게 채취 가능한 대중적인 패류.",
+    "fishing": 31,
+    "gleaning": 23,
+    "fishHref": "point/11_boseong_fishing.html",
+    "gleanHref": "point/11_boseong_gleaning.html"
+   },
+   {
+    "r": "goheung",
+    "name": "고흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "연호·점암 갯벌 대표 패류.",
+    "fishing": 74,
+    "gleaning": 35,
+    "fishHref": "point/12_goheung_fishing.html",
+    "gleanHref": "point/12_goheung_gleaning.html"
+   },
+   {
+    "r": "yeosu",
+    "name": "여수",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "5월 – 9월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "초보자도 쉽게 채취 가능한 대중적인 패류.",
+    "fishing": 82,
+    "gleaning": 32,
+    "fishHref": "point/13_yeosu_fishing.html",
+    "gleanHref": "point/13_yeosu_gleaning.html"
+   },
+   {
+    "r": "suncheon",
+    "name": "순천",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "연중(봄 성수기)",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "봄철이 성수기인 대중적 패류.",
+    "fishing": 23,
+    "gleaning": 21,
+    "fishHref": "point/14_suncheon_fishing.html",
+    "gleanHref": "point/14_suncheon_gleaning.html"
+   },
+   {
+    "r": "gwangyang",
+    "name": "광양",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "봄 – 가을",
+    "m": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "광양만 갯벌 공통 패류.",
+    "fishing": 26,
+    "gleaning": 20,
+    "fishHref": "point/15_gwangyang_fishing.html",
+    "gleanHref": "point/15_gwangyang_gleaning.html"
+   },
+   {
+    "r": "taean",
+    "name": "태안",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "3월 – 6월",
+    "m": [
+     3,
+     4,
+     5,
+     6
+    ],
+    "text": "병술만·대야도·가경주 같은 어촌체험휴양마을에서 체험비를 내고, 마을이 열어 둔 구역 안에서만 호미로 캡니다. 구역 밖 마을어장은 채취 금지입니다.",
+    "fishing": 83,
+    "gleaning": 39,
+    "fishHref": "point/chungnam/taean_fishing.html",
+    "gleanHref": "point/chungnam/taean_gleaning.html"
+   },
+   {
+    "r": "seosan",
+    "name": "서산",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "3월 – 6월",
+    "m": [
+     3,
+     4,
+     5,
+     6
+    ],
+    "text": "중리·웅도 어촌체험마을의 갯벌 체험에 참가해 정해진 구역에서 호미로 캡니다. 가로림만 마을어장은 어촌계 허락 없이 채취할 수 없습니다.",
+    "fishing": 14,
+    "gleaning": 12,
+    "fishHref": "point/chungnam/seosan_fishing.html",
+    "gleanHref": "point/chungnam/seosan_gleaning.html"
+   },
+   {
+    "r": "dangjin",
+    "name": "당진",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "4월 – 5월",
+    "m": [
+     4,
+     5
+    ],
+    "text": "송악읍 한진포구에서 봄 축제가 열리면 참가비를 내고 바지락을 캐 가져갈 수 있습니다. 평소에는 어촌계 허락 없이 캐면 안 됩니다.",
+    "fishing": 20,
+    "gleaning": 14,
+    "fishHref": "point/chungnam/dangjin_fishing.html",
+    "gleanHref": "point/chungnam/dangjin_gleaning.html"
+   },
+   {
+    "r": "boryeong",
+    "name": "보령",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "3월 – 6월 · 9월 – 10월",
+    "m": [
+     3,
+     4,
+     5,
+     6,
+     9,
+     10
+    ],
+    "text": "무창포 어촌체험휴양마을과 군헌 갯벌체험장 같은 어촌계 체험장에서 캘 수 있습니다. 마을어장이라 체험 프로그램 밖 채취는 하면 안 됩니다.",
+    "fishing": 60,
+    "gleaning": 20,
+    "fishHref": "point/chungnam/boryeong_fishing.html",
+    "gleanHref": "point/chungnam/boryeong_gleaning.html"
+   },
+   {
+    "r": "seocheon",
+    "name": "서천",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "3월 – 6월 · 9월 – 10월",
+    "m": [
+     3,
+     4,
+     5,
+     6,
+     9,
+     10
+    ],
+    "text": "월하성·선도리 체험장에서 캘 수 있으며 산란기인 여름에는 운영을 쉬기도 합니다. 개인이 마을어장에서 따로 캐는 것은 안 됩니다.",
+    "fishing": 12,
+    "gleaning": 15,
+    "fishHref": "point/chungnam/seocheon_fishing.html",
+    "gleanHref": "point/chungnam/seocheon_gleaning.html"
+   },
+   {
+    "r": "hongseong",
+    "name": "홍성",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "속동갯벌마을이 운영하는 체험으로 캘 수 있고, 1인 채취량 제한이 있습니다. 마을 정보센터에 먼저 들러 안내를 받으세요.",
+    "fishing": 8,
+    "gleaning": 9,
+    "fishHref": "point/chungnam/hongseong_fishing.html",
+    "gleanHref": "point/chungnam/hongseong_gleaning.html"
+   },
+   {
+    "r": "gunsan",
+    "name": "군산",
+    "group": "jeonbuk",
+    "glabel": "전북",
+    "season": "3월 – 6월",
+    "m": [
+     3,
+     4,
+     5,
+     6
+    ],
+    "text": "군산 도심 쪽 해안은 대부분 항만과 방조제여서 조개를 캘 갯벌이 거의 없습니다. 방조제 도로로 이어진 신시도·선유도 어촌체험마을에서 체험비를 내고 마을이 정한 구역에서 캐세요.",
+    "fishing": 14,
+    "gleaning": 4,
+    "fishHref": "point/jeonbuk/gunsan_fishing.html",
+    "gleanHref": "point/jeonbuk/gunsan_gleaning.html"
+   },
+   {
+    "r": "gogunsan",
+    "name": "고군산군도",
+    "group": "jeonbuk",
+    "glabel": "전북",
+    "season": "3월 – 6월",
+    "m": [
+     3,
+     4,
+     5,
+     6
+    ],
+    "text": "신시도어촌체험휴양마을 갯벌에서 마을 체험을 신청하면 호미와 바구니를 받아 정해진 구역에서 캘 수 있습니다. 조개밭 대부분이 마을 양식장이라 체험 외 채취는 금지입니다.",
+    "fishing": 96,
+    "gleaning": 8,
+    "fishHref": "point/jeonbuk/gogunsan_fishing.html",
+    "gleanHref": "point/jeonbuk/gogunsan_gleaning.html"
+   },
+   {
+    "r": "buan",
+    "name": "부안",
+    "group": "jeonbuk",
+    "glabel": "전북",
+    "season": "3월 – 6월",
+    "m": [
+     3,
+     4,
+     5,
+     6
+    ],
+    "text": "모항갯벌체험장은 부안군에서 유어장으로 지정받아 운영하는 곳입니다. 이용료를 내고 갈고리와 바구니를 빌려 정해진 양만 캐는 방식이며, 운영 여부는 가기 전에 확인하세요.",
+    "fishing": 43,
+    "gleaning": 15,
+    "fishHref": "point/jeonbuk/buan_fishing.html",
+    "gleanHref": "point/jeonbuk/buan_gleaning.html"
+   },
+   {
+    "r": "gochang",
+    "name": "고창",
+    "group": "jeonbuk",
+    "glabel": "전북",
+    "season": "3월 – 6월",
+    "m": [
+     3,
+     4,
+     5,
+     6
+    ],
+    "text": "전국에서 바지락이 가장 많이 나는 하전 갯벌에서는 마을 체험장을 통해서만 캘 수 있습니다. 트랙터가 끄는 갯벌버스를 타고 체험 구역까지 들어갑니다.",
+    "fishing": 4,
+    "gleaning": 7,
+    "fishHref": "point/jeonbuk/gochang_fishing.html",
+    "gleanHref": "point/jeonbuk/gochang_gleaning.html"
+   },
+   {
+    "r": "namhae",
+    "name": "남해",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "3월 – 11월",
+    "m": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "지족마을·유포마을 갯벌체험에서 체험비를 내고 호미로 캡니다. 체험장 밖 마을어장에서 조개를 캐는 것은 허용되지 않습니다.",
+    "fishing": 131,
+    "gleaning": 24,
+    "fishHref": "point/gyeongnam/namhae_fishing.html",
+    "gleanHref": "point/gyeongnam/namhae_gleaning.html"
+   },
+   {
+    "r": "sacheon",
+    "name": "사천·하동",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "3월 – 11월",
+    "m": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "서포면 다맥마을 갯벌체험에서 체험비를 내고 캡니다. 비토섬 둘레 갯벌은 대부분 마을어장이라 체험 프로그램 밖에서는 캐지 마세요.",
+    "fishing": 67,
+    "gleaning": 8,
+    "fishHref": "point/gyeongnam/sacheon_fishing.html",
+    "gleanHref": "point/gyeongnam/sacheon_gleaning.html"
+   },
+   {
+    "r": "goseong",
+    "name": "고성",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "3월 – 11월",
+    "m": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "하일면 동화마을과 삼산면 룡대미마을 갯벌체험으로 즐깁니다. 체험비를 내고 마을이 열어 둔 구역에서만 캡니다.",
+    "fishing": 54,
+    "gleaning": 1,
+    "fishHref": "point/gyeongnam/goseong_fishing.html",
+    "gleanHref": "point/gyeongnam/goseong_gleaning.html"
+   },
+   {
+    "r": "tongyeong",
+    "name": "통영",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "3월 – 6월",
+    "m": [
+     3,
+     4,
+     5,
+     6
+    ],
+    "text": "산양읍 연명·궁항마을이 운영하는 체험에 참여해 마을이 정한 갯벌에서만 캡니다. 궁항마을은 앞바다 소장군도로 건너가 캐는 프로그램도 있습니다.",
+    "fishing": 222,
+    "gleaning": 20,
+    "fishHref": "point/gyeongnam/tongyeong_fishing.html",
+    "gleanHref": "point/gyeongnam/tongyeong_gleaning.html"
+   },
+   {
+    "r": "geoje",
+    "name": "거제",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "봄·겨울",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     12
+    ],
+    "text": "남부면 쌍근마을은 계절별 체험 가운데 봄과 겨울에 바지락 캐기를 안내합니다. 운영 여부를 미리 확인하세요.",
+    "fishing": 118,
+    "gleaning": 27,
+    "fishHref": "point/gyeongnam/geoje_fishing.html",
+    "gleanHref": "point/gyeongnam/geoje_gleaning.html"
+   },
+   {
+    "r": "yeongjong",
+    "name": "영종",
+    "group": "sudogwon",
+    "glabel": "인천·경기",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "마시안해변과 남북동 해변 어촌체험마을에서 체험비를 내고 마을이 정한 구역에서 호미로 캡니다. 구역 밖 갯벌은 마을어장이라 채취 금지입니다.",
+    "fishing": 32,
+    "gleaning": 14,
+    "fishHref": "point/sudogwon/yeongjong_fishing.html",
+    "gleanHref": "point/sudogwon/yeongjong_gleaning.html"
+   },
+   {
+    "r": "ongjin",
+    "name": "옹진 섬",
+    "group": "sudogwon",
+    "glabel": "인천·경기",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "선재도 어촌체험마을은 섬 입구 쪽 체험어장에서 조개잡이를 운영합니다. 체험비를 내고 정해진 구역에서만 캐세요.",
+    "fishing": 124,
+    "gleaning": 29,
+    "fishHref": "point/sudogwon/ongjin_fishing.html",
+    "gleanHref": "point/sudogwon/ongjin_gleaning.html"
+   },
+   {
+    "r": "daebu",
+    "name": "대부·오이도",
+    "group": "sudogwon",
+    "glabel": "인천·경기",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "종현·선감 어촌체험마을에서 체험비를 내고 마을이 연 구역에서만 캡니다. 선감마을은 트랙터 마차를 타고 갯벌로 들어갑니다.",
+    "fishing": 24,
+    "gleaning": 12,
+    "fishHref": "point/sudogwon/daebu_fishing.html",
+    "gleanHref": "point/sudogwon/daebu_gleaning.html"
+   },
+   {
+    "r": "hwaseong",
+    "name": "화성",
+    "group": "sudogwon",
+    "glabel": "인천·경기",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "제부·백미리·궁평리 어촌체험마을에서 체험비를 내고 마을 구역 안에서 캡니다. 제부도는 해안선에서 150m까지만 체험이 허용되고 그 밖은 마을어장이라고 마을이 안내합니다.",
+    "fishing": 23,
+    "gleaning": 9,
+    "fishHref": "point/sudogwon/hwaseong_fishing.html",
+    "gleanHref": "point/sudogwon/hwaseong_gleaning.html"
+   }
+  ],
+  "bollak": [
+   {
+    "r": "yeonggwang",
+    "name": "영광",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "12월 – 3월",
+    "m": [
+     1,
+     2,
+     3,
+     12
+    ],
+    "text": "겨울~봄 야간 갯바위 인기 어종.",
+    "fishing": 30,
+    "gleaning": 21,
+    "fishHref": "point/04_yeonggwang_fishing.html",
+    "gleanHref": "point/04_yeonggwang_gleaning.html"
+   },
+   {
+    "r": "haenam",
+    "name": "해남",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "12월 – 2월",
+    "m": [
+     1,
+     2,
+     12
+    ],
+    "text": "겨울철 야간 인기 어종.",
+    "fishing": 49,
+    "gleaning": 22,
+    "fishHref": "point/07_haenam_fishing.html",
+    "gleanHref": "point/07_haenam_gleaning.html"
+   },
+   {
+    "r": "wando",
+    "name": "완도",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "12월 – 2월",
+    "m": [
+     1,
+     2,
+     12
+    ],
+    "text": "겨울철 야간 인기 어종.",
+    "fishing": 80,
+    "gleaning": 41,
+    "fishHref": "point/08_wando_fishing.html",
+    "gleanHref": "point/08_wando_gleaning.html"
+   },
+   {
+    "r": "gangjin",
+    "name": "강진",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "사계절 낚이는 인기 어종.",
+    "fishing": 34,
+    "gleaning": 24,
+    "fishHref": "point/09_gangjin_fishing.html",
+    "gleanHref": "point/09_gangjin_gleaning.html"
+   },
+   {
+    "r": "jangheung",
+    "name": "장흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "안천방파제 야간 인기 어종.",
+    "fishing": 31,
+    "gleaning": 21,
+    "fishHref": "point/10_jangheung_fishing.html",
+    "gleanHref": "point/10_jangheung_gleaning.html"
+   },
+   {
+    "r": "boseong",
+    "name": "보성",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "11월 – 3월",
+    "m": [
+     1,
+     2,
+     3,
+     11,
+     12
+    ],
+    "text": "해 진 뒤 갯바위 주변에서 주로 낚이는 야간 인기 어종.",
+    "fishing": 31,
+    "gleaning": 23,
+    "fishHref": "point/11_boseong_fishing.html",
+    "gleanHref": "point/11_boseong_gleaning.html"
+   },
+   {
+    "r": "goheung",
+    "name": "고흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "사계절 낚이는 인기 어종.",
+    "fishing": 74,
+    "gleaning": 35,
+    "fishHref": "point/12_goheung_fishing.html",
+    "gleanHref": "point/12_goheung_gleaning.html"
+   },
+   {
+    "r": "yeosu",
+    "name": "여수",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "11월 – 3월",
+    "m": [
+     1,
+     2,
+     3,
+     11,
+     12
+    ],
+    "text": "해 진 뒤 갯바위 주변에서 주로 낚이는 야간 인기 어종.",
+    "fishing": 82,
+    "gleaning": 32,
+    "fishHref": "point/13_yeosu_fishing.html",
+    "gleanHref": "point/13_yeosu_gleaning.html"
+   },
+   {
+    "r": "suncheon",
+    "name": "순천",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "12월 – 2월",
+    "m": [
+     1,
+     2,
+     12
+    ],
+    "text": "겨울철 야간 인기 어종.",
+    "fishing": 23,
+    "gleaning": 21,
+    "fishHref": "point/14_suncheon_fishing.html",
+    "gleanHref": "point/14_suncheon_gleaning.html"
+   },
+   {
+    "r": "gwangyang",
+    "name": "광양",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "12월 – 2월",
+    "m": [
+     1,
+     2,
+     12
+    ],
+    "text": "겨울철 야간 인기 어종.",
+    "fishing": 26,
+    "gleaning": 20,
+    "fishHref": "point/15_gwangyang_fishing.html",
+    "gleanHref": "point/15_gwangyang_gleaning.html"
+   },
+   {
+    "r": "namhae",
+    "name": "남해",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "12월 – 4월",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     12
+    ],
+    "text": "해가 진 뒤 어항 방파제에서 작은 루어(가짜 미끼)로 노립니다. 군이 정한 낚시통제구역 안내판이 있는 방파제는 피하세요.",
+    "fishing": 131,
+    "gleaning": 24,
+    "fishHref": "point/gyeongnam/namhae_fishing.html",
+    "gleanHref": "point/gyeongnam/namhae_gleaning.html"
+   },
+   {
+    "r": "goseong",
+    "name": "고성",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "11월 – 4월",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     11,
+     12
+    ],
+    "text": "맥전포 방파제처럼 자란만을 끼고 있는 어항에서 해 진 뒤 가벼운 루어(가짜 미끼) 채비로 노립니다.",
+    "fishing": 54,
+    "gleaning": 1,
+    "fishHref": "point/gyeongnam/goseong_fishing.html",
+    "gleanHref": "point/gyeongnam/goseong_gleaning.html"
+   },
+   {
+    "r": "tongyeong",
+    "name": "통영",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "11월 – 3월",
+    "m": [
+     1,
+     2,
+     3,
+     11,
+     12
+    ],
+    "text": "해가 진 뒤 방파제 끝이나 섬 갯바위 가장자리에서 가벼운 채비로 수면 가까운 층을 천천히 훑어 노립니다.",
+    "fishing": 222,
+    "gleaning": 20,
+    "fishHref": "point/gyeongnam/tongyeong_fishing.html",
+    "gleanHref": "point/gyeongnam/tongyeong_gleaning.html"
+   },
+   {
+    "r": "changwon",
+    "name": "창원",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "11월 – 3월",
+    "m": [
+     1,
+     2,
+     3,
+     11,
+     12
+    ],
+    "text": "구산면 쪽 방파제와 어항 주변에서 밤에 작은 웜 채비로 노리며, 물살이 약한 만 안쪽이라 초보자도 해 볼 만합니다.",
+    "fishing": 71,
+    "gleaning": 8,
+    "fishHref": "point/gyeongnam/changwon_fishing.html",
+    "gleanHref": "point/gyeongnam/changwon_gleaning.html"
+   },
+   {
+    "r": "busanwest",
+    "name": "부산 서부",
+    "group": "busanulsan",
+    "glabel": "부산·울산",
+    "season": "12월 – 4월",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     12
+    ],
+    "text": "해가 진 뒤 가덕도 대항 주변 갯바위에서 작은 웜(말랑한 가짜 미끼)이나 민물새우 미끼로 잡습니다.",
+    "fishing": 75,
+    "gleaning": 12,
+    "fishHref": "point/busanulsan/busanwest_fishing.html",
+    "gleanHref": "point/busanulsan/busanwest_gleaning.html"
+   },
+   {
+    "r": "pohang",
+    "name": "포항 바다",
+    "group": "gyeongbuk",
+    "glabel": "경북",
+    "season": "3월 – 6월",
+    "m": [
+     3,
+     4,
+     5,
+     6
+    ],
+    "text": "밤에 항구와 방파제 불빛 주변에서 작은 웜(고무 미끼)이나 민물새우 미끼로 잡습니다.",
+    "fishing": 70,
+    "gleaning": 15,
+    "fishHref": "point/gyeongbuk/pohang_fishing.html",
+    "gleanHref": "point/gyeongbuk/pohang_gleaning.html"
+   },
+   {
+    "r": "uljin",
+    "name": "울진 바다",
+    "group": "gyeongbuk",
+    "glabel": "경북",
+    "season": "3월 – 6월",
+    "m": [
+     3,
+     4,
+     5,
+     6
+    ],
+    "text": "밤에 죽변항·후포항 방파제 불빛 아래에서 작은 웜(고무 미끼)으로 잡습니다.",
+    "fishing": 76,
+    "gleaning": 14,
+    "fishHref": "point/gyeongbuk/uljin_fishing.html",
+    "gleanHref": "point/gyeongbuk/uljin_gleaning.html"
+   },
+   {
+    "r": "ulleung",
+    "name": "울릉도·독도",
+    "group": "gyeongbuk",
+    "glabel": "경북",
+    "season": "3월 – 6월",
+    "m": [
+     3,
+     4,
+     5,
+     6
+    ],
+    "text": "밤에 항구 안 불빛 주변에서 작은 웜(고무 미끼)으로 잡습니다. 방파제 끝이나 테트라포드에는 올라가지 마세요.",
+    "fishing": 25,
+    "gleaning": 4,
+    "fishHref": "point/gyeongbuk/ulleung_fishing.html",
+    "gleanHref": "point/gyeongbuk/ulleung_gleaning.html"
+   }
+  ],
+  "bungjangeo": [
+   {
+    "r": "muan",
+    "name": "무안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "6월 – 10월",
+    "m": [
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "여름밤 방파제 밑바닥을 노리는 야간 어종.",
+    "fishing": 30,
+    "gleaning": 23,
+    "fishHref": "point/02_muan_fishing.html",
+    "gleanHref": "point/02_muan_gleaning.html"
+   },
+   {
+    "r": "hampyeong",
+    "name": "함평",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "6월 – 9월",
+    "m": [
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "여름 야간 원투낚시 대상.",
+    "fishing": 25,
+    "gleaning": 23,
+    "fishHref": "point/05_hampyeong_fishing.html",
+    "gleanHref": "point/05_hampyeong_gleaning.html"
+   },
+   {
+    "r": "jindo",
+    "name": "진도",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "6월 – 10월",
+    "m": [
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "여름철 야간 원투낚시(멀리 던지는 낚시) 대상.",
+    "fishing": 74,
+    "gleaning": 26,
+    "fishHref": "point/06_jindo_fishing.html",
+    "gleanHref": "point/06_jindo_gleaning.html"
+   },
+   {
+    "r": "haenam",
+    "name": "해남",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "6월 – 10월",
+    "m": [
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "여름 야간 원투낚시(멀리 던지는 낚시) 대상.",
+    "fishing": 49,
+    "gleaning": 22,
+    "fishHref": "point/07_haenam_fishing.html",
+    "gleanHref": "point/07_haenam_gleaning.html"
+   },
+   {
+    "r": "jangheung",
+    "name": "장흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "6월 – 10월",
+    "m": [
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "여름철 야간 원투낚시 대상.",
+    "fishing": 31,
+    "gleaning": 21,
+    "fishHref": "point/10_jangheung_fishing.html",
+    "gleanHref": "point/10_jangheung_gleaning.html"
+   },
+   {
+    "r": "gwangyang",
+    "name": "광양",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "겨울",
+    "m": [
+     1,
+     2,
+     12
+    ],
+    "text": "광양만 겨울철 원투낚시(멀리 던지는 낚시) 대상.",
+    "fishing": 26,
+    "gleaning": 20,
+    "fishHref": "point/15_gwangyang_fishing.html",
+    "gleanHref": "point/15_gwangyang_gleaning.html"
+   }
+  ],
+  "byeongedom": [
+   {
+    "r": "haenam",
+    "name": "해남",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "12월 – 2월",
+    "m": [
+     1,
+     2,
+     12
+    ],
+    "text": "겨울철 대물 벵에돔 시즌.",
+    "fishing": 49,
+    "gleaning": 22,
+    "fishHref": "point/07_haenam_fishing.html",
+    "gleanHref": "point/07_haenam_gleaning.html"
+   },
+   {
+    "r": "wando",
+    "name": "완도",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "12월 – 2월",
+    "m": [
+     1,
+     2,
+     12
+    ],
+    "text": "겨울철 대물 벵에돔 시즌.",
+    "fishing": 80,
+    "gleaning": 41,
+    "fishHref": "point/08_wando_fishing.html",
+    "gleanHref": "point/08_wando_gleaning.html"
+   },
+   {
+    "r": "jangheung",
+    "name": "장흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "사계절 낚이는 인기 어종.",
+    "fishing": 31,
+    "gleaning": 21,
+    "fishHref": "point/10_jangheung_fishing.html",
+    "gleanHref": "point/10_jangheung_gleaning.html"
+   },
+   {
+    "r": "goheung",
+    "name": "고흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "12월 – 2월",
+    "m": [
+     1,
+     2,
+     12
+    ],
+    "text": "겨울철 대물 벵에돔 시즌.",
+    "fishing": 74,
+    "gleaning": 35,
+    "fishHref": "point/12_goheung_fishing.html",
+    "gleanHref": "point/12_goheung_gleaning.html"
+   },
+   {
+    "r": "yeosu",
+    "name": "여수",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "10월 – 이듬해 3월",
+    "m": [
+     1,
+     2,
+     3,
+     10,
+     11,
+     12
+    ],
+    "text": "가을·겨울 갯바위 대표 어종. 밑밥낚시로 주로 노립니다.",
+    "fishing": 82,
+    "gleaning": 32,
+    "fishHref": "point/13_yeosu_fishing.html",
+    "gleanHref": "point/13_yeosu_gleaning.html"
+   },
+   {
+    "r": "aewol",
+    "name": "애월·한림",
+    "group": "jeju",
+    "glabel": "제주",
+    "season": "여름 – 가을",
+    "m": [
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "갯바위 찌낚시 대상어. 시즌은 현지 낚시점에 확인하세요.",
+    "fishing": 23,
+    "gleaning": 12,
+    "fishHref": "point/jeju/aewol_fishing.html",
+    "gleanHref": "point/jeju/aewol_gleaning.html"
+   },
+   {
+    "r": "jocheon",
+    "name": "조천·구좌",
+    "group": "jeju",
+    "glabel": "제주",
+    "season": "여름 – 가을",
+    "m": [
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "갯바위 찌낚시 대상어.",
+    "fishing": 11,
+    "gleaning": 14,
+    "fishHref": "point/jeju/jocheon_fishing.html",
+    "gleanHref": "point/jeju/jocheon_gleaning.html"
+   },
+   {
+    "r": "seongsan",
+    "name": "성산·표선",
+    "group": "jeju",
+    "glabel": "제주",
+    "season": "6월 – 12월",
+    "m": [
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "제주 방파제·갯바위의 대표 손맛 어종.",
+    "fishing": 30,
+    "gleaning": 16,
+    "fishHref": "point/jeju/seongsan_fishing.html",
+    "gleanHref": "point/jeju/seongsan_gleaning.html"
+   },
+   {
+    "r": "seogwipo",
+    "name": "서귀포·중문",
+    "group": "jeju",
+    "glabel": "제주",
+    "season": "6월 – 이듬해 2월",
+    "m": [
+     1,
+     2,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "6~11월은 많이 잡히고, 겨울에는 큰 것이 갯바위에서 나옵니다.",
+    "fishing": 16,
+    "gleaning": 12,
+    "fishHref": "point/jeju/seogwipo_fishing.html",
+    "gleanHref": "point/jeju/seogwipo_gleaning.html"
+   },
+   {
+    "r": "daejeong",
+    "name": "대정·안덕",
+    "group": "jeju",
+    "glabel": "제주",
+    "season": "6월 – 이듬해 2월",
+    "m": [
+     1,
+     2,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "갯바위 찌낚시로 노립니다. 겨울에는 큰 것이 나옵니다.",
+    "fishing": 21,
+    "gleaning": 7,
+    "fishHref": "point/jeju/daejeong_fishing.html",
+    "gleanHref": "point/jeju/daejeong_gleaning.html"
+   },
+   {
+    "r": "chuja",
+    "name": "추자도",
+    "group": "jeju",
+    "glabel": "제주",
+    "season": "현지 확인",
+    "m": [],
+    "text": "갯바위 찌낚시 대상. 시기는 현지 낚시점에 확인하세요.",
+    "fishing": 30,
+    "gleaning": 6,
+    "fishHref": "point/jeju/chuja_fishing.html",
+    "gleanHref": "point/jeju/chuja_gleaning.html"
+   },
+   {
+    "r": "geoje",
+    "name": "거제",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "6월 – 11월",
+    "m": [
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "남부면·해금강 쪽 갯바위에서 크릴 밑밥을 뿌려 물고기를 띄운 뒤 가벼운 찌로 노리는 대상어입니다.",
+    "fishing": 118,
+    "gleaning": 27,
+    "fishHref": "point/gyeongnam/geoje_fishing.html",
+    "gleanHref": "point/gyeongnam/geoje_gleaning.html"
+   },
+   {
+    "r": "busaneast",
+    "name": "부산 동부",
+    "group": "busanulsan",
+    "glabel": "부산·울산",
+    "season": "6월 – 11월",
+    "m": [
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "기장 앞 갯바위에서 크릴을 조금씩 뿌려 물고기를 모은 뒤 가벼운 찌 채비로 물 중간층을 노립니다.",
+    "fishing": 61,
+    "gleaning": 13,
+    "fishHref": "point/busanulsan/busaneast_fishing.html",
+    "gleanHref": "point/busanulsan/busaneast_gleaning.html"
+   },
+   {
+    "r": "gyeongju",
+    "name": "경주 바다",
+    "group": "gyeongbuk",
+    "glabel": "경북",
+    "season": "7월 – 11월",
+    "m": [
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "물이 맑은 갯바위 주변에서 밑밥을 뿌려 띄운 뒤 가벼운 찌 채비로 잡습니다. 여름부터 가을까지 많이 찾습니다.",
+    "fishing": 31,
+    "gleaning": 5,
+    "fishHref": "point/gyeongbuk/gyeongju_fishing.html",
+    "gleanHref": "point/gyeongbuk/gyeongju_gleaning.html"
+   },
+   {
+    "r": "ulleung",
+    "name": "울릉도·독도",
+    "group": "gyeongbuk",
+    "glabel": "경북",
+    "season": "5월 – 11월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "물이 맑은 갯바위에서 밑밥을 뿌려 띄운 뒤 가벼운 찌 채비로 잡습니다. 저동·천부·현포 방파제 테트라포드는 출입통제 구역이 있습니다.",
+    "fishing": 25,
+    "gleaning": 4,
+    "fishHref": "point/gyeongbuk/ulleung_fishing.html",
+    "gleanHref": "point/gyeongbuk/ulleung_gleaning.html"
+   }
+  ],
+  "chamdom": [
+   {
+    "r": "sinan",
+    "name": "신안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 6월",
+    "m": [
+     4,
+     5,
+     6
+    ],
+    "text": "봄철 갯바위에서 인기 있는 어종.",
+    "fishing": 76,
+    "gleaning": 34,
+    "fishHref": "point/01_sinan_fishing.html",
+    "gleanHref": "point/01_sinan_gleaning.html"
+   },
+   {
+    "r": "haenam",
+    "name": "해남",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "사계절 낚이는 인기 대상어.",
+    "fishing": 49,
+    "gleaning": 22,
+    "fishHref": "point/07_haenam_fishing.html",
+    "gleanHref": "point/07_haenam_gleaning.html"
+   },
+   {
+    "r": "wando",
+    "name": "완도",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "사계절 낚이는 인기 대상어.",
+    "fishing": 80,
+    "gleaning": 41,
+    "fishHref": "point/08_wando_fishing.html",
+    "gleanHref": "point/08_wando_gleaning.html"
+   },
+   {
+    "r": "gangjin",
+    "name": "강진",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "가우도 낚시공원 인기 대상어.",
+    "fishing": 34,
+    "gleaning": 24,
+    "fishHref": "point/09_gangjin_fishing.html",
+    "gleanHref": "point/09_gangjin_gleaning.html"
+   },
+   {
+    "r": "goheung",
+    "name": "고흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "나로도항 사계절 인기 대상어.",
+    "fishing": 74,
+    "gleaning": 35,
+    "fishHref": "point/12_goheung_fishing.html",
+    "gleanHref": "point/12_goheung_gleaning.html"
+   },
+   {
+    "r": "yeosu",
+    "name": "여수",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "5월 – 10월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "향일암 갯바위 일대에서 노리는 여름철 인기 대상어.",
+    "fishing": 82,
+    "gleaning": 32,
+    "fishHref": "point/13_yeosu_fishing.html",
+    "gleanHref": "point/13_yeosu_gleaning.html"
+   },
+   {
+    "r": "chuja",
+    "name": "추자도",
+    "group": "jeju",
+    "glabel": "제주",
+    "season": "봄 · 늦가을",
+    "m": [
+     3,
+     4,
+     5,
+     10,
+     11
+    ],
+    "text": "봄과 11월 말~12월 초에 큰 참돔이 나옵니다.",
+    "fishing": 30,
+    "gleaning": 6,
+    "fishHref": "point/jeju/chuja_fishing.html",
+    "gleanHref": "point/jeju/chuja_gleaning.html"
+   },
+   {
+    "r": "seocheon",
+    "name": "서천",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "4월 – 6월",
+    "m": [
+     4,
+     5,
+     6
+    ],
+    "text": "봄 서천 앞바다에서 노리는 대상으로, 5월 광어·도미 축제와 시기가 겹칩니다.",
+    "fishing": 12,
+    "gleaning": 15,
+    "fishHref": "point/chungnam/seocheon_fishing.html",
+    "gleanHref": "point/chungnam/seocheon_gleaning.html"
+   },
+   {
+    "r": "gunsan",
+    "name": "군산",
+    "group": "jeonbuk",
+    "glabel": "전북",
+    "season": "5월 – 7월",
+    "m": [
+     5,
+     6,
+     7
+    ],
+    "text": "가을 물때가 좋은 날 방파제 끝자리에서 찌낚시나 루어로 노립니다.",
+    "fishing": 14,
+    "gleaning": 4,
+    "fishHref": "point/jeonbuk/gunsan_fishing.html",
+    "gleanHref": "point/jeonbuk/gunsan_gleaning.html"
+   },
+   {
+    "r": "namhae",
+    "name": "남해",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "봄 · 가을",
+    "m": [
+     3,
+     4,
+     5,
+     9,
+     10,
+     11
+    ],
+    "text": "미조 앞바다 갯바위 찌낚시의 대표 대상어 가운데 하나로, 조류가 흐르는 자리에서 밑밥을 뿌려 불러 모읍니다.",
+    "fishing": 131,
+    "gleaning": 24,
+    "fishHref": "point/gyeongnam/namhae_fishing.html",
+    "gleanHref": "point/gyeongnam/namhae_gleaning.html"
+   },
+   {
+    "r": "tongyeong",
+    "name": "통영",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "4월 – 6월, 9월 – 11월",
+    "m": [
+     4,
+     5,
+     6,
+     9,
+     10,
+     11
+    ],
+    "text": "통영 연안 갯바위와 방파제에서 찌낚시로 주로 노립니다.",
+    "fishing": 222,
+    "gleaning": 20,
+    "fishHref": "point/gyeongnam/tongyeong_fishing.html",
+    "gleanHref": "point/gyeongnam/tongyeong_gleaning.html"
+   }
+  ],
+  "chilge": [
+   {
+    "r": "muan",
+    "name": "무안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "6월 – 10월",
+    "m": [
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "갯벌 구멍마다 드나드는 작은 게. 게장·튀김용으로 씁니다.",
+    "fishing": 30,
+    "gleaning": 23,
+    "fishHref": "point/02_muan_fishing.html",
+    "gleanHref": "point/02_muan_gleaning.html"
+   },
+   {
+    "r": "yeonggwang",
+    "name": "영광",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "5월 – 9월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "갯벌 표면에서 흔히 보이는 작은 게.",
+    "fishing": 30,
+    "gleaning": 21,
+    "fishHref": "point/04_yeonggwang_fishing.html",
+    "gleanHref": "point/04_yeonggwang_gleaning.html"
+   },
+   {
+    "r": "hampyeong",
+    "name": "함평",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "6월 – 8월",
+    "m": [
+     6,
+     7,
+     8
+    ],
+    "text": "여름철 갯벌 표면에서 쉽게 보이는 게.",
+    "fishing": 25,
+    "gleaning": 23,
+    "fishHref": "point/05_hampyeong_fishing.html",
+    "gleanHref": "point/05_hampyeong_gleaning.html"
+   },
+   {
+    "r": "boseong",
+    "name": "보성",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "5월 – 10월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "갯벌 표면 어디서나 보이는 작은 게. 장 담그는 데도 씁니다.",
+    "fishing": 31,
+    "gleaning": 23,
+    "fishHref": "point/11_boseong_fishing.html",
+    "gleanHref": "point/11_boseong_gleaning.html"
+   },
+   {
+    "r": "yeosu",
+    "name": "여수",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "5월 – 10월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "갯벌 표면 어디서나 보이는 작은 게. 장 담그는 데도 씁니다.",
+    "fishing": 82,
+    "gleaning": 32,
+    "fishHref": "point/13_yeosu_fishing.html",
+    "gleanHref": "point/13_yeosu_gleaning.html"
+   },
+   {
+    "r": "suncheon",
+    "name": "순천",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "봄 – 가을",
+    "m": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "갯벌 표면에서 흔한 채집 대상.",
+    "fishing": 23,
+    "gleaning": 21,
+    "fishHref": "point/14_suncheon_fishing.html",
+    "gleanHref": "point/14_suncheon_gleaning.html"
+   },
+   {
+    "r": "gwangyang",
+    "name": "광양",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "여름",
+    "m": [
+     6,
+     7,
+     8
+    ],
+    "text": "갯벌 표면에서 흔한 채집 대상.",
+    "fishing": 26,
+    "gleaning": 20,
+    "fishHref": "point/15_gwangyang_fishing.html",
+    "gleanHref": "point/15_gwangyang_gleaning.html"
+   },
+   {
+    "r": "gunsan",
+    "name": "군산",
+    "group": "jeonbuk",
+    "glabel": "전북",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "체험마을 갯벌에서 구멍을 드나드는 게를 관찰하고 다시 놓아주는 활동입니다. 금강 하구 쪽 펄은 발이 깊이 빠지므로 혼자 들어가지 않습니다.",
+    "fishing": 14,
+    "gleaning": 4,
+    "fishHref": "point/jeonbuk/gunsan_fishing.html",
+    "gleanHref": "point/jeonbuk/gunsan_gleaning.html"
+   }
+  ],
+  "dodari": [
+   {
+    "r": "muan",
+    "name": "무안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "3월 – 6월",
+    "m": [
+     3,
+     4,
+     5,
+     6
+    ],
+    "text": "봄철 별미. 모래바닥이 깔린 포인트에서 잘 나옵니다.",
+    "fishing": 30,
+    "gleaning": 23,
+    "fishHref": "point/02_muan_fishing.html",
+    "gleanHref": "point/02_muan_gleaning.html"
+   },
+   {
+    "r": "yeonggwang",
+    "name": "영광",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "3월 – 5월",
+    "m": [
+     3,
+     4,
+     5
+    ],
+    "text": "봄철 백수 갯바위 대표 어종.",
+    "fishing": 30,
+    "gleaning": 21,
+    "fishHref": "point/04_yeonggwang_fishing.html",
+    "gleanHref": "point/04_yeonggwang_gleaning.html"
+   },
+   {
+    "r": "hampyeong",
+    "name": "함평",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "3월 – 5월",
+    "m": [
+     3,
+     4,
+     5
+    ],
+    "text": "봄철 함평만 방파제 인기 어종.",
+    "fishing": 25,
+    "gleaning": 23,
+    "fishHref": "point/05_hampyeong_fishing.html",
+    "gleanHref": "point/05_hampyeong_gleaning.html"
+   },
+   {
+    "r": "jindo",
+    "name": "진도",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "3월 – 5월",
+    "m": [
+     3,
+     4,
+     5
+    ],
+    "text": "봄철 방파제 대표 어종.",
+    "fishing": 74,
+    "gleaning": 26,
+    "fishHref": "point/06_jindo_fishing.html",
+    "gleanHref": "point/06_jindo_gleaning.html"
+   },
+   {
+    "r": "haenam",
+    "name": "해남",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "3월 – 5월",
+    "m": [
+     3,
+     4,
+     5
+    ],
+    "text": "우수영 방파제 봄철 대표 어종.",
+    "fishing": 49,
+    "gleaning": 22,
+    "fishHref": "point/07_haenam_fishing.html",
+    "gleanHref": "point/07_haenam_gleaning.html"
+   },
+   {
+    "r": "wando",
+    "name": "완도",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "3월 – 5월",
+    "m": [
+     3,
+     4,
+     5
+    ],
+    "text": "봄철 방파제 대표 어종.",
+    "fishing": 80,
+    "gleaning": 41,
+    "fishHref": "point/08_wando_fishing.html",
+    "gleanHref": "point/08_wando_gleaning.html"
+   },
+   {
+    "r": "suncheon",
+    "name": "순천",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "3월 – 5월",
+    "m": [
+     3,
+     4,
+     5
+    ],
+    "text": "봄철 대표 어종.",
+    "fishing": 23,
+    "gleaning": 21,
+    "fishHref": "point/14_suncheon_fishing.html",
+    "gleanHref": "point/14_suncheon_gleaning.html"
+   },
+   {
+    "r": "gwangyang",
+    "name": "광양",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "봄",
+    "m": [
+     3,
+     4,
+     5
+    ],
+    "text": "봄철 방파제 대표 어종.",
+    "fishing": 26,
+    "gleaning": 20,
+    "fishHref": "point/15_gwangyang_fishing.html",
+    "gleanHref": "point/15_gwangyang_gleaning.html"
+   },
+   {
+    "r": "boryeong",
+    "name": "보령",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "3월 – 5월",
+    "m": [
+     3,
+     4,
+     5
+    ],
+    "text": "봄 무창포 앞바다에서 원투로 노리며, 같은 철 축제 먹거리로도 이름이 올라갑니다.",
+    "fishing": 60,
+    "gleaning": 20,
+    "fishHref": "point/chungnam/boryeong_fishing.html",
+    "gleanHref": "point/chungnam/boryeong_gleaning.html"
+   },
+   {
+    "r": "sacheon",
+    "name": "사천·하동",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "3월 – 5월",
+    "m": [
+     3,
+     4,
+     5
+    ],
+    "text": "삼천포 방파제에서 모래 바닥에 채비를 내린 뒤 살살 끌어 주며 입질을 기다리는 봄 낚시입니다.",
+    "fishing": 67,
+    "gleaning": 8,
+    "fishHref": "point/gyeongnam/sacheon_fishing.html",
+    "gleanHref": "point/gyeongnam/sacheon_gleaning.html"
+   },
+   {
+    "r": "goseong",
+    "name": "고성",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "3월 – 5월",
+    "m": [
+     3,
+     4,
+     5
+    ],
+    "text": "물살이 잔잔한 자란만은 봄 도다리 낚시 터로 쓰입니다. 양식장 부표와 줄에 채비가 걸리지 않도록 거리를 두세요.",
+    "fishing": 54,
+    "gleaning": 1,
+    "fishHref": "point/gyeongnam/goseong_fishing.html",
+    "gleanHref": "point/gyeongnam/goseong_gleaning.html"
+   },
+   {
+    "r": "changwon",
+    "name": "창원",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "3월 – 5월",
+    "m": [
+     3,
+     4,
+     5
+    ],
+    "text": "진해 명동·삼포 앞바다에서 갯지렁이를 단 바닥 채비로 노립니다. 명동마리나 방파제와 우도 보도교는 낚시통제구역이라 피해야 합니다.",
+    "fishing": 71,
+    "gleaning": 8,
+    "fishHref": "point/gyeongnam/changwon_fishing.html",
+    "gleanHref": "point/gyeongnam/changwon_gleaning.html"
+   },
+   {
+    "r": "busaneast",
+    "name": "부산 동부",
+    "group": "busanulsan",
+    "glabel": "부산·울산",
+    "season": "3월 – 5월",
+    "m": [
+     3,
+     4,
+     5
+    ],
+    "text": "봄에 기장 앞바다 모래 바닥을 방파제 원투로 노리며, 갯지렁이 미끼를 바닥에 두고 기다립니다.",
+    "fishing": 61,
+    "gleaning": 13,
+    "fishHref": "point/busanulsan/busaneast_fishing.html",
+    "gleanHref": "point/busanulsan/busaneast_gleaning.html"
+   }
+  ],
+  "doldom": [
+   {
+    "r": "sinan",
+    "name": "신안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "6월 – 9월",
+    "m": [
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "여름철 손맛 어종, 상태도 갯바위 대표.",
+    "fishing": 76,
+    "gleaning": 34,
+    "fishHref": "point/01_sinan_fishing.html",
+    "gleanHref": "point/01_sinan_gleaning.html"
+   },
+   {
+    "r": "yeosu",
+    "name": "여수",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "6월 – 9월",
+    "m": [
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "갯바위 마니아들이 손꼽는 여름 손맛 대상어.",
+    "fishing": 82,
+    "gleaning": 32,
+    "fishHref": "point/13_yeosu_fishing.html",
+    "gleanHref": "point/13_yeosu_gleaning.html"
+   },
+   {
+    "r": "seongsan",
+    "name": "성산·표선",
+    "group": "jeju",
+    "glabel": "제주",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "성산포방파제 외항에서 가을에 많이 노립니다.",
+    "fishing": 30,
+    "gleaning": 16,
+    "fishHref": "point/jeju/seongsan_fishing.html",
+    "gleanHref": "point/jeju/seongsan_gleaning.html"
+   },
+   {
+    "r": "chuja",
+    "name": "추자도",
+    "group": "jeju",
+    "glabel": "제주",
+    "season": "여름",
+    "m": [
+     6,
+     7,
+     8
+    ],
+    "text": "장마철 전후가 가장 좋다고 알려진 갯바위 대상어.",
+    "fishing": 30,
+    "gleaning": 6,
+    "fishHref": "point/jeju/chuja_fishing.html",
+    "gleanHref": "point/jeju/chuja_gleaning.html"
+   }
+  ],
+  "dongjuk": [
+   {
+    "r": "sinan",
+    "name": "신안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 12월",
+    "m": [
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "가을 갯벌에서 흔히 채집하는 조개.",
+    "fishing": 76,
+    "gleaning": 34,
+    "fishHref": "point/01_sinan_fishing.html",
+    "gleanHref": "point/01_sinan_gleaning.html"
+   },
+   {
+    "r": "muan",
+    "name": "무안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 9월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "톱머리 갯벌 등 모래갯벌에서 흔히 채취되는 조개.",
+    "fishing": 30,
+    "gleaning": 23,
+    "fishHref": "point/02_muan_fishing.html",
+    "gleanHref": "point/02_muan_gleaning.html"
+   },
+   {
+    "r": "yeonggwang",
+    "name": "영광",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 9월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "두우리 해변에서 흔히 나는 조개.",
+    "fishing": 30,
+    "gleaning": 21,
+    "fishHref": "point/04_yeonggwang_fishing.html",
+    "gleanHref": "point/04_yeonggwang_gleaning.html"
+   },
+   {
+    "r": "hampyeong",
+    "name": "함평",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 9월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "주포·학산 갯벌 공통 채집 대상.",
+    "fishing": 25,
+    "gleaning": 23,
+    "fishHref": "point/05_hampyeong_fishing.html",
+    "gleanHref": "point/05_hampyeong_gleaning.html"
+   },
+   {
+    "r": "jindo",
+    "name": "진도",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "5월 – 9월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "하조도 갯벌에서 흔히 나는 조개.",
+    "fishing": 74,
+    "gleaning": 26,
+    "fishHref": "point/06_jindo_fishing.html",
+    "gleanHref": "point/06_jindo_gleaning.html"
+   },
+   {
+    "r": "gangjin",
+    "name": "강진",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 9월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "강진만 갯벌 공통 채집 대상.",
+    "fishing": 34,
+    "gleaning": 24,
+    "fishHref": "point/09_gangjin_fishing.html",
+    "gleanHref": "point/09_gangjin_gleaning.html"
+   },
+   {
+    "r": "jangheung",
+    "name": "장흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 9월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "장흥 갯벌 공통 채집 대상.",
+    "fishing": 31,
+    "gleaning": 21,
+    "fishHref": "point/10_jangheung_fishing.html",
+    "gleanHref": "point/10_jangheung_gleaning.html"
+   },
+   {
+    "r": "boseong",
+    "name": "보성",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 9월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "모래 섞인 갯벌에서 잘 나오는 조개. 국물 요리에 많이 씁니다.",
+    "fishing": 31,
+    "gleaning": 23,
+    "fishHref": "point/11_boseong_fishing.html",
+    "gleanHref": "point/11_boseong_gleaning.html"
+   },
+   {
+    "r": "goheung",
+    "name": "고흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "5월 – 9월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "고흥 갯벌 공통 채집 대상.",
+    "fishing": 74,
+    "gleaning": 35,
+    "fishHref": "point/12_goheung_fishing.html",
+    "gleanHref": "point/12_goheung_gleaning.html"
+   },
+   {
+    "r": "yeosu",
+    "name": "여수",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 9월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "모래 섞인 갯벌에서 잘 나오는 조개. 국물 요리에 많이 씁니다.",
+    "fishing": 82,
+    "gleaning": 32,
+    "fishHref": "point/13_yeosu_fishing.html",
+    "gleanHref": "point/13_yeosu_gleaning.html"
+   },
+   {
+    "r": "suncheon",
+    "name": "순천",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "봄 – 가을",
+    "m": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "순천만 갯벌 공통 채집 대상.",
+    "fishing": 23,
+    "gleaning": 21,
+    "fishHref": "point/14_suncheon_fishing.html",
+    "gleanHref": "point/14_suncheon_gleaning.html"
+   },
+   {
+    "r": "boryeong",
+    "name": "보령",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "봄 – 가을",
+    "m": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "무창포 바닷길 주변 체험 구역에서 바지락과 함께 나옵니다. 어촌계가 정한 시간과 구역, 채취량을 지켜야 합니다.",
+    "fishing": 60,
+    "gleaning": 20,
+    "fishHref": "point/chungnam/boryeong_fishing.html",
+    "gleanHref": "point/chungnam/boryeong_gleaning.html"
+   },
+   {
+    "r": "seocheon",
+    "name": "서천",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "봄 – 가을",
+    "m": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "선도리 갯벌체험마을의 주 대상 조개입니다. 체험장 입장 후 안내받은 구역에서 호미로 캐고, 구역 밖 마을어장은 들어가지 않습니다.",
+    "fishing": 12,
+    "gleaning": 15,
+    "fishHref": "point/chungnam/seocheon_fishing.html",
+    "gleanHref": "point/chungnam/seocheon_gleaning.html"
+   },
+   {
+    "r": "yeongjong",
+    "name": "영종",
+    "group": "sudogwon",
+    "glabel": "인천·경기",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "마시안해변과 남북동 해변 어촌체험마을에서 체험비를 내고 마을이 정한 구역에서 호미로 캡니다. 구역 밖 갯벌은 마을어장이라 채취 금지입니다.",
+    "fishing": 32,
+    "gleaning": 14,
+    "fishHref": "point/sudogwon/yeongjong_fishing.html",
+    "gleanHref": "point/sudogwon/yeongjong_gleaning.html"
+   },
+   {
+    "r": "hwaseong",
+    "name": "화성",
+    "group": "sudogwon",
+    "glabel": "인천·경기",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "제부·백미리·궁평리 어촌체험마을에서 체험비를 내고 마을 구역 안에서 캡니다. 제부도는 해안선에서 150m까지만 체험이 허용되고 그 밖은 마을어장이라고 마을이 안내합니다.",
+    "fishing": 23,
+    "gleaning": 9,
+    "fishHref": "point/sudogwon/hwaseong_fishing.html",
+    "gleanHref": "point/sudogwon/hwaseong_gleaning.html"
+   }
+  ],
+  "gaebul": [
+   {
+    "r": "gangjin",
+    "name": "강진",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "1월 – 3월",
+    "m": [
+     1,
+     2,
+     3
+    ],
+    "text": "신전면 사초리 전통 개막이 채취.",
+    "fishing": 34,
+    "gleaning": 24,
+    "fishHref": "point/09_gangjin_fishing.html",
+    "gleanHref": "point/09_gangjin_gleaning.html"
+   },
+   {
+    "r": "goheung",
+    "name": "고흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "11월 – 3월",
+    "m": [
+     1,
+     2,
+     3,
+     11,
+     12
+    ],
+    "text": "겨울~초봄 별미.",
+    "fishing": 74,
+    "gleaning": 35,
+    "fishHref": "point/12_goheung_fishing.html",
+    "gleanHref": "point/12_goheung_gleaning.html"
+   }
+  ],
+  "gaejogae": [
+   {
+    "r": "haenam",
+    "name": "해남",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 9월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "봄~가을 갯벌 채집 대상.",
+    "fishing": 49,
+    "gleaning": 22,
+    "fishHref": "point/07_haenam_fishing.html",
+    "gleanHref": "point/07_haenam_gleaning.html"
+   },
+   {
+    "r": "jangheung",
+    "name": "장흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "3월 – 9월",
+    "m": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "봄~가을 갯벌 채집 대상.",
+    "fishing": 31,
+    "gleaning": 21,
+    "fishHref": "point/10_jangheung_fishing.html",
+    "gleanHref": "point/10_jangheung_gleaning.html"
+   }
+  ],
+  "gamseongdom": [
+   {
+    "r": "sinan",
+    "name": "신안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "가을 대표 낚시 어종, 사계절 조황 보고.",
+    "fishing": 76,
+    "gleaning": 34,
+    "fishHref": "point/01_sinan_fishing.html",
+    "gleanHref": "point/01_sinan_gleaning.html"
+   },
+   {
+    "r": "muan",
+    "name": "무안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 이듬해 2월",
+    "m": [
+     1,
+     2,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "도리포 방파제 일대에서 노리는 가을·겨울 대상어.",
+    "fishing": 30,
+    "gleaning": 23,
+    "fishHref": "point/02_muan_fishing.html",
+    "gleanHref": "point/02_muan_gleaning.html"
+   },
+   {
+    "r": "mokpo",
+    "name": "목포",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "북항 방파제 가을 대표 대상어.",
+    "fishing": 24,
+    "gleaning": 22,
+    "fishHref": "point/03_mokpo_fishing.html",
+    "gleanHref": "point/03_mokpo_gleaning.html"
+   },
+   {
+    "r": "yeonggwang",
+    "name": "영광",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "홍농 방파제 가을 대표 대상어.",
+    "fishing": 30,
+    "gleaning": 21,
+    "fishHref": "point/04_yeonggwang_fishing.html",
+    "gleanHref": "point/04_yeonggwang_gleaning.html"
+   },
+   {
+    "r": "jindo",
+    "name": "진도",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 이듬해 2월",
+    "m": [
+     1,
+     2,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "진도 전역 방파제·갯바위 대표 대상어.",
+    "fishing": 74,
+    "gleaning": 26,
+    "fishHref": "point/06_jindo_fishing.html",
+    "gleanHref": "point/06_jindo_gleaning.html"
+   },
+   {
+    "r": "haenam",
+    "name": "해남",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 이듬해 2월",
+    "m": [
+     1,
+     2,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "땅끝마을 송지 방파제 대표 대상어.",
+    "fishing": 49,
+    "gleaning": 22,
+    "fishHref": "point/07_haenam_fishing.html",
+    "gleanHref": "point/07_haenam_gleaning.html"
+   },
+   {
+    "r": "wando",
+    "name": "완도",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 이듬해 2월",
+    "m": [
+     1,
+     2,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "보길도·신지도 방파제 대표 대상어.",
+    "fishing": 80,
+    "gleaning": 41,
+    "fishHref": "point/08_wando_fishing.html",
+    "gleanHref": "point/08_wando_gleaning.html"
+   },
+   {
+    "r": "gangjin",
+    "name": "강진",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 12월",
+    "m": [
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "마량항·장산 방파제 대표 대상어, 강진군수배 낚시대회 개최지.",
+    "fishing": 34,
+    "gleaning": 24,
+    "fishHref": "point/09_gangjin_fishing.html",
+    "gleanHref": "point/09_gangjin_gleaning.html"
+   },
+   {
+    "r": "jangheung",
+    "name": "장흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "안천·율포 방파제 사계절 대표 대상어, 가을 피크.",
+    "fishing": 31,
+    "gleaning": 21,
+    "fishHref": "point/10_jangheung_fishing.html",
+    "gleanHref": "point/10_jangheung_gleaning.html"
+   },
+   {
+    "r": "boseong",
+    "name": "보성",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 이듬해 2월",
+    "m": [
+     1,
+     2,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "군학리 방파제 일대의 대표 대상어. 찬바람 불 때 크기가 굵어집니다.",
+    "fishing": 31,
+    "gleaning": 23,
+    "fishHref": "point/11_boseong_fishing.html",
+    "gleanHref": "point/11_boseong_gleaning.html"
+   },
+   {
+    "r": "goheung",
+    "name": "고흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 이듬해 2월",
+    "m": [
+     1,
+     2,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "나로도·발포 방파제 대표 대상어, 가을~겨울 피크.",
+    "fishing": 74,
+    "gleaning": 35,
+    "fishHref": "point/12_goheung_fishing.html",
+    "gleanHref": "point/12_goheung_gleaning.html"
+   },
+   {
+    "r": "yeosu",
+    "name": "여수",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 이듬해 2월",
+    "m": [
+     1,
+     2,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "돌산 갯바위 일대의 대표 대상어. 찬바람 불 때 크기가 굵어집니다. 돌산대교 아래는 낚시통제구역입니다.",
+    "fishing": 82,
+    "gleaning": 32,
+    "fishHref": "point/13_yeosu_fishing.html",
+    "gleanHref": "point/13_yeosu_gleaning.html"
+   },
+   {
+    "r": "suncheon",
+    "name": "순천",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 이듬해 1월",
+    "m": [
+     1,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "가을~겨울 순천만 대표 대상어.",
+    "fishing": 23,
+    "gleaning": 21,
+    "fishHref": "point/14_suncheon_fishing.html",
+    "gleanHref": "point/14_suncheon_gleaning.html"
+   },
+   {
+    "r": "gwangyang",
+    "name": "광양",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 이듬해 2월",
+    "m": [
+     1,
+     2,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "은동마을 방파제 가을~겨울 대표 대상어.",
+    "fishing": 26,
+    "gleaning": 20,
+    "fishHref": "point/15_gwangyang_fishing.html",
+    "gleanHref": "point/15_gwangyang_gleaning.html"
+   },
+   {
+    "r": "chuja",
+    "name": "추자도",
+    "group": "jeju",
+    "glabel": "제주",
+    "season": "겨울",
+    "m": [
+     1,
+     2,
+     12
+    ],
+    "text": "겨울 갯바위 찌낚시·원투(멀리 던지는 바닥낚시)로 노립니다.",
+    "fishing": 30,
+    "gleaning": 6,
+    "fishHref": "point/jeju/chuja_fishing.html",
+    "gleanHref": "point/jeju/chuja_gleaning.html"
+   },
+   {
+    "r": "gogunsan",
+    "name": "고군산군도",
+    "group": "jeonbuk",
+    "glabel": "전북",
+    "season": "4월 – 6월, 9월 – 11월",
+    "m": [
+     4,
+     5,
+     6,
+     9,
+     10,
+     11
+    ],
+    "text": "선유도·장자도 갯바위에서 찌낚시로 노리는 어종으로, 발판이 좁은 자리가 많아 경험자에게 맞습니다.",
+    "fishing": 96,
+    "gleaning": 8,
+    "fishHref": "point/jeonbuk/gogunsan_fishing.html",
+    "gleanHref": "point/jeonbuk/gogunsan_gleaning.html"
+   },
+   {
+    "r": "buan",
+    "name": "부안",
+    "group": "jeonbuk",
+    "glabel": "전북",
+    "season": "4월 – 6월, 9월 – 11월",
+    "m": [
+     4,
+     5,
+     6,
+     9,
+     10,
+     11
+    ],
+    "text": "위도 둘레 갯바위가 전북에서 손꼽히는 찌낚시 터로, 섬에 들어가 민박을 잡고 물때 맞춰 포인트에 내리는 경우가 많습니다.",
+    "fishing": 43,
+    "gleaning": 15,
+    "fishHref": "point/jeonbuk/buan_fishing.html",
+    "gleanHref": "point/jeonbuk/buan_gleaning.html"
+   },
+   {
+    "r": "namhae",
+    "name": "남해",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "11월 – 4월",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     11,
+     12
+    ],
+    "text": "미조항 방파제와 물미해안 갯바위 둘레에서 찌낚시로 노리는 늦가을부터 봄까지의 대상어입니다.",
+    "fishing": 131,
+    "gleaning": 24,
+    "fishHref": "point/gyeongnam/namhae_fishing.html",
+    "gleanHref": "point/gyeongnam/namhae_gleaning.html"
+   },
+   {
+    "r": "goseong",
+    "name": "고성",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "10월 – 2월",
+    "m": [
+     1,
+     2,
+     10,
+     11,
+     12
+    ],
+    "text": "자란만 안쪽 양식장 둘레와 사량도로 이어지는 섬 갯바위에서 찌낚시로 노리는 가을·겨울 대상어입니다.",
+    "fishing": 54,
+    "gleaning": 1,
+    "fishHref": "point/gyeongnam/goseong_fishing.html",
+    "gleanHref": "point/gyeongnam/goseong_gleaning.html"
+   },
+   {
+    "r": "tongyeong",
+    "name": "통영",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "10월 – 2월",
+    "m": [
+     1,
+     2,
+     10,
+     11,
+     12
+    ],
+    "text": "욕지도·사량도 같은 섬 갯바위로 들어가 크릴을 밑밥과 미끼로 쓰는 찌낚시가 기본입니다.",
+    "fishing": 222,
+    "gleaning": 20,
+    "fishHref": "point/gyeongnam/tongyeong_fishing.html",
+    "gleanHref": "point/gyeongnam/tongyeong_gleaning.html"
+   },
+   {
+    "r": "busanwest",
+    "name": "부산 서부",
+    "group": "busanulsan",
+    "glabel": "부산·울산",
+    "season": "10월 – 2월",
+    "m": [
+     1,
+     2,
+     10,
+     11,
+     12
+    ],
+    "text": "가덕도 갯바위에서 크릴 미끼로 바닥 가까이를 노립니다. 다대포항·감천항 방파제는 2024년 8월부터 출입이 통제되니 허용된 곳에서만 하세요.",
+    "fishing": 75,
+    "gleaning": 12,
+    "fishHref": "point/busanulsan/busanwest_fishing.html",
+    "gleanHref": "point/busanulsan/busanwest_gleaning.html"
+   },
+   {
+    "r": "gyeongju",
+    "name": "경주 바다",
+    "group": "gyeongbuk",
+    "glabel": "경북",
+    "season": "10월 – 3월",
+    "m": [
+     1,
+     2,
+     3,
+     10,
+     11,
+     12
+    ],
+    "text": "감포·양남의 갯바위와 방파제에서 찌낚시로 노립니다. 물살이 센 날이 많아 구명조끼를 입고, 출입통제 표지가 있는 곳은 들어가지 마세요.",
+    "fishing": 31,
+    "gleaning": 5,
+    "fishHref": "point/gyeongbuk/gyeongju_fishing.html",
+    "gleanHref": "point/gyeongbuk/gyeongju_gleaning.html"
+   },
+   {
+    "r": "yeongdeok",
+    "name": "영덕 바다",
+    "group": "gyeongbuk",
+    "glabel": "경북",
+    "season": "10월 – 3월",
+    "m": [
+     1,
+     2,
+     3,
+     10,
+     11,
+     12
+    ],
+    "text": "블루로드 해안의 갯바위와 방파제에서 찌낚시로 노립니다. 파도가 높은 날은 갯바위에 내려가지 마세요.",
+    "fishing": 44,
+    "gleaning": 10,
+    "fishHref": "point/gyeongbuk/yeongdeok_fishing.html",
+    "gleanHref": "point/gyeongbuk/yeongdeok_gleaning.html"
+   },
+   {
+    "r": "uljin",
+    "name": "울진 바다",
+    "group": "gyeongbuk",
+    "glabel": "경북",
+    "season": "10월 – 3월",
+    "m": [
+     1,
+     2,
+     3,
+     10,
+     11,
+     12
+    ],
+    "text": "기성·구산 쪽 갯바위와 방파제에서 찌낚시로 노립니다. 테트라포드 위에는 올라가지 마세요.",
+    "fishing": 76,
+    "gleaning": 14,
+    "fishHref": "point/gyeongbuk/uljin_fishing.html",
+    "gleanHref": "point/gyeongbuk/uljin_gleaning.html"
+   },
+   {
+    "r": "samcheok",
+    "name": "삼척",
+    "group": "gangwon",
+    "glabel": "강원",
+    "season": "10월 – 1월",
+    "m": [
+     1,
+     10,
+     11,
+     12
+    ],
+    "text": "찬바람이 불면 남쪽 갯바위에서 찌낚시로 노립니다. 파도가 높은 날에는 갯바위에 오르지 말고 날을 바꾸세요.",
+    "fishing": 36,
+    "gleaning": 15,
+    "fishHref": "point/gangwon/samcheok_fishing.html",
+    "gleanHref": "point/gangwon/samcheok_gleaning.html"
+   }
+  ],
+  "gapojingeo": [
+   {
+    "r": "hampyeong",
+    "name": "함평",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "가을 에깅 대상어로 인기.",
+    "fishing": 25,
+    "gleaning": 23,
+    "fishHref": "point/05_hampyeong_fishing.html",
+    "gleanHref": "point/05_hampyeong_gleaning.html"
+   },
+   {
+    "r": "gangjin",
+    "name": "강진",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "5월 – 11월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "봄~가을 에깅 대상어.",
+    "fishing": 34,
+    "gleaning": 24,
+    "fishHref": "point/09_gangjin_fishing.html",
+    "gleanHref": "point/09_gangjin_gleaning.html"
+   },
+   {
+    "r": "jangheung",
+    "name": "장흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "5월 – 11월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "노력도 원투낚시 대표 대상.",
+    "fishing": 31,
+    "gleaning": 21,
+    "fishHref": "point/10_jangheung_fishing.html",
+    "gleanHref": "point/10_jangheung_gleaning.html"
+   },
+   {
+    "r": "yeosu",
+    "name": "여수",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "가을 방파제 에깅 대상어로 인기.",
+    "fishing": 82,
+    "gleaning": 32,
+    "fishHref": "point/13_yeosu_fishing.html",
+    "gleanHref": "point/13_yeosu_gleaning.html"
+   },
+   {
+    "r": "jejusi",
+    "name": "제주시내",
+    "group": "jeju",
+    "glabel": "제주",
+    "season": "11월 – 이듬해 5월",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     11,
+     12
+    ],
+    "text": "늦가을부터 봄까지 에깅(가짜 미끼로 하는 오징어낚시)·낚시로 노립니다.",
+    "fishing": 14,
+    "gleaning": 7,
+    "fishHref": "point/jeju/jejusi_fishing.html",
+    "gleanHref": "point/jeju/jejusi_gleaning.html"
+   },
+   {
+    "r": "aewol",
+    "name": "애월·한림",
+    "group": "jeju",
+    "glabel": "제주",
+    "season": "11월 – 이듬해 5월",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     11,
+     12
+    ],
+    "text": "방파제 에깅과 낚시로 노립니다.",
+    "fishing": 23,
+    "gleaning": 12,
+    "fishHref": "point/jeju/aewol_fishing.html",
+    "gleanHref": "point/jeju/aewol_gleaning.html"
+   },
+   {
+    "r": "taean",
+    "name": "태안",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "가을 주꾸미와 같은 자리에서 함께 올라오는 경우가 많고, 에기를 조금 무거운 것으로 바꿔 바닥을 탐색합니다.",
+    "fishing": 83,
+    "gleaning": 39,
+    "fishHref": "point/chungnam/taean_fishing.html",
+    "gleanHref": "point/chungnam/taean_gleaning.html"
+   },
+   {
+    "r": "boryeong",
+    "name": "보령",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "주꾸미를 노리는 자리에서 에기를 함께 달아 노리는 경우가 많고, 씨알이 굵어 손맛이 묵직합니다.",
+    "fishing": 60,
+    "gleaning": 20,
+    "fishHref": "point/chungnam/boryeong_fishing.html",
+    "gleanHref": "point/chungnam/boryeong_gleaning.html"
+   },
+   {
+    "r": "seocheon",
+    "name": "서천",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "주꾸미와 같은 물때에 나오며, 서천 앞바다 여밭에서 에깅으로 한두 마리씩 섞여 올라옵니다.",
+    "fishing": 12,
+    "gleaning": 15,
+    "fishHref": "point/chungnam/seocheon_fishing.html",
+    "gleanHref": "point/chungnam/seocheon_gleaning.html"
+   },
+   {
+    "r": "hongseong",
+    "name": "홍성",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "천수만 가을에 주꾸미 사이로 가끔 올라오는 손님 고기로, 먹물이 튀니 올릴 때 조심합니다.",
+    "fishing": 8,
+    "gleaning": 9,
+    "fishHref": "point/chungnam/hongseong_fishing.html",
+    "gleanHref": "point/chungnam/hongseong_gleaning.html"
+   },
+   {
+    "r": "gunsan",
+    "name": "군산",
+    "group": "jeonbuk",
+    "glabel": "전북",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "주꾸미를 노리는 자리에서 함께 올라오는 손님 고기로, 무게가 더 나가는 에기를 달고 바닥에서 잠깐씩 멈춰 주며 입질을 기다립니다.",
+    "fishing": 14,
+    "gleaning": 4,
+    "fishHref": "point/jeonbuk/gunsan_fishing.html",
+    "gleanHref": "point/jeonbuk/gunsan_gleaning.html"
+   },
+   {
+    "r": "gochang",
+    "name": "고창",
+    "group": "jeonbuk",
+    "glabel": "전북",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "가을 구시포 방파제에서 주꾸미와 섞여 나오며, 에기를 들었다 놓았다 하며 바닥 가까이에 오래 머물게 하는 것이 요령입니다.",
+    "fishing": 4,
+    "gleaning": 7,
+    "fishHref": "point/jeonbuk/gochang_fishing.html",
+    "gleanHref": "point/jeonbuk/gochang_gleaning.html"
+   },
+   {
+    "r": "sacheon",
+    "name": "사천·하동",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "3월 – 4월",
+    "m": [
+     3,
+     4
+    ],
+    "text": "알을 낳으러 연안에 붙는 봄철에 몸통이 큰 갑오징어가 잡힙니다. 에기(오징어용 가짜 미끼)를 바닥 가까이 천천히 움직입니다.",
+    "fishing": 67,
+    "gleaning": 8,
+    "fishHref": "point/gyeongnam/sacheon_fishing.html",
+    "gleanHref": "point/gyeongnam/sacheon_gleaning.html"
+   },
+   {
+    "r": "goseong",
+    "name": "고성",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "가을이면 그해 자란 갑오징어가 맥전포·용암포 방파제 주변으로 들어옵니다. 에기를 바닥에 닿게 한 뒤 톡톡 튕겨 올립니다.",
+    "fishing": 54,
+    "gleaning": 1,
+    "fishHref": "point/gyeongnam/goseong_fishing.html",
+    "gleanHref": "point/gyeongnam/goseong_gleaning.html"
+   },
+   {
+    "r": "changwon",
+    "name": "창원",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "가을 주꾸미와 같은 자리에서 함께 올라오는 경우가 많으며, 바닥에서 에기를 살짝 들었다 놓으며 입질을 기다립니다.",
+    "fishing": 71,
+    "gleaning": 8,
+    "fishHref": "point/gyeongnam/changwon_fishing.html",
+    "gleanHref": "point/gyeongnam/changwon_gleaning.html"
+   },
+   {
+    "r": "hwaseong",
+    "name": "화성",
+    "group": "sudogwon",
+    "glabel": "인천·경기",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "금어기(주꾸미 5월 11일~8월 31일)가 끝나면 전곡항·궁평항 방파제에서 에기(가짜 미끼)로 함께 노립니다.",
+    "fishing": 23,
+    "gleaning": 9,
+    "fishHref": "point/sudogwon/hwaseong_fishing.html",
+    "gleanHref": "point/sudogwon/hwaseong_gleaning.html"
+   }
+  ],
+  "godeungeo": [
+   {
+    "r": "mokpo",
+    "name": "목포",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "가을철 무리 지어 회유하는 대중 어종.",
+    "fishing": 24,
+    "gleaning": 22,
+    "fishHref": "point/03_mokpo_fishing.html",
+    "gleanHref": "point/03_mokpo_gleaning.html"
+   },
+   {
+    "r": "wando",
+    "name": "완도",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "가을철 무리 지어 회유하는 어종.",
+    "fishing": 80,
+    "gleaning": 41,
+    "fishHref": "point/08_wando_fishing.html",
+    "gleanHref": "point/08_wando_gleaning.html"
+   },
+   {
+    "r": "busaneast",
+    "name": "부산 동부",
+    "group": "busanulsan",
+    "glabel": "부산·울산",
+    "season": "8월 – 11월",
+    "m": [
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "가을에 기장 포구 주변으로 떼 지어 들어옵니다. 대변항 월드컵 방파제 테트라포드 구역은 낚시통제구역이니 피하세요.",
+    "fishing": 61,
+    "gleaning": 13,
+    "fishHref": "point/busanulsan/busaneast_fishing.html",
+    "gleanHref": "point/busanulsan/busaneast_gleaning.html"
+   },
+   {
+    "r": "yeongdeok",
+    "name": "영덕 바다",
+    "group": "gyeongbuk",
+    "glabel": "경북",
+    "season": "7월 – 10월",
+    "m": [
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "여름부터 가을까지 항구 안으로 들어와 카드 채비(작은 바늘이 줄줄이 달린 채비)로 여러 마리를 한꺼번에 잡기도 합니다.",
+    "fishing": 44,
+    "gleaning": 10,
+    "fishHref": "point/gyeongbuk/yeongdeok_fishing.html",
+    "gleanHref": "point/gyeongbuk/yeongdeok_gleaning.html"
+   },
+   {
+    "r": "samcheok",
+    "name": "삼척",
+    "group": "gangwon",
+    "glabel": "강원",
+    "season": "8월 – 10월",
+    "m": [
+     8,
+     9,
+     10
+    ],
+    "text": "늦여름부터 항구 안쪽까지 무리가 들어오면 작은 바늘 여러 개를 단 카드채비(반짝이 달린 여러 바늘 채비)로 잡습니다.",
+    "fishing": 36,
+    "gleaning": 15,
+    "fishHref": "point/gangwon/samcheok_fishing.html",
+    "gleanHref": "point/gangwon/samcheok_gleaning.html"
+   },
+   {
+    "r": "sokcho",
+    "name": "속초",
+    "group": "gangwon",
+    "glabel": "강원",
+    "season": "8월 – 10월",
+    "m": [
+     8,
+     9,
+     10
+    ],
+    "text": "늦여름 항구 안쪽으로 무리가 들어오면 카드채비(반짝이 달린 여러 바늘 채비)로 잡습니다. 테트라포드 위에서는 하지 마세요.",
+    "fishing": 13,
+    "gleaning": 3,
+    "fishHref": "point/gangwon/sokcho_fishing.html",
+    "gleanHref": "point/gangwon/sokcho_gleaning.html"
+   }
+  ],
+  "godung": [
+   {
+    "r": "mokpo",
+    "name": "목포",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "갯바위 틈에서 쉽게 눈에 띄는 채집 대상.",
+    "fishing": 24,
+    "gleaning": 22,
+    "fishHref": "point/03_mokpo_fishing.html",
+    "gleanHref": "point/03_mokpo_gleaning.html"
+   },
+   {
+    "r": "goheung",
+    "name": "고흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "갯바위 틈에서 흔한 채집 대상.",
+    "fishing": 74,
+    "gleaning": 35,
+    "fishHref": "point/12_goheung_fishing.html",
+    "gleanHref": "point/12_goheung_gleaning.html"
+   },
+   {
+    "r": "gogunsan",
+    "name": "고군산군도",
+    "group": "jeonbuk",
+    "glabel": "전북",
+    "season": "5월 – 10월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "무녀도·방축도 어촌체험휴양마을 앞 갯바위에 붙어 사는 고둥은 마을어장에 속하는 경우가 많아, 마을 프로그램에 참여해서 잡아야 합니다.",
+    "fishing": 96,
+    "gleaning": 8,
+    "fishHref": "point/jeonbuk/gogunsan_fishing.html",
+    "gleanHref": "point/jeonbuk/gogunsan_gleaning.html"
+   },
+   {
+    "r": "goseong",
+    "name": "고성",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "2월 – 10월",
+    "m": [
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "동화마을은 썰물에 드러난 바위 둘레에서 고둥을 줍는 체험을 운영합니다. 체험 구역 밖 마을어장에서는 채취하지 마세요.",
+    "fishing": 54,
+    "gleaning": 1,
+    "fishHref": "point/gyeongnam/goseong_fishing.html",
+    "gleanHref": "point/gyeongnam/goseong_gleaning.html"
+   },
+   {
+    "r": "tongyeong",
+    "name": "통영",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "봄 – 가을",
+    "m": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "연명마을 체험에 바지락 캐기와 고동줍기가 함께 들어 있습니다. 체험 구역 밖 바위의 고둥은 마을어장 자원이니 줍지 마세요.",
+    "fishing": 222,
+    "gleaning": 20,
+    "fishHref": "point/gyeongnam/tongyeong_fishing.html",
+    "gleanHref": "point/gyeongnam/tongyeong_gleaning.html"
+   }
+  ],
+  "gul": [
+   {
+    "r": "muan",
+    "name": "무안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "11월 – 2월",
+    "m": [
+     1,
+     2,
+     11,
+     12
+    ],
+    "text": "갯바위와 갯벌 경계부에서 채취되는 겨울 별미.",
+    "fishing": 30,
+    "gleaning": 23,
+    "fishHref": "point/02_muan_fishing.html",
+    "gleanHref": "point/02_muan_gleaning.html"
+   },
+   {
+    "r": "mokpo",
+    "name": "목포",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "10월 – 이듬해 3월",
+    "m": [
+     1,
+     2,
+     3,
+     10,
+     11,
+     12
+    ],
+    "text": "목포 9미에도 오르는 겨울 별미 패류.",
+    "fishing": 24,
+    "gleaning": 22,
+    "fishHref": "point/03_mokpo_fishing.html",
+    "gleanHref": "point/03_mokpo_gleaning.html"
+   },
+   {
+    "r": "yeonggwang",
+    "name": "영광",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "10월 – 이듬해 3월",
+    "m": [
+     1,
+     2,
+     3,
+     10,
+     11,
+     12
+    ],
+    "text": "가마미 갯벌 인근 겨울 패류.",
+    "fishing": 30,
+    "gleaning": 21,
+    "fishHref": "point/04_yeonggwang_fishing.html",
+    "gleanHref": "point/04_yeonggwang_gleaning.html"
+   },
+   {
+    "r": "hampyeong",
+    "name": "함평",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "11월 – 2월",
+    "m": [
+     1,
+     2,
+     11,
+     12
+    ],
+    "text": "가을~겨울 함평만 갯벌 별미.",
+    "fishing": 25,
+    "gleaning": 23,
+    "fishHref": "point/05_hampyeong_fishing.html",
+    "gleanHref": "point/05_hampyeong_gleaning.html"
+   },
+   {
+    "r": "haenam",
+    "name": "해남",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "11월 – 2월",
+    "m": [
+     1,
+     2,
+     11,
+     12
+    ],
+    "text": "해남 연안 겨울 패류.",
+    "fishing": 49,
+    "gleaning": 22,
+    "fishHref": "point/07_haenam_fishing.html",
+    "gleanHref": "point/07_haenam_gleaning.html"
+   },
+   {
+    "r": "jangheung",
+    "name": "장흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "11월 – 2월",
+    "m": [
+     1,
+     2,
+     11,
+     12
+    ],
+    "text": "죽청·남포마을 겨울철 자연산 굴.",
+    "fishing": 31,
+    "gleaning": 21,
+    "fishHref": "point/10_jangheung_fishing.html",
+    "gleanHref": "point/10_jangheung_gleaning.html"
+   },
+   {
+    "r": "goheung",
+    "name": "고흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "10월 – 이듬해 3월",
+    "m": [
+     1,
+     2,
+     3,
+     10,
+     11,
+     12
+    ],
+    "text": "녹동항 인근 겨울 별미, 피굴의 재료.",
+    "fishing": 74,
+    "gleaning": 35,
+    "fishHref": "point/12_goheung_fishing.html",
+    "gleanHref": "point/12_goheung_gleaning.html"
+   },
+   {
+    "r": "yeosu",
+    "name": "여수",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "11월 – 이듬해 2월",
+    "m": [
+     1,
+     2,
+     11,
+     12
+    ],
+    "text": "갯바위와 갯벌 경계부에서 채취되는 겨울 별미.",
+    "fishing": 82,
+    "gleaning": 32,
+    "fishHref": "point/13_yeosu_fishing.html",
+    "gleanHref": "point/13_yeosu_gleaning.html"
+   },
+   {
+    "r": "seosan",
+    "name": "서산",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "11월 – 2월",
+    "m": [
+     1,
+     2,
+     11,
+     12
+    ],
+    "text": "간월도 갯벌 굴은 주민이 관리하는 자원이라 관광객 채취 대상이 아닙니다. 어리굴젓이나 굴밥으로 맛보는 편을 권합니다.",
+    "fishing": 14,
+    "gleaning": 12,
+    "fishHref": "point/chungnam/seosan_fishing.html",
+    "gleanHref": "point/chungnam/seosan_gleaning.html"
+   },
+   {
+    "r": "hongseong",
+    "name": "홍성",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "속동 갯벌 바위에 붙은 자연산 굴을 체험 중에 딸 수 있습니다. 양식장 시설물은 어민 재산이라 손대면 안 됩니다.",
+    "fishing": 8,
+    "gleaning": 9,
+    "fishHref": "point/chungnam/hongseong_fishing.html",
+    "gleanHref": "point/chungnam/hongseong_gleaning.html"
+   }
+  ],
+  "haesam": [
+   {
+    "r": "sinan",
+    "name": "신안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "11월 – 이듬해 4월",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     11,
+     12
+    ],
+    "text": "겨울철 쫄깃한 식감의 별미.",
+    "fishing": 76,
+    "gleaning": 34,
+    "fishHref": "point/01_sinan_fishing.html",
+    "gleanHref": "point/01_sinan_gleaning.html"
+   },
+   {
+    "r": "mokpo",
+    "name": "목포",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "12월 – 4월",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     12
+    ],
+    "text": "쫄깃한 식감의 겨울~봄 별미. 7월은 금어기라 잡을 수 없습니다.",
+    "fishing": 24,
+    "gleaning": 22,
+    "fishHref": "point/03_mokpo_fishing.html",
+    "gleanHref": "point/03_mokpo_gleaning.html"
+   },
+   {
+    "r": "samcheok",
+    "name": "삼척",
+    "group": "gangwon",
+    "glabel": "강원",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "강원특별자치도 조례에 따라 어업인이 아닌 사람은 어촌계 마을어장 안에서 전복·해삼·성게·홍합 같은 정착성 동물과 문어를 잡을 수 없습니다. 위반하면 벌금 대상입니다.",
+    "fishing": 36,
+    "gleaning": 15,
+    "fishHref": "point/gangwon/samcheok_fishing.html",
+    "gleanHref": "point/gangwon/samcheok_gleaning.html"
+   }
+  ],
+  "hakkongchi": [
+   {
+    "r": "sinan",
+    "name": "신안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "10월 – 12월",
+    "m": [
+     10,
+     11,
+     12
+    ],
+    "text": "가을~초겨울 무리 지어 회유하는 어종.",
+    "fishing": 76,
+    "gleaning": 34,
+    "fishHref": "point/01_sinan_fishing.html",
+    "gleanHref": "point/01_sinan_gleaning.html"
+   },
+   {
+    "r": "muan",
+    "name": "무안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "10월 – 이듬해 2월",
+    "m": [
+     1,
+     2,
+     10,
+     11,
+     12
+    ],
+    "text": "초겨울 잔잔한 날 찌낚시로 즐기는 입문 어종.",
+    "fishing": 30,
+    "gleaning": 23,
+    "fishHref": "point/02_muan_fishing.html",
+    "gleanHref": "point/02_muan_gleaning.html"
+   },
+   {
+    "r": "jindo",
+    "name": "진도",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "11월 – 2월",
+    "m": [
+     1,
+     2,
+     11,
+     12
+    ],
+    "text": "겨울철 방파제 인기 어종.",
+    "fishing": 74,
+    "gleaning": 26,
+    "fishHref": "point/06_jindo_fishing.html",
+    "gleanHref": "point/06_jindo_gleaning.html"
+   },
+   {
+    "r": "gangjin",
+    "name": "강진",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "가을 – 겨울",
+    "m": [
+     1,
+     2,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "겨울철 방파제 인기 어종.",
+    "fishing": 34,
+    "gleaning": 24,
+    "fishHref": "point/09_gangjin_fishing.html",
+    "gleanHref": "point/09_gangjin_gleaning.html"
+   },
+   {
+    "r": "boseong",
+    "name": "보성",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "10월 – 12월",
+    "m": [
+     10,
+     11,
+     12
+    ],
+    "text": "가을철 무리 지어 몰려드는 은빛 어종. 찌낚시로 손맛 좋음.",
+    "fishing": 31,
+    "gleaning": 23,
+    "fishHref": "point/11_boseong_fishing.html",
+    "gleanHref": "point/11_boseong_gleaning.html"
+   },
+   {
+    "r": "goheung",
+    "name": "고흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "가을 – 겨울",
+    "m": [
+     1,
+     2,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "겨울철 방파제 인기 어종.",
+    "fishing": 74,
+    "gleaning": 35,
+    "fishHref": "point/12_goheung_fishing.html",
+    "gleanHref": "point/12_goheung_gleaning.html"
+   },
+   {
+    "r": "suncheon",
+    "name": "순천",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "가을 – 겨울",
+    "m": [
+     1,
+     2,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "겨울철 방파제 인기 어종.",
+    "fishing": 23,
+    "gleaning": 21,
+    "fishHref": "point/14_suncheon_fishing.html",
+    "gleanHref": "point/14_suncheon_gleaning.html"
+   },
+   {
+    "r": "gwangyang",
+    "name": "광양",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "가을 – 겨울",
+    "m": [
+     1,
+     2,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "겨울철 방파제 인기 어종.",
+    "fishing": 26,
+    "gleaning": 20,
+    "fishHref": "point/15_gwangyang_fishing.html",
+    "gleanHref": "point/15_gwangyang_gleaning.html"
+   },
+   {
+    "r": "geoje",
+    "name": "거제",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "11월 – 2월",
+    "m": [
+     1,
+     2,
+     11,
+     12
+    ],
+    "text": "찬바람이 불면 항구 안쪽 방파제로 몰려오며, 가는 찌채비에 크릴을 달아 수면 바로 아래를 노립니다.",
+    "fishing": 118,
+    "gleaning": 27,
+    "fishHref": "point/gyeongnam/geoje_fishing.html",
+    "gleanHref": "point/gyeongnam/geoje_gleaning.html"
+   },
+   {
+    "r": "ulsan",
+    "name": "울산",
+    "group": "busanulsan",
+    "glabel": "부산·울산",
+    "season": "11월 – 3월",
+    "m": [
+     1,
+     2,
+     3,
+     11,
+     12
+    ],
+    "text": "겨울에 포구 안쪽 잔잔한 물가로 몰려오며, 작은 찌와 가는 바늘로 수면 가까이를 노립니다. 출입통제 방파제는 피하세요.",
+    "fishing": 52,
+    "gleaning": 14,
+    "fishHref": "point/busanulsan/ulsan_fishing.html",
+    "gleanHref": "point/busanulsan/ulsan_gleaning.html"
+   },
+   {
+    "r": "pohang",
+    "name": "포항 바다",
+    "group": "gyeongbuk",
+    "glabel": "경북",
+    "season": "10월 – 12월",
+    "m": [
+     10,
+     11,
+     12
+    ],
+    "text": "가을부터 방파제 가까이 몰려와 가벼운 찌 채비와 크릴 미끼로 잡습니다. 테트라포드(방파제 콘크리트 블록) 위에는 올라가지 마세요.",
+    "fishing": 70,
+    "gleaning": 15,
+    "fishHref": "point/gyeongbuk/pohang_fishing.html",
+    "gleanHref": "point/gyeongbuk/pohang_gleaning.html"
+   },
+   {
+    "r": "samcheok",
+    "name": "삼척",
+    "group": "gangwon",
+    "glabel": "강원",
+    "season": "3월 – 5월",
+    "m": [
+     3,
+     4,
+     5
+    ],
+    "text": "봄에 방파제 안쪽 잔잔한 물에서 가벼운 찌낚시로 노립니다. 테트라포드(방파제 콘크리트 블록) 위에는 오르지 마세요.",
+    "fishing": 36,
+    "gleaning": 15,
+    "fishHref": "point/gangwon/samcheok_fishing.html",
+    "gleanHref": "point/gangwon/samcheok_gleaning.html"
+   },
+   {
+    "r": "yangyang",
+    "name": "양양",
+    "group": "gangwon",
+    "glabel": "강원",
+    "season": "3월 – 5월",
+    "m": [
+     3,
+     4,
+     5
+    ],
+    "text": "봄에 항구 안쪽 잔잔한 물에 무리로 들어오며, 가벼운 찌낚시로 잡습니다.",
+    "fishing": 30,
+    "gleaning": 13,
+    "fishHref": "point/gangwon/yangyang_fishing.html",
+    "gleanHref": "point/gangwon/yangyang_gleaning.html"
+   }
+  ],
+  "honghap": [
+   {
+    "r": "yeosu",
+    "name": "여수",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "3월 – 6월",
+    "m": [
+     3,
+     4,
+     5,
+     6
+    ],
+    "text": "갯바위 주변에서 흔히 채취되는 봄철 패류.",
+    "fishing": 82,
+    "gleaning": 32,
+    "fishHref": "point/13_yeosu_fishing.html",
+    "gleanHref": "point/13_yeosu_gleaning.html"
+   },
+   {
+    "r": "ulleung",
+    "name": "울릉도·독도",
+    "group": "gyeongbuk",
+    "glabel": "경북",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "울릉도 해안 바위는 어촌계와 해녀가 관리하는 마을어장입니다. 홍합이나 따개비라도 일반인이 따면 처벌받을 수 있으니 식당에서 맛보세요.",
+    "fishing": 25,
+    "gleaning": 4,
+    "fishHref": "point/gyeongbuk/ulleung_fishing.html",
+    "gleanHref": "point/gyeongbuk/ulleung_gleaning.html"
+   }
+  ],
+  "jaecheop": [
+   {
+    "r": "gwangyang",
+    "name": "광양",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "다압면 섬진강 손틀어업, 세계중요농업유산.",
+    "fishing": 26,
+    "gleaning": 20,
+    "fishHref": "point/15_gwangyang_fishing.html",
+    "gleanHref": "point/15_gwangyang_gleaning.html"
+   }
+  ],
+  "jeonbok": [
+   {
+    "r": "sinan",
+    "name": "신안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "3월 – 11월",
+    "m": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "흑산도 연안 청정 해역의 특산 패류.",
+    "fishing": 76,
+    "gleaning": 34,
+    "fishHref": "point/01_sinan_fishing.html",
+    "gleanHref": "point/01_sinan_gleaning.html"
+   },
+   {
+    "r": "wando",
+    "name": "완도",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "완도 최대 양식 특산물.",
+    "fishing": 80,
+    "gleaning": 41,
+    "fishHref": "point/08_wando_fishing.html",
+    "gleanHref": "point/08_wando_gleaning.html"
+   },
+   {
+    "r": "gyeongju",
+    "name": "경주 바다",
+    "group": "gyeongbuk",
+    "glabel": "경북",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "경주 갯바위 앞 얕은 바다는 대부분 어촌계가 관리하는 마을어장입니다. 해녀가 물질하는 곳이라 일반인이 따면 처벌받을 수 있으니 눈으로만 보세요.",
+    "fishing": 31,
+    "gleaning": 5,
+    "fishHref": "point/gyeongbuk/gyeongju_fishing.html",
+    "gleanHref": "point/gyeongbuk/gyeongju_gleaning.html"
+   },
+   {
+    "r": "pohang",
+    "name": "포항 바다",
+    "group": "gyeongbuk",
+    "glabel": "경북",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "호미반도와 장기면의 갯바위 앞은 어촌계 마을어장입니다. 해녀와 어민이 관리하는 수산물이라 일반인이 잡거나 따면 안 됩니다.",
+    "fishing": 70,
+    "gleaning": 15,
+    "fishHref": "point/gyeongbuk/pohang_fishing.html",
+    "gleanHref": "point/gyeongbuk/pohang_gleaning.html"
+   },
+   {
+    "r": "ulleung",
+    "name": "울릉도·독도",
+    "group": "gyeongbuk",
+    "glabel": "경북",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "울릉도 해안 바위는 어촌계와 해녀가 관리하는 마을어장입니다. 홍합이나 따개비라도 일반인이 따면 처벌받을 수 있으니 식당에서 맛보세요.",
+    "fishing": 25,
+    "gleaning": 4,
+    "fishHref": "point/gyeongbuk/ulleung_fishing.html",
+    "gleanHref": "point/gyeongbuk/ulleung_gleaning.html"
+   },
+   {
+    "r": "samcheok",
+    "name": "삼척",
+    "group": "gangwon",
+    "glabel": "강원",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "강원특별자치도 조례에 따라 어업인이 아닌 사람은 어촌계 마을어장 안에서 전복·해삼·성게·홍합 같은 정착성 동물과 문어를 잡을 수 없습니다. 위반하면 벌금 대상입니다.",
+    "fishing": 36,
+    "gleaning": 15,
+    "fishHref": "point/gangwon/samcheok_fishing.html",
+    "gleanHref": "point/gangwon/samcheok_gleaning.html"
+   },
+   {
+    "r": "sokcho",
+    "name": "속초",
+    "group": "gangwon",
+    "glabel": "강원",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "장사항 앞바다 등에는 전복·가리비가 살지만 마을어장 자원이라 비어업인은 잡을 수 없습니다(강원 조례).",
+    "fishing": 13,
+    "gleaning": 3,
+    "fishHref": "point/gangwon/sokcho_fishing.html",
+    "gleanHref": "point/gangwon/sokcho_gleaning.html"
+   }
+  ],
+  "jeoneo": [
+   {
+    "r": "yeonggwang",
+    "name": "영광",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 10월",
+    "m": [
+     9,
+     10
+    ],
+    "text": "가을철 무리 지어 회유하는 인기 어종.",
+    "fishing": 30,
+    "gleaning": 21,
+    "fishHref": "point/04_yeonggwang_fishing.html",
+    "gleanHref": "point/04_yeonggwang_gleaning.html"
+   },
+   {
+    "r": "hampyeong",
+    "name": "함평",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 10월",
+    "m": [
+     9,
+     10
+    ],
+    "text": "가을철 함평만 방조제 대표 어종.",
+    "fishing": 25,
+    "gleaning": 23,
+    "fishHref": "point/05_hampyeong_fishing.html",
+    "gleanHref": "point/05_hampyeong_gleaning.html"
+   },
+   {
+    "r": "gangjin",
+    "name": "강진",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 10월",
+    "m": [
+     9,
+     10
+    ],
+    "text": "마량 찰전어축제 연계 인기 어종.",
+    "fishing": 34,
+    "gleaning": 24,
+    "fishHref": "point/09_gangjin_fishing.html",
+    "gleanHref": "point/09_gangjin_gleaning.html"
+   },
+   {
+    "r": "boseong",
+    "name": "보성",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "8월 – 10월",
+    "m": [
+     8,
+     9,
+     10
+    ],
+    "text": "가을 전어로 유명. 방파제 던질낚시로도 곧잘 낚입니다.",
+    "fishing": 31,
+    "gleaning": 23,
+    "fishHref": "point/11_boseong_fishing.html",
+    "gleanHref": "point/11_boseong_gleaning.html"
+   },
+   {
+    "r": "suncheon",
+    "name": "순천",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 10월",
+    "m": [
+     9,
+     10
+    ],
+    "text": "화포항 가을 대표 어종.",
+    "fishing": 23,
+    "gleaning": 21,
+    "fishHref": "point/14_suncheon_fishing.html",
+    "gleanHref": "point/14_suncheon_gleaning.html"
+   },
+   {
+    "r": "gwangyang",
+    "name": "광양",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "광양전어축제 대상 어종, 망덕포구 명물.",
+    "fishing": 26,
+    "gleaning": 20,
+    "fishHref": "point/15_gwangyang_fishing.html",
+    "gleanHref": "point/15_gwangyang_gleaning.html"
+   },
+   {
+    "r": "seocheon",
+    "name": "서천",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "8월 – 10월",
+    "m": [
+     8,
+     9,
+     10
+    ],
+    "text": "가을 연안에 무리 지어 들어오는 생선이라 카드채비에 여러 마리가 한 번에 걸리기도 합니다.",
+    "fishing": 12,
+    "gleaning": 15,
+    "fishHref": "point/chungnam/seocheon_fishing.html",
+    "gleanHref": "point/chungnam/seocheon_gleaning.html"
+   }
+  ],
+  "jjangttungeo": [
+   {
+    "r": "muan",
+    "name": "무안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "함해만 갯벌을 뛰어다니는 명물. 탕으로 끓여 먹습니다.",
+    "fishing": 30,
+    "gleaning": 23,
+    "fishHref": "point/02_muan_fishing.html",
+    "gleanHref": "point/02_muan_gleaning.html"
+   },
+   {
+    "r": "yeonggwang",
+    "name": "영광",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "5월 – 10월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "염산 갯벌 여름 별미, 짱뚱어탕 재료.",
+    "fishing": 30,
+    "gleaning": 21,
+    "fishHref": "point/04_yeonggwang_fishing.html",
+    "gleanHref": "point/04_yeonggwang_gleaning.html"
+   },
+   {
+    "r": "hampyeong",
+    "name": "함평",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "5월 – 9월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "함평만 갯벌에서 볼 수 있는 명물 어류.",
+    "fishing": 25,
+    "gleaning": 23,
+    "fishHref": "point/05_hampyeong_fishing.html",
+    "gleanHref": "point/05_hampyeong_gleaning.html"
+   },
+   {
+    "r": "gangjin",
+    "name": "강진",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "5월 – 10월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "강진만갯벌탕 재료로 쓰이는 명물.",
+    "fishing": 34,
+    "gleaning": 24,
+    "fishHref": "point/09_gangjin_fishing.html",
+    "gleanHref": "point/09_gangjin_gleaning.html"
+   },
+   {
+    "r": "boseong",
+    "name": "보성",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "6월 – 9월",
+    "m": [
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "여름 갯벌 위를 뛰어다니는 보성 벌교의 별미 재료.",
+    "fishing": 31,
+    "gleaning": 23,
+    "fishHref": "point/11_boseong_fishing.html",
+    "gleanHref": "point/11_boseong_gleaning.html"
+   },
+   {
+    "r": "suncheon",
+    "name": "순천",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "순천만 명물, 화포·와온 갯벌 대표.",
+    "fishing": 23,
+    "gleaning": 21,
+    "fishHref": "point/14_suncheon_fishing.html",
+    "gleanHref": "point/14_suncheon_gleaning.html"
+   },
+   {
+    "r": "gwangyang",
+    "name": "광양",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "봄 – 가을",
+    "m": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "배알도 갯벌 명물.",
+    "fishing": 26,
+    "gleaning": 20,
+    "fishHref": "point/15_gwangyang_fishing.html",
+    "gleanHref": "point/15_gwangyang_gleaning.html"
+   }
+  ],
+  "jukkumi": [
+   {
+    "r": "taean",
+    "name": "태안",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "금어기(5월 11일~8월 31일)가 끝난 가을, 안흥항·신진도항 방파제에서 에기를 바닥에 붙여 톡톡 끌어 잡습니다.",
+    "fishing": 83,
+    "gleaning": 39,
+    "fishHref": "point/chungnam/taean_fishing.html",
+    "gleanHref": "point/chungnam/taean_gleaning.html"
+   },
+   {
+    "r": "seosan",
+    "name": "서산",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "금어기가 끝난 가을, 대산 쪽 방파제에서 모래·펄 바닥을 에기로 노립니다. 삼길포항 부잔교·선착장·방파제 등대는 낚시통제구역입니다.",
+    "fishing": 14,
+    "gleaning": 12,
+    "fishHref": "point/chungnam/seosan_fishing.html",
+    "gleanHref": "point/chungnam/seosan_gleaning.html"
+   },
+   {
+    "r": "boryeong",
+    "name": "보령",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "오천항·대천항 방파제에서 가을에 가장 많이 노리는 어종입니다. 5월 11일부터 8월 31일까지는 잡을 수 없습니다.",
+    "fishing": 60,
+    "gleaning": 20,
+    "fishHref": "point/chungnam/boryeong_fishing.html",
+    "gleanHref": "point/chungnam/boryeong_gleaning.html"
+   },
+   {
+    "r": "seocheon",
+    "name": "서천",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "홍원항·마량진항 방파제에서 가을에 노리는 어종이며, 여름철 금어기(5.11~8.31)가 끝난 뒤부터 시작합니다.",
+    "fishing": 12,
+    "gleaning": 15,
+    "fishHref": "point/chungnam/seocheon_fishing.html",
+    "gleanHref": "point/chungnam/seocheon_gleaning.html"
+   },
+   {
+    "r": "hongseong",
+    "name": "홍성",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "남당항 방파제에서 천수만 안쪽을 보고 노립니다. 금어기(5.11~8.31) 이후 가을이 제철입니다.",
+    "fishing": 8,
+    "gleaning": 9,
+    "fishHref": "point/chungnam/hongseong_fishing.html",
+    "gleanHref": "point/chungnam/hongseong_gleaning.html"
+   },
+   {
+    "r": "gunsan",
+    "name": "군산",
+    "group": "jeonbuk",
+    "glabel": "전북",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "금어기가 풀리는 9월부터 비응항 방파제 쪽에서 에기를 바닥에 붙여 톡톡 튀기듯 끌어 잡습니다. 새만금 방조제 석축은 현장에 낚시 금지 안내가 있는 구간이 있어 안내판을 먼저 확인하세요.",
+    "fishing": 14,
+    "gleaning": 4,
+    "fishHref": "point/jeonbuk/gunsan_fishing.html",
+    "gleanHref": "point/jeonbuk/gunsan_gleaning.html"
+   },
+   {
+    "r": "buan",
+    "name": "부안",
+    "group": "jeonbuk",
+    "glabel": "전북",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "곰소만과 격포 앞바다 모래펄 바닥에서 가을 낚시로 잡습니다. 봄 산란기는 금어기(5월 11일~8월 31일) 전후라 가을 조황을 노리세요.",
+    "fishing": 43,
+    "gleaning": 15,
+    "fishHref": "point/jeonbuk/buan_fishing.html",
+    "gleanHref": "point/jeonbuk/buan_gleaning.html"
+   },
+   {
+    "r": "gochang",
+    "name": "고창",
+    "group": "jeonbuk",
+    "glabel": "전북",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "구시포항 방파제와 앞바다 모래펄에서 잡습니다. 물살이 약한 조금 물때 전후가 에기를 바닥에 붙이기 수월합니다.",
+    "fishing": 4,
+    "gleaning": 7,
+    "fishHref": "point/jeonbuk/gochang_fishing.html",
+    "gleanHref": "point/jeonbuk/gochang_gleaning.html"
+   },
+   {
+    "r": "changwon",
+    "name": "창원",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "진해만·마산만 방파제에서 에기를 바닥에 끌어 잡습니다. 5월 11일부터 8월 31일까지는 금어기입니다.",
+    "fishing": 71,
+    "gleaning": 8,
+    "fishHref": "point/gyeongnam/changwon_fishing.html",
+    "gleanHref": "point/gyeongnam/changwon_gleaning.html"
+   },
+   {
+    "r": "yeongjong",
+    "name": "영종",
+    "group": "sudogwon",
+    "glabel": "인천·경기",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "금어기(5월 11일~8월 31일)가 끝난 뒤 방파제와 갯벌에서 에기(오징어·주꾸미용 가짜 미끼)로 바닥을 끌어 잡습니다.",
+    "fishing": 32,
+    "gleaning": 14,
+    "fishHref": "point/sudogwon/yeongjong_fishing.html",
+    "gleanHref": "point/sudogwon/yeongjong_gleaning.html"
+   },
+   {
+    "r": "ongjin",
+    "name": "옹진 섬",
+    "group": "sudogwon",
+    "glabel": "인천·경기",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "금어기(5월 11일~8월 31일)가 지나면 영흥도 방파제와 갯벌에서 에기(가짜 미끼)로 바닥을 끌어 잡습니다.",
+    "fishing": 124,
+    "gleaning": 29,
+    "fishHref": "point/sudogwon/ongjin_fishing.html",
+    "gleanHref": "point/sudogwon/ongjin_gleaning.html"
+   },
+   {
+    "r": "daebu",
+    "name": "대부·오이도",
+    "group": "sudogwon",
+    "glabel": "인천·경기",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "금어기(5월 11일~8월 31일)가 끝나면 방아머리·탄도항 방파제에서 에기(가짜 미끼)를 바닥에 끌어 잡습니다.",
+    "fishing": 24,
+    "gleaning": 12,
+    "fishHref": "point/sudogwon/daebu_fishing.html",
+    "gleanHref": "point/sudogwon/daebu_gleaning.html"
+   },
+   {
+    "r": "hwaseong",
+    "name": "화성",
+    "group": "sudogwon",
+    "glabel": "인천·경기",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "금어기(주꾸미 5월 11일~8월 31일)가 끝나면 전곡항·궁평항 방파제에서 에기(가짜 미끼)로 함께 노립니다.",
+    "fishing": 23,
+    "gleaning": 9,
+    "fishHref": "point/sudogwon/hwaseong_fishing.html",
+    "gleanHref": "point/sudogwon/hwaseong_gleaning.html"
+   }
+  ],
+  "kkomak": [
+   {
+    "r": "jindo",
+    "name": "진도",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 이듬해 3월",
+    "m": [
+     1,
+     2,
+     3,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "세방낙조해변 인근 가을~겨울 별미.",
+    "fishing": 74,
+    "gleaning": 26,
+    "fishHref": "point/06_jindo_fishing.html",
+    "gleanHref": "point/06_jindo_gleaning.html"
+   },
+   {
+    "r": "haenam",
+    "name": "해남",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 이듬해 3월",
+    "m": [
+     1,
+     2,
+     3,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "북평 오산리 갯벌 가을~겨울 별미.",
+    "fishing": 49,
+    "gleaning": 22,
+    "fishHref": "point/07_haenam_fishing.html",
+    "gleanHref": "point/07_haenam_gleaning.html"
+   },
+   {
+    "r": "boseong",
+    "name": "보성",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "10월 – 이듬해 3월",
+    "m": [
+     1,
+     2,
+     3,
+     10,
+     11,
+     12
+    ],
+    "text": "보성 벌교 갯벌의 대표 패류. 겨울철 살이 가장 차오릅니다.",
+    "fishing": 31,
+    "gleaning": 23,
+    "fishHref": "point/11_boseong_fishing.html",
+    "gleanHref": "point/11_boseong_gleaning.html"
+   },
+   {
+    "r": "goheung",
+    "name": "고흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "11월 – 2월",
+    "m": [
+     1,
+     2,
+     11,
+     12
+    ],
+    "text": "인근 여자만권 공통 겨울 별미.",
+    "fishing": 74,
+    "gleaning": 35,
+    "fishHref": "point/12_goheung_fishing.html",
+    "gleanHref": "point/12_goheung_gleaning.html"
+   },
+   {
+    "r": "suncheon",
+    "name": "순천",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "11월 – 3월",
+    "m": [
+     1,
+     2,
+     3,
+     11,
+     12
+    ],
+    "text": "순천만 갯벌 공통 채집 대상.",
+    "fishing": 23,
+    "gleaning": 21,
+    "fishHref": "point/14_suncheon_fishing.html",
+    "gleanHref": "point/14_suncheon_gleaning.html"
+   },
+   {
+    "r": "gwangyang",
+    "name": "광양",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "겨울",
+    "m": [
+     1,
+     2,
+     12
+    ],
+    "text": "광양만 겨울철 별미.",
+    "fishing": 26,
+    "gleaning": 20,
+    "fishHref": "point/15_gwangyang_fishing.html",
+    "gleanHref": "point/15_gwangyang_gleaning.html"
+   }
+  ],
+  "mangdungeo": [
+   {
+    "r": "hampyeong",
+    "name": "함평",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "6월 – 9월",
+    "m": [
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "여름~가을 방파제에서 흔히 낚이는 어종.",
+    "fishing": 25,
+    "gleaning": 23,
+    "fishHref": "point/05_hampyeong_fishing.html",
+    "gleanHref": "point/05_hampyeong_gleaning.html"
+   },
+   {
+    "r": "suncheon",
+    "name": "순천",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "6월 – 9월",
+    "m": [
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "여름~가을 흔한 방파제 어종.",
+    "fishing": 23,
+    "gleaning": 21,
+    "fishHref": "point/14_suncheon_fishing.html",
+    "gleanHref": "point/14_suncheon_gleaning.html"
+   },
+   {
+    "r": "seosan",
+    "name": "서산",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "가로림만 포구와 갯골 가장자리에서 짧은 낚싯대에 갯지렁이를 달아 초보도 어렵지 않게 손맛을 봅니다.",
+    "fishing": 14,
+    "gleaning": 12,
+    "fishHref": "point/chungnam/seosan_fishing.html",
+    "gleanHref": "point/chungnam/seosan_gleaning.html"
+   },
+   {
+    "r": "dangjin",
+    "name": "당진",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "석문선착장과 석문방조제 주변에서 가을에 가볍게 즐기는 낚시로, 짧은 대와 갯지렁이면 충분합니다.",
+    "fishing": 20,
+    "gleaning": 14,
+    "fishHref": "point/chungnam/dangjin_fishing.html",
+    "gleanHref": "point/chungnam/dangjin_gleaning.html"
+   },
+   {
+    "r": "hongseong",
+    "name": "홍성",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "8월 – 10월",
+    "m": [
+     8,
+     9,
+     10
+    ],
+    "text": "갯벌 물골이 가까운 포구 주변에서 짧은 대와 갯지렁이로 가볍게 즐기는 가을 입문 낚시 대상입니다.",
+    "fishing": 8,
+    "gleaning": 9,
+    "fishHref": "point/chungnam/hongseong_fishing.html",
+    "gleanHref": "point/chungnam/hongseong_gleaning.html"
+   },
+   {
+    "r": "gunsan",
+    "name": "군산",
+    "group": "jeonbuk",
+    "glabel": "전북",
+    "season": "9월 – 10월",
+    "m": [
+     9,
+     10
+    ],
+    "text": "가을 물가에서 아이와 함께 해 보기 좋은 가벼운 낚시 대상입니다. 비응도 쪽 군산항 남방파제 일원은 연중 출입통제장소라 들어가면 안 됩니다.",
+    "fishing": 14,
+    "gleaning": 4,
+    "fishHref": "point/jeonbuk/gunsan_fishing.html",
+    "gleanHref": "point/jeonbuk/gunsan_gleaning.html"
+   },
+   {
+    "r": "gogunsan",
+    "name": "고군산군도",
+    "group": "jeonbuk",
+    "glabel": "전북",
+    "season": "8월 – 10월",
+    "m": [
+     8,
+     9,
+     10
+    ],
+    "text": "무녀도·선유도 선착장 둘레 물골에서 짧은 낚싯대와 갯지렁이만으로도 손맛을 보기 쉬워 아이들 첫 낚시로 알맞습니다.",
+    "fishing": 96,
+    "gleaning": 8,
+    "fishHref": "point/jeonbuk/gogunsan_fishing.html",
+    "gleanHref": "point/jeonbuk/gogunsan_gleaning.html"
+   },
+   {
+    "r": "ganghwa",
+    "name": "강화",
+    "group": "sudogwon",
+    "glabel": "인천·경기",
+    "season": "8월 – 11월",
+    "m": [
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "초지대교 아래나 황산도 선착장 같은 염하 물가에서 짧은 낚싯대로 갯지렁이를 달아 노립니다. 물살이 세고 갯벌이 깊으니 들물 시각을 꼭 확인하세요.",
+    "fishing": 27,
+    "gleaning": 22,
+    "fishHref": "point/sudogwon/ganghwa_fishing.html",
+    "gleanHref": "point/sudogwon/ganghwa_gleaning.html"
+   },
+   {
+    "r": "yeongjong",
+    "name": "영종",
+    "group": "sudogwon",
+    "glabel": "인천·경기",
+    "season": "8월 – 11월",
+    "m": [
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "영종도 해안 선착장과 방조제 둑에서 갯지렁이 미끼로 손쉽게 잡는 가을 대상어입니다. 들물 때 입질이 잦습니다.",
+    "fishing": 32,
+    "gleaning": 14,
+    "fishHref": "point/sudogwon/yeongjong_fishing.html",
+    "gleanHref": "point/sudogwon/yeongjong_gleaning.html"
+   },
+   {
+    "r": "daebu",
+    "name": "대부·오이도",
+    "group": "sudogwon",
+    "glabel": "인천·경기",
+    "season": "8월 – 11월",
+    "m": [
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "시화방조제 둑과 오이도 제방에서 갯지렁이로 잡는 가을 대표 어종입니다. 테트라포드(방파제 콘크리트 블록)에는 올라가지 마세요.",
+    "fishing": 24,
+    "gleaning": 12,
+    "fishHref": "point/sudogwon/daebu_fishing.html",
+    "gleanHref": "point/sudogwon/daebu_gleaning.html"
+   },
+   {
+    "r": "hwaseong",
+    "name": "화성",
+    "group": "sudogwon",
+    "glabel": "인천·경기",
+    "season": "8월 – 11월",
+    "m": [
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "궁평항 방파제와 화성방조제 둑에서 갯지렁이 미끼로 잡습니다. 방파제 끝과 테트라포드(콘크리트 블록)에는 올라가지 마세요.",
+    "fishing": 23,
+    "gleaning": 9,
+    "fishHref": "point/sudogwon/hwaseong_fishing.html",
+    "gleanHref": "point/sudogwon/hwaseong_gleaning.html"
+   }
+  ],
+  "matjogae": [
+   {
+    "r": "jindo",
+    "name": "진도",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "구멍에 소금을 뿌려 잡는 재미가 있는 패류.",
+    "fishing": 74,
+    "gleaning": 26,
+    "fishHref": "point/06_jindo_fishing.html",
+    "gleanHref": "point/06_jindo_gleaning.html"
+   },
+   {
+    "r": "boseong",
+    "name": "보성",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "3월 – 6월",
+    "m": [
+     3,
+     4,
+     5,
+     6
+    ],
+    "text": "구멍에 소금을 뿌려 잡는 재미가 있는 패류. 봄철이 절정.",
+    "fishing": 31,
+    "gleaning": 23,
+    "fishHref": "point/11_boseong_fishing.html",
+    "gleanHref": "point/11_boseong_gleaning.html"
+   },
+   {
+    "r": "yeosu",
+    "name": "여수",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "3월 – 6월",
+    "m": [
+     3,
+     4,
+     5,
+     6
+    ],
+    "text": "구멍에 소금을 뿌려 잡는 재미가 있는 패류. 봄철이 절정.",
+    "fishing": 82,
+    "gleaning": 32,
+    "fishHref": "point/13_yeosu_fishing.html",
+    "gleanHref": "point/13_yeosu_gleaning.html"
+   },
+   {
+    "r": "suncheon",
+    "name": "순천",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "3월 – 6월",
+    "m": [
+     3,
+     4,
+     5,
+     6
+    ],
+    "text": "봄철 구멍에서 잡는 재미있는 패류.",
+    "fishing": 23,
+    "gleaning": 21,
+    "fishHref": "point/14_suncheon_fishing.html",
+    "gleanHref": "point/14_suncheon_gleaning.html"
+   },
+   {
+    "r": "gwangyang",
+    "name": "광양",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "봄",
+    "m": [
+     3,
+     4,
+     5
+    ],
+    "text": "섬진강 하구 갯벌 채집 대상.",
+    "fishing": 26,
+    "gleaning": 20,
+    "fishHref": "point/15_gwangyang_fishing.html",
+    "gleanHref": "point/15_gwangyang_gleaning.html"
+   },
+   {
+    "r": "taean",
+    "name": "태안",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "봄",
+    "m": [
+     3,
+     4,
+     5
+    ],
+    "text": "몽산포 쪽 모래갯벌에서 구멍을 찾아 캐는 체험이 알려져 있지만 어촌계 관리 구역이 섞여 있어, 현장 안내판과 체험 운영 여부를 먼저 확인해야 합니다.",
+    "fishing": 83,
+    "gleaning": 39,
+    "fishHref": "point/chungnam/taean_fishing.html",
+    "gleanHref": "point/chungnam/taean_gleaning.html"
+   },
+   {
+    "r": "boryeong",
+    "name": "보령",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "봄 – 가을",
+    "m": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "대천 해안도로변 군헌 갯벌체험장(유료)에서 구멍에 소금을 넣어 올라오게 하는 방식으로 체험합니다. 도구는 손·호미 정도만 씁니다.",
+    "fishing": 60,
+    "gleaning": 20,
+    "fishHref": "point/chungnam/boryeong_fishing.html",
+    "gleanHref": "point/chungnam/boryeong_gleaning.html"
+   },
+   {
+    "r": "seocheon",
+    "name": "서천",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "봄 – 가을",
+    "m": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "월하성 어촌체험휴양마을 어촌계가 장비를 빌려주며 소금을 뿌려 잡는 체험을 운영합니다. 체험 시간 안에서만 채취하세요.",
+    "fishing": 12,
+    "gleaning": 15,
+    "fishHref": "point/chungnam/seocheon_fishing.html",
+    "gleanHref": "point/chungnam/seocheon_gleaning.html"
+   },
+   {
+    "r": "gunsan",
+    "name": "군산",
+    "group": "jeonbuk",
+    "glabel": "전북",
+    "season": "봄",
+    "m": [
+     3,
+     4,
+     5
+    ],
+    "text": "고군산 쪽 모래갯벌 체험 프로그램에서 소금을 뿌려 올라오는 맛조개를 잡아 볼 수 있습니다. 개인이 마을어장에 들어가 캐는 것은 불법이니 운영 여부를 먼저 물어보세요.",
+    "fishing": 14,
+    "gleaning": 4,
+    "fishHref": "point/jeonbuk/gunsan_fishing.html",
+    "gleanHref": "point/jeonbuk/gunsan_gleaning.html"
+   },
+   {
+    "r": "gochang",
+    "name": "고창",
+    "group": "jeonbuk",
+    "glabel": "전북",
+    "season": "6월 – 8월",
+    "m": [
+     6,
+     7,
+     8
+    ],
+    "text": "장호마을 앞 명사십리 모래갯벌에서 여름 성수기에 조개잡이 체험이 열립니다. 마을에서 안내한 구역 밖에서는 채취하지 않습니다.",
+    "fishing": 4,
+    "gleaning": 7,
+    "fishHref": "point/jeonbuk/gochang_fishing.html",
+    "gleanHref": "point/jeonbuk/gochang_gleaning.html"
+   }
+  ],
+  "muni": [
+   {
+    "r": "haenam",
+    "name": "해남",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "가을 에깅 대상어.",
+    "fishing": 49,
+    "gleaning": 22,
+    "fishHref": "point/07_haenam_fishing.html",
+    "gleanHref": "point/07_haenam_gleaning.html"
+   },
+   {
+    "r": "wando",
+    "name": "완도",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "가을 에깅 대상어.",
+    "fishing": 80,
+    "gleaning": 41,
+    "fishHref": "point/08_wando_fishing.html",
+    "gleanHref": "point/08_wando_gleaning.html"
+   },
+   {
+    "r": "jocheon",
+    "name": "조천·구좌",
+    "group": "jeju",
+    "glabel": "제주",
+    "season": "가을 · 봄",
+    "m": [
+     3,
+     4,
+     5,
+     9,
+     10,
+     11
+    ],
+    "text": "방파제·갯바위 에깅으로 노립니다. 봄에 큰 것이 나옵니다.",
+    "fishing": 11,
+    "gleaning": 14,
+    "fishHref": "point/jeju/jocheon_fishing.html",
+    "gleanHref": "point/jeju/jocheon_gleaning.html"
+   },
+   {
+    "r": "seongsan",
+    "name": "성산·표선",
+    "group": "jeju",
+    "glabel": "제주",
+    "season": "가을 · 봄",
+    "m": [
+     3,
+     4,
+     5,
+     9,
+     10,
+     11
+    ],
+    "text": "에깅 대상. 봄에 큰 개체가 나옵니다.",
+    "fishing": 30,
+    "gleaning": 16,
+    "fishHref": "point/jeju/seongsan_fishing.html",
+    "gleanHref": "point/jeju/seongsan_gleaning.html"
+   },
+   {
+    "r": "seogwipo",
+    "name": "서귀포·중문",
+    "group": "jeju",
+    "glabel": "제주",
+    "season": "3월 – 4월",
+    "m": [
+     3,
+     4
+    ],
+    "text": "봄에 큰 개체를 노리는 에깅 대상.",
+    "fishing": 16,
+    "gleaning": 12,
+    "fishHref": "point/jeju/seogwipo_fishing.html",
+    "gleanHref": "point/jeju/seogwipo_gleaning.html"
+   },
+   {
+    "r": "namhae",
+    "name": "남해",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "가을에 남면·미조 쪽 갯바위와 방파제에서 에기(오징어용 가짜 미끼)를 던져 잡습니다. 갯바위는 미끄러우니 구명조끼와 미끄럼 방지 신발을 갖추세요.",
+    "fishing": 131,
+    "gleaning": 24,
+    "fishHref": "point/gyeongnam/namhae_fishing.html",
+    "gleanHref": "point/gyeongnam/namhae_gleaning.html"
+   },
+   {
+    "r": "tongyeong",
+    "name": "통영",
+    "group": "gyeongnam",
+    "glabel": "경남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "가을철 섬 주변 갯바위와 방파제에서 에기(오징어용 가짜 미끼)를 던진 뒤 튕기듯 당겨 노립니다.",
+    "fishing": 222,
+    "gleaning": 20,
+    "fishHref": "point/gyeongnam/tongyeong_fishing.html",
+    "gleanHref": "point/gyeongnam/tongyeong_gleaning.html"
+   },
+   {
+    "r": "busanwest",
+    "name": "부산 서부",
+    "group": "busanulsan",
+    "glabel": "부산·울산",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "가을에 가덕도 바위 해안에서 에기(오징어용 가짜 미끼)를 던져 천천히 끌어 노립니다.",
+    "fishing": 75,
+    "gleaning": 12,
+    "fishHref": "point/busanulsan/busanwest_fishing.html",
+    "gleanHref": "point/busanulsan/busanwest_gleaning.html"
+   },
+   {
+    "r": "gyeongju",
+    "name": "경주 바다",
+    "group": "gyeongbuk",
+    "glabel": "경북",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "가을에 방파제와 갯바위에서 에기(오징어용 가짜 미끼)를 던져 끌어옵니다. 밤보다 해 뜰 무렵과 해 질 무렵을 많이 노립니다.",
+    "fishing": 31,
+    "gleaning": 5,
+    "fishHref": "point/gyeongbuk/gyeongju_fishing.html",
+    "gleanHref": "point/gyeongbuk/gyeongju_gleaning.html"
+   },
+   {
+    "r": "yeongdeok",
+    "name": "영덕 바다",
+    "group": "gyeongbuk",
+    "glabel": "경북",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "가을에 항구 방파제와 갯바위에서 에기(오징어용 가짜 미끼)를 던져 바닥 가까이 끌어옵니다.",
+    "fishing": 44,
+    "gleaning": 10,
+    "fishHref": "point/gyeongbuk/yeongdeok_fishing.html",
+    "gleanHref": "point/gyeongbuk/yeongdeok_gleaning.html"
+   }
+  ],
+  "nakji": [
+   {
+    "r": "sinan",
+    "name": "신안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "가을 갯벌의 대표 별미, 압해도가 특히 유명.",
+    "fishing": 76,
+    "gleaning": 34,
+    "fishHref": "point/01_sinan_fishing.html",
+    "gleanHref": "point/01_sinan_gleaning.html"
+   },
+   {
+    "r": "muan",
+    "name": "무안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "사계절 (제철 4월 – 10월)",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "다리가 가는 무안의 대표 특산물. 갯벌 구멍을 따라 손으로 잡습니다.",
+    "fishing": 30,
+    "gleaning": 23,
+    "fishHref": "point/02_muan_fishing.html",
+    "gleanHref": "point/02_muan_gleaning.html"
+   },
+   {
+    "r": "mokpo",
+    "name": "목포",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "5월 – 10월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "목포를 대표하는 가늘고 부드러운 낙지.",
+    "fishing": 24,
+    "gleaning": 22,
+    "fishHref": "point/03_mokpo_fishing.html",
+    "gleanHref": "point/03_mokpo_gleaning.html"
+   },
+   {
+    "r": "yeonggwang",
+    "name": "영광",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "5월 – 11월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "염산·백수 갯벌에서 잡히는 세발낙지.",
+    "fishing": 30,
+    "gleaning": 21,
+    "fishHref": "point/04_yeonggwang_fishing.html",
+    "gleanHref": "point/04_yeonggwang_gleaning.html"
+   },
+   {
+    "r": "hampyeong",
+    "name": "함평",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "5월 – 10월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "게르마늄 갯벌에서 나는 함평 대표 낙지.",
+    "fishing": 25,
+    "gleaning": 23,
+    "fishHref": "point/05_hampyeong_fishing.html",
+    "gleanHref": "point/05_hampyeong_gleaning.html"
+   },
+   {
+    "r": "jindo",
+    "name": "진도",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "6월 – 11월",
+    "m": [
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "진도 세발낙지의 본고장.",
+    "fishing": 74,
+    "gleaning": 26,
+    "fishHref": "point/06_jindo_fishing.html",
+    "gleanHref": "point/06_jindo_gleaning.html"
+   },
+   {
+    "r": "haenam",
+    "name": "해남",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "6월 – 11월",
+    "m": [
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "해남 갯벌 세발낙지.",
+    "fishing": 49,
+    "gleaning": 22,
+    "fishHref": "point/07_haenam_fishing.html",
+    "gleanHref": "point/07_haenam_gleaning.html"
+   },
+   {
+    "r": "gangjin",
+    "name": "강진",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "강진만 갯벌 가을 별미.",
+    "fishing": 34,
+    "gleaning": 24,
+    "fishHref": "point/09_gangjin_fishing.html",
+    "gleanHref": "point/09_gangjin_gleaning.html"
+   },
+   {
+    "r": "jangheung",
+    "name": "장흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "8월 – 11월",
+    "m": [
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "장흥 갯벌 가을 별미.",
+    "fishing": 31,
+    "gleaning": 21,
+    "fishHref": "point/10_jangheung_fishing.html",
+    "gleanHref": "point/10_jangheung_gleaning.html"
+   },
+   {
+    "r": "goheung",
+    "name": "고흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "점암 갯벌 가을 뻘낙지.",
+    "fishing": 74,
+    "gleaning": 35,
+    "fishHref": "point/12_goheung_fishing.html",
+    "gleanHref": "point/12_goheung_gleaning.html"
+   },
+   {
+    "r": "yeosu",
+    "name": "여수",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "갯벌 구멍을 따라 손으로 잡는 여수 연안의 인기 대상.",
+    "fishing": 82,
+    "gleaning": 32,
+    "fishHref": "point/13_yeosu_fishing.html",
+    "gleanHref": "point/13_yeosu_gleaning.html"
+   },
+   {
+    "r": "suncheon",
+    "name": "순천",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "7월 – 11월",
+    "m": [
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "순천만 갯벌 여름~가을 별미.",
+    "fishing": 23,
+    "gleaning": 21,
+    "fishHref": "point/14_suncheon_fishing.html",
+    "gleanHref": "point/14_suncheon_gleaning.html"
+   },
+   {
+    "r": "gwangyang",
+    "name": "광양",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "여름 – 가을",
+    "m": [
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "태인동 갯벌 대표 채집 대상.",
+    "fishing": 26,
+    "gleaning": 20,
+    "fishHref": "point/15_gwangyang_fishing.html",
+    "gleanHref": "point/15_gwangyang_gleaning.html"
+   },
+   {
+    "r": "taean",
+    "name": "태안",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "9월 – 11월",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "가경주·대야도 마을 갯벌에 살지만 개인 채취가 아닌 마을 체험 프로그램으로 즐겨야 합니다. 금어기는 해마다 공지를 확인하세요.",
+    "fishing": 83,
+    "gleaning": 39,
+    "fishHref": "point/chungnam/taean_fishing.html",
+    "gleanHref": "point/chungnam/taean_gleaning.html"
+   },
+   {
+    "r": "seosan",
+    "name": "서산",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "가을",
+    "m": [
+     9,
+     10,
+     11
+    ],
+    "text": "중리 일대는 뻘낙지 산지로 알려졌지만 낙지는 마을어장 자원이라, 마을 체험 프로그램이 열릴 때만 잡아 볼 수 있습니다.",
+    "fishing": 14,
+    "gleaning": 12,
+    "fishHref": "point/chungnam/seosan_fishing.html",
+    "gleanHref": "point/chungnam/seosan_gleaning.html"
+   },
+   {
+    "r": "hongseong",
+    "name": "홍성",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "속동 갯벌에서 체험 대상으로 소개되지만 펄이 깊은 곳은 위험합니다. 마을 안내 구역 밖으로 나가지 마세요.",
+    "fishing": 8,
+    "gleaning": 9,
+    "fishHref": "point/chungnam/hongseong_fishing.html",
+    "gleanHref": "point/chungnam/hongseong_gleaning.html"
+   },
+   {
+    "r": "hwaseong",
+    "name": "화성",
+    "group": "sudogwon",
+    "glabel": "인천·경기",
+    "season": "6월 – 9월",
+    "m": [
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "백미리는 여름 밀국낙지로 알려진 마을입니다. 낙지 잡기는 마을 체험 프로그램으로만 참여하세요.",
+    "fishing": 23,
+    "gleaning": 9,
+    "fishHref": "point/sudogwon/hwaseong_fishing.html",
+    "gleanHref": "point/sudogwon/hwaseong_gleaning.html"
+   }
+  ],
+  "nongeo": [
+   {
+    "r": "sinan",
+    "name": "신안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "6월 – 10월",
+    "m": [
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "여름부터 가을까지 방파제를 회유.",
+    "fishing": 76,
+    "gleaning": 34,
+    "fishHref": "point/01_sinan_fishing.html",
+    "gleanHref": "point/01_sinan_gleaning.html"
+   },
+   {
+    "r": "muan",
+    "name": "무안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "6월 – 11월",
+    "m": [
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "도리포 방파제 물돌이 때 노리는 힘 좋은 대상어.",
+    "fishing": 30,
+    "gleaning": 23,
+    "fishHref": "point/02_muan_fishing.html",
+    "gleanHref": "point/02_muan_gleaning.html"
+   },
+   {
+    "r": "mokpo",
+    "name": "목포",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 7월",
+    "m": [
+     4,
+     5,
+     6,
+     7
+    ],
+    "text": "봄철 방파제·갯바위에서 노리는 인기 어종.",
+    "fishing": 24,
+    "gleaning": 22,
+    "fishHref": "point/03_mokpo_fishing.html",
+    "gleanHref": "point/03_mokpo_gleaning.html"
+   },
+   {
+    "r": "yeonggwang",
+    "name": "영광",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 8월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "text": "봄~여름 방파제 인기 어종.",
+    "fishing": 30,
+    "gleaning": 21,
+    "fishHref": "point/04_yeonggwang_fishing.html",
+    "gleanHref": "point/04_yeonggwang_gleaning.html"
+   },
+   {
+    "r": "jindo",
+    "name": "진도",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "5월 – 10월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "봄~가을 방파제 인기 어종.",
+    "fishing": 74,
+    "gleaning": 26,
+    "fishHref": "point/06_jindo_fishing.html",
+    "gleanHref": "point/06_jindo_gleaning.html"
+   },
+   {
+    "r": "haenam",
+    "name": "해남",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "5월 – 10월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "봄~가을 방파제 인기 어종.",
+    "fishing": 49,
+    "gleaning": 22,
+    "fishHref": "point/07_haenam_fishing.html",
+    "gleanHref": "point/07_haenam_gleaning.html"
+   },
+   {
+    "r": "wando",
+    "name": "완도",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "5월 – 10월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "봄~가을 방파제 인기 어종.",
+    "fishing": 80,
+    "gleaning": 41,
+    "fishHref": "point/08_wando_fishing.html",
+    "gleanHref": "point/08_wando_gleaning.html"
+   },
+   {
+    "r": "gangjin",
+    "name": "강진",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "5월 – 11월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "봄~가을 방파제 인기 어종.",
+    "fishing": 34,
+    "gleaning": 24,
+    "fishHref": "point/09_gangjin_fishing.html",
+    "gleanHref": "point/09_gangjin_gleaning.html"
+   },
+   {
+    "r": "jangheung",
+    "name": "장흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "5월 – 11월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "봄~가을 방파제 인기 어종.",
+    "fishing": 31,
+    "gleaning": 21,
+    "fishHref": "point/10_jangheung_fishing.html",
+    "gleanHref": "point/10_jangheung_gleaning.html"
+   },
+   {
+    "r": "goheung",
+    "name": "고흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "3월 – 10월",
+    "m": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "봄~가을 방파제 인기 어종.",
+    "fishing": 74,
+    "gleaning": 35,
+    "fishHref": "point/12_goheung_fishing.html",
+    "gleanHref": "point/12_goheung_gleaning.html"
+   },
+   {
+    "r": "suncheon",
+    "name": "순천",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "6월 – 9월",
+    "m": [
+     6,
+     7,
+     8,
+     9
+    ],
+    "text": "여름~가을 방파제 인기 어종.",
+    "fishing": 23,
+    "gleaning": 21,
+    "fishHref": "point/14_suncheon_fishing.html",
+    "gleanHref": "point/14_suncheon_gleaning.html"
+   },
+   {
+    "r": "gogunsan",
+    "name": "고군산군도",
+    "group": "jeonbuk",
+    "glabel": "전북",
+    "season": "6월 – 10월",
+    "m": [
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "물살이 빠른 섬 사이 수로와 여 주변에서 새벽이나 해 질 녘에 루어를 던져 끌어오는 방식으로 잡습니다.",
+    "fishing": 96,
+    "gleaning": 8,
+    "fishHref": "point/jeonbuk/gogunsan_fishing.html",
+    "gleanHref": "point/jeonbuk/gogunsan_gleaning.html"
+   },
+   {
+    "r": "ganghwa",
+    "name": "강화",
+    "group": "sudogwon",
+    "glabel": "인천·경기",
+    "season": "6월 – 10월",
+    "m": [
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "강화 서쪽 갯바위와 방파제에서 루어로 노립니다. 북쪽은 군 작전 구역이 가까우니 출입이 허용된 곳인지 먼저 확인하세요.",
+    "fishing": 27,
+    "gleaning": 22,
+    "fishHref": "point/sudogwon/ganghwa_fishing.html",
+    "gleanHref": "point/sudogwon/ganghwa_gleaning.html"
+   },
+   {
+    "r": "ongjin",
+    "name": "옹진 섬",
+    "group": "sudogwon",
+    "glabel": "인천·경기",
+    "season": "6월 – 10월",
+    "m": [
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "덕적도·자월도 같은 먼 섬의 갯바위와 물살 센 곳에서 루어(가짜 미끼)로 노리는 경우가 많습니다. 갯바위는 미끄러우니 구명조끼를 입으세요.",
+    "fishing": 124,
+    "gleaning": 29,
+    "fishHref": "point/sudogwon/ongjin_fishing.html",
+    "gleanHref": "point/sudogwon/ongjin_gleaning.html"
+   }
+  ],
+  "noraemi": [
+   {
+    "r": "muan",
+    "name": "무안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "3월 – 11월",
+    "m": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "연중 낚이는 편이라 초보자에게 무난합니다.",
+    "fishing": 30,
+    "gleaning": 23,
+    "fishHref": "point/02_muan_fishing.html",
+    "gleanHref": "point/02_muan_gleaning.html"
+   },
+   {
+    "r": "mokpo",
+    "name": "목포",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "봄부터 가을까지 갯바위에서 흔한 손맛 어종.",
+    "fishing": 24,
+    "gleaning": 22,
+    "fishHref": "point/03_mokpo_fishing.html",
+    "gleanHref": "point/03_mokpo_gleaning.html"
+   },
+   {
+    "r": "yeonggwang",
+    "name": "영광",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "봄부터 가을까지 갯바위 손맛 어종.",
+    "fishing": 30,
+    "gleaning": 21,
+    "fishHref": "point/04_yeonggwang_fishing.html",
+    "gleanHref": "point/04_yeonggwang_gleaning.html"
+   },
+   {
+    "r": "hampyeong",
+    "name": "함평",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "봄부터 가을까지 흔한 손맛 어종.",
+    "fishing": 25,
+    "gleaning": 23,
+    "fishHref": "point/05_hampyeong_fishing.html",
+    "gleanHref": "point/05_hampyeong_gleaning.html"
+   },
+   {
+    "r": "jindo",
+    "name": "진도",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "갯바위 손맛 어종.",
+    "fishing": 74,
+    "gleaning": 26,
+    "fishHref": "point/06_jindo_fishing.html",
+    "gleanHref": "point/06_jindo_gleaning.html"
+   },
+   {
+    "r": "boseong",
+    "name": "보성",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "3월 – 11월",
+    "m": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "연중 낚이는 편이라 초보자 입문용으로 무난한 어종.",
+    "fishing": 31,
+    "gleaning": 23,
+    "fishHref": "point/11_boseong_fishing.html",
+    "gleanHref": "point/11_boseong_gleaning.html"
+   },
+   {
+    "r": "dangjin",
+    "name": "당진",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "봄 · 가을",
+    "m": [
+     3,
+     4,
+     5,
+     9,
+     10,
+     11
+    ],
+    "text": "당진 갯바위에서 찌낚시나 원투로 노리며, 물때가 바뀌는 시간대를 골라 들어갑니다. 장고항 일원은 당진시 고시로 낚시·채취가 금지된 곳입니다.",
+    "fishing": 20,
+    "gleaning": 14,
+    "fishHref": "point/chungnam/dangjin_fishing.html",
+    "gleanHref": "point/chungnam/dangjin_gleaning.html"
+   },
+   {
+    "r": "ulsan",
+    "name": "울산",
+    "group": "busanulsan",
+    "glabel": "부산·울산",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "바위가 많은 울산 해안 바닥에 사는 물고기로, 갯지렁이 미끼를 바위 틈 근처 바닥에 내려 잡습니다.",
+    "fishing": 52,
+    "gleaning": 14,
+    "fishHref": "point/busanulsan/ulsan_fishing.html",
+    "gleanHref": "point/busanulsan/ulsan_gleaning.html"
+   },
+   {
+    "r": "yangyang",
+    "name": "양양",
+    "group": "gangwon",
+    "glabel": "강원",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "바위 틈에 사는 물고기로, 방파제 안쪽 석축 주변에서 갯지렁이 미끼로 노립니다. 하조대 갯바위는 출입통제장소이니 가지 마세요.",
+    "fishing": 30,
+    "gleaning": 13,
+    "fishHref": "point/gangwon/yangyang_fishing.html",
+    "gleanHref": "point/gangwon/yangyang_gleaning.html"
+   },
+   {
+    "r": "gwgoseong",
+    "name": "강원 고성",
+    "group": "gangwon",
+    "glabel": "강원",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "항구 안쪽 석축과 바위 틈 주변에서 갯지렁이 미끼로 노립니다. 테트라포드와 군 경계 구역에는 들어가지 마세요.",
+    "fishing": 26,
+    "gleaning": 13,
+    "fishHref": "point/gangwon/gwgoseong_fishing.html",
+    "gleanHref": "point/gangwon/gwgoseong_gleaning.html"
+   }
+  ],
+  "sora": [
+   {
+    "r": "sinan",
+    "name": "신안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 11월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "흑산도 갯바위에서 채집하는 고둥류.",
+    "fishing": 76,
+    "gleaning": 34,
+    "fishHref": "point/01_sinan_fishing.html",
+    "gleanHref": "point/01_sinan_gleaning.html"
+   },
+   {
+    "r": "mokpo",
+    "name": "목포",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 11월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "외달도 인근에서 흔히 나는 고둥류.",
+    "fishing": 24,
+    "gleaning": 22,
+    "fishHref": "point/03_mokpo_fishing.html",
+    "gleanHref": "point/03_mokpo_gleaning.html"
+   },
+   {
+    "r": "wando",
+    "name": "완도",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "청산도·정도리 갯바위 채집 대상.",
+    "fishing": 80,
+    "gleaning": 41,
+    "fishHref": "point/08_wando_fishing.html",
+    "gleanHref": "point/08_wando_gleaning.html"
+   },
+   {
+    "r": "gangjin",
+    "name": "강진",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "5월 – 10월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "강진 연안 갯바위 채집 대상.",
+    "fishing": 34,
+    "gleaning": 24,
+    "fishHref": "point/09_gangjin_fishing.html",
+    "gleanHref": "point/09_gangjin_gleaning.html"
+   },
+   {
+    "r": "goheung",
+    "name": "고흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "5월 – 10월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "연호해변 갯바위 채집 대상.",
+    "fishing": 74,
+    "gleaning": 35,
+    "fishHref": "point/12_goheung_fishing.html",
+    "gleanHref": "point/12_goheung_gleaning.html"
+   },
+   {
+    "r": "hongseong",
+    "name": "홍성",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "4월 – 10월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "홍성군이 속동 갯벌 체험 대상으로 소개하는 종입니다. 체험 구역 안에서 손이나 집게로 줍는 정도만 허용됩니다.",
+    "fishing": 8,
+    "gleaning": 9,
+    "fishHref": "point/chungnam/hongseong_fishing.html",
+    "gleanHref": "point/chungnam/hongseong_gleaning.html"
+   },
+   {
+    "r": "gogunsan",
+    "name": "고군산군도",
+    "group": "jeonbuk",
+    "glabel": "전북",
+    "season": "5월 – 10월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "text": "무녀도·방축도 어촌체험휴양마을 앞 갯바위에 붙어 사는 고둥은 마을어장에 속하는 경우가 많아, 마을 프로그램에 참여해서 잡아야 합니다.",
+    "fishing": 96,
+    "gleaning": 8,
+    "fishHref": "point/jeonbuk/gogunsan_fishing.html",
+    "gleanHref": "point/jeonbuk/gogunsan_gleaning.html"
+   }
+  ],
+  "sungeo": [
+   {
+    "r": "muan",
+    "name": "무안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 12월",
+    "m": [
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "가을 찬바람 불면 함해만 방파제 주변으로 몰려드는 대형 어종.",
+    "fishing": 30,
+    "gleaning": 23,
+    "fishHref": "point/02_muan_fishing.html",
+    "gleanHref": "point/02_muan_gleaning.html"
+   },
+   {
+    "r": "mokpo",
+    "name": "목포",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "10월 – 이듬해 1월",
+    "m": [
+     1,
+     10,
+     11,
+     12
+    ],
+    "text": "가을~겨울 방파제 원투낚시(멀리 던지는 낚시) 단골손님.",
+    "fishing": 24,
+    "gleaning": 22,
+    "fishHref": "point/03_mokpo_fishing.html",
+    "gleanHref": "point/03_mokpo_gleaning.html"
+   },
+   {
+    "r": "yeonggwang",
+    "name": "영광",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "10월 – 이듬해 1월",
+    "m": [
+     1,
+     10,
+     11,
+     12
+    ],
+    "text": "가을~겨울 방파제 원투낚시(멀리 던지는 낚시) 단골.",
+    "fishing": 30,
+    "gleaning": 21,
+    "fishHref": "point/04_yeonggwang_fishing.html",
+    "gleanHref": "point/04_yeonggwang_gleaning.html"
+   },
+   {
+    "r": "hampyeong",
+    "name": "함평",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 이듬해 1월",
+    "m": [
+     1,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "함평항 방파제 가을~겨울 대표 어종.",
+    "fishing": 25,
+    "gleaning": 23,
+    "fishHref": "point/05_hampyeong_fishing.html",
+    "gleanHref": "point/05_hampyeong_gleaning.html"
+   },
+   {
+    "r": "jindo",
+    "name": "진도",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "사계절 두루 낚이는 어종.",
+    "fishing": 74,
+    "gleaning": 26,
+    "fishHref": "point/06_jindo_fishing.html",
+    "gleanHref": "point/06_jindo_gleaning.html"
+   },
+   {
+    "r": "boseong",
+    "name": "보성",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "9월 – 12월",
+    "m": [
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "가을 찬바람 불면 방파제 주변으로 몰려드는 대형 어종.",
+    "fishing": 31,
+    "gleaning": 23,
+    "fishHref": "point/11_boseong_fishing.html",
+    "gleanHref": "point/11_boseong_gleaning.html"
+   },
+   {
+    "r": "suncheon",
+    "name": "순천",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "와온방파제 사계절 대표 어종, 가을 피크.",
+    "fishing": 23,
+    "gleaning": 21,
+    "fishHref": "point/14_suncheon_fishing.html",
+    "gleanHref": "point/14_suncheon_gleaning.html"
+   },
+   {
+    "r": "gwangyang",
+    "name": "광양",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "광양만 방파제 사계절 대표 어종.",
+    "fishing": 26,
+    "gleaning": 20,
+    "fishHref": "point/15_gwangyang_fishing.html",
+    "gleanHref": "point/15_gwangyang_gleaning.html"
+   },
+   {
+    "r": "donghae",
+    "name": "동해",
+    "group": "gangwon",
+    "glabel": "강원",
+    "season": "3월 – 5월",
+    "m": [
+     3,
+     4,
+     5
+    ],
+    "text": "봄에 하천이 바다와 만나는 하구와 항구 안쪽에서 무리로 다니며, 찌낚시나 루어(가짜 미끼)로 노립니다.",
+    "fishing": 16,
+    "gleaning": 9,
+    "fishHref": "point/gangwon/donghae_fishing.html",
+    "gleanHref": "point/gangwon/donghae_gleaning.html"
+   },
+   {
+    "r": "ganghwa",
+    "name": "강화",
+    "group": "sudogwon",
+    "glabel": "인천·경기",
+    "season": "4월 – 6월",
+    "m": [
+     4,
+     5,
+     6
+    ],
+    "text": "봄에 염하 물길을 오르내리는 숭어를 루어(가짜 미끼)로 노립니다. 물살이 매우 빠른 곳이니 물가 끝에 서지 마세요.",
+    "fishing": 27,
+    "gleaning": 22,
+    "fishHref": "point/sudogwon/ganghwa_fishing.html",
+    "gleanHref": "point/sudogwon/ganghwa_gleaning.html"
+   },
+   {
+    "r": "daebu",
+    "name": "대부·오이도",
+    "group": "sudogwon",
+    "glabel": "인천·경기",
+    "season": "4월 – 6월",
+    "m": [
+     4,
+     5,
+     6
+    ],
+    "text": "봄에 시화방조제 주변으로 숭어가 들어와 루어(가짜 미끼)로 노립니다. 낚시 금지 표지가 있는 구간은 피하세요.",
+    "fishing": 24,
+    "gleaning": 12,
+    "fishHref": "point/sudogwon/daebu_fishing.html",
+    "gleanHref": "point/sudogwon/daebu_gleaning.html"
+   }
+  ],
+  "ureok": [
+   {
+    "r": "sinan",
+    "name": "신안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "사계절 방파제에서 두루 낚이는 기본 어종.",
+    "fishing": 76,
+    "gleaning": 34,
+    "fishHref": "point/01_sinan_fishing.html",
+    "gleanHref": "point/01_sinan_gleaning.html"
+   },
+   {
+    "r": "muan",
+    "name": "무안",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "3월 – 11월",
+    "m": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "조피볼락. 방파제 어디서든 두루 낚이는 입문 어종.",
+    "fishing": 30,
+    "gleaning": 23,
+    "fishHref": "point/02_muan_fishing.html",
+    "gleanHref": "point/02_muan_gleaning.html"
+   },
+   {
+    "r": "mokpo",
+    "name": "목포",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "사계절 방파제에서 두루 낚이는 기본 어종.",
+    "fishing": 24,
+    "gleaning": 22,
+    "fishHref": "point/03_mokpo_fishing.html",
+    "gleanHref": "point/03_mokpo_gleaning.html"
+   },
+   {
+    "r": "yeonggwang",
+    "name": "영광",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "사계절 두루 낚이는 기본 어종.",
+    "fishing": 30,
+    "gleaning": 21,
+    "fishHref": "point/04_yeonggwang_fishing.html",
+    "gleanHref": "point/04_yeonggwang_gleaning.html"
+   },
+   {
+    "r": "hampyeong",
+    "name": "함평",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "사계절 방파제에서 두루 낚이는 기본 어종.",
+    "fishing": 25,
+    "gleaning": 23,
+    "fishHref": "point/05_hampyeong_fishing.html",
+    "gleanHref": "point/05_hampyeong_gleaning.html"
+   },
+   {
+    "r": "jindo",
+    "name": "진도",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "기본 방파제 대상어.",
+    "fishing": 74,
+    "gleaning": 26,
+    "fishHref": "point/06_jindo_fishing.html",
+    "gleanHref": "point/06_jindo_gleaning.html"
+   },
+   {
+    "r": "gangjin",
+    "name": "강진",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "기본 방파제 대상어.",
+    "fishing": 34,
+    "gleaning": 24,
+    "fishHref": "point/09_gangjin_fishing.html",
+    "gleanHref": "point/09_gangjin_gleaning.html"
+   },
+   {
+    "r": "jangheung",
+    "name": "장흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "기본 방파제 대상어.",
+    "fishing": 31,
+    "gleaning": 21,
+    "fishHref": "point/10_jangheung_fishing.html",
+    "gleanHref": "point/10_jangheung_gleaning.html"
+   },
+   {
+    "r": "boseong",
+    "name": "보성",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "3월 – 11월",
+    "m": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "조피볼락. 사계절 두루 낚이는 방파제 대표 대상어.",
+    "fishing": 31,
+    "gleaning": 23,
+    "fishHref": "point/11_boseong_fishing.html",
+    "gleanHref": "point/11_boseong_gleaning.html"
+   },
+   {
+    "r": "goheung",
+    "name": "고흥",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "기본 방파제 대상어.",
+    "fishing": 74,
+    "gleaning": 35,
+    "fishHref": "point/12_goheung_fishing.html",
+    "gleanHref": "point/12_goheung_gleaning.html"
+   },
+   {
+    "r": "gwangyang",
+    "name": "광양",
+    "group": "jeonnam",
+    "glabel": "전남",
+    "season": "연중",
+    "m": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "text": "기본 방파제 대상어.",
+    "fishing": 26,
+    "gleaning": 20,
+    "fishHref": "point/15_gwangyang_fishing.html",
+    "gleanHref": "point/15_gwangyang_gleaning.html"
+   },
+   {
+    "r": "taean",
+    "name": "태안",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "4월 – 11월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "신진도·안흥항 방파제와 갯바위 암초 자리에서 노리며, 채비를 바닥 가까이 내립니다.",
+    "fishing": 83,
+    "gleaning": 39,
+    "fishHref": "point/chungnam/taean_fishing.html",
+    "gleanHref": "point/chungnam/taean_gleaning.html"
+   },
+   {
+    "r": "seosan",
+    "name": "서산",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "4월 – 11월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "대산 쪽 석축 암초 자리에서 채비를 바닥 가까이 내려 노립니다. 삼길포항 부잔교·방파제 등대는 낚시통제구역입니다.",
+    "fishing": 14,
+    "gleaning": 12,
+    "fishHref": "point/chungnam/seosan_fishing.html",
+    "gleanHref": "point/chungnam/seosan_gleaning.html"
+   },
+   {
+    "r": "dangjin",
+    "name": "당진",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "4월 – 11월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "도비도항 방파제 암초 자리에서 노리는 것이 이 지역의 대표 방식입니다. 장고항 일원은 낚시통제구역입니다.",
+    "fishing": 20,
+    "gleaning": 14,
+    "fishHref": "point/chungnam/dangjin_fishing.html",
+    "gleanHref": "point/chungnam/dangjin_gleaning.html"
+   },
+   {
+    "r": "boryeong",
+    "name": "보령",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "4월 – 11월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "섬 주변 암초대와 방파제에서 노리는 보령 바다의 대표 대상어입니다.",
+    "fishing": 60,
+    "gleaning": 20,
+    "fishHref": "point/chungnam/boryeong_fishing.html",
+    "gleanHref": "point/chungnam/boryeong_gleaning.html"
+   },
+   {
+    "r": "hongseong",
+    "name": "홍성",
+    "group": "chungnam",
+    "glabel": "충남",
+    "season": "4월 – 11월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "궁리포구 천수만 해상낚시공원에서 노리는 어종이며, 시설 이용 시간과 규칙을 먼저 확인해야 합니다.",
+    "fishing": 8,
+    "gleaning": 9,
+    "fishHref": "point/chungnam/hongseong_fishing.html",
+    "gleanHref": "point/chungnam/hongseong_gleaning.html"
+   },
+   {
+    "r": "gunsan",
+    "name": "군산",
+    "group": "jeonbuk",
+    "glabel": "전북",
+    "season": "4월 – 11월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "내항 방파제와 물양장 석축에서 봉돌을 바닥에 닿게 한 뒤 살짝 띄워 기다립니다.",
+    "fishing": 14,
+    "gleaning": 4,
+    "fishHref": "point/jeonbuk/gunsan_fishing.html",
+    "gleanHref": "point/jeonbuk/gunsan_gleaning.html"
+   },
+   {
+    "r": "buan",
+    "name": "부안",
+    "group": "jeonbuk",
+    "glabel": "전북",
+    "season": "5월 – 11월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "격포항 방파제와 위도 갯바위 암초 자리에서 무거운 봉돌로 바닥을 찍고 곧바로 한두 바퀴 감아 올려 기다립니다.",
+    "fishing": 43,
+    "gleaning": 15,
+    "fishHref": "point/jeonbuk/buan_fishing.html",
+    "gleanHref": "point/jeonbuk/buan_gleaning.html"
+   },
+   {
+    "r": "gochang",
+    "name": "고창",
+    "group": "jeonbuk",
+    "glabel": "전북",
+    "season": "5월 – 11월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "구시포 방파제와 갯바위 암초에서 노리며, 채비가 걸리기 쉬운 바닥이라 여분 봉돌을 넉넉히 챙깁니다.",
+    "fishing": 4,
+    "gleaning": 7,
+    "fishHref": "point/jeonbuk/gochang_fishing.html",
+    "gleanHref": "point/jeonbuk/gochang_gleaning.html"
+   },
+   {
+    "r": "yeongjong",
+    "name": "영종",
+    "group": "sudogwon",
+    "glabel": "인천·경기",
+    "season": "5월 – 11월",
+    "m": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "무의도·장봉도 갯바위와 방파제 암초 자리에서 노립니다. 출입통제 구역은 먼저 확인하세요.",
+    "fishing": 32,
+    "gleaning": 14,
+    "fishHref": "point/sudogwon/yeongjong_fishing.html",
+    "gleanHref": "point/sudogwon/yeongjong_gleaning.html"
+   },
+   {
+    "r": "ongjin",
+    "name": "옹진 섬",
+    "group": "sudogwon",
+    "glabel": "인천·경기",
+    "season": "4월 – 11월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "영흥도 진두항 방파제와 섬 사이 암초 지대에서 채비를 내려 바닥 가까이를 노립니다.",
+    "fishing": 124,
+    "gleaning": 29,
+    "fishHref": "point/sudogwon/ongjin_fishing.html",
+    "gleanHref": "point/sudogwon/ongjin_gleaning.html"
+   },
+   {
+    "r": "daebu",
+    "name": "대부·오이도",
+    "group": "sudogwon",
+    "glabel": "인천·경기",
+    "season": "4월 – 11월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "대부도 방파제와 섬 주변 암초 자리에서 노립니다. 낚시가 되는 자리는 현지 안내를 확인하세요.",
+    "fishing": 24,
+    "gleaning": 12,
+    "fishHref": "point/sudogwon/daebu_fishing.html",
+    "gleanHref": "point/sudogwon/daebu_gleaning.html"
+   },
+   {
+    "r": "hwaseong",
+    "name": "화성",
+    "group": "sudogwon",
+    "glabel": "인천·경기",
+    "season": "4월 – 11월",
+    "m": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "text": "전곡·궁평항 방파제 암초 자리에서 노립니다.",
+    "fishing": 23,
+    "gleaning": 9,
+    "fishHref": "point/sudogwon/hwaseong_fishing.html",
+    "gleanHref": "point/sudogwon/hwaseong_gleaning.html"
+   }
+  ]
+ }
+}

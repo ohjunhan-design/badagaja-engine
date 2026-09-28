@@ -1,0 +1,67 @@
+{
+  "regions": {
+    "jejusi": [
+      {"name": "도두봉 키세스존", "addr": "제주시 도두일동", "shot": "나무 터널 삼각 틀 속 바다 풍경", "best": "맑은 날 낮", "tip": "인기 포토존이라 줄 서서 찍기도 함", "fee": "무료", "lat": 33.50714, "lng": 126.46848, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500143"},
+      {"name": "이호테우 말등대", "addr": "제주시 이호일동", "shot": "바다를 배경으로 한 빨강·하양 말 등대", "best": "일몰 무렵", "tip": "파도 높은 날은 방파제 진입 자제", "fee": "무료", "lat": 33.50216, "lng": 126.45645, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000019997"},
+      {"name": "도두동 무지개해안도로", "addr": "제주시 도두일동", "shot": "무지개색 방호벽과 바다", "best": "맑은 날 낮", "tip": "차도 옆이라 도로 위 촬영 금지", "fee": "무료", "lat": 33.50931, "lng": 126.47393, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000007625"},
+      {"name": "용두암", "addr": "제주시 용담이동", "shot": "바다에서 솟은 용 머리 모양 바위", "best": "맑은 날·일출 무렵", "tip": "전망 관람 무료, 주차요금은 현장 확인", "fee": "무료", "lat": 33.51496, "lng": 126.51169, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500469"},
+      {"name": "사라봉", "addr": "제주시 건입동", "shot": "노을에 붉게 물든 바다와 시내", "best": "일몰(영주십이경 '사봉낙조')", "tip": "일몰 후 하산길 어두우니 조명 준비", "fee": "무료", "lat": 33.51772, "lng": 126.54576, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500276"}
+    ],
+    "aewol": [
+      {"name": "한담해안산책로", "addr": "제주시 애월읍 곽지리", "shot": "용암 바위 해안과 에메랄드 바다 길", "best": "일몰 무렵, 봄 유채", "tip": "데크 밖 자연 바위 구간은 미끄럼 주의", "fee": "무료", "lat": 33.45906, "lng": 126.3106, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000020159"},
+      {"name": "협재해변", "addr": "제주시 한림읍 협재리", "shot": "비양도가 떠 있는 옥빛 바다와 백사장", "best": "맑은 날 낮, 일몰", "tip": "파라솔·평상은 유료, 여름엔 혼잡", "fee": "무료", "lat": 33.39248, "lng": 126.23899, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500697"},
+      {"name": "금능해변", "addr": "제주시 한림읍 금능리", "shot": "비양도와 잔잔한 파란 바다", "best": "맑은 날 낮", "tip": "협재와 이어져 있고 비교적 한적함", "fee": "무료", "lat": 33.39, "lng": 126.23591, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500079"},
+      {"name": "신창풍차해안도로", "addr": "제주시 한경면 신창리", "shot": "바다 위 흰 풍력발전기 줄지은 풍경", "best": "일몰 무렵", "tip": "만조 때는 바다 위 산책로가 잠기거나 통제될 수 있음", "fee": "무료", "lat": 33.34303, "lng": 126.17217, "source": "https://m.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000007676"},
+      {"name": "수월봉(차귀도 일몰)", "addr": "제주시 한경면 고산리", "shot": "차귀도 너머로 지는 노을", "best": "일몰", "tip": "아래 엉알길은 낙석 이력, 통제 확인", "fee": "무료", "lat": 33.29374, "lng": 126.16281, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500388"}
+    ],
+    "jocheon": [
+      {"name": "서우봉", "addr": "제주시 조천읍 함덕리", "shot": "함덕 바다 내려다보는 유채꽃 언덕", "best": "봄 유채꽃 시기", "tip": "둘레길 조명 없어 일몰 전 복귀 권장", "fee": "무료", "lat": 33.53441, "lng": 126.63425, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500335"},
+      {"name": "월정리해변", "addr": "제주시 구좌읍 월정리", "shot": "에메랄드빛 얕은 바다와 백사장", "best": "맑은 날 낮", "tip": "해변 앞 의자는 카페 소유일 수 있음", "fee": "무료", "lat": 33.55511, "lng": 126.79864, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500496"},
+      {"name": "세화해변", "addr": "제주시 구좌읍 세화리", "shot": "의자에 앉아 옥빛 바다를 보는 컷", "best": "간조 시간대 맑은 날", "tip": "만조 땐 백사장이 줄거나 잠김", "fee": "무료", "lat": 33.5253, "lng": 126.86128, "source": "https://m.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500361"},
+      {"name": "종달리해안도로 수국길", "addr": "제주시 구좌읍 종달리", "shot": "수국길 너머 성산일출봉·우도", "best": "6월 중순~7월 초 수국(해마다 다름)", "tip": "차도 옆이라 정차·촬영 시 차량 주의", "fee": "무료", "lat": 33.48285, "lng": 126.90179, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000019998"},
+      {"name": "김녕성세기해변", "addr": "제주시 구좌읍 김녕리", "shot": "하얀 모래와 투명한 푸른 바다", "best": "맑은 날 낮(여름)", "tip": "해수욕장 개장기간은 매년 공지 확인", "fee": "무료", "lat": 33.55702, "lng": 126.75988, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500083"}
+    ],
+    "seongsan": [
+      {"name": "광치기해변", "addr": "서귀포시 성산읍 고성리", "shot": "성산일출봉과 이끼 낀 용암 해안", "best": "일출(연말연시 인기)", "tip": "이끼 덮인 용암 바위는 미끄럼 주의", "fee": "무료", "lat": 33.45245, "lng": 126.92458, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000018413"},
+      {"name": "섭지코지", "addr": "서귀포시 성산읍 고성리", "shot": "성산일출봉 배경 해안 초원과 절벽", "best": "봄 유채, 맑은 날", "tip": "입장 무료, 주차장은 유료", "fee": "무료", "lat": 33.42369, "lng": 126.9296, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500343"},
+      {"name": "성산일출봉", "addr": "서귀포시 성산읍 성산리", "shot": "정상 분화구와 성산 마을·바다", "best": "일출(계절별 개장시간 확인)", "tip": "매달 첫째 월요일 휴무, 정상은 유료", "fee": "입장료 있음", "lat": 33.46215, "lng": 126.93642, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500349"},
+      {"name": "남원큰엉해안(한반도 숲길)", "addr": "서귀포시 남원읍 태위로", "shot": "나무 틈으로 보이는 한반도 모양 바다", "best": "맑은 날 낮", "tip": "높은 해안 절벽, 난간 안쪽에서만 촬영", "fee": "무료", "lat": 33.27338, "lng": 126.70375, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000019750"},
+      {"name": "우도 서빈백사(산호해변)", "addr": "제주시 우도면 연평리", "shot": "홍조단괴(산호처럼 보이는 흰 알갱이) 백사장과 옥빛 바다", "best": "맑은 날 낮", "tip": "배편 요금 별도, 홍조단괴 반출 금지", "fee": "무료", "lat": 33.5023, "lng": 126.94323, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500474"}
+    ],
+    "seogwipo": [
+      {"name": "쇠소깍", "addr": "서귀포시 하효동", "shot": "기암절벽 사이 짙은 옥빛 물길", "best": "맑은 날 낮", "tip": "테우 등 체험은 유료, 운영 여부 확인", "fee": "무료", "lat": 33.25409, "lng": 126.6223, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500384"},
+      {"name": "새연교", "addr": "서귀포시 서홍동", "shot": "테우 모양 주탑 다리의 야경", "best": "해 질 녘~조명 켜진 밤", "tip": "점등시간은 전화로 미리 확인", "fee": "무료", "lat": 33.23819, "lng": 126.55907, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500312"},
+      {"name": "외돌개", "addr": "서귀포시 서홍동", "shot": "바다 위 소나무 얹은 20m 돌기둥", "best": "맑은 날 낮", "tip": "전망 산책로 안에서 촬영", "fee": "무료", "lat": 33.24006, "lng": 126.54573, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000018409"},
+      {"name": "대포해안주상절리대", "addr": "서귀포시 중문동", "shot": "파도 치는 육각 돌기둥 해안", "best": "맑은 날 관람시간 내", "tip": "입장 마감 시각은 계절별로 확인, 기상 따라 통제", "fee": "입장료 있음", "lat": 33.23834, "lng": 126.42586, "source": "https://eticket.seogwipo.go.kr/contents?bmcode=joosang"},
+      {"name": "엉또폭포", "addr": "서귀포시 강정동", "shot": "비 온 뒤에만 쏟아지는 50m 폭포", "best": "산간에 70mm 이상 비 온 직후", "tip": "평소엔 마른 절벽, 폭우 중 방문 자제", "fee": "무료", "lat": 33.26836, "lng": 126.49997, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500434"}
+    ],
+    "daejeong": [
+      {"name": "송악산 둘레길", "addr": "서귀포시 대정읍 상모리", "shot": "형제섬·산방산 보이는 해안 절벽길", "best": "맑은 날", "tip": "정상부 2027년 7월 말까지 출입 제한(보도), 둘레길 개방도 확인", "fee": "무료", "lat": 33.20771, "lng": 126.29099, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000014386"},
+      {"name": "용머리해안", "addr": "서귀포시 안덕면 사계리", "shot": "켜켜이 쌓인 사암 절벽 해안", "best": "간조 시간대", "tip": "물때·파도로 통제 잦음, 당일 확인", "fee": "입장료 있음", "lat": 33.23343, "lng": 126.31374, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500471"},
+      {"name": "산방산 유채꽃밭", "addr": "서귀포시 안덕면 사계리", "shot": "산방산 암벽 앞 노란 유채밭", "best": "봄 유채 개화기(해마다 다름)", "tip": "사유지 밭이라 밭마다 촬영료를 따로 받음(현금)", "fee": "촬영료 1,000~2,000원", "lat": null, "lng": null, "source": "https://www.telltrip.com/domestic-travel/sanbangsan-canola-flower-spring-jeju/"},
+      {"name": "사계해변", "addr": "서귀포시 안덕면 사계리", "shot": "산방산·용머리 배경 옥빛 해안", "best": "맑은 날 낮", "tip": "인근 발자국 화석 산지는 출입 통제", "fee": "무료", "lat": 33.22811, "lng": 126.30848, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500274"},
+      {"name": "가파도 청보리밭", "addr": "서귀포시 대정읍 가파리", "shot": "섬 전체 청보리 물결과 바다", "best": "4~5월 청보리", "tip": "배편 필요(요금 별도), 섬은 걸어서 1~2시간", "fee": "무료", "lat": 33.17002, "lng": 126.27152, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000018432"}
+    ],
+    "chuja": [
+      {"name": "나바론 하늘길(나바론절벽)", "addr": "제주시 추자면 영흥리", "shot": "바다 위로 깎아지른 절벽 능선길", "best": "맑은 날", "tip": "난도 높은 길, 탐방로 밖 절벽 접근 금지", "fee": "무료", "lat": 33.95641, "lng": 126.29398, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000018516"},
+      {"name": "추자도등대 전망대", "addr": "제주시 추자면(상추자도)", "shot": "섬들이 펼쳐진 추자군도 전경", "best": "구름 없는 맑은 날", "tip": "올레 18-1코스 경유, 오르막 대비", "fee": "무료", "lat": null, "lng": null, "source": "https://www.visitjeju.net/u/5GT"},
+      {"name": "추자연도교", "addr": "제주시 추자면 영흥리", "shot": "상·하추자도를 잇는 다리와 바다", "best": "맑은 날", "tip": "차량 통행 다리, 보행 시 차 주의", "fee": "무료", "lat": 33.95409, "lng": 126.3023, "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000021031"},
+      {"name": "눈물의 십자가(황경한의 묘 인근)", "addr": "제주시 추자면(하추자도)", "shot": "바닷가 바위 위 십자가 조형물", "best": "확인필요", "tip": "천주교 성지, 해안 바위는 미끄럼 주의", "fee": "무료", "lat": null, "lng": null, "source": "https://www.ajunews.com/view/20180115114204427"},
+      {"name": "모진이몽돌해변", "addr": "제주시 추자면 신양리", "shot": "둥근 몽돌과 맑은 바다", "best": "맑은 날(여름)", "tip": "추자도 대표 몽돌 해변, 몽돌 반출 금지", "fee": "무료", "lat": null, "lng": null, "source": "https://v.daum.net/v/Gti2PHDxVO"}
+    ]
+  },
+  "notes": [
+    "조사일 2026-09-17. 좌표는 비짓제주(visitjeju.net) 상세페이지 위도·경도를 소수 5자리로 반올림한 값. 좌표 미확인 항목은 null.",
+    "우도(우도면)는 행정구역상 제주시이나, 요청대로 성산포항 배편 기준으로 seongsan 권역에 넣음. 배편 요금(도립공원 입장료 포함 여부 등)은 확인필요.",
+    "요금: 성산일출봉 성인 5,000원(비짓제주), 주상절리대 성인 2,000원(서귀포 E-Ticket), 용머리해안 성인 2,000원(언론보도, 확인필요). 공영관광지 6곳은 2026.9.11~16 한시 무료였음(종료).",
+    "용머리해안은 매일 물때·파도에 따라 관람시간이 바뀌거나 전면 통제됨. 서귀포시 공영관광지 인스타그램(@6sot_official) 또는 064-794-2940 확인.",
+    "산방산 유채꽃밭은 여러 사유지 밭이 각자 촬영료(1,000~2,000원 수준, 언론보도)를 받음. 개화 시기·요금은 해마다 다름(확인필요). 좌표 미확인.",
+    "송악산: 정상·정상탐방로는 자연휴식년으로 2027년 7월 말까지 출입 제한(언론보도). 비짓제주에 둘레길 공사 2026.05.11~07.31(연장가능) 공지가 있어 현재 개방 여부 확인필요.",
+    "수월봉 아래 엉알길은 2024.4 절벽 일부 붕괴로 통제된 적 있음. 현재 통제 여부 확인필요.",
+    "사계해안 인근 '사람발자국과 동물발자국 화석 산지'(천연기념물)는 일반인 출입 통제 구역이므로 안내하지 않음.",
+    "월정리·세화 등 '해변 의자' 포토존은 카페가 둔 것일 수 있음. 카페 좌석 이용 시 음료 주문이 필요할 수 있음(확인필요).",
+    "해수욕장(협재·금능·함덕·김녕 등) 2026년 개장기간은 6.24~9.6(비짓제주). 개장기간 외에는 안전요원이 없을 수 있음.",
+    "추자도 항목(등대 전망대·눈물의 십자가·모진이몽돌해변)은 비짓제주 테마기사·언론기사로 존재만 확인했고 좌표·세부 접근로는 확인필요. 추자도는 제주항 등에서 배편 필요.",
+    "제외: 절벽 끝·출입통제 해안·사유지 무단 진입이 필요한 이른바 '몰래 명소'는 넣지 않음."
+  ]
+}

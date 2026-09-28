@@ -1,0 +1,415 @@
+{
+    "_source":  "위키미디어 커먼즈(공공누리 제1유형·CC). 축소본. 출처를 사진에 표시",
+    "items":  [
+                  {
+                      "use":  "home",
+                      "place":  "",
+                      "region":  "seongsan",
+                      "file":  "img/jeju/photo/home-hero.jpg",
+                      "credit":  "Korea.net / Korean Culture and Information Service",
+                      "license":  "CC BY-SA 2.0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Seongsan_Ilchulbong_from_the_air.jpg",
+                      "title":  "성산일출봉"
+                  },
+                  {
+                      "use":  "hero-jejusi",
+                      "place":  "",
+                      "region":  "jejusi",
+                      "file":  "img/jeju/photo/jejusi-yongduam.jpg",
+                      "credit":  "Jeong seolah",
+                      "license":  "CC0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Yongduam_in_jeju.jpg",
+                      "title":  "용두암"
+                  },
+                  {
+                      "use":  "hero-aewol",
+                      "place":  "",
+                      "region":  "aewol",
+                      "file":  "img/jeju/photo/aewol-hero.jpg",
+                      "credit":  "Lcarrion88",
+                      "license":  "CC BY-SA 4.0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Hyeopjae_Beach_Scenery.jpg",
+                      "title":  "협재해변"
+                  },
+                  {
+                      "use":  "hero-jocheon",
+                      "place":  "",
+                      "region":  "jocheon",
+                      "file":  "img/jeju/photo/jocheon-hero.jpg",
+                      "credit":  "Hong Da Hyeon",
+                      "license":  "CC0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Hamdeok_Beach.jpg",
+                      "title":  "함덕해변"
+                  },
+                  {
+                      "use":  "hero-seongsan",
+                      "place":  "",
+                      "region":  "seongsan",
+                      "file":  "img/jeju/photo/seongsan-hero.jpg",
+                      "credit":  "Engin Cukuroglu",
+                      "license":  "CC BY-SA 4.0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Jeju_Island_Seopjikoji.jpg",
+                      "title":  "섭지코지"
+                  },
+                  {
+                      "use":  "hero-seogwipo",
+                      "place":  "",
+                      "region":  "seogwipo",
+                      "file":  "img/jeju/photo/seogwipo-hero.jpg",
+                      "credit":  "Lcarrion88",
+                      "license":  "CC BY-SA 4.0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Oedolgae_Rocks.jpg",
+                      "title":  "외돌개"
+                  },
+                  {
+                      "use":  "hero-daejeong",
+                      "place":  "",
+                      "region":  "daejeong",
+                      "file":  "img/jeju/photo/daejeong-hero.jpg",
+                      "credit":  "Sadopaul",
+                      "license":  "CC BY 4.0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Sanbang_san_and_Yongmeori_Beach_(2025-01).jpg",
+                      "title":  "용머리해안"
+                  },
+                  {
+                      "use":  "hero-chuja",
+                      "place":  "",
+                      "region":  "chuja",
+                      "file":  "img/jeju/photo/chuja-hero.jpg",
+                      "credit":  "Jeju Olle Foundation(제주올레)",
+                      "license":  "CC BY-SA 4.0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Jeju_Olle_Route_18-1.jpg",
+                      "title":  "추자도(상추자항)"
+                  },
+                  {
+                      "use":  "도두봉 키세스존",
+                      "place":  "도두봉 키세스존",
+                      "region":  "jejusi",
+                      "file":  "img/jeju/photo/jejusi-dodubong.jpg",
+                      "credit":  "Grapesurgeon",
+                      "license":  "CC BY-SA 4.0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Dodubong_03.jpg",
+                      "title":  "도두봉 키세스존"
+                  },
+                  {
+                      "use":  "이호테우 말등대",
+                      "place":  "이호테우 말등대",
+                      "region":  "jejusi",
+                      "file":  "img/jeju/photo/jejusi-iho.jpg",
+                      "credit":  "Grapesurgeon",
+                      "license":  "CC BY-SA 4.0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Iho_Tewoo_Beach_03.jpg",
+                      "title":  "이호테우 말등대"
+                  },
+                  {
+                      "use":  "용두암",
+                      "place":  "용두암",
+                      "region":  "jejusi",
+                      "file":  "img/jeju/photo/jejusi-yongduam.jpg",
+                      "credit":  "Jeong seolah",
+                      "license":  "CC0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Yongduam_in_jeju.jpg",
+                      "title":  "용두암"
+                  },
+                  {
+                      "use":  "한담해안산책로",
+                      "place":  "한담해안산책로",
+                      "region":  "aewol",
+                      "file":  "img/jeju/photo/aewol-handam.jpg",
+                      "credit":  "Jeju Olle Foundation(제주올레)",
+                      "license":  "CC BY-SA 4.0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Jeju_Olle_Route_15-B.jpg",
+                      "title":  "한담해안산책로"
+                  },
+                  {
+                      "use":  "협재해변",
+                      "place":  "협재해변",
+                      "region":  "aewol",
+                      "file":  "img/jeju/photo/aewol-hyeopjae.jpg",
+                      "credit":  "Engin Cukuroglu",
+                      "license":  "CC BY-SA 3.0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Jeju_Island_Hyeopje_Beach.jpg",
+                      "title":  "협재해변"
+                  },
+                  {
+                      "use":  "수월봉(차귀도 일몰)",
+                      "place":  "수월봉(차귀도 일몰)",
+                      "region":  "aewol",
+                      "file":  "img/jeju/photo/aewol-suwolbong.jpg",
+                      "credit":  "Sohyeon Bak",
+                      "license":  "CC BY-SA 3.0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:View_from_Suwolbong.jpg",
+                      "title":  "수월봉(차귀도 일몰)"
+                  },
+                  {
+                      "use":  "서우봉",
+                      "place":  "서우봉",
+                      "region":  "jocheon",
+                      "file":  "img/jeju/photo/jocheon-seoubong.jpg",
+                      "credit":  "Grapesurgeon",
+                      "license":  "CC BY-SA 4.0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Hamdeok_Beach_May_2026_08.jpg",
+                      "title":  "함덕해변·서우봉"
+                  },
+                  {
+                      "use":  "월정리해변",
+                      "place":  "월정리해변",
+                      "region":  "jocheon",
+                      "file":  "img/jeju/photo/jocheon-woljeong.jpg",
+                      "credit":  "Korea.net / Korean Culture and Information Service (Republic of Korea)",
+                      "license":  "CC BY-SA 2.0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Jeju_Island_20141127_45_(15709047190).jpg",
+                      "title":  "월정리해변"
+                  },
+                  {
+                      "use":  "세화해변",
+                      "place":  "세화해변",
+                      "region":  "jocheon",
+                      "file":  "img/jeju/photo/jocheon-sehwa.jpg",
+                      "credit":  "Bohyunlee",
+                      "license":  "CC BY-SA 4.0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:%EC%84%B8%ED%99%94%ED%95%B4%EC%88%98%EC%9A%95%EC%9E%A52.JPG",
+                      "title":  "세화해변"
+                  },
+                  {
+                      "use":  "광치기해변",
+                      "place":  "광치기해변",
+                      "region":  "seongsan",
+                      "file":  "img/jeju/photo/seongsan-gwangchigi.jpg",
+                      "credit":  "Korea.net / Korean Culture and Information Service (Republic of Korea)",
+                      "license":  "CC BY-SA 2.0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Jeju_Island_20141127_25_(15892738751).jpg",
+                      "title":  "광치기해변"
+                  },
+                  {
+                      "use":  "섭지코지",
+                      "place":  "섭지코지",
+                      "region":  "seongsan",
+                      "file":  "img/jeju/photo/seongsan-seopjikoji.jpg",
+                      "credit":  "Engin Cukuroglu",
+                      "license":  "CC BY-SA 4.0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Jeju_Island_Seopjikoji.jpg",
+                      "title":  "섭지코지"
+                  },
+                  {
+                      "use":  "성산일출봉",
+                      "place":  "성산일출봉",
+                      "region":  "seongsan",
+                      "file":  "img/jeju/photo/seongsan-ilchulbong.jpg",
+                      "credit":  "Bernard Gagnon",
+                      "license":  "CC0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Seongsan_Ilchulbong_01.jpg",
+                      "title":  "성산일출봉"
+                  },
+                  {
+                      "use":  "우도 서빈백사(산호해변)",
+                      "place":  "우도 서빈백사(산호해변)",
+                      "region":  "seongsan",
+                      "file":  "img/jeju/photo/seongsan-udo.jpg",
+                      "credit":  "제주영상문화산업진흥원(현 제주콘텐츠진흥원)",
+                      "license":  "공공누리 제1유형",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Udo,_Jeju_Province,_South_Korea_09.jpg",
+                      "title":  "우도"
+                  },
+                  {
+                      "use":  "쇠소깍",
+                      "place":  "쇠소깍",
+                      "region":  "seogwipo",
+                      "file":  "img/jeju/photo/seogwipo-soesokkak.jpg",
+                      "credit":  "Jocelyndurrey",
+                      "license":  "CC BY-SA 4.0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:%EC%87%A0%EC%86%8C%EA%B9%8D_(2).jpg",
+                      "title":  "쇠소깍"
+                  },
+                  {
+                      "use":  "새연교",
+                      "place":  "새연교",
+                      "region":  "seogwipo",
+                      "file":  "img/jeju/photo/seogwipo-saeyeongyo.jpg",
+                      "credit":  "Bernard Gagnon",
+                      "license":  "CC0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Saeyeongyo_Bridge_01.jpg",
+                      "title":  "새연교"
+                  },
+                  {
+                      "use":  "외돌개",
+                      "place":  "외돌개",
+                      "region":  "seogwipo",
+                      "file":  "img/jeju/photo/seogwipo-oedolgae.jpg",
+                      "credit":  "Lcarrion88",
+                      "license":  "CC BY-SA 4.0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Oedolgae_Rocks.jpg",
+                      "title":  "외돌개"
+                  },
+                  {
+                      "use":  "대포해안주상절리대",
+                      "place":  "대포해안주상절리대",
+                      "region":  "seogwipo",
+                      "file":  "img/jeju/photo/seogwipo-daepo.jpg",
+                      "credit":  "Bernard Gagnon",
+                      "license":  "CC0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Daepo_Jusangjeolli_Cliff_01.jpg",
+                      "title":  "대포해안주상절리대"
+                  },
+                  {
+                      "use":  "엉또폭포",
+                      "place":  "엉또폭포",
+                      "region":  "seogwipo",
+                      "file":  "img/jeju/photo/seogwipo-eongtto.jpg",
+                      "credit":  "Cedar101",
+                      "license":  "CC BY-SA 3.0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Eongtto-pokpo.JPG",
+                      "title":  "엉또폭포"
+                  },
+                  {
+                      "use":  "송악산 둘레길",
+                      "place":  "송악산 둘레길",
+                      "region":  "daejeong",
+                      "file":  "img/jeju/photo/daejeong-songaksan.jpg",
+                      "credit":  "Lcarrion88",
+                      "license":  "CC BY-SA 4.0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Songaksan.jpg",
+                      "title":  "송악산 둘레길"
+                  },
+                  {
+                      "use":  "용머리해안",
+                      "place":  "용머리해안",
+                      "region":  "daejeong",
+                      "file":  "img/jeju/photo/daejeong-yongmeori.jpg",
+                      "credit":  "Bernard Gagnon",
+                      "license":  "CC0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Yongmeori_Coast.jpg",
+                      "title":  "용머리해안"
+                  },
+                  {
+                      "use":  "산방산 유채꽃밭",
+                      "place":  "산방산 유채꽃밭",
+                      "region":  "daejeong",
+                      "file":  "img/jeju/photo/daejeong-sanbangsan.jpg",
+                      "credit":  "Sgroey",
+                      "license":  "CC BY-SA 4.0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Sanbangsan_and_a_field_04.jpg",
+                      "title":  "산방산 유채꽃밭"
+                  },
+                  {
+                      "use":  "사계해변",
+                      "place":  "사계해변",
+                      "region":  "daejeong",
+                      "file":  "img/jeju/photo/daejeong-sagye.jpg",
+                      "credit":  "Grapesurgeon",
+                      "license":  "CC BY-SA 4.0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Sagye_Beach_01.jpg",
+                      "title":  "사계해변"
+                  },
+                  {
+                      "use":  "가파도 청보리밭",
+                      "place":  "가파도 청보리밭",
+                      "region":  "daejeong",
+                      "file":  "img/jeju/photo/daejeong-gapado.jpg",
+                      "credit":  "Jjw",
+                      "license":  "CC BY-SA 4.0",
+                      "page":  "https://commons.wikimedia.org/wiki/File:Barley_field_at_Gapa_Island.jpg",
+                      "title":  "가파도 청보리밭"
+                  },
+                  {
+                      "use":  "김녕성세기해변",
+                      "place":  "김녕성세기해변",
+                      "region":  "jocheon",
+                      "file":  "img/jeju/photo/jocheon-gimnyeong.jpg",
+                      "credit":  "제주콘텐츠진흥원",
+                      "license":  "공공누리 제1유형",
+                      "page":  "https://www.kogl.or.kr/recommend/recommendDivView.do?recommendIdx=86630\u0026division=img",
+                      "title":  "김녕해변"
+                  },
+                  {
+                      "use":  "남원큰엉해안(한반도 숲길)",
+                      "place":  "남원큰엉해안(한반도 숲길)",
+                      "region":  "seongsan",
+                      "file":  "img/jeju/photo/seongsan-keuneong.jpg",
+                      "credit":  "한국관광공사",
+                      "license":  "공공누리 제1유형",
+                      "page":  "https://tong.visitkorea.or.kr/cms/resource/27/3550527_image2_1.jpg",
+                      "title":  "제주_남원 큰엉해안 (3)"
+                  },
+                  {
+                      "use":  "종달리해안도로 수국길",
+                      "place":  "종달리해안도로 수국길",
+                      "region":  "jocheon",
+                      "file":  "img/jeju/photo/jocheon-sugukgil.jpg",
+                      "credit":  "한국관광공사",
+                      "license":  "공공누리 제3유형",
+                      "page":  "https://tong.visitkorea.or.kr/cms/resource/55/2799755_image2_1.jpg",
+                      "title":  "종달리수국길_3"
+                  },
+                  {
+                      "use":  "나바론 하늘길(나바론절벽)",
+                      "place":  "나바론 하늘길(나바론절벽)",
+                      "region":  "chuja",
+                      "file":  "img/jeju/photo/chuja-navarone.jpg",
+                      "credit":  "한국관광공사",
+                      "license":  "공공누리 제3유형",
+                      "page":  "https://tong.visitkorea.or.kr/cms/resource/70/2863870_image2_1.JPG",
+                      "title":  "제주_제주시_나바론하늘길_도보길 (4)"
+                  },
+                  {
+                      "use":  "추자도등대 전망대",
+                      "place":  "추자도등대 전망대",
+                      "region":  "chuja",
+                      "file":  "img/jeju/photo/chuja-deungdae.jpg",
+                      "credit":  "한국관광공사",
+                      "license":  "공공누리 제3유형",
+                      "page":  "https://tong.visitkorea.or.kr/cms/resource/96/3528996_image2_1.jpg",
+                      "title":  "제주_추자도 등대 (1)"
+                  },
+                  {
+                      "use":  "눈물의 십자가(황경한의 묘 인근)",
+                      "place":  "눈물의 십자가(황경한의 묘 인근)",
+                      "region":  "chuja",
+                      "file":  "img/jeju/photo/chuja-cross.jpg",
+                      "credit":  "한국관광공사",
+                      "license":  "공공누리 제3유형",
+                      "page":  "https://tong.visitkorea.or.kr/cms/resource/65/3411265_image2_1.jpg",
+                      "title":  "제주_추자군도 (2)"
+                  },
+                  {
+                      "use":  "금능해변",
+                      "place":  "금능해변",
+                      "region":  "aewol",
+                      "file":  "img/jeju/photo/aewol-geumneung.jpg",
+                      "credit":  "한국관광공사 포토코리아-천건엽",
+                      "license":  "공공누리 제1유형",
+                      "page":  "https://tong.visitkorea.or.kr/cms2/website/10/3515410.jpg",
+                      "title":  "금능해수욕장"
+                  },
+                  {
+                      "use":  "사라봉",
+                      "place":  "사라봉",
+                      "region":  "jejusi",
+                      "file":  "img/jeju/photo/jejusi-sarabong.jpg",
+                      "credit":  "한국관광공사 포토코리아-이정수",
+                      "license":  "공공누리 제1유형",
+                      "page":  "https://tong.visitkorea.or.kr/cms2/website/67/3406867.jpg",
+                      "title":  "사라봉공원"
+                  },
+                  {
+                      "use":  "도두동 무지개해안도로",
+                      "place":  "도두동 무지개해안도로",
+                      "region":  "jejusi",
+                      "file":  "img/jeju/photo/jejusi-rainbow.jpg",
+                      "credit":  "한국관광공사 포토코리아-이범수",
+                      "license":  "공공누리 제1유형",
+                      "page":  "https://tong.visitkorea.or.kr/cms2/website/51/2610151.jpg",
+                      "title":  "도두동 무지개 해안도로"
+                  },
+                  {
+                      "use":  "신창풍차해안도로",
+                      "place":  "신창풍차해안도로",
+                      "region":  "aewol",
+                      "file":  "img/jeju/photo/aewol-sinchang.jpg",
+                      "credit":  "한국관광공사 포토코리아-라이브스튜디오",
+                      "license":  "공공누리 제1유형",
+                      "page":  "https://tong.visitkorea.or.kr/cms2/website/43/2911943.jpg",
+                      "title":  "신창풍차해안도로"
+                  }
+              ]
+}

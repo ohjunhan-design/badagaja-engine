@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /data/
+Disallow: /marketing/
+Allow: /
+
+Sitemap: https://badagaja.cloud/sitemap.xml

@@ -693,12 +693,17 @@ def 검사12_옛쪽표본이저장소에있나():
                       r'|\d{7,8})(?![0-9])')
     for 뿌, 칸들, 파일들 in os.walk(칸):
         for f in 파일들:
-            if not f.endswith('.html'):
+            # ★ **html 밖도 봅니다** (2026-09-28 · 바로 고침)
+            #   처음에는 html 만 봤습니다. 그랬더니 data/*.json 의
+            #   35곳을 놓쳤습니다. 어느 꼴로 적혔든 같습니다.
+            if not f.endswith(('.html', '.json', '.js',
+                               '.css', '.xml', '.txt')):
                 continue
-            쪽수 += 1
+            if f.endswith('.html'):
+                쪽수 += 1
             상대 = os.path.relpath(os.path.join(뿌, f), 칸)
             상대 = 상대.replace(os.sep, '/')
-            if 상대.startswith('zh-cn/'):
+            if 상대.startswith('zh-cn/') and f.endswith('.html'):
                 중국어 += 1
             if 무늬.search(io.read(os.path.join(뿌, f), default='')):
                 번호든쪽.append(상대)

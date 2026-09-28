@@ -1,0 +1,422 @@
+{
+  "busanwest": {
+    "gleaning": {
+      "file": "point/busanulsan/busanwest_gleaning.html",
+      "n": 12
+    },
+    "fishing": {
+      "file": "point/busanulsan/busanwest_fishing.html",
+      "n": 75
+    }
+  },
+  "busaneast": {
+    "gleaning": {
+      "file": "point/busanulsan/busaneast_gleaning.html",
+      "n": 13
+    },
+    "fishing": {
+      "file": "point/busanulsan/busaneast_fishing.html",
+      "n": 61
+    }
+  },
+  "ulsan": {
+    "gleaning": {
+      "file": "point/busanulsan/ulsan_gleaning.html",
+      "n": 14
+    },
+    "fishing": {
+      "file": "point/busanulsan/ulsan_fishing.html",
+      "n": 52
+    }
+  },
+  "samcheok": {
+    "gleaning": {
+      "file": "point/gangwon/samcheok_gleaning.html",
+      "n": 15
+    },
+    "fishing": {
+      "file": "point/gangwon/samcheok_fishing.html",
+      "n": 36
+    }
+  },
+  "donghae": {
+    "gleaning": {
+      "file": "point/gangwon/donghae_gleaning.html",
+      "n": 9
+    },
+    "fishing": {
+      "file": "point/gangwon/donghae_fishing.html",
+      "n": 16
+    }
+  },
+  "gangneung": {
+    "gleaning": {
+      "file": "point/gangwon/gangneung_gleaning.html",
+      "n": 18
+    },
+    "fishing": {
+      "file": "point/gangwon/gangneung_fishing.html",
+      "n": 30
+    }
+  },
+  "yangyang": {
+    "gleaning": {
+      "file": "point/gangwon/yangyang_gleaning.html",
+      "n": 13
+    },
+    "fishing": {
+      "file": "point/gangwon/yangyang_fishing.html",
+      "n": 30
+    }
+  },
+  "sokcho": {
+    "gleaning": {
+      "file": "point/gangwon/sokcho_gleaning.html",
+      "n": 3
+    },
+    "fishing": {
+      "file": "point/gangwon/sokcho_fishing.html",
+      "n": 13
+    }
+  },
+  "gwgoseong": {
+    "gleaning": {
+      "file": "point/gangwon/gwgoseong_gleaning.html",
+      "n": 13
+    },
+    "fishing": {
+      "file": "point/gangwon/gwgoseong_fishing.html",
+      "n": 26
+    }
+  },
+  "gyeongju": {
+    "gleaning": {
+      "file": "point/gyeongbuk/gyeongju_gleaning.html",
+      "n": 5
+    },
+    "fishing": {
+      "file": "point/gyeongbuk/gyeongju_fishing.html",
+      "n": 31
+    }
+  },
+  "pohang": {
+    "gleaning": {
+      "file": "point/gyeongbuk/pohang_gleaning.html",
+      "n": 15
+    },
+    "fishing": {
+      "file": "point/gyeongbuk/pohang_fishing.html",
+      "n": 70
+    }
+  },
+  "yeongdeok": {
+    "gleaning": {
+      "file": "point/gyeongbuk/yeongdeok_gleaning.html",
+      "n": 10
+    },
+    "fishing": {
+      "file": "point/gyeongbuk/yeongdeok_fishing.html",
+      "n": 44
+    }
+  },
+  "uljin": {
+    "gleaning": {
+      "file": "point/gyeongbuk/uljin_gleaning.html",
+      "n": 14
+    },
+    "fishing": {
+      "file": "point/gyeongbuk/uljin_fishing.html",
+      "n": 76
+    }
+  },
+  "ulleung": {
+    "gleaning": {
+      "file": "point/gyeongbuk/ulleung_gleaning.html",
+      "n": 4
+    },
+    "fishing": {
+      "file": "point/gyeongbuk/ulleung_fishing.html",
+      "n": 25
+    }
+  },
+  "namhae": {
+    "gleaning": {
+      "file": "point/gyeongnam/namhae_gleaning.html",
+      "n": 24
+    },
+    "fishing": {
+      "file": "point/gyeongnam/namhae_fishing.html",
+      "n": 131
+    }
+  },
+  "sacheon": {
+    "gleaning": {
+      "file": "point/gyeongnam/sacheon_gleaning.html",
+      "n": 8
+    },
+    "fishing": {
+      "file": "point/gyeongnam/sacheon_fishing.html",
+      "n": 67
+    }
+  },
+  "goseong": {
+    "gleaning": {
+      "file": "point/gyeongnam/goseong_gleaning.html",
+      "n": 1
+    },
+    "fishing": {
+      "file": "point/gyeongnam/goseong_fishing.html",
+      "n": 54
+    }
+  },
+  "tongyeong": {
+    "gleaning": {
+      "file": "point/gyeongnam/tongyeong_gleaning.html",
+      "n": 20
+    },
+    "fishing": {
+      "file": "point/gyeongnam/tongyeong_fishing.html",
+      "n": 222
+    }
+  },
+  "geoje": {
+    "gleaning": {
+      "file": "point/gyeongnam/geoje_gleaning.html",
+      "n": 27
+    },
+    "fishing": {
+      "file": "point/gyeongnam/geoje_fishing.html",
+      "n": 118
+    }
+  },
+  "changwon": {
+    "gleaning": {
+      "file": "point/gyeongnam/changwon_gleaning.html",
+      "n": 8
+    },
+    "fishing": {
+      "file": "point/gyeongnam/changwon_fishing.html",
+      "n": 71
+    }
+  },
+  "gunsan": {
+    "gleaning": {
+      "file": "point/jeonbuk/gunsan_gleaning.html",
+      "n": 4
+    },
+    "fishing": {
+      "file": "point/jeonbuk/gunsan_fishing.html",
+      "n": 14
+    }
+  },
+  "gogunsan": {
+    "gleaning": {
+      "file": "point/jeonbuk/gogunsan_gleaning.html",
+      "n": 8
+    },
+    "fishing": {
+      "file": "point/jeonbuk/gogunsan_fishing.html",
+      "n": 96
+    }
+  },
+  "buan": {
+    "gleaning": {
+      "file": "point/jeonbuk/buan_gleaning.html",
+      "n": 15
+    },
+    "fishing": {
+      "file": "point/jeonbuk/buan_fishing.html",
+      "n": 43
+    }
+  },
+  "gochang": {
+    "gleaning": {
+      "file": "point/jeonbuk/gochang_gleaning.html",
+      "n": 7
+    },
+    "fishing": {
+      "file": "point/jeonbuk/gochang_fishing.html",
+      "n": 4
+    }
+  },
+  "ganghwa": {
+    "gleaning": {
+      "file": "point/sudogwon/ganghwa_gleaning.html",
+      "n": 22
+    },
+    "fishing": {
+      "file": "point/sudogwon/ganghwa_fishing.html",
+      "n": 27
+    }
+  },
+  "yeongjong": {
+    "gleaning": {
+      "file": "point/sudogwon/yeongjong_gleaning.html",
+      "n": 14
+    },
+    "fishing": {
+      "file": "point/sudogwon/yeongjong_fishing.html",
+      "n": 32
+    }
+  },
+  "ongjin": {
+    "gleaning": {
+      "file": "point/sudogwon/ongjin_gleaning.html",
+      "n": 29
+    },
+    "fishing": {
+      "file": "point/sudogwon/ongjin_fishing.html",
+      "n": 124
+    }
+  },
+  "daebu": {
+    "gleaning": {
+      "file": "point/sudogwon/daebu_gleaning.html",
+      "n": 12
+    },
+    "fishing": {
+      "file": "point/sudogwon/daebu_fishing.html",
+      "n": 24
+    }
+  },
+  "hwaseong": {
+    "gleaning": {
+      "file": "point/sudogwon/hwaseong_gleaning.html",
+      "n": 9
+    },
+    "fishing": {
+      "file": "point/sudogwon/hwaseong_fishing.html",
+      "n": 23
+    }
+  },
+  "taean": {
+    "gleaning": {
+      "file": "point/chungnam/taean_gleaning.html",
+      "n": 39
+    },
+    "fishing": {
+      "file": "point/chungnam/taean_fishing.html",
+      "n": 83
+    }
+  },
+  "seosan": {
+    "gleaning": {
+      "file": "point/chungnam/seosan_gleaning.html",
+      "n": 12
+    },
+    "fishing": {
+      "file": "point/chungnam/seosan_fishing.html",
+      "n": 14
+    }
+  },
+  "dangjin": {
+    "gleaning": {
+      "file": "point/chungnam/dangjin_gleaning.html",
+      "n": 14
+    },
+    "fishing": {
+      "file": "point/chungnam/dangjin_fishing.html",
+      "n": 20
+    }
+  },
+  "boryeong": {
+    "gleaning": {
+      "file": "point/chungnam/boryeong_gleaning.html",
+      "n": 20
+    },
+    "fishing": {
+      "file": "point/chungnam/boryeong_fishing.html",
+      "n": 60
+    }
+  },
+  "seocheon": {
+    "gleaning": {
+      "file": "point/chungnam/seocheon_gleaning.html",
+      "n": 15
+    },
+    "fishing": {
+      "file": "point/chungnam/seocheon_fishing.html",
+      "n": 12
+    }
+  },
+  "hongseong": {
+    "gleaning": {
+      "file": "point/chungnam/hongseong_gleaning.html",
+      "n": 9
+    },
+    "fishing": {
+      "file": "point/chungnam/hongseong_fishing.html",
+      "n": 8
+    }
+  },
+  "jejusi": {
+    "gleaning": {
+      "file": "point/jeju/jejusi_gleaning.html",
+      "n": 7
+    },
+    "fishing": {
+      "file": "point/jeju/jejusi_fishing.html",
+      "n": 14
+    }
+  },
+  "aewol": {
+    "gleaning": {
+      "file": "point/jeju/aewol_gleaning.html",
+      "n": 12
+    },
+    "fishing": {
+      "file": "point/jeju/aewol_fishing.html",
+      "n": 23
+    }
+  },
+  "jocheon": {
+    "gleaning": {
+      "file": "point/jeju/jocheon_gleaning.html",
+      "n": 14
+    },
+    "fishing": {
+      "file": "point/jeju/jocheon_fishing.html",
+      "n": 11
+    }
+  },
+  "seongsan": {
+    "gleaning": {
+      "file": "point/jeju/seongsan_gleaning.html",
+      "n": 16
+    },
+    "fishing": {
+      "file": "point/jeju/seongsan_fishing.html",
+      "n": 30
+    }
+  },
+  "seogwipo": {
+    "gleaning": {
+      "file": "point/jeju/seogwipo_gleaning.html",
+      "n": 12
+    },
+    "fishing": {
+      "file": "point/jeju/seogwipo_fishing.html",
+      "n": 16
+    }
+  },
+  "daejeong": {
+    "gleaning": {
+      "file": "point/jeju/daejeong_gleaning.html",
+      "n": 7
+    },
+    "fishing": {
+      "file": "point/jeju/daejeong_fishing.html",
+      "n": 21
+    }
+  },
+  "chuja": {
+    "gleaning": {
+      "file": "point/jeju/chuja_gleaning.html",
+      "n": 6
+    },
+    "fishing": {
+      "file": "point/jeju/chuja_fishing.html",
+      "n": 30
+    }
+  }
+}

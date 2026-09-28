@@ -1,0 +1,346 @@
+{
+  "_about": "바다가자닷컴 광고 한곳 관리 — tools/build-ads.py 가 읽어 js/ads-data.js 를 만들고 data-private/광고현황.md 에 현황을 씁니다. 쪽에는 <aside class=\"ad-slot\" data-ad-slot=\"자리이름\" hidden></aside> 만 둡니다. 쓰는 법은 data-private/광고관리.md",
+  "enabled": true,
+  "label": {
+    "badge": "광고",
+    "text": "쿠팡 파트너스"
+  },
+  "banners": {
+    "coupang-carousel-580x240": {
+      "provider": "coupang",
+      "id": 1028423,
+      "template": "carousel",
+      "trackingCode": "AF2011879",
+      "width": 580,
+      "height": 150,
+      "memo": "참고서·묶음 쪽 이달의 바다 PC — 2026-09-23 높이만 줄임(580x240 → 580x150) — 옆 축제 상자와 높이가 맞고 상품도 더 보입니다",
+      "label": "쿠팡 파트너스"
+    },
+    "coupang-carousel-320x100": {
+      "provider": "coupang",
+      "id": 1028423,
+      "template": "carousel",
+      "trackingCode": "AF2011879",
+      "width": 320,
+      "height": 100,
+      "memo": "참고서 이달의 바다 휴대폰",
+      "label": "쿠팡 파트너스"
+    },
+    "coupang-carousel-760x140-index": {
+      "provider": "coupang",
+      "id": 1032048,
+      "template": "carousel",
+      "trackingCode": "AF2011879",
+      "width": 760,
+      "height": 140,
+      "memo": "첫 화면 가운데 PC — 문구 칸(250px) 오른쪽. 2026-09-22 주인이 만든 760×140 배너",
+      "label": "쿠팡 파트너스"
+    },
+    "coupang-carousel-290x100-index": {
+      "provider": "coupang",
+      "id": 1032049,
+      "template": "carousel",
+      "trackingCode": "AF2011879",
+      "width": 290,
+      "height": 100,
+      "memo": "첫 화면 가운데 휴대폰 — 문구 아래. 2026-09-22 주인이 만든 290×100 배너",
+      "label": "쿠팡 파트너스"
+    },
+    "coupang-carousel-760x140-gear": {
+      "provider": "coupang",
+      "id": 1032399,
+      "template": "carousel",
+      "trackingCode": "AF2011879",
+      "width": 760,
+      "height": 140,
+      "memo": "2026-09-23 주인 — 장비·안전 쪽 구역 사이 가로 띠(PC)"
+    },
+    "coupang-carousel-720x140-gear": {
+      "provider": "coupang",
+      "id": 1032399,
+      "template": "carousel",
+      "trackingCode": "AF2011879",
+      "width": 720,
+      "height": 140,
+      "memo": "2026-09-23 주인 — 장비·안전 3장 끝(PC)"
+    },
+    "coupang-carousel-760x140-fish": {
+      "provider": "coupang",
+      "id": 1032399,
+      "template": "carousel",
+      "trackingCode": "AF2011879",
+      "width": 760,
+      "height": 140,
+      "memo": "2026-09-23 주인 — 낚시 어종 쪽 목록 위(PC). 받은 코드 720 → 칸 폭 824 에 맞춰 760 으로"
+    },
+    "coupang-carousel-320x100-fish": {
+      "provider": "coupang",
+      "id": 1032399,
+      "template": "carousel",
+      "trackingCode": "AF2011879",
+      "width": 320,
+      "height": 100,
+      "memo": "2026-09-23 주인 — 낚시 어종 쪽 목록 위(휴대폰)"
+    },
+    "coupang-carousel-320x100-travel": {
+      "provider": "coupang",
+      "id": 1032400,
+      "template": "carousel",
+      "trackingCode": "AF2011879",
+      "width": 320,
+      "height": 100,
+      "memo": "2026-09-23 주인 — 관광·맛집·숙소 쪽 지도 옆"
+    },
+    "coupang-carousel-760x140-travel": {
+      "provider": "coupang",
+      "id": 1032400,
+      "template": "carousel",
+      "trackingCode": "AF2011879",
+      "width": 760,
+      "height": 140,
+      "memo": "2026-09-23 주인 — 관광·맛집·숙소 쪽 끝. 본문 칸 824px 에 맞춘 크기"
+    },
+    "coupang-carousel-320x100-tide": {
+      "provider": "coupang",
+      "id": 1032400,
+      "template": "carousel",
+      "trackingCode": "AF2011879",
+      "width": 320,
+      "height": 100,
+      "memo": "2026-09-23 주인 — 전국 물때표 쪽 지도 옆"
+    },
+    "coupang-carousel-320x100-gleaning": {
+      "provider": "coupang",
+      "id": 1032406,
+      "template": "carousel",
+      "trackingCode": "AF2011879",
+      "width": 320,
+      "height": 100,
+      "memo": "해루질 품목 배너 — 휴대폰"
+    },
+    "coupang-carousel-760x140-gleaning": {
+      "provider": "coupang",
+      "id": 1032406,
+      "template": "carousel",
+      "trackingCode": "AF2011879",
+      "width": 760,
+      "height": 140,
+      "memo": "해루질 품목 배너 — 해루질 대상 쪽 목록 위 · 장비 2장 끝(PC). 받은 코드 680 → 칸 폭 824 에 맞춰 760"
+    },
+    "coupang-carousel-320x100-gear": {
+      "provider": "coupang",
+      "id": 1032399,
+      "template": "carousel",
+      "trackingCode": "AF2011879",
+      "width": 320,
+      "height": 100,
+      "memo": "2026-09-23 주인 — 장비·안전 쪽 휴대폰"
+    },
+    "coupang-carousel-300x225-hub": {
+      "provider": "coupang",
+      "id": 1032144,
+      "template": "carousel",
+      "trackingCode": "AF2011879",
+      "width": 300,
+      "height": 225,
+      "memo": "권역 카드 칸의 빈 칸(PC) — 카드 한 칸(297×223)과 같은 4:3. 2026-09-22 주인이 만든 배너",
+      "label": "쿠팡 파트너스"
+    },
+    "trip-link-stay": {
+      "provider": "link",
+      "style": "stay-card",
+      "label": "트립닷컴 제휴",
+      "url": "https://kr.trip.com/?Allianceid=10551794&SID=331105566&trip_sub1=&trip_sub3=D19921568",
+      "title": "{region} 숙소 더 보기",
+      "desc": "트립닷컴에서 호텔·펜션 가격 비교 →",
+      "brand": "Trip.com",
+      "color": "#287DFA",
+      "memo": "권역 쪽 숙소 칸(한·중) — 2026-09-22 주인이 준 제휴 링크(한·중 같은 링크). 배너 코드를 받으면 바꿈",
+      "title_zh": "在 Trip.com 查看附近酒店",
+      "desc_zh": "比较酒店·民宿价格 →",
+      "label_zh": "Trip.com 合作"
+    },
+    "coupang-carousel-680x140-spot": {
+      "provider": "coupang",
+      "id": 1032947,
+      "template": "carousel",
+      "trackingCode": "AF2011879",
+      "width": 680,
+      "height": 140,
+      "memo": "권역 쪽 바닷가 명소 위 PC — 주인이 주신 코드(2026-09-25)",
+      "label": "쿠팡 파트너스"
+    },
+    "coupang-carousel-290x100-spot": {
+      "provider": "coupang",
+      "id": 1032947,
+      "template": "carousel",
+      "trackingCode": "AF2011879",
+      "width": 290,
+      "height": 100,
+      "memo": "권역 쪽 바닷가 명소 위 휴대폰 — 320px 기기에서도 안 넘치는 크기",
+      "label": "쿠팡 파트너스"
+    }
+  },
+  "slots": {
+    "guide-season-pc": {
+      "on": true,
+      "device": "pc",
+      "banner": "coupang-carousel-580x240",
+      "memo": "참고서(guide/) 이달의 바다 — 제철 상자 아래 왼쪽 칸"
+    },
+    "travel-map-pc": {
+      "on": true,
+      "device": "pc",
+      "banner": "coupang-carousel-320x100-travel",
+      "memo": "관광·맛집·숙소 — 지도 옆 안내 아래"
+    },
+    "travel-map-mobile": {
+      "on": true,
+      "device": "mobile",
+      "banner": "coupang-carousel-320x100-travel",
+      "memo": "관광·맛집·숙소 — 지도 아래 안내 칸(휴대폰)"
+    },
+    "travel-bottom-pc": {
+      "on": true,
+      "device": "pc",
+      "banner": "coupang-carousel-760x140-travel",
+      "memo": "관광·맛집·숙소 — 동행별 코스 아래, 쪽 끝"
+    },
+    "travel-bottom-mobile": {
+      "on": true,
+      "device": "mobile",
+      "banner": "coupang-carousel-320x100-travel",
+      "memo": "관광·맛집·숙소 — 쪽 끝(휴대폰)"
+    },
+    "tide-map-pc": {
+      "on": true,
+      "device": "pc",
+      "banner": "coupang-carousel-320x100-tide",
+      "memo": "전국 물때표 — 지도 옆 안내 상자 아래"
+    },
+    "tide-map-mobile": {
+      "on": true,
+      "device": "mobile",
+      "banner": "coupang-carousel-320x100-tide",
+      "memo": "전국 물때표 — 지도 아래 안내 칸(휴대폰)"
+    },
+    "fish-top-pc": {
+      "on": true,
+      "device": "pc",
+      "banner": "coupang-carousel-760x140-fish",
+      "memo": "낚시 어종 쪽 — 왕초보 기초 상자 아래, 어종 카드 위"
+    },
+    "fish-top-mobile": {
+      "on": true,
+      "device": "mobile",
+      "banner": "coupang-carousel-320x100-fish",
+      "memo": "낚시 어종 쪽 목록 위(휴대폰)"
+    },
+    "catch-top-mobile": {
+      "on": true,
+      "device": "mobile",
+      "banner": "coupang-carousel-320x100-gleaning",
+      "memo": "해루질 대상 쪽 목록 위(휴대폰)"
+    },
+    "catch-basics-pc": {
+      "on": true,
+      "device": "pc",
+      "banner": "coupang-carousel-760x140-gleaning",
+      "memo": "왕초보 해루질 기초 — 그림 강의 아래, 대상 목록 위"
+    },
+    "catch-basics-mobile": {
+      "on": true,
+      "device": "mobile",
+      "banner": "coupang-carousel-320x100-gleaning",
+      "memo": "왕초보 해루질 기초(휴대폰)"
+    },
+    "catch-top-pc": {
+      "on": true,
+      "device": "pc",
+      "banner": "coupang-carousel-760x140-gleaning",
+      "memo": "해루질 대상 쪽 — 왕초보 기초 상자 아래, 대상 카드 위"
+    },
+    "gear-2-pc": {
+      "on": true,
+      "device": "pc",
+      "banner": "coupang-carousel-760x140-gleaning",
+      "memo": "장비·안전 2장 해루질 장비 끝"
+    },
+    "gear-2-mobile": {
+      "on": true,
+      "device": "mobile",
+      "banner": "coupang-carousel-320x100-gleaning",
+      "memo": "장비·안전 2장 해루질 장비 끝(휴대폰)"
+    },
+    "gear-3-pc": {
+      "on": true,
+      "device": "pc",
+      "banner": "coupang-carousel-720x140-gear",
+      "memo": "장비·안전 3장 낚시 장비 끝"
+    },
+    "gear-3-mobile": {
+      "on": true,
+      "device": "mobile",
+      "banner": "coupang-carousel-320x100-gear",
+      "memo": "장비·안전 3장 낚시 장비 끝(휴대폰)"
+    },
+    "hub-season-pc": {
+      "on": true,
+      "device": "pc",
+      "banner": "coupang-carousel-580x240",
+      "memo": "묶음 쪽(제주·전남·충남·전북·경남·경북·강원·부산울산·인천경기) 이달의 바다 — 제철 상자 아래 왼쪽 칸"
+    },
+    "hub-season-mobile": {
+      "on": true,
+      "device": "mobile",
+      "banner": "coupang-carousel-320x100",
+      "memo": "묶음 쪽 휴대폰 — 칸 맨 끝(축제 상자 아래)"
+    },
+    "guide-season-mobile": {
+      "on": true,
+      "device": "mobile",
+      "banner": "coupang-carousel-320x100",
+      "memo": "참고서(guide/) 이달의 바다 — 칸 맨 끝(축제 상자 아래)"
+    },
+    "index-mid-pc": {
+      "on": true,
+      "device": "pc",
+      "banner": "coupang-carousel-760x140-index",
+      "memo": "첫 화면 — 큰 칸 셋(.g-main)과 카드 넷(.g-four) 사이"
+    },
+    "index-mid-mobile": {
+      "on": true,
+      "device": "mobile",
+      "banner": "coupang-carousel-290x100-index",
+      "memo": "첫 화면 휴대폰 — 같은 자리"
+    },
+    "hub-grid-pc": {
+      "on": false,
+      "device": "pc",
+      "banner": "coupang-carousel-300x225-hub",
+      "memo": "권역 카드 칸(묶음 쪽·제주 첫 화면·참고서)에서 카드 수가 줄을 다 채우지 못해 빈 칸이 생길 때만 그 칸에. 휴대폰은 칸이 작아(155×116) 싣지 않음 · 2026-09-24 껐습니다 — 같은 쪽의 hub-season-pc 와 나란히 나와 같은 배너가 두 번 보였습니다(주인 지시)",
+      "dynamic": "js/ads.js 가 .rc-grid 의 빈 칸을 찾아 붙임"
+    },
+    "region-stay": {
+      "on": true,
+      "device": "all",
+      "banner": "trip-link-stay",
+      "memo": "권역 쪽(한국어 57·중국어) 숙소 칸 첫 묶음 맨 끝, 한 줄을 꽉 채우면 숙소 하나를 빼고 그 자리에",
+      "dynamic": "js/region-extra.js · zh-cn/js/region.js 가 숙소를 그린 뒤 붙임"
+    },
+    "region-spot-pc": {
+      "on": true,
+      "device": "pc",
+      "banner": "coupang-carousel-680x140-spot",
+      "label": false,
+      "memo": "권역 쪽 '바닷가 명소' 바로 위 (PC) — 표시줄 없음(주인 지시)"
+    },
+    "region-spot-mobile": {
+      "on": true,
+      "device": "mobile",
+      "banner": "coupang-carousel-290x100-spot",
+      "label": false,
+      "memo": "권역 쪽 '바닷가 명소' 바로 위 (휴대폰) — 표시줄 없음(주인 지시)"
+    }
+  }
+}

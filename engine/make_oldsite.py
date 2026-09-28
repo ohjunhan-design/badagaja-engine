@@ -50,7 +50,12 @@ ROOT = os.path.dirname(HERE)
 # 저장소 안에 둘 자리
 둘자리 = os.path.join(ROOT, 'oldsite')
 
-뜰꼬리 = ('.html', '.css', '.js')
+# ★ **.json 도 뜹니다** (2026-09-28 · 바로 고침)
+#   처음에는 html·css·js 만 떴습니다. 그랬더니 이관 도구가
+#   zh-cn/i18n/region-ko.json 을 못 찾아 18번이 FAIL 났습니다.
+#   이관 도구들이 읽는 것은 data/*.json 과 i18n/*.json 입니다.
+#   3.3MB 더 뜨면 됩니다.
+뜰꼬리 = ('.html', '.css', '.js', '.json', '.xml', '.txt')
 
 # ★ 이 칸들은 **절대 안 뜹니다**
 #   data-private — 근거 자료는 웹에 안 냅니다 (주인 규칙 11)
@@ -143,7 +148,11 @@ def main():
     for 상대, 온길 in 것들:
         여기 = os.path.join(둘자리, 상대.replace('/', os.sep))
         os.makedirs(os.path.dirname(여기), exist_ok=True)
-        if 상대.endswith('.html'):
+        # ★ **글자 파일은 모두 가립니다** (2026-09-28 · 바로 고침)
+        #   처음에는 html 만 가렸습니다. 그랬더니 data/*.json 에
+        #   35곳이 그대로 남았습니다. 마을 문의처 번호입니다.
+        #   어느 꼴로 적혔든 개인 번호는 개인 번호입니다.
+        if 상대.endswith(뜰꼬리):
             글 = io2.open(온길, encoding='utf-8', errors='replace').read()
             글, 가린수 = 전화가리기(글)
             가린것[0] += 가린수

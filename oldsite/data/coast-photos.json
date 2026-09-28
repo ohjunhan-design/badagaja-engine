@@ -1,0 +1,1595 @@
+{
+  "_source": "충남·전북 권역 사진 — 한국관광공사 관광정보 이미지(공공누리 1·3유형, 3유형은 원본 그대로)와 위키미디어 공용(CC). tools/photo-art.ps1·build-credits.ps1 이 읽음 (2026-09-18)",
+  "items": [
+    {
+      "use": "hero-hampyeong",
+      "region": "hampyeong",
+      "spot": "",
+      "title": "함평 안악해변",
+      "file": "img/hampyeong/hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/70/3061170_image2_1.jpg"
+    },
+    {
+      "use": "hero-boseong",
+      "region": "boseong",
+      "spot": "",
+      "title": "보성 율포해수욕장",
+      "file": "img/boseong/hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/29/3370529_image2_1.JPG"
+    },
+    {
+      "use": "hero-gangjin",
+      "region": "gangjin",
+      "spot": "",
+      "title": "강진 가우도",
+      "file": "img/gangjin/hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/62/4065162_image2_1.jpg"
+    },
+    {
+      "use": "hero-goheung",
+      "region": "goheung",
+      "spot": "",
+      "title": "고흥 녹동항 바다정원",
+      "file": "img/goheung/hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/46/4077346_image2_1.jpg"
+    },
+    {
+      "use": "hero-jangheung",
+      "region": "jangheung",
+      "spot": "",
+      "title": "장흥 소등섬",
+      "file": "img/jangheung/hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/70/3303270_image2_1.jpg"
+    },
+    {
+      "use": "hero-jindo",
+      "region": "jindo",
+      "spot": "",
+      "title": "진도 세방낙조 전망대",
+      "file": "img/jindo/hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/23/3351423_image2_1.jpg"
+    },
+    {
+      "use": "hero-muan",
+      "region": "muan",
+      "spot": "",
+      "title": "무안 톱머리해수욕장",
+      "file": "img/muan/hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/86/3535786_image2_1.jpg"
+    },
+    {
+      "use": "hero-sinan",
+      "region": "sinan",
+      "spot": "",
+      "title": "신안 천사대교",
+      "file": "img/sinan/hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/07/3559007_image2_1.jpg"
+    },
+    {
+      "use": "hero-yeosu",
+      "region": "yeosu",
+      "spot": "",
+      "title": "여수 오동도",
+      "file": "img/yeosu/hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/13/3499913_image2_1.jpg"
+    },
+    {
+      "use": "hero-suncheon",
+      "region": "suncheon",
+      "spot": "",
+      "title": "순천만",
+      "file": "img/suncheon/hero.jpg",
+      "credit": "Jjw",
+      "license": "CC BY-SA 4.0",
+      "page": "https://commons.wikimedia.org/wiki/File:20181231_Suncheon_Bay_001.jpg"
+    },
+    {
+      "use": "hero-yeonggwang",
+      "region": "yeonggwang",
+      "spot": "",
+      "title": "영광 백수해안도로",
+      "file": "img/yeonggwang/hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/04/4057304_image2_1.jpg"
+    },
+    {
+      "use": "hero-gwangyang",
+      "region": "gwangyang",
+      "spot": "",
+      "title": "광양만과 이순신대교",
+      "file": "img/gwangyang/hero.jpg",
+      "credit": "Glabb",
+      "license": "Public domain",
+      "page": "https://commons.wikimedia.org/wiki/File:Yi_Sun-sin_Bridge.jpg"
+    },
+    {
+      "use": "hero-haenam",
+      "region": "haenam",
+      "spot": "",
+      "title": "해남 땅끝송호해수욕장",
+      "file": "img/haenam/hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/87/3587587_image2_1.jpg"
+    },
+    {
+      "use": "hero-mokpo",
+      "region": "mokpo",
+      "spot": "",
+      "title": "목포대교",
+      "file": "img/mokpo/hero.jpg",
+      "credit": "Mobius6",
+      "license": "CC BY-SA 4.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Mokpo_Bridge_20241004_001.jpg"
+    },
+    {
+      "use": "hero-wando",
+      "region": "wando",
+      "spot": "",
+      "title": "완도 신지명사십리해수욕장",
+      "file": "img/wando/hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource_photo/59/4060859_image2_1.jpg"
+    },
+    {
+      "use": "hero-taean",
+      "region": "taean",
+      "spot": "",
+      "title": "만리포 일몰",
+      "file": "img/coast/taean-hero.jpg",
+      "credit": "Olga Lipunova",
+      "license": "CC BY-SA 3.0",
+      "page": "https://commons.wikimedia.org/wiki/File:%ED%83%9C%EC%95%88%ED%95%B4%EC%95%88%EA%B5%AD%EB%A6%BD%EA%B3%B5%EC%9B%90_%EB%A7%8C%EB%A6%AC%ED%8F%AC_%EC%9D%BC%EB%AA%B0_3.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "taean",
+      "spot": "학암포해수욕장",
+      "title": "학암포해수욕장",
+      "file": "img/coast/taean-hakampo.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/39/3340739_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "taean",
+      "spot": "만리포해수욕장",
+      "title": "만리포해수욕장",
+      "file": "img/coast/taean-mallipo.jpg",
+      "credit": "Olga Lipunova",
+      "license": "CC BY-SA 3.0",
+      "page": "https://commons.wikimedia.org/wiki/File:%ED%83%9C%EC%95%88%ED%95%B4%EC%95%88%EA%B5%AD%EB%A6%BD%EA%B3%B5%EC%9B%90_%EB%A7%8C%EB%A6%AC%ED%8F%AC_5.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "taean",
+      "spot": "몽산포해수욕장",
+      "title": "몽산포해수욕장",
+      "file": "img/coast/taean-mongsanpo.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/78/3344178_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "taean",
+      "spot": "가의도",
+      "title": "가의도",
+      "file": "img/coast/taean-gauido.jpg",
+      "credit": "Jjw",
+      "license": "CC BY-SA 4.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Gauido_at_Taeanhaean_National_Park_image_4.jpg"
+    },
+    {
+      "use": "hero-seosan",
+      "region": "seosan",
+      "spot": "",
+      "title": "삼길포항",
+      "file": "img/coast/seosan-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/40/3531440_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "seosan",
+      "spot": "해미읍성",
+      "title": "해미읍성",
+      "file": "img/coast/seosan-haemi.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/28/3560128_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "seosan",
+      "spot": "삼길포항",
+      "title": "삼길포항",
+      "file": "img/coast/seosan-samgilpo.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/41/3531441_image2_1.jpg"
+    },
+    {
+      "use": "hero-dangjin",
+      "region": "dangjin",
+      "spot": "",
+      "title": "왜목마을 해변",
+      "file": "img/coast/dangjin-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/64/3567564_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "dangjin",
+      "spot": "왜목마을",
+      "title": "왜목마을",
+      "file": "img/coast/dangjin-waemok.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/60/3567560_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "dangjin",
+      "spot": "장고항",
+      "title": "장고항",
+      "file": "img/coast/dangjin-janggo.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/30/3567530_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "dangjin",
+      "spot": "마섬포구",
+      "title": "마섬포구",
+      "file": "img/coast/dangjin-maseom.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/66/3567566_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "dangjin",
+      "spot": "석문선착장",
+      "title": "석문선착장",
+      "file": "img/coast/dangjin-seokmun.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/07/3567707_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "dangjin",
+      "spot": "도비도항",
+      "title": "도비도항",
+      "file": "img/coast/dangjin-dobido.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/48/3567548_image2_1.jpg"
+    },
+    {
+      "use": "hero-boryeong",
+      "region": "boryeong",
+      "spot": "",
+      "title": "보령 대천해수욕장",
+      "file": "img/coast/boryeong-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/66/3513866_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "boryeong",
+      "spot": "대천해수욕장",
+      "title": "대천해수욕장",
+      "file": "img/coast/boryeong-daecheon-beach.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/10/3560610_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "boryeong",
+      "spot": "대천항",
+      "title": "대천항",
+      "file": "img/coast/boryeong-daecheon-port.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/67/3334167_image2_1.JPG"
+    },
+    {
+      "use": "spot",
+      "region": "boryeong",
+      "spot": "삽시도",
+      "title": "삽시도",
+      "file": "img/coast/boryeong-sapsido.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/60/3019060_image2_1.png"
+    },
+    {
+      "use": "hero-seocheon",
+      "region": "seocheon",
+      "spot": "띠섬목해변",
+      "title": "서천_띠섬목해변 (2)",
+      "file": "img/coast/seocheon-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/62/3401262_image1_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "seocheon",
+      "spot": "비인 선도리 쌍도해안",
+      "title": "비인 선도리 쌍도해안",
+      "file": "img/coast/seocheon-ssangdo.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/74/3339974_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "seocheon",
+      "spot": "신성리 갈대밭",
+      "title": "신성리 갈대밭",
+      "file": "img/coast/seocheon-sinseongri.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/65/3533665_image2_1.jpg"
+    },
+    {
+      "use": "hero-gunsan",
+      "region": "gunsan",
+      "spot": "",
+      "title": "군산 고군산군도",
+      "file": "img/coast/gunsan-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/89/3588689_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "gunsan",
+      "spot": "군산 내항 뜬다리부두",
+      "title": "군산 내항 뜬다리부두",
+      "file": "img/coast/gunsan-pier.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://commons.wikimedia.org/wiki/File:Pier_of_Port_of_Gunsan_01.jpg"
+    },
+    {
+      "use": "hero-buan",
+      "region": "buan",
+      "spot": "",
+      "title": "적벽강 노을",
+      "file": "img/coast/buan-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/38/3558138_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "buan",
+      "spot": "적벽강",
+      "title": "적벽강",
+      "file": "img/coast/buan-jeokbyeok.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/39/3558139_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "buan",
+      "spot": "격포항",
+      "title": "격포항",
+      "file": "img/coast/buan-gyeokpo.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/62/3542862_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "buan",
+      "spot": "솔섬",
+      "title": "솔섬",
+      "file": "img/coast/buan-solseom.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/55/3520255_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "buan",
+      "spot": "모항해수욕장",
+      "title": "모항해수욕장",
+      "file": "img/coast/buan-mohang.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/21/3375121_image2_1.JPG"
+    },
+    {
+      "use": "spot",
+      "region": "buan",
+      "spot": "채석강",
+      "title": "채석강",
+      "file": "img/coast/buan-chaeseok.jpg",
+      "credit": "Byungjoon Kim",
+      "license": "CC BY 2.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Korea-Buan_County-Chaeseokgang-01.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "buan",
+      "spot": "변산해수욕장",
+      "title": "변산해수욕장",
+      "file": "img/coast/buan-byeonsan.jpg",
+      "credit": "S.M.M.Musabbir Uddin",
+      "license": "CC BY-SA 4.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Byeonsan_Sea_Beach.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "gochang",
+      "spot": "람사르고창갯벌센터",
+      "title": "람사르고창갯벌센터",
+      "file": "img/coast/gochang-tidalflat.jpg",
+      "credit": "문화재청(국가유산청)",
+      "license": "공공누리 제1유형",
+      "page": "https://commons.wikimedia.org/wiki/File:Gochang_tidal_flat_01.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "gochang",
+      "spot": "동호해수욕장",
+      "title": "동호해수욕장",
+      "file": "img/coast/gochang-dongho.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/09/3336509_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "gochang",
+      "spot": "구시포항",
+      "title": "구시포항",
+      "file": "img/coast/gochang-gusipo.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/07/3536207_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "gochang",
+      "spot": "선운사",
+      "title": "선운사",
+      "file": "img/coast/gochang-seonunsa.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/19/3347919_image2_1.jpg"
+    },
+    {
+      "use": "hero-gochang",
+      "region": "gochang",
+      "spot": "",
+      "title": "고창 갯벌 노을",
+      "file": "img/coast/gochang-hero.jpg",
+      "credit": "Seungh",
+      "license": "CC BY-SA 3.0",
+      "page": "https://commons.wikimedia.org/wiki/File:%EA%B3%A0%EC%B0%BD%EA%B0%AF%EB%B2%8C.jpg"
+    },
+    {
+      "use": "hero-tongyeong",
+      "region": "tongyeong",
+      "spot": "",
+      "title": "통영 미륵산에서 본 한려수도",
+      "file": "img/coast/tongyeong-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/74/3557774_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "tongyeong",
+      "spot": "달아공원",
+      "title": "달아공원",
+      "file": "img/coast/tongyeong-dalagongwon.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/84/3072984_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "tongyeong",
+      "spot": "욕지도",
+      "title": "욕지도해안일주도로",
+      "file": "img/coast/tongyeong-yokjido.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/43/3580443_image2_1.jpg"
+    },
+    {
+      "use": "hero-changwon",
+      "region": "changwon",
+      "spot": "",
+      "title": "창원 우도",
+      "file": "img/coast/changwon-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/35/3565835_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "changwon",
+      "spot": "광암해수욕장",
+      "title": "광암해수욕장",
+      "file": "img/coast/changwon-gwangamhaesuyokjang.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/78/3565278_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "changwon",
+      "spot": "우도",
+      "title": "창원 우도",
+      "file": "img/coast/changwon-udo.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/35/3565835_image2_1.jpg"
+    },
+    {
+      "use": "hero-pohang",
+      "region": "pohang",
+      "spot": "호미곶 해안단구 (경북 동해안 국가지질공원)",
+      "title": "호미곶 해안단구_1_국가지질공원",
+      "file": "img/coast/pohang-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/26/2917726_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "pohang",
+      "spot": "구룡포 주상절리",
+      "title": "구룡포 주상절리",
+      "file": "img/coast/pohang-guryongpo-jusangjeolri.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/40/3528240_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "pohang",
+      "spot": "칠포해수욕장",
+      "title": "칠포해수욕장",
+      "file": "img/coast/pohang-chilpohaesuyokjang.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/51/3528351_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "pohang",
+      "spot": "이가리 닻 전망대",
+      "title": "이가리 닻 전망대",
+      "file": "img/coast/pohang-igari-dat-jeonmangdae.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/78/3337478_image2_1.jpg"
+    },
+    {
+      "use": "hero-uljin",
+      "region": "uljin",
+      "spot": "죽변항",
+      "title": "울진_죽변항 (1)",
+      "file": "img/coast/uljin-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/70/3583270_image1_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "uljin",
+      "spot": "월송정",
+      "title": "월송정",
+      "file": "img/coast/uljin-wolsongjeong.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/24/3500524_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "uljin",
+      "spot": "구산해수욕장",
+      "title": "구산해수욕장",
+      "file": "img/coast/uljin-gusanhaesuyokjang.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/70/3039170_image2_1.JPG"
+    },
+    {
+      "use": "spot",
+      "region": "uljin",
+      "spot": "기성망양해수욕장",
+      "title": "기성망양해수욕장",
+      "file": "img/coast/uljin-giseongmangyanghaesuyokjang.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/75/3576575_image2_1.jpg"
+    },
+    {
+      "use": "hero-ulleung",
+      "region": "ulleung",
+      "spot": "",
+      "title": "Jeodong Fishing Port OCT2020",
+      "file": "img/coast/ulleung-hero.jpg",
+      "credit": "Gupdaal",
+      "license": "CC BY 4.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Jeodong_Fishing_Port_OCT2020.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "ulleung",
+      "spot": "독도전망대 케이블카",
+      "title": "독도전망대 케이블카",
+      "file": "img/coast/ulleung-dokdojeonmangdae-keibeulka.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/80/3575380_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "ulleung",
+      "spot": "저동항",
+      "title": "저동항",
+      "file": "img/coast/ulleung-jeodonghang.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/98/3575298_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "ulleung",
+      "spot": "관음도",
+      "title": "관음도 (울릉도, 독도 국가지질공원)",
+      "file": "img/coast/ulleung-gwaneumdo.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/33/3574833_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "ulleung",
+      "spot": "나리분지",
+      "title": "나리분지",
+      "file": "img/coast/ulleung-naribunji.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/34/3524434_image2_1.jpg"
+    },
+    {
+      "use": "hero-donghae",
+      "region": "donghae",
+      "spot": "추암해변",
+      "title": "추암해변_3",
+      "file": "img/coast/donghae-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/71/2921671_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "donghae",
+      "spot": "묵호항",
+      "title": "묵호항",
+      "file": "img/coast/donghae-mukhohang.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/55/3423355_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "donghae",
+      "spot": "추암 촛대바위",
+      "title": "추암 촛대바위",
+      "file": "img/coast/donghae-chuam-chotdaebawi.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/83/2921483_image2_1.jpg"
+    },
+    {
+      "use": "hero-gangneung",
+      "region": "gangneung",
+      "spot": "",
+      "title": "강릉 정동진해변",
+      "file": "img/coast/gangneung-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/82/3534482_image2_1.jpg"
+    },
+    {
+      "use": "hero-sokcho",
+      "region": "sokcho",
+      "spot": "",
+      "title": "속초 영금정",
+      "file": "img/coast/sokcho-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/01/3576201_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "sokcho",
+      "spot": "영금정",
+      "title": "영금정",
+      "file": "img/coast/sokcho-yeonggeumjeong.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/01/3576201_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "sokcho",
+      "spot": "영랑호",
+      "title": "영랑호",
+      "file": "img/coast/sokcho-yeongrangho.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/13/3449813_image2_1.jpg"
+    },
+    {
+      "use": "hero-gwgoseong",
+      "region": "gwgoseong",
+      "spot": "",
+      "title": "고성 송지호해안 서낭바위",
+      "file": "img/coast/gwgoseong-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/00/3022400_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "gwgoseong",
+      "spot": "통일안보공원",
+      "title": "통일안보공원",
+      "file": "img/coast/gwgoseong-tongilanbogongwon.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/45/3378445_image2_1.JPG"
+    },
+    {
+      "use": "spot",
+      "region": "gwgoseong",
+      "spot": "대진항",
+      "title": "대진항",
+      "file": "img/coast/gwgoseong-daejinhang.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/09/3383909_image2_1.JPG"
+    },
+    {
+      "use": "hero-ganghwa",
+      "region": "ganghwa",
+      "spot": "",
+      "title": "Sunset in Seogmo-do Island - panoramio",
+      "file": "img/coast/ganghwa-hero.jpg",
+      "credit": "Cho's",
+      "license": "CC BY-SA 3.0",
+      "page": "https://commons.wikimedia.org/wiki/File%3ASunset_in_Seogmo-do_Island_-_panoramio.jpg"
+    },
+    {
+      "use": "hero-hongseong",
+      "region": "hongseong",
+      "spot": "속동전망대",
+      "title": "속동전망대 (5)",
+      "file": "img/coast/hongseong-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/53/3333753_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "hongseong",
+      "spot": "남당항",
+      "title": "남당항어촌마을",
+      "file": "img/coast/hongseong-namdanghang.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/19/3338019_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "hongseong",
+      "spot": "궁리포구",
+      "title": "궁리포구",
+      "file": "img/coast/hongseong-gungripogu.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/79/3357079_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "hongseong",
+      "spot": "죽도",
+      "title": "죽도 (보령)",
+      "file": "img/coast/hongseong-jukdo.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/31/3048131_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "hongseong",
+      "spot": "광천토굴새우젓단지",
+      "title": "광천토굴새우젓단지",
+      "file": "img/coast/hongseong-gwangcheontogulsaeujeotdanji.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/53/3034653_image2_1.jpg"
+    },
+    {
+      "use": "hero-gogunsan",
+      "region": "gogunsan",
+      "spot": "대장봉 전망대",
+      "title": "군산_대장봉 전망대 (1)",
+      "file": "img/coast/gogunsan-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/60/3550560_image1_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "gogunsan",
+      "spot": "무녀도 쥐똥섬",
+      "title": "고군산대교 주탑 중단부",
+      "file": "img/coast/gogunsan-munyeodo-jwittongseom.jpg",
+      "credit": "Gcd822",
+      "license": "CC BY-SA 4.0",
+      "page": "https://commons.wikimedia.org/wiki/File:%EA%B3%A0%EA%B5%B0%EC%82%B0%EB%8C%80%EA%B5%90_%EC%A3%BC%ED%83%91_%EC%A4%91%EB%8B%A8%EB%B6%80.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "gogunsan",
+      "spot": "선유도해수욕장",
+      "title": "선유교1",
+      "file": "img/coast/gogunsan-seonyudohaesuyokjang.jpg",
+      "credit": "Gcd822",
+      "license": "CC BY-SA 4.0",
+      "page": "https://commons.wikimedia.org/wiki/File:%EC%84%A0%EC%9C%A0%EA%B5%901.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "gogunsan",
+      "spot": "장자도",
+      "title": "장자도선착장",
+      "file": "img/coast/gogunsan-jangjado.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/35/3358135_image2_1.JPG"
+    },
+    {
+      "use": "hero-namhae",
+      "region": "namhae",
+      "spot": "설리해수욕장",
+      "title": "경남_남해_설리 해수욕장 (2)",
+      "file": "img/coast/namhae-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/26/3339026_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "namhae",
+      "spot": "상주은모래비치",
+      "title": "상주은모래비치캠핑장",
+      "file": "img/coast/namhae-sangjueunmoraebichi.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/19/2728319_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "namhae",
+      "spot": "송정솔바람해변",
+      "title": "송정솔바람해변",
+      "file": "img/coast/namhae-songjeongsolbaramhaebyeon.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/42/3556542_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "namhae",
+      "spot": "미조항",
+      "title": "미조항",
+      "file": "img/coast/namhae-mijohang.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/44/3554744_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "namhae",
+      "spot": "노도",
+      "title": "노도",
+      "file": "img/coast/namhae-nodo.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/64/3556464_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "namhae",
+      "spot": "금산 보리암",
+      "title": "In A Beautiful Place",
+      "file": "img/coast/namhae-geumsan-boriam.jpg",
+      "credit": "Lee Kyeong Hwan",
+      "license": "CC BY 3.0",
+      "page": "https://commons.wikimedia.org/wiki/File:In_A_Beautiful_Place_(30628057).jpeg"
+    },
+    {
+      "use": "hero-sacheon",
+      "region": "sacheon",
+      "spot": "",
+      "title": "사천 코끼리바위 해안",
+      "file": "img/coast/sacheon-hero.jpg",
+      "credit": "GNUErkin",
+      "license": "CC BY-SA 4.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Elephant_Mountain_01.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "sacheon",
+      "spot": "삼천포용궁수산시장",
+      "title": "삼천포용궁수산시장",
+      "file": "img/coast/sacheon-samcheonpoyonggungsusansijan.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/61/3515461_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "sacheon",
+      "spot": "사천 선진리성",
+      "title": "사천선진리성",
+      "file": "img/coast/sacheon-sacheon-seonjinriseong.jpg",
+      "credit": "문화재청",
+      "license": "CC BY-SA 4.0",
+      "page": "https://commons.wikimedia.org/wiki/File:%EC%82%AC%EC%B2%9C%EC%84%A0%EC%A7%84%EB%A6%AC%EC%84%B1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "sacheon",
+      "spot": "대도",
+      "title": "대도어촌체험마을",
+      "file": "img/coast/sacheon-daedo.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/60/3565860_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "goseong",
+      "spot": "자란만",
+      "title": "고성 자란만",
+      "file": "img/coast/goseong-jaranman.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/94/3040094_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "goseong",
+      "spot": "당항포관광지",
+      "title": "통영 당포성 2",
+      "file": "img/coast/goseong-danghangpogwangwangji.jpg",
+      "credit": "Yongchangjang",
+      "license": "CC BY-SA 4.0",
+      "page": "https://commons.wikimedia.org/wiki/File:%ED%86%B5%EC%98%81_%EB%8B%B9%ED%8F%AC%EC%84%B1_2.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "goseong",
+      "spot": "해맞이공원",
+      "title": "해맞이공원",
+      "file": "img/coast/goseong-haematigongwon.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/53/3377153_image2_1.JPG"
+    },
+    {
+      "use": "hero-geoje",
+      "region": "geoje",
+      "spot": "",
+      "title": "Aerial View of Oedo",
+      "file": "img/coast/geoje-hero.jpg",
+      "credit": "NabinMewahang",
+      "license": "CC BY-SA 4.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Aerial_View_of_Oedo.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "geoje",
+      "spot": "학동흑진주몽돌해변",
+      "title": "Picture of Mongdol Beach in Geoje island",
+      "file": "img/coast/geoje-hakdongheukjinjumongdolhaeby.jpg",
+      "credit": "Parkhyunsang",
+      "license": "CC BY-SA 3.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Picture_of_Mongdol_Beach_in_Geoje_island.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "geoje",
+      "spot": "바람의언덕",
+      "title": "2014년 5월 25일 경상남도 거제시 바람의언덕01",
+      "file": "img/coast/geoje-baramuieondeok.jpg",
+      "credit": "최광모",
+      "license": "CC BY-SA 4.0",
+      "page": "https://commons.wikimedia.org/wiki/File:2014%EB%85%84_5%EC%9B%94_25%EC%9D%BC_%EA%B2%BD%EC%83%81%EB%82%A8%EB%8F%84_%EA%B1%B0%EC%A0%9C%EC%8B%9C_%EB%B0%94%EB%9E%8C%EC%9D%98%EC%96%B8%EB%8D%9501.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "geoje",
+      "spot": "칠천량해전공원",
+      "title": "칠천량해전공원전시관",
+      "file": "img/coast/geoje-chilcheonryanghaejeongongwon.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/42/3510642_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "busanwest",
+      "spot": "다대포해수욕장",
+      "title": "Dadaepo beach station platform 20180420 192107",
+      "file": "img/coast/busanwest-dadaepohaesuyokjang.jpg",
+      "credit": "Dongchan0417",
+      "license": "CC BY-SA 3.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Dadaepo_beach_station_platform_20180420_192107.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "busanwest",
+      "spot": "송도해수욕장",
+      "title": "부산_서구_부산 송도해수욕장 (1)",
+      "file": "img/coast/busanwest-songdohaesuyokjang.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/59/3436159_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "busanwest",
+      "spot": "태종대",
+      "title": "Taejongdae, Busan, South Korea, October 2019 09",
+      "file": "img/coast/busanwest-taejongdae.jpg",
+      "credit": "Ahmed",
+      "license": "CC BY-SA 4.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Taejongdae,_Busan,_South_Korea,_October_2019_09.jpg"
+    },
+    {
+      "use": "hero-busaneast",
+      "region": "busaneast",
+      "spot": "",
+      "title": "Busan (53854311416)",
+      "file": "img/coast/busaneast-hero.jpg",
+      "credit": "David Lee from Redmond, WA, USA",
+      "license": "CC BY 2.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Busan_(53854311416).jpg"
+    },
+    {
+      "use": "spot",
+      "region": "busaneast",
+      "spot": "이기대",
+      "title": "Dongbaek island looking from Igidae Park",
+      "file": "img/coast/busaneast-igidae.jpg",
+      "credit": "Choi2451",
+      "license": "CC BY-SA 3.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Dongbaek_island_looking_from_Igidae_Park.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "busaneast",
+      "spot": "광안리해수욕장",
+      "title": "Busan (53853424102)",
+      "file": "img/coast/busaneast-gwanganrihaesuyokjang.jpg",
+      "credit": "David Lee from Redmond, WA, USA",
+      "license": "CC BY 2.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Busan_(53853424102).jpg"
+    },
+    {
+      "use": "spot",
+      "region": "busaneast",
+      "spot": "해동용궁사",
+      "title": "Busan (53854676259)",
+      "file": "img/coast/busaneast-haedongyonggungsa.jpg",
+      "credit": "David Lee from Redmond, WA, USA",
+      "license": "CC BY 2.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Busan_(53854676259).jpg"
+    },
+    {
+      "use": "spot",
+      "region": "busaneast",
+      "spot": "대변항",
+      "title": "Daebyeon Port 3",
+      "file": "img/coast/busaneast-daebyeonhang.jpg",
+      "credit": "cezzie901",
+      "license": "CC BY 2.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Daebyeon_Port_3.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "busaneast",
+      "spot": "일광해수욕장",
+      "title": "Ilgwang Station Platform 20170311 172319",
+      "file": "img/coast/busaneast-ilgwanghaesuyokjang.jpg",
+      "credit": "Himuka tachibana",
+      "license": "CC BY-SA 4.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Ilgwang_Station_Platform_20170311_172319.jpg"
+    },
+    {
+      "use": "hero-ulsan",
+      "region": "ulsan",
+      "spot": "대왕암공원",
+      "title": "대왕암의 가을",
+      "file": "img/coast/ulsan-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/60/3583560_image1_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "ulsan",
+      "spot": "진하해수욕장",
+      "title": "Sunrise",
+      "file": "img/coast/ulsan-jinhahaesuyokjang.jpg",
+      "credit": "Jh Jung",
+      "license": "CC BY 3.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Sunrise_(169520597).jpeg"
+    },
+    {
+      "use": "spot",
+      "region": "ulsan",
+      "spot": "간절곶",
+      "title": "간절곶",
+      "file": "img/coast/ulsan-ganjeolgot.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/50/3583350_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "ulsan",
+      "spot": "대왕암공원",
+      "title": "대왕암공원",
+      "file": "img/coast/ulsan-daewangamgongwon.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/16/3583516_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "ulsan",
+      "spot": "일산해수욕장",
+      "title": "일산해수욕장(울산)",
+      "file": "img/coast/ulsan-ilsanhaesuyokjang.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/44/3528444_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "ulsan",
+      "spot": "주전몽돌해변",
+      "title": "주전몽돌해변",
+      "file": "img/coast/ulsan-jujeonmongdolhaebyeon.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/42/3014942_image2_1.jpg"
+    },
+    {
+      "use": "hero-gyeongju",
+      "region": "gyeongju",
+      "spot": "감포항",
+      "title": "경주 문무대왕릉",
+      "file": "img/coast/gyeongju-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/41/4103841_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "gyeongju",
+      "spot": "양남 주상절리 전망대",
+      "title": "Gyeongju Yangnam Jusangjeolli Cliff",
+      "file": "img/coast/gyeongju-yangnam-jusangjeolri-jeonman.jpg",
+      "credit": "Serena Kang",
+      "license": "CC BY-SA 4.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Gyeongju_Yangnam_Jusangjeolli_Cliff.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "gyeongju",
+      "spot": "문무대왕릉(봉길대왕암해변)",
+      "title": "Underwater Tomb of King Munmu",
+      "file": "img/coast/gyeongju-munmudaewangreung-bonggildae.jpg",
+      "credit": "vatar/편성재",
+      "license": "CC BY-SA 3.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Underwater_Tomb_of_King_Munmu.jpeg"
+    },
+    {
+      "use": "spot",
+      "region": "gyeongju",
+      "spot": "이견대",
+      "title": "경주 이견대",
+      "file": "img/coast/gyeongju-igyeondae.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/11/3542511_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "gyeongju",
+      "spot": "나정고운모래해변",
+      "title": "Starfish of Korea",
+      "file": "img/coast/gyeongju-najeonggounmoraehaebyeon.jpg",
+      "credit": "Chelsea Marie Hicks",
+      "license": "CC BY 2.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Starfish_of_Korea.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "gyeongju",
+      "spot": "전촌용굴",
+      "title": "Gampo",
+      "file": "img/coast/gyeongju-jeonchonyonggul.jpg",
+      "credit": "Dittwjfsdgkvkdjg",
+      "license": "CC BY-SA 3.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Gampo.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "yeongdeok",
+      "spot": "장사상륙작전 전승기념관",
+      "title": "영덕_장사상륙작전 전승기념관 (8)",
+      "file": "img/coast/yeongdeok-jangsasangryukjakjeon-jeonse.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/13/3572813_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "yeongdeok",
+      "spot": "삼사해상공원",
+      "title": "삼사동",
+      "file": "img/coast/yeongdeok-samsahaesanggongwon.jpg",
+      "credit": "박영철",
+      "license": "CC BY 3.0",
+      "page": "https://commons.wikimedia.org/wiki/File:%EC%82%BC%EC%82%AC%EB%8F%99.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "yeongdeok",
+      "spot": "영덕풍력발전단지",
+      "title": "영덕풍력발전단지",
+      "file": "img/coast/yeongdeok-yeongdeokpungryeokbaljeondan.jpg",
+      "credit": "이강철",
+      "license": "CC BY-SA 4.0",
+      "page": "https://commons.wikimedia.org/wiki/File:%EC%98%81%EB%8D%95%ED%92%8D%EB%A0%A5%EB%B0%9C%EC%A0%84%EB%8B%A8%EC%A7%80.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "yeongdeok",
+      "spot": "축산항",
+      "title": "축산항",
+      "file": "img/coast/yeongdeok-chuksanhang.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/54/3014954_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "yeongdeok",
+      "spot": "괴시리 전통마을",
+      "title": "괴시리 전통마을_2",
+      "file": "img/coast/yeongdeok-goesiri-jeontongmaeul.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/19/3039219_image2_1.JPG"
+    },
+    {
+      "use": "hero-samcheok",
+      "region": "samcheok",
+      "spot": "",
+      "title": "한국의 나폴리 장호 - panoramio - 우한길(HK Woo) (2)",
+      "file": "img/coast/samcheok-hero.jpg",
+      "credit": "우한길(HK Woo)",
+      "license": "CC BY 3.0",
+      "page": "https://commons.wikimedia.org/wiki/File%3A%ED%95%9C%EA%B5%AD%EC%9D%98_%EB%82%98%ED%8F%B4%EB%A6%AC_%EC%9E%A5%ED%98%B8_-_panoramio_-_%EC%9A%B0%ED%95%9C%EA%B8%B8%28HK_Woo%29_%282%29.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "samcheok",
+      "spot": "새천년해안도로",
+      "title": "Q1599269 Samcheok 01",
+      "file": "img/coast/samcheok-saecheonnyeonhaeandoro.jpg",
+      "credit": "*Youngjin",
+      "license": "CC BY-SA 4.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Q1599269_Samcheok_01.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "samcheok",
+      "spot": "덕봉산 해안생태탐방로",
+      "title": "2025-11-12 14.01.34 samcheok",
+      "file": "img/coast/samcheok-deokbongsan-haeansaengtaetam.jpg",
+      "credit": "You may select the license of your choice.",
+      "license": "CC0",
+      "page": "https://commons.wikimedia.org/wiki/File:2025-11-12_14.01.34_samcheok.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "samcheok",
+      "spot": "장호항",
+      "title": "한국의 나폴리 장호항",
+      "file": "img/coast/samcheok-janghohang.jpg",
+      "credit": "우한길(HK Woo)",
+      "license": "CC BY 3.0",
+      "page": "https://commons.wikimedia.org/wiki/File:%ED%95%9C%EA%B5%AD%EC%9D%98_%EB%82%98%ED%8F%B4%EB%A6%AC_%EC%9E%A5%ED%98%B8%ED%95%AD.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "samcheok",
+      "spot": "해신당공원",
+      "title": "삼척 해신당공원",
+      "file": "img/coast/samcheok-haesindanggongwon.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/87/3376587_image2_1.jpg"
+    },
+    {
+      "use": "hero-yangyang",
+      "region": "yangyang",
+      "spot": "",
+      "title": "양양 하조대해수욕장",
+      "file": "img/coast/yangyang-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/73/2745273_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "yangyang",
+      "spot": "휴휴암",
+      "title": "휴휴암(강원)",
+      "file": "img/coast/yangyang-hyuhyuam.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/38/3490638_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "yangyang",
+      "spot": "하조대",
+      "title": "하조대 무인등대",
+      "file": "img/coast/yangyang-hajodae.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/12/3511712_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "yangyang",
+      "spot": "수산항",
+      "title": "수산항",
+      "file": "img/coast/yangyang-susanhang.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/79/3336979_image2_1.jpg"
+    },
+    {
+      "use": "hero-yeongjong",
+      "region": "yeongjong",
+      "spot": "무의도",
+      "title": "무의도 (2)",
+      "file": "img/coast/yeongjong-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/94/3532994_image1_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "yeongjong",
+      "spot": "소무의도",
+      "title": "Ostrov Somuuido, Yongyu-dong, Jung District, Inčchon, Jižní Korea 04",
+      "file": "img/coast/yeongjong-somuuido.jpg",
+      "credit": "File by Fry72 (Karel Frydrýšek) uploaded to Wikimedia Commons; see [1] .",
+      "license": "CC BY-SA 4.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Ostrov_Somuuido,_Yongyu-dong,_Jung_District,_In%C4%8Dchon,_Ji%C5%BEn%C3%AD_Korea_04.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "yeongjong",
+      "spot": "장봉도",
+      "title": "장봉도 옹암해변",
+      "file": "img/coast/yeongjong-jangbongdo.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/54/3355854_image2_1.jpg"
+    },
+    {
+      "use": "hero-ongjin",
+      "region": "ongjin",
+      "spot": "",
+      "title": "옹진 백령도 두무진",
+      "file": "img/coast/ongjin-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/07/2918007_image2_1.JPG"
+    },
+    {
+      "use": "spot",
+      "region": "ongjin",
+      "spot": "장경리해수욕장",
+      "title": "Incheon City Ongjin-gun Janggyeongri Beach 20241102 (01)",
+      "file": "img/coast/ongjin-janggyeongrihaesuyokjang.jpg",
+      "credit": "LandAndTree",
+      "license": "CC0",
+      "page": "https://commons.wikimedia.org/wiki/File:Incheon_City_Ongjin-gun_Janggyeongri_Beach_20241102_(01).jpg"
+    },
+    {
+      "use": "spot",
+      "region": "ongjin",
+      "spot": "덕적도 서포리해수욕장",
+      "title": "Seopori pine forest promenade",
+      "file": "img/coast/ongjin-deokjeokdo-seoporihaesuyokja.jpg",
+      "credit": "LT sfm",
+      "license": "CC BY-SA 4.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Seopori_pine_forest_promenade.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "ongjin",
+      "spot": "자월도 장골해수욕장",
+      "title": "자월도 (Jawol-Do) - panoramio - 골뱅이 (1)",
+      "file": "img/coast/ongjin-jawoldo-janggolhaesuyokjang.jpg",
+      "credit": "골뱅이",
+      "license": "CC BY-SA 3.0",
+      "page": "https://commons.wikimedia.org/wiki/File:%EC%9E%90%EC%9B%94%EB%8F%84_(Jawol-Do)_-_panoramio_-_%EA%B3%A8%EB%B1%85%EC%9D%B4_(1).jpg"
+    },
+    {
+      "use": "hero-daebu",
+      "region": "daebu",
+      "spot": "구봉도 낙조전망대",
+      "title": "구봉도 낙조전망대 (4)",
+      "file": "img/coast/daebu-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/86/3334386_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "daebu",
+      "spot": "오이도 빨간등대",
+      "title": "Tomb auxilary complex of Kim Chi-in at Oido in 2026",
+      "file": "img/coast/daebu-oido-ppalgandeungdae.jpg",
+      "credit": "Sadopaul",
+      "license": "CC BY-SA 4.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Tomb_auxilary_complex_of_Kim_Chi-in_at_Oido_in_2026.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "daebu",
+      "spot": "방아머리해변",
+      "title": "대부도풍경 - panoramio",
+      "file": "img/coast/daebu-bangameorihaebyeon.jpg",
+      "credit": "冥想",
+      "license": "CC BY 3.0",
+      "page": "https://commons.wikimedia.org/wiki/File:%EB%8C%80%EB%B6%80%EB%8F%84%ED%92%8D%EA%B2%BD_-_panoramio.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "daebu",
+      "spot": "구봉도 낙조전망대",
+      "title": "구봉도 낙조전망대",
+      "file": "img/coast/daebu-gubongdo-nakjojeonmangdae.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/83/3334383_image2_1.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "daebu",
+      "spot": "탄도항 누에섬",
+      "title": "20230819 대부광산퇴적암층",
+      "file": "img/coast/daebu-tandohang-nueseom.jpg",
+      "credit": "Jjw",
+      "license": "CC BY-SA 4.0",
+      "page": "https://commons.wikimedia.org/wiki/File:20230819_%EB%8C%80%EB%B6%80%EA%B4%91%EC%82%B0%ED%87%B4%EC%A0%81%EC%95%94%EC%B8%B5.jpg"
+    },
+    {
+      "use": "spot",
+      "region": "hongseong",
+      "spot": "홍주읍성",
+      "title": "홍주읍성",
+      "file": "img/coast/hongseong-hongjuseong.jpg",
+      "credit": "Korea.net / 해외문화홍보원 (전한)",
+      "license": "CC BY-SA 2.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Korea_Hongjuseong_Fortres_02_(14039503167).jpg"
+    },
+    {
+      "use": "spot",
+      "region": "hongseong",
+      "spot": "김좌진장군생가지",
+      "title": "김좌진장군생가지",
+      "file": "img/coast/hongseong-kimjwajin.jpg",
+      "credit": "Trainholic",
+      "license": "CC BY 4.0",
+      "page": "https://commons.wikimedia.org/wiki/File:Birthplace_of_Kim_Chwa-chin.jpg"
+    },
+    {
+      "use": "hero-busanwest",
+      "region": "busanwest",
+      "spot": "부산 송도해수욕장",
+      "title": "부산_서구_부산 송도해수욕장 (6)",
+      "file": "img/coast/busanwest-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/64/3436164_image1_1.jpg"
+    },
+    {
+      "use": "hero-goseong",
+      "region": "goseong",
+      "spot": "고성 자란만",
+      "title": "경남_고성_고성 자란만 (4)",
+      "file": "img/coast/goseong-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제3유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/97/3040097_image2_1.jpg"
+    },
+    {
+      "use": "hero-hwaseong",
+      "region": "hwaseong",
+      "spot": "제부도",
+      "title": "제부도",
+      "file": "img/coast/hwaseong-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/88/3330988_image2_1.jpg"
+    },
+    {
+      "use": "hero-yeongdeok",
+      "region": "yeongdeok",
+      "spot": "[영덕 블루로드] 3코스 바람의 언덕",
+      "title": "영덕 죽도산전망대",
+      "file": "img/coast/yeongdeok-hero.jpg",
+      "credit": "한국관광공사",
+      "license": "공공누리 제1유형",
+      "page": "https://tong.visitkorea.or.kr/cms/resource/52/3576952_image2_1.jpg"
+    }
+  ]
+}

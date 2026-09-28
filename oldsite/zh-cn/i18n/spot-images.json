@@ -1,0 +1,15 @@
+{
+  "_설명": "관광지 참고 이미지(AI 생성) 계절 표기. 파일은 img/spot/<키>.jpg (prepare-spot-images.ps1로 示意图 표시·크기 조정). 프롬프트 원본은 D:\\바다가자\\중국어_관광지이미지_프롬프트.md",
+  "yeosu-1": { "season": "春季" },
+  "yeosu-2": { "season": "秋季" },
+  "yeosu-3": { "season": "春季" },
+  "yeosu-4": { "season": "秋季" },
+  "suncheon-1": { "season": "秋季" },
+  "suncheon-2": { "season": "秋季" },
+  "suncheon-3": { "season": "冬季" },
+  "suncheon-4": { "season": "春季" },
+  "mokpo-1": { "season": "夏季" },
+  "mokpo-2": { "season": "秋季" },
+  "mokpo-3": { "season": "春季" },
+  "mokpo-4": { "season": "夏季" }
+}

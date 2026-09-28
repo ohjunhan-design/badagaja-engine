@@ -1,0 +1,578 @@
+{
+ "_설명": "한국어 어종명 → cn: 중국 본토에서 실제로 부르는 이름, std: 표준명(다를 때만), sci: 학명, g: 같은 먹거리로 묶는 이름, note: 중국에 없는 것 설명",
+ "낙지": {
+  "cn": "小章鱼",
+  "std": "长蛸",
+  "sci": "Octopus minor",
+  "g": "小章鱼"
+ },
+ "낙지(세발낙지)": {
+  "cn": "小章鱼",
+  "std": "长蛸",
+  "sci": "Octopus minor",
+  "g": "小章鱼"
+ },
+ "세발낙지": {
+  "cn": "细腿小章鱼",
+  "std": "长蛸",
+  "sci": "Octopus minor",
+  "g": "小章鱼",
+  "note": "腿细长的小章鱼，韩国全罗南道名产"
+ },
+ "뻘낙지": {
+  "cn": "滩涂小章鱼",
+  "std": "长蛸",
+  "sci": "Octopus minor",
+  "g": "小章鱼"
+ },
+ "낙지알": {
+  "cn": "章鱼卵",
+  "g": "章鱼卵"
+ },
+ "문어": {
+  "cn": "章鱼",
+  "sci": "Octopus spp.",
+  "g": "章鱼"
+ },
+ "돌문어": {
+  "cn": "真蛸",
+  "sci": "Octopus vulgaris",
+  "g": "章鱼"
+ },
+ "갑오징어": {
+  "cn": "墨鱼",
+  "std": "金乌贼",
+  "sci": "Sepia esculenta",
+  "g": "墨鱼"
+ },
+ "무늬오징어": {
+  "cn": "莱氏拟乌贼",
+  "sci": "Sepioteuthis lessoniana",
+  "g": "莱氏拟乌贼",
+  "note": "钓友也常叫它软丝，个头大、肉厚"
+ },
+ "바지락": {
+  "cn": "花蛤",
+  "std": "菲律宾蛤仔",
+  "sci": "Ruditapes philippinarum",
+  "g": "花蛤"
+ },
+ "동죽": {
+  "cn": "浅蛤",
+  "std": "等边浅蛤",
+  "sci": "Gomphina veneriformis",
+  "g": "浅蛤"
+ },
+ "백합": {
+  "cn": "文蛤",
+  "sci": "Meretrix lusoria",
+  "g": "文蛤"
+ },
+ "가무락조개": {
+  "cn": "青蛤",
+  "sci": "Cyclina sinensis",
+  "g": "青蛤"
+ },
+ "개조개": {
+  "cn": "紫石房蛤",
+  "sci": "Saxidomus purpuratus",
+  "g": "紫石房蛤"
+ },
+ "조개류(백수·홍농)": {
+  "cn": "各类贝类",
+  "g": "各类贝类"
+ },
+ "맛조개": {
+  "cn": "蛏子",
+  "std": "竹蛏",
+  "sci": "Solen strictus",
+  "g": "蛏子"
+ },
+ "꼬막": {
+  "cn": "血蚶",
+  "std": "泥蚶",
+  "sci": "Tegillarca granosa",
+  "g": "血蚶"
+ },
+ "참꼬막": {
+  "cn": "血蚶",
+  "std": "泥蚶",
+  "sci": "Tegillarca granosa",
+  "g": "血蚶"
+ },
+ "새꼬막": {
+  "cn": "毛蚶",
+  "sci": "Scapharca kagoshimensis",
+  "g": "血蚶"
+ },
+ "키조개": {
+  "cn": "带子",
+  "std": "栉江珧",
+  "sci": "Atrina pectinata",
+  "g": "带子"
+ },
+ "새조개": {
+  "cn": "鸟贝",
+  "std": "鸟蛤",
+  "sci": "Fulvia mutica",
+  "g": "鸟贝"
+ },
+ "전복": {
+  "cn": "鲍鱼",
+  "sci": "Haliotis discus hannai",
+  "g": "鲍鱼"
+ },
+ "소라": {
+  "cn": "海螺",
+  "std": "蝾螺",
+  "sci": "Turbo sazae",
+  "g": "海螺"
+ },
+ "고둥": {
+  "cn": "小海螺",
+  "g": "海螺"
+ },
+ "홍합": {
+  "cn": "贻贝",
+  "sci": "Mytilus coruscus",
+  "g": "贻贝"
+ },
+ "굴": {
+  "cn": "牡蛎",
+  "sci": "Crassostrea gigas",
+  "g": "牡蛎"
+ },
+ "굴/석화": {
+  "cn": "牡蛎",
+  "sci": "Crassostrea gigas",
+  "g": "牡蛎"
+ },
+ "석화굴": {
+  "cn": "石花牡蛎",
+  "sci": "Crassostrea gigas",
+  "g": "牡蛎"
+ },
+ "자연산 굴": {
+  "cn": "野生牡蛎",
+  "sci": "Crassostrea gigas",
+  "g": "牡蛎"
+ },
+ "강굴": {
+  "cn": "野生岩牡蛎",
+  "g": "牡蛎",
+  "note": "长在礁石上的大个野生牡蛎"
+ },
+ "벚굴": {
+  "cn": "樱花牡蛎",
+  "std": "河口巨型牡蛎",
+  "g": "樱花牡蛎",
+  "note": "蟾津江河口春季特产，个头比普通牡蛎大得多"
+ },
+ "재첩": {
+  "cn": "蚬子",
+  "std": "河蚬",
+  "sci": "Corbicula japonica",
+  "g": "蚬子"
+ },
+ "해삼": {
+  "cn": "海参",
+  "sci": "Apostichopus japonicus",
+  "g": "海参"
+ },
+ "개불": {
+  "cn": "海肠",
+  "std": "单环刺螠",
+  "sci": "Urechis unicinctus",
+  "g": "海肠"
+ },
+ "쏙": {
+  "cn": "蝼蛄虾",
+  "sci": "Upogebia major",
+  "g": "蝼蛄虾"
+ },
+ "칠게": {
+  "cn": "大眼蟹",
+  "std": "日本大眼蟹",
+  "sci": "Macrophthalmus japonicus",
+  "g": "大眼蟹"
+ },
+ "꽃게": {
+  "cn": "梭子蟹",
+  "std": "三疣梭子蟹",
+  "sci": "Portunus trituberculatus",
+  "g": "梭子蟹"
+ },
+ "민꽃게": {
+  "cn": "日本蟳",
+  "sci": "Charybdis japonica",
+  "g": "日本蟳"
+ },
+ "참게": {
+  "cn": "日本绒螯蟹",
+  "sci": "Eriocheir japonica",
+  "g": "日本绒螯蟹"
+ },
+ "짱뚱어": {
+  "cn": "跳跳鱼",
+  "std": "大弹涂鱼",
+  "sci": "Boleophthalmus pectinirostris",
+  "g": "跳跳鱼"
+ },
+ "감성돔": {
+  "cn": "黑鲷",
+  "sci": "Acanthopagrus schlegelii",
+  "g": "黑鲷"
+ },
+ "돌돔": {
+  "cn": "石鲷",
+  "std": "条石鲷",
+  "sci": "Oplegnathus fasciatus",
+  "g": "石鲷"
+ },
+ "참돔": {
+  "cn": "真鲷",
+  "sci": "Pagrus major",
+  "g": "真鲷"
+ },
+ "벵에돔": {
+  "cn": "黑毛",
+  "std": "斑鱾",
+  "sci": "Girella punctata",
+  "g": "黑毛"
+ },
+ "우럭": {
+  "cn": "许氏平鲉",
+  "std": "许氏平鲉",
+  "sci": "Sebastes schlegelii",
+  "g": "许氏平鲉",
+  "alt": "黑鲪"
+ },
+ "볼락": {
+  "cn": "平鲉",
+  "std": "无备平鲉",
+  "sci": "Sebastes inermis",
+  "g": "平鲉"
+ },
+ "노래미": {
+  "cn": "斑头鱼",
+  "std": "斑头六线鱼",
+  "sci": "Hexagrammos agrammus",
+  "g": "斑头鱼"
+ },
+ "농어": {
+  "cn": "海鲈鱼",
+  "std": "花鲈",
+  "sci": "Lateolabrax japonicus",
+  "g": "海鲈鱼"
+ },
+ "민어": {
+  "cn": "鮸鱼",
+  "std": "鮸",
+  "sci": "Miichthys miiuy",
+  "g": "鮸鱼"
+ },
+ "병어": {
+  "cn": "鲳鱼",
+  "std": "银鲳",
+  "sci": "Pampus argenteus",
+  "g": "鲳鱼"
+ },
+ "학공치": {
+  "cn": "针鱼",
+  "std": "日本下鱵鱼",
+  "sci": "Hyporhamphus sajori",
+  "g": "针鱼"
+ },
+ "학꽁치": {
+  "cn": "针鱼",
+  "std": "日本下鱵鱼",
+  "sci": "Hyporhamphus sajori",
+  "g": "针鱼"
+ },
+ "숭어": {
+  "cn": "鲻鱼",
+  "sci": "Mugil cephalus",
+  "g": "鲻鱼"
+ },
+ "도다리": {
+  "cn": "鲽鱼",
+  "std": "钝吻黄盖鲽",
+  "sci": "Pseudopleuronectes yokohamae",
+  "g": "鲽鱼"
+ },
+ "붕장어": {
+  "cn": "星鳗",
+  "std": "星康吉鳗",
+  "sci": "Conger myriaster",
+  "g": "星鳗"
+ },
+ "뱀장어": {
+  "cn": "鳗鱼",
+  "std": "日本鳗鲡",
+  "sci": "Anguilla japonica",
+  "g": "鳗鱼"
+ },
+ "갯장어": {
+  "cn": "海鳗",
+  "sci": "Muraenesox cinereus",
+  "g": "海鳗"
+ },
+ "갈치": {
+  "cn": "带鱼",
+  "sci": "Trichiurus lepturus",
+  "g": "带鱼"
+ },
+ "고등어": {
+  "cn": "青花鱼",
+  "std": "鲐鱼",
+  "sci": "Scomber japonicus",
+  "g": "青花鱼"
+ },
+ "전갱이": {
+  "cn": "竹荚鱼",
+  "sci": "Trachurus japonicus",
+  "g": "竹荚鱼"
+ },
+ "삼치": {
+  "cn": "鲅鱼",
+  "std": "蓝点马鲛",
+  "sci": "Scomberomorus niphonius",
+  "g": "鲅鱼"
+ },
+ "전어": {
+  "cn": "斑鰶",
+  "sci": "Konosirus punctatus",
+  "g": "斑鰶"
+ },
+ "망둥어": {
+  "cn": "虾虎鱼",
+  "std": "矛尾虾虎鱼",
+  "sci": "Acanthogobius flavimanus",
+  "g": "虾虎鱼"
+ },
+ "물김": {
+  "cn": "鲜紫菜",
+  "g": "紫菜"
+ },
+ "김": {
+  "cn": "紫菜",
+  "sci": "Pyropia spp.",
+  "g": "紫菜"
+ },
+ "미역": {
+  "cn": "裙带菜",
+  "sci": "Undaria pinnatifida",
+  "g": "裙带菜"
+ },
+ "다시마": {
+  "cn": "海带",
+  "sci": "Saccharina japonica",
+  "g": "海带"
+ },
+ "톳": {
+  "cn": "羊栖菜",
+  "sci": "Sargassum fusiforme",
+  "g": "羊栖菜"
+ },
+ "감태": {
+  "cn": "苔菜",
+  "std": "浒苔",
+  "sci": "Ulva prolifera",
+  "g": "苔菜",
+  "note": "全南西海岸叫“감태”的是这种绿藻，与济州等地同名的褐藻（Ecklonia cava）不同"
+ },
+ "매생이": {
+  "cn": "细丝绿藻",
+  "sci": "Capsosiphon fulvescens",
+  "g": "细丝绿藻（매생이）",
+  "note": "韩国冬季特有的细丝状绿藻，韩语叫매생이，常煮成汤"
+ },
+ "_금어기용": "아래는 금어기·금지체장 페이지(jinyuqi.html)에 나오는 종. 전남에서 흔하지 않아도 법령에 있으면 싣는다",
+ "대구": {
+  "cn": "鳕鱼",
+  "std": "太平洋鳕",
+  "sci": "Gadus macrocephalus",
+  "g": "鳕鱼"
+ },
+ "연어": {
+  "cn": "大麻哈鱼",
+  "sci": "Oncorhynchus keta",
+  "g": "大麻哈鱼"
+ },
+ "쥐노래미": {
+  "cn": "大泷六线鱼",
+  "sci": "Hexagrammos otakii",
+  "g": "大泷六线鱼"
+ },
+ "참홍어": {
+  "cn": "斑鳐",
+  "std": "美鳐",
+  "sci": "Raja pulchra",
+  "g": "斑鳐",
+  "note": "韩国用来做发酵斑鳐（洪鱼）的种"
+ },
+ "홍어": {
+  "cn": "斑鳐",
+  "std": "美鳐",
+  "sci": "Raja pulchra",
+  "g": "斑鳐"
+ },
+ "참조기": {
+  "cn": "小黄鱼",
+  "sci": "Larimichthys polyactis",
+  "g": "小黄鱼",
+  "note": "晒干后就是灵光黄鱼干（굴비）"
+ },
+ "말쥐치": {
+  "cn": "绿鳍马面鲀",
+  "sci": "Thamnaconus modestus",
+  "g": "马面鲀"
+ },
+ "옥돔": {
+  "cn": "马头鱼",
+  "std": "日本方头鱼",
+  "sci": "Branchiostegus japonicus",
+  "g": "马头鱼"
+ },
+ "명태": {
+  "cn": "明太鱼",
+  "std": "黄线狭鳕",
+  "sci": "Gadus chalcogrammus",
+  "g": "明太鱼"
+ },
+ "대게": {
+  "cn": "雪蟹",
+  "std": "灰眼雪蟹",
+  "sci": "Chionoecetes opilio",
+  "g": "雪蟹"
+ },
+ "붉은대게": {
+  "cn": "红雪蟹",
+  "std": "日本雪蟹",
+  "sci": "Chionoecetes japonicus",
+  "g": "雪蟹"
+ },
+ "대하": {
+  "cn": "中国对虾",
+  "sci": "Penaeus chinensis",
+  "g": "对虾"
+ },
+ "전복류": {
+  "cn": "鲍鱼类",
+  "sci": "Haliotis spp.",
+  "g": "鲍鱼"
+ },
+ "코끼리조개": {
+  "cn": "象拔蚌",
+  "std": "日本潜泥蛤",
+  "sci": "Panopea japonica",
+  "g": "象拔蚌"
+ },
+ "가리비": {
+  "cn": "扇贝",
+  "std": "虾夷扇贝",
+  "sci": "Mizuhopecten yessoensis",
+  "g": "扇贝"
+ },
+ "오분자기": {
+  "cn": "杂色鲍",
+  "sci": "Sulculus diversicolor",
+  "g": "鲍鱼",
+  "note": "个头小的鲍鱼，济州岛常见"
+ },
+ "기수재첩": {
+  "cn": "河蚬",
+  "sci": "Corbicula japonica",
+  "g": "蚬子",
+  "note": "长在江海交汇处的蚬子"
+ },
+ "넓미역": {
+  "cn": "宽叶裙带菜",
+  "sci": "Undariopsis peterseniana",
+  "g": "裙带菜"
+ },
+ "우뭇가사리": {
+  "cn": "石花菜",
+  "sci": "Gelidium amansii",
+  "g": "石花菜",
+  "note": "做凉粉用的海藻"
+ },
+ "살오징어": {
+  "cn": "鱿鱼",
+  "std": "太平洋褶柔鱼",
+  "sci": "Todarodes pacificus",
+  "g": "鱿鱼"
+ },
+ "오징어": {
+  "cn": "鱿鱼",
+  "std": "太平洋褶柔鱼",
+  "sci": "Todarodes pacificus",
+  "g": "鱿鱼"
+ },
+ "주꾸미": {
+  "cn": "短蛸",
+  "sci": "Amphioctopus fangsiao",
+  "g": "短蛸",
+  "note": "个头小、腿短的章鱼，也叫望潮"
+ },
+ "대문어": {
+  "cn": "北太平洋巨型章鱼",
+  "sci": "Enteroctopus dofleini",
+  "g": "章鱼"
+ },
+ "참가자미": {
+  "cn": "赫氏黄盖鲽",
+  "sci": "Pleuronectes herzensteini",
+  "g": "鲽鱼"
+ },
+ "넙치": {
+  "cn": "牙鲆",
+  "sci": "Paralichthys olivaceus",
+  "g": "牙鲆",
+  "note": "韩国叫광어，生鱼片里最常见"
+ },
+ "광어": {
+  "cn": "牙鲆",
+  "sci": "Paralichthys olivaceus",
+  "g": "牙鲆"
+ },
+ "도루묵": {
+  "cn": "日本叉牙鱼",
+  "sci": "Arctoscopus japonicus",
+  "g": "叉牙鱼"
+ },
+ "방어": {
+  "cn": "五条鰤",
+  "sci": "Seriola quinqueradiata",
+  "g": "五条鰤",
+  "note": "冬季生鱼片的代表"
+ },
+ "미거지": {
+  "cn": "狮子鱼",
+  "std": "鄂霍次克狮子鱼",
+  "sci": "Liparis ochotensis",
+  "g": "狮子鱼"
+ },
+ "용가자미": {
+  "cn": "松木高眼鲽",
+  "sci": "Hippoglossoides pinetorum",
+  "g": "鲽鱼"
+ },
+ "기름가자미": {
+  "cn": "亚洲油鲽",
+  "sci": "Glyptocephalus stelleri",
+  "g": "鲽鱼"
+ },
+ "청어": {
+  "cn": "太平洋鲱",
+  "sci": "Clupea pallasii",
+  "g": "鲱鱼"
+ },
+ "실치": {
+  "cn": "白饭鱼",
+  "std": "云鳚幼鱼",
+  "sci": "Pholis nebulosa (juv.)",
+  "g": "白饭鱼",
+  "note": "细如丝线的小鱼苗，晒干后就是“뱅어포”。与玉筋鱼（까나리）是不同的鱼。"
+ }
+}
