@@ -148,7 +148,7 @@ jobs:
           #   그것을 「걸러냈다」고 세면, 연습이 확인하려던 바로 그것을
           #   확인하지 못합니다. 오늘 하루 내내 본 얼굴입니다.
           set +e
-          python engine/smoke.py --net > _smoke.txt 2>&1
+          python engine/smoke.py --net --판지문묻지않기 > _smoke.txt 2>&1
           코드=$?
           set -e
           tail -30 _smoke.txt
@@ -220,9 +220,13 @@ jobs:
 
           echo ""
           echo "── (다) 검사가 이제 통과하는가"
+          # ★ 판 지문은 묻지 않습니다 (2026-09-28 — 연습 #2 에서 드러남)
+          #   서버는 **옛 판**으로 돌아가 있습니다. 그것이 지금 코드로
+          #   만든 것과 같을 까닭이 없습니다. 같아야 하는 것은
+          #   「A판과 같은가」이고, 그것은 (가) 가 이미 봤습니다.
           export BADAGAJA_URL="https://badagaja.com/$CARD"
           export BADAGAJA_URL_ROOT="https://badagaja.com"
-          python engine/smoke.py --net || BAD=1
+          python engine/smoke.py --net --판지문묻지않기 || BAD=1
 
           echo ""
           if [ "$BAD" != "0" ]; then
