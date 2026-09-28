@@ -387,6 +387,24 @@ def 마지막말(번호, 몇=18):
     맞는것.sort(key=lambda f: os.path.getmtime(os.path.join(칸, f)))
     글 = io.read(os.path.join(칸, 맞는것[-1]), default='')
     줄들 = [x.rstrip() for x in 글.split('\n') if x.strip()]
+    # ★ **어긴 줄의 앞뒤를 보여 줍니다** (2026-09-28 · 바로 고침)
+    #
+    #   처음에는 마지막 몇 줄만 붙였습니다. 그랬더니 19번에서
+    #   「✗ 바로 앞 판으로 되돌린다」 같은 **이름만** 보이고
+    #   **왜 그런지**가 안 보였습니다. 까닭은 그 위에 있습니다.
+    #
+    #   시험은 「무엇을 보았는가」를 먼저 찍고 판정을 뒤에 찍습니다.
+    #   그러니 ✗ 가 있으면 그 자리 **앞쪽**을 함께 봐야 합니다.
+    어긴자리 = [i for i, x in enumerate(줄들) if x.strip().startswith('✗')]
+    if 어긴자리:
+        골라낸, 본것 = [], set()
+        for i in 어긴자리[:4]:
+            for j in range(max(0, i - 6), min(len(줄들), i + 2)):
+                if j not in 본것:
+                    본것.add(j)
+                    골라낸.append(줄들[j])
+            골라낸.append('  ─────')
+        return 골라낸[:몇 * 2]
     return 줄들[-몇:]
 
 
