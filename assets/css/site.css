@@ -1,0 +1,909 @@
+/* 바다가자 — 모든 쪽이 함께 쓰는 단 하나의 차림표(CSS)
+ *
+ * 왜 한 파일인가
+ *   옛 사이트는 같은 CSS 가 187쪽에 통째로 박혀 1MB 를 차지했습니다.
+ *   한 줄 고치려면 187쪽을 다시 만들어야 했고, 쪽마다 조금씩 달라져
+ *   「고쳤는데 안 바뀌는」 일이 났습니다.
+ *
+ * 규칙
+ *   · 요소는 **클래스로** 찾습니다. section[style*="linear-gradient"] 처럼
+ *     인라인 스타일로 찾지 않습니다 — 스타일이 조금만 바뀌면 조용히 안 먹습니다
+ *   · 덧대지 않습니다. 고칠 것은 원래 자리에서 고칩니다
+ *   · 디자인 기준은 전남 쪽입니다 (주인 규칙 7)
+ */
+
+/* ── 바탕값 ───────────────────────────────────────────── */
+:root{
+  --bg:#FFFBF3; --ink:#2B2116; --muted:#6B5E4F; --line:#EDE3D0;
+  --orange:#C07B22; --green:#2F5D57; --white:#fff;
+  --wrap:1120px; --gutter:20px;
+  --r-sm:12px; --r-md:16px; --r-lg:18px; --r-full:999px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:'Noto Sans KR',system-ui,-apple-system,sans-serif;
+  background:var(--bg); color:var(--ink); line-height:1.6;
+}
+.serif{font-family:'Noto Serif KR',serif}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+
+/* 눈에 안 보이지만 읽어 주는 글 */
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
+}
+
+/* ── 틀 ───────────────────────────────────────────────── */
+/* overflow-x:hidden 을 여기 두지 않습니다.
+   넘치는 것을 **가려 버려** 눈으로도 재는 도구로도 못 찾게 됩니다.
+   (2026-09-26 — 그 한 줄 때문에 원인을 한참 못 찾았습니다)
+   넘침은 가리지 말고 engine/check_render.py 로 잡아 고칩니다. */
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--gutter)}
+.section{padding:36px 0}
+.section--soft{background:linear-gradient(to bottom,#FFFBF3,#FFF6E8)}
+.section--white{background:var(--white);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.section--tail{padding:0 0 40px}
+
+/* ── 맨 위 알림 줄 ────────────────────────────────────── */
+.topbar{background:#2B2116;color:#C9BCA8;text-align:center;padding:8px 12px;font-size:11px}
+.topbar b{color:#E5A94F}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+.header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(255,251,243,.92);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
+}
+.header .wrap{display:flex;justify-content:space-between;align-items:center;padding:14px var(--gutter)}
+.header-left{display:flex;gap:12px;align-items:center}
+.header-title{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.header-tags{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap}
+.header-right{display:flex;gap:8px}
+.header-sep{width:1px;height:14px;background:var(--line)}
+.header-role{font-size:13px;font-weight:700;color:var(--green)}
+/* ★ 누르는 자리는 44px 이상 (2026-09-27 engine/check_render.py 가 잡음)
+     로고 링크가 20~26px 이라 손가락으로 누르기 어려웠습니다.
+     글자 크기는 그대로 두고 **누를 수 있는 넓이**만 넓힙니다 —
+     디자인 기준은 전남 쪽을 따르되(주인 규칙 7), 누르기 편한 것은
+     디자인이 아니라 쓰기 편함입니다. */
+.brand{
+  display:inline-flex;align-items:center;gap:6px;text-decoration:none;
+  font-weight:700;min-height:44px;
+}
+/* 머리·꼬리에서는 위아래 여백이 이미 넉넉해 자리를 더 안 씁니다 */
+a.badge{min-height:44px}
+.brand svg{width:18px;height:18px}
+/* ★ 로고 글씨는 네이버 검색창과 같게 (2026-09-27 주인 지시)
+     「네이버에 바다가자닷컴을 검색하면 이런 폰트가 나와」
+     네이버가 쓰는 나눔스퀘어 네오입니다. 로고가 네이버 검색창을
+     흉내 낸 것이라 글씨까지 같아야 진짜처럼 보입니다.
+     못 받으면 지금 글꼴로 떨어집니다 (계약-23). */
+.brand .mark{
+  font-family:'NanumSquareNeoExtraBold','NanumSquareNeoBold',
+              'NanumSquareNeo','Noto Sans KR',sans-serif;
+  font-size:18px;font-weight:800;letter-spacing:-0.02em;
+}
+.brand .nv-n{display:inline-flex;width:22px;height:22px;border-radius:7px;background:var(--ink);align-items:center;justify-content:center}
+.brand .nv-n svg{width:14px;height:14px}
+.brand .nv-go svg{width:16px;height:16px;fill:none;stroke:var(--green);stroke-width:2}
+.official{
+  background:var(--ink);color:#fff;border-radius:var(--r-full);padding:3px 8px;
+  font-size:10px;font-weight:700;display:inline-flex;align-items:center;gap:5px;
+}
+.official::before{content:"";width:6px;height:6px;border-radius:50%;background:#2ECC71}
+
+/* ── 이름표 ───────────────────────────────────────────── */
+.badge{
+  display:inline-flex;align-items:center;gap:6px;border-radius:var(--r-full);
+  padding:5px 12px;font-size:11px;font-weight:700;
+  border:1px solid var(--line);background:var(--white);white-space:nowrap;
+  text-decoration:none;
+}
+.badge--sm{font-size:10px}
+.badge--orange{background:#FFF0D6;border-color:#F5D6A3;color:var(--orange)}
+.badge--green{background:#E6F6E8;border-color:#B8D8C0;color:#2A5A36}
+.badge--plain{background:var(--bg)}
+.grade-A{background:#E6F6E8;border-color:#B8D8C0;color:#2A5A36}
+.grade-B{background:#FFF0D6;border-color:#F5D6A3;color:#9A6A1A}
+.grade-C{background:#F3F0EB;border-color:#E0D9CE;color:var(--muted)}
+
+/* ── 단추 ─────────────────────────────────────────────── */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:12px 18px;border-radius:var(--r-sm);
+  font-size:14px;font-weight:700;text-decoration:none;transition:.2s;
+  min-height:44px;
+}
+.btn--dark{background:var(--ink);color:#fff}
+.btn--white{background:var(--white);border:1px solid var(--line);color:var(--ink)}
+.btn-row{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
+
+/* ── 첫 화면 ──────────────────────────────────────────── */
+.hero .wrap{padding:56px var(--gutter)}
+/* 첫 화면의 이름표는 글이 길어 한 줄로 두면 화면을 밀어냅니다 */
+.hero .badge{white-space:normal;line-height:1.45}
+.hero h1{
+  font-size:clamp(1.7rem,4.6vw,3.4rem);font-weight:700;line-height:1.35;
+  margin-top:16px;letter-spacing:-0.01em;max-width:20ch;
+}
+.hero h1 .accent{color:var(--orange)}
+.hero-lead{color:var(--muted);font-size:16px;line-height:1.7;margin-top:14px;max-width:58ch}
+
+/* ── 바다 안내 상자 ───────────────────────────────────── */
+.sea-note{padding:0 0 30px}
+.sea-note-box{background:var(--bg);border:1px solid #E8DCC8;border-radius:var(--r-md);padding:20px 22px}
+.sea-note-box h2{font-size:16px;color:var(--ink);font-weight:700}
+.sea-note-box p{margin:10px 0 0;font-size:13.5px;line-height:1.8;color:#4A3F33;max-width:64ch}
+.sea-note-box p.warn{color:#7A3B1F;margin-top:12px}
+
+/* ── 목록 ─────────────────────────────────────────────── */
+.list-head{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:16px;flex-wrap:wrap;gap:12px;
+}
+.list-head h2{font-size:1.9rem;font-weight:700}
+.search{
+  border:1px solid var(--line);border-radius:var(--r-sm);
+  padding:10px 14px;font-size:13px;width:260px;min-height:44px;font:inherit;
+}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+
+/* ── 포인트 카드 ──────────────────────────────────────── */
+.card{
+  background:var(--white);border:1px solid var(--line);
+  border-radius:var(--r-lg);overflow:hidden;transition:.2s;
+  padding:18px;scroll-margin-top:90px;
+}
+.card:hover{border-color:var(--orange);box-shadow:0 12px 32px rgba(43,33,22,.08)}
+.card-head{display:flex;justify-content:space-between;align-items:start;gap:8px}
+.card-name{font-weight:700;font-size:1.08rem}
+.card-tags{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.card-body{margin-top:10px;font-size:12px;color:var(--muted);line-height:1.6}
+.card-body b{color:var(--ink)}
+.card-note{margin-top:10px;font-size:12px;color:#7A3B1F}
+.maplink{
+  display:inline-flex;align-items:center;gap:4px;margin-top:10px;
+  font-size:12px;font-weight:700;color:var(--green);text-decoration:none;
+}
+.maplink:hover{text-decoration:underline}
+
+/* ── 걸러내기 단추 ────────────────────────────────────── */
+.filter{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}
+.filter button{
+  /* ★ 누름자리 44px (2026-09-27 재어 보니 38px 이었습니다)
+     휴대폰에서 손가락으로 누르기에 38px 은 작습니다. 달 고르기
+     단추가 열셋이라 나란히 있어, 옆 것을 잘못 누르기 쉽습니다. */
+  font:inherit;font-size:13px;font-weight:700;padding:10px 15px;min-height:44px;
+  display:inline-flex;align-items:center;gap:5px;
+  border-radius:var(--r-full);border:1px solid var(--line);
+  background:var(--white);color:var(--ink);cursor:pointer;
+}
+.filter button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.more{
+  display:block;width:100%;margin:14px 0 0;min-height:48px;
+  border-radius:14px;border:1px solid var(--line);background:var(--white);
+  font:inherit;font-size:15px;font-weight:700;color:var(--ink);cursor:pointer;
+}
+.more[hidden],.empty[hidden]{display:none}
+.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:28px 0;font-size:14px}
+.notice{
+  display:block;font-size:13px;line-height:1.6;color:var(--muted);
+  background:var(--bg);border:1px solid var(--line);
+  border-radius:var(--r-sm);padding:10px 14px;margin:0 0 14px;
+}
+
+/* ── 지도 ─────────────────────────────────────────────── */
+.map-wrap{
+  position:relative;background:#F9F3E8;border:1px solid var(--line);
+  border-radius:var(--r-lg);overflow:hidden;aspect-ratio:16/10;
+}
+.map-wrap.map-on{background:transparent}
+.map-canvas{position:absolute;inset:0}
+.map-note{margin-top:10px;font-size:12.5px;line-height:1.7;color:var(--muted)}
+
+/* 지도 위 번호 핀 — 등급에 따라 색이 다릅니다 */
+.pin{
+  width:28px;height:28px;border-radius:50%;border:2px solid #fff;
+  box-shadow:0 2px 8px rgba(0,0,0,.28);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font:inherit;font-size:11px;font-weight:700;
+  cursor:pointer;padding:0;transition:transform .15s;
+}
+.pin:hover,.pin.on{transform:scale(1.25);z-index:5}
+.pin--A{background:var(--green)}
+.pin--B{background:var(--orange)}
+.pin--C{background:#8A7E6E}
+.pin--area{border-style:dashed;opacity:.9}
+.pin[hidden]{display:none}
+
+/* 핀을 눌렀을 때 뜨는 풍선 */
+.map-pop{
+  position:relative;background:var(--white);border:1px solid var(--line);
+  border-radius:14px;padding:14px 16px 12px;min-width:200px;max-width:260px;
+  box-shadow:0 10px 30px rgba(43,33,22,.18);
+}
+.map-pop b{display:block;font-size:14px;margin-right:18px}
+.map-pop .sub{display:block;margin-top:5px;font-size:12px;color:var(--muted)}
+.map-pop .acc{display:block;margin-top:6px;font-size:11px;color:var(--green)}
+.map-pop .acc.area{color:var(--orange)}
+.map-pop .x{
+  position:absolute;top:6px;right:8px;border:0;background:none;
+  font-size:18px;line-height:1;color:var(--muted);cursor:pointer;
+  width:28px;height:28px;
+}
+.map-pop .go{
+  display:block;width:100%;margin-top:10px;min-height:38px;
+  border:1px solid var(--line);border-radius:10px;background:var(--bg);
+  font:inherit;font-size:13px;font-weight:700;color:var(--ink);cursor:pointer;
+}
+
+/* 스크롤하다 실수로 확대되지 않게 — 눌러야 켜집니다.
+   글자가 지도와 섞이면 안 읽히므로 알약 모양 바탕을 깔아 둡니다 */
+.map-lock{
+  position:absolute;inset:0;z-index:3;border:0;
+  background:rgba(43,33,22,.04);
+  display:flex;align-items:flex-end;justify-content:center;
+  padding-bottom:18px;
+  font:inherit;font-size:0;cursor:pointer;
+}
+.map-lock::after{
+  content:"지도를 눌러 확대·이동";
+  background:rgba(255,251,243,.96);border:1px solid var(--line);
+  border-radius:var(--r-full);padding:9px 18px;
+  font-size:13px;font-weight:700;color:var(--ink);
+  box-shadow:0 4px 14px rgba(43,33,22,.14);
+}
+.map-lock[hidden]{display:none}
+
+/* 카드에서 지도로 가는 단추 */
+.maplink--map{
+  border:0;background:none;padding:0;cursor:pointer;font:inherit;
+  font-size:12px;font-weight:700;color:var(--green);margin-left:12px;
+}
+.card.flash{border-color:var(--orange);box-shadow:0 0 0 3px rgba(192,123,34,.25)}
+.card[hidden]{display:none}
+
+/* ── 맨 위로 ──────────────────────────────────────────── */
+.to-top{
+  position:fixed;right:16px;bottom:20px;width:46px;height:46px;border-radius:50%;
+  border:0;background:var(--orange);color:#fff;font-size:20px;
+  box-shadow:0 6px 18px rgba(0,0,0,.2);
+  opacity:0;pointer-events:none;transition:opacity .2s;z-index:60;cursor:pointer;
+}
+.to-top.show{opacity:1;pointer-events:auto}
+
+/* ── 꼬리 ─────────────────────────────────────────────── */
+.site-footer{border-top:1px solid var(--line);margin-top:40px;padding:28px 0 60px;font-size:12px;color:var(--muted);line-height:1.8}
+.footer-nav{display:flex;gap:28px;flex-wrap:wrap;margin-bottom:20px}
+.footer-nav h2{font-size:13px;color:var(--ink);margin-bottom:8px}
+.footer-nav a{display:block;text-decoration:none;color:var(--muted);padding:3px 0}
+.footer-nav a:hover{color:var(--orange)}
+/* 지금 보고 있는 쪽 — 링크가 아니라 표시만 */
+.footer-nav .here{display:block;padding:3px 0;color:var(--orange);font-weight:700}
+
+/* ── 권역 쪽 ──────────────────────────────────────────── */
+.section-head{margin-bottom:20px}
+.section-head .kicker{
+  font-size:12px;font-weight:700;color:var(--orange);
+  letter-spacing:.04em;margin-bottom:6px;
+}
+.section-head h2{font-size:1.9rem;font-weight:700}
+.section-head .lead{margin-top:10px;font-size:14px;line-height:1.75;color:var(--muted);max-width:62ch}
+
+/* 이 쪽 안에서 바로 가기 */
+/* ── 빠른 이동 ─────────────────────────────────────────────
+   2026-09-27 주인 지적 「너무 많이 줄었어」 · 규칙 6-1
+   옛 쪽에는 아이콘 7칸 격자가 있었는데 글자만 든 알약이 되어
+   한눈에 안 들어왔습니다. 아이콘을 되살리고 짜임도 격자로 돌립니다.
+
+   ★ 누름자리 44px — 휴대폰에서 누르기 좋게 (2026-09-27 재어 보니
+     세로 21~40px 단추가 여럿이었습니다) */
+.quicknav{
+  display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-top:24px;
+}
+.quicknav a,.quicknav .qn-item{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:8px;min-height:80px;padding:14px 6px;
+  border-radius:14px;border:1px solid var(--line);background:var(--white);
+  font-size:12.5px;font-weight:700;text-decoration:none;color:var(--ink);
+  text-align:center;line-height:1.35;
+  transition:border-color .15s,color .15s,transform .15s;
+}
+.quicknav svg{width:26px;height:26px;color:var(--orange);flex:none}
+.quicknav a:hover,.quicknav .qn-item:hover{
+  border-color:var(--orange);color:var(--orange);transform:translateY(-1px);
+}
+@media (max-width:900px){
+  .quicknav{grid-template-columns:repeat(4,1fr)}
+}
+@media (max-width:480px){
+  .quicknav{grid-template-columns:repeat(3,1fr);gap:8px}
+  .quicknav a,.quicknav .qn-item{min-height:74px;padding:12px 4px;font-size:11.5px}
+  .quicknav svg{width:23px;height:23px}
+}
+
+.two-up{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.grid--tight{grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+
+/* 눌러서 넘어가는 카드 */
+.card--go{display:block;text-decoration:none;color:inherit}
+.card--go .maplink{margin-top:12px}
+
+/* 조심할 것 · 안내 상자 */
+.warn-box,.note-box{
+  margin-top:20px;border-radius:var(--r-md);padding:18px 20px;
+  border:1px solid #E8DCC8;background:var(--bg);
+}
+.warn-box{border-color:#E8C8A8;background:#FFF7EC}
+.warn-box h3,.note-box h3{font-size:15px;margin-bottom:8px}
+.warn-box ul,.note-box ul{margin:8px 0 0;padding-left:18px}
+.warn-box li,.note-box li{font-size:13px;line-height:1.75;color:#4A3F33;margin-top:6px}
+.note-box p{font-size:13px;line-height:1.7;color:var(--muted)}
+
+/* 제철 어종 */
+.catch-group{margin-top:22px}
+.catch-group:first-child{margin-top:0}
+.catch-group-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.catch-group-head .sub{font-size:13px;color:var(--muted)}
+.catch-card{
+  background:var(--white);border:1px solid var(--line);
+  border-radius:var(--r-md);padding:16px;
+}
+.catch-card .season{font-size:11px;font-weight:700;color:var(--orange);margin-bottom:6px}
+.catch-card h3{font-size:15px;font-weight:700}
+.catch-card p{margin-top:7px;font-size:12.5px;line-height:1.65;color:var(--muted)}
+
+/* 코스 차례 */
+.steps{margin:10px 0 0;padding-left:20px}
+.steps li{font-size:13px;line-height:1.8;color:var(--muted)}
+
+/* 축제 달력 */
+.months{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.month{
+  border:1px solid var(--line);border-radius:var(--r-sm);
+  padding:12px 14px;background:var(--white);min-height:84px;
+}
+.month--on{border-color:#F5D6A3;background:#FFFBF3}
+.month-num{font-size:12px;font-weight:700;color:var(--muted)}
+.month--on .month-num{color:var(--orange)}
+.month-name{margin-top:6px;font-size:13.5px;font-weight:700;line-height:1.45}
+.month-desc{margin-top:4px;font-size:12px;line-height:1.6;color:var(--muted)}
+
+/* ── 물때표 ───────────────────────────────────────────── */
+/* 물때 번호·사리/조금은 계산으로 늘 나옵니다.
+   간조·만조 시각은 공공데이터가 오면 채워집니다 (계약-23) */
+.tide-strip{min-height:0}
+.tide-strip:empty{display:none}
+.tide-days{
+  display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:4px;
+}
+.tide-day{
+  border:1px solid var(--line);border-radius:var(--r-sm);
+  background:var(--white);padding:12px 8px;text-align:center;
+}
+.tide-day--today{border-color:var(--orange);background:#FFFBF3}
+.td-date{font-size:11.5px;font-weight:700;color:var(--muted)}
+.tide-day--today .td-date{color:var(--orange)}
+.td-bar{
+  height:70px;display:flex;align-items:flex-end;justify-content:center;
+  margin:8px 0 6px;
+}
+.td-bar-in{width:18px;border-radius:5px 5px 0 0;min-height:10px}
+.td-spring{background:var(--green)}
+.td-mid{background:#9FB8A8}
+.td-neap{background:#D9D0C2}
+.td-num{font-size:14px;font-weight:700;line-height:1.3}
+.td-name{font-size:11px;color:var(--orange);font-weight:700;margin-top:3px}
+.td-gap{font-size:10.5px;color:var(--muted);margin-top:2px}
+.td-times{margin-top:8px;border-top:1px solid var(--line);padding-top:7px}
+.td-times:empty{display:none}
+.td-t{display:flex;align-items:center;justify-content:center;gap:4px;
+      font-size:11px;line-height:1.9;color:var(--muted)}
+.tt-k{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:15px;height:15px;border-radius:4px;
+  background:#E7EFEA;color:var(--green);font-size:9px;font-weight:700;
+}
+.td-t--low .tt-k{background:#FFF0D6;color:var(--orange)}
+.tt-v{font-weight:700;color:var(--ink)}
+.tt-cm{color:#9A8F80;font-size:10px}
+
+/* ── 첫 화면 · 묶음 쪽 ────────────────────────────────── */
+/* ── 사진이 든 카드 ───────────────────────────────────────
+   2026-09-27 주인 지적 「사람들은 문자 정보보다는 시각 정보를
+   더 좋아해. 특히 휴대폰 화면에서」 · 규칙 6-1
+
+   전에는 글자만 든 네모였습니다. 아홉 개가 나란히 있으면
+   **읽어야 고를 수 있었습니다.** 휴대폰에서는 읽지 않고 넘깁니다.
+   사진을 얹어 훑어보며 고르게 합니다. */
+.groups{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:14px;
+}
+.group-card{
+  display:block;position:relative;overflow:hidden;
+  background:var(--white);border:1px solid var(--line);
+  border-radius:var(--r-md);
+  text-decoration:none;color:inherit;transition:.2s;
+}
+.gc-photo{
+  display:block;width:100%;height:auto;
+  aspect-ratio:16/10;object-fit:cover;background:#E8DCC8;
+}
+.gc-text{display:block;padding:14px 16px 16px}
+.group-card:hover{
+  border-color:var(--orange);box-shadow:0 10px 26px rgba(43,33,22,.10);
+  transform:translateY(-2px);
+}
+.group-card:hover .gc-photo{filter:brightness(1.04)}
+.gc-name{
+  display:block;font-family:'Noto Serif KR',serif;
+  font-size:19px;font-weight:700;
+}
+.gc-sub{display:block;margin-top:4px;font-size:12.5px;color:var(--muted)}
+
+/* 찾기 카드 — 그림 위, 글자 아래 */
+.card--pic{overflow:hidden;padding:0;display:block}
+.card--pic .gc-photo{aspect-ratio:2/1;border-radius:0}
+.card--pic .card-text{display:block;padding:16px 18px 18px}
+.card--pic .card-name{margin:0}
+.card--pic .card-body{margin:6px 0 10px}
+
+@media (max-width:480px){
+  .groups{grid-template-columns:1fr 1fr;gap:10px}
+  .gc-photo{aspect-ratio:4/3}
+  .gc-text{padding:10px 12px 12px}
+  .gc-name{font-size:16px}
+  .gc-sub{font-size:11.5px}
+}
+
+.counts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.count-card{
+  background:var(--bg);border:1px solid var(--line);
+  border-radius:var(--r-md);padding:18px;text-align:center;
+}
+.count-card b{display:block;font-family:'Noto Serif KR',serif;
+              font-size:24px;color:var(--orange)}
+.count-card span{display:block;margin-top:5px;font-size:12.5px;color:var(--muted)}
+
+/* ── 축제 쪽 ──────────────────────────────────────────── */
+.breadcrumb{display:flex;gap:7px;flex-wrap:wrap;align-items:center;
+            font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.breadcrumb a{text-decoration:none}
+.breadcrumb a:hover{color:var(--orange)}
+.breadcrumb span{color:#C9BCA8}
+
+.fest-facts{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+  gap:10px;margin-top:24px;
+}
+.fact{
+  background:var(--white);border:1px solid var(--line);
+  border-radius:var(--r-sm);padding:13px 16px;
+}
+.f-k{display:block;font-size:11.5px;color:var(--muted);font-weight:700}
+.f-v{display:block;margin-top:4px;font-size:14px;font-weight:700}
+
+/* 긴 글 — 읽기 좋은 폭으로 */
+.long{font-size:15px;line-height:1.9;color:#4A3F33;max-width:62ch}
+.long + .long{margin-top:14px}
+.sub-head{margin:26px 0 10px;font-size:16px;font-weight:700}
+.dots{margin:0;padding-left:20px;max-width:62ch}
+.dots li{font-size:14px;line-height:1.85;color:#4A3F33;margin-top:5px}
+
+/* ── 축제 달력 ────────────────────────────────────────── */
+.filter button b{margin-left:5px;color:var(--orange);font-weight:700}
+.filter button[aria-pressed="true"] b{color:#F5D6A3}
+.filter button[disabled]{opacity:.4;cursor:default}
+.month-block{margin-top:28px}
+.month-block[hidden]{display:none}
+.month-head{
+  display:flex;align-items:baseline;gap:10px;margin-bottom:12px;
+  font-family:'Noto Serif KR',serif;font-size:20px;font-weight:700;
+}
+.month-head span{font-family:inherit;font-size:12.5px;color:var(--muted);font-weight:400}
+.fest-item[hidden]{display:none}
+.fest-item .card-note{margin-top:6px;color:var(--muted)}
+
+/* ── 어종 안내 쪽 ─────────────────────────────────────── */
+.alias{margin-top:8px;font-size:13px;color:var(--muted)}
+
+/* 권역 알약 — 이 어종이 나오는 곳 */
+.region-chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.region-chips .badge{text-decoration:none;padding:7px 13px;font-size:12px}
+.region-chips .badge:hover{border-color:var(--orange);color:var(--orange)}
+.region-chips b{margin-left:5px;color:var(--orange)}
+
+/* 목록 카드의 작은 그림 — 2026-09-28 주인 규칙 6-1
+   맨 위 큰 덮개 그림을 빼는 대신 카드마다 작게 넣습니다. */
+.card-ico{
+  flex:0 0 auto;width:28px;height:28px;display:block;
+  margin-right:9px;
+}
+.card-head{display:flex;align-items:center;gap:0}
+.card-head .card-name{flex:1 1 auto;min-width:0}
+
+/* 전국에서 나오는 곳 — 권역마다 그곳 사정을 적습니다
+   ★ 2026-09-28. 자료에 권역×어종 설명이 534개 있는데
+     어종 쪽에서 빠져 있었습니다. 법·안전 이야기가 들어 있습니다. */
+.area-list{list-style:none;margin:10px 0 0;padding:0}
+.area-row{
+  padding:10px 0;border-top:1px dashed var(--line);
+}
+.area-row:first-child{border-top:0}
+.area-go{
+  font-weight:700;color:var(--ink);text-decoration:none;
+  border-bottom:1px solid transparent;
+}
+.area-go:hover{color:var(--orange);border-bottom-color:var(--orange)}
+.area-n2{margin-left:8px;font-size:12.5px;color:var(--muted)}
+.area-say{
+  margin:5px 0 0;font-size:13px;line-height:1.75;color:var(--muted);
+  max-width:64ch;
+}
+
+/* 여행 코스 카드 — 어느 권역 것인지 밝힙니다
+   ★ 2026-09-28 주인 지적으로 되살린 칸입니다.
+     묶음 쪽에서 코스를 고르면 그 권역으로 바로 가게 합니다. */
+.course-card{display:flex;flex-direction:column}
+.course-where{margin:2px 0 10px;font-size:12.5px}
+.course-where a{
+  color:var(--orange);text-decoration:none;font-weight:600;
+  border-bottom:1px solid transparent;
+}
+.course-where a:hover{border-bottom-color:var(--orange)}
+.course-card .steps{margin-top:auto}
+
+/* 전국에서 나오는 곳 — 묶음(도)으로 묶어 냅니다
+   ★ 2026-09-28 주인 지적. 감성돔은 권역 51곳에 걸칩니다.
+     평평하게 늘어놓으면 51개가 한 줄로 이어져 전국 그림이
+     안 보이고 고르기도 어렵습니다. 옛 쪽처럼 도별로 묶습니다. */
+.area-groups{margin-top:14px}
+.area-group{padding:14px 0 4px;border-top:1px solid var(--line)}
+.area-group:first-child{border-top:0;padding-top:4px}
+.area-name{
+  margin:0;font-family:'Noto Serif KR',serif;
+  font-size:16px;font-weight:700;color:var(--ink);
+}
+.area-n{
+  margin-left:8px;font-family:'Noto Sans KR',sans-serif;
+  font-size:12.5px;font-weight:400;color:var(--muted);
+}
+.area-group .region-chips{margin-top:9px}
+
+@media (max-width:480px){
+  .area-name{font-size:15px}
+  .area-n{display:block;margin:3px 0 0}
+}
+
+/* 차례대로 — 번호가 큰 목록 */
+.steps-big{list-style:none;margin:18px 0 0;padding:0;max-width:64ch}
+.steps-big li{display:flex;gap:14px;margin-top:16px;align-items:flex-start}
+.step-no{
+  flex:0 0 auto;width:28px;height:28px;border-radius:50%;
+  background:var(--green);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;
+}
+.step-text{font-size:14.5px;line-height:1.85;color:#4A3F33;padding-top:2px}
+
+/* ── 광고 자리 ────────────────────────────────────────── */
+/* ★ 접힌 채로 시작해, 광고가 **실제로 들어왔을 때만** 폅니다.
+     광고는 바깥 것이라 언제든 안 올 수 있습니다. 미리 자리를 잡아
+     두면 안 왔을 때 빈 상자가 덩그러니 남습니다. 접어 두면
+     아무 자리도 안 씁니다 (계약-23 바깥 자료가 죽어도 사이트는 산다)
+
+   크기 (주인 규칙 23 — PC·모바일 둘 다 정합니다)
+     PC     760x140 · 680x140    본문 안쪽 1080px (--wrap 1120 − 여백 40)
+     휴대폰 290x100              360px 화면 안쪽 328px (여백 16×2)
+                                 320 을 쓰면 여유가 8px 뿐이라 290 을 씁니다 */
+/* ★ hidden(display:none) 을 쓰지 않습니다 (2026-09-26 check_ads.py 가 잡음)
+     display:none 이면 IntersectionObserver 가 **영영 못 봅니다.**
+     광고를 늦게 부르려고 관찰하는데, 관찰이 안 되니 광고가 한 번도
+     안 떴습니다. 배포했으면 광고 수입이 0 이었습니다.
+
+     그래서 높이만 0 으로 둡니다 — 자리는 안 쓰면서 관찰은 됩니다.
+     광고가 실제로 들어오면 ads.js 가 data-ad-state="떴음" 을 달고,
+     그때 폅니다. */
+.ad-slot{
+  display:block;margin:0 auto;text-align:center;width:100%;max-width:800px;
+  /* ★ 0 이 아니라 1px 입니다 (2026-09-26 check_ads.py 가 잡음)
+       높이가 0 이면 IntersectionObserver 가 교차를 못 봅니다.
+       늦게 부르려고 관찰하는데 관찰이 안 되니 광고가 안 떴습니다.
+       1px 은 눈에 안 띄면서 관찰은 됩니다. */
+  height:1px;overflow:hidden;
+}
+.ad-slot[data-ad-state="떴음"]{height:auto;overflow:visible;margin:24px auto}
+/* 기기가 안 맞는 자리는 아예 안 보입니다 — 크기가 다른 배너를 각각 싣습니다 */
+@media (max-width:767px){ .ad-slot[data-ad-device="pc"]{display:none} }
+@media (min-width:768px){ .ad-slot[data-ad-device="mobile"]{display:none} }
+.ad-label{
+  margin:0 0 6px;font-size:11.5px;color:var(--muted);
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.ad-badge{
+  display:inline-block;padding:1px 6px;border-radius:4px;
+  background:#EFE8DC;color:#6B5B48;font-size:10.5px;font-weight:700;
+  letter-spacing:.02em;
+}
+/* 배너가 칸보다 넓으면 ads.js 가 줄입니다. 그래도 새지 않게 막습니다 */
+.ad-box{max-width:100%;overflow:hidden}
+.ad-box iframe,.ad-box img{max-width:100%}
+
+/* ── 좁은 화면 ────────────────────────────────────────── */
+/* 덧대지 않고 여기 한 곳에서만 줄입니다 */
+@media (max-width:640px){
+  .topbar{display:none}
+  :root{--gutter:16px}
+  .header .wrap{padding-top:10px;padding-bottom:10px;gap:10px}
+  .header-sep,.header-role,.official{display:none}
+  .header .brand .mark{font-size:16px}
+  /* 좁은 화면에서도 누르는 자리는 44px 을 지킵니다 (2026-09-27)
+     전에는 36px 로 줄여 손가락이 닿기 어려웠습니다 */
+  .header-right .badge{padding:8px 12px;font-size:12px;min-height:44px}
+  .header-right a[href^="mailto:"]{display:none}
+  .hero .wrap{padding:28px var(--gutter) 32px}
+  .hero h1{font-size:28px;max-width:none;margin-top:0}
+  .hero-lead{font-size:15px}
+  .btn-row .btn{flex:1 1 100%}
+  .section{padding:24px 0}
+  .list-head h2{font-size:22px}
+  .search{width:100%;min-height:46px;font-size:16px}
+  .grid{grid-template-columns:1fr;gap:12px}
+  .card{padding:16px;scroll-margin-top:70px}
+  .card-name{font-size:16px}
+  .card-body{font-size:14px;line-height:1.65}
+  .maplink{display:flex;justify-content:center;min-height:44px;margin-top:12px;
+           border:1px solid #CFE0DB;border-radius:var(--r-sm);background:#F3F8F6;font-size:14px}
+  /* 옛 사이트는 여기를 가로 스크롤로 두었는데, 오른쪽 단추가 있는 줄을
+     모르고 지나치기 쉬웠고 쪽 전체 폭까지 밀어냈습니다 (2026-09-26 확인).
+     단추가 많아야 열 개 안쪽이라 줄을 바꿔 다 보여 주는 편이 낫습니다 */
+  .filter{flex-wrap:wrap}
+  .filter button{flex:0 1 auto}
+  /* 좁은 화면에서 16:10 은 너무 납작해, 남북으로 긴 권역(태안·완도)이
+     안 담겨 지도가 엉뚱하게 넓어집니다. 세로를 늘려 줍니다 (2026-09-26) */
+  .map-wrap{aspect-ratio:4/5}
+  /* ★ 물때 이레를 **접어서 다 보여 줍니다** (2026-09-28 주인 지적)
+     처음에는 옆으로 미는 길을 골랐습니다. 그런데 휴대폰에서 찍어 보니
+     **첫인상이 「잘렸다」** 였습니다. 옆으로 밀 수 있다는 것을
+     모르는 분은 사흘치만 보고 지나갑니다.
+
+     옛 쪽은 3×2 격자로 이레를 다 보여 주었습니다. 그편이 낫습니다.
+     — 한눈에 「이번 주 언제 갈까」가 보입니다
+     — 밀어야 한다는 것을 배우지 않아도 됩니다
+     (주인 규칙 23 — 확인은 휴대폰과 PC 둘 다) */
+  .tide-days{
+    grid-template-columns:repeat(3,1fr);
+    gap:6px;
+  }
+  .tide-day{padding:10px 6px}
+  .td-name{font-size:14px}
+  .td-times{font-size:11px}
+  .site-footer{padding:20px var(--gutter) 80px}
+}
+
+/* ── 사진 ─────────────────────────────────────────────────
+   2026-09-27 주인 지시 「사진 넣어야해」 · 규칙 6-1
+   사람은 눈으로 봅니다. 글만 있는 쪽에는 머물지 않습니다.
+
+   ★ 자리를 미리 잡아 둡니다 (계약-14)
+     aspect-ratio 로 칸 크기를 정해 두면, 사진이 내려오기 전에도
+     아래 글이 밀렸다 올라갔다 하지 않습니다. */
+.photo{margin:0;width:100%}
+.photo img{
+  display:block;width:100%;height:auto;
+  aspect-ratio:3/2;object-fit:cover;
+  border-radius:14px;background:#EDE4D6;
+}
+.photo figcaption{
+  margin:8px 2px 0;font-size:12px;color:var(--muted);
+  text-align:right;line-height:1.5;
+}
+.photo--hero{margin:28px 0 4px}
+.photo--hero img{border-radius:18px;aspect-ratio:16/9}
+@media (max-width:767px){
+  .photo--hero{margin:20px 0 4px}
+  .photo--hero img{aspect-ratio:4/3;border-radius:14px}
+}
+
+/* 그린 그림 — 사진과 구별되게 테두리를 둡니다 (주인 규칙 5) */
+.photo--drawn img{background:#1D3440;border:1px solid var(--line)}
+
+/* ── 사진 히어로 (첫 화면) ────────────────────────────────
+   2026-09-27 주인 지적 「너무 단조롭고 글자가 너무 많다」
+   옛 쪽처럼 바다 사진을 깔고 그 위에 글자를 얹습니다.
+
+   ★ 글자가 묻히지 않게 어두운 막을 덮습니다.
+     밝은 사진에도 읽히도록 아래로 갈수록 짙게 합니다. */
+.hero--photo{
+  position:relative;overflow:hidden;padding:0;
+  min-height:520px;display:flex;align-items:flex-end;
+  background:#1B2E38;
+}
+.hero--photo .hero-bg{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;z-index:0;
+}
+.hero--photo::after{
+  content:'';position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg,
+    rgba(16,28,36,.34) 0%,
+    rgba(16,28,36,.52) 45%,
+    rgba(16,28,36,.80) 100%);
+}
+.hero-inner{position:relative;z-index:2;padding:56px 20px 44px;width:100%}
+.hero--photo h1{color:#FFF6E8}
+.hero--photo .accent{color:#F3C083}
+.hero--photo .hero-lead{color:rgba(255,246,232,.92);max-width:640px}
+.hero--photo .badge{
+  background:rgba(255,246,232,.16);color:#FFF6E8;
+  border:1px solid rgba(255,246,232,.30);
+}
+.hero--photo .btn--white{
+  background:rgba(255,246,232,.14);color:#FFF6E8;
+  border-color:rgba(255,246,232,.46);
+}
+.hero--photo .btn--dark{background:#FFF6E8;color:#24343C;border-color:#FFF6E8}
+.hero-credit{
+  position:absolute;right:12px;bottom:8px;z-index:2;
+  font-size:11px;color:rgba(255,246,232,.72);
+  background:rgba(16,28,36,.42);padding:3px 8px;border-radius:6px;
+}
+@media (max-width:767px){
+  .hero--photo{min-height:430px}
+  .hero-inner{padding:40px 16px 34px}
+}
+
+/* ── 묶음 쪽에 되살린 것들 (2026-09-28 주인 지적) ──────────
+   옛 묶음 쪽에 있던 숫자 요약·권역 단추·카드 사진이
+   새 쪽에서 빠져 있었습니다. engine/check_design.py 가
+   「사진 6→1 · 단추 18→1 · 입력칸 1→0」으로 잡았습니다. */
+
+/* 숫자 요약 — 6 / 306 / 48 / 19 */
+.hero-stats{
+  display:flex;flex-wrap:wrap;gap:0;margin:22px 0 4px;
+  border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  background:#fff;
+}
+.hero-stats .hs{
+  flex:1 1 130px;padding:14px 16px;
+  border-right:1px solid var(--line);
+}
+.hero-stats .hs:last-child{border-right:0}
+.hero-stats .hs b{
+  display:block;font-size:26px;line-height:1.15;
+  font-family:var(--serif);color:var(--ink);
+}
+.hero-stats .hs span{
+  display:block;margin-top:2px;font-size:13px;color:var(--dim);
+}
+
+/* 권역 고르기 단추 — 누르면 그 권역 물때로 바뀝니다 */
+.tide-regions{
+  display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;
+}
+.tide-region{
+  display:inline-block;text-decoration:none;
+  padding:8px 16px;border-radius:999px;
+  border:1px solid var(--line);background:#fff;
+  font-size:14px;color:var(--ink);
+}
+.tide-region:hover{border-color:var(--ink)}
+.tide-region.is-on{
+  background:var(--ink);color:#fff;border-color:var(--ink);font-weight:600;
+}
+.tide-more{margin:14px 0 0;font-size:14px}
+.tide-more a{color:var(--dim)}
+
+/* 권역 카드에 사진 */
+.grid--photo{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+.card--photo{padding:0;overflow:hidden}
+.card--photo .card-photo{
+  display:block;width:100%;height:170px;object-fit:cover;
+  background:var(--soft);
+}
+.card--photo .card-head,
+.card--photo .card-body,
+.card--photo .maplink{margin-left:18px;margin-right:18px}
+.card--photo .card-head{margin-top:14px}
+.card--photo .maplink{display:inline-block;margin-bottom:16px}
+
+@media (max-width:640px){
+  .hero-stats .hs{flex:1 1 50%;border-bottom:1px solid var(--line)}
+  .hero-stats .hs b{font-size:22px}
+  .card--photo .card-photo{height:150px}
+}
+
+/* 묶음 쪽 검색 (2026-09-28 주인 지적으로 되살림) */
+.gs{margin:22px 0 0;max-width:640px}
+.gs-box{
+  display:flex;align-items:center;gap:10px;
+  padding:0 16px;height:52px;
+  background:#fff;border:1px solid var(--line);border-radius:999px;
+}
+.gs-box:focus-within{border-color:var(--ink)}
+.gs-ic{
+  width:18px;height:18px;flex:none;
+  fill:none;stroke:var(--dim);stroke-width:2;stroke-linecap:round;
+}
+.gs input{
+  flex:1;min-width:0;height:100%;
+  border:0;background:transparent;font:inherit;font-size:15px;color:var(--ink);
+}
+.gs input:focus{outline:none}
+.gs input::-webkit-search-cancel-button{cursor:pointer}
+.gs-quick{
+  display:flex;flex-wrap:wrap;align-items:center;gap:6px;
+  margin-top:10px;font-size:13px;color:var(--dim);
+}
+.gs-quick button{
+  appearance:none;cursor:pointer;
+  padding:5px 12px;border-radius:999px;
+  border:1px solid var(--line);background:#fff;
+  font:inherit;font-size:13px;color:var(--ink);
+}
+.gs-quick button:hover{border-color:var(--ink)}
+.gs-out{
+  margin-top:10px;background:#fff;
+  border:1px solid var(--line);border-radius:14px;overflow:hidden;
+}
+.gs-row{
+  display:flex;align-items:baseline;gap:10px;
+  padding:11px 16px;text-decoration:none;color:inherit;
+  border-bottom:1px solid var(--line);
+}
+.gs-row:last-child{border-bottom:0}
+.gs-row:hover{background:var(--soft)}
+.gs-kind{
+  flex:none;min-width:44px;font-size:12px;color:var(--accent);
+}
+.gs-row b{font-weight:600;font-size:15px}
+.gs-row small{color:var(--dim);font-size:13px}
+.gs-none,.gs-more{margin:0;padding:14px 16px;font-size:14px;color:var(--dim)}
+.gs-more{border-top:1px solid var(--line)}
+
+@media (max-width:640px){
+  .gs-box{height:48px;padding:0 14px}
+  .gs input{font-size:16px}   /* 휴대폰에서 글자가 확대되지 않게 */
+  .gs-row{flex-wrap:wrap;gap:4px 10px}
+}
+
+/* 묶음 쪽 지도 — 권역이 어디쯤인지 보여 주는 그림 (2026-09-28) */
+.gm-layout{display:grid;grid-template-columns:280px 1fr;gap:18px;align-items:start}
+.gm{
+  position:sticky;top:18px;
+  background:#fff;border:1px solid var(--line);border-radius:16px;
+  padding:10px 10px 4px;
+}
+.gm svg{display:block;width:100%;height:auto}
+.gm-pin circle{fill:var(--accent);opacity:.9;transition:r .12s}
+.gm-pin text{
+  font-size:13px;fill:var(--ink);text-anchor:middle;font-weight:600;
+  paint-order:stroke;stroke:#fff;stroke-width:3.5px;stroke-linejoin:round;
+}
+.gm-pin:hover circle{r:9;opacity:1}
+.gm-pin:focus-visible circle{stroke:var(--ink);stroke-width:2}
+.gm-note{margin:6px 4px 8px;font-size:12px;line-height:1.5;color:var(--dim)}
+
+@media (max-width:860px){
+  .gm-layout{grid-template-columns:1fr}
+  .gm{position:static;max-width:320px;margin:0 auto}
+}
+
+/* 명소 카드 사진 (2026-09-28 — 자료에 142장 있는데 안 쓰고 있었습니다) */
+.card--photo .card-figure{margin:0}
+.card--photo .card-figure img{
+  display:block;width:100%;height:190px;object-fit:cover;
+  background:var(--soft);
+}
+.card--photo .card-figure figcaption{
+  padding:6px 18px 0;font-size:12px;color:var(--dim);
+}
+
+/* 권역 위치 안내 이름표 (2026-09-28 — 「지도」라 부르면
+   손님이 길 찾기를 기대합니다. 못 하는 것을 약속하지 않습니다) */
+.gm-title{
+  margin:2px 4px 8px;font-size:13px;font-weight:600;color:var(--dim);
+}

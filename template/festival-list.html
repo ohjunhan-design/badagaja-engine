@@ -1,0 +1,36 @@
+{{#_head.html}}
+<body>
+{{#_header.html}}
+
+<section class="section hero section--soft"><div class="wrap">
+  <div class="badge badge--orange">🎏 {{한줄}}</div>
+  <h1 class="serif">{{큰제목}}<br><span class="accent">{{큰제목뒷줄}}</span></h1>
+  <p class="hero-lead">{{소개글}}</p>
+
+  {{{대표사진자리}}}
+</div></section>
+
+<section class="section" id="list"><div class="wrap">
+  <div class="section-head">
+    <p class="kicker">어디서 열리나</p>
+    <h2 class="serif">바다 따라 고르기</h2>
+  </div>
+  <div class="filter" id="groupFilter" role="group" aria-label="묶음 고르기">{{{묶음단추}}}</div>
+
+  <div class="section-head" style="margin-top:26px">
+    <p class="kicker">언제 열리나</p>
+    <h2 class="serif">달 따라 고르기</h2>
+  </div>
+  <div class="filter" id="monthFilter" role="group" aria-label="달 고르기">{{{달단추}}}</div>
+
+  <p class="notice" id="festCount">{{셈안내}}</p>
+  <div id="festList">{{{달별목록}}}</div>
+  <p class="empty" id="festEmpty" hidden>고른 조건에 맞는 축제가 없습니다.</p>
+</div></section>
+
+<section class="section section--tail"><div class="wrap">
+  <p class="notice">{{기준일안내}}</p>
+</div></section>
+
+<button class="to-top" id="toTop" aria-label="맨 위로">↑</button>
+{{#_footer.html}}

@@ -1,0 +1,102 @@
+{{#_head.html}}
+<body data-group="{{묶음}}">
+{{#_header.html}}
+
+<section class="section hero section--soft"><div class="wrap">
+  <div class="badge badge--orange">🌊 {{한줄}}</div>
+  <h1 class="serif">{{큰제목}}<br><span class="accent">{{큰제목뒷줄}}</span></h1>
+  <p class="hero-lead">{{소개글}}</p>
+  <div class="btn-row">
+    <a href="#gwonyeok" class="btn btn--dark">{{권역수}}권역 보기</a>
+    <a href="{{전국주소}}" class="btn btn--white">전국 바다</a>
+  </div>
+
+  <!-- ★ 숫자 요약 — 2026-09-28 주인 지적으로 되살렸습니다.
+       옛 묶음 쪽에 「6 / 306 / 48 / 19」 가 크게 있었습니다.
+       숫자는 **자료에서 셉니다** (주인 규칙 29). -->
+  <!-- ★ 검색칸 — 2026-09-28 주인 지적으로 되살렸습니다.
+       옛 묶음 쪽에 「충남 권역·포인트·제철 해산물·축제·명소 검색」이
+       있었습니다. check_design.py 가 「입력칸 1 → 0」으로 잡았습니다. -->
+  {{{검색칸}}}
+
+  {{{숫자요약}}}
+
+  {{{대표사진자리}}}
+</div></section>
+
+<!-- ★ 오늘 물때 — 2026-09-28 주인 지적으로 되살렸습니다.
+     옛 묶음 쪽에는 「오늘 태안 바다는 10물 · 물 많이 빠짐」과
+     이번 주 막대그래프가 있었습니다. 손님이 묶음 쪽만 보고도
+     「오늘 갈까」를 알 수 있었습니다.
+
+     새 쪽에서는 권역 쪽까지 들어가야 알 수 있었습니다.
+     권역 이름을 함께 둡니다 — 누르면 그곳 물때와 포인트로 갑니다. -->
+<section class="section section--white" id="tide"><div class="wrap">
+  <div class="section-head">
+    <p class="kicker">오늘의 바다</p>
+    <h2 class="serif">{{묶음이름}} 바다는 지금</h2>
+    <p class="lead" id="tideStatus">{{첫권역이름}} 기준입니다.
+      다른 권역을 누르면 그곳 물때와 포인트로 갑니다.</p>
+  </div>
+  <nav class="tide-regions" id="tideRegions"
+       aria-label="권역 고르기">{{{권역단추}}}</nav>
+  <div class="tide-strip" id="tideStrip"
+       data-region="{{첫권역}}" data-station="{{첫관측소}}"
+       data-days="7"></div>
+  <div class="tide-graph" id="tideGraph"></div>
+  <p class="tide-more"><a href="{{첫권역주소}}#tide">물때표 2주 전체 보기 →</a></p>
+</div></section>
+
+<section class="section" id="gwonyeok"><div class="wrap">
+  <div class="section-head">
+    <p class="kicker">{{묶음이름}} 해안선을 따라</p>
+    <h2 class="serif">어디로 갈까요</h2>
+    <p class="lead">{{권역안내}}</p>
+  </div>
+  <!-- ★ 지도 — 2026-09-28 주인 지적으로 되살렸습니다.
+       옛 쪽에는 카드 왼쪽에 지도가 있었습니다. 바깥 지도를 부르지
+       않고 자료의 좌표로 직접 그립니다 — 열쇠도 필요 없고,
+       인터넷이 느려도 바로 보입니다. -->
+  <div class="gm-layout">
+    {{{지도}}}
+    <div class="grid grid--photo">{{{권역칸}}}</div>
+  </div>
+</div></section>
+
+<section class="section section--white" id="jecheol"><div class="wrap">
+  <div class="section-head">
+    <p class="kicker">이 바다의 제철</p>
+    <h2 class="serif">지금 잡히는 것들</h2>
+    <p class="lead">권역마다 조금씩 다릅니다. 자세한 것은 권역 쪽에서 보세요.</p>
+  </div>
+  <div class="grid grid--tight">{{{어종칸}}}</div>
+</div></section>
+
+<!-- ★ 여행 코스 — 2026-09-28 주인 지적으로 되살렸습니다.
+     옛 묶음 쪽에 있던 「학암포에서 만리포까지 해변 잇기」 같은
+     코스 18개가 새 쪽에서 통째로 빠져 있었습니다.
+     engine/check_design.py 가 잡았습니다. -->
+<section class="section" id="course"><div class="wrap">
+  <div class="section-head">
+    <p class="kicker">누구와 떠나시나요</p>
+    <h2 class="serif">하루 코스 {{코스수}}가지</h2>
+    <p class="lead">바다 하나만 보고 오기 아까울 때. 권역 이름을 누르면
+      그곳 물때와 포인트로 갑니다.</p>
+  </div>
+  <div class="grid">{{{코스칸}}}</div>
+</div></section>
+
+<section class="section section--white" id="chukje"><div class="wrap">
+  <div class="section-head">
+    <p class="kicker">이 바다의 축제</p>
+    <h2 class="serif">달마다 다른 얼굴</h2>
+  </div>
+  <div class="months">{{{축제칸}}}</div>
+</div></section>
+
+<section class="section section--tail"><div class="wrap">
+  <p class="notice">{{기준일안내}}</p>
+</div></section>
+
+<button class="to-top" id="toTop" aria-label="맨 위로">↑</button>
+{{#_footer.html}}

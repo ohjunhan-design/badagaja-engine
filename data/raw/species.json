@@ -1,0 +1,733 @@
+{
+  "_설명": "어종·해루질 대상. 포인트가 이 아이디를 가리킵니다",
+  "어종": [
+    {
+      "id": "baekhap",
+      "이름": {
+        "ko": "백합",
+        "zh": null
+      }
+    },
+    {
+      "id": "baekjogi",
+      "이름": {
+        "ko": "백조기",
+        "zh": null
+      }
+    },
+    {
+      "id": "baendaengi",
+      "이름": {
+        "ko": "밴댕이",
+        "zh": null
+      }
+    },
+    {
+      "id": "bajirak",
+      "이름": {
+        "ko": "바지락",
+        "zh": null
+      }
+    },
+    {
+      "id": "bakhaji",
+      "이름": {
+        "ko": "박하지",
+        "zh": null
+      }
+    },
+    {
+      "id": "bangeo",
+      "이름": {
+        "ko": "방어",
+        "zh": null
+      }
+    },
+    {
+      "id": "bangge",
+      "이름": {
+        "ko": "방게",
+        "zh": null
+      }
+    },
+    {
+      "id": "bengedom",
+      "이름": {
+        "ko": "벵에돔",
+        "zh": null
+      }
+    },
+    {
+      "id": "benjari",
+      "이름": {
+        "ko": "벤자리",
+        "zh": null
+      }
+    },
+    {
+      "id": "bogeo",
+      "이름": {
+        "ko": "복어",
+        "zh": null
+      }
+    },
+    {
+      "id": "bollak",
+      "이름": {
+        "ko": "볼락",
+        "zh": null
+      }
+    },
+    {
+      "id": "bomal",
+      "이름": {
+        "ko": "보말",
+        "zh": null
+      }
+    },
+    {
+      "id": "borimyeol",
+      "이름": {
+        "ko": "보리멸",
+        "zh": null
+      }
+    },
+    {
+      "id": "bukbari",
+      "이름": {
+        "ko": "붉바리",
+        "zh": null
+      }
+    },
+    {
+      "id": "bungjangeo",
+      "이름": {
+        "ko": "붕장어",
+        "zh": null
+      }
+    },
+    {
+      "id": "buse",
+      "이름": {
+        "ko": "부세",
+        "zh": null
+      }
+    },
+    {
+      "id": "busiri",
+      "이름": {
+        "ko": "부시리",
+        "zh": null
+      }
+    },
+    {
+      "id": "chamdom",
+      "이름": {
+        "ko": "참돔",
+        "zh": null
+      }
+    },
+    {
+      "id": "cheongeo",
+      "이름": {
+        "ko": "청어",
+        "zh": null
+      }
+    },
+    {
+      "id": "chilge",
+      "이름": {
+        "ko": "칠게",
+        "zh": null
+      }
+    },
+    {
+      "id": "daeha",
+      "이름": {
+        "ko": "대하",
+        "zh": null
+      }
+    },
+    {
+      "id": "dageumbari",
+      "이름": {
+        "ko": "다금바리",
+        "zh": null
+      }
+    },
+    {
+      "id": "dodari",
+      "이름": {
+        "ko": "도다리",
+        "zh": null
+      }
+    },
+    {
+      "id": "dokgasichi",
+      "이름": {
+        "ko": "독가시치",
+        "zh": null
+      }
+    },
+    {
+      "id": "doldom",
+      "이름": {
+        "ko": "돌돔",
+        "zh": null
+      }
+    },
+    {
+      "id": "dolge",
+      "이름": {
+        "ko": "돌게",
+        "zh": null
+      }
+    },
+    {
+      "id": "dongjuk",
+      "이름": {
+        "ko": "동죽",
+        "zh": null
+      }
+    },
+    {
+      "id": "euneo",
+      "이름": {
+        "ko": "은어",
+        "zh": null
+      }
+    },
+    {
+      "id": "gabojingeo",
+      "이름": {
+        "ko": "갑오징어",
+        "zh": null
+      }
+    },
+    {
+      "id": "gaebul",
+      "이름": {
+        "ko": "개불",
+        "zh": null
+      }
+    },
+    {
+      "id": "gaejogae",
+      "이름": {
+        "ko": "개조개",
+        "zh": null
+      }
+    },
+    {
+      "id": "gaetbeoljangeo",
+      "이름": {
+        "ko": "갯벌장어",
+        "zh": null
+      }
+    },
+    {
+      "id": "gaetgajae",
+      "이름": {
+        "ko": "갯가재",
+        "zh": null
+      }
+    },
+    {
+      "id": "gaetgodung",
+      "이름": {
+        "ko": "갯고둥",
+        "zh": null
+      }
+    },
+    {
+      "id": "gaetjireongi",
+      "이름": {
+        "ko": "갯지렁이",
+        "zh": null
+      }
+    },
+    {
+      "id": "gajami",
+      "이름": {
+        "ko": "가자미",
+        "zh": null
+      }
+    },
+    {
+      "id": "galchi",
+      "이름": {
+        "ko": "갈치",
+        "zh": null
+      }
+    },
+    {
+      "id": "gamseongdom",
+      "이름": {
+        "ko": "감성돔",
+        "zh": null
+      }
+    },
+    {
+      "id": "gamurak",
+      "이름": {
+        "ko": "가무락",
+        "zh": null
+      }
+    },
+    {
+      "id": "gangdodari",
+      "이름": {
+        "ko": "강도다리",
+        "zh": null
+      }
+    },
+    {
+      "id": "ganjaemi",
+      "이름": {
+        "ko": "간재미",
+        "zh": null
+      }
+    },
+    {
+      "id": "gaori",
+      "이름": {
+        "ko": "가오리",
+        "zh": null
+      }
+    },
+    {
+      "id": "ge",
+      "이름": {
+        "ko": "게",
+        "zh": null
+      }
+    },
+    {
+      "id": "geobuksol",
+      "이름": {
+        "ko": "거북손",
+        "zh": null
+      }
+    },
+    {
+      "id": "godeungeo",
+      "이름": {
+        "ko": "고등어",
+        "zh": null
+      }
+    },
+    {
+      "id": "godung",
+      "이름": {
+        "ko": "고둥",
+        "zh": null
+      }
+    },
+    {
+      "id": "golbaengi",
+      "이름": {
+        "ko": "골뱅이",
+        "zh": null
+      }
+    },
+    {
+      "id": "gul",
+      "이름": {
+        "ko": "굴",
+        "zh": null
+      }
+    },
+    {
+      "id": "gunso",
+      "이름": {
+        "ko": "군소",
+        "zh": null
+      }
+    },
+    {
+      "id": "gwangeo",
+      "이름": {
+        "ko": "광어",
+        "zh": null
+      }
+    },
+    {
+      "id": "haesam",
+      "이름": {
+        "ko": "해삼",
+        "zh": null
+      }
+    },
+    {
+      "id": "hakkongchi",
+      "이름": {
+        "ko": "학꽁치",
+        "zh": null
+      }
+    },
+    {
+      "id": "hanchi",
+      "이름": {
+        "ko": "한치",
+        "zh": null
+      }
+    },
+    {
+      "id": "honghap",
+      "이름": {
+        "ko": "홍합",
+        "zh": null
+      }
+    },
+    {
+      "id": "horaegi",
+      "이름": {
+        "ko": "호래기",
+        "zh": null
+      }
+    },
+    {
+      "id": "hwangeo",
+      "이름": {
+        "ko": "황어",
+        "zh": null
+      }
+    },
+    {
+      "id": "imyeonsueo",
+      "이름": {
+        "ko": "임연수어",
+        "zh": null
+      }
+    },
+    {
+      "id": "jaridom",
+      "이름": {
+        "ko": "자리돔",
+        "zh": null
+      }
+    },
+    {
+      "id": "jeonbok",
+      "이름": {
+        "ko": "전복",
+        "zh": null
+      }
+    },
+    {
+      "id": "jeoneo",
+      "이름": {
+        "ko": "전어",
+        "zh": null
+      }
+    },
+    {
+      "id": "jeongaengi",
+      "이름": {
+        "ko": "전갱이",
+        "zh": null
+      }
+    },
+    {
+      "id": "jjangttungeo",
+      "이름": {
+        "ko": "짱뚱어",
+        "zh": null
+      }
+    },
+    {
+      "id": "jogae",
+      "이름": {
+        "ko": "조개류",
+        "zh": null
+      }
+    },
+    {
+      "id": "jukkumi",
+      "이름": {
+        "ko": "주꾸미",
+        "zh": null
+      }
+    },
+    {
+      "id": "jwichi",
+      "이름": {
+        "ko": "쥐치",
+        "zh": null
+      }
+    },
+    {
+      "id": "jwinoraemi",
+      "이름": {
+        "ko": "쥐노래미",
+        "zh": null
+      }
+    },
+    {
+      "id": "kijogae",
+      "이름": {
+        "ko": "키조개",
+        "zh": null
+      }
+    },
+    {
+      "id": "kkomak",
+      "이름": {
+        "ko": "꼬막",
+        "zh": null
+      }
+    },
+    {
+      "id": "kkotge",
+      "이름": {
+        "ko": "꽃게",
+        "zh": null
+      }
+    },
+    {
+      "id": "mangdungeo",
+      "이름": {
+        "ko": "망둥어",
+        "zh": null
+      }
+    },
+    {
+      "id": "mangnongeo",
+      "이름": {
+        "ko": "망농어",
+        "zh": null
+      }
+    },
+    {
+      "id": "mangsangeo",
+      "이름": {
+        "ko": "망상어",
+        "zh": null
+      }
+    },
+    {
+      "id": "matjogae",
+      "이름": {
+        "ko": "맛조개",
+        "zh": null
+      }
+    },
+    {
+      "id": "meongge",
+      "이름": {
+        "ko": "멍게",
+        "zh": null
+      }
+    },
+    {
+      "id": "mineo",
+      "이름": {
+        "ko": "민어",
+        "zh": null
+      }
+    },
+    {
+      "id": "miyeok",
+      "이름": {
+        "ko": "미역",
+        "zh": null
+      }
+    },
+    {
+      "id": "mosijogae",
+      "이름": {
+        "ko": "모시조개",
+        "zh": null
+      }
+    },
+    {
+      "id": "muneo",
+      "이름": {
+        "ko": "문어",
+        "zh": null
+      }
+    },
+    {
+      "id": "muniojingeo",
+      "이름": {
+        "ko": "무늬오징어",
+        "zh": null
+      }
+    },
+    {
+      "id": "myeolchi",
+      "이름": {
+        "ko": "멸치",
+        "zh": null
+      }
+    },
+    {
+      "id": "myeongjujogae",
+      "이름": {
+        "ko": "명주조개",
+        "zh": null
+      }
+    },
+    {
+      "id": "nakji",
+      "이름": {
+        "ko": "낙지",
+        "zh": null
+      }
+    },
+    {
+      "id": "neopchi",
+      "이름": {
+        "ko": "넙치",
+        "zh": null
+      }
+    },
+    {
+      "id": "nongeo",
+      "이름": {
+        "ko": "농어",
+        "zh": null
+      }
+    },
+    {
+      "id": "noraemi",
+      "이름": {
+        "ko": "노래미",
+        "zh": null
+      }
+    },
+    {
+      "id": "ojingeo",
+      "이름": {
+        "ko": "오징어",
+        "zh": null
+      }
+    },
+    {
+      "id": "pijogae",
+      "이름": {
+        "ko": "피조개",
+        "zh": null
+      }
+    },
+    {
+      "id": "saejogae",
+      "이름": {
+        "ko": "새조개",
+        "zh": null
+      }
+    },
+    {
+      "id": "saekkomak",
+      "이름": {
+        "ko": "새꼬막",
+        "zh": null
+      }
+    },
+    {
+      "id": "saeu",
+      "이름": {
+        "ko": "새우",
+        "zh": null
+      }
+    },
+    {
+      "id": "samchi",
+      "이름": {
+        "ko": "삼치",
+        "zh": null
+      }
+    },
+    {
+      "id": "seongdae",
+      "이름": {
+        "ko": "성대",
+        "zh": null
+      }
+    },
+    {
+      "id": "seonggae",
+      "이름": {
+        "ko": "성게",
+        "zh": null
+      }
+    },
+    {
+      "id": "sora",
+      "이름": {
+        "ko": "소라",
+        "zh": null
+      }
+    },
+    {
+      "id": "sorage",
+      "이름": {
+        "ko": "소라게",
+        "zh": null
+      }
+    },
+    {
+      "id": "ssok",
+      "이름": {
+        "ko": "쏙",
+        "zh": null
+      }
+    },
+    {
+      "id": "ssombaengi",
+      "이름": {
+        "ko": "쏨뱅이",
+        "zh": null
+      }
+    },
+    {
+      "id": "sungeo",
+      "이름": {
+        "ko": "숭어",
+        "zh": null
+      }
+    },
+    {
+      "id": "tot",
+      "이름": {
+        "ko": "톳",
+        "zh": null
+      }
+    },
+    {
+      "id": "ttagaebi",
+      "이름": {
+        "ko": "따개비",
+        "zh": null
+      }
+    },
+    {
+      "id": "ureok",
+      "이름": {
+        "ko": "우럭",
+        "zh": null
+      }
+    },
+    {
+      "id": "ureokjogae",
+      "이름": {
+        "ko": "우럭조개",
+        "zh": null
+      }
+    },
+    {
+      "id": "yangtae",
+      "이름": {
+        "ko": "양태",
+        "zh": null
+      }
+    },
+    {
+      "id": "yeolgi",
+      "이름": {
+        "ko": "열기",
+        "zh": null
+      }
+    }
+  ]
+}

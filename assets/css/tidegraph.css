@@ -1,0 +1,49 @@
+/* 시간별 물높이 그래프 — 옛 사이트에서 옮겨 온 모양입니다.
+ *
+ * ★ engine/migrate_tidegraph.py 가 만듭니다. 손으로 고치지 마세요.
+ *   고치려면 그 도구를 고치고 다시 돌리세요 (주인 규칙 26).
+ *
+ * 옛 css/style.css · tide.css · gate.css 에서 `.tg-*` 규칙만 골라 왔습니다.
+ */
+.tide-graph .tg-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.tide-graph .tg-head b{font-size:.98rem}
+.tide-graph .tg-tabs{display:flex;gap:4px}
+.tide-graph .tg-tabs button{border:1px solid var(--line);background:transparent;border-radius:999px;padding:4px 12px;font:inherit;font-size:.8rem;cursor:pointer;color:inherit}
+.tide-graph .tg-tabs button.on{background:#2E8A8A;border-color:#2E8A8A;color:#fff;font-weight:700}
+.tide-graph .tg-plot{position:relative;margin-top:6px}
+.tide-graph .tg-grid{stroke:rgba(38,51,46,.08);stroke-width:1}
+.tide-graph .tg-axis{font-size:11px;fill:#8A7E6E}
+.tide-graph .tg-line{fill:none;stroke:#2E8A8A;stroke-width:2.4;stroke-linejoin:round}
+.tide-graph .tg-dot.high{fill:#C07B22;stroke:#fff;stroke-width:2}
+.tide-graph .tg-dot.low{fill:#2F5D57;stroke:#fff;stroke-width:2}
+.tide-graph .tg-lbl{font-size:11.5px;font-weight:700}
+.tide-graph .tg-lbl.high{fill:#9A6A1A}
+.tide-graph .tg-lbl.low{fill:#2F5D57}
+.tide-graph .tg-now{stroke:#D9642E;stroke-width:1.5;stroke-dasharray:4 3}
+.tide-graph .tg-nowlbl{font-size:11px;fill:#D9642E;font-weight:700}
+.tide-graph .tg-hline{stroke:rgba(38,51,46,.35);stroke-width:1}
+.tide-graph .tg-hdot{fill:#fff;stroke:#2E8A8A;stroke-width:2.5}
+.tide-graph .tg-tip{position:absolute;top:0;transform:translateX(-50%);background:#26332E;color:#fff;font-size:.75rem;font-weight:700;padding:3px 8px;border-radius:8px;white-space:nowrap;pointer-events:none}
+.tide-graph .tg-foot{font-size:.72rem;color:var(--foam-dim);margin-top:4px}
+.tide-graph.dark .tg-grid{stroke:rgba(243,236,221,.08)}
+.tide-graph.dark .tg-axis{fill:rgba(243,236,221,.55)}
+.tide-graph.dark .tg-line{stroke:#8FD0C6}
+.tide-graph.dark .tg-dot.low{fill:#6FA8A0}
+.tide-graph.dark .tg-lbl.high{fill:#F2B65C}
+.tide-graph.dark .tg-lbl.low{fill:#9EE0D4}
+.tide-graph.dark .tg-tabs button{border-color:rgba(243,236,221,.25)}
+.tide-graph.dark .tg-tabs button.on{background:#F2B65C;border-color:#F2B65C;color:#2A1B08}
+.tide-graph.dark .tg-hline{stroke:rgba(243,236,221,.4)}
+.tide-graph.dark .tg-tip{background:#F2B65C;color:#2A1B08}
+.tide-graph.dark .tg-foot{color:rgba(243,236,221,.55)}
+.tide-graph .tg-lbl{font-size:14px}
+.tide-graph .tg-axis{font-size:13px}
+.tide-page .h-today .tide-graph .tg-head b,.tide-page .h-today .tide-graph .tg-axis,.tide-page .h-today .tide-graph .tg-lbl{fill:#2B3942;color:#2B3942}
+.tide-page .h-today .tide-graph .tg-head,.tide-page .h-today .tide-graph .tg-foot{display:flex;color:#546069}
+.tide-page .h-today .tide-graph .tg-tabs button{border:1.5px solid #D6E2EC;color:#1F5F8B;background:#fff}
+.tide-page .h-today .tide-graph .tg-tabs button[aria-selected="true"]{background:#1F5F8B;border-color:#1F5F8B;color:#fff}
+.g-today .tide-graph .tg-head, .g-today .tide-graph .tg-foot{display:none}
+.g-today .tide-graph .tg-plot{margin:0}
+/* 그래프 글자는 칸 폭에 맞춰 줄어드니, 옆 글자와 비슷해 보이도록 키워 둡니다 */ .g-today .tide-graph .tg-axis{font-size:15px}
+.g-today .tide-graph .tg-lbl{font-size:15px}
+/* 물높이 예보를 못 받으면 빈 칸만 남으므로 아예 접습니다 */ .g-today .gt-graph:not(:has(.tg-plot)){display:none}

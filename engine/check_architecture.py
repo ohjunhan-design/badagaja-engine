@@ -1,0 +1,536 @@
+# -*- coding: utf-8 -*-
+"""**같은 사실을 두 곳에서 관리하고 있지 않은가** — 짜임을 봅니다.
+
+★ 왜 만들었나 (2026-09-28 바깥 검수 7차 지시)
+
+    하루에 일곱 번 같은 사고가 났습니다.
+
+        바깥 자리 목록  check_console 만 가짐      → 검사기 셋이 몰랐습니다
+        크롬 자리      검사기 여섯에 베껴짐
+        메모리 재기     검사기 둘에 베껴짐
+        keep.json 읽기  check_assets 만 읽음      → 6번·11번 FAIL
+        홈으로 가는 길   build.py 안 일곱 군데      → 권역 57쪽 로고가 빈 링크
+        갱신 차례      refresh 와 시험에 따로      → 서로 달랐습니다
+        상태 목록      ERROR 를 더하고 찍는 표를 잊음 → 판정이 통째로 죽음
+        차림표 목록     손으로 적어 tidegraph.css 를 잊음 → 쪽 57개가 깨짐
+
+    바깥 검수가 뿌리를 짚었습니다.
+
+        이번 사고 넷은 별개처럼 보이지만 사실 같은 뿌리입니다.
+        **하나의 사실을 여러 곳에서 따로 정의하고 있습니다.**
+
+        check_architecture.py 의 목적은 「코드가 예쁜가」가 아니라
+        **「같은 사실을 두 곳에서 관리하고 있지 않은가」** 입니다.
+
+★ 조심할 것 — 거짓 경보를 내면 아무도 안 봅니다
+    바깥 검수가 짚었습니다.
+
+        「리스트가 하드코딩되어 있으니 FAIL」 이라고 하면 안 됩니다.
+        **「실제 파일 집합과 별도의 관리 목록이 존재한다」** 를 잡아야 합니다.
+
+    그래서 목록 자체를 나무라지 않습니다.
+    **진짜 있는 것과 어긋날 때만** 말합니다.
+
+★ 검사 등급 (계약-21)
+    막음 — 지금 어긋나 있습니다. 고쳐야 합니다
+    알림 — 어긋날 수 있는 자리입니다. 봐 두세요
+
+쓰는 법
+    python engine/check_architecture.py
+    python engine/check_architecture.py --strict
+    python engine/check_architecture.py --자세히
+"""
+import os
+import re
+import sys
+import glob
+import collections
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(HERE)
+sys.path.insert(0, ROOT)
+from engine import io   # noqa: E402
+
+ASSETS = os.environ.get('BADAGAJA_ASSETS', os.path.join(ROOT, 'assets'))
+NEW = os.environ.get('BADAGAJA_SITE', os.path.join(ROOT, 'site'))
+
+막음, 알림 = [], []
+자세히 = False
+
+
+def 소스들(밖=()):
+    """저장소의 파이썬 소스. 만든 것·캐시는 뺍니다.
+
+    ★ **자기 자신은 늘 뺍니다** — 찾을 무늬를 코드에 담고 있어
+      안 빼면 언제나 자기를 잡습니다 (거짓 경보).
+    """
+    밖 = tuple(밖) + ('engine/check_architecture.py',)
+    for p in sorted(glob.glob(os.path.join(ROOT, '**', '*.py'),
+                              recursive=True)):
+        상대 = os.path.relpath(p, ROOT).replace(os.sep, '/')
+        if 상대.startswith(('site/', '.git/')) or '__pycache__' in 상대:
+            continue
+        if any(상대.startswith(x) for x in 밖):
+            continue
+        yield 상대, io.read(p, default='')
+
+
+def 말(등급, 글, 자세한말=''):
+    (막음 if 등급 == '막음' else 알림).append(글)
+    print('  %s %s' % ('✗' if 등급 == '막음' else '!', 글))
+    if 자세한말:
+        for 줄 in 자세한말.split('\n'):
+            if 줄.strip():
+                print('      %s' % 줄)
+
+
+def 됨(글, 자세한말=''):
+    print('  · %s' % 글)
+    if 자세히 and 자세한말:
+        for 줄 in 자세한말.split('\n'):
+            if 줄.strip():
+                print('      %s' % 줄)
+
+
+# ── 1. 파일 목록을 손으로 적고 있는가 ─────────────────────
+#
+#   ★ 2026-09-28 — tidegraph.css 를 만들고 목록에 안 적어
+#     배포본에서 빠졌습니다. 쪽 57개가 없는 차림표를 불렀습니다.
+#
+#   ★ 목록이 있다고 나무라지 않습니다.
+#     **진짜 있는 것과 어긋날 때만** 말합니다.
+def 검사1_파일목록():
+    print('[1] 파일 이름을 손으로 적어 둔 곳이 진짜와 어긋나는가')
+    볼것 = [
+        ('차림표', os.path.join(ASSETS, 'css'), '.css'),
+        ('스크립트', os.path.join(ASSETS, 'js'), '.js'),
+        ('틀', os.path.join(ROOT, 'template'), '.html'),
+    ]
+    났나 = False
+    for 무엇, 칸, 꼬리 in 볼것:
+        if not os.path.isdir(칸):
+            continue
+        진짜 = set(x for x in os.listdir(칸) if x.endswith(꼬리))
+        # ★ 조각 틀(_head.html 처럼)은 **틀이 틀을 부릅니다.**
+        #   생성기가 이름을 안 적는 것이 정상입니다.
+        진짜 = set(x for x in 진짜 if not x.startswith('_'))
+        if not 진짜:
+            continue
+        # 소스에서 그 꼬리를 가진 이름을 모읍니다
+        적힌것 = collections.defaultdict(set)
+        무늬 = re.compile(r"['\"]([\w.-]+%s)['\"]" % re.escape(꼬리))
+        for 상대, s in 소스들():
+            for 이름 in 무늬.findall(s):
+                if 이름 in 진짜:
+                    적힌것[상대].add(이름)
+        for 상대, 적은것 in sorted(적힌것.items()):
+            # 두 개 넘게 적어 둔 곳만 「목록」으로 봅니다
+            if len(적은것) < 2:
+                continue
+            # ★ 시험은 일부러 몇 개를 골라 적습니다 — 목록이 아닙니다
+            if 상대.startswith('tests/'):
+                continue
+            # ★ 검사기가 「이것만 본다」고 고른 것도 목록이 아닙니다.
+            #   진짜와 어긋나도 탈이 아닙니다.
+            if 상대.startswith('engine/check_'):
+                continue
+            빠진것 = 진짜 - 적은것
+            if 빠진것:
+                났나 = True
+                말('막음',
+                   '%s에 %s 이름을 %d개 적어 두었는데 %d개가 빠졌습니다 (%s)'
+                   % (상대, 무엇, len(적은것), len(빠진것), ' · '.join(sorted(빠진것))),
+                   '진짜 있는 것: %s' % ' · '.join(sorted(진짜)))
+    if not 났나:
+        됨('손으로 적은 파일 목록이 진짜와 어긋나지 않습니다')
+
+
+# ── 2. 같은 판단을 여러 곳에서 하는가 ─────────────────────
+#
+#   ★ 한 곳에 모아 둔 것을 **정말 다들 쓰는지** 봅니다.
+#     모아 놓고 딴 데서 또 하면 모은 뜻이 없습니다.
+모은것 = [
+    ('우리 것인가 바깥 것인가', 'engine/net.py',
+     [r'coupang', r'fonts\.googleapis', r'pstatic', r'daumcdn'],
+     ('engine/net.py',)),
+    ('크롬은 어디 있나', 'engine/machine.py',
+     [r'Program Files.*[Cc]hrome', r'google-chrome'],
+     ('engine/machine.py',)),
+    ('메모리는 얼마나 남았나', 'engine/machine.py',
+     [r'GlobalMemoryStatusEx', r'MemAvailable'],
+     ('engine/machine.py',)),
+    ('이 주소는 무엇인가', 'engine/pages.py',
+     # ★ 이름만 스치는 것이 아니라 **실제로 읽는 것**만 봅니다
+     [r"read_json\([^)]*keep\.json", r"'남길것'"],
+     ('engine/pages.py', 'engine/check_keep.py', 'engine/keep_detail.py',
+      'engine/build.py')),
+    ('갱신 차례', 'engine/refresh.py',
+     [r"migrate_photos\.py'", r"migrate_map\.py'"],
+     ('engine/refresh.py',)),
+]
+
+
+def 검사2_모은판단():
+    print('[2] 한 곳에 모은 판단을 딴 곳에서 또 하고 있는가')
+    났나 = False
+    for 무엇, 집, 무늬들, 봐줄것 in 모은것:
+        어긴곳 = []
+        for 상대, s in 소스들():
+            if 상대 in 봐줄것:
+                continue
+            for 무늬 in 무늬들:
+                if re.search(무늬, s):
+                    어긴곳.append(상대)
+                    break
+        if 어긴곳:
+            났나 = True
+            말('알림',
+               '「%s」는 %s 가 맡는데 %d곳에서 또 합니다'
+               % (무엇, 집, len(어긴곳)),
+               ' · '.join(어긴곳[:5]))
+        else:
+            됨('「%s」 — %s 한 곳에서만' % (무엇, 집))
+    if not 났나:
+        pass
+
+
+# ── 3. 상태 목록이 쓰는 곳과 맞는가 ───────────────────────
+#
+#   ★ 2026-09-28 — ERROR 를 더하고 **찍는 표에 안 더해**
+#     판정이 KeyError 로 통째로 죽었습니다.
+def 검사3_상태목록():
+    print('[3] 상태를 더했는데 다루는 곳을 빠뜨렸는가')
+    s = io.read(os.path.join(ROOT, 'engine', 'gate.py'), default='')
+    m = re.search(r"상태들 = \(([^)]*)\)", s)
+    if not m:
+        말('알림', 'gate.py 에서 상태 목록을 못 찾았습니다')
+        return
+    상태들 = re.findall(r"'([A-Z_.]+)'", m.group(1))
+    # 상태를 다루는 표·판정
+    표들 = re.findall(r"표 = \{([^}]*)\}", s)
+    다룸 = set()
+    for 표 in 표들:
+        다룸 |= set(re.findall(r"'([A-Z_.]+)'", 표))
+    빠진것 = [x for x in 상태들 if x not in 다룸]
+    # setdefault 로 채우면 봐줍니다
+    if 빠진것 and 'setdefault' not in s:
+        말('막음', '상태 %s 를 찍는 표가 안 다룹니다 — KeyError 가 납니다'
+           % ' · '.join(빠진것))
+    else:
+        됨('상태 %d가지를 찍는 표가 모두 다룹니다 (%s)'
+           % (len(상태들), ' · '.join(상태들)))
+
+
+# ── 4. 검사기가 판정에 물려 있는가 ────────────────────────
+#
+#   ★ 검사기를 만들어 두고 gate 에 안 물리면 **아무도 안 돌립니다.**
+#     있는 줄 알았던 검사가 도는 적이 없습니다.
+def 검사4_검사기등록():
+    print('[4] 만든 검사기가 판정에 물려 있는가')
+    gate = io.read(os.path.join(ROOT, 'engine', 'gate.py'), default='')
+    검사기 = sorted(os.path.basename(p) for p in
+                    glob.glob(os.path.join(ROOT, 'engine', 'check_*.py')))
+    안물림 = [x for x in 검사기 if x not in gate]
+    if 안물림:
+        말('막음', '판정에 안 물린 검사기 %d개 — 아무도 안 돌립니다'
+           % len(안물림), ' · '.join(안물림))
+    else:
+        됨('검사기 %d개가 모두 판정에 물려 있습니다' % len(검사기))
+
+
+# ── 5. 같은 고르개가 여러 차림표에 있는가 ─────────────────
+#
+#   ★ 바깥 검수 지시 — 세 등급으로 나눕니다
+#       같은 고르개가 여러 파일에                    알림
+#       + 같은 속성까지 겹침                        센 알림
+#       + 값이 서로 다름                            부딪힘 (막음)
+def 검사5_차림표겹침():
+    print('[5] 같은 고르개가 여러 차림표에서 부딪히는가')
+    칸 = os.path.join(ASSETS, 'css')
+    if not os.path.isdir(칸):
+        return
+    규칙 = collections.defaultdict(dict)   # 고르개 → {파일: {속성: 값}}
+    for 이름 in sorted(os.listdir(칸)):
+        if not 이름.endswith('.css'):
+            continue
+        s = io.read(os.path.join(칸, 이름), default='')
+        s = re.sub(r'/\*.*?\*/', ' ', s, flags=re.S)
+        for m in re.finditer(r'([^{}@]+)\{([^{}]*)\}', s):
+            고르개 = ' '.join(m.group(1).split())
+            if not 고르개 or 고르개.startswith(('@', '%')):
+                continue
+            속성 = {}
+            for 줄 in m.group(2).split(';'):
+                if ':' in 줄:
+                    k, v = 줄.split(':', 1)
+                    속성[k.strip()] = v.strip()
+            if 속성:
+                규칙[고르개][이름] = 속성
+
+    부딪힘, 센것, 겹침 = [], [], 0
+    for 고르개, 파일별 in 규칙.items():
+        if len(파일별) < 2:
+            continue
+        겹침 += 1
+        파일들 = sorted(파일별)
+        같은속성 = set(파일별[파일들[0]])
+        for f in 파일들[1:]:
+            같은속성 &= set(파일별[f])
+        if not 같은속성:
+            continue
+        다른값 = [k for k in 같은속성
+                  if len(set(파일별[f][k] for f in 파일들)) > 1]
+        if 다른값:
+            부딪힘.append('%s — %s (%s)'
+                          % (고르개, ' vs '.join(파일들),
+                             ' · '.join(sorted(다른값)[:3])))
+        else:
+            센것.append('%s — %s' % (고르개, ' vs '.join(파일들)))
+
+    if 부딪힘:
+        말('막음', '같은 고르개가 여러 차림표에서 **다른 값**을 줍니다 %d건'
+           % len(부딪힘), '\n'.join(부딪힘[:6]))
+    elif 센것:
+        말('알림', '같은 고르개·같은 속성이 여러 차림표에 %d건' % len(센것),
+           '\n'.join(센것[:5]))
+    else:
+        됨('겹치는 고르개 %d개 — 값이 부딪히지 않습니다' % 겹침)
+
+
+# ── 6. 실제 파일인데 아무도 안 쓰는 것 ────────────────────
+def 검사6_버려진것():
+    print('[6] 만들어 두고 아무도 안 쓰는 것이 있는가')
+    버려진것 = []
+    for 칸, 꼬리 in ((os.path.join(ASSETS, 'css'), '.css'),
+                     (os.path.join(ASSETS, 'js'), '.js'),
+                     (os.path.join(ROOT, 'template'), '.html')):
+        if not os.path.isdir(칸):
+            continue
+        for 이름 in sorted(os.listdir(칸)):
+            if not 이름.endswith(꼬리) or 이름.startswith('_'):
+                continue
+            쓰나 = False
+            # ★ **시험은 빼고 봅니다** (2026-09-28)
+            #   시험이 「아무도 안 쓰는 파일」을 일부러 만들어 보는데,
+            #   그 이름이 시험 코드에 적혀 있으면 검사기가
+            #   「누가 쓰고 있다」고 봅니다.
+            #   **시험이 검사를 무력하게 만듭니다.**
+            #   진짜로 쓰는 것은 engine/ 과 틀입니다.
+            for _상대, s in 소스들(밖=('tests/',)):
+                if 이름 in s:
+                    쓰나 = True
+                    break
+            if not 쓰나:
+                # 틀끼리 부르는 경우도 봅니다
+                for p in glob.glob(os.path.join(ROOT, 'template', '*.html')):
+                    if 이름 in io.read(p, default=''):
+                        쓰나 = True
+                        break
+            if not 쓰나:
+                버려진것.append(os.path.relpath(os.path.join(칸, 이름), ROOT))
+    if 버려진것:
+        말('알림', '아무도 안 쓰는 파일 %d개 — 지우거나 쓰세요'
+           % len(버려진것), ' · '.join(버려진것))
+    else:
+        됨('만들어 두고 안 쓰는 차림표·스크립트·틀이 없습니다')
+
+
+
+def 검사7_워크플로가정말도는가():
+    """★ 클라우드 판정이 **한 번도 돈 적이 없었습니다** (2026-09-28)
+
+    여섯 번을 올려 여섯 번 다 「Failure」 였습니다. 저는 그것을
+    판정 결과로 여겼습니다. 아니었습니다 —
+
+        The identifier '판정' is invalid.
+        IDs may only contain alphanumeric characters, '_', and '-'.
+
+    깃허브는 워크플로 파일을 **아예 안 읽었습니다.** 판정은
+    시작조차 못 했는데, 목록에 빨간 줄이 서 있으니 돌고 있는 줄
+    알았습니다. **안 도는 판정은 없는 판정입니다.**
+
+    더 뼈아픈 것은, 바로 그 파일 49줄에 같은 교훈이 이미 적혀
+    있었다는 것입니다(`id: 크롬` 사고). 글은 적어 두었는데
+    **기계가 보지 않으니 옆줄에서 같은 잘못을 또 했습니다.**
+
+    이것도 「같은 사실이 두 곳에」입니다 — 판정이 이 컴퓨터와
+    클라우드 두 곳에 있는데, 한쪽이 죽은 것을 아무도 몰랐습니다.
+    """
+    print('[7] 워크플로가 깃허브에서 정말 읽히는가')
+    뿌리 = os.path.join(ROOT, '.github', 'workflows')
+    if not os.path.isdir(뿌리):
+        됨('워크플로가 없습니다 — 클라우드에서 안 돌립니다')
+        return
+
+    한글 = re.compile(r'[가-힣]')
+    # 식별자가 되는 자리만 봅니다.
+    #   ① jobs: 밑의 일 이름      (들여쓰기 2칸 + 이름 + 콜론)
+    #   ② id: · needs: 의 값
+    #   ③ 식 안의 steps.○○ · inputs.○○ · jobs.○○ · needs.○○
+    일이름 = re.compile(r'^  ([^\s:#]+):\s*$')
+    # ★ run: 안의 **셸 변수**도 봅니다 (2026-09-28)
+    #   진단 워크플로를 처음 돌렸을 때 이렇게 죽었습니다.
+    #       볼것="..."  →  line 15: 볼것=  (명령을 못 찾습니다)
+    #   리눅스 셸도 한글 이름을 못 씁니다. 식별자 이야기와
+    #   같은 뿌리인데, 자리가 달라 안 잡히고 있었습니다.
+    셸변수 = re.compile(r'^\s*([^\s=#|&;()]+)=[^=]')
+    열쇠값 = re.compile(r'(?<![A-Za-z0-9_.])(?:id|needs)\s*:\s*([^\s#]+)')
+    식이름 = re.compile(r'(?<![A-Za-z0-9_.])(?:steps|jobs|inputs|needs)\.([^\s.)}\]]+)')
+
+    나쁜것 = []
+    센것 = 0
+    일칸 = False
+    for 이름 in sorted(os.listdir(뿌리)):
+        if not 이름.endswith(('.yml', '.yaml')):
+            continue
+        센것 += 1
+        글 = io.read(os.path.join(뿌리, 이름), default='')
+        일칸 = False
+        for 번호, 줄 in enumerate(글.split('\n'), 1):
+            벗긴 = 줄.split('#', 1)[0]          # 주석은 봐줍니다
+            if not 벗긴.strip():
+                continue
+            if 벗긴.startswith('jobs:'):
+                일칸 = True
+            elif 벗긴[:1] not in (' ', '\t'):
+                일칸 = False
+
+            값들 = []
+            if 일칸:
+                m = 일이름.match(벗긴.rstrip())
+                if m:
+                    값들.append(m.group(1))
+            값들 += 열쇠값.findall(벗긴)
+            값들 += 식이름.findall(벗긴)
+            m = 셸변수.match(벗긴)
+            if m:
+                값들.append(m.group(1))
+            for 값 in 값들:
+                if 한글.search(값):
+                    나쁜것.append('%s:%d  %s'
+                                  % (이름, 번호, 줄.strip()[:60]))
+                    break
+
+    if 나쁜것:
+        말('막음', '워크플로에 한글 식별자가 있습니다 %d곳' % len(나쁜것),
+           '\n'.join('      %s' % x for x in 나쁜것[:6]))
+        print('      → id·needs·jobs 이름이면 깃허브가 **파일을 아예 안 읽습니다.**')
+        print('        run: 안의 셸 변수면 **그 줄에서 죽습니다.**')
+        print('        어느 쪽이든 판정이 도는 줄 알지만 안 돕니다.')
+        print('        name: 과 주석은 한글로 두고, 이름만 영어로 적습니다.')
+    else:
+        됨('워크플로 %d개에 한글 식별자가 없습니다' % 센것)
+
+
+
+def 검사8_없음을빈것으로바꿔읽나():
+    """★ **누락을 숨길 수 있는 코드**를 찾습니다 (2026-09-28 바깥 검수 9차)
+
+    검사기가 이렇게 읽고 있었습니다.
+
+        사이트맵 = io.꼭읽기(os.path.join(NEW, 'sitemap.xml'))
+
+    그러면 이 둘이 똑같아집니다.
+
+        파일이 아예 없음      → ''
+        파일은 있으나 0바이트  → ''
+
+    실제로 sitemap.xml 이 통째로 없었는데 `<loc>` 이 하나도 없으니
+    「사이트맵이 가리키는 쪽이 모두 있습니다」로 넘어갔습니다.
+    **없는 것을 「다 맞다」고 세는 검사**였습니다.
+
+    바깥 검수의 말: 「파일 누락 검사가 아니라 **누락을 숨길 수 있는
+    코드 검사**까지 가야 합니다.」
+
+    ★ 다만 `default=''` 가 다 나쁜 것은 아닙니다.
+      「없어도 되는 것」을 읽을 때는 옳은 씀씀이입니다.
+      그래서 **꼭 있어야 하는 것**을 읽는 자리만 봅니다 —
+      그 줄에 필수 파일 이름이 보이는가.
+    """
+    print('[8] 「없음」을 「빈 것」으로 바꿔 읽는 자리가 있는가')
+
+    # 반드시 있어야 하는 것들. 없으면 배포가 깨집니다.
+    꼭있어야하는것 = (
+        'sitemap.xml', 'robots.txt', 'llms.txt', 'build.json',
+        'keep.json', 'url-map.json', 'refresh-plan.json',
+        'site.css', 'tide.js', 'index.html',
+    )
+    숨기는법 = (
+        "default=''", 'default=""', "default=[]", "default={}",
+        "or ''", 'or ""',
+    )
+
+    나쁜것 = []
+    for 상대, 글 in 소스들(밖=('tests/',)):
+        for 번호, 줄 in enumerate(글.split('\n'), 1):
+            벗긴 = 줄.split('#', 1)[0]
+            # ★ **정말 읽는 줄만** 봅니다 (2026-09-28)
+            #   처음에는 그 줄에 글자가 보이기만 하면 잡았습니다.
+            #   그랬더니 **제가 쓴 설명 글**까지 잡았습니다 —
+            #       ★ keep.json 을 `default={}` 로 읽던 자리를…
+            #   글자로 판정하면 늘 어딘가 샙니다. 오늘 네 번째입니다.
+            if not ('io.read(' in 벗긴 or 'io.read_json(' in 벗긴):
+                continue
+            if not any(x in 벗긴 for x in 숨기는법):
+                continue
+            if not any(x in 벗긴 for x in 꼭있어야하는것):
+                continue
+            # ★ 옛 저장소는 **없을 수 있습니다.**
+            #   없으면 INFRA_FAIL 로 가야지, 「빈 것으로 읽는다」고
+            #   나무랄 일이 아닙니다.
+            if 'OLD' in 벗긴:
+                continue
+            나쁜것.append('%s:%d  %s' % (상대, 번호, 줄.strip()[:64]))
+
+    if 나쁜것:
+        말('막음', '없어서는 안 될 파일을 빈 것으로 바꿔 읽습니다 %d곳'
+           % len(나쁜것),
+           '\n'.join('      %s' % x for x in 나쁜것[:6]))
+        print('      → 없는 것과 빈 것이 같아집니다.')
+        print('        io.파일상태() 나 io.꼭있어야함() 으로 읽으세요 —')
+        print('        MISSING · EMPTY · INVALID · VALID 를 가려 줍니다.')
+    else:
+        됨('꼭 있어야 하는 파일을 빈 것으로 바꿔 읽는 자리가 없습니다')
+
+
+def main():
+    global 자세히
+    자세히 = '--자세히' in sys.argv
+    print('같은 사실을 두 곳에서 관리하고 있지 않은가 (바깥 검수 7차)')
+    print('  ★ 「코드가 예쁜가」가 아닙니다.')
+    print('    하루에 일곱 번 난 사고가 전부 이 뿌리였습니다.')
+    print('')
+
+    검사1_파일목록()
+    print('')
+    검사2_모은판단()
+    print('')
+    검사3_상태목록()
+    print('')
+    검사4_검사기등록()
+    print('')
+    검사5_차림표겹침()
+    print('')
+    검사6_버려진것()
+    print('')
+    검사7_워크플로가정말도는가()
+    print('')
+    검사8_없음을빈것으로바꿔읽나()
+    print('')
+
+    if 알림:
+        print('살펴볼 것 %d가지 (막지 않습니다)' % len(알림))
+    if 막음:
+        print('손볼 곳 %d가지' % len(막음))
+        for x in 막음:
+            print('  ✗ %s' % x)
+        print('')
+        print('  **같은 사실이 두 곳에 있으면 언젠가 반드시 어긋납니다.**')
+        return 1
+    print('같은 사실을 두 곳에서 관리하는 곳이 없습니다.')
+    return 0
+
+
+if __name__ == '__main__':
+    sys.stdout.reconfigure(encoding='utf-8')
+    sys.exit(main())

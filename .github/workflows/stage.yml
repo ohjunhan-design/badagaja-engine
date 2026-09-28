@@ -1,0 +1,155 @@
+# 검증 배포 — **운영 자리를 건드리지 않고** 같은 서버에 올려 재 봅니다
+#
+# ★ 왜 (2026-09-28 바깥 검수 8차 지시)
+#
+#     운영 서버에 바로 배포        NO-GO
+#     검증 서버에 올려 20번 검사    GO
+#
+#     지금 필요한 것은 「배포하지 말고 멈춰라」가 아니라
+#     **「운영 배포와 검증 배포를 분리하라」** 입니다.
+#
+#   20번(실제 서버 배포 후 검증)은 **올려야만** 잴 수 있습니다.
+#   그렇다고 운영 자리에 바로 올리면, 나쁠 때 손님이 먼저 봅니다.
+#
+# ★ 카페24에는 검증 서버가 따로 없습니다
+#   그래서 **같은 서버의 하위 칸**에 올립니다.
+#       badagaja.com/_stage/
+#   같은 아파치 · 같은 PHP · 같은 물때 API 를 씁니다.
+#   **운영 쪽 파일은 한 글자도 안 건드립니다.**
+#
+# ★ 검색에 안 걸리게 막습니다
+#   robots.txt 와 쪽마다 noindex 를 넣습니다.
+#   검증판이 검색에 걸리면 운영 쪽과 겹쳐 둘 다 손해입니다.
+#
+# 쓰려면 저장소 Secrets 에 FTP_SERVER · FTP_USERNAME · FTP_PASSWORD 가
+# 있어야 합니다 (운영 저장소와 같은 값).
+name: 검증 배포
+
+on:
+  workflow_dispatch:
+    inputs:
+      folder:
+        description: '올릴 칸 (기본 _stage)'
+        required: false
+        default: _stage
+
+concurrency:
+  group: ftp-stage
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  stage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    env:
+      TZ: Asia/Seoul
+      LANG: ko_KR.UTF-8
+      LC_ALL: ko_KR.UTF-8
+      PYTHONIOENCODING: utf-8
+      PYTHONUNBUFFERED: '1'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 쪽 만들기
+        run: python engine/build.py
+
+      # ★ 지문보다 **먼저** 표시합니다 (2026-09-28)
+      #   순서가 거꾸로면 지문은 표시 없는 쪽을 세는데
+      #   서버에는 표시 있는 쪽이 올라가, 20번 대조가 전부 어긋납니다.
+      - name: 검증판임을 밝히고 검색을 막습니다
+        run: python engine/mark_stage.py --write
+
+      - name: 배포판 지문 만들기
+        run: python engine/build_id.py
+
+      - name: lftp 설치
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+
+      - name: 올리기
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FOLDER: ${{ github.event.inputs.folder }}
+        run: |
+          CARD="${FOLDER:-_stage}"
+          # ★ 목숨이 걸린 줄입니다.
+          #   CARD 가 비면 아래 mirror --delete 가 /www/ 전체를 지웁니다.
+          #   운영 사이트가 통째로 사라집니다. 반드시 먼저 봅니다.
+          case "$CARD" in
+            ""|/*|*..*|*" "*)
+              echo "::error::올릴 칸 이름이 이상합니다: [$CARD]"; exit 1 ;;
+          esac
+          echo "올릴 곳: /www/$CARD"
+          # ★ **자산을 먼저, 쪽을 나중에** (2026-09-28 바깥 검수 9차 숙제 6)
+          #
+          #   719개를 올리는 데 4분 21초 걸립니다. 그 사이에 손님이
+          #   들어오면 어떤 것을 볼까요?
+          #
+          #   다행히 옛 쪽과 새 쪽은 **아예 다른 자리**를 씁니다.
+          #       옛 쪽   css/style.css     js/app.js      (남기기로 한 것)
+          #       새 쪽   assets/css/...    assets/js/...
+          #   그래서 「옛 쪽이 새 꾸밈을 받는」 일은 안 일어납니다.
+          #
+          #   남은 위험은 하나 — **새 쪽이 올라갔는데 그 쪽이 부르는
+          #   자산이 아직 없는 순간**입니다. 꾸밈도 움직임도 없는
+          #   맨몸 쪽이 보입니다.
+          #
+          #   그래서 순서를 못 박습니다. 자산이 다 올라간 뒤에
+          #   쪽을 올리면, 쪽이 나타나는 순간 이미 자산이 있습니다.
+          #   자산이 먼저 있는 것은 해롭지 않습니다 — 아무도 안 부릅니다.
+          #
+          #   ※ 지우는 것(--delete)은 **맨 마지막**에 한 번만 합니다.
+          #     먼저 지우면 그 틈에 들어온 손님이 빈 자리를 봅니다.
+          lftp -c "
+            set ftp:ssl-allow no;
+            set net:max-retries 3;
+            open -u \"$FTP_USERNAME\",\"$FTP_PASSWORD\" \"$FTP_SERVER\";
+            mkdir -p /www/$CARD;
+            echo '── 1단계: 자산 (꾸밈·움직임·그림)';
+            mirror -R --only-newer --parallel=4 site/assets/ /www/$CARD/assets/;
+            mirror -R --only-newer --parallel=4 site/img/ /www/$CARD/img/;
+            echo '── 2단계: 쪽 (자산이 다 올라간 뒤에)';
+            mirror -R --only-newer --parallel=4 --exclude-glob build.json --exclude assets/ --exclude img/ site/ /www/$CARD/;
+            echo '── 3단계: 쓸모없어진 것 솎기';
+            mirror -R --only-newer --delete --parallel=4 --exclude-glob build.json site/ /www/$CARD/;
+            echo '── 4단계: 판 지문 (맨 마지막 — 이것이 올라가야 판이 바뀐 것)';
+            put site/build.json -o /www/$CARD/build.json;
+          "
+
+      # 20번 — **올린 뒤 서버에서** 잽니다. 이것이 이 워크플로의 목적입니다.
+      - name: 올린 것을 서버에서 확인 (20번)
+        env:
+          FOLDER: ${{ github.event.inputs.folder }}
+        run: |
+          export BADAGAJA_URL="https://badagaja.com/${FOLDER:-_stage}"
+          export BADAGAJA_URL_ROOT="https://badagaja.com"
+          echo "잴 곳: $BADAGAJA_URL (옛 쪽은 $BADAGAJA_URL_ROOT 에서)"
+          python engine/check_deployed.py --net --strict
+
+      - name: 살아 있는지 (smoke)
+        env:
+          FOLDER: ${{ github.event.inputs.folder }}
+        run: |
+          export BADAGAJA_URL="https://badagaja.com/${FOLDER:-_stage}"
+          export BADAGAJA_URL_ROOT="https://badagaja.com"
+          python engine/smoke.py --net
+
+      - name: 결과 남기기
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: 검증배포결과
+          path: |
+            tests/out/*.json
+            tests/out/*.txt
+          retention-days: 30

@@ -1,0 +1,3548 @@
+{
+  "_설명": "낚시 어종·해루질 대상 안내. 채비·미끼·방법·금어기까지. 어종아이디 로 species.json 과 이어집니다",
+  "어종": [
+    {
+      "id": "bollak",
+      "갈래": "낚시",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "15cm 이하는 놓아주어야 합니다.",
+        "zh": null
+      },
+      "그림": "jighead",
+      "금어기": null,
+      "깊이cm": null,
+      "나오는권역": [
+        "busaneast",
+        "busanwest",
+        "changwon",
+        "chuja",
+        "daejeong",
+        "donghae",
+        "gangneung",
+        "geoje",
+        "gogunsan",
+        "goheung",
+        "goseong",
+        "gwangyang",
+        "gwgoseong",
+        "gyeongju",
+        "haenam",
+        "jangheung",
+        "jindo",
+        "jocheon",
+        "namhae",
+        "ongjin",
+        "pohang",
+        "sacheon",
+        "samcheok",
+        "seongsan",
+        "sinan",
+        "sokcho",
+        "taean",
+        "tongyeong",
+        "uljin",
+        "ulleung",
+        "ulsan",
+        "wando",
+        "yangyang",
+        "yeongdeok",
+        "yeonggwang",
+        "yeosu"
+      ],
+      "딴이름": [],
+      "먹는법": {
+        "ko": "구이와 매운탕, 조림으로 먹습니다.",
+        "zh": null
+      },
+      "무리": "어류",
+      "미끼": {
+        "ko": "웜, 크릴, 작은 새우.",
+        "zh": null
+      },
+      "손질법": {
+        "ko": null,
+        "zh": null
+      },
+      "어디서": {
+        "ko": "방파제 벽면, 테트라포드 틈, 갯바위 홈통.",
+        "zh": null
+      },
+      "어려움": "쉬움",
+      "어종아이디": "bollak",
+      "언제": {
+        "ko": "늦가을에서 봄. 해가 진 뒤가 훨씬 잘 물립니다.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "벽면을 따라 가볍게 던지고 천천히 감습니다.",
+          "zh": null
+        },
+        {
+          "ko": "입질이 없으면 수심을 조금씩 바꿔 가며 찾습니다.",
+          "zh": null
+        },
+        {
+          "ko": "무리 지어 다니므로 한 마리가 나오면 같은 자리를 다시 노립니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "볼락",
+        "zh": null
+      },
+      "채비": {
+        "ko": "1~2g 지그헤드에 작은 웜을 끼우는 채비가 대표적입니다. 민장대에 구슬찌를 쓰기도 합니다.",
+        "zh": null
+      },
+      "철": [
+        1,
+        2,
+        3,
+        12
+      ],
+      "크기제한": "15cm 이하",
+      "한줄": {
+        "ko": "겨울밤 방파제에서 인기 있는 대상입니다. 가벼운 장비로 즐길 수 있습니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": null,
+        "zh": null
+      }
+    },
+    {
+      "id": "bungjangeo",
+      "갈래": "낚시",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "35cm 이하는 놓아주세요. 미끄러워 수건이나 장갑이 필요합니다.",
+        "zh": null
+      },
+      "그림": "bottom",
+      "금어기": null,
+      "깊이cm": null,
+      "나오는권역": [
+        "boryeong",
+        "boseong",
+        "buan",
+        "busaneast",
+        "busanwest",
+        "changwon",
+        "daebu",
+        "dangjin",
+        "donghae",
+        "ganghwa",
+        "gangjin",
+        "geoje",
+        "gochang",
+        "gogunsan",
+        "goheung",
+        "goseong",
+        "gunsan",
+        "gwangyang",
+        "gwgoseong",
+        "haenam",
+        "hampyeong",
+        "hongseong",
+        "hwaseong",
+        "jangheung",
+        "jindo",
+        "mokpo",
+        "muan",
+        "namhae",
+        "ongjin",
+        "pohang",
+        "sacheon",
+        "sinan",
+        "suncheon",
+        "taean",
+        "tongyeong",
+        "uljin",
+        "ulsan",
+        "wando",
+        "yangyang",
+        "yeongdeok",
+        "yeonggwang",
+        "yeongjong",
+        "yeosu"
+      ],
+      "딴이름": [
+        "아나고"
+      ],
+      "먹는법": {
+        "ko": "구이와 탕으로 먹습니다.",
+        "zh": null
+      },
+      "무리": "어류",
+      "미끼": {
+        "ko": "갯지렁이, 고등어살, 오징어살.",
+        "zh": null
+      },
+      "손질법": {
+        "ko": null,
+        "zh": null
+      },
+      "어디서": {
+        "ko": "방파제, 내만의 진흙·모래 바닥.",
+        "zh": null
+      },
+      "어려움": "쉬움",
+      "어종아이디": "bungjangeo",
+      "언제": {
+        "ko": "여름에서 가을, 해가 진 뒤.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "던져 놓고 초릿대에 방울이나 케미를 달아 입질을 봅니다.",
+          "zh": null
+        },
+        {
+          "ko": "입질 후 충분히 먹은 뒤 채야 바늘이 잘 걸립니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "붕장어",
+        "zh": null
+      },
+      "채비": {
+        "ko": "원투 바닥 채비에 튼튼한 바늘.",
+        "zh": null
+      },
+      "철": [
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "크기제한": "35cm 이하",
+      "한줄": {
+        "ko": "밤에 바닥에서 무는 대상입니다. 초보자도 잡기 쉬운 편입니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": null,
+        "zh": null
+      }
+    },
+    {
+      "id": "byeongedom",
+      "갈래": "낚시",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "잡어가 많은 시기에는 밑밥 던지는 자리와 채비 자리를 떨어뜨립니다.",
+        "zh": null
+      },
+      "그림": "float",
+      "금어기": null,
+      "깊이cm": null,
+      "나오는권역": [
+        "aewol",
+        "busaneast",
+        "busanwest",
+        "changwon",
+        "chuja",
+        "daejeong",
+        "donghae",
+        "gangneung",
+        "geoje",
+        "goheung",
+        "goseong",
+        "gwgoseong",
+        "gyeongju",
+        "jejusi",
+        "jindo",
+        "jocheon",
+        "namhae",
+        "pohang",
+        "sacheon",
+        "samcheok",
+        "seogwipo",
+        "seongsan",
+        "tongyeong",
+        "uljin",
+        "ulleung",
+        "ulsan",
+        "wando",
+        "yangyang",
+        "yeongdeok",
+        "yeonggwang",
+        "yeosu"
+      ],
+      "딴이름": [],
+      "먹는법": {
+        "ko": "회로 많이 먹습니다.",
+        "zh": null
+      },
+      "무리": "어류",
+      "미끼": {
+        "ko": "크릴, 빵가루, 옥수수.",
+        "zh": null
+      },
+      "손질법": {
+        "ko": null,
+        "zh": null
+      },
+      "어디서": {
+        "ko": "갯바위, 방파제 끝.",
+        "zh": null
+      },
+      "어려움": "보통",
+      "어종아이디": "bengedom",
+      "언제": {
+        "ko": "여름에서 가을.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "밑밥을 던져 표층으로 띄운 뒤 그 아래로 채비를 넣습니다.",
+          "zh": null
+        },
+        {
+          "ko": "입질이 예민해 목줄을 가늘게 쓰는 편이 유리합니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "벵에돔",
+        "zh": null
+      },
+      "채비": {
+        "ko": "가벼운 찌 채비(제로찌·잠길찌). 목줄을 길게 씁니다.",
+        "zh": null
+      },
+      "철": [
+        1,
+        2,
+        12
+      ],
+      "크기제한": null,
+      "한줄": {
+        "ko": "여름 갯바위에서 많이 노리는 대상입니다. 표층에서 무는 경우가 많습니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": null,
+        "zh": null
+      }
+    },
+    {
+      "id": "chamdom",
+      "갈래": "낚시",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "24cm 이하는 잡을 수 없습니다.",
+        "zh": null
+      },
+      "그림": "rock",
+      "금어기": null,
+      "깊이cm": null,
+      "나오는권역": [
+        "aewol",
+        "buan",
+        "busaneast",
+        "busanwest",
+        "chuja",
+        "geoje",
+        "gogunsan",
+        "goheung",
+        "goseong",
+        "jejusi",
+        "jindo",
+        "jocheon",
+        "namhae",
+        "ongjin",
+        "sacheon",
+        "seocheon",
+        "seogwipo",
+        "seongsan",
+        "sinan",
+        "tongyeong",
+        "ulleung",
+        "wando",
+        "yeosu"
+      ],
+      "딴이름": [],
+      "먹는법": {
+        "ko": "회·구이·찜 모두 잘 어울립니다.",
+        "zh": null
+      },
+      "무리": "어류",
+      "미끼": {
+        "ko": "타이라바, 갯지렁이, 오징어살.",
+        "zh": null
+      },
+      "손질법": {
+        "ko": null,
+        "zh": null
+      },
+      "어디서": {
+        "ko": "수심 있는 연안 어초와 방파제 끝자리.",
+        "zh": null
+      },
+      "어려움": "보통",
+      "어종아이디": "chamdom",
+      "언제": {
+        "ko": "봄과 가을이 대표 시즌입니다.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "바닥까지 내린 뒤 일정한 속도로 감아올립니다.",
+          "zh": null
+        },
+        {
+          "ko": "입질이 와도 감는 속도를 유지해야 걸립니다. 급하게 채면 놓치기 쉽습니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "참돔",
+        "zh": null
+      },
+      "채비": {
+        "ko": "찌낚시나 생미끼 바닥 채비.",
+        "zh": null
+      },
+      "철": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "크기제한": "24cm 이하",
+      "한줄": {
+        "ko": "갯바위·방파제의 대표 대상입니다. 큰 것은 힘이 매우 셉니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": null,
+        "zh": null
+      }
+    },
+    {
+      "id": "dodari",
+      "갈래": "낚시",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "20cm 이하는 잡을 수 없고, 겨울에는 금어기입니다.",
+        "zh": null
+      },
+      "그림": "bottom",
+      "금어기": "12월 1일 ~ 다음 해 1월 31일",
+      "깊이cm": null,
+      "나오는권역": [
+        "boryeong",
+        "boseong",
+        "buan",
+        "busaneast",
+        "busanwest",
+        "changwon",
+        "dangjin",
+        "donghae",
+        "gangjin",
+        "gangneung",
+        "geoje",
+        "gogunsan",
+        "goheung",
+        "goseong",
+        "gunsan",
+        "gwangyang",
+        "gwgoseong",
+        "haenam",
+        "hampyeong",
+        "hwaseong",
+        "jangheung",
+        "jindo",
+        "mokpo",
+        "muan",
+        "namhae",
+        "ongjin",
+        "pohang",
+        "sacheon",
+        "samcheok",
+        "seocheon",
+        "sinan",
+        "sokcho",
+        "taean",
+        "tongyeong",
+        "uljin",
+        "ulsan",
+        "wando",
+        "yangyang",
+        "yeongdeok",
+        "yeonggwang",
+        "yeosu"
+      ],
+      "딴이름": [
+        "문치가자미"
+      ],
+      "먹는법": {
+        "ko": "봄 도다리는 쑥국으로 많이 먹습니다.",
+        "zh": null
+      },
+      "무리": "어류",
+      "미끼": {
+        "ko": "청갯지렁이.",
+        "zh": null
+      },
+      "손질법": {
+        "ko": null,
+        "zh": null
+      },
+      "어디서": {
+        "ko": "모래 바닥이 있는 방파제 앞, 내만.",
+        "zh": null
+      },
+      "어려움": "쉬움",
+      "어종아이디": "dodari",
+      "언제": {
+        "ko": "봄. 겨울 산란기에는 금어기가 있습니다.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "던져 놓고 아주 천천히 끌어 줍니다.",
+          "zh": null
+        },
+        {
+          "ko": "입질이 약해 초릿대 끝의 작은 움직임을 봐야 합니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "도다리",
+        "zh": null
+      },
+      "채비": {
+        "ko": "원투 바닥 채비에 작은 바늘 두세 개.",
+        "zh": null
+      },
+      "철": [
+        3,
+        4,
+        5
+      ],
+      "크기제한": "20cm 이하",
+      "한줄": {
+        "ko": "봄을 알리는 생선으로 알려져 있습니다. 바닥에 납작하게 붙어 있습니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": null,
+        "zh": null
+      }
+    },
+    {
+      "id": "doldom",
+      "갈래": "낚시",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "24cm 이하는 놓아주세요. 초보자에게는 쉽지 않은 대상입니다.",
+        "zh": null
+      },
+      "그림": "bottom",
+      "금어기": null,
+      "깊이cm": null,
+      "나오는권역": [
+        "aewol",
+        "buan",
+        "chuja",
+        "geoje",
+        "gogunsan",
+        "goheung",
+        "jejusi",
+        "jindo",
+        "jocheon",
+        "namhae",
+        "sacheon",
+        "seogwipo",
+        "seongsan",
+        "sinan",
+        "tongyeong",
+        "ulleung",
+        "wando",
+        "yeosu"
+      ],
+      "딴이름": [],
+      "먹는법": {
+        "ko": "회가 특히 좋습니다.",
+        "zh": null
+      },
+      "무리": "어류",
+      "미끼": {
+        "ko": "성게, 소라, 참갯지렁이.",
+        "zh": null
+      },
+      "손질법": {
+        "ko": null,
+        "zh": null
+      },
+      "어디서": {
+        "ko": "수심 있는 갯바위, 여밭.",
+        "zh": null
+      },
+      "어려움": "어려움",
+      "어종아이디": "doldom",
+      "언제": {
+        "ko": "여름에서 초가을.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "바닥 지형이 험한 곳을 노립니다.",
+          "zh": null
+        },
+        {
+          "ko": "입질이 매우 짧고 강합니다. 대를 잡고 있다가 바로 대응해야 합니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "돌돔",
+        "zh": null
+      },
+      "채비": {
+        "ko": "원투 바닥 채비에 굵은 목줄. 전용 채비를 쓰는 경우가 많습니다.",
+        "zh": null
+      },
+      "철": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "크기제한": "24cm 이하",
+      "한줄": {
+        "ko": "갯바위 낚시에서 만나기 어려운 대상입니다. 이빨이 강해 채비도 튼튼해야 합니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": null,
+        "zh": null
+      }
+    },
+    {
+      "id": "gamseongdom",
+      "갈래": "낚시",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "처음이라면 방파제에서 감을 익힌 뒤 갯바위로 가는 편이 안전합니다.",
+        "zh": null
+      },
+      "그림": "float",
+      "금어기": "5월 1일 ~ 5월 31일",
+      "깊이cm": null,
+      "나오는권역": [
+        "aewol",
+        "boryeong",
+        "boseong",
+        "buan",
+        "busaneast",
+        "busanwest",
+        "changwon",
+        "chuja",
+        "daebu",
+        "daejeong",
+        "dangjin",
+        "donghae",
+        "gangjin",
+        "gangneung",
+        "geoje",
+        "gogunsan",
+        "goheung",
+        "goseong",
+        "gunsan",
+        "gwangyang",
+        "gwgoseong",
+        "gyeongju",
+        "haenam",
+        "hampyeong",
+        "hongseong",
+        "hwaseong",
+        "jangheung",
+        "jejusi",
+        "jindo",
+        "mokpo",
+        "muan",
+        "namhae",
+        "ongjin",
+        "pohang",
+        "sacheon",
+        "samcheok",
+        "seocheon",
+        "seosan",
+        "sinan",
+        "sokcho",
+        "taean",
+        "tongyeong",
+        "uljin",
+        "ulleung",
+        "ulsan",
+        "wando",
+        "yangyang",
+        "yeongdeok",
+        "yeonggwang",
+        "yeongjong",
+        "yeosu"
+      ],
+      "딴이름": [
+        "감생이"
+      ],
+      "먹는법": {
+        "ko": "회와 구이 모두 좋습니다.",
+        "zh": null
+      },
+      "무리": "어류",
+      "미끼": {
+        "ko": "크릴이 가장 흔하고, 게·홍합·깐새우도 씁니다. 밑밥은 크릴과 집어제를 섞습니다.",
+        "zh": null
+      },
+      "손질법": {
+        "ko": null,
+        "zh": null
+      },
+      "어디서": {
+        "ko": "갯바위, 방파제 끝자락, 내만의 수심 있는 자리.",
+        "zh": null
+      },
+      "어려움": "어려움",
+      "어종아이디": "gamseongdom",
+      "언제": {
+        "ko": "가을에서 겨울이 본 시즌입니다. 산란기인 봄에는 금어기가 있습니다.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "밑밥을 한 자리에 꾸준히 주어 고기를 모읍니다.",
+          "zh": null
+        },
+        {
+          "ko": "채비가 밑밥과 같은 속도로 흘러가게 맞추는 것이 핵심입니다.",
+          "zh": null
+        },
+        {
+          "ko": "찌가 천천히 잠기면 줄을 살짝 당겨 무게가 느껴질 때 챕니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "감성돔",
+        "zh": null
+      },
+      "채비": {
+        "ko": "찌낚시(반유동 채비)가 기본입니다. 0~B 정도의 가벼운 찌부터 시작합니다.",
+        "zh": null
+      },
+      "철": [
+        1,
+        2,
+        9,
+        10,
+        11,
+        12
+      ],
+      "크기제한": "25cm 이하",
+      "한줄": {
+        "ko": "갯바위 낚시의 대표 대상입니다. 조류를 읽는 눈이 필요해 난이도가 높습니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": null,
+        "zh": null
+      }
+    },
+    {
+      "id": "gapojingeo",
+      "갈래": "낚시",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "먹물을 뿜습니다. 옷에 튀지 않게 통을 준비하세요.",
+        "zh": null
+      },
+      "그림": "egi",
+      "금어기": null,
+      "깊이cm": null,
+      "나오는권역": [
+        "boryeong",
+        "buan",
+        "busaneast",
+        "changwon",
+        "daebu",
+        "dangjin",
+        "donghae",
+        "gangjin",
+        "geoje",
+        "gogunsan",
+        "goheung",
+        "goseong",
+        "gunsan",
+        "gyeongju",
+        "hongseong",
+        "hwaseong",
+        "jangheung",
+        "jindo",
+        "mokpo",
+        "namhae",
+        "ongjin",
+        "pohang",
+        "sacheon",
+        "seocheon",
+        "seosan",
+        "sinan",
+        "taean",
+        "tongyeong",
+        "ulsan",
+        "wando",
+        "yangyang",
+        "yeongjong",
+        "yeosu"
+      ],
+      "딴이름": [],
+      "먹는법": {
+        "ko": "데쳐 먹거나 볶음으로 먹습니다.",
+        "zh": null
+      },
+      "무리": "두족류",
+      "미끼": {
+        "ko": "에기. 생미끼를 감아 쓰는 방식도 있습니다.",
+        "zh": null
+      },
+      "손질법": {
+        "ko": null,
+        "zh": null
+      },
+      "어디서": {
+        "ko": "방파제, 내만의 모래·펄 바닥.",
+        "zh": null
+      },
+      "어려움": "보통",
+      "어종아이디": "gabojingeo",
+      "언제": {
+        "ko": "봄과 가을. 해질 무렵과 밤에 잘 물립니다.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "던져 바닥까지 가라앉힌 뒤 두세 번 크게 튕겨 올리고 다시 가라앉힙니다.",
+          "zh": null
+        },
+        {
+          "ko": "가라앉는 동안 입질이 오는 경우가 많아 줄을 팽팽하게 유지합니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "갑오징어",
+        "zh": null
+      },
+      "채비": {
+        "ko": "에기(오징어 전용 루어)를 쓰는 에깅 채비. 봉돌을 단 다운샷 에기도 씁니다.",
+        "zh": null
+      },
+      "철": [
+        9,
+        10,
+        11
+      ],
+      "크기제한": null,
+      "한줄": {
+        "ko": "가을 에깅의 대표 대상입니다. 무게감 있는 입질이 특징입니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": null,
+        "zh": null
+      }
+    },
+    {
+      "id": "godeungeo",
+      "갈래": "낚시",
+      "고시로정함": true,
+      "귀띔": {
+        "ko": "21cm 이하는 잡을 수 없고, 봄에는 금어기가 정해집니다.",
+        "zh": null
+      },
+      "그림": "sabiki",
+      "금어기": "5월 1일 ~ 5월 31일",
+      "깊이cm": null,
+      "나오는권역": [
+        "boryeong",
+        "busaneast",
+        "busanwest",
+        "changwon",
+        "gangneung",
+        "geoje",
+        "gogunsan",
+        "goseong",
+        "gwgoseong",
+        "gyeongju",
+        "haenam",
+        "hongseong",
+        "namhae",
+        "pohang",
+        "seosan",
+        "sinan",
+        "sokcho",
+        "taean",
+        "tongyeong",
+        "uljin",
+        "ulleung",
+        "ulsan",
+        "wando",
+        "yangyang",
+        "yeonggwang"
+      ],
+      "딴이름": [],
+      "먹는법": {
+        "ko": "구이와 조림으로 먹습니다.",
+        "zh": null
+      },
+      "무리": "어류",
+      "미끼": {
+        "ko": "밑밥용 크릴, 빈 바늘.",
+        "zh": null
+      },
+      "손질법": {
+        "ko": null,
+        "zh": null
+      },
+      "어디서": {
+        "ko": "방파제 끝, 수심 있는 부둣가.",
+        "zh": null
+      },
+      "어려움": "쉬움",
+      "어종아이디": "godeungeo",
+      "언제": {
+        "ko": "여름에서 가을.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "채비를 내려 위아래로 흔들어 반짝임을 줍니다.",
+          "zh": null
+        },
+        {
+          "ko": "한 번에 여러 마리가 걸리므로 올릴 때 조심합니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "고등어",
+        "zh": null
+      },
+      "채비": {
+        "ko": "카드 채비. 아래에 봉돌을 답니다.",
+        "zh": null
+      },
+      "철": [
+        9,
+        10,
+        11
+      ],
+      "크기제한": "21cm 이하",
+      "한줄": {
+        "ko": "무리가 들어오면 쉽게 잡히는 대상입니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": null,
+        "zh": null
+      }
+    },
+    {
+      "id": "hakkongchi",
+      "갈래": "낚시",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "입이 약해 세게 채면 빠집니다.",
+        "zh": null
+      },
+      "그림": "sabiki",
+      "금어기": null,
+      "깊이cm": null,
+      "나오는권역": [
+        "boryeong",
+        "buan",
+        "busaneast",
+        "busanwest",
+        "changwon",
+        "daebu",
+        "donghae",
+        "ganghwa",
+        "gangneung",
+        "geoje",
+        "gogunsan",
+        "goheung",
+        "goseong",
+        "gwgoseong",
+        "gyeongju",
+        "hwaseong",
+        "namhae",
+        "ongjin",
+        "pohang",
+        "sacheon",
+        "samcheok",
+        "seocheon",
+        "sinan",
+        "sokcho",
+        "suncheon",
+        "taean",
+        "tongyeong",
+        "uljin",
+        "ulsan",
+        "yangyang",
+        "yeongdeok",
+        "yeongjong"
+      ],
+      "딴이름": [
+        "학공치"
+      ],
+      "먹는법": {
+        "ko": "회와 튀김으로 먹습니다.",
+        "zh": null
+      },
+      "무리": "어류",
+      "미끼": {
+        "ko": "크릴 조각, 밑밥.",
+        "zh": null
+      },
+      "손질법": {
+        "ko": null,
+        "zh": null
+      },
+      "어디서": {
+        "ko": "방파제, 부둣가.",
+        "zh": null
+      },
+      "어려움": "쉬움",
+      "어종아이디": "hakkongchi",
+      "언제": {
+        "ko": "가을에서 겨울.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "밑밥을 조금씩 뿌려 무리를 잡아 둡니다.",
+          "zh": null
+        },
+        {
+          "ko": "채비를 표층 가까이 두고 가볍게 흔들어 줍니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "학꽁치",
+        "zh": null
+      },
+      "채비": {
+        "ko": "작은 바늘이 여러 개 달린 카드 채비나 구슬찌 채비.",
+        "zh": null
+      },
+      "철": [
+        1,
+        2,
+        10,
+        11,
+        12
+      ],
+      "크기제한": null,
+      "한줄": {
+        "ko": "표층에서 무리 지어 다닙니다. 가족 단위로 하기 좋습니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": null,
+        "zh": null
+      }
+    },
+    {
+      "id": "jeoneo",
+      "갈래": "낚시",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "봄~초여름에는 금어기입니다. 지역 예외가 있어 확인하세요.",
+        "zh": null
+      },
+      "그림": "sabiki",
+      "금어기": "5월 1일 ~ 7월 15일",
+      "깊이cm": null,
+      "나오는권역": [
+        "boryeong",
+        "busaneast",
+        "busanwest",
+        "changwon",
+        "daebu",
+        "dangjin",
+        "ganghwa",
+        "geoje",
+        "gwangyang",
+        "hwaseong",
+        "namhae",
+        "sacheon",
+        "seocheon",
+        "sinan",
+        "tongyeong",
+        "ulsan",
+        "yeongdeok",
+        "yeosu"
+      ],
+      "딴이름": [],
+      "먹는법": {
+        "ko": "구이와 회무침이 대표적입니다.",
+        "zh": null
+      },
+      "무리": "어류",
+      "미끼": {
+        "ko": "밑밥용 크릴, 바늘에는 작은 미끼나 빈 바늘.",
+        "zh": null
+      },
+      "손질법": {
+        "ko": null,
+        "zh": null
+      },
+      "어디서": {
+        "ko": "방파제 안쪽, 내만.",
+        "zh": null
+      },
+      "어려움": "쉬움",
+      "어종아이디": "jeoneo",
+      "언제": {
+        "ko": "가을(대체로 9~11월). 금어기가 있으니 확인이 필요합니다.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "무리가 지나가는 자리를 찾아 채비를 내리고 가볍게 위아래로 흔듭니다.",
+          "zh": null
+        },
+        {
+          "ko": "한 마리가 걸리면 바로 올리지 말고 잠깐 두면 여러 마리가 걸립니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "전어",
+        "zh": null
+      },
+      "채비": {
+        "ko": "카드 채비(여러 바늘이 달린 채비)를 많이 씁니다.",
+        "zh": null
+      },
+      "철": [
+        9,
+        10
+      ],
+      "크기제한": null,
+      "한줄": {
+        "ko": "가을을 대표하는 생선입니다. 무리가 들어오면 짧은 시간에 많이 잡힙니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": null,
+        "zh": null
+      }
+    },
+    {
+      "id": "jukkumi",
+      "갈래": "낚시",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "5월 11일부터 8월 31일까지는 금어기입니다.",
+        "zh": null
+      },
+      "그림": "egi",
+      "금어기": "5월 11일 ~ 8월 31일",
+      "깊이cm": null,
+      "나오는권역": [
+        "boryeong",
+        "buan",
+        "busaneast",
+        "changwon",
+        "daebu",
+        "dangjin",
+        "geoje",
+        "gogunsan",
+        "gunsan",
+        "hongseong",
+        "hwaseong",
+        "muan",
+        "namhae",
+        "ongjin",
+        "sacheon",
+        "seocheon",
+        "seosan",
+        "sinan",
+        "taean",
+        "tongyeong",
+        "wando",
+        "yeongjong"
+      ],
+      "딴이름": [],
+      "먹는법": {
+        "ko": "샤부샤부와 볶음으로 먹습니다.",
+        "zh": null
+      },
+      "무리": "두족류",
+      "미끼": {
+        "ko": "에기.",
+        "zh": null
+      },
+      "손질법": {
+        "ko": null,
+        "zh": null
+      },
+      "어디서": {
+        "ko": ", 모래·펄 바닥.",
+        "zh": null
+      },
+      "어려움": "쉬움",
+      "어종아이디": "jukkumi",
+      "언제": {
+        "ko": "가을(대체로 9~11월). 봄부터 여름까지는 금어기입니다.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "바닥에 채비를 닿게 두고 가볍게 들썩입니다.",
+          "zh": null
+        },
+        {
+          "ko": "묵직한 느낌이 들면 천천히 감아올립니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "주꾸미",
+        "zh": null
+      },
+      "채비": {
+        "ko": "주꾸미 전용 에기나 스테를 단 채비.",
+        "zh": null
+      },
+      "철": [],
+      "크기제한": null,
+      "한줄": {
+        "ko": "가을 초보자에게 가장 인기 있는 대상입니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": null,
+        "zh": null
+      }
+    },
+    {
+      "id": "mangdungeo",
+      "갈래": "낚시",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "작은 것은 놓아주고 필요한 만큼만 가져가세요.",
+        "zh": null
+      },
+      "그림": "bottom",
+      "금어기": null,
+      "깊이cm": null,
+      "나오는권역": [
+        "boryeong",
+        "boseong",
+        "buan",
+        "busaneast",
+        "busanwest",
+        "changwon",
+        "daebu",
+        "dangjin",
+        "ganghwa",
+        "gangjin",
+        "gochang",
+        "goheung",
+        "goseong",
+        "gunsan",
+        "gwangyang",
+        "hampyeong",
+        "hongseong",
+        "hwaseong",
+        "jangheung",
+        "mokpo",
+        "muan",
+        "namhae",
+        "ongjin",
+        "sacheon",
+        "seocheon",
+        "seosan",
+        "sinan",
+        "suncheon",
+        "taean",
+        "yeonggwang",
+        "yeongjong",
+        "yeosu"
+      ],
+      "딴이름": [
+        "망둑어"
+      ],
+      "먹는법": {
+        "ko": "튀김과 조림으로 먹습니다.",
+        "zh": null
+      },
+      "무리": "어류",
+      "미끼": {
+        "ko": "갯지렁이.",
+        "zh": null
+      },
+      "손질법": {
+        "ko": null,
+        "zh": null
+      },
+      "어디서": {
+        "ko": "갯벌 앞 방파제, 강 하구.",
+        "zh": null
+      },
+      "어려움": "쉬움",
+      "어종아이디": "mangdungeo",
+      "언제": {
+        "ko": "가을.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "던져 놓고 가만히 두면 금방 입질이 옵니다.",
+          "zh": null
+        },
+        {
+          "ko": "입질이 잦아 아이들과 함께하기 좋습니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "망둥어",
+        "zh": null
+      },
+      "채비": {
+        "ko": "간단한 바닥 채비. 짧은 대로도 충분합니다.",
+        "zh": null
+      },
+      "철": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "크기제한": null,
+      "한줄": {
+        "ko": "초보자와 아이들이 가장 쉽게 잡는 대상입니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": null,
+        "zh": null
+      }
+    },
+    {
+      "id": "muni",
+      "갈래": "낚시",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "해조류가 있는 자리를 노리되 밑걸림에 주의하세요.",
+        "zh": null
+      },
+      "그림": "egi",
+      "금어기": null,
+      "깊이cm": null,
+      "나오는권역": [
+        "busaneast",
+        "busanwest",
+        "donghae",
+        "gangneung",
+        "geoje",
+        "goheung",
+        "goseong",
+        "gyeongju",
+        "jocheon",
+        "namhae",
+        "pohang",
+        "samcheok",
+        "seocheon",
+        "seongsan",
+        "sinan",
+        "tongyeong",
+        "uljin",
+        "ulsan",
+        "wando",
+        "yangyang",
+        "yeongdeok",
+        "yeosu"
+      ],
+      "딴이름": [
+        "흰오징어"
+      ],
+      "먹는법": {
+        "ko": "회로 인기가 높습니다.",
+        "zh": null
+      },
+      "무리": "두족류",
+      "미끼": {
+        "ko": "에기.",
+        "zh": null
+      },
+      "손질법": {
+        "ko": null,
+        "zh": null
+      },
+      "어디서": {
+        "ko": "갯바위, 방파제, 해조류가 있는 여밭.",
+        "zh": null
+      },
+      "어려움": "어려움",
+      "어종아이디": "muniojingeo",
+      "언제": {
+        "ko": "가을이 대표 시즌입니다.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "바닥까지 내린 뒤 두 번 크게 채고 멈추기를 반복합니다.",
+          "zh": null
+        },
+        {
+          "ko": "멈춘 동안 입질이 오므로 줄의 변화를 잘 봐야 합니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "무늬오징어",
+        "zh": null
+      },
+      "채비": {
+        "ko": "3.0~3.5호 에기를 쓰는 에깅 채비.",
+        "zh": null
+      },
+      "철": [
+        9,
+        10,
+        11
+      ],
+      "크기제한": null,
+      "한줄": {
+        "ko": "에깅(오징어 루어낚시)에서 가장 인기 있는 대상입니다. 몸집이 크고 힘이 좋습니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": null,
+        "zh": null
+      }
+    },
+    {
+      "id": "nongeo",
+      "갈래": "낚시",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "30cm 이하는 잡을 수 없습니다. 작은 것은 바로 놓아주세요.",
+        "zh": null
+      },
+      "그림": "lure",
+      "금어기": null,
+      "깊이cm": null,
+      "나오는권역": [
+        "aewol",
+        "boryeong",
+        "boseong",
+        "buan",
+        "busaneast",
+        "busanwest",
+        "changwon",
+        "chuja",
+        "daebu",
+        "daejeong",
+        "dangjin",
+        "donghae",
+        "ganghwa",
+        "gangjin",
+        "gangneung",
+        "geoje",
+        "gogunsan",
+        "goheung",
+        "goseong",
+        "gwangyang",
+        "gyeongju",
+        "haenam",
+        "hampyeong",
+        "jangheung",
+        "jejusi",
+        "jindo",
+        "mokpo",
+        "muan",
+        "namhae",
+        "ongjin",
+        "pohang",
+        "sacheon",
+        "samcheok",
+        "seocheon",
+        "seosan",
+        "sinan",
+        "sokcho",
+        "suncheon",
+        "taean",
+        "tongyeong",
+        "uljin",
+        "ulleung",
+        "ulsan",
+        "wando",
+        "yangyang",
+        "yeongdeok",
+        "yeonggwang",
+        "yeongjong",
+        "yeosu"
+      ],
+      "딴이름": [],
+      "먹는법": {
+        "ko": "여름 농어는 회가 유명합니다.",
+        "zh": null
+      },
+      "무리": "어류",
+      "미끼": {
+        "ko": "루어 위주. 생미끼로는 살아 있는 새우나 전갱이를 씁니다.",
+        "zh": null
+      },
+      "손질법": {
+        "ko": null,
+        "zh": null
+      },
+      "어디서": {
+        "ko": "물살이 부딪히는 방파제 끝, 갯바위, 강 하구.",
+        "zh": null
+      },
+      "어려움": "보통",
+      "어종아이디": "nongeo",
+      "언제": {
+        "ko": "여름이 대표 시즌입니다. 해 뜨기 전후와 해 질 무렵이 활발합니다.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "물살이 만나는 경계나 거품이 이는 자리를 노립니다.",
+          "zh": null
+        },
+        {
+          "ko": "루어를 던져 천천히 감되, 중간중간 멈춰 변화를 줍니다.",
+          "zh": null
+        },
+        {
+          "ko": "입질이 오면 강하게 챈 뒤 초반 돌진을 버텨 줍니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "농어",
+        "zh": null
+      },
+      "채비": {
+        "ko": "미노우나 바이브레이션 루어를 쓰는 루어 채비. 원줄은 합사, 목줄은 카본을 씁니다.",
+        "zh": null
+      },
+      "철": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "크기제한": "30cm 이하",
+      "한줄": {
+        "ko": "루어낚시 대상으로 인기가 높습니다. 힘이 좋아 손맛이 강합니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": null,
+        "zh": null
+      }
+    },
+    {
+      "id": "noraemi",
+      "갈래": "낚시",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "20cm 이하는 놓아주세요.",
+        "zh": null
+      },
+      "그림": "bottom",
+      "금어기": null,
+      "깊이cm": null,
+      "나오는권역": [
+        "boryeong",
+        "buan",
+        "busaneast",
+        "busanwest",
+        "changwon",
+        "daebu",
+        "daejeong",
+        "dangjin",
+        "donghae",
+        "ganghwa",
+        "gangjin",
+        "gangneung",
+        "geoje",
+        "gogunsan",
+        "goheung",
+        "goseong",
+        "gunsan",
+        "gwangyang",
+        "gwgoseong",
+        "gyeongju",
+        "haenam",
+        "hongseong",
+        "hwaseong",
+        "jejusi",
+        "jindo",
+        "jocheon",
+        "mokpo",
+        "muan",
+        "namhae",
+        "ongjin",
+        "pohang",
+        "sacheon",
+        "samcheok",
+        "seocheon",
+        "seogwipo",
+        "seosan",
+        "sinan",
+        "sokcho",
+        "taean",
+        "tongyeong",
+        "uljin",
+        "ulleung",
+        "ulsan",
+        "wando",
+        "yangyang",
+        "yeongdeok",
+        "yeonggwang",
+        "yeongjong",
+        "yeosu"
+      ],
+      "딴이름": [
+        "쥐노래미"
+      ],
+      "먹는법": {
+        "ko": "구이와 매운탕으로 먹습니다.",
+        "zh": null
+      },
+      "무리": "어류",
+      "미끼": {
+        "ko": "갯지렁이, 새우.",
+        "zh": null
+      },
+      "손질법": {
+        "ko": null,
+        "zh": null
+      },
+      "어디서": {
+        "ko": "방파제, 갯바위, 해조류가 있는 바닥.",
+        "zh": null
+      },
+      "어려움": "쉬움",
+      "어종아이디": "noraemi",
+      "언제": {
+        "ko": "가을에서 봄. 겨울 산란기에는 금어기가 있습니다.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "바닥을 끌듯이 천천히 탐색합니다.",
+          "zh": null
+        },
+        {
+          "ko": "해조류가 많은 자리를 좋아합니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "노래미",
+        "zh": null
+      },
+      "채비": {
+        "ko": "우럭과 같은 바닥 채비.",
+        "zh": null
+      },
+      "철": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "크기제한": null,
+      "한줄": {
+        "ko": "우럭과 같은 자리에서 자주 함께 올라옵니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": null,
+        "zh": null
+      }
+    },
+    {
+      "id": "sungeo",
+      "갈래": "낚시",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "훌치기는 불법으로 단속되는 지역이 있습니다. 현장 안내를 확인하세요.",
+        "zh": null
+      },
+      "그림": "float",
+      "금어기": null,
+      "깊이cm": null,
+      "나오는권역": [
+        "boryeong",
+        "boseong",
+        "buan",
+        "busaneast",
+        "busanwest",
+        "changwon",
+        "daebu",
+        "dangjin",
+        "donghae",
+        "ganghwa",
+        "gangjin",
+        "gangneung",
+        "gochang",
+        "gogunsan",
+        "goheung",
+        "goseong",
+        "gunsan",
+        "gwangyang",
+        "gwgoseong",
+        "gyeongju",
+        "haenam",
+        "hampyeong",
+        "hongseong",
+        "hwaseong",
+        "jangheung",
+        "jindo",
+        "mokpo",
+        "muan",
+        "namhae",
+        "ongjin",
+        "pohang",
+        "sacheon",
+        "samcheok",
+        "seocheon",
+        "seosan",
+        "sinan",
+        "suncheon",
+        "taean",
+        "tongyeong",
+        "uljin",
+        "ulsan",
+        "wando",
+        "yangyang",
+        "yeongdeok",
+        "yeonggwang",
+        "yeongjong",
+        "yeosu"
+      ],
+      "딴이름": [],
+      "먹는법": {
+        "ko": "겨울 숭어는 회로 인기가 있습니다.",
+        "zh": null
+      },
+      "무리": "어류",
+      "미끼": {
+        "ko": "크릴, 갯지렁이, 떡밥.",
+        "zh": null
+      },
+      "손질법": {
+        "ko": null,
+        "zh": null
+      },
+      "어디서": {
+        "ko": "방파제 안쪽, 강 하구, 내만.",
+        "zh": null
+      },
+      "어려움": "쉬움",
+      "어종아이디": "sungeo",
+      "언제": {
+        "ko": "겨울에서 봄. 물이 도는 시간에 활발합니다.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "숭어가 뛰는 자리를 찾아 그 주변을 노립니다.",
+          "zh": null
+        },
+        {
+          "ko": "예민한 편이라 사람 그림자와 소리를 줄이는 것이 좋습니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "숭어",
+        "zh": null
+      },
+      "채비": {
+        "ko": "찌 채비나 던질낚시. 갈고리로 고기를 걸어 채는 방식(훌치기)은 지역에 따라 금지됩니다.",
+        "zh": null
+      },
+      "철": [
+        1,
+        9,
+        10,
+        11,
+        12
+      ],
+      "크기제한": null,
+      "한줄": {
+        "ko": "봄철 연안에서 흔히 보이는 대상입니다. 무리 지어 다닙니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": null,
+        "zh": null
+      }
+    },
+    {
+      "id": "ureok",
+      "갈래": "낚시",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "밑걸림이 잦은 자리라 여분 바늘과 봉돌을 넉넉히 챙기세요.",
+        "zh": null
+      },
+      "그림": "bottom",
+      "금어기": null,
+      "깊이cm": null,
+      "나오는권역": [
+        "boryeong",
+        "boseong",
+        "buan",
+        "busaneast",
+        "busanwest",
+        "changwon",
+        "daebu",
+        "dangjin",
+        "donghae",
+        "ganghwa",
+        "gangneung",
+        "geoje",
+        "gochang",
+        "gogunsan",
+        "goheung",
+        "goseong",
+        "gunsan",
+        "gwgoseong",
+        "gyeongju",
+        "haenam",
+        "hongseong",
+        "hwaseong",
+        "jangheung",
+        "jindo",
+        "mokpo",
+        "muan",
+        "namhae",
+        "ongjin",
+        "pohang",
+        "sacheon",
+        "samcheok",
+        "seocheon",
+        "seosan",
+        "sinan",
+        "sokcho",
+        "taean",
+        "tongyeong",
+        "uljin",
+        "ulleung",
+        "wando",
+        "yangyang",
+        "yeongdeok",
+        "yeonggwang",
+        "yeongjong",
+        "yeosu"
+      ],
+      "딴이름": [
+        "조피볼락"
+      ],
+      "먹는법": {
+        "ko": "매운탕과 구이로 많이 먹습니다. 회로도 좋습니다.",
+        "zh": null
+      },
+      "무리": "어류",
+      "미끼": {
+        "ko": "갯지렁이, 새우, 오징어살. 루어는 지그헤드에 웜.",
+        "zh": null
+      },
+      "손질법": {
+        "ko": null,
+        "zh": null
+      },
+      "어디서": {
+        "ko": "방파제 테트라포드 주변, 갯바위 홈통. 구조물과 돌 틈을 좋아합니다.",
+        "zh": null
+      },
+      "어려움": "쉬움",
+      "어종아이디": "ureok",
+      "언제": {
+        "ko": "연중 가능하지만 늦가을에서 봄까지 잡히는 것이 더 굵습니다. 물이 돌기 시작하는 들물·날물(밀물·썰물) 초입에 잘 뭅니다.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "채비를 바닥까지 내린 뒤 한 뼘쯤 들어 바닥에서 살짝 띄웁니다.",
+          "zh": null
+        },
+        {
+          "ko": "입질이 오면 바로 채지 말고 한 박자 기다렸다가 손목으로 챕니다.",
+          "zh": null
+        },
+        {
+          "ko": "돌 틈에 박히면 줄을 세게 당기기보다 각도를 바꿔 빼냅니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "우럭",
+        "zh": null
+      },
+      "채비": {
+        "ko": "봉돌을 맨 아래 달고 위에 바늘 두 개를 다는 바닥 채비(일명 우럭 채비). 바닥이 모래면 다운샷도 씁니다.",
+        "zh": null
+      },
+      "철": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "크기제한": "23cm 이하",
+      "한줄": {
+        "ko": "방파제에서 가장 흔하게 만나는 대상입니다. 바닥 가까이에 붙어 있어 채비가 단순합니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": null,
+        "zh": null
+      }
+    },
+    {
+      "id": "baekhap",
+      "갈래": "해루질",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "백합으로 유명한 갯벌은 대부분 마을어장입니다. 체험장 이용이 안전합니다.",
+        "zh": null
+      },
+      "그림": "shell",
+      "금어기": null,
+      "깊이cm": 18,
+      "나오는권역": [
+        "boryeong",
+        "buan",
+        "ganghwa",
+        "geoje",
+        "gochang",
+        "hwaseong",
+        "namhae",
+        "ongjin",
+        "sinan",
+        "taean",
+        "tongyeong",
+        "wando",
+        "yeonggwang",
+        "yeongjong"
+      ],
+      "딴이름": [
+        "생합"
+      ],
+      "먹는법": {
+        "ko": null,
+        "zh": null
+      },
+      "무리": "조개",
+      "미끼": {
+        "ko": null,
+        "zh": null
+      },
+      "손질법": {
+        "ko": "해감 후 구이나 탕으로 먹습니다. 살이 단단해 냉장 보관이 비교적 잘 됩니다.",
+        "zh": null
+      },
+      "어디서": {
+        "ko": "고운 모래갯벌. 물이 빠진 뒤 표면에 작은 구멍이나 숨자국이 보이는 자리.",
+        "zh": null
+      },
+      "어려움": "보통",
+      "어종아이디": "baekhap",
+      "언제": {
+        "ko": "사리 전후 큰 간조. 물이 많이 빠질수록 백합밭이 드러납니다.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "표면의 작은 구멍 주변을 호미나 손으로 10~20cm 파 들어갑니다.",
+          "zh": null
+        },
+        {
+          "ko": "발로 모래를 밟으며 단단한 것이 느껴지는 자리를 찾는 방법도 씁니다.",
+          "zh": null
+        },
+        {
+          "ko": "껍데기가 잘 깨지므로 호미로 찍지 말고 옆에서 들어 올립니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "백합",
+        "zh": null
+      },
+      "채비": {
+        "ko": null,
+        "zh": null
+      },
+      "철": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "크기제한": null,
+      "한줄": {
+        "ko": "매끈한 껍데기에 무늬가 있는 고급 조개입니다. 모래갯벌 깊은 곳에 있어 바지락보다 손이 갑니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": "작은 구멍과 숨자국",
+        "zh": null
+      }
+    },
+    {
+      "id": "bajirak",
+      "갈래": "해루질",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "체험장에서는 갈퀴 사용을 제한하는 곳이 있습니다. 호미만 챙겨도 충분합니다.",
+        "zh": null
+      },
+      "그림": "shell",
+      "금어기": null,
+      "깊이cm": 10,
+      "나오는권역": [
+        "boryeong",
+        "boseong",
+        "buan",
+        "busanwest",
+        "changwon",
+        "daebu",
+        "dangjin",
+        "ganghwa",
+        "gangjin",
+        "geoje",
+        "gochang",
+        "gogunsan",
+        "goheung",
+        "goseong",
+        "gunsan",
+        "haenam",
+        "hampyeong",
+        "hongseong",
+        "hwaseong",
+        "jangheung",
+        "jindo",
+        "mokpo",
+        "muan",
+        "namhae",
+        "ongjin",
+        "sacheon",
+        "seocheon",
+        "seosan",
+        "sinan",
+        "taean",
+        "tongyeong",
+        "ulsan",
+        "wando",
+        "yeonggwang",
+        "yeongjong",
+        "yeosu"
+      ],
+      "딴이름": [
+        "바지락조개"
+      ],
+      "먹는법": {
+        "ko": null,
+        "zh": null
+      },
+      "무리": "조개",
+      "미끼": {
+        "ko": null,
+        "zh": null
+      },
+      "손질법": {
+        "ko": "바닷물 농도(물 1L에 소금 약 30g)로 어두운 곳에 2~3시간 두면 해감됩니다. 냉장은 하루 이틀, 삶아 살만 발라 얼리면 오래 씁니다.",
+        "zh": null
+      },
+      "어디서": {
+        "ko": "모래와 뻘이 섞인 단단한 갯벌. 발이 깊이 빠지지 않는 곳에 많습니다.",
+        "zh": null
+      },
+      "어려움": "쉬움",
+      "어종아이디": "bajirak",
+      "언제": {
+        "ko": "간조 앞뒤 1~2시간. 사리(물이 많이 빠지는 날)일수록 갯벌이 넓게 드러납니다.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "호미로 갯벌 표면을 10cm 안팎 깊이로 긁듯이 훑습니다. 깊게 파기보다 넓게 훑는 편이 빠릅니다.",
+          "zh": null
+        },
+        {
+          "ko": "껍데기 부딪히는 소리가 나면 그 주변을 집중해서 봅니다. 무리 지어 있는 경우가 많습니다.",
+          "zh": null
+        },
+        {
+          "ko": "3cm가 안 되는 작은 것은 돌려보내 주세요. 기준은 지역마다 다를 수 있으니 갯벌 안내판을 확인하세요.",
+          "zh": null
+        },
+        {
+          "ko": "판 자리는 대충이라도 메워 주면 갯벌이 덜 상합니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "바지락",
+        "zh": null
+      },
+      "채비": {
+        "ko": null,
+        "zh": null
+      },
+      "철": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "크기제한": null,
+      "한줄": {
+        "ko": "모래 섞인 갯벌 표층에 얕게 묻혀 있어, 해루질을 처음 하는 분에게 가장 무난한 대상입니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": "조개 숨구멍이 작게 두 개",
+        "zh": null
+      }
+    },
+    {
+      "id": "chilge",
+      "갈래": "해루질",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "아이와 함께라면 잡은 뒤 놓아주는 관찰 활동으로도 충분히 재미있습니다.",
+        "zh": null
+      },
+      "그림": "crab",
+      "금어기": null,
+      "깊이cm": 5,
+      "나오는권역": [
+        "boryeong",
+        "ganghwa",
+        "geoje",
+        "gogunsan",
+        "goheung",
+        "seocheon",
+        "taean"
+      ],
+      "딴이름": [],
+      "먹는법": {
+        "ko": null,
+        "zh": null
+      },
+      "무리": "갑각",
+      "미끼": {
+        "ko": null,
+        "zh": null
+      },
+      "손질법": {
+        "ko": "게장이나 튀김으로 먹습니다. 잡은 뒤 바닷물에 담가 흙을 뱉게 합니다.",
+        "zh": null
+      },
+      "어디서": {
+        "ko": "무른 뻘갯벌 표면. 구멍 주변에 무리 지어 있습니다.",
+        "zh": null
+      },
+      "어려움": "쉬움",
+      "어종아이디": "chilge",
+      "언제": {
+        "ko": "물이 빠진 뒤 해가 있을 때 활발합니다.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "구멍 근처에서 조용히 기다렸다가 손이나 집게로 잡습니다.",
+          "zh": null
+        },
+        {
+          "ko": "통발 같은 함정 도구는 지역에 따라 제한될 수 있습니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "칠게",
+        "zh": null
+      },
+      "채비": {
+        "ko": null,
+        "zh": null
+      },
+      "철": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "크기제한": null,
+      "한줄": {
+        "ko": "갯벌 위를 옆으로 달리는 작은 게입니다. 아이들과 관찰하기 좋습니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": "구멍 주변에 게 흔적",
+        "zh": null
+      }
+    },
+    {
+      "id": "dongjuk",
+      "갈래": "해루질",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "크기가 커서 금방 무거워집니다. 먹을 만큼만 담으세요.",
+        "zh": null
+      },
+      "그림": "shell",
+      "금어기": null,
+      "깊이cm": 12,
+      "나오는권역": [
+        "boryeong",
+        "boseong",
+        "buan",
+        "daebu",
+        "dangjin",
+        "ganghwa",
+        "gangjin",
+        "gochang",
+        "gogunsan",
+        "haenam",
+        "hampyeong",
+        "hongseong",
+        "hwaseong",
+        "jangheung",
+        "muan",
+        "namhae",
+        "ongjin",
+        "seocheon",
+        "sinan",
+        "taean",
+        "tongyeong",
+        "yeongjong",
+        "yeosu"
+      ],
+      "딴이름": [],
+      "먹는법": {
+        "ko": null,
+        "zh": null
+      },
+      "무리": "조개",
+      "미끼": {
+        "ko": null,
+        "zh": null
+      },
+      "손질법": {
+        "ko": "모래를 많이 머금어 해감을 넉넉히(3시간 이상) 하는 편이 좋습니다. 국물 요리에 잘 어울립니다.",
+        "zh": null
+      },
+      "어디서": {
+        "ko": "모래 섞인 갯벌. 바지락밭보다 조금 더 물이 차는 쪽에 많습니다.",
+        "zh": null
+      },
+      "어려움": "쉬움",
+      "어종아이디": "dongjuk",
+      "언제": {
+        "ko": "간조 앞뒤. 여름철에 살이 오릅니다.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "바지락과 같은 방식으로 훑되, 10cm보다 조금 더 들어가 있는 편입니다.",
+          "zh": null
+        },
+        {
+          "ko": "한 마리가 나오면 같은 줄을 따라 파면 여러 개가 이어집니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "동죽",
+        "zh": null
+      },
+      "채비": {
+        "ko": null,
+        "zh": null
+      },
+      "철": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "크기제한": null,
+      "한줄": {
+        "ko": "바지락보다 둥글고 큰 조개로, 모래가 많은 갯벌에서 함께 나오는 경우가 많습니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": "표면에 작은 구멍",
+        "zh": null
+      }
+    },
+    {
+      "id": "gaebul",
+      "갈래": "해루질",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "겨울 갯벌은 체온을 빠르게 빼앗습니다. 방수 장갑과 여벌 옷이 필요합니다.",
+        "zh": null
+      },
+      "그림": "worm",
+      "금어기": null,
+      "깊이cm": 35,
+      "나오는권역": [
+        "boryeong",
+        "gunsan",
+        "seocheon",
+        "taean"
+      ],
+      "딴이름": [],
+      "먹는법": {
+        "ko": null,
+        "zh": null
+      },
+      "무리": "기타",
+      "미끼": {
+        "ko": null,
+        "zh": null
+      },
+      "손질법": {
+        "ko": "가위로 갈라 내장을 빼고 찬물에 헹굽니다. 회로 먹는 경우가 많습니다.",
+        "zh": null
+      },
+      "어디서": {
+        "ko": "모래와 뻘이 섞인 갯벌. 8자 모양 배설 흔적이 단서입니다.",
+        "zh": null
+      },
+      "어려움": "어려움",
+      "어종아이디": "gaebul",
+      "언제": {
+        "ko": "한겨울 큰 사리 간조.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "흔적 주변을 삽으로 30cm 이상 파 내려갑니다. 체력 소모가 큽니다.",
+          "zh": null
+        },
+        {
+          "ko": "굴이 이어져 있어 한 마리가 나오면 근처를 더 살펴봅니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "개불",
+        "zh": null
+      },
+      "채비": {
+        "ko": null,
+        "zh": null
+      },
+      "철": [
+        1,
+        2,
+        3
+      ],
+      "크기제한": null,
+      "한줄": {
+        "ko": "모래펄 깊은 곳에 있어 삽질이 필요합니다. 겨울이 제철입니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": "8자 모양 배설 흔적",
+        "zh": null
+      }
+    },
+    {
+      "id": "gaejogae",
+      "갈래": "해루질",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "무게가 많이 나갑니다. 돌아올 거리를 생각해서 담으세요.",
+        "zh": null
+      },
+      "그림": "shell",
+      "금어기": null,
+      "깊이cm": 18,
+      "나오는권역": [
+        "boryeong",
+        "hwaseong",
+        "ongjin",
+        "taean"
+      ],
+      "딴이름": [],
+      "먹는법": {
+        "ko": null,
+        "zh": null
+      },
+      "무리": "조개",
+      "미끼": {
+        "ko": null,
+        "zh": null
+      },
+      "손질법": {
+        "ko": "해감 후 구이·탕으로 먹습니다.",
+        "zh": null
+      },
+      "어디서": {
+        "ko": "모래펄 갯벌의 아래쪽, 물이 늦게 빠지는 자리.",
+        "zh": null
+      },
+      "어려움": "보통",
+      "어종아이디": "gaejogae",
+      "언제": {
+        "ko": "사리 큰 간조.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "호미보다는 작은 삽이 편합니다. 15cm 넘게 파야 하는 경우가 많습니다.",
+          "zh": null
+        },
+        {
+          "ko": "껍데기가 두꺼워 잘 깨지지 않지만, 손을 다치지 않게 장갑을 끼세요.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "개조개",
+        "zh": null
+      },
+      "채비": {
+        "ko": null,
+        "zh": null
+      },
+      "철": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "크기제한": null,
+      "한줄": {
+        "ko": "크고 두꺼운 조개로 국물 맛이 좋습니다. 조금 깊은 곳에 있습니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": "큰 숨구멍",
+        "zh": null
+      }
+    },
+    {
+      "id": "godung",
+      "갈래": "해루질",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "종류가 많고 이름이 지역마다 다릅니다. 모르는 것은 먹지 않는 편이 안전합니다.",
+        "zh": null
+      },
+      "그림": "snail",
+      "금어기": null,
+      "깊이cm": 0,
+      "나오는권역": [
+        "aewol",
+        "boryeong",
+        "boseong",
+        "buan",
+        "busaneast",
+        "busanwest",
+        "changwon",
+        "chuja",
+        "daebu",
+        "dangjin",
+        "donghae",
+        "ganghwa",
+        "gangjin",
+        "gangneung",
+        "geoje",
+        "goheung",
+        "gunsan",
+        "gwangyang",
+        "gwgoseong",
+        "gyeongju",
+        "haenam",
+        "hampyeong",
+        "hongseong",
+        "hwaseong",
+        "jangheung",
+        "jindo",
+        "jocheon",
+        "mokpo",
+        "muan",
+        "namhae",
+        "ongjin",
+        "pohang",
+        "sacheon",
+        "samcheok",
+        "seocheon",
+        "seongsan",
+        "seosan",
+        "sinan",
+        "sokcho",
+        "suncheon",
+        "taean",
+        "tongyeong",
+        "uljin",
+        "ulsan",
+        "wando",
+        "yangyang",
+        "yeongdeok",
+        "yeonggwang",
+        "yeongjong",
+        "yeosu"
+      ],
+      "딴이름": [
+        "고동",
+        "총알고둥"
+      ],
+      "먹는법": {
+        "ko": null,
+        "zh": null
+      },
+      "무리": "패류",
+      "미끼": {
+        "ko": null,
+        "zh": null
+      },
+      "손질법": {
+        "ko": "소금물에 담가 해감한 뒤 삶습니다.",
+        "zh": null
+      },
+      "어디서": {
+        "ko": "조간대(물이 들고 나는 갯가) 바위, 자갈, 방파제 밑.",
+        "zh": null
+      },
+      "어려움": "쉬움",
+      "어종아이디": "godung",
+      "언제": {
+        "ko": "물이 빠진 시간대 전체.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "손으로 줍기만 하면 됩니다. 돌을 들췄다면 원래대로 덮습니다.",
+          "zh": null
+        },
+        {
+          "ko": "한자리를 싹 훑지 말고 조금씩 옮겨 가며 줍는 편이 좋습니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "고둥",
+        "zh": null
+      },
+      "채비": {
+        "ko": null,
+        "zh": null
+      },
+      "철": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "크기제한": null,
+      "한줄": {
+        "ko": "갯바위와 자갈밭에 흔합니다. 어렵지 않아 가족 단위로 많이 합니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": "바위 표면",
+        "zh": null
+      }
+    },
+    {
+      "id": "gul",
+      "갈래": "해루질",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "여름철 산란기 자연산 굴은 먹지 않는 편이 좋습니다.",
+        "zh": null
+      },
+      "그림": "rock",
+      "금어기": null,
+      "깊이cm": 0,
+      "나오는권역": [
+        "boryeong",
+        "buan",
+        "busanwest",
+        "changwon",
+        "daebu",
+        "dangjin",
+        "ganghwa",
+        "gangjin",
+        "geoje",
+        "gogunsan",
+        "goheung",
+        "haenam",
+        "hongseong",
+        "hwaseong",
+        "mokpo",
+        "namhae",
+        "ongjin",
+        "sacheon",
+        "seocheon",
+        "seosan",
+        "suncheon",
+        "taean",
+        "tongyeong",
+        "ulsan",
+        "wando",
+        "yeongjong"
+      ],
+      "딴이름": [
+        "석화",
+        "자연산 굴"
+      ],
+      "먹는법": {
+        "ko": null,
+        "zh": null
+      },
+      "무리": "패류",
+      "미끼": {
+        "ko": null,
+        "zh": null
+      },
+      "손질법": {
+        "ko": "찬 소금물에 헹굽니다. 생으로 먹을 때는 채취 시기와 수질을 특히 따져야 합니다.",
+        "zh": null
+      },
+      "어디서": {
+        "ko": "조간대(물이 들고 나는 갯가) 갯바위, 방파제 아래 돌밭.",
+        "zh": null
+      },
+      "어려움": "보통",
+      "어종아이디": "gul",
+      "언제": {
+        "ko": "11월부터 이듬해 봄까지.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "굴은 껍데기째 떼어 온 뒤 갈고리로 쪼아 열고 살만 발라냅니다. 비어업인이 쓸 수 있는 도구는 손·호미·집게·갈고리입니다.",
+          "zh": null
+        },
+        {
+          "ko": "바위가 미끄러우니 밑창이 좋은 신발과 두꺼운 장갑이 필요합니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "굴",
+        "zh": null
+      },
+      "채비": {
+        "ko": null,
+        "zh": null
+      },
+      "철": [
+        1,
+        2,
+        11,
+        12
+      ],
+      "크기제한": null,
+      "한줄": {
+        "ko": "갯바위나 돌에 붙어 자랍니다. 찬 바람이 불면 살이 차오릅니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": "바위에 붙어 있음",
+        "zh": null
+      }
+    },
+    {
+      "id": "haesam",
+      "갈래": "해루질",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "어촌계 수익원이라 단속이 많은 대상입니다. 반드시 허용 여부를 확인하세요.",
+        "zh": null
+      },
+      "그림": "worm",
+      "금어기": "7월 1일 ~ 7월 31일",
+      "깊이cm": 0,
+      "나오는권역": [
+        "gwangyang",
+        "gyeongju",
+        "haenam",
+        "hampyeong",
+        "jindo",
+        "mokpo",
+        "pohang",
+        "suncheon",
+        "taean",
+        "uljin",
+        "ulleung",
+        "ulsan",
+        "wando",
+        "yeongdeok",
+        "yeosu"
+      ],
+      "딴이름": [],
+      "먹는법": {
+        "ko": null,
+        "zh": null
+      },
+      "무리": "기타",
+      "미끼": {
+        "ko": null,
+        "zh": null
+      },
+      "손질법": {
+        "ko": "내장을 제거하고 소금으로 문질러 씻습니다.",
+        "zh": null
+      },
+      "어디서": {
+        "ko": "갯바위 아래 자갈·모래 바닥.",
+        "zh": null
+      },
+      "어려움": "제한",
+      "어종아이디": "haesam",
+      "언제": {
+        "ko": "겨울에서 봄. 7월은 금어기입니다.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "얕은 물에서 눈으로 찾아 손으로 줍는 방식입니다.",
+          "zh": null
+        },
+        {
+          "ko": "잠수 장비 사용은 금지되며, 마을어장에서는 채취 자체가 금지됩니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "해삼",
+        "zh": null
+      },
+      "채비": {
+        "ko": null,
+        "zh": null
+      },
+      "철": [
+        1,
+        2,
+        3,
+        4,
+        12
+      ],
+      "크기제한": null,
+      "한줄": {
+        "ko": "겨울과 봄에 얕은 곳까지 올라옵니다. 금어기가 있습니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": "자갈·모래 바닥 위",
+        "zh": null
+      }
+    },
+    {
+      "id": "honghap",
+      "갈래": "해루질",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "적조나 패류독소 경보가 있을 때는 채취하지 말고 지자체 공지를 확인하세요.",
+        "zh": null
+      },
+      "그림": "rock",
+      "금어기": null,
+      "깊이cm": 0,
+      "나오는권역": [
+        "busanwest",
+        "changwon",
+        "daebu",
+        "donghae",
+        "gangneung",
+        "gogunsan",
+        "goheung",
+        "gwangyang",
+        "gwgoseong",
+        "haenam",
+        "hampyeong",
+        "jindo",
+        "mokpo",
+        "ongjin",
+        "samcheok",
+        "suncheon",
+        "uljin",
+        "wando",
+        "yangyang",
+        "yeosu"
+      ],
+      "딴이름": [
+        "담치"
+      ],
+      "먹는법": {
+        "ko": null,
+        "zh": null
+      },
+      "무리": "패류",
+      "미끼": {
+        "ko": null,
+        "zh": null
+      },
+      "손질법": {
+        "ko": "수염을 제거하고 껍데기를 문질러 씻습니다.",
+        "zh": null
+      },
+      "어디서": {
+        "ko": "파도가 닿는 바위, 방파제 벽면.",
+        "zh": null
+      },
+      "어려움": "쉬움",
+      "어종아이디": "honghap",
+      "언제": {
+        "ko": "물이 빠진 시간대.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "손으로 떼어냅니다. 바위가 미끄러우니 발밑을 먼저 확인하세요.",
+          "zh": null
+        },
+        {
+          "ko": "붙어 있는 것 전부를 훑지 말고 필요한 만큼만 떼는 편이 좋습니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "홍합",
+        "zh": null
+      },
+      "채비": {
+        "ko": null,
+        "zh": null
+      },
+      "철": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "크기제한": null,
+      "한줄": {
+        "ko": "방파제나 갯바위에 무리 지어 붙어 있습니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": "바위에 뭉쳐 붙음",
+        "zh": null
+      }
+    },
+    {
+      "id": "jaecheop",
+      "갈래": "해루질",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "크기 제한이 있습니다. 작은 것은 돌려보내세요.",
+        "zh": null
+      },
+      "그림": "shell",
+      "금어기": null,
+      "깊이cm": 5,
+      "나오는권역": [
+        "gwangyang"
+      ],
+      "딴이름": [],
+      "먹는법": {
+        "ko": null,
+        "zh": null
+      },
+      "무리": "조개",
+      "미끼": {
+        "ko": null,
+        "zh": null
+      },
+      "손질법": {
+        "ko": "해감 후 맑은 국으로 끓입니다.",
+        "zh": null
+      },
+      "어디서": {
+        "ko": "모래가 고운 강 하구 바닥.",
+        "zh": null
+      },
+      "어려움": "쉬움",
+      "어종아이디": null,
+      "언제": {
+        "ko": "물이 빠진 시간, 봄부터 초여름.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "손으로 바닥을 훑거나 갈퀴로 긁어 모읍니다.",
+          "zh": null
+        },
+        {
+          "ko": "지역에 따라 도구와 양이 제한됩니다. 현장 안내판을 확인하세요.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "재첩",
+        "zh": null
+      },
+      "채비": {
+        "ko": null,
+        "zh": null
+      },
+      "철": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "크기제한": "각장 1.5cm 이하",
+      "한줄": {
+        "ko": "강과 바다가 만나는 기수역에 삽니다. 섬진강 하구가 잘 알려져 있습니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": "강 하구 모래 바닥",
+        "zh": null
+      }
+    },
+    {
+      "id": "jeonbok",
+      "갈래": "해루질",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "완도에서는 전복 체험 프로그램이나 직판장을 이용하는 편이 확실합니다.",
+        "zh": null
+      },
+      "그림": "abalone",
+      "금어기": "9월 1일 ~ 10월 31일",
+      "깊이cm": 0,
+      "나오는권역": [
+        "gyeongju",
+        "pohang",
+        "uljin",
+        "ulleung",
+        "ulsan",
+        "wando",
+        "yeongdeok"
+      ],
+      "딴이름": [],
+      "먹는법": {
+        "ko": null,
+        "zh": null
+      },
+      "무리": "패류",
+      "미끼": {
+        "ko": null,
+        "zh": null
+      },
+      "손질법": {
+        "ko": "솔로 껍데기를 문질러 씻고 숟가락으로 살을 떼어냅니다.",
+        "zh": null
+      },
+      "어디서": {
+        "ko": "완도 일대의 양식장. 자연산은 수심이 있는 갯바위.",
+        "zh": null
+      },
+      "어려움": "제한",
+      "어종아이디": "jeonbok",
+      "언제": {
+        "ko": "금어기와 크기 제한이 모두 있습니다.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "잠수 장비를 이용한 채취는 일반인에게 금지됩니다.",
+          "zh": null
+        },
+        {
+          "ko": "양식장 구역에 들어가 채취하면 절도로 처벌될 수 있습니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "전복",
+        "zh": null
+      },
+      "채비": {
+        "ko": null,
+        "zh": null
+      },
+      "철": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "크기제한": "각장 7cm 이하",
+      "한줄": {
+        "ko": "대부분 양식으로 기릅니다. 자연산 채취는 사실상 어렵고 규정도 엄격합니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": "바위에 납작하게 붙음",
+        "zh": null
+      }
+    },
+    {
+      "id": "jjangttungeo",
+      "갈래": "해루질",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "지역 관광자원이기도 합니다. 함부로 잡기보다 체험 프로그램을 이용하세요.",
+        "zh": null
+      },
+      "그림": "fish",
+      "금어기": null,
+      "깊이cm": 0,
+      "나오는권역": [
+        "ganghwa",
+        "goheung",
+        "yeosu"
+      ],
+      "딴이름": [
+        "짱뚱이"
+      ],
+      "먹는법": {
+        "ko": null,
+        "zh": null
+      },
+      "무리": "어류",
+      "미끼": {
+        "ko": null,
+        "zh": null
+      },
+      "손질법": {
+        "ko": "주로 탕으로 먹습니다.",
+        "zh": null
+      },
+      "어디서": {
+        "ko": "무른 뻘갯벌.",
+        "zh": null
+      },
+      "어려움": "어려움",
+      "어종아이디": "jjangttungeo",
+      "언제": {
+        "ko": "여름에서 가을. 해가 좋은 날 활동이 활발합니다.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "전통 방식은 긴 낚싯대로 훑어 채는 '훌치기'인데 숙련이 필요합니다.",
+          "zh": null
+        },
+        {
+          "ko": "일반 방문객은 잡기보다 관찰이 현실적입니다. 순천만 뻘배 체험에서 가까이 볼 수 있습니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "짱뚱어",
+        "zh": null
+      },
+      "채비": {
+        "ko": null,
+        "zh": null
+      },
+      "철": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "크기제한": null,
+      "한줄": {
+        "ko": "갯벌 위를 뛰어다니는 물고기입니다. 순천만·보성 일대에서 볼 수 있습니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": "갯벌 위를 뛰어다님",
+        "zh": null
+      }
+    },
+    {
+      "id": "kkomak",
+      "갈래": "해루질",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "꼬막밭은 사유 양식장인 경우가 많아, 체험 프로그램이 사실상 유일한 방법입니다.",
+        "zh": null
+      },
+      "그림": "shell",
+      "금어기": null,
+      "깊이cm": 8,
+      "나오는권역": [
+        "boseong",
+        "buan",
+        "gangjin",
+        "goheung",
+        "haenam",
+        "hampyeong",
+        "jangheung",
+        "muan",
+        "sinan",
+        "suncheon"
+      ],
+      "딴이름": [
+        "참꼬막",
+        "새꼬막"
+      ],
+      "먹는법": {
+        "ko": null,
+        "zh": null
+      },
+      "무리": "조개",
+      "미끼": {
+        "ko": null,
+        "zh": null
+      },
+      "손질법": {
+        "ko": "끓기 직전에 건져 반쯤 익히는 방식이 흔합니다. 오래 삶으면 질겨집니다.",
+        "zh": null
+      },
+      "어디서": {
+        "ko": "무른 뻘갯벌. 대부분 어촌계가 관리하는 양식장입니다.",
+        "zh": null
+      },
+      "어려움": "보통",
+      "어종아이디": "kkomak",
+      "언제": {
+        "ko": "겨울이 제철로 알려져 있습니다.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "체험장에서는 뻘배(널배)를 타고 들어가 손이나 갈퀴로 훑는 방식으로 진행합니다.",
+          "zh": null
+        },
+        {
+          "ko": "개인이 임의로 들어가 채취하는 것은 대부분 금지되어 있습니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "꼬막",
+        "zh": null
+      },
+      "채비": {
+        "ko": null,
+        "zh": null
+      },
+      "철": [
+        1,
+        2,
+        3,
+        11,
+        12
+      ],
+      "크기제한": null,
+      "한줄": {
+        "ko": "보성·벌교 일대로 잘 알려진 조개입니다. 뻘이 깊은 갯벌에 삽니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": "뻘 표면의 미세한 자국",
+        "zh": null
+      }
+    },
+    {
+      "id": "matjogae",
+      "갈래": "해루질",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "소금은 통에 덜어 오면 바람에 덜 날립니다.",
+        "zh": null
+      },
+      "그림": "razor",
+      "금어기": null,
+      "깊이cm": 25,
+      "나오는권역": [
+        "boryeong",
+        "boseong",
+        "buan",
+        "busanwest",
+        "ganghwa",
+        "geoje",
+        "gochang",
+        "gogunsan",
+        "haenam",
+        "hwaseong",
+        "jindo",
+        "namhae",
+        "ongjin",
+        "seocheon",
+        "seosan",
+        "sinan",
+        "taean",
+        "tongyeong",
+        "ulsan",
+        "wando",
+        "yeosu"
+      ],
+      "딴이름": [
+        "맛"
+      ],
+      "먹는법": {
+        "ko": null,
+        "zh": null
+      },
+      "무리": "조개",
+      "미끼": {
+        "ko": null,
+        "zh": null
+      },
+      "손질법": {
+        "ko": "짠맛이 강하므로 해감을 짧게 하고 구이·볶음으로 먹습니다.",
+        "zh": null
+      },
+      "어디서": {
+        "ko": "모래가 많은 갯벌. 지름 1cm 안팎의 길쭉한 구멍이 단서입니다.",
+        "zh": null
+      },
+      "어려움": "보통",
+      "어종아이디": "matjogae",
+      "언제": {
+        "ko": "봄철 큰 사리 간조. 물이 빠진 직후가 구멍이 잘 보입니다.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "구멍 위 모래를 살짝 걷어내고 굵은소금을 한 꼬집 넣습니다.",
+          "zh": null
+        },
+        {
+          "ko": "올라오면 손으로 잡되, 세게 당기지 말고 나오는 속도에 맞춰 들어 올립니다.",
+          "zh": null
+        },
+        {
+          "ko": "끊어지면 다시 들어가므로 서두르지 않는 편이 낫습니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "맛조개",
+        "zh": null
+      },
+      "채비": {
+        "ko": null,
+        "zh": null
+      },
+      "철": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "크기제한": null,
+      "한줄": {
+        "ko": "길쭉한 대롱 모양 조개입니다. 구멍에 소금을 넣으면 올라오는 방식이 잘 알려져 있습니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": "길쭉한 타원 구멍",
+        "zh": null
+      }
+    },
+    {
+      "id": "nakji",
+      "갈래": "해루질",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "금어기가 있고 시·도지사가 지역별로 따로 정하기도 합니다. 출발 전 확인하세요.",
+        "zh": null
+      },
+      "그림": "octopus",
+      "금어기": "6월 1일 ~ 6월 30일",
+      "깊이cm": 40,
+      "나오는권역": [
+        "boryeong",
+        "boseong",
+        "buan",
+        "busaneast",
+        "busanwest",
+        "changwon",
+        "daebu",
+        "dangjin",
+        "ganghwa",
+        "gangjin",
+        "geoje",
+        "gogunsan",
+        "goheung",
+        "gunsan",
+        "haenam",
+        "hampyeong",
+        "hongseong",
+        "hwaseong",
+        "jangheung",
+        "jindo",
+        "muan",
+        "namhae",
+        "ongjin",
+        "sacheon",
+        "seocheon",
+        "seosan",
+        "sinan",
+        "taean",
+        "tongyeong",
+        "ulsan",
+        "wando",
+        "yeongjong",
+        "yeosu"
+      ],
+      "딴이름": [
+        "세발낙지"
+      ],
+      "먹는법": {
+        "ko": null,
+        "zh": null
+      },
+      "무리": "연체",
+      "미끼": {
+        "ko": null,
+        "zh": null
+      },
+      "손질법": {
+        "ko": "밀가루로 주물러 씻어 점액을 빼냅니다. 바로 먹지 않으면 손질 후 얼립니다.",
+        "zh": null
+      },
+      "어디서": {
+        "ko": "무른 뻘갯벌. 숨구멍과 파낸 흙이 쌓인 자리를 함께 봅니다.",
+        "zh": null
+      },
+      "어려움": "어려움",
+      "어종아이디": "nakji",
+      "언제": {
+        "ko": "간조 전후. 물이 빠지기 최소 두 시간 전에는 들어가야 여유 있게 구멍을 찾을 수 있습니다.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "낙지가 드나드는 주 구멍을 현지에서 '부럿'이라고 부릅니다. 주변에 위장용 구멍이 여러 개 이어져 있어, 어느 쪽이 본 구멍인지 읽는 것이 요령입니다.",
+          "zh": null
+        },
+        {
+          "ko": "구멍 주변을 살살 밟았을 때 물이 올라오면 낙지가 들어 있을 가능성이 큽니다.",
+          "zh": null
+        },
+        {
+          "ko": "가래(낙지삽)로 구멍 옆을 파 내려가며 굴을 따라갑니다. 구멍을 직접 쑤시면 더 깊이 들어가 버립니다.",
+          "zh": null
+        },
+        {
+          "ko": "파낸 자리에 물이 고이면 바가지로 퍼내면서 진행합니다.",
+          "zh": null
+        },
+        {
+          "ko": "잡은 낙지는 뚜껑 있는 통에 넣습니다. 그물망은 빠져나갑니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "낙지",
+        "zh": null
+      },
+      "채비": {
+        "ko": null,
+        "zh": null
+      },
+      "철": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "크기제한": null,
+      "한줄": {
+        "ko": "전남 갯벌의 대표 대상입니다. 구멍을 찾아 파는 방식이라 체력과 요령이 모두 필요합니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": "부럿(주 구멍)과 위장 구멍들",
+        "zh": null
+      }
+    },
+    {
+      "id": "sora",
+      "갈래": "해루질",
+      "고시로정함": false,
+      "귀띔": {
+        "ko": "껍데기 높이(각고)가 5cm 이하인 것은 잡을 수 없습니다. 작은 것은 놓아주세요.",
+        "zh": null
+      },
+      "그림": "snail",
+      "금어기": "여수 삼산면 6월 1일 ~ 6월 30일",
+      "깊이cm": 0,
+      "나오는권역": [
+        "boryeong",
+        "buan",
+        "busaneast",
+        "busanwest",
+        "changwon",
+        "daebu",
+        "dangjin",
+        "ganghwa",
+        "gangjin",
+        "geoje",
+        "gogunsan",
+        "goheung",
+        "gunsan",
+        "gwangyang",
+        "gyeongju",
+        "haenam",
+        "hampyeong",
+        "hongseong",
+        "hwaseong",
+        "jindo",
+        "mokpo",
+        "namhae",
+        "ongjin",
+        "pohang",
+        "seocheon",
+        "seosan",
+        "sinan",
+        "suncheon",
+        "taean",
+        "tongyeong",
+        "uljin",
+        "ulleung",
+        "ulsan",
+        "wando",
+        "yeongdeok",
+        "yeongjong",
+        "yeosu"
+      ],
+      "딴이름": [
+        "뿔소라"
+      ],
+      "먹는법": {
+        "ko": null,
+        "zh": null
+      },
+      "무리": "패류",
+      "미끼": {
+        "ko": null,
+        "zh": null
+      },
+      "손질법": {
+        "ko": "삶아서 이쑤시개로 살을 빼냅니다. 내장 끝부분은 쓴맛이 납니다.",
+        "zh": null
+      },
+      "어디서": {
+        "ko": "조간대(물이 들고 나는 갯가) 갯바위, 자갈밭.",
+        "zh": null
+      },
+      "어려움": "보통",
+      "어종아이디": "sora",
+      "언제": {
+        "ko": "물이 많이 빠지는 사리 간조.",
+        "zh": null
+      },
+      "이렇게": [
+        {
+          "ko": "돌을 들추어 확인하고, 들춘 돌은 반드시 원래대로 덮어 둡니다. 그 아래 생물이 삽니다.",
+          "zh": null
+        },
+        {
+          "ko": "잠수 장비를 쓰는 채취는 일반인에게 금지됩니다.",
+          "zh": null
+        }
+      ],
+      "이름": {
+        "ko": "소라",
+        "zh": null
+      },
+      "채비": {
+        "ko": null,
+        "zh": null
+      },
+      "철": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "크기제한": "각고 5cm 이하",
+      "한줄": {
+        "ko": "갯바위 틈이나 돌 밑에 붙어 있습니다. 크기 제한이 있는 대상입니다.",
+        "zh": null
+      },
+      "흔적": {
+        "ko": "돌 밑·틈",
+        "zh": null
+      }
+    }
+  ]
+}

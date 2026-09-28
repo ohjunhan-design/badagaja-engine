@@ -1,0 +1,255 @@
+# 운영 배포 — badagaja.com 뿌리로 올립니다
+#
+# ★ 이것은 **손님이 보는 자리**에 올리는 일입니다.
+#   검증 배포(stage.yml)와 달리 되돌릴 시간이 없습니다.
+#   그래서 문을 여럿 둡니다.
+#
+#   ① 손으로만 돌립니다 (push 로 저절로 돌지 않습니다)
+#   ② 「배포합니다」라고 **정확히 쳐야** 합니다
+#   ③ 판정이 GO 여야 합니다 — 아니면 거기서 멈춥니다
+#   ④ 검증판 표시가 남아 있으면 멈춥니다
+#      (그대로 나가면 416쪽이 검색에서 통째로 사라집니다)
+#   ⑤ 올리기 전에 **지금 서버를 통째로 내려받아 둡니다**
+#      되돌릴 것이 없으면 되돌리기도 없습니다
+#   ⑥ 올린 뒤 20번을 재고, 나쁘면 **스스로 되돌립니다**
+#
+# ★ 올리는 차례 (바깥 검수 9차 숙제 6)
+#      1 자산 → 2 쪽 → 3 솎기 → 4 판 지문
+#   719개를 올리는 데 4분 남짓 걸립니다. 그 사이에 들어온 손님이
+#   「쪽은 새것인데 꾸밈이 없는」 화면을 보지 않게 하려는 차례입니다.
+name: 운영 배포
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: '정말 올리려면 「배포합니다」 라고 치세요'
+        required: true
+        default: ''
+      skip_gate:
+        description: '판정을 건너뜁니다 (급할 때만 · 권하지 않습니다)'
+        required: false
+        default: 'no'
+
+concurrency:
+  group: ftp-deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: 운영 배포
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    env:
+      TZ: Asia/Seoul
+      LANG: ko_KR.UTF-8
+      LC_ALL: ko_KR.UTF-8
+      PYTHONIOENCODING: utf-8
+      PYTHONUNBUFFERED: '1'
+      BADAGAJA_URL: https://badagaja.com
+      BADAGAJA_URL_ROOT: https://badagaja.com
+
+    steps:
+      # ── ① 정말 올릴 것인지
+      - name: 다짐을 받습니다
+        env:
+          CONFIRM: ${{ github.event.inputs.confirm }}
+        run: |
+          if [ "$CONFIRM" != "배포합니다" ]; then
+            echo "::error::「배포합니다」 라고 정확히 쳐야 올립니다 (친 것: $CONFIRM)"
+            exit 1
+          fi
+          echo "· 다짐을 받았습니다"
+
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 크롬 깔기
+        uses: browser-actions/setup-chrome@v1
+        id: chrome
+        with:
+          chrome-version: stable
+
+      - name: 쪽 만들기
+        run: python engine/build.py
+
+      # ── ③ 판정이 GO 여야 합니다
+      - name: 배포해도 되는지 판정합니다
+        if: ${{ github.event.inputs.skip_gate != 'yes' }}
+        env:
+          BADAGAJA_CHROME: ${{ steps.chrome.outputs.chrome-path }}
+          BADAGAJA_CHROMES: '3'
+        run: |
+          python engine/gate.py --full || true
+          python engine/report.py --strict
+          FINAL=$(python -c "import json,io;print(json.load(io.open('tests/out/gate.json',encoding='utf-8')).get('FINAL',''))")
+          echo "판정: $FINAL"
+          case "$FINAL" in
+            "GO 후보") echo "· 판정이 통과했습니다" ;;
+            *)
+              echo "::error::판정이 $FINAL 입니다 — 올리지 않습니다"
+              echo "  20번(실제 서버)은 올려야만 잽니다. 그것만 남았다면"
+              echo "  먼저 검증 배포(stage.yml)로 확인하세요."
+              exit 1 ;;
+          esac
+
+      # ── ④ 검증판 표시가 남아 있으면 안 됩니다
+      - name: 검증판 표시가 없는지 봅니다
+        run: |
+          if grep -rl "badagaja:stage" site/ >/dev/null 2>&1; then
+            echo "::error::검증판(_stage) 표시가 남아 있습니다"
+            echo "  그대로 올리면 416쪽이 통째로 검색에서 사라집니다."
+            exit 1
+          fi
+          echo "· 검증판 표시가 없습니다"
+
+      - name: 배포판 지문 만들기
+        run: python engine/build_id.py
+
+      - name: lftp 설치
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+
+      # ── ⑤ 되돌릴 것을 먼저 챙깁니다
+      - name: 지금 서버를 내려받아 둡니다 (되돌리기용)
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          # ★ **사진도 받습니다** (2026-09-28 바깥 검수 10차)
+          #
+          #   처음에는 용량 때문에 img/ 를 뺐습니다. 그런데 그러면
+          #
+          #       배포 전  img/a.jpg = A
+          #       배포 후  img/a.jpg = B
+          #       되돌림   html·css·js 는 돌아오는데 a.jpg 는 B 그대로
+          #
+          #   **코드는 되돌렸는데 사이트는 안 되돌린 것**이 됩니다.
+          #   재 보니 사진은 71MB·269장입니다. 받을 만합니다.
+          #   「백업 파일이 있다」와 「그 백업으로 복구할 수 있다」는
+          #   완전히 다른 이야기입니다.
+          mkdir -p _before
+          lftp -c "
+            set ftp:ssl-allow no;
+            set net:max-retries 3;
+            open -u \"$FTP_USERNAME\",\"$FTP_PASSWORD\" \"$FTP_SERVER\";
+            mirror --only-newer --parallel=4 --exclude-glob _stage/ /www/ _before/;
+          " || {
+            echo "::error::지금 서버를 다 못 받았습니다 — 되돌릴 것이 없으면 올리지 않습니다"
+            exit 1
+          }
+          echo "받아 둔 파일 $(find _before -type f | wc -l)개 · $(du -sh _before | cut -f1)"
+          # 받아 둔 것의 지문을 남깁니다 — 되돌린 뒤 견주려고
+          (cd _before && find . -type f -exec sha256sum {} \; | sort) > _before.sha256
+          echo "지문 $(wc -l < _before.sha256)줄"
+          tar -czf _before.tgz _before _before.sha256
+
+      - name: 되돌릴 것을 남겨 둡니다
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: 배포전-서버
+          path: _before.tgz
+          retention-days: 30
+
+      # ── 올리기 — 자산 먼저, 쪽 나중
+      - name: 올리기
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          echo "올릴 곳: /www/  (운영)"
+          lftp -c "
+            set ftp:ssl-allow no;
+            set net:max-retries 3;
+            open -u \"$FTP_USERNAME\",\"$FTP_PASSWORD\" \"$FTP_SERVER\";
+            echo '── 1단계: 자산 (꾸밈·움직임·그림)';
+            mirror -R --only-newer --parallel=4 site/assets/ /www/assets/;
+            mirror -R --only-newer --parallel=4 site/img/ /www/img/;
+            echo '── 2단계: 쪽 (자산이 다 올라간 뒤에)';
+            mirror -R --only-newer --parallel=4 --exclude-glob build.json --exclude assets/ --exclude img/ site/ /www/;
+            echo '── 3단계: 판 지문 (이것이 올라가야 판이 바뀐 것)';
+            put site/build.json -o /www/build.json;
+          "
+          echo "· 올렸습니다"
+
+      # ★ 운영에서는 **--delete 를 쓰지 않습니다.**
+      #   옛 쪽 22갈래를 남기기로 했고(keep.json), 솎다가 그것들을
+      #   지우면 중국어판 190쪽이 통째로 깨집니다.
+      #   쓸모없어진 파일은 손으로 확인하고 지웁니다.
+
+      # ── ⑥ 올린 뒤 재고, 나쁘면 되돌립니다
+      - name: 올린 것을 서버에서 확인 (20번)
+        id: after
+        run: |
+          python engine/check_deployed.py --net --strict
+          python engine/smoke.py --net
+
+      - name: 나쁘면 되돌립니다
+        if: failure() && steps.after.conclusion == 'failure'
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          echo "::warning::올린 뒤 검사가 나빠 되돌립니다"
+          if [ ! -d _before ] || [ -z "$(ls -A _before 2>/dev/null)" ]; then
+            echo "::error::되돌릴 것이 없습니다 — 손으로 고쳐야 합니다"
+            exit 1
+          fi
+          lftp -c "
+            set ftp:ssl-allow no;
+            set net:max-retries 3;
+            open -u \"$FTP_USERNAME\",\"$FTP_PASSWORD\" \"$FTP_SERVER\";
+            mirror -R --parallel=4 _before/ /www/;
+          "
+          echo "· 파일을 되돌렸습니다."
+          echo ""
+          # ★ **되돌리기는 FTP 복사가 아니라 하나의 배포입니다**
+          #   (2026-09-28 바깥 검수 10차)
+          #   파일이 돌아왔다고 성공이 아닙니다. 사이트가 살아났는지
+          #   봐야 합니다. 안 보면 「되돌렸는데 여전히 깨진」 상태를
+          #   모른 채 넘어갑니다.
+          echo "── 되돌린 뒤에도 사이트가 살아 있는지 봅니다"
+          BAD=0
+          python engine/smoke.py --net || BAD=1
+          for U in / /taean.html /robots.txt /sitemap.xml \
+                   /css/style.css /js/app.js /zh-cn/; do
+            C=$(curl -s -o /dev/null -w '%{http_code}' --max-time 25 \
+                "https://badagaja.com$U")
+            printf '   %-18s %s\n' "$U" "$C"
+            [ "$C" = "200" ] || BAD=1
+          done
+          if [ "$BAD" != "0" ]; then
+            echo "::error::**되돌렸는데도 사이트가 성치 않습니다** — 손으로 봐야 합니다"
+            exit 1
+          fi
+          echo "· 되돌렸고 사이트가 살아 있습니다. 왜 나빴는지 보고 다시 하세요."
+
+      - name: 결과 남기기
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: 운영배포결과
+          path: |
+            tests/out/*.json
+            tests/out/log/*.txt
+          retention-days: 90
+
+      - name: 다음에 할 일
+        if: success()
+        run: |
+          echo "· 배포가 끝났습니다."
+          echo ""
+          echo "  남은 일 (손으로)"
+          echo "    1. 네이버 서치어드바이저에 사이트맵 다시 제출"
+          echo "    2. 구글 서치콘솔에 사이트맵 다시 제출"
+          echo "    3. /www/_stage/ 를 지웁니다 (검증판이 검색에 걸리지 않게)"
+          echo "    4. 며칠간 검색 유입을 지켜봅니다"

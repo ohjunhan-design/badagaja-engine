@@ -1,0 +1,216 @@
+# 되돌리기 연습 — **정말 되돌아가는지** 검증 자리에서 해 봅니다
+#
+# ★ 왜 (2026-09-28 바깥 검수 10차)
+#
+#     「백업 파일이 있다」와 「그 백업으로 사이트를 복구할 수 있다」는
+#     **완전히 다른 이야기입니다.**
+#     rollback 은 FTP 복사 작업이 아니라 **하나의 배포**입니다.
+#
+#   지금까지 우리는 되돌리기 코드를 적어 두기만 했습니다.
+#   한 번도 정말 되돌아가는지 본 적이 없습니다.
+#   급할 때 안 되는 되돌리기는 없는 것입니다.
+#
+# ★ 어떻게
+#
+#     1  지금 검증 자리(_stage)를 통째로 받아 둡니다      ← A판
+#     2  일부러 망가뜨린 판을 올립니다                     ← B판
+#        (쪽을 하나 지우고, 자산 하나를 비웁니다)
+#     3  검사가 **정말 걸러내는지** 봅니다
+#        — 안 걸리면 검사가 무른 것이니 거기서 멈춥니다
+#     4  A판으로 되돌립니다
+#     5  되돌린 뒤 **판정까지** 합니다
+#        — 지문이 A판과 같은가 · 쪽·자산·사진이 200 인가
+#
+#   운영은 한 글자도 안 건드립니다. /www/_stage/ 안에서만 합니다.
+name: 되돌리기 연습
+
+on:
+  workflow_dispatch:
+    inputs:
+      folder:
+        description: '연습할 칸 (기본 _stage)'
+        required: false
+        default: _stage
+
+concurrency:
+  group: ftp-stage
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  drill:
+    name: 되돌리기 연습
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    env:
+      TZ: Asia/Seoul
+      PYTHONIOENCODING: utf-8
+      PYTHONUNBUFFERED: '1'
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 올릴 칸을 정합니다
+        env:
+          FOLDER: ${{ github.event.inputs.folder }}
+        run: |
+          CARD="${FOLDER:-_stage}"
+          # ★ 목숨이 걸린 줄입니다 — 빈 이름이면 /www/ 전체를 건드립니다
+          case "$CARD" in
+            ""|/*|*..*|*" "*|www)
+              echo "::error::칸 이름이 이상합니다: [$CARD]"; exit 1 ;;
+          esac
+          echo "CARD=$CARD" >> "$GITHUB_ENV"
+          echo "연습할 곳: /www/$CARD  (운영은 안 건드립니다)"
+
+      - name: lftp 설치
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+
+      # ── 1. A판을 받아 둡니다
+      - name: 1단계 — 지금 것을 받아 둡니다 (A판)
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          mkdir -p _A
+          lftp -c "
+            set ftp:ssl-allow no;
+            set net:max-retries 3;
+            open -u \"$FTP_USERNAME\",\"$FTP_PASSWORD\" \"$FTP_SERVER\";
+            mirror --parallel=4 /www/$CARD/ _A/;
+          " || { echo "::error::A판을 못 받았습니다"; exit 1; }
+          echo "A판 파일 $(find _A -type f | wc -l)개 · $(du -sh _A | cut -f1)"
+          (cd _A && find . -type f -exec sha256sum {} \; | sort) > _A.sha256
+          echo "A판 지문 $(wc -l < _A.sha256)줄"
+
+      # ── 2. 일부러 망가뜨린 B판
+      - name: 2단계 — 일부러 망가뜨린 판을 만듭니다 (B판)
+        run: |
+          cp -r _A _B
+          echo "── 망가뜨리는 것"
+          # (가) 쪽 하나를 지웁니다 — 손님이 404 를 봅니다
+          rm -f _B/taean.html && echo "   · taean.html 을 지웠습니다"
+          # (나) 자산 하나를 비웁니다 — 꾸밈이 사라집니다
+          : > _B/assets/css/site.css && echo "   · site.css 를 비웠습니다"
+          # (다) 판 지문을 흔듭니다 — 올린 것이 만든 것과 달라집니다
+          if [ -f _B/build.json ]; then
+            python -c "import json,io;p='_B/build.json';d=json.load(io.open(p,encoding='utf-8'));d['통지문']='0'*64;io.open(p,'w',encoding='utf-8').write(json.dumps(d,ensure_ascii=False,indent=2))"
+            echo "   · build.json 의 통지문을 흔들었습니다"
+          fi
+
+      - name: 2단계 — B판을 올립니다
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          lftp -c "
+            set ftp:ssl-allow no;
+            set net:max-retries 3;
+            open -u \"$FTP_USERNAME\",\"$FTP_PASSWORD\" \"$FTP_SERVER\";
+            mirror -R --delete --parallel=4 _B/ /www/$CARD/;
+          "
+          echo "· 망가진 판을 올렸습니다"
+
+      # ── 3. 검사가 정말 걸러내는가
+      - name: 3단계 — 검사가 이것을 걸러내는가
+        run: |
+          export BADAGAJA_URL="https://badagaja.com/$CARD"
+          export BADAGAJA_URL_ROOT="https://badagaja.com"
+          echo "── 걸러내야 정상입니다"
+          if python engine/smoke.py --net; then
+            echo "::error::**망가진 판을 검사가 통과시켰습니다**"
+            echo "  되돌리기를 시험하기 전에 검사부터 고쳐야 합니다."
+            echo "  (그대로 두면 운영에서도 못 걸러냅니다)"
+            echo "NEEDFIX=1" >> "$GITHUB_ENV"
+          else
+            echo "· 검사가 제대로 걸러냈습니다"
+          fi
+
+      # ── 4. 되돌립니다
+      - name: 4단계 — A판으로 되돌립니다
+        if: always()
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          lftp -c "
+            set ftp:ssl-allow no;
+            set net:max-retries 3;
+            open -u \"$FTP_USERNAME\",\"$FTP_PASSWORD\" \"$FTP_SERVER\";
+            mirror -R --delete --parallel=4 _A/ /www/$CARD/;
+          "
+          echo "· 파일을 되돌렸습니다"
+
+      # ── 5. 되돌린 뒤 **판정까지**
+      - name: 5단계 — 정말 A판으로 돌아왔는가
+        if: always()
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          BAD=0
+
+          echo "── (가) 파일 지문이 A판과 같은가"
+          mkdir -p _after
+          lftp -c "
+            set ftp:ssl-allow no;
+            set net:max-retries 3;
+            open -u \"$FTP_USERNAME\",\"$FTP_PASSWORD\" \"$FTP_SERVER\";
+            mirror --parallel=4 /www/$CARD/ _after/;
+          "
+          (cd _after && find . -type f -exec sha256sum {} \; | sort) > _after.sha256
+          if diff -q _A.sha256 _after.sha256 >/dev/null; then
+            echo "   · 파일 $(wc -l < _A.sha256)개가 모두 A판과 같습니다"
+          else
+            echo "   ✗ A판과 다릅니다"
+            diff _A.sha256 _after.sha256 | head -10
+            BAD=1
+          fi
+
+          echo ""
+          echo "── (나) 사이트가 살아 있는가"
+          for U in / /taean.html /assets/css/site.css /build.json; do
+            C=$(curl -s -o /dev/null -w '%{http_code}' --max-time 25 \
+                "https://badagaja.com/$CARD$U")
+            printf '   %-28s %s\n' "$U" "$C"
+            [ "$C" = "200" ] || BAD=1
+          done
+
+          echo ""
+          echo "── (다) 검사가 이제 통과하는가"
+          export BADAGAJA_URL="https://badagaja.com/$CARD"
+          export BADAGAJA_URL_ROOT="https://badagaja.com"
+          python engine/smoke.py --net || BAD=1
+
+          echo ""
+          if [ "$BAD" != "0" ]; then
+            echo "::error::**되돌렸는데 A판으로 돌아오지 않았습니다**"
+            echo "  이대로면 급할 때 되돌리기가 안 됩니다."
+            exit 1
+          fi
+          if [ "${NEEDFIX:-0}" = "1" ]; then
+            echo "::error::되돌리기는 됐지만 **검사가 망가진 판을 통과시켰습니다**"
+            exit 1
+          fi
+          echo "· 되돌리기가 정말 됩니다."
+          echo "  「백업이 있다」가 아니라 「복구된다」를 확인했습니다."
+
+      - name: 결과 남기기
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: 되돌리기연습
+          path: |
+            _A.sha256
+            _after.sha256
+          retention-days: 30

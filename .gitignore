@@ -1,0 +1,17 @@
+# 만들어진 것 — 자료에서 언제든 다시 만들 수 있으므로 저장소에 두지 않습니다
+site/
+data/cache/
+
+# 파이썬
+__pycache__/
+*.pyc
+
+# 검사 결과
+tests/out/
+
+# 봉해 둔 배포판 — 내용은 site/ 와 같아 저장소에 둘 까닭이 없습니다
+# (소스는 git 이, 배포판은 release/ 가 지킵니다 — 계약-22·29)
+release/
+
+.tmp/
+tests/out/log/

@@ -1,0 +1,88 @@
+{{#_head.html}}
+<body data-region="{{권역}}">
+{{#_header.html}}
+
+<section class="section hero section--soft"><div class="wrap">
+  <div class="badge badge--orange">🌊 {{한줄}}</div>
+  <h1 class="serif">{{큰제목}}<br><span class="accent">{{큰제목뒷줄}}</span></h1>
+  <p class="hero-lead">{{소개글}}</p>
+  <div class="btn-row">
+    <a href="#points" class="btn btn--dark">포인트 {{포인트수}}곳 보기</a>
+    <a href="#tide" class="btn btn--white">오늘 물때 보기</a>
+  </div>
+  <nav class="quicknav" aria-label="이 쪽 안에서 바로 가기">{{{빠른이동}}}</nav>
+
+  {{{대표사진자리}}}
+</div></section>
+
+<section class="section section--white" id="tide"><div class="wrap">
+  <div class="section-head">
+    <p class="kicker">이번 주 물때</p>
+    <h2 class="serif">물때표</h2>
+    <p class="lead" id="tideStatus">{{물때안내}}</p>
+  </div>
+  {{{물때자리}}}
+</div></section>
+
+<section class="section" id="points"><div class="wrap">
+  <div class="section-head">
+    <p class="kicker">해루질 · 낚시 포인트</p>
+    <h2 class="serif">{{권역이름}}에서 어디로 갈까요</h2>
+    <p class="lead">{{포인트안내}}</p>
+  </div>
+  <div class="two-up">{{{포인트칸}}}</div>
+  {{{통제}}}
+  {{{광고칸}}}
+</div></section>
+
+<section class="section section--white" id="catch"><div class="wrap">
+  <div class="section-head">
+    <p class="kicker">제철 어종 · 패류</p>
+    <h2 class="serif">지금 잡히는 것들</h2>
+    <p class="lead">계절에 따라 활동 시기가 다릅니다. 금어기와 잡아도 되는 크기를 꼭 확인하세요.</p>
+  </div>
+  {{{어종칸}}}
+</div></section>
+
+<section class="section" id="eat"><div class="wrap">
+  <div class="section-head">
+    <p class="kicker">향토 먹거리</p>
+    <h2 class="serif">맛을 찾아 떠나는 즐거움</h2>
+    <p class="lead">현지 식당에서 맛볼 수 있는 대표 메뉴입니다.</p>
+  </div>
+  <div class="grid grid--tight">{{{먹거리칸}}}</div>
+</div></section>
+
+<section class="section section--white" id="spot"><div class="wrap">
+  <div class="section-head">
+    <p class="kicker">해안 명소</p>
+    <h2 class="serif">바다를 보러 가는 곳</h2>
+  </div>
+  <div class="grid">{{{명소칸}}}</div>
+</div></section>
+
+<section class="section" id="festival"><div class="wrap">
+  <div class="section-head">
+    <p class="kicker">지역 축제</p>
+    <h2 class="serif">{{권역이름}}, 달마다 다른 얼굴</h2>
+    <p class="lead">정확한 일정은 해마다 조금씩 바뀝니다. 가시기 전에 확정 공고를 확인하세요.</p>
+  </div>
+  <div class="months">{{{축제칸}}}</div>
+</div></section>
+
+<section class="section section--white" id="course"><div class="wrap">
+  <div class="section-head">
+    <p class="kicker">추천 여행 코스</p>
+    <h2 class="serif">누구와 함께 오시나요</h2>
+    <p class="lead">위의 포인트·먹거리·명소를 엮은 보기입니다. 물때와 날씨에 맞춰 바꿔 쓰세요.</p>
+  </div>
+  <div class="grid">{{{코스칸}}}</div>
+</div></section>
+
+<section class="section section--tail"><div class="wrap">
+  {{{마을칸}}}
+  <p class="notice">{{기준일안내}}</p>
+</div></section>
+
+<button class="to-top" id="toTop" aria-label="맨 위로">↑</button>
+{{#_footer.html}}

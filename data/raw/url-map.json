@@ -1,0 +1,40 @@
+{
+  "_설명": "옛 주소 → 새 주소. 주소가 바뀌면 검색에 쌓인 것이 끊기므로 옛 주소마다 갈 곳을 정해 둡니다. engine/check_urls.py 가 봅니다",
+  "_왜": "2026-09-26 바깥 검수에서 「옛 주소 139쪽이 404 가 된다」는 지적을 받았습니다. 포인트 주소는 옛것을 그대로 쓰기로 해 118쪽이 살아났고, 남은 것을 여기에 적습니다",
+  "넘김": {},
+  "아직_안_만듦": {
+    "_메모": "",
+    "_설명": "사라진 것이 아니라 **순서상 아직 안 만든** 쪽입니다. 만들면 이 목록에서 빼세요. 빼지 않으면 검사가 계속 알립니다",
+    "쪽": [
+      "about.html",
+      "club.html",
+      "copyright.html",
+      "data.html",
+      "gear.html",
+      "muldae.html",
+      "photos.html",
+      "privacy.html",
+      "rule.html",
+      "sources.html",
+      "stats.html",
+      "catch/basics.html",
+      "fish/basics.html",
+      "guide/index.html",
+      "tide/index.html",
+      "jeju/festival.html",
+      "point/busan.html",
+      "point/gunsan.html",
+      "point/incheon.html",
+      "point/jeju.html"
+    ]
+  },
+  "일부러_없앰": {
+    "_설명": "새 사이트에 두지 않기로 한 쪽입니다. 이유를 꼭 적습니다",
+    "쪽": {
+      "404.html": "쪽이 아니라 서버 설정(.htaccess)이 맡습니다",
+      "_ad-compare.html": "광고 크기를 견주려고 만든 제 작업용 쪽입니다",
+      "naver1ce5a07a1c7b45c6c8ccaf8b1fc16dc5.html": "네이버 소유 확인 파일 — 배포할 때 그대로 올립니다",
+      "naverc19eda34e92a0dd255fe1df49d72fcfe.html": "네이버 소유 확인 파일 — 배포할 때 그대로 올립니다"
+    }
+  }
+}

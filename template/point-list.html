@@ -1,0 +1,52 @@
+{{#_head.html}}
+<body>
+{{#_header.html}}
+
+<section class="section hero section--soft"><div class="wrap">
+  <div class="badge badge--orange">🌊 {{머리이름표글}}</div>
+  <h1 class="serif">{{큰제목}}<br><span class="accent">{{큰제목뒷줄}}</span></h1>
+  <p class="hero-lead">{{소개글}}</p>
+  <div class="btn-row">
+    <a href="#map" class="btn btn--dark">지도에서 포인트 보기</a>
+    <a href="#points" class="btn btn--white">전체 목록 보기 · {{포인트수}}곳</a>
+  </div>
+
+  {{{대표사진자리}}}
+</div></section>
+
+<section class="sea-note"><div class="wrap">
+  <div class="sea-note-box">
+    <h2 class="serif">{{바다제목}}</h2>
+    <p>{{바다글}}</p>
+    <p class="warn"><b>조심할 것</b> · {{바다조심}}</p>
+  </div>
+</div></section>
+
+<section class="section section--white" id="map"><div class="wrap">
+  <div class="list-head"><h2 class="serif">{{권역이름}} {{갈래}} 포인트 지도</h2></div>
+  <div class="map-wrap" id="pointMap" data-region="{{권역}}" data-kind="{{갈래코드}}">
+    <p class="sr-only">{{포인트수}}곳의 위치를 지도에 표시합니다. 지도를 못 보시면 아래 목록을 보세요.</p>
+  </div>
+</div></section>
+
+<section class="section" id="points"><div class="wrap">
+  <div class="list-head">
+    <h2 class="serif">{{권역이름}} {{갈래}} 포인트 전체 목록</h2>
+    <label class="sr-only" for="searchInput">포인트 검색</label>
+    <input class="search" id="searchInput" placeholder="포인트 이름·지형·대상 검색">
+  </div>
+  <p class="notice">{{안내글}}</p>
+  <div class="filter" id="filter">{{{걸러내기}}}</div>
+  <div class="grid" id="pointsGrid">
+{{{카드들}}}
+    <p class="empty" id="empty" hidden>찾는 포인트가 없습니다.</p>
+  </div>
+</div></section>
+
+<section class="section section--tail"><div class="wrap">
+  {{{광고칸}}}
+  <p class="notice">{{기준일안내}}</p>
+</div></section>
+
+<button class="to-top" id="toTop" aria-label="맨 위로">↑</button>
+{{#_footer.html}}

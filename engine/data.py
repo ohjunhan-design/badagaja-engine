@@ -1,0 +1,272 @@
+# -*- coding: utf-8 -*-
+"""자료를 읽어 하나로 합칩니다.  (계약-20)
+
+    data/raw/        옮기는 도구가 만듭니다 — 덮어씁니다
+    data/overrides/  사람이 고친 것 — 절대 안 덮습니다
+            ↓ 합침
+        여기서 돌려주는 값 (파일로 남기지 않습니다)
+
+합치는 규칙
+    같은 아이디가 양쪽에 있으면 overrides 가 이깁니다.
+    항목 하나만 고쳐도 됩니다 — 나머지는 raw 에서 옵니다.
+
+★ 숫자는 여기서 셉니다 (계약-04·06)
+    쪽이나 자료에 「110곳」을 적지 않습니다. 물어보면 세어 줍니다.
+"""
+import os
+import sys
+import glob
+import collections
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(HERE)
+sys.path.insert(0, ROOT)
+from engine import io   # noqa: E402
+
+DATA = os.environ.get('BADAGAJA_DATA', os.path.join(ROOT, 'data'))
+
+
+class 자료오류(Exception):
+    pass
+
+
+def _합치기(바탕, 덧):
+    """덧이 바탕을 이깁니다. 사전은 파고들며, 목록은 통째로 바꿉니다."""
+    나옴 = dict(바탕)
+    for k, v in (덧 or {}).items():
+        if isinstance(v, dict) and isinstance(나옴.get(k), dict):
+            나옴[k] = _합치기(나옴[k], v)
+        else:
+            나옴[k] = v
+    return 나옴
+
+
+def _읽기(상대길, default=None):
+    바탕 = io.read_json(os.path.join(DATA, 'raw', 상대길), default=None)
+    덧 = io.read_json(os.path.join(DATA, 'overrides', 상대길), default=None)
+    if 바탕 is None and 덧 is None:
+        if default is None:
+            raise 자료오류('자료가 없습니다: %s' % 상대길)
+        return default
+    return _합치기(바탕 or {}, 덧 or {})
+
+
+class 자료:
+    """사이트의 모든 자료. 한 번 만들어 두고 씁니다."""
+
+    def __init__(self):
+        self.사이트 = _읽기('site.json')
+        self.색인 = _읽기('index.json')
+        self.어종 = _읽기('species.json')
+        # 중국어 낱말표. 없어도 됩니다 — 그때는 한국어로 떨어집니다
+        self.중국어낱말 = _읽기('zh.json', default={})
+        # 사진. 없어도 돌아갑니다 — 그때는 사진 없는 쪽이 나옵니다
+        self._사진자료 = _읽기('photos.json', default={})
+        # 옛 첫 화면의 전국 바다지도 (2026-09-27 주인 지시)
+        self._지도자료 = _읽기('map.json', default={})
+        self._히어로 = None
+        self._명소사진 = None
+        self._포인트 = None
+        self._권역 = None
+        self._여행 = None
+        self._축제 = None
+        self._안내 = None
+
+    @property
+    def 지도(self):
+        """옛 첫 화면의 전국 바다지도. 없으면 빈 것 — 쪽은 그대로 돕니다."""
+        return self._지도자료 or {}
+
+    # ── 사진 ─────────────────────────────────────────────
+    #
+    # ★ 2026-09-27 주인 지시 「사진 넣어야해」
+    #   새 틀 416쪽에 사진이 한 장도 없었습니다. 게다가 build.py 가
+    #   대표 사진 주소를 **자료를 안 보고 지어내** 공유 미리보기
+    #   52갈래가 깨져 있었습니다.
+    #
+    #       지어낸 것   img/taean/hero.jpg        ← 없는 파일
+    #       실제 파일   img/coast/taean-hero.jpg  ← 있는 파일
+    #
+    #   이제 자료에서만 읽습니다. 주소를 짐작하지 않습니다.
+    @property
+    def 사진들(self):
+        return self._사진자료.get('사진') or []
+
+    def 히어로(self, 권역):
+        """그 권역의 대표 사진. 없으면 None — **지어내지 않습니다.**"""
+        if self._히어로 is None:
+            self._히어로 = {}
+            for x in self.사진들:
+                if str(x.get('쓰임', '')).startswith('hero') and x.get('권역'):
+                    # 한 권역에 여럿이면 파일 이름 차례로 첫째를 씁니다
+                    앞것 = self._히어로.get(x['권역'])
+                    if 앞것 is None or x.get('파일', '') < 앞것.get('파일', ''):
+                        self._히어로[x['권역']] = x
+        return self._히어로.get(권역)
+
+    def 명소사진(self, 권역):
+        """그 권역의 명소 사진들. 차례를 못 박아 돌려줍니다."""
+        if self._명소사진 is None:
+            self._명소사진 = {}
+            for x in self.사진들:
+                if str(x.get('쓰임', '')).startswith('hero'):
+                    continue
+                if not x.get('권역'):
+                    continue
+                self._명소사진.setdefault(x['권역'], []).append(x)
+            for k in self._명소사진:
+                self._명소사진[k].sort(key=lambda v: v.get('파일', ''))
+        return self._명소사진.get(권역) or []
+
+    def 어종사진(self, 아이디):
+        """그 어종의 사진. 없으면 None — 지어내지 않습니다."""
+        for x in self.사진들:
+            if x.get('명소') == 아이디 and 'species' in str(x.get('파일', '')):
+                return x
+        return None
+
+    # ── 권역 ─────────────────────────────────────────────
+    @property
+    def 권역들(self):
+        return self.색인['권역']
+
+    def 권역(self, 아이디):
+        if self._권역 is None:
+            self._권역 = dict((x['id'], x) for x in self.권역들)
+        if 아이디 not in self._권역:
+            raise 자료오류('모르는 권역입니다: %s (index.json 에 없습니다)' % 아이디)
+        return self._권역[아이디]
+
+    # ── 포인트 ───────────────────────────────────────────
+    @property
+    def 포인트들(self):
+        """모든 포인트. 아이디 차례로 — 늘 같은 차례여야 합니다 (계약-07)"""
+        if self._포인트 is None:
+            나옴 = []
+            for p in sorted(glob.glob(os.path.join(DATA, 'raw', 'points', '*.json'))):
+                묶음 = os.path.splitext(os.path.basename(p))[0]
+                덧 = io.read_json(
+                    os.path.join(DATA, 'overrides', 'points', '%s.json' % 묶음),
+                    default={})
+                덧표 = dict((x['id'], x) for x in 덧.get('포인트', []))
+                for x in io.read_json(p, default={}).get('포인트', []):
+                    나옴.append(_합치기(x, 덧표.get(x['id'])))
+            나옴.sort(key=lambda x: x['id'])
+            self._포인트 = 나옴
+        return self._포인트
+
+    def 포인트(self, 권역, 갈래=None):
+        """한 권역의 포인트. 갈래를 주면 그것만"""
+        return [x for x in self.포인트들
+                if x['권역'] == 권역 and (갈래 is None or x['갈래'] == 갈래)]
+
+    # ── 셈 (계약-04·06) ──────────────────────────────────
+    def 셈(self, 권역=None, 갈래=None, 묶음=None):
+        """포인트 수. **쪽에 적힌 숫자는 전부 여기서 나옵니다.**"""
+        n = 0
+        묶음표 = None
+        if 묶음:
+            묶음표 = set(x['id'] for x in self.권역들 if x['묶음'] == 묶음)
+        for x in self.포인트들:
+            if 권역 and x['권역'] != 권역:
+                continue
+            if 갈래 and x['갈래'] != 갈래:
+                continue
+            if 묶음표 is not None and x['권역'] not in 묶음표:
+                continue
+            n += 1
+        return n
+
+    def 묶음별셈(self):
+        """묶음 → 포인트 수. 합이 전국 수와 같아야 합니다 (계약-05)"""
+        권역묶음 = dict((x['id'], x['묶음']) for x in self.권역들)
+        나옴 = collections.Counter()
+        for x in self.포인트들:
+            나옴[권역묶음.get(x['권역'], '?')] += 1
+        return dict(나옴)
+
+    # ── 여행 (명소·먹거리·축제·어종·코스·마을·통제) ─────
+    @property
+    def 여행들(self):
+        if getattr(self, '_여행', None) is None:
+            나옴 = {}
+            for p in sorted(glob.glob(os.path.join(DATA, 'raw', 'travel',
+                                                   '*.json'))):
+                묶음 = os.path.splitext(os.path.basename(p))[0]
+                덧 = io.read_json(
+                    os.path.join(DATA, 'overrides', 'travel', '%s.json' % 묶음),
+                    default={})
+                덧표 = dict((x['id'], x) for x in 덧.get('권역', []))
+                for x in io.read_json(p, default={}).get('권역', []):
+                    나옴[x['id']] = _합치기(x, 덧표.get(x['id']))
+            self._여행 = 나옴
+        return self._여행
+
+    def 여행(self, 권역):
+        """한 권역의 여행 자료. 없으면 빈 것을 돌려줍니다"""
+        빈것 = {'id': 권역, '명소': [], '먹거리': [], '축제': [], '어종': [],
+                '코스': [], '마을': [], '통제': [], '관광안내': None}
+        나온것 = self.여행들.get(권역)
+        if not 나온것:
+            return 빈것
+        빈것.update(나온것)
+        return 빈것
+
+    # ── 축제 ─────────────────────────────────────────────
+    @property
+    def 축제들(self):
+        """모든 축제. 아이디 차례로 (계약-07)"""
+        if self._축제 is None:
+            나옴 = []
+            for p in sorted(glob.glob(os.path.join(DATA, 'raw', 'festivals',
+                                                   '*.json'))):
+                묶음 = os.path.splitext(os.path.basename(p))[0]
+                덧 = io.read_json(
+                    os.path.join(DATA, 'overrides', 'festivals',
+                                 '%s.json' % 묶음), default={})
+                덧표 = dict((x['id'], x) for x in 덧.get('축제', []))
+                for x in io.read_json(p, default={}).get('축제', []):
+                    나옴.append(_합치기(x, 덧표.get(x['id'])))
+            나옴.sort(key=lambda x: x['id'])
+            self._축제 = 나옴
+        return self._축제
+
+    def 축제(self, 권역=None, 달=None):
+        """권역·달로 고릅니다"""
+        return [x for x in self.축제들
+                if (권역 is None or x['권역'] == 권역)
+                and (달 is None or x.get('달') == 달)]
+
+    # ── 어종 안내 (낚시 어종·해루질 대상) ───────────────
+    @property
+    def 안내들(self):
+        if self._안내 is None:
+            바탕 = _읽기('guide.json', default={}).get('어종', [])
+            self._안내 = sorted(바탕, key=lambda x: (x['갈래'], x['id']))
+        return self._안내
+
+    def 안내(self, 갈래=None):
+        return [x for x in self.안내들
+                if 갈래 is None or x['갈래'] == 갈래]
+
+    # ── 어종 ─────────────────────────────────────────────
+    def 어종이름(self, 아이디, 언어='ko'):
+        if not hasattr(self, '_어종표'):
+            self._어종표 = dict((x['id'], x) for x in self.어종['어종'])
+        x = self._어종표.get(아이디)
+        if x is None:
+            raise 자료오류('모르는 어종입니다: %s' % 아이디)
+        return (x['이름'].get(언어) or x['이름']['ko'])
+
+    # ── 바다 ─────────────────────────────────────────────
+    def 바다안내(self, 권역아이디, 언어='ko'):
+        """권역이 닿는 바다의 안내글. 어느 바다인지는 **자료가 정합니다**"""
+        바다 = self.권역(권역아이디).get('바다')
+        안내 = (self.사이트.get('바다안내') or {}).get(바다)
+        if not 안내:
+            raise 자료오류('바다 안내글이 없습니다: %s (권역 %s)' % (바다, 권역아이디))
+
+        def 글(칸):
+            v = 안내[칸]
+            return v.get(언어) or v['ko']
+        return {'제목': 글('제목'), '글': 글('글'), '조심': 글('조심')}

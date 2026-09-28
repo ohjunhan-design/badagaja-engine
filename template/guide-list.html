@@ -1,0 +1,33 @@
+{{#_head.html}}
+<body>
+{{#_header.html}}
+
+<!-- ★ 맨 위에 큰 그림을 깔지 않습니다 (2026-09-28 주인 지적)
+       「해루질대상도 상단에 이미지보다는 이게 더 좋고」
+
+     옛 짜임은 **작은 머리말 · 큰 제목 · 긴 설명 · 안내 띠** 입니다.
+     여기는 무엇을 잡을지 **고르러 오는 쪽**이라, 큰 그림이 먼저
+     오면 고를 것이 한 화면 아래로 밀립니다.
+     그림은 아래 카드마다 이미 있습니다. -->
+<section class="section hero hero--text section--soft"><div class="wrap">
+  <p class="kicker">{{한줄}}</p>
+  <h1 class="serif">{{큰제목}}</h1>
+  <p class="hero-lead">{{소개글}}</p>
+  {{{안내띠}}}
+</div></section>
+
+<section class="section section--white" id="bada"><div class="wrap">
+  <div class="section-head">
+    <p class="kicker">하나씩 보기</p>
+    <h2 class="serif">무엇을 잡으러 가시나요</h2>
+    <p class="lead">{{묶음안내}}</p>
+  </div>
+  <div class="grid">{{{묶음칸}}}</div>
+</div></section>
+
+<section class="section section--tail"><div class="wrap">
+  <p class="notice">{{기준일안내}}</p>
+</div></section>
+
+<button class="to-top" id="toTop" aria-label="맨 위로">↑</button>
+{{#_footer.html}}

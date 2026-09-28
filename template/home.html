@@ -1,0 +1,102 @@
+{{#_head.html}}
+<body>
+{{#_header.html}}
+
+<!-- ★ 옛 첫 화면 짜임 그대로입니다 (2026-09-27 주인 지시)
+       「기존 디자인이 더 좋아 · 기존 인덱스에 정말 많은 공이 들어가 있어」
+
+       겉(짜임·색·카드·차례)은 옛것 그대로,
+       속(숫자·물때·링크·기준일)은 새 엔진이 채웁니다.
+
+       옛 쪽은 축제·어종 수가 손으로 박혀 있어 지금 자료와 달랐습니다.
+       여기 숫자는 모두 자료에서 셉니다 (주인 규칙 29).
+       ★ 이 틀에는 숫자를 쓰지 않습니다 — 주석에도 (계약-04). -->
+
+<section class="g-hero" id="top">
+  <div class="g-hero-bg" aria-hidden="true">{{{히어로사진}}}</div>
+  <div class="g-hero-shade" aria-hidden="true"></div>
+  <div class="wrap g-hero-in">
+    <div class="g-hero-txt">
+      <span class="g-eyebrow">{{한줄}}</span>
+      <h1 class="serif">
+        <span class="l1">{{큰제목}}</span>
+        <span class="l2">{{큰제목앞}} <em>{{큰제목뒷줄}}</em></span>
+      </h1>
+      <p class="g-lede">{{소개글}}</p>
+      {{{찾기폼}}}
+      <p class="g-quick"><span>이렇게 찾아보세요</span>{{{빠른꼬리표}}}</p>
+    </div>
+  </div>
+  {{{히어로설명}}}
+</section>
+
+<div class="g-stats"><div class="wrap">{{{숫자칸}}}</div></div>
+
+<section class="stw" aria-label="바다가자닷컴 이용 순서"><div class="wrap">
+  <p class="stw-t">
+    <b>바다가자닷컴은 이렇게 안내합니다</b>
+    <span>여섯 걸음이면 오늘 갈 바다가 정해집니다</span>
+  </p>
+  <div class="st-row">{{{걸음칸}}}</div>
+</div></section>
+
+<div class="wrap g-main">
+
+  <section class="g-panel g-today" id="tide">
+    <div class="gp-head">
+      <h2>물때정보</h2>
+      <a class="gp-btn" href="{{물때쪽}}">전국 물때표 보기</a>
+    </div>
+    {{{물때사진}}}
+    <div class="gt-grid">
+      <div><span>오늘 물때</span><b id="tsMuldae">계산 중</b></div>
+      <div><span>물살</span><b id="tsMuldaeName">–</b></div>
+    </div>
+    <p class="gt-foot">물이 멈춰 있는 시간보다 <b>도는 시간</b>에
+      입질이 잦습니다.</p>
+    <p id="tideStatus" class="gt-more">{{물때안내}}</p>
+    <div id="tideStrip" class="gt-graph" data-days="7"></div>
+  </section>
+
+  <section class="g-panel g-book" id="book">
+    <div class="gp-head"><h2>초보자를 위한 바다생활 가이드</h2></div>
+    <div class="gb-list">{{{가이드칸}}}</div>
+  </section>
+
+  {{{동호회칸}}}
+
+</div>
+
+<div class="wrap g-ad">{{{광고칸}}}</div>
+
+<!-- ★ 옛 전국 바다지도 (2026-09-27 주인 지시)
+       「이건 예전 지도로 권역선택하게 하고」
+       바닷가는 자리가 곧 정보입니다. 지도가 글자보다 빠릅니다. -->
+<div class="wrap">
+  <section class="hm" id="bada" aria-labelledby="hmT">
+    <div class="hm-left">
+      <div class="hm-head">
+        <em>전국 바다지도</em>
+        <h2 id="hmT">어느 바다로 갈까요</h2>
+      </div>
+      <div class="hm-map">{{{바다지도}}}</div>
+    </div>
+    {{{지도차림표}}}
+  </section>
+</div>
+
+<section class="section section--white" id="bada-cards"><div class="wrap">
+  <div class="section-head">
+    <p class="kicker">묶음별로 보기</p>
+    <h2 class="serif">사진으로 고르기</h2>
+    <p class="lead">{{묶음안내}}</p>
+  </div>
+  <div class="groups">{{{묶음칸}}}</div>
+</div></section>
+
+<section class="section section--tail"><div class="wrap">
+  <p class="notice">{{기준일안내}}</p>
+</div></section>
+
+<button class="to-top" id="toTop" aria-label="맨 위로">↑</button>
+{{#_footer.html}}

@@ -1,0 +1,178 @@
+# 판정 — 깃허브 액션(클라우드)에서 돌립니다   (2026-09-27 주인 승인)
+#
+# ★ 왜 클라우드인가
+#
+#   내 컴퓨터는 메모리 31.8GB 중 커널이 28GB 를 쥐고 있어
+#   쓸 수 있는 것이 3.4GB 뿐입니다. 주인이 컴퓨터를 만질 수 없는
+#   자리에 계셔 재시동도 못 합니다.
+#
+#   그 형편에서 판정을 돌렸더니 MemoryError 로 검사기 다섯이
+#   넘어져, **멀쩡한 쪽이 FAIL 로 찍혔습니다.**
+#
+#   바깥 검수(GPT 5차)가 이렇게 지적했습니다.
+#       「검수 시스템이 환경에 따라 다른 결과를 내놓을 수 있다.
+#         그러면 판정이 무슨 뜻입니까?」
+#
+#   러너는 매번 **같은 이미지에서 새로** 뜹니다. 내 찌꺼기도,
+#   주인 크롬도, 메모리를 쥔 커널도 없습니다.
+#   「같은 판 = 같은 결과」가 저절로 지켜집니다.
+#
+# ★ 한꺼번에 돌리지 않고 **하나씩(--serial)** 돌립니다
+#   바깥 검수 지시 — 「병렬화하지 말고 먼저 깨끗한 환경에서
+#   기준 결과를 확보하십시오」. 병렬은 결정성이 증명된 다음입니다.
+name: 배포 판정
+
+on:
+  workflow_dispatch:          # 손으로 돌립니다
+    inputs:
+      mode:
+        description: '하나씩(serial) 또는 한꺼번에(parallel)'
+        required: false
+        default: serial
+        type: choice
+        options: [serial, parallel]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+# ★ 이름·아이디는 **영어여야 합니다** (2026-09-28)
+#
+#   처음 세 판이 통째로 안 떴습니다. 까닭은 이것이었습니다.
+#
+#       Invalid workflow file: .github/workflows/gate.yml#L1
+#       Unexpected symbol: '크롬'
+#           steps.크롬.outputs.chrome-path
+#
+#   깃허브 액션의 식(expression)은 **한글 이름을 못 씁니다.**
+#   `id: 크롬` 을 `steps.크롬` 으로 부르니 파일이 아예 안 읽혔습니다.
+#   `inputs.모드` 도 같습니다.
+#
+#   환경변수 이름 때와 같은 이야기입니다 — 리눅스 셸도, 깃허브
+#   액션 식도 한글을 못 씁니다. **`name:` 과 주석은 한글로 두되,
+#   `id:`·`inputs:` 의 열쇠는 영어로** 적습니다.
+#
+#   ★ 그런데 바로 이 글 아래에서 **같은 잘못을 또 했습니다.**
+#     (2026-09-28 — 여섯 번을 돌려 여섯 번 다 실패했습니다)
+#
+#       jobs:
+#         판정:          ← 일 이름도 식별자입니다
+#
+#     깃허브는 파일을 아예 안 읽고 이렇게만 말합니다.
+#
+#       The identifier '판정' is invalid.
+#
+#     **판정이 돈 적이 없는데 저는 「돌고 있다」고 여겼습니다.**
+#     실패 여섯 줄이 목록에 있었으나, 실패 이유가 판정 결과인 줄
+#     알았습니다. 파일이 안 읽히면 판정은 시작조차 안 합니다.
+#     → engine/check_architecture.py 가 이제 한글 식별자를 잡습니다.
+
+jobs:
+  gate:
+    name: 판정
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    # ★ 환경을 못 박습니다 (2026-09-28 바깥 검수 6차 지시)
+    #
+    #   「OS · 브라우저 · 판 · 뷰포트 · DPR · 글꼴 · 로케일 · 시간대를
+    #     CI 에서 고정하십시오. Golden 은 그 환경에서만 만듭니다」
+    #
+    #   물때는 시간대에 따라 답이 달라집니다. 러너 기본은 UTC 라
+    #   한국 시각으로 재지 않으면 **하루가 밀립니다.**
+    env:
+      TZ: Asia/Seoul
+      LANG: ko_KR.UTF-8
+      LC_ALL: ko_KR.UTF-8
+      PYTHONIOENCODING: utf-8
+      PYTHONUNBUFFERED: '1'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # 크롬 — 러너에 미리 깔려 있지만 자리를 못 박습니다.
+      # 엣지는 쓰지 않습니다 (주인 규칙 25)
+      - name: 크롬 깔기
+        uses: browser-actions/setup-chrome@v1
+        id: chrome
+        with:
+          chrome-version: stable
+
+      # ★ 크롬이 **정말 도는지 먼저 봅니다** (2026-09-28)
+      #
+      #   클라우드 판정이 처음 돌았을 때 5·9·10번이 모두
+      #   「못 쟀습니다」로 FAIL 이었습니다. 크롬을 깔았다고
+      #   나오는데 검사기는 못 쓰고 있었습니다.
+      #
+      #   깔렸다는 말과 돌아간다는 말은 다릅니다.
+      #   **여기서 한 번 돌려 보고, 안 되면 거기서 멈춥니다.**
+      #   못 쓰는 크롬으로 20분 돌린 뒤 「못 쟀습니다」를 받는 것은
+      #   시간도 잃고 무엇이 틀렸는지도 안 알려 줍니다.
+      - name: 크롬이 정말 도는가
+        env:
+          BADAGAJA_CHROME: ${{ steps.chrome.outputs.chrome-path }}
+        run: |
+          echo "setup-chrome 이 알려 준 자리: [$BADAGAJA_CHROME]"
+          if [ -z "$BADAGAJA_CHROME" ]; then
+            echo "::error::크롬 자리가 비었습니다 — outputs.chrome-path 가 없습니다"
+            exit 1
+          fi
+          "$BADAGAJA_CHROME" --version || {
+            echo "::error::크롬이 실행되지 않습니다"; exit 1; }
+          echo '<!doctype html><title>t</title><p>바다</p>' > /tmp/t.html
+          "$BADAGAJA_CHROME" --headless=new --disable-gpu --no-sandbox \
+            --virtual-time-budget=4000 --dump-dom file:///tmp/t.html \
+            > /tmp/t.out 2>/tmp/t.err || true
+          if grep -q '바다' /tmp/t.out; then
+            echo "· 크롬이 쪽을 그려 냅니다"
+          else
+            echo "::error::크롬이 쪽을 못 그립니다"
+            head -20 /tmp/t.err
+            exit 1
+          fi
+          python engine/machine.py
+
+      - name: 어떤 컴퓨터에서 재는지 남기기
+        run: python engine/machine.py
+        env:
+          BADAGAJA_CHROME: ${{ steps.chrome.outputs.chrome-path }}
+
+      - name: 쪽 만들기
+        run: python engine/build.py
+        env:
+          BADAGAJA_CHROME: ${{ steps.chrome.outputs.chrome-path }}
+
+      # ★ 멱등성(두 번 만들어 같은가)은 계약-07 이 판정 안에서
+      #   봅니다 — 딴 자리에 새로 만들어 바이트까지 견줍니다.
+      #   여기서 또 돌리지 않습니다.
+      - name: 배포판 지문 만들기
+        run: python engine/build_id.py
+
+      - name: 판정
+        run: |
+          MODE="--serial"
+          if [ "${{ github.event.inputs.mode }}" = "parallel" ]; then
+            MODE=""
+          fi
+          python engine/gate.py --full $MODE --json
+        env:
+          PYTHONIOENCODING: utf-8
+          PYTHONUNBUFFERED: '1'      # 진행이 실시간으로 보이게
+          BADAGAJA_CHROME: ${{ steps.chrome.outputs.chrome-path }}
+          BADAGAJA_CHROMES: '3'
+          BADAGAJA_JOBS: '1,3'
+
+      - name: 판정 결과 남기기
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: 판정결과
+          path: |
+            tests/out/gate.json
+            tests/out/*.txt
+          retention-days: 30

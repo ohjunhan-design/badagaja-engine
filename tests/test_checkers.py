@@ -1,0 +1,1242 @@
+# -*- coding: utf-8 -*-
+"""검사기가 **잘못을 잡을 줄 아는지** 봅니다.
+
+★ 왜 이 시험이 필요한가 (2026-09-26 바깥 검수 요구)
+
+    「검사기가 항상 통과를 내도록 망가져 있어도 모르면 아무 의미가
+      없습니다. 일부러 오류가 있는 것을 넣어 검사기가 실패를 내는지
+      확인해야 합니다」
+
+    맞는 말입니다. 오늘 검사기가 네 번 틀렸습니다.
+      · 전남 어종을 16개 중 2개만 캤는데 통과시킴
+      · 채움 비율이 100% 로 나오는데 빈 칸이 7개
+      · 멀쩡한 site.css 를 「없다」고 함
+      · 'catch/' 를 「없는 쪽」이라 함
+
+    모두 **조용히 통과시키거나 헛것을 낸 것**입니다.
+    검사가 잘못을 못 잡으면, 검사가 없는 것보다 나쁩니다.
+    없으면 조심이라도 하는데, 있으면 믿어 버리기 때문입니다.
+
+어떻게 보나
+    일부러 망가뜨린 것을 만들어 넣고, 검사기가 **반드시 잡는지** 봅니다.
+    잡으면 통과, 못 잡으면 그 검사기는 믿을 수 없는 것입니다.
+
+쓰는 법
+    python tests/test_checkers.py
+"""
+import os
+import re
+import sys
+import json
+import shutil
+import tempfile
+import subprocess
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(HERE)
+sys.path.insert(0, ROOT)
+from engine import io
+from engine import isolate   # noqa: E402
+
+통과, 실패 = 0, []
+
+# 시험을 시작할 때 본 작업 트리가 어떤 상태였는지 — 끝에 견줍니다.
+# 여기 없던 변화가 생겼다면 **시험이 본 트리를 건드린 것**입니다.
+처음알았나, 처음본트리 = isolate.본트리가깨끗한가()
+
+
+def 봄(이름, 참인가, 덧=''):
+    global 통과
+    if 참인가:
+        통과 += 1
+        print('  · %s' % 이름)
+    else:
+        실패.append(이름)
+        print('  ✗ %s %s' % (이름, 덧))
+
+
+def 돌리기(도구, 사이트=None, 자료=None, 인자=(), 뿌리=None):
+    """검사기를 딴 자리에 대고 돌립니다. 진짜 site/ 는 안 건드립니다
+
+    뿌리 를 주면 **그 사본의 검사기**를 돌립니다. 검사기는 제 위치에서
+    뿌리를 셈하므로, 사본의 engine/ 을 부르면 사본만 봅니다.
+    (2026-09-27 바깥 검수 — 본 작업 트리를 건드리지 않게)
+    """
+    환경 = dict(os.environ)
+    환경['PYTHONIOENCODING'] = 'utf-8'
+    if 사이트:
+        환경['BADAGAJA_SITE'] = 사이트
+    if 자료:
+        환경['BADAGAJA_DATA'] = 자료
+    r = subprocess.run(
+        [sys.executable, os.path.join(뿌리 or ROOT, 'engine', 도구)]
+        + list(인자),
+        capture_output=True, text=True, encoding='utf-8',
+        env=환경, timeout=1200)
+    return (r.stdout or '') + (r.stderr or '')
+
+
+def 사이트사본(고치기=None):
+    """site/ 를 임시로 베껴, 고치기 함수로 망가뜨립니다"""
+    t = tempfile.mkdtemp(prefix='checker-test-')
+    사본 = os.path.join(t, 'site')
+    shutil.copytree(os.path.join(ROOT, 'site'), 사본)
+    if 고치기:
+        고치기(사본)
+    return t, 사본
+
+
+# ── check_render — 가로 넘침을 잡는가 ──────────────────────
+def 시험_렌더():
+    print('[1] check_render — 화면 넘침을 잡는가')
+
+    # (가) 멀쩡한 쪽은 통과해야 합니다
+    글 = 돌리기('check_render.py',
+                인자=[os.path.join(ROOT, 'site', 'index.html')])
+    봄('멀쩡한 쪽은 넘침 0', '넘침 0' in 글, 글[-200:])
+
+    # (나) 일부러 넓은 것을 넣으면 반드시 잡아야 합니다
+    def 망가뜨리기(사본):
+        p = os.path.join(사본, 'index.html')
+        s = io.read(p)
+        s = s.replace('</body>',
+                      '<div style="width:1400px;height:20px">넘침</div>'
+                      '</body>')
+        io.write(p, s)
+
+    t, 사본 = 사이트사본(망가뜨리기)
+    try:
+        글 = 돌리기('check_render.py', 사이트=사본,
+                    인자=[os.path.join(사본, 'index.html')])
+        잡았나 = ('넘침 0' not in 글.split('1280px')[0]
+                  or '가로 넘침' in 글 or '넘칩니다' in 글)
+        봄('1400px 짜리를 넣으면 잡는다', 잡았나, 글[-300:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
+# ── check_links — 끊긴 링크·자기참조를 잡는가 ──────────────
+def 시험_링크():
+    print('[2] check_links — 끊긴 링크와 자기참조를 잡는가')
+
+    글 = 돌리기('check_links.py')
+    봄('멀쩡한 사이트는 통과', '자기 자신을 가리키는 링크' in 글
+       and '이상 없음' in 글.split('자기 자신을 가리키는 링크')[1][:40], 글[-200:])
+
+    # (가) 없는 쪽으로 가는 링크를 넣습니다
+    def 끊기(사본):
+        p = os.path.join(사본, 'index.html')
+        s = io.read(p)
+        io.write(p, s.replace('</body>',
+                              '<a href="없는쪽.html">없는 곳</a></body>'))
+
+    t, 사본 = 사이트사본(끊기)
+    try:
+        글 = 돌리기('check_links.py', 사이트=사본)
+        봄('없는 쪽으로 가는 링크를 잡는다', '없는쪽.html' in 글, 글[-300:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # (나) 자기 자신을 가리키는 링크를 넣습니다
+    def 자기참조(사본):
+        p = os.path.join(사본, 'index.html')
+        s = io.read(p)
+        io.write(p, s.replace('</body>',
+                              '<a href="index.html">자기 자신</a></body>'))
+
+    t, 사본 = 사이트사본(자기참조)
+    try:
+        글 = 돌리기('check_links.py', 사이트=사본)
+        봄('자기 자신을 가리키는 링크를 잡는다',
+           '자기 자신을 가리키는 링크' in 글
+           and '이상 없음' not in 글.split('자기 자신을 가리키는 링크')[1][:40],
+           글[-300:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
+# ── check_urls — 사라진 옛 주소를 잡는가 ───────────────────
+def 시험_주소():
+    print('[3] check_urls — 사라진 옛 주소를 잡는가')
+
+    글 = 돌리기('check_urls.py')
+    봄('지금은 갈 곳 없는 주소가 없다', '갈 곳 없는 옛 주소가 없습니다' in 글,
+       글[-200:])
+
+    # 포인트 쪽 하나를 지우면 반드시 잡아야 합니다
+    def 지우기(사본):
+        for r, _, fs in os.walk(os.path.join(사본, 'point')):
+            for f in fs:
+                if f.endswith('_fishing.html'):
+                    os.remove(os.path.join(r, f))
+                    return
+
+    t, 사본 = 사이트사본(지우기)
+    try:
+        글 = 돌리기('check_urls.py', 사이트=사본)
+        봄('쪽 하나를 지우면 「갈 곳 없음」으로 잡는다',
+           '갈 곳이 없음' in 글 and '404 가 됩니다' in 글, 글[-400:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
+# ── check_contracts — 합계가 안 맞으면 잡는가 ──────────────
+def 시험_계약():
+    print('[4] check_contracts — 계약 합계가 안 맞으면 잡는가')
+
+    글 = 돌리기('check_contracts.py', 인자=['--fast'])
+    # 검수표 **안**만 봅니다. 밖에도 같은 말이 나와 두 번 세어졌습니다
+    표 = 글.split('검수 결과')[-1].split('배포 가능 여부')[0]
+    총 = re.search(r'총 계약\s+(\d+)', 표)
+    칸 = dict((k, int(v)) for k, v in
+              re.findall(r'^\s+(지킴|어김|안 잰 것|해당없음)\s+(\d+)\s*$',
+                         표, re.M))
+    합 = sum(칸.values())
+    봄('칸별 합계가 총 계약 수와 같다',
+       bool(총) and 합 == int(총.group(1)),
+       '총 %s · 합 %d %s' % (총.group(1) if 총 else '?', 합, 칸))
+    # ★ 계약 검사기는 **배포를 말하면 안 됩니다** (2026-09-28 바깥 검수 6차)
+    #
+    #   전에는 여기서 「배포 가능 여부: 예」를 냈습니다. 그 말을
+    #   검수 요청서에 그대로 옮겼더니 같은 문서 안에
+    #
+    #       「배포 가능 여부: 예」
+    #       「--full 을 아직 한 번도 성공 못 했습니다」
+    #
+    #   가 나란히 있게 됐습니다. 바깥 검수가 바로 잡아냈습니다 —
+    #   「검수 시스템이 건전해졌다」와 「사이트가 배포 준비를 끝냈다」는
+    #   서로 다른 문제인데 둘이 섞여 있다고.
+    #
+    #   그래서 **되돌아가지 못하게 시험으로 굳힙니다.**
+    봄('계약 상태를 따로 낸다',
+       '계약 상태:' in 글, 글[-300:])
+    봄('★ 계약 검사기가 배포를 말하지 않는다',
+       '배포 판정이 아닙니다' in 글 and '배포 가능 여부' not in 글,
+       글[-300:])
+    봄('「안 잰 것」을 「지킴」으로 안 센다',
+       '안 잰 것' in 글 and ('지킨다고 말할 수 없습니다' in 글
+                             or '재 보지 않은 것은 지킨 것이 아닙니다' in 글),
+       글[-300:])
+
+    # 계약 문서에 한 줄 더하면 합계가 안 맞아 잡아야 합니다
+    t = tempfile.mkdtemp(prefix='checker-test-')
+    try:
+        사본자료 = os.path.join(t, 'data')
+        shutil.copytree(os.path.join(ROOT, 'data'), 사본자료)
+        # ★ 본 트리가 아니라 **사본**에서 고칩니다 (2026-09-27 바깥 검수)
+        with isolate.일터() as 뿌리:
+            문서 = os.path.join(뿌리, 'docs', 'CONTRACTS.md')
+            덧 = ['', '', '### 계약-99 · 시험용 가짜 계약', '',
+                 '시험입니다.', '']
+            io.write(문서, io.read(문서) + chr(10).join(덧))
+            글 = 돌리기('check_contracts.py', 인자=['--fast'], 뿌리=뿌리)
+            봄('계약을 하나 더하면 합계가 안 맞는다고 잡는다',
+               '합계가 계약 수와 다릅니다' in 글, 글[-400:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
+# ── check_stale — 어중간한 자료를 잡는가 ───────────────────
+def 시험_어중간():
+    print('[5] check_stale — 어중간한 자료를 잡는가')
+
+    글 = 돌리기('check_stale.py')
+    봄('지금 자료는 끝까지 다듬어져 있다',
+       '자료가 끝까지 다듬어져 있습니다' in 글, 글[-300:])
+
+    # (가) 대상을 한글 이름으로 되돌려 놓으면 잡아야 합니다
+    t = tempfile.mkdtemp(prefix='checker-test-')
+    try:
+        사본 = os.path.join(t, 'data')
+        shutil.copytree(os.path.join(ROOT, 'data'), 사본)
+        p = os.path.join(사본, 'raw', 'points', 'chungnam.json')
+        d = io.read_json(p)
+        for x in d.get('포인트', [])[:5]:
+            if x.get('대상'):
+                x['대상'] = ['감성돔', '농어']
+        io.write_json(p, d)
+        글 = 돌리기('check_stale.py', 자료=사본, 인자=['--strict'])
+        봄('대상이 한글 이름이면 잡는다',
+           '대상이 아이디가 아닌 것' in 글, 글[-400:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # (나) 앞 도구만 돌린 흔적(species-map.json)이 있으면 잡아야 합니다
+    t = tempfile.mkdtemp(prefix='checker-test-')
+    try:
+        사본 = os.path.join(t, 'data')
+        shutil.copytree(os.path.join(ROOT, 'data'), 사본)
+        io.write_json(os.path.join(사본, 'raw', 'species-map.json'),
+                      {'_설명': '시험용'})
+        글 = 돌리기('check_stale.py', 자료=사본, 인자=['--strict'])
+        봄('앞 도구만 돌린 흔적을 잡는다',
+           'species-map.json 가 남아 있습니다' in 글, 글[-400:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
+# ── check_ads — 광고 탈을 잡는가 ───────────────────────────
+def 시험_광고():
+    print('[6] check_ads — 광고 탈을 잡는가')
+
+    글 = 돌리기('check_ads.py')
+    봄('지금 광고는 뜰 때도 안 뜰 때도 멀쩡하다',
+       '광고가 뜰 때도 안 뜰 때도 쪽이 멀쩡합니다' in 글, 글[-400:])
+
+    # (가) 자료에 켰는데 쪽에 없는 자리를 만들면 잡아야 합니다
+    t = tempfile.mkdtemp(prefix='checker-test-')
+    try:
+        사본 = os.path.join(t, 'data')
+        shutil.copytree(os.path.join(ROOT, 'data'), 사본)
+        p = os.path.join(사본, 'raw', 'ads.json')
+        d = io.read_json(p)
+        d['자리']['없는자리-pc'] = {
+            '켬': True, '기기': 'pc',
+            '배너': 'coupang-carousel-760x140-index', '쪽갈래': '첫화면'}
+        io.write_json(p, d)
+        글 = 돌리기('check_ads.py', 자료=사본, 인자=['--strict'])
+        봄('자료에 켰는데 쪽에 없는 자리를 잡는다',
+           '쪽에 없습니다' in 글 and '없는자리-pc' in 글, 글[-400:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # (나) 휴대폰 자리에 PC 배너를 물려도 가로로 안 넘쳐야 합니다
+    #     (ads.js 가 칸보다 넓은 배너를 줄여 넣습니다)
+    t = tempfile.mkdtemp(prefix='checker-test-')
+    try:
+        사본 = os.path.join(t, 'data')
+        shutil.copytree(os.path.join(ROOT, 'data'), 사본)
+        p = os.path.join(사본, 'raw', 'ads.json')
+        d = io.read_json(p)
+        d['자리']['index-mid-mobile']['배너'] = 'coupang-carousel-760x140-index'
+        io.write_json(p, d)
+        글 = 돌리기('check_ads.py', 자료=사본, 인자=['--strict'])
+        봄('휴대폰에 큰 배너를 물려도 가로로 안 넘친다',
+           '화면 밖으로' not in 글 and '가로로 넘칩니다' not in 글, 글[-400:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
+# ── check_i18n — 다른 언어 쪽 탈을 잡는가 ──────────────────
+def 시험_다른언어():
+    print('[7] check_i18n — 다른 언어 쪽 탈을 잡는가')
+
+    글 = 돌리기('check_i18n.py')
+    봄('다른 언어 쪽이 없으면 「해당 없음」이라 말한다',
+       '잴 것이 없습니다' in 글 and '해당 없음' in 글, 글[-300:])
+
+    # (가) 한국어뿐인 쪽을 중국어 자리에 두면 잡아야 합니다
+    def 가짜중국어쪽(사본):
+        자리 = os.path.join(사본, 'zh-cn')
+        os.makedirs(자리, exist_ok=True)
+        s = io.read(os.path.join(사본, 'index.html'))
+        s = s.replace('<html lang="ko"', '<html lang="zh-Hans"', 1)
+        io.write(os.path.join(자리, 'index.html'), s)
+
+    t, 사본 = 사이트사본(가짜중국어쪽)
+    try:
+        글 = 돌리기('check_i18n.py', 사이트=사본, 인자=['--strict'])
+        봄('중국어 쪽인데 한국어면 잡는다',
+           '80% 에 못 미치는' in 글 or '그 언어가 아닙니다' in 글, 글[-400:])
+        봄('한국어를 안 밝힌 것도 잡는다',
+           'lang="ko" 로 안 밝힌' in 글, 글[-400:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # (나) 만들기로 해 놓고 안 만들면 잡아야 합니다
+    t = tempfile.mkdtemp(prefix='checker-test-')
+    try:
+        사본 = os.path.join(t, 'data')
+        shutil.copytree(os.path.join(ROOT, 'data'), 사본)
+        p = os.path.join(사본, 'raw', 'site.json')
+        d = io.read_json(p)
+        d['만들언어']['쪽'] = ['ko', 'zh']
+        io.write_json(p, d)
+        글 = 돌리기('check_i18n.py', 자료=사본, 인자=['--strict'])
+        봄('만들기로 해 놓고 안 만들면 잡는다',
+           '만들기로 했는데 쪽이 없습니다' in 글
+           or '「만들언어」에는 들어 있습니다' in 글, 글[-400:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
+# ── check_keep — 지우면 안 되는 것을 지키는가 ──────────────
+def 시험_남길것():
+    print('[8] check_keep — 지우면 안 되는 것을 지키는가')
+
+    글 = 돌리기('check_keep.py')
+    봄('지금은 중국어판이 멀쩡하다',
+       '중국어판이 멀쩡합니다' in 글, 글[-300:])
+
+    # (가) 남길 것 목록에서 css/style.css 를 빼면 잡아야 합니다
+    #     — 중국어 쪽 182곳이 쓰는 파일입니다
+    t = tempfile.mkdtemp(prefix='checker-test-')
+    try:
+        사본 = os.path.join(t, 'data')
+        shutil.copytree(os.path.join(ROOT, 'data'), 사본)
+        p = os.path.join(사본, 'raw', 'keep.json')
+        d = io.read_json(p)
+        d['남길것'].pop('css/style.css', None)
+        io.write_json(p, d)
+        글 = 돌리기('check_keep.py', 자료=사본, 인자=['--strict'])
+        봄('중국어판이 쓰는 css 를 목록에서 빼면 잡는다',
+           'css/style.css' in 글 and '사라질 것' in 글, 글[-400:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # (나) 자료가 낡으면 알려야 합니다 (막지는 않습니다)
+    t = tempfile.mkdtemp(prefix='checker-test-')
+    try:
+        사본 = os.path.join(t, 'data')
+        shutil.copytree(os.path.join(ROOT, 'data'), 사본)
+        p = os.path.join(사본, 'raw', 'keep.json')
+        d = io.read_json(p)
+        d['중국어가쓰는것']['css/style.css'] = 9999
+        io.write_json(p, d)
+        글 = 돌리기('check_keep.py', 자료=사본)
+        봄('자료에 적은 값이 낡으면 알려 준다',
+           '자료가 낡았습니다' in 글, 글[-400:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
+# ── check_seo — 검색 기준 탈을 잡는가 ──────────────────────
+def 시험_검색():
+    print('[9] check_seo — 검색 기준 탈을 잡는가')
+
+    글 = 돌리기('check_seo.py')
+    봄('지금 쪽은 검색 기준을 지킨다',
+       '검색 기준을 모두 지킵니다' in 글, 글[-500:])
+
+    # (가) 제목을 두 쪽에 같게 만들면 잡아야 합니다
+    def 제목겹치게(사본):
+        a = os.path.join(사본, 'index.html')
+        b = os.path.join(사본, 'taean.html')
+        if not os.path.exists(b):
+            return
+        s2 = io.read(b)
+        원래 = io.read(a)
+        m = re.search(r'<title>(.*?)</title>', 원래, re.S)
+        if m:
+            s2 = re.sub(r'<title>.*?</title>',
+                        '<title>%s</title>' % m.group(1), s2, count=1,
+                        flags=re.S)
+            io.write(b, s2)
+
+    t, 사본 = 사이트사본(제목겹치게)
+    try:
+        글 = 돌리기('check_seo.py', 사이트=사본, 인자=['--strict'])
+        봄('제목이 겹치면 잡는다', '제목이 겹침' in 글, 글[-400:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # (나) 제목에 같은 말을 세 번 넣으면 잡아야 합니다
+    def 되풀이넣기(사본):
+        a = os.path.join(사본, 'index.html')
+        s2 = io.read(a)
+        s2 = re.sub(r'<title>.*?</title>',
+                    '<title>갯벌 갯벌 갯벌 안내</title>', s2, count=1,
+                    flags=re.S)
+        io.write(a, s2)
+
+    t, 사본 = 사이트사본(되풀이넣기)
+    try:
+        글 = 돌리기('check_seo.py', 사이트=사본, 인자=['--strict'])
+        봄('제목에 같은 말 3번이면 잡는다',
+           '제목에 같은 말 3번 이상' in 글, 글[-400:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # (다) 설명을 지우면 잡아야 합니다
+    def 설명지우기(사본):
+        a = os.path.join(사본, 'index.html')
+        s2 = io.read(a)
+        s2 = re.sub(r'<meta name="description"[^>]*>', '', s2, count=1)
+        io.write(a, s2)
+
+    t, 사본 = 사이트사본(설명지우기)
+    try:
+        글 = 돌리기('check_seo.py', 사이트=사본, 인자=['--strict'])
+        봄('설명이 없으면 잡는다', '설명이 없음' in 글, 글[-400:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
+# ── check_refresh — 갱신 대장 탈을 잡는가 ──────────────────
+def 시험_갱신():
+    print('[10] check_refresh — 갱신 대장 탈을 잡는가')
+
+    글 = 돌리기('check_refresh.py')
+    봄('지금 자료는 모두 대장에 있다',
+       '자료가 모두 대장에 있습니다' in 글, 글[-400:])
+
+    # (가) 대장에서 한 줄 빼면 잡아야 합니다
+    t = tempfile.mkdtemp(prefix='checker-test-')
+    try:
+        사본 = os.path.join(t, 'data')
+        shutil.copytree(os.path.join(ROOT, 'data'), 사본)
+        p2 = os.path.join(사본, 'raw', 'refresh-plan.json')
+        d = io.read_json(p2)
+        d['자료'] = [x for x in d['자료'] if x.get('key') != 'ads']
+        io.write_json(p2, d)
+        글 = 돌리기('check_refresh.py', 자료=사본)
+        봄('대장에서 자료를 빼면 잡는다',
+           '대장에 안 적힌 자료' in 글 and 'ads.json' in 글, 글[-400:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # (나) 기한을 0 으로 하면 「지났다」고 해야 합니다
+    t = tempfile.mkdtemp(prefix='checker-test-')
+    try:
+        사본 = os.path.join(t, 'data')
+        shutil.copytree(os.path.join(ROOT, 'data'), 사본)
+        p2 = os.path.join(사본, 'raw', 'refresh-plan.json')
+        d = io.read_json(p2)
+        for x in d['자료']:
+            if x.get('key') == 'points':
+                x['유효기간일'] = 0
+        io.write_json(p2, d)
+        글 = 돌리기('check_refresh.py', 자료=사본)
+        봄('기한이 지나면 알려 준다',
+           '일 지남 (기한' in 글 and '기한을 넘긴 자료가 없습니다' not in 글,
+           글[-500:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
+# ── check_calendar — 달이 바뀌면 틀어질 것을 잡는가 ────────
+def 시험_달력():
+    print('[11] check_calendar — 달이 바뀌면 틀어질 것을 잡는가')
+
+    글 = 돌리기('check_calendar.py')
+    봄('지금은 달이 바뀌어도 탈이 없다',
+       '달이 바뀌어도 탈이 없습니다' in 글, 글[-400:])
+
+    글 = 돌리기('check_calendar.py', 인자=['--next'])
+    봄('다음 달로 넘어간 척해도 탈이 없다',
+       '달이 바뀌어도 탈이 없습니다' in 글, 글[-400:])
+
+    # (가) 쪽에 「이달의 축제」를 박아 두면 잡아야 합니다
+    def 이달박기(사본):
+        p = os.path.join(사본, 'index.html')
+        s = io.read(p)
+        io.write(p, s.replace('</body>',
+                              '<h2>이달의 축제</h2></body>'))
+
+    t, 사본 = 사이트사본(이달박기)
+    try:
+        글 = 돌리기('check_calendar.py', 사이트=사본, 인자=['--strict'])
+        봄('「이달의 축제」를 박아 두면 잡는다',
+           '「이달」이 쪽에 박힌 곳' in 글, 글[-400:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # (나) 기준일을 딴 달로 바꾸면 잡아야 합니다
+    def 기준일틀리기(사본):
+        p = os.path.join(사본, 'index.html')
+        s = io.read(p)
+        io.write(p, re.sub(r'이 자료는 \d{4}년 \d{1,2}월 기준입니다',
+                           '이 자료는 1999년 1월 기준입니다', s))
+
+    t, 사본 = 사이트사본(기준일틀리기)
+    try:
+        글 = 돌리기('check_calendar.py', 사이트=사본, 인자=['--strict'])
+        봄('기준일이 자료와 다르면 잡는다',
+           '기준일이 자료와 다릅니다' in 글, 글[-400:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
+# ── check_assets — 자산·아이콘·고아 링크를 잡는가 ──────────
+def 시험_자산():
+    print('[12] check_assets — 자산·아이콘·고아 링크를 잡는가')
+
+    글 = 돌리기('check_assets.py')
+    봄('지금은 요구하는 것이 모두 있다',
+       '쪽이 요구하는 것이 모두 있습니다' in 글, 글[-400:])
+
+    # (가) 아이콘 파일을 지우면 잡아야 합니다
+    def 아이콘지우기(사본):
+        p2 = os.path.join(사본, 'favicon.svg')
+        if os.path.exists(p2):
+            os.remove(p2)
+
+    t, 사본 = 사이트사본(아이콘지우기)
+    try:
+        글 = 돌리기('check_assets.py', 사이트=사본, 인자=['--strict'])
+        봄('아이콘 파일을 지우면 잡는다',
+           'favicon.svg' in 글, 글[-400:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # (나) 없는 사진을 쓰면 잡아야 합니다
+    def 없는사진(사본):
+        p2 = os.path.join(사본, 'index.html')
+        s = io.read(p2)
+        io.write(p2, s.replace('</body>',
+                               '<img src="없는사진.jpg" alt="시험"></body>'))
+
+    t, 사본 = 사이트사본(없는사진)
+    try:
+        글 = 돌리기('check_assets.py', 사이트=사본, 인자=['--strict'])
+        봄('없는 사진을 쓰면 잡는다', '없는사진.jpg' in 글, 글[-400:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # (다) 남길 것 목록에 없는 쪽을 가리키면 잡아야 합니다
+    def 없는쪽가리키기(사본):
+        p2 = os.path.join(사본, 'index.html')
+        s = io.read(p2)
+        io.write(p2, s.replace('</body>',
+                               '<a href="아무데도없음.html">시험</a></body>'))
+
+    t, 사본 = 사이트사본(없는쪽가리키기)
+    try:
+        글 = 돌리기('check_assets.py', 사이트=사본, 인자=['--strict'])
+        봄('남기기로 안 적은 없는 쪽을 가리키면 잡는다',
+           '아무데도없음.html' in 글, 글[-400:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
+# ── check_canonical — 대표 주소 탈을 잡는가 ────────────────
+def 시험_대표주소():
+    print('[13] check_canonical — 대표 주소 탈을 잡는가')
+
+    글 = 돌리기('check_canonical.py')
+    봄('지금 쪽 안의 대표 주소는 맞다',
+       '모든 쪽이 제 주소를 가리킵니다' in 글, 글[-400:])
+    봄('실제 서버를 안 물어봤으면 그렇다고 말한다',
+       '실제 서버 응답은 안 쟀습니다' in 글, 글[-300:])
+
+    # (가) 첫 화면 canonical 을 /index.html 로 바꾸면 잡아야 합니다
+    def 캐논틀리기(사본):
+        p2 = os.path.join(사본, 'index.html')
+        s = io.read(p2)
+        io.write(p2, s.replace('href="https://badagaja.com/"',
+                               'href="https://badagaja.com/index.html"'))
+
+    t, 사본 = 사이트사본(캐논틀리기)
+    try:
+        글 = 돌리기('check_canonical.py', 사이트=사본, 인자=['--strict'])
+        봄('첫 화면 대표 주소가 /index.html 이면 잡는다',
+           'index.html' in 글 and '아닙니다' in 글, 글[-400:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # (나) 첫 화면 제목을 바꾸면 잡아야 합니다 (검수 지시 14)
+    def 제목바꾸기(사본):
+        p2 = os.path.join(사본, 'index.html')
+        s = io.read(p2)
+        io.write(p2, re.sub(r'<title>.*?</title>',
+                            '<title>딴 제목</title>', s, count=1, flags=re.S))
+
+    t, 사본 = 사이트사본(제목바꾸기)
+    try:
+        글 = 돌리기('check_canonical.py', 사이트=사본, 인자=['--strict'])
+        봄('첫 화면 제목을 바꾸면 잡는다',
+           '제목이 정해 둔 것과 다릅니다' in 글, 글[-400:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
+# ── check_console — 자바스크립트 탈을 잡는가 ───────────────
+def 시험_콘솔():
+    print('[14] check_console — 자바스크립트 탈을 잡는가')
+
+    글 = 돌리기('check_console.py')
+    봄('지금은 브라우저에서 조용하다',
+       '브라우저에서 조용하고' in 글, 글[-400:])
+    봄('광고가 두 경로 다 뜬다',
+       '광고도 제대로 뜹니다' in 글, 글[-300:])
+
+    # (가) 일부러 넘어지는 코드를 넣으면 잡아야 합니다
+    def 넘어뜨리기(사본):
+        p2 = os.path.join(사본, 'index.html')
+        s = io.read(p2)
+        io.write(p2, s.replace('</body>',
+                               '<script>없는것.부르기()</script></body>'))
+
+    t, 사본 = 사이트사본(넘어뜨리기)
+    try:
+        글 = 돌리기('check_console.py', 사이트=사본, 인자=['--strict'])
+        봄('일부러 넘어뜨리면 잡는다',
+           '사이트 자체 코드에서 난 탈' in 글, 글[-500:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # (나) 사이트 안 파일을 못 받게 하면 잡아야 합니다
+    def 파일없애기(사본):
+        p2 = os.path.join(사본, 'index.html')
+        s = io.read(p2)
+        io.write(p2, s.replace('</body>',
+                               '<script src="없는움직임.js"></script></body>'))
+
+    t, 사본 = 사이트사본(파일없애기)
+    try:
+        글 = 돌리기('check_console.py', 사이트=사본, 인자=['--strict'])
+        봄('사이트 안 파일을 못 받으면 잡는다',
+           '사이트 안 파일을 못 받았습니다' in 글, 글[-500:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
+# ── check_deployed — 배포 뒤 검사가 제 몫을 하는가 ─────────
+def 시험_배포뒤():
+    print('[15] check_deployed — 배포 뒤 검사가 제 몫을 하는가')
+
+    # (가) --net 없이는 아무것도 재지 않아야 합니다
+    글 = 돌리기('check_deployed.py')
+    봄('--net 없이는 잰 척하지 않는다',
+       '실제로는 안 물어봤습니다' in 글 and '아직 안 잰 것' in 글, 글[-400:])
+
+    # (나) 무엇을 볼지 목록을 냅니다
+    봄('무엇을 볼지 보여 준다',
+       '쪽 ' in 글 and '자산 ' in 글 and '남기기로 한 것' in 글, 글[-400:])
+
+    # (다) 아직 안 올렸으면 「같습니다」라고 하지 않습니다
+    #     (--net 은 바깥에 나가므로 여기서는 안 돌립니다.
+    #      대신 코드에 그 갈래가 있는지 봅니다)
+    코드글 = io.read(os.path.join(ROOT, 'engine', 'check_deployed.py'),
+                     default='')
+    봄('아직 안 올렸을 때를 따로 다룬다',
+       '아직 안 올렸습니다' in 코드글 and '잰 것이 아닙니다' in 코드글)
+    봄('.htaccess 가 웹으로 보이면 잡는다',
+       '숨어야할것' in 코드글 and '서버 설정이 샙니다' in 코드글)
+
+
+# ── url_table — 줄어든 쪽이 무엇인지 밝히는가 ──────────────
+def 시험_주소표():
+    print('[16] url_table — 줄어든 쪽이 무엇인지 밝히는가')
+
+    글 = 돌리기('url_table.py')
+    봄('434개가 모두 어떻게 됐는지 적혀 있다',
+       '모두 어떻게 됐는지 적혀 있습니다' in 글, 글[-400:])
+    봄('검산을 스스로 낸다', '검산' in 글 and '안 맞습니다' not in 글, 글[-300:])
+    봄('줄어든 것을 갈래별로 보여 준다',
+       '줄어든' in 글 and '아직안만듦' in 글, 글[-400:])
+
+    # 남길 것에서 빼면 「갈 곳 없음」으로 나와야 합니다
+    t = tempfile.mkdtemp(prefix='checker-test-')
+    try:
+        사본 = os.path.join(t, 'data')
+        shutil.copytree(os.path.join(ROOT, 'data'), 사본)
+        p2 = os.path.join(사본, 'raw', 'keep.json')
+        d = io.read_json(p2)
+        d['남길것'].pop('about.html', None)
+        io.write_json(p2, d)
+        p3 = os.path.join(사본, 'raw', 'url-map.json')
+        d3 = io.read_json(p3)
+        d3['아직_안_만듦']['쪽'] = [x for x in d3['아직_안_만듦']['쪽']
+                                     if x != 'about.html']
+        io.write_json(p3, d3)
+        글 = 돌리기('url_table.py', 자료=사본, 인자=['--strict'])
+        봄('어디에도 안 적힌 옛 주소를 잡는다',
+           '갈 곳 없는 옛 주소' in 글 and 'about.html' in 글, 글[-400:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
+# ── check_clean — 시험 자국을 잡는가 ───────────────────────
+def 시험_깨끗한가():
+    print('[17] check_clean — 시험이 망가뜨린 것을 잡는가')
+
+    글 = 돌리기('check_clean.py')
+    봄('지금은 시험 자국이 없다',
+       '시험이 망가뜨린 것이 없습니다' in 글 or '시험 자국이 없습니다' in 글,
+       글[-400:])
+
+    # 물때 식을 밀어 놓으면 잡아야 합니다 — 실제로 커밋된 적이 있습니다
+    # ★ 본 트리가 아니라 **사본**에서 밉니다 (2026-09-27 바깥 검수)
+    #   전에는 여기서 진짜 tide.js 를 고쳤다 되돌렸습니다. 그 사이에
+    #   커밋하면 밀린 식이 그대로 들어갑니다 — 실제로 들어갔습니다.
+    with isolate.일터() as 뿌리:
+        p2 = os.path.join(뿌리, 'assets', 'js', 'tide.js')
+        io.write(p2, io.read(p2).replace('(음력날(날짜) + 5) % 15',
+                                         '(음력날(날짜) + 6) % 15'))
+        글 = 돌리기('check_clean.py', 인자=['--strict'], 뿌리=뿌리)
+        봄('물때 식이 밀려 있으면 잡는다',
+           'tide.js' in 글 and '한 칸 민 자국' in 글, 글[-400:])
+
+    # 사본을 지우고 나면 본 트리는 처음부터 깨끗해야 합니다
+    글 = 돌리기('check_clean.py')
+    봄('되돌리면 다시 깨끗하다',
+       '시험이 망가뜨린 것이 없습니다' in 글, 글[-300:])
+
+    # ★ 본 트리를 정말 안 건드렸는가 — 바깥 검수가 더하라고 한 조건입니다
+    #   「mutation test 종료 후: 메인 worktree tracked file 변경 0개」
+    알았나, 지금 = isolate.본트리가깨끗한가()
+    if not 알았나:
+        봄('본 트리를 안 건드렸다', False, 'git 을 못 물어봤습니다')
+    else:
+        샌것 = sorted(set(지금) - set(처음본트리))
+        봄('본 트리를 안 건드렸다', not 샌것,
+           '시험 때문에 바뀐 파일: %s' % ' · '.join(샌것[:5]))
+
+
+# ── check_tide — 물때가 어긋나면 잡는가 ────────────────────
+def 시험_물때():
+    print('[18] check_tide — 독립 셈과 화면 값이 어긋나면 잡는가')
+
+    from engine import tide_reference as 독립
+    import datetime
+    오늘 = datetime.date.today()
+    봄('독립 셈이 돌아간다', 독립.물때(오늘)['이름'] in 독립.물때이름)
+
+    # tide.js 의 식을 한 칸 밀면 독립 셈과 어긋나야 합니다
+    # ★ 본 트리가 아니라 **사본**에서 밉니다 (2026-09-27 바깥 검수)
+    with isolate.일터() as 뿌리:
+        p = os.path.join(뿌리, 'assets', 'js', 'tide.js')
+        io.write(p, io.read(p).replace('(음력날(날짜) + 5) % 15',
+                                       '(음력날(날짜) + 6) % 15'))
+        글 = 돌리기('check_tide.py', 뿌리=뿌리)
+        봄('물때 식을 한 칸 밀면 잡는다',
+           '독립 셈과 화면 값이 다릅니다' in 글, 글[:600])
+
+
+
+# ── check_newmoon — 삭이 어긋나면 잡는가 ───────────────────
+def 시험_삭():
+    print('[19] check_newmoon — 삭이 천문 기준과 어긋나면 잡는가')
+
+    # 천문 기준(meeus)이 주인이 확인한 값과 맞는가 — 자를 먼저 봅니다
+    from engine import meeus
+    import datetime
+    목록 = dict((t.strftime('%Y-%m-%d'), t)
+                for _, t in meeus.삭목록(2026, 2026))
+    봄('천문 기준이 2026-10-11 00:50 을 낸다',
+       '2026-10-11' in 목록 and abs(목록['2026-10-11'].hour * 60
+                                    + 목록['2026-10-11'].minute - 50) <= 5,
+       str(목록.get('2026-10-11')))
+
+    # 달 흔들림을 몇 개 빼면 삭이 어긋나야 합니다.
+    # ★ 사본에서만 뺍니다 — 본 트리는 안 건드립니다
+    with isolate.일터() as 뿌리:
+        p = os.path.join(뿌리, 'assets', 'js', 'tide.js')
+        원 = io.read(p)
+        # 큰 흔들림 하나(1.274 sin(2D−M'))를 지웁니다
+        상한것 = 원.replace("      + 1.274027 * Math.sin(2 * D - Mp)\n", '')
+        봄('흔들림 항을 정말 지웠다', 상한것 != 원)
+        io.write(p, 상한것)
+        글 = 돌리기('check_newmoon.py', 인자=['2026', '2027', '--strict'],
+                    뿌리=뿌리)
+        봄('흔들림 항을 빼면 잡는다',
+           ('음력 날짜가' in 글 and '갈립니다' in 글)
+           or '삭 시각이' in 글, 글[-500:])
+
+    # 바깥 기준표를 비우면 「못 박을 데가 없다」고 해야 합니다
+    with isolate.일터() as 뿌리:
+        p2 = os.path.join(뿌리, 'data', 'raw', '삭-기준.json')
+        d = io.read_json(p2)
+        d['삭'] = []
+        io.write_json(p2, d)
+        글 = 돌리기('check_newmoon.py', 인자=['2026', '2026', '--strict'],
+                    뿌리=뿌리)
+        봄('바깥 기준이 비면 잡는다',
+           '확인된 값이 하나도 없습니다' in 글, 글[-400:])
+
+
+# ── check_months — 달이 안 넘어가면 잡는가 ─────────────────
+def 시험_열두달():
+    print('[20] check_months — 달이 안 넘어가면 잡는가')
+
+    # 축제 달력이 이달을 안 고르게 만들면 잡아야 합니다
+    with isolate.일터() as 뿌리:
+        p = os.path.join(뿌리, 'assets', 'js', 'festival-list.js')
+        원 = io.read(p)
+        상한것 = 원.replace('new Date().getMonth() + 1', '6')
+        봄('이달 고르기를 정말 망가뜨렸다', 상한것 != 원)
+        io.write(p, 상한것)
+        글 = 돌리기('check_months.py', 인자=['--strict'], 뿌리=뿌리)
+        봄('달이 안 따라가면 잡는다',
+           '월인데' in 글 and '눌렸습니다' in 글, 글[-500:])
+
+    # 움직임이 음력 **달**을 셈해 내면 잡아야 합니다
+    with isolate.일터() as 뿌리:
+        p2 = os.path.join(뿌리, 'assets', 'js', 'tide.js')
+        io.write(p2, io.read(p2)
+                 + chr(10) + 'var 윤달 = true;' + chr(10))
+        글 = 돌리기('check_months.py', 인자=['--strict'], 뿌리=뿌리)
+        봄('음력 달을 셈해 내면 잡는다',
+           '음력 **달**을 셈해' in 글 or '윤달에 갈립니다' in 글, 글[-400:])
+
+
+# ── check_mobile — 휴대폰에서 넘치면 잡는가 ────────────────
+def 시험_휴대폰():
+    """★ 2026-09-28 — 「휴대폰 확인」을 한 번도 제대로 못 했습니다.
+
+    크롬 헤드리스는 창을 500px 보다 좁게 못 만듭니다.
+    --window-size=375 를 줘도 쪽이 받는 폭은 500px 입니다.
+    그래서 찍은 「휴대폰 사진」이 전부 500px 짜리였고,
+    375px 그림에 담기며 오른쪽이 잘려 보였습니다.
+
+    check_mobile 은 **iframe 안에 넣어** 진짜 폭으로 그립니다.
+    그 검사기가 정말 잡는지 여기서 봅니다.
+    """
+    print('[27] check_mobile — 휴대폰에서 화면 밖으로 나가면 잡는가')
+
+    글 = 돌리기('check_mobile.py')
+    봄('지금은 휴대폰에서 넘치는 것이 없다',
+       '화면 밖으로 나가는 것이 없습니다' in 글, 글[-400:])
+
+    # (가) 화면보다 넓은 것을 넣으면 잡아야 합니다
+    def 넓은것넣기(사본):
+        a = os.path.join(사본, 'taean.html')
+        s2 = io.read(a)
+        io.write(a, s2.replace(
+            '</body>',
+            '<div style="width:700px;height:40px">일부러 넘치게</div>'
+            '</body>', 1))
+
+    t, 사본 = 사이트사본(넓은것넣기)
+    try:
+        글 = 돌리기('check_mobile.py', 사이트=사본, 인자=['--strict'])
+        봄('화면보다 넓은 것을 넣으면 잡는다',
+           '화면 밖으로 나갑니다' in 글 or '넘친 것' in 글, 글[-500:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # (나) 일부러 옆으로 밀게 만든 것은 **봐줘야** 합니다
+    #     안 봐주면 「무조건 빨간불 기계」가 됩니다
+    def 밀수있게(사본):
+        a = os.path.join(사본, 'taean.html')
+        s2 = io.read(a)
+        io.write(a, s2.replace(
+            '</body>',
+            '<div style="overflow-x:auto">'
+            '<div style="width:700px;height:40px">밀어서 봅니다</div>'
+            '</div></body>', 1))
+
+    t, 사본 = 사이트사본(밀수있게)
+    try:
+        글 = 돌리기('check_mobile.py', 사이트=사본, 인자=['--strict'])
+        봄('일부러 밀게 만든 것은 안 막는다',
+           '화면 밖으로 나가는 것이 없습니다' in 글, 글[-500:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
+# ── check_photos — 보이는 것이 없으면 잡는가 ───────────────
+def 시험_사진():
+    print('[21] check_photos — 쪽에 보이는 것이 없으면 잡는가')
+
+    글 = 돌리기('check_photos.py')
+    봄('지금은 쪽마다 보이는 것이 있다',
+       '모두 보이는 것이 있고' in 글, 글[-400:])
+
+    # (가) 사진을 지우면 잡아야 합니다
+    def 사진지우기(사본):
+        import re as _re
+        a = os.path.join(사본, 'taean.html')
+        s2 = io.read(a)
+        # ★ **보이는 것을 모두** 지웁니다 (2026-09-28)
+        #   전에는 <figure class="photo…> 만 지웠습니다. 그런데
+        #   명소 사진을 <figure class="card-figure"> 로 넣자
+        #   그것들이 남아 「그림이 하나도 없다」가 안 됐습니다.
+        #   시험이 덜 지우면 **검사기가 멀쩡한데도 못 잡은 것처럼**
+        #   보입니다. 보이는 것을 통째로 지워야 제대로 잽니다.
+        s2 = _re.sub(r'<figure[^>]*>.*?</figure>', '', s2, flags=_re.S)
+        s2 = _re.sub(r'<img[^>]*>', '', s2)
+        s2 = _re.sub(r'<svg[^>]*>.*?</svg>', '', s2, flags=_re.S)
+        io.write(a, s2)
+
+    t, 사본 = 사이트사본(사진지우기)
+    try:
+        글 = 돌리기('check_photos.py', 사이트=사본, 인자=['--strict'])
+        봄('사진을 지우면 잡는다',
+           '그림이 하나도 없습니다' in 글, 글[-400:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # (나) 없는 파일을 가리키면 잡아야 합니다
+    #   ★ 2026-09-27 에 실제로 52갈래가 이랬습니다
+    def 엉뚱한주소(사본):
+        a = os.path.join(사본, 'taean.html')
+        s2 = io.read(a)
+        io.write(a, s2.replace('img/coast/taean-hero.jpg',
+                               'img/taean/hero.jpg'))
+
+    t, 사본 = 사이트사본(엉뚱한주소)
+    try:
+        글 = 돌리기('check_photos.py', 사이트=사본, 인자=['--strict'])
+        봄('없는 그림을 가리키면 잡는다',
+           '없는 파일을 가리킵니다' in 글, 글[-500:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # (다) 설명에 이용허락 종류를 적으면 잡아야 합니다 (규칙 6)
+    def 허락적기(사본):
+        a = os.path.join(사본, 'taean.html')
+        s2 = io.read(a)
+        io.write(a, s2.replace('<figcaption>사진 ·',
+                               '<figcaption>공공누리 제1유형 · 사진 ·', 1))
+
+    t, 사본 = 사이트사본(허락적기)
+    try:
+        글 = 돌리기('check_photos.py', 사이트=사본, 인자=['--strict'])
+        봄('쪽에 이용허락 종류를 적으면 잡는다',
+           '이용허락 종류를 적은 곳' in 글 and '✗' in 글, 글[-500:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # (라) 촬영자를 빼면 잡아야 합니다 (규칙 5)
+    def 촬영자빼기(사본):
+        import re as _re
+        a = os.path.join(사본, 'taean.html')
+        s2 = io.read(a)
+        io.write(a, _re.sub(r'<figcaption>사진 · [^<]*</figcaption>',
+                            '<figcaption>사진</figcaption>', s2))
+
+    t, 사본 = 사이트사본(촬영자빼기)
+    try:
+        글 = 돌리기('check_photos.py', 사이트=사본, 인자=['--strict'])
+        봄('촬영자를 빼면 잡는다',
+           '촬영자가 없습니다' in 글 or '촬영자가 빠진 곳' in 글, 글[-500:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
+# ── check_golden — 있던 것이 사라지면 잡는가 ───────────────
+#
+#   ★ 계약-28 「검사기도 시험받는다」
+#     이 검사기는 **주인이 눈으로 잡은 셋**을 다시 놓치지 않으려고
+#     만들었습니다. 그러니 이것이 진짜 잡는지도 재 봐야 합니다.
+#         사진 0장 · 링크 안 링크 · 아이콘 7칸 사라짐
+def 시험_있던것():
+    print('[22] check_golden — 있던 것이 사라지면 잡는가')
+
+    글 = 돌리기('check_golden.py')
+    봄('지금은 있던 것이 그대로 있다',
+       '모두 지켰습니다' in 글, 글[-400:])
+
+    # (가) 빈 링크 — 2026-09-27 에 권역 쪽 57개가 실제로 이랬습니다
+    def 빈링크넣기(사본):
+        a = os.path.join(사본, 'taean.html')
+        s2 = io.read(a)
+        io.write(a, s2.replace('<a class="brand" href="./"',
+                               '<a class="brand" href=""', 1))
+
+    t, 사본 = 사이트사본(빈링크넣기)
+    try:
+        글 = 돌리기('check_golden.py', 사이트=사본)
+        봄('빈 링크를 넣으면 잡는다', '빈 링크' in 글 and '✗' in 글, 글[-500:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # (나) 링크 안에 링크 — 주인이 화면 보고 잡은 것
+    def 링크겹치기(사본):
+        a = os.path.join(사본, 'index.html')
+        s2 = io.read(a)
+        io.write(a, s2.replace('<div class="groups">',
+                               '<div class="groups"><a href="a.html">'
+                               '<a href="b.html">겹침</a></a>', 1))
+
+    t, 사본 = 사이트사본(링크겹치기)
+    try:
+        글 = 돌리기('check_golden.py', 사이트=사본)
+        봄('링크 안에 링크를 넣으면 잡는다',
+           '링크 안에 링크' in 글 and '✗' in 글, 글[-500:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # (다) 사진을 통째로 빼면 잡아야 합니다 — 416쪽 사진 0장 사고
+    def 보이는것없애기(사본):
+        import re as _re
+        a = os.path.join(사본, 'taean.html')
+        s2 = io.read(a)
+        몸 = s2.split('</head>', 1)
+        if len(몸) == 2:
+            뒤 = _re.sub(r'<img[^>]*>', '', 몸[1])
+            뒤 = _re.sub(r'(?is)<svg.*?</svg>', '', 뒤)
+            뒤 = _re.sub(r'(?is)<picture.*?</picture>', '', 뒤)
+            io.write(a, 몸[0] + '</head>' + 뒤)
+
+    t, 사본 = 사이트사본(보이는것없애기)
+    try:
+        글 = 돌리기('check_golden.py', 사이트=사본)
+        봄('보이는 것을 다 빼면 잡는다',
+           '보이는 것이 하나도 없음' in 글 and '✗' in 글, 글[-500:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # (라) alt 없는 사진 — 눈이 불편한 분이 못 읽습니다
+    def 알트빼기(사본):
+        a = os.path.join(사본, 'index.html')
+        s2 = io.read(a)
+        io.write(a, s2.replace('<img class="gc-photo" src=',
+                               '<img class="gc-photo" data-x src=', 1)
+                 .replace(' alt=""', ' ', 1))
+
+    t, 사본 = 사이트사본(알트빼기)
+    try:
+        글 = 돌리기('check_golden.py', 사이트=사본)
+        봄('alt 없는 사진을 넣으면 잡는다',
+           'alt 없는 사진' in 글 and '✗' in 글, 글[-500:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
+
+# ── check_architecture — 같은 사실이 두 곳에 있으면 잡는가 ──
+#
+#   ★ 계약-28. 이 검사기는 **하루에 열한 번 난 사고**를 막으려고
+#     만들었습니다. 그러니 정말 잡는지도 재 봐야 합니다.
+def 시험_짜임():
+    print('[23] check_architecture — 같은 사실이 두 곳에 있으면 잡는가')
+
+    글 = 돌리기('check_architecture.py')
+    봄('지금은 두 곳에서 관리하는 것이 없다',
+       '같은 사실을 두 곳에서 관리하는 곳이 없습니다' in 글, 글[-400:])
+
+    # (가) 검사기를 만들고 판정에 안 물리면 잡아야 합니다
+    #     — 오늘 실제로 넷이 그랬습니다
+    t = tempfile.mkdtemp(prefix='arch-')
+    try:
+        뿌리 = os.path.join(t, '두번째도전')
+        shutil.copytree(ROOT, 뿌리, ignore=shutil.ignore_patterns(
+            'site', '.git', '__pycache__', '.tmp', 'release',
+            # ★ 사진 71MB 는 복사할 까닭이 없습니다 (2026-09-28)
+            #   시험마다 통째로 베끼다 디스크를 때려, 같이 돌던
+            #   check_console 이 크롬을 못 얻고 죽었습니다.
+            'photo'))
+        io.write(os.path.join(뿌리, 'engine', 'check_아무것도안함.py'),
+                 '# -*- coding: utf-8 -*-\nimport sys\nsys.exit(0)\n')
+        글 = 돌리기('check_architecture.py', 뿌리=뿌리)
+        봄('판정에 안 물린 검사기를 잡는다',
+           '판정에 안 물린 검사기' in 글, 글[-500:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # (나) 차림표를 하나 더했는데 아무도 안 쓰면 잡아야 합니다
+    t = tempfile.mkdtemp(prefix='arch2-')
+    try:
+        뿌리 = os.path.join(t, '두번째도전')
+        shutil.copytree(ROOT, 뿌리, ignore=shutil.ignore_patterns(
+            'site', '.git', '__pycache__', '.tmp', 'release',
+            # ★ 사진 71MB 는 복사할 까닭이 없습니다 (2026-09-28)
+            #   시험마다 통째로 베끼다 디스크를 때려, 같이 돌던
+            #   check_console 이 크롬을 못 얻고 죽었습니다.
+            'photo'))
+        io.write(os.path.join(뿌리, 'assets', 'css', '아무도안씀.css'),
+                 '.x{color:red}\n')
+        글 = 돌리기('check_architecture.py', 뿌리=뿌리)
+        봄('아무도 안 쓰는 차림표를 잡는다',
+           '안 쓰는 파일' in 글, 글[-500:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
+# ── check_design — 옛 쪽보다 줄면 잡는가 ───────────────────
+def 시험_옛쪽대비():
+    print('[24] check_design — 옛 쪽이 가졌던 것을 잃으면 잡는가')
+
+    글 = 돌리기('check_design.py')
+    봄('지금은 법·안전 말이 권역 쪽에 다 있다',
+       '권역 57쪽 모두 있습니다' in 글 or '모두 있습니다' in 글, 글[-500:])
+
+    # 안전 말을 지우면 잡아야 합니다 — 오늘 실제로 빠져 있던 것입니다
+    def 안전지우기(사본):
+        import re as _re
+        for 이름 in ('taean.html', 'boseong.html'):
+            a = os.path.join(사본, 이름)
+            if not os.path.isfile(a):
+                continue
+            s2 = io.read(a)
+            io.write(a, _re.sub(r'(?is)<details class="firsttime".*?</details>',
+                                '', s2))
+
+    t, 사본 = 사이트사본(안전지우기)
+    try:
+        글 = 돌리기('check_design.py', 사이트=사본)
+        봄('안전 안내를 지우면 잡는다',
+           '테트라포드' in 글 and '✗' in 글, 글[-600:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
+# ── check_tide_old — 옛 쪽과 새 쪽의 음력이 갈리면 잡는가 ──
+def 시험_옛물때():
+    print('[25] check_tide_old — 옛·새 음력이 갈리면 잡는가')
+
+    글 = 돌리기('check_tide_old.py')
+    봄('지금은 옛 쪽과 새 쪽이 같은 답을 낸다',
+       '하나도 안 다릅니다' in 글, 글[-400:])
+    봄('못 쟀으면 「같다」고 하지 않는다',
+       '재지 못한 것은 「같다」가 아닙니다' in io.read(
+           os.path.join(ROOT, 'engine', 'check_tide_old.py'), default=''),
+       '검사기에 그 다짐이 적혀 있어야 합니다')
+
+
+# ── check_canary — 카나리가 사라지면 잡는가 ────────────────
+def 시험_카나리():
+    print('[26] check_canary — 표본이 고쳐지면 잡는가')
+
+    글 = 돌리기('check_canary.py')
+    봄('지금은 검사기가 모두 살아 있다',
+       '모두 살아 있습니다' in 글, 글[-400:])
+
+    # 카나리를 고쳐 놓으면(=멀쩡하게 만들면) 잡아야 합니다
+    t = tempfile.mkdtemp(prefix='canary-')
+    try:
+        뿌리 = os.path.join(t, '두번째도전')
+        shutil.copytree(ROOT, 뿌리, ignore=shutil.ignore_patterns(
+            'site', '.git', '__pycache__', '.tmp', 'release',
+            # ★ 사진 71MB 는 복사할 까닭이 없습니다 (2026-09-28)
+            #   시험마다 통째로 베끼다 디스크를 때려, 같이 돌던
+            #   check_console 이 크롬을 못 얻고 죽었습니다.
+            'photo'))
+        a = os.path.join(뿌리, 'tests', 'canary', '빈링크', 'index.html')
+        if os.path.isfile(a):
+            io.write(a, io.read(a).replace('href=""', 'href="b.html"'))
+        글 = 돌리기('check_canary.py', 뿌리=뿌리)
+        봄('카나리를 고쳐 놓으면 잡는다',
+           '못 잡았습니다' in 글, 글[-600:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
+def main():
+    print('검사기가 잘못을 잡을 줄 아는지')
+    print('')
+    시험_렌더()
+    시험_링크()
+    시험_주소()
+    시험_계약()
+    시험_어중간()
+    시험_광고()
+    시험_다른언어()
+    시험_남길것()
+    시험_검색()
+    시험_갱신()
+    시험_달력()
+    시험_자산()
+    시험_대표주소()
+    시험_콘솔()
+    시험_배포뒤()
+    시험_주소표()
+    시험_깨끗한가()
+    시험_물때()
+    시험_삭()
+    시험_열두달()
+    시험_휴대폰()
+    시험_사진()
+    시험_있던것()
+    시험_짜임()
+    시험_옛쪽대비()
+    시험_옛물때()
+    시험_카나리()
+    print('')
+    if 실패:
+        print('%d가지 통과 · %d가지 실패' % (통과, len(실패)))
+        for x in 실패:
+            print('  ✗ %s' % x)
+        print('')
+        print('  잘못을 못 잡는 검사기는 **없는 것보다 나쁩니다.**')
+        print('  없으면 조심이라도 하는데, 있으면 믿어 버립니다.')
+        return 1
+    print('%d가지 모두 통과 — 검사기가 잘못을 제대로 잡습니다.' % 통과)
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())
