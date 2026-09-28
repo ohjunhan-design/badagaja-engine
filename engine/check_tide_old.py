@@ -150,7 +150,7 @@ def 재기(시작, 날수):
         except RuntimeError as e:
             return None, str(e)
         r = subprocess.run(
-            [크롬, '--headless=new', '--disable-gpu', '--no-sandbox',
+            machine.크롬앞머리() + [
              '--user-data-dir=' + os.path.join(t, 'prof'),
              '--virtual-time-budget=30000',
              # 바깥으로 안 나갑니다 — 인터넷에 흔들리면 시험이 아닙니다

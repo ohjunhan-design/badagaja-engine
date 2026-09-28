@@ -310,7 +310,7 @@ def 재기(쪽길, 폭=375, 높이=2000):
                       .replace('__폭__', str(폭))
                       .replace('__높이__', str(높이))))
         나옴 = subprocess.run(
-            [크롬찾기(), '--headless=new', '--disable-gpu', '--hide-scrollbars',
+            machine.크롬앞머리() + [ '--hide-scrollbars',
              '--window-size=%d,%d' % (max(폭 + 40, 900), 높이 + 60),
              '--virtual-time-budget=2500', '--allow-file-access-from-files',
              # 바깥 연결은 곧바로 실패시킵니다 (2026-09-27)
@@ -385,7 +385,7 @@ def 묶어재기(쪽길들, 폭=375, 높이=2000):
 </head><body>%s</body></html>""" % ''.join(틀들)))
 
         나옴 = subprocess.run(
-            [크롬찾기(), '--headless=new', '--disable-gpu', '--hide-scrollbars',
+            machine.크롬앞머리() + [ '--hide-scrollbars',
              '--window-size=%d,%d' % (max(폭 + 40, 900), 높이 + 60),
              # 틀이 많으니 시간을 조금 더 줍니다
              '--virtual-time-budget=%d' % min(2500 + 400 * len(쪽길들), 20000),

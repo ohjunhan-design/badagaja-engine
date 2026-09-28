@@ -40,6 +40,7 @@
     python engine/check_architecture.py --strict
     python engine/check_architecture.py --자세히
 """
+import ast
 import os
 import re
 import sys
@@ -493,6 +494,68 @@ def 검사8_없음을빈것으로바꿔읽나():
         됨('꼭 있어야 하는 파일을 빈 것으로 바꿔 읽는 자리가 없습니다')
 
 
+
+def 검사9_크롬을따로부르지않나():
+    """★ **크롬 깃발은 한 곳에서만 정합니다** (2026-09-28)
+
+    겪은 일 — 클라우드 판정이 416쪽을 **한 쪽도 못 쟀습니다.**
+
+      크롬을 부르는 자리가 열한 군데였는데 `--no-sandbox` 를
+      주는 곳은 한 곳뿐이었습니다. 내 컴퓨터(윈도)에서는 아무
+      탈이 없었습니다. 깃허브 러너는 루트로 돌기 때문에 그
+      깃발이 없으면 크롬이 시작조차 안 합니다.
+
+      판정표에는 INFRA_FAIL 2 · FAIL 1 · NOT_TESTED 2 로 찍혔고,
+      메시지는 「크롬이 도는 자리에서 다시 재세요」였습니다.
+      크롬은 있었습니다. **깃발 하나가 없었습니다.**
+
+    그래서 machine.크롬앞머리() 를 거치지 않고 크롬을 부르는
+    자리가 있으면 여기서 막습니다.
+    """
+    print('[9] 크롬을 따로 부르는 자리가 있는가')
+
+    # ★ **글자로 찾으면 설명글까지 잡습니다** (2026-09-28 · 바로 고침)
+    #
+    #   처음에는 줄에 `--headless` 가 있는지만 봤습니다. 그랬더니
+    #   크롬을 죽이는 도구(clean_chrome.py)의 **설명글**과
+    #   이 검사 자신의 코드까지 걸렸습니다. 오늘만 세 번째입니다.
+    #
+    #   그래서 코드를 읽습니다. subprocess 를 부르면서 그 인자
+    #   목록에 크롬 깃발이 박혀 있는 자리만 봅니다. 설명글은
+    #   코드가 아니므로 저절로 빠집니다.
+    따로 = []
+    곳 = os.path.join(ROOT, 'engine')
+    for 뿌, 칸들, 파일들 in os.walk(곳):
+        칸들[:] = [c for c in 칸들 if c != '__pycache__']
+        for f in sorted(파일들):
+            if not f.endswith('.py') or f == 'machine.py':
+                continue
+            글 = io.read(os.path.join(뿌, f), default='')
+            try:
+                나무 = ast.parse(글)
+            except SyntaxError:
+                continue
+            for 마디 in ast.walk(나무):
+                if not isinstance(마디, ast.Call):
+                    continue
+                for 인자 in 마디.args:
+                    if not isinstance(인자, ast.List):
+                        continue
+                    깃발들 = [x.value for x in 인자.elts
+                              if isinstance(x, ast.Constant)
+                              and isinstance(x.value, str)]
+                    if any(x.startswith('--headless') for x in 깃발들):
+                        따로.append('%s:%d' % (f, 인자.lineno))
+    if 따로:
+        막음.append('크롬을 따로 부르는 자리 %d곳' % len(따로))
+        print('  ✗ machine.크롬앞머리() 를 안 거치는 곳 %d' % len(따로))
+        for x in 따로[:6]:
+            print('      %s' % x)
+        print('      → 깃발 하나가 빠지면 그 자리만 조용히 못 잽니다.')
+    else:
+        print('  · 모두 machine.크롬앞머리() 를 거칩니다')
+    print('')
+
 def main():
     global 자세히
     자세히 = '--자세히' in sys.argv
@@ -516,6 +579,7 @@ def main():
     검사7_워크플로가정말도는가()
     print('')
     검사8_없음을빈것으로바꿔읽나()
+    검사9_크롬을따로부르지않나()
     print('')
 
     if 알림:

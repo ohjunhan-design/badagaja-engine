@@ -176,7 +176,7 @@ def 시계돌려보기(쪽길, 때들):
                     if os.path.exists(바탕):
                         io.write(os.path.join(뒤, nm), io.read(바탕))
             r = subprocess.run(
-                [크롬찾기(), '--headless=new', '--disable-gpu',
+                machine.크롬앞머리() + [
                  '--host-resolver-rules=MAP * 127.0.0.1:1',
                  '--virtual-time-budget=4000', '--dump-dom',
                  'file:///' + 사본.replace(os.sep, '/')],

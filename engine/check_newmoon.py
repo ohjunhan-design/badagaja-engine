@@ -134,7 +134,7 @@ def 우리삭과음력(k들, 날들):
         p2 = os.path.join(t, 'a.html')
         io.write(p2, 쪽)
         r = subprocess.run(
-            [크롬찾기(), '--headless=new', '--disable-gpu',
+            machine.크롬앞머리() + [
              '--host-resolver-rules=MAP * 127.0.0.1:1',
              '--virtual-time-budget=20000', '--dump-dom',
              'file:///' + p2.replace(os.sep, '/')],

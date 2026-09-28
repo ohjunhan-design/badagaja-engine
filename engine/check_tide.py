@@ -76,7 +76,7 @@ def 해양조사원물때(관측소='DT_0050'):
     자바스크립트로 채워지는 쪽이라 크롬으로 열어야 보입니다.
     """
     r = subprocess.run(
-        [크롬찾기(), '--headless=new', '--disable-gpu',
+        machine.크롬앞머리() + [
          '--virtual-time-budget=15000', '--dump-dom',
          'https://www.khoa.go.kr/swtc/main.do?obsPostId=%s' % 관측소],
         capture_output=True, text=True, encoding='utf-8', timeout=180)
@@ -148,7 +148,7 @@ def 우리물때(날짜들):
         p2 = os.path.join(t, 'a.html')
         io.write(p2, 쪽)
         r = subprocess.run(
-            [크롬찾기(), '--headless=new', '--disable-gpu',
+            machine.크롬앞머리() + [
              '--host-resolver-rules=MAP * 127.0.0.1:1',
              '--virtual-time-budget=3000', '--dump-dom',
              'file:///' + p2.replace(os.sep, '/')],
@@ -182,7 +182,7 @@ def 오늘음력():
                  'e.textContent=JSON.stringify(셈?셈.음력날(new Date()):0);'
                  'document.body.appendChild(e);})();</script></body></html>')
         r = subprocess.run(
-            [크롬찾기(), '--headless=new', '--disable-gpu',
+            machine.크롬앞머리() + [
              '--host-resolver-rules=MAP * 127.0.0.1:1',
              '--virtual-time-budget=3000', '--dump-dom',
              'file:///' + os.path.join(t, 'a.html').replace(os.sep, '/')],

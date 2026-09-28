@@ -269,7 +269,7 @@ f.addEventListener('load', function () {
         p = os.path.join(t, 'z.html')
         io.write(p, 겉)
         r = subprocess.run(
-            [크롬찾기(), '--headless=new', '--disable-gpu',
+            machine.크롬앞머리() + [
              '--window-size=%d,1000' % max(폭 + 120, 1400),
              '--allow-file-access-from-files',
              # 바깥으로 안 나갑니다 — 인터넷에 흔들리면 시험이 아닙니다

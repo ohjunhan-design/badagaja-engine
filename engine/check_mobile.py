@@ -136,7 +136,7 @@ def 재기(쪽길, 폭):
         io.write(p, 겉)
         try:
             r = subprocess.run(
-                [크롬찾기(), '--headless=new', '--disable-gpu',
+                machine.크롬앞머리() + [
                  '--window-size=%d,2600' % max(폭 + 140, 620),
                  '--allow-file-access-from-files',
                  # 바깥으로 안 나갑니다 — 인터넷에 흔들리면 시험이 아닙니다

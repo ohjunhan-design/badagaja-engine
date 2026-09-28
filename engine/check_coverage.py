@@ -48,6 +48,7 @@ import os
 import re
 import sys
 import glob
+import html as html_mod
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -63,12 +64,22 @@ NEW = os.environ.get('BADAGAJA_SITE', os.path.join(ROOT, 'site'))
 
 
 def 글만(html):
-    """꼬리표를 떼고 글만 남깁니다 — 손님이 읽는 것만 봅니다."""
+    """꼬리표를 떼고 글만 남깁니다 — 손님이 읽는 것만 봅니다.
+
+    ★ **엔티티를 풉니다** (2026-09-28)
+
+      「신진도 오징어&수산물 축제」가 쪽에 버젓이 있는데도
+      「안 보입니다」로 잡혔습니다. 쪽에는 `오징어&amp;수산물`
+      로 적혀 있어서 자료의 `&` 와 안 맞았던 것입니다.
+
+      손님 눈에는 `&` 로 보입니다. 손님이 보는 대로 봐야
+      합니다. **검사기가 헛것을 잡으면 진짜가 묻힙니다.**
+    """
     s = re.sub(r'<script.*?</script>', ' ', html, flags=re.S)
     s = re.sub(r'<style.*?</style>', ' ', s, flags=re.S)
     s = re.sub(r'<!--.*?-->', ' ', s, flags=re.S)
     s = re.sub(r'<[^>]+>', ' ', s)
-    return re.sub(r'\s+', ' ', s)
+    return re.sub(r'\s+', ' ', html_mod.unescape(s))
 
 
 def 말(값, 언어='ko'):
