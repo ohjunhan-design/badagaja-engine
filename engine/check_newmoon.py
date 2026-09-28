@@ -153,7 +153,9 @@ def 우리삭과음력(k들, 날들):
             탈 = (r.stderr or '').strip()
             if 탈:
                 줄들 = [x.strip() for x in 탈.split('\n') if x.strip()]
-                까닭.append('크롬이 한 말: ' + ' / '.join(줄들[-3:])[:200])
+                # ★ FATAL 줄이 길어 잘렸습니다 — 넉넉히 적습니다
+                까닭.append('크롬이 한 말: '
+                          + ' / '.join(줄들[-3:])[:400])
             if r.stdout and 'id="R"' not in r.stdout:
                 까닭.append('쪽은 그렸는데 R 칸이 없습니다'
                             ' (스크립트가 안 돌았습니다)')
