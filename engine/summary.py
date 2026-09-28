@@ -47,21 +47,47 @@ ROOT = os.path.dirname(HERE)
 }
 
 
-def 까닭들(이름, 최대=12):
-    """검사기가 뱉은 말에서 어긴 줄만 골라 옵니다."""
-    for 후보 in (이름, 이름.replace(' ', '_')):
-        길 = os.path.join(ROOT, 'tests', 'out', 후보 + '.txt')
-        if os.path.isfile(길):
-            break
-    else:
+def 까닭들(항목, 최대=12):
+    """검사기가 뱉은 말에서 어긴 줄만 골라 옵니다.
+
+    ★ **검사기 이름으로 찾습니다** (2026-09-29)
+
+      기록은 tests/out/log/ 에 **검사기 파일 이름**으로 쌓입니다
+      (check_ads_strict.txt 처럼 인자가 꼬리로 붙습니다).
+      판정표의 「롤백」 같은 사람 이름으로는 못 찾습니다.
+      그래서 gate 가 항목에 남긴 '검사기' 를 씁니다.
+    """
+    도구 = os.path.basename((항목.get('검사기') or '').replace('/', os.sep))
+    도구 = 도구[:-3] if 도구.endswith('.py') else 도구
+    칸 = os.path.join(ROOT, 'tests', 'out', 'log')
+    길 = None
+    if 도구 and os.path.isdir(칸):
+        # 꼬리(_strict 따위)가 붙으므로 앞이 같은 것을 고릅니다
+        맞는것 = sorted(f for f in os.listdir(칸)
+                        if f.startswith(도구) and f.endswith('.txt'))
+        if 맞는것:
+            길 = os.path.join(칸, 맞는것[0])
+    if 길 is None:
         return []
     try:
-        줄들 = io.open(길, encoding='utf-8', errors='replace').read().splitlines()
+        줄들 = io.open(길, encoding='utf-8',
+                       errors='replace').read().splitlines()
     except OSError:
         return []
     고른것 = [x.rstrip() for x in 줄들
               if x.lstrip().startswith(('✗', 'Traceback', '  File '))]
-    return 고른것[:최대]
+    if 고른것:
+        return 고른것[:최대]
+
+    # ★ **기록은 있는데 ✗ 표가 없는 경우** (2026-09-29)
+    #
+    #   검사기가 「손볼 곳 3건」처럼 끝에서만 말하는 일이 있습니다.
+    #   그때 빈손으로 돌아가면 「못 찾았습니다」로 보여, 기록이
+    #   아예 없는 것과 구별이 안 됩니다. **다른 상황입니다.**
+    #   끝부분을 보여 주는 편이 아무것도 없는 것보다 낫습니다.
+    끝줄들 = [x.rstrip() for x in 줄들 if x.strip()]
+    return (['(✗ 표가 없어 기록 끝부분을 옮깁니다 — %s)'
+             % os.path.basename(길)] + 끝줄들[-최대:]) if 끝줄들 else []
 
 
 def 만들기(d):
@@ -89,7 +115,7 @@ def 만들기(d):
         글.append('| %s | %s | %s | %s |'
                   % (x.get('번호') or '덧', x.get('이름', ''),
                      표시.get(x.get('상태'), x.get('상태', '')),
-                     str(x.get('증거', '')).replace('|', '\|')[:160]))
+                     str(x.get('증거', '')).replace('|', '\\|')[:160]))
     글.append('')
 
     나쁜것 = [x for x in 항목
@@ -98,14 +124,16 @@ def 만들기(d):
         글.append('### 어긴 것의 까닭')
         글.append('')
         for x in 나쁜것:
-            줄들 = 까닭들(x.get('이름', ''))
+            줄들 = 까닭들(x)
             글.append('<details><summary>%s %s — %s</summary>'
                       % (x.get('번호') or '덧', x.get('이름', ''),
                          표시.get(x.get('상태'), '')))
             글.append('')
             글.append('```')
-            글.extend(줄들 or ['(검사기가 뱉은 말을 못 찾았습니다 — '
-                              '판정결과 꾸러미를 내려받아 보세요)'])
+            글.extend(줄들 or [
+                '(이 검사기의 기록을 못 찾았습니다 — 검사기 %s)'
+                % (x.get('검사기') or '(어느 검사기인지 안 적혀 있습니다)'),
+                '판정결과 꾸러미의 tests/out/log/ 를 내려받아 보세요.'])
             글.append('```')
             글.append('')
             글.append('</details>')
