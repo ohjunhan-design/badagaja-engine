@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">  <!-- 광고 자리를 견줘 보려고 만든 미리보기 전용 쪽 — 검색에 올리지 않습니다 (2026-09-24) --><title>첫 화면 광고 비교 (미리보기 전용)</title>
+<style>
+body{margin:0;background:#2b3431;font-family:'Noto Sans KR',sans-serif;color:#fff}
+h1{font-size:18px;margin:14px 16px 4px}
+p.note{margin:0 16px 12px;font-size:13px;color:#cfd8d4}
+.grid{display:grid;grid-template-columns:auto auto;gap:18px;padding:0 16px 24px;align-items:start}
+.cell h2{font-size:14px;margin:0 0 6px;color:#E5A94F}
+.frame{background:#fff;overflow:hidden;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.35)}
+.pc .frame{width:640px;height:420px}
+.pc iframe{width:1280px;height:840px;transform:scale(.5);transform-origin:0 0;border:0}
+.mo .frame{width:300px;height:560px}
+.mo iframe{width:375px;height:700px;transform:scale(.8);transform-origin:0 0;border:0}
+</style></head><body>
+<h1>첫 화면 광고 비교 — A 배너만 · B 문구+배너</h1>
+<p class="note">실제 첫 화면에 쿠팡 배너(받아 둔 코드, 크기만 바꿈)를 넣어 본 모습입니다. 위: PC(1280px) · 아래: 휴대폰(375px). 저장소에는 들어가지 않는 미리보기 전용 쪽입니다.</p>
+<div class="grid">
+  <div class="cell pc"><h2>PC · A 배너만 (1030×140)</h2><div class="frame"><iframe data-k="a" src="/?cmp=pa"></iframe></div></div>
+  <div class="cell pc"><h2>PC · B 문구 + 배너 (760×140)</h2><div class="frame"><iframe data-k="b" src="/?cmp=pb"></iframe></div></div>
+  <div class="cell mo"><h2>휴대폰 · A 배너만 (290×100)</h2><div class="frame"><iframe data-k="a" src="/?cmp=ma"></iframe></div></div>
+  <div class="cell mo"><h2>휴대폰 · B 문구 + 배너 (290×100)</h2><div class="frame"><iframe data-k="b" src="/?cmp=mb"></iframe></div></div>
+</div>
+<script>
+function mock(win, kind) {
+  var d = win.document, mob = win.innerWidth < 901, four = d.querySelector('.g-four');
+  if (!four) return;
+  var w = d.createElement('div'); w.className = 'wrap'; w.style.cssText = 'margin-top:22px;margin-bottom:22px';
+  var card = 'background:#FFFBF3;border:1px solid rgba(38,51,46,.13);border-radius:16px;padding:12px 14px 14px';
+  var lab = '<p style="display:flex;align-items:center;gap:6px;margin:0 0 8px;font-size:.8rem;font-weight:600;color:#6B5E4F"><span style="font-size:.72rem;font-weight:700;color:#fff;background:#C07B22;border-radius:999px;padding:4px 9px">광고</span>쿠팡 파트너스</p>';
+  var W, H;
+  if (kind === 'a') {
+    W = mob ? 290 : 1030; H = mob ? 100 : 140;
+    w.innerHTML = '<div style="' + card + '">' + lab + '<div id="mockSlot" style="height:' + H + 'px;display:flex;justify-content:center;overflow:hidden"></div></div>';
+  } else {
+    W = mob ? 290 : 760; H = mob ? 100 : 140;
+    var txt = '<div style="' + (mob ? 'margin-bottom:10px' : 'flex:0 0 250px;padding-right:18px;border-right:1px dashed rgba(38,51,46,.2)') + '">' +
+      '<div style="font-size:.78rem;font-weight:700;color:#C07B22">9월 바다 준비물</div>' +
+      '<div style="font-family:Noto Serif KR,serif;font-size:1.15rem;font-weight:700;color:#2B2116;margin:4px 0 6px;line-height:1.35">갑오징어·주꾸미 철이에요</div>' +
+      '<div style="font-size:.8rem;color:#6B5E4F;line-height:1.55">방파제 에기 낚시와 야간 해루질에 쓰는 물건을 모았습니다.</div></div>';
+    w.innerHTML = '<div style="' + card + '">' + lab + '<div style="display:' + (mob ? 'block' : 'flex') + ';align-items:center;gap:18px">' + txt +
+      '<div id="mockSlot" style="height:' + H + 'px;flex:1;display:flex;justify-content:center;overflow:hidden"></div></div></div>';
+  }
+  four.parentNode.insertBefore(w, four);
+  function go() { new win.PartnersCoupang.G({ id: 1028423, template: 'carousel', trackingCode: 'AF2011879', width: String(W), height: String(H), tsource: '', container: d.getElementById('mockSlot') }); }
+  var s = d.createElement('script'); s.src = 'https://ads-partners.coupang.com/g.js'; s.onload = go; d.head.appendChild(s);
+  setTimeout(function () { win.scrollTo(0, w.getBoundingClientRect().top + win.scrollY - (mob ? 260 : 330)); }, 300);
+}
+[].forEach.call(document.querySelectorAll('iframe'), function (f) {
+  f.addEventListener('load', function () { try { mock(f.contentWindow, f.getAttribute('data-k')); } catch (e) {} });
+});
+</script>
+</body></html>

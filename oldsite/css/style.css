@@ -1,0 +1,1770 @@
+:root{
+    --night:#F7F2E7;
+    --night-2:#EFE6D3;
+    --mud:#7C6242;
+    --mud-deep:#4E3B26;
+    --sand:#93713F;
+    --lantern:#C07B22;
+    --lantern-dim:#8A6428;
+    --foam:#26332E;
+    --foam-dim:#6E6353;
+    --teal:#2F5D57;
+    --ink:#2A1B08;
+    --line: rgba(38,51,46,0.13);
+    --dark-text:#F3ECDD;
+    --dark-text-dim: rgba(243,236,221,0.72);
+  }
+
+  /* ---------- REGION THEMES ----------
+     각 권역 body에 data-region 값만 있으면 색상이 자동으로 바뀝니다.
+     새 권역을 열 때는 이 블록만 하나 추가하면 됩니다. */
+  [data-region="sinan"]{
+    --mud:#5C4A66;
+    --mud-deep:#362B3E;
+    --lantern:#CE7A38;
+    --lantern-dim:#9C5A26;
+    --teal:#4A5C82;
+    --sand:#A69368;
+  }
+
+  [data-region="muan"]{
+    --mud:#8B5A3C;
+    --mud-deep:#5C3820;
+    --lantern:#C1592E;
+    --lantern-dim:#8F3F1E;
+    --teal:#3F7A5C;
+    --sand:#A8663F;
+  }
+
+  [data-region="yeosu"]{
+    --mud:#4B5A66;
+    --mud-deep:#2A343C;
+    --lantern:#D9642E;
+    --lantern-dim:#A34A1E;
+    --teal:#1F5C6B;
+    --sand:#6E5A47;
+  }
+
+  [data-region="mokpo"]{
+    --mud:#3F5568;
+    --mud-deep:#24313E;
+    --lantern:#D9772A;
+    --lantern-dim:#A6591D;
+    --teal:#2C6B79;
+    --sand:#8C7357;
+  }
+
+  [data-region="yeonggwang"]{
+    --mud:#5E4A2E;
+    --mud-deep:#3C2F1C;
+    --lantern:#C68A22;
+    --lantern-dim:#966A19;
+    --teal:#3D6B5A;
+    --sand:#A88347;
+  }
+
+  [data-region="hampyeong"]{
+    --mud:#5A4456;
+    --mud-deep:#392B37;
+    --lantern:#D9668A;
+    --lantern-dim:#A94A69;
+    --teal:#3C7A6E;
+    --sand:#8C6F63;
+  }
+
+  [data-region="jindo"]{
+    --mud:#34435C;
+    --mud-deep:#1D2738;
+    --lantern:#DD6B2E;
+    --lantern-dim:#A94F20;
+    --teal:#2A5C78;
+    --sand:#74684F;
+  }
+
+  [data-region="haenam"]{
+    --mud:#5A4234;
+    --mud-deep:#392A20;
+    --lantern:#DE7134;
+    --lantern-dim:#AB5423;
+    --teal:#3E6E68;
+    --sand:#A9855E;
+  }
+
+  [data-region="wando"]{
+    --mud:#2F5049;
+    --mud-deep:#1B322D;
+    --lantern:#DB7E2C;
+    --lantern-dim:#A75F1F;
+    --teal:#23726E;
+    --sand:#7C8A5C;
+  }
+
+  [data-region="gangjin"]{
+    --mud:#3D5C52;
+    --mud-deep:#233A32;
+    --lantern:#CB7A2A;
+    --lantern-dim:#9A5C1E;
+    --teal:#2E7566;
+    --sand:#8A9270;
+  }
+
+  [data-region="jangheung"]{
+    --mud:#3C5540;
+    --mud-deep:#223125;
+    --lantern:#D3752A;
+    --lantern-dim:#A0581F;
+    --teal:#2E6C52;
+    --sand:#8B8A5A;
+  }
+
+  [data-region="goheung"]{
+    --mud:#33435E;
+    --mud-deep:#1C2738;
+    --lantern:#DB6E30;
+    --lantern-dim:#A85223;
+    --teal:#275C7A;
+    --sand:#6E7A63;
+  }
+
+  [data-region="suncheon"]{
+    --mud:#574F30;
+    --mud-deep:#362F1D;
+    --lantern:#CD7E2D;
+    --lantern-dim:#9C5F21;
+    --teal:#3C6B4E;
+    --sand:#A08C4E;
+  }
+
+  [data-region="gwangyang"]{
+    --mud:#4A3E4C;
+    --mud-deep:#2C2530;
+    --lantern:#D96B4A;
+    --lantern-dim:#A64F35;
+    --teal:#3E6472;
+    --sand:#8C7A73;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--night);
+    color:var(--foam);
+    font-family:'Noto Sans KR', sans-serif;
+    font-weight:400;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.serif{ font-family:'Noto Serif KR', serif; font-weight:700; letter-spacing:-0.01em; }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 28px;}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(247,242,231,0.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .navbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 28px; max-width:1120px; margin:0 auto;
+  }
+  .brand{ display:flex; align-items:baseline; gap:10px; }
+  .brand .mark{ font-family:'Noto Serif KR',serif; font-weight:700; font-size:1.35rem; letter-spacing:1px; }
+  .brand .sub{ font-size:0.72rem; color:var(--foam-dim); }
+  .navlinks{ display:flex; gap:28px; font-size:0.92rem; color:var(--foam-dim);}
+  .navlinks a:hover{ color:var(--lantern); }
+  .muldae-badge{
+    display:flex; align-items:center; gap:8px;
+    border:1px solid var(--line); border-radius:100px;
+    padding:6px 14px; font-size:0.78rem; color:var(--foam-dim);
+  }
+  .muldae-badge .dot{
+    width:7px; height:7px; border-radius:50%; background:var(--lantern);
+    box-shadow:0 0 8px var(--lantern);
+  }
+  @media(max-width:760px){ .navlinks{display:none;} }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:110px 28px 96px;
+    background:
+      radial-gradient(ellipse at 80% 6%, rgba(224,158,72,0.38), transparent 46%),
+      radial-gradient(ellipse at 8% 92%, rgba(47,93,87,0.14), transparent 55%),
+      linear-gradient(175deg, #FBF6EA 0%, #F3E6CA 48%, #E7CFA0 100%);
+    overflow:hidden;
+  }
+  /* 실사 배경사진이 준비된 권역은 body에 class="has-photo"를 붙이면
+     그라데이션이 반투명 톤으로 바뀌고 그 위/아래로 img/<지역>-hero.jpg 사진이 깔립니다.
+     사진 파일이 없거나 경로가 틀려도 그라데이션만 보일 뿐 레이아웃은 깨지지 않습니다. */
+  body.has-photo[data-region="boseong"] .hero{
+    background-image:
+      radial-gradient(ellipse at 88% 10%, rgba(224,158,72,0.22), transparent 40%),
+      linear-gradient(100deg, rgba(251,246,234,0.97) 0%, rgba(251,246,234,0.94) 32%, rgba(248,241,224,0.72) 46%, rgba(243,230,202,0.34) 62%, rgba(231,207,160,0.10) 78%),
+      url("../img/boseong/hero.jpg?v=2789956585");
+    background-size:auto,auto,cover;
+    background-position:center,center,center 60%;
+    background-repeat:no-repeat;
+  }
+  body.has-photo[data-region="muan"] .hero{
+    background-image:
+      radial-gradient(ellipse at 88% 10%, rgba(193,89,46,0.22), transparent 40%),
+      linear-gradient(100deg, rgba(251,246,234,0.97) 0%, rgba(251,246,234,0.94) 32%, rgba(248,241,224,0.72) 46%, rgba(243,230,202,0.34) 62%, rgba(231,207,160,0.10) 78%),
+      url("../img/muan/hero.jpg?v=2786954701");
+    background-size:auto,auto,cover;
+    background-position:center,center,center 60%;
+    background-repeat:no-repeat;
+  }
+  body.has-photo[data-region="sinan"] .hero{
+    background-image:
+      radial-gradient(ellipse at 88% 10%, rgba(206,122,56,0.22), transparent 40%),
+      linear-gradient(100deg, rgba(251,246,234,0.97) 0%, rgba(251,246,234,0.94) 32%, rgba(248,241,224,0.72) 46%, rgba(243,230,202,0.34) 62%, rgba(231,207,160,0.10) 78%),
+      url("../img/sinan/hero.jpg?v=4072387617");
+    background-size:auto,auto,cover;
+    background-position:center,center,center 60%;
+    background-repeat:no-repeat;
+  }
+  body.has-photo[data-region="mokpo"] .hero{
+    background-image:
+      radial-gradient(ellipse at 88% 10%, rgba(217,119,42,0.22), transparent 40%),
+      linear-gradient(100deg, rgba(251,246,234,0.97) 0%, rgba(251,246,234,0.94) 32%, rgba(248,241,224,0.72) 46%, rgba(243,230,202,0.34) 62%, rgba(231,207,160,0.10) 78%),
+      url("../img/mokpo/hero.jpg?v=3936749720");
+    background-size:auto,auto,cover;
+    background-position:center,center,center 60%;
+    background-repeat:no-repeat;
+  }
+  body.has-photo[data-region="yeonggwang"] .hero{
+    background-image:
+      radial-gradient(ellipse at 88% 10%, rgba(198,138,34,0.22), transparent 40%),
+      linear-gradient(100deg, rgba(251,246,234,0.97) 0%, rgba(251,246,234,0.94) 32%, rgba(248,241,224,0.72) 46%, rgba(243,230,202,0.34) 62%, rgba(231,207,160,0.10) 78%),
+      url("../img/yeonggwang/hero.jpg?v=1963307806");
+    background-size:auto,auto,cover;
+    background-position:center,center,center 60%;
+    background-repeat:no-repeat;
+  }
+  body.has-photo[data-region="hampyeong"] .hero{
+    background-image:
+      radial-gradient(ellipse at 88% 10%, rgba(217,102,138,0.22), transparent 40%),
+      linear-gradient(100deg, rgba(251,246,234,0.97) 0%, rgba(251,246,234,0.94) 32%, rgba(248,241,224,0.72) 46%, rgba(243,230,202,0.34) 62%, rgba(231,207,160,0.10) 78%),
+      url("../img/hampyeong/hero.jpg?v=1914375018");
+    background-size:auto,auto,cover;
+    background-position:center,center,center 60%;
+    background-repeat:no-repeat;
+  }
+  body.has-photo[data-region="jindo"] .hero{
+    background-image:
+      radial-gradient(ellipse at 88% 10%, rgba(221,107,46,0.22), transparent 40%),
+      linear-gradient(100deg, rgba(251,246,234,0.97) 0%, rgba(251,246,234,0.94) 32%, rgba(248,241,224,0.72) 46%, rgba(243,230,202,0.34) 62%, rgba(231,207,160,0.10) 78%),
+      url("../img/jindo/hero.jpg?v=4139485421");
+    background-size:auto,auto,cover;
+    background-position:center,center,center 60%;
+    background-repeat:no-repeat;
+  }
+  body.has-photo[data-region="haenam"] .hero{
+    background-image:
+      radial-gradient(ellipse at 88% 10%, rgba(222,113,52,0.22), transparent 40%),
+      linear-gradient(100deg, rgba(251,246,234,0.97) 0%, rgba(251,246,234,0.94) 32%, rgba(248,241,224,0.72) 46%, rgba(243,230,202,0.34) 62%, rgba(231,207,160,0.10) 78%),
+      url("../img/haenam/hero.jpg?v=2750522131");
+    background-size:auto,auto,cover;
+    background-position:center,center,center 60%;
+    background-repeat:no-repeat;
+  }
+  body.has-photo[data-region="wando"] .hero{
+    background-image:
+      radial-gradient(ellipse at 88% 10%, rgba(219,126,44,0.22), transparent 40%),
+      linear-gradient(100deg, rgba(251,246,234,0.97) 0%, rgba(251,246,234,0.94) 32%, rgba(248,241,224,0.72) 46%, rgba(243,230,202,0.34) 62%, rgba(231,207,160,0.10) 78%),
+      url("../img/wando/hero.jpg?v=3301756433");
+    background-size:auto,auto,cover;
+    background-position:center,center,center 60%;
+    background-repeat:no-repeat;
+  }
+  body.has-photo[data-region="gangjin"] .hero{
+    background-image:
+      radial-gradient(ellipse at 88% 10%, rgba(203,122,42,0.22), transparent 40%),
+      linear-gradient(100deg, rgba(251,246,234,0.97) 0%, rgba(251,246,234,0.94) 32%, rgba(248,241,224,0.72) 46%, rgba(243,230,202,0.34) 62%, rgba(231,207,160,0.10) 78%),
+      url("../img/gangjin/hero.jpg?v=3357826768");
+    background-size:auto,auto,cover;
+    background-position:center,center,center 60%;
+    background-repeat:no-repeat;
+  }
+  body.has-photo[data-region="jangheung"] .hero{
+    background-image:
+      radial-gradient(ellipse at 88% 10%, rgba(211,117,42,0.22), transparent 40%),
+      linear-gradient(100deg, rgba(251,246,234,0.97) 0%, rgba(251,246,234,0.94) 32%, rgba(248,241,224,0.72) 46%, rgba(243,230,202,0.34) 62%, rgba(231,207,160,0.10) 78%),
+      url("../img/jangheung/hero.jpg?v=3113682503");
+    background-size:auto,auto,cover;
+    background-position:center,center,center 60%;
+    background-repeat:no-repeat;
+  }
+  body.has-photo[data-region="goheung"] .hero{
+    background-image:
+      radial-gradient(ellipse at 88% 10%, rgba(219,110,48,0.22), transparent 40%),
+      linear-gradient(100deg, rgba(251,246,234,0.97) 0%, rgba(251,246,234,0.94) 32%, rgba(248,241,224,0.72) 46%, rgba(243,230,202,0.34) 62%, rgba(231,207,160,0.10) 78%),
+      url("../img/goheung/hero.jpg?v=3878430809");
+    background-size:auto,auto,cover;
+    background-position:center,center,center 60%;
+    background-repeat:no-repeat;
+  }
+  body.has-photo[data-region="yeosu"] .hero{
+    background-image:
+      radial-gradient(ellipse at 88% 10%, rgba(217,100,46,0.22), transparent 40%),
+      linear-gradient(100deg, rgba(251,246,234,0.97) 0%, rgba(251,246,234,0.94) 32%, rgba(248,241,224,0.72) 46%, rgba(243,230,202,0.34) 62%, rgba(231,207,160,0.10) 78%),
+      url("../img/yeosu/hero.jpg?v=3012168707");
+    background-size:auto,auto,cover;
+    background-position:center,center,center 60%;
+    background-repeat:no-repeat;
+  }
+  body.has-photo[data-region="suncheon"] .hero{
+    background-image:
+      radial-gradient(ellipse at 88% 10%, rgba(205,126,45,0.22), transparent 40%),
+      linear-gradient(100deg, rgba(251,246,234,0.97) 0%, rgba(251,246,234,0.94) 32%, rgba(248,241,224,0.72) 46%, rgba(243,230,202,0.34) 62%, rgba(231,207,160,0.10) 78%),
+      url("../img/suncheon/hero.jpg?v=3244125823");
+    background-size:auto,auto,cover;
+    background-position:center,center,center 60%;
+    background-repeat:no-repeat;
+  }
+  body.has-photo[data-region="gwangyang"] .hero{
+    background-image:
+      radial-gradient(ellipse at 88% 10%, rgba(217,107,74,0.22), transparent 40%),
+      linear-gradient(100deg, rgba(251,246,234,0.97) 0%, rgba(251,246,234,0.94) 32%, rgba(248,241,224,0.72) 46%, rgba(243,230,202,0.34) 62%, rgba(231,207,160,0.10) 78%),
+      url("../img/gwangyang/hero.jpg?v=2291571228");
+    background-size:auto,auto,cover;
+    background-position:center,center,center 60%;
+    background-repeat:no-repeat;
+  }
+
+  /* boseong-band(권역 소개 띠)도 사진이 있으면 은은하게 배경으로 깔아줍니다.
+     사진이 없거나 has-photo가 없으면 기존 그라데이션만 그대로 보입니다. */
+  body.has-photo[data-region="boseong"] .boseong-band{
+    background-image:
+      linear-gradient(120deg, rgba(78,59,38,0.86), rgba(124,98,66,0.72) 70%),
+      url("../img/boseong/band.jpg?v=279383542");
+    background-size:cover;
+    background-position:center 42%;
+    background-repeat:no-repeat;
+  }
+
+  /* 물때·날씨 카드도 사진이 있으면 하늘 사진을 배경으로 깔아줍니다.
+     왼쪽(기온·아이콘)은 짙게 가리고 오른쪽(파고·수온 수치)으로 갈수록 하늘이 드러납니다. */
+  body.has-photo[data-region="boseong"] .weather-card{
+    background-image:
+      linear-gradient(100deg, rgba(78,59,38,0.90) 0%, rgba(78,59,38,0.76) 34%, rgba(78,59,38,0.46) 60%, rgba(78,59,38,0.20) 85%),
+      url("../img/boseong/sky.jpg?v=2277129444");
+    background-size:cover;
+    background-position:center 40%;
+    background-repeat:no-repeat;
+  }
+
+  .hero::before{
+    content:"";
+    position:absolute; inset:0; z-index:1; pointer-events:none;
+    opacity:0.05; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .hero::after{
+    content:"";
+    position:absolute; left:0; right:0; bottom:0; height:38%; z-index:1; pointer-events:none;
+    background:linear-gradient(180deg, transparent, rgba(47,93,87,0.10) 60%, rgba(47,93,87,0.16));
+  }
+  .hero-inner{ max-width:1120px; margin:0 auto; position:relative; z-index:2; }
+  .hero .eyebrow-line{
+    display:flex; align-items:center; gap:12px; margin-bottom:26px;
+    color:var(--foam-dim); font-size:0.9rem;
+  }
+  .hero .eyebrow-line svg{ flex-shrink:0; }
+  .hero h1{
+    font-size:clamp(2.1rem, 4.6vw, 3.4rem);
+    line-height:1.35;
+    max-width:13em;
+    color:var(--foam);
+  }
+  .hero h1 .accent{ color:var(--lantern); }
+  .hero p.lede{
+    margin-top:22px; max-width:52ch; color:var(--foam-dim);
+    font-size:1.05rem;
+  }
+  .hero-cta{ display:flex; gap:14px; margin-top:36px; flex-wrap:wrap; }
+  .btn{
+    padding:13px 26px; border-radius:2px; font-size:0.95rem;
+    border:1px solid transparent; cursor:pointer;
+  }
+  .btn-primary{ background:var(--lantern); color:var(--ink); font-weight:600; }
+  .btn-primary:hover{ background:#f0b25c; }
+  .btn-ghost{ border-color:var(--line); color:var(--foam); }
+  .btn-ghost:hover{ border-color:var(--foam-dim); }
+
+  .tide-scene{
+    position:absolute; right:0; top:40px; width:380px; height:380px;
+    opacity:0.9; z-index:1; pointer-events:none;
+  }
+  @media(max-width:1180px){ .tide-scene{ right:28px; } }
+  @media(max-width:900px){ .tide-scene{ display:none; } }
+  /* 실사 배경사진이 켜지면 장식용 해/파도 그래픽은 사진과 겹쳐 어색해 보이므로 숨깁니다. */
+  body.has-photo .tide-scene{ display:none; }
+
+  /* ---------- QUICK NAV ---------- */
+  .quicknav{ padding:30px 0; border-bottom:1px solid var(--line); }
+  .quicknav .row{
+    display:grid; grid-template-columns:repeat(7,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line);
+  }
+  .qn-item{
+    background:var(--night); padding:20px 8px; text-align:center;
+    display:flex; flex-direction:column; align-items:center; gap:10px;
+    transition:background .15s;
+  }
+  .qn-item:hover{ background:var(--night-2); }
+  .qn-item svg{ width:26px; height:26px; }
+  .qn-item span{ font-size:0.78rem; color:var(--foam-dim); }
+  @media(max-width:700px){ .quicknav .row{ grid-template-columns:repeat(3,1fr); } }
+
+  /* ---------- COASTLINE STRIP ---------- */
+  .coastline{ padding:54px 0 70px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--night-2); }
+  .coastline .head{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:28px; flex-wrap:wrap; gap:10px;}
+  .coastline h2{ font-size:1.5rem; }
+  .coastline .head p{ color:var(--foam-dim); font-size:0.9rem; }
+  .strip{
+    display:flex; gap:2px; overflow-x:auto; padding-bottom:8px;
+    scrollbar-width:thin;
+  }
+  .region{
+    flex:0 0 auto; width:118px; padding:18px 14px;
+    border-top:2px solid var(--line);
+    position:relative; color:var(--foam-dim);
+    transition:border-color .2s, background .2s;
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .region:hover{ background:var(--night-2); }
+  .region .n{ font-size:0.7rem; color:var(--foam-dim); opacity:0.55; letter-spacing:0.02em; }
+  .region .name{ font-size:1.05rem; color:var(--foam-dim); }
+  .region .stat{
+    align-self:flex-start; font-size:0.68rem; padding:3px 9px;
+    border-radius:100px; background:rgba(38,51,46,0.06); color:var(--foam-dim); opacity:0.7;
+  }
+  .region.active{ border-top-color:var(--lantern); background:rgba(192,123,34,0.05); }
+  .region.active .name{ color:var(--lantern); font-weight:700; }
+  .region.active .stat{ background:rgba(192,123,34,0.14); color:var(--lantern); opacity:1; font-weight:600; }
+  .region.locked .stat::before{ content:""; }
+  .region.open{ border-top-color:var(--teal); cursor:pointer; }
+  .region.open .name{ color:var(--foam); }
+  .region.open .stat{ background:rgba(47,93,87,0.12); color:#1F4A44; opacity:1; font-weight:600; }
+  .region.open:hover{ background:var(--night-2); }
+
+  /* ---------- REGION GRID (메인 허브 페이지 전용 — index.html) ---------- */
+  .region-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line);
+  }
+  .rg-card{
+    position:relative; background:var(--night); padding:26px 24px 24px;
+    display:flex; flex-direction:column; gap:8px; transition:background .15s;
+  }
+  .rg-card::before{
+    content:""; position:absolute; left:0; top:0; bottom:0; width:3px;
+    background:var(--lantern, var(--foam-dim)); opacity:0.8;
+  }
+  a.rg-card:hover{ background:var(--night-2); }
+  .rg-card .n{ font-size:0.72rem; color:var(--foam-dim); opacity:0.6; letter-spacing:0.03em; }
+  .rg-card h3{ font-size:1.3rem; margin-top:2px; }
+  .rg-card p{ font-size:0.85rem; color:var(--foam-dim); line-height:1.6; flex:1; }
+  .rg-card .go{ font-size:0.8rem; color:var(--lantern); font-weight:600; margin-top:2px; }
+  .rg-card.locked{ opacity:0.55; }
+  .rg-card.locked::before{ background:var(--foam-dim); }
+  .rg-card.locked .go{ color:var(--foam-dim); }
+  @media(max-width:900px){ .region-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media(max-width:560px){ .region-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- SECTION SHELL ---------- */
+  .section{ padding:80px 0; }
+  .section-head{ max-width:640px; margin-bottom:44px; }
+  .section-head .kicker{
+    font-size:0.82rem; color:var(--lantern); margin-bottom:10px;
+  }
+  .section-head h2{ font-size:1.9rem; line-height:1.4; }
+  .section-head p{ color:var(--foam-dim); margin-top:14px; font-size:0.98rem; }
+
+  /* ---------- BOSEONG INTRO BAND ---------- */
+  .boseong-band{
+    background:linear-gradient(120deg, var(--mud-deep), var(--mud) 70%);
+    color:var(--dark-text);
+    padding:64px 28px;
+  }
+  .boseong-band .wrap{ display:flex; gap:48px; align-items:flex-start; flex-wrap:wrap;}
+  .boseong-band .left{ flex:1 1 300px; }
+  .boseong-band h2{ font-size:2.1rem; }
+  .boseong-band .right{ flex:1 1 340px; display:grid; grid-template-columns:1fr 1fr; gap:1px; background:rgba(243,236,221,0.18);}
+  .fact{ background:var(--mud-deep); padding:20px 18px; }
+  .fact .num{ font-family:'Noto Serif KR',serif; font-weight:700; font-size:1.5rem; color:#E5A94F; }
+  .fact .label{ font-size:0.8rem; color:var(--dark-text-dim); margin-top:6px; }
+
+  /* ---------- POINT LIST (해루질 · 낚시 포인트) ---------- */
+  .points{ display:flex; flex-direction:column; border-top:1px solid var(--line); }
+  .points:not(.expanded) .point:nth-child(n+5){ display:none; }
+  .more-btn{
+    margin-left:auto; flex-shrink:0;
+    font-size:0.8rem; padding:5px 14px; border-radius:100px;
+    border:1px solid var(--line); background:transparent; color:var(--foam-dim);
+    cursor:pointer; transition:border-color .15s, color .15s;
+  }
+  .more-btn:hover{ border-color:var(--lantern); color:var(--lantern); }
+  .more-btn:focus-visible{ outline:2px solid var(--lantern); outline-offset:2px; }
+  .point{
+    display:grid; grid-template-columns:1.8fr 1.3fr 1fr 1.1fr 0.9fr; gap:20px;
+    padding:26px 0; border-bottom:1px solid var(--line);
+    align-items:center;
+  }
+  .point .pname{ font-size:1.08rem; }
+  .point .pname .loc{ display:block; font-size:0.8rem; color:var(--foam-dim); margin-top:4px; }
+  .point .catch-tags{ display:flex; flex-wrap:wrap; gap:6px; }
+  .tag{
+    font-size:0.76rem; padding:4px 10px; border:1px solid var(--line);
+    color:var(--foam-dim); border-radius:100px;
+  }
+  .point .season{ font-size:0.86rem; color:var(--lantern); }
+  .point .season .small{ display:block; font-size:0.74rem; color:var(--foam-dim); margin-top:3px;}
+  .point .tide-window{ font-size:0.86rem; color:var(--sand); }
+  .point .tide-window .small{ display:block; font-size:0.74rem; color:var(--foam-dim); margin-top:3px;}
+  .point .level{ text-align:right; font-size:0.82rem; }
+  .level.easy{ color:#3F7A54; }
+  .level.mid{ color:var(--lantern); }
+  .level.hard{ color:#B5503F; }
+  /* 휴대폰에서는 오른쪽이 비지 않게 두 칸으로 나눠 담습니다 (2026-09-20)
+     1줄 이름·주소 + 난이도 / 2줄 대상 / 3줄 제철 + 물때 */
+  @media(max-width:760px){
+    .point{ grid-template-columns:minmax(0,1fr) max-content; gap:10px 14px; padding:20px 0; align-items:start; }
+    .point .pname{ grid-area:1 / 1; }
+    .point .level{ grid-area:1 / 2; text-align:right; align-self:start; }
+    .point .catch-tags{ grid-area:2 / 1 / 3 / -1; }
+    .point .season{ grid-area:3 / 1; }
+    .point .tide-window{ grid-area:3 / 2; }
+  }
+
+  /* ---------- CATCH / 어종 CARDS ---------- */
+  .catch-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+  .catch-card{ background:var(--night); padding:28px 22px; }
+  .catch-card .season{ font-size:0.74rem; color:var(--lantern); }
+  .catch-card h3{ font-size:1.25rem; margin-top:10px; }
+  .catch-card p{ font-size:0.84rem; color:var(--foam-dim); margin-top:10px; }
+  /* 접힌 상태(기본값)에서는 3개만 보여주고, 빈 4번째 칸이 남지 않도록 3열로 맞춥니다.
+     더보기를 누르면(.expanded) 전부 펼치고 4열로 되돌아갑니다. */
+  .catch-grid:not(.expanded) .catch-card:nth-child(n+4){ display:none; }
+  .catch-grid:not(.expanded){ grid-template-columns:repeat(3,1fr); }
+  @media(max-width:900px){ .catch-grid{ grid-template-columns:repeat(2,1fr) !important;} }
+  @media(max-width:520px){ .catch-grid{ grid-template-columns:1fr !important;} }
+
+  .catch-group{ margin-top:44px; }
+  .catch-group:first-child{ margin-top:0; }
+  .catch-group-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:18px; }
+  .catch-group-head .method-badge{
+    font-size:0.8rem; padding:5px 14px; border-radius:100px; flex-shrink:0;
+  }
+  .method-badge.foraging{ background:rgba(192,123,34,0.12); color:var(--lantern); border:1px solid rgba(192,123,34,0.35); }
+  .method-badge.fishing{ background:rgba(47,93,87,0.10); color:#1F4A44; border:1px solid rgba(47,93,87,0.35); }
+  .catch-group-head .desc{ font-size:0.86rem; color:var(--foam-dim); }
+  .catch-card .method-tag{ font-size:0.72rem; color:var(--foam-dim); margin-top:14px; opacity:0.75; }
+
+  /* ---------- TIDE TABLE (물때표) ---------- */
+  .tide-strip{
+    display:grid; grid-template-columns:repeat(7,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line);
+  }
+  .tide-day{ background:var(--night); padding:20px 14px; text-align:center; }
+  .tide-day.is-today{ background:#FBF3E2; }
+  .tide-day .d-label{ font-size:0.78rem; color:var(--foam-dim); }
+  .tide-day .d-date{ font-size:0.92rem; margin-top:2px; }
+  .d-weather{ height:20px; margin-top:8px; display:flex; align-items:center; justify-content:center; gap:4px; }
+  .d-weather svg{ width:18px; height:18px; }
+  .d-weather .d-w-temp{ font-size:0.76rem; color:var(--foam-dim); }
+  .tide-day .d-muldae{
+    font-family:'Noto Serif KR',serif; font-weight:700; font-size:1.6rem; color:var(--lantern);
+    margin-top:14px;
+  }
+  .tide-day .d-muldae .unit{ font-size:0.8rem; font-family:'Noto Sans KR'; margin-left:2px; color:var(--foam-dim); }
+  .tide-day .d-events{ margin-top:14px; font-size:0.74rem; color:var(--foam-dim); line-height:1.9; }
+  .tide-day .d-events .ev{ display:block; }
+  .tide-day .d-events .ev.high{ color:var(--lantern); }
+  .tide-note{ margin-top:16px; font-size:0.78rem; color:var(--foam-dim); }
+  .d-gauge{
+    margin-top:14px; height:5px; border-radius:100px;
+    background:rgba(38,51,46,0.10); overflow:hidden;
+  }
+  .d-gauge-fill{ height:100%; border-radius:100px; }
+  .d-gauge-fill.spring{ background:var(--lantern); }
+  .d-gauge-fill.mid{ background:#2F5D57; opacity:0.55; }
+  .d-gauge-fill.neap{ background:var(--foam-dim); opacity:0.45; }
+  .d-tidelabel{ margin-top:8px; font-size:0.74rem; }
+  .d-tidelabel.spring{ color:var(--lantern); font-weight:600; }
+  .d-tidelabel.mid{ color:var(--foam-dim); }
+  .d-tidelabel.neap{ color:var(--foam-dim); opacity:0.75; }
+
+  /* ---------- WEATHER CARD ---------- */
+  .weather-card{
+    display:flex; align-items:center; gap:28px; flex-wrap:wrap;
+    padding:24px 28px; margin-bottom:28px;
+    background:linear-gradient(120deg, var(--mud-deep), var(--mud) 85%);
+    color:var(--dark-text);
+  }
+  .w-icon{ width:52px; height:52px; flex-shrink:0; }
+  .w-icon svg{ width:100%; height:100%; }
+  .w-main{ min-width:120px; }
+  .w-temp{ font-family:'Noto Serif KR',serif; font-weight:700; font-size:2rem; }
+  .w-label{ font-size:0.84rem; color:var(--dark-text-dim); margin-top:2px; }
+  .w-stats{ display:flex; gap:24px; margin-left:auto; }
+  .w-stat{ display:flex; flex-direction:column; gap:4px; }
+  .w-stat-label{ font-size:0.72rem; color:var(--dark-text-dim); }
+  .w-stat-val{ font-size:1.05rem; font-weight:600; color:#E5A94F; }
+  @media(max-width:600px){ .w-stats{ margin-left:0; } }
+  @media(max-width:760px){
+    .tide-strip{ grid-template-columns:repeat(4,1fr); }
+  }
+  @media(max-width:480px){
+    .tide-strip{ grid-template-columns:repeat(2,1fr); }
+  }
+
+  /* ---------- STAY / 펜션 ---------- */
+  .stay-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  .stay-card{
+    border:1px solid var(--line);
+  }
+  .stay-card .thumb{
+    height:110px; background:linear-gradient(135deg,var(--teal),#1c3634);
+    position:relative; overflow:hidden;
+  }
+  .stay-card .thumb .thumb-icon{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    opacity:0.5;
+  }
+  .stay-card .thumb .thumb-icon svg{ width:42px; height:42px; }
+  .stay-card .thumb .distance{
+    position:absolute; bottom:8px; left:8px; font-size:0.66rem;
+    background:rgba(20,28,26,0.72); padding:3px 8px; border-radius:100px; color:#F3ECDD;
+    z-index:1;
+  }
+  .stay-card .body{ padding:13px; }
+  .stay-card h3{ font-size:0.9rem; font-family:'Noto Sans KR'; font-weight:600; }
+  .stay-card .meta{ font-size:0.72rem; color:var(--foam-dim); margin-top:6px; line-height:1.4; }
+  .stay-card .price{ margin-top:10px; font-size:0.78rem; color:var(--sand); }
+
+  .stay-card.ad-slot{ border:1px dashed rgba(38,51,46,0.28); }
+  .ad-thumb{
+    height:110px; background:var(--night-2);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .ad-thumb svg{ width:26px; height:26px; opacity:0.7; }
+  @media(max-width:760px){ .stay-row{ grid-template-columns:repeat(2,1fr); } }
+  @media(max-width:460px){ .stay-row{ grid-template-columns:1fr; } }
+  .ad-slot .meta{ line-height:1.5; }
+  .ad-cta{ display:block; color:var(--lantern) !important; font-weight:600; cursor:pointer; }
+  .ad-cta:hover{ text-decoration:underline; }
+
+  /* ---------- EAT / 먹거리 ---------- */
+  .eat-list{ display:grid; grid-template-columns:1fr 1fr; gap:0; border-top:1px solid var(--line);}
+  .eat-row{
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:20px 0; border-bottom:1px solid var(--line);
+  }
+  .eat-row:nth-child(odd){ padding-right:28px; }
+  .eat-row:nth-child(even){ padding-left:28px; }
+  .eat-row .name{ font-size:1rem; }
+  .eat-row .desc{ display:block; font-size:0.8rem; color:var(--foam-dim); margin-top:5px; }
+  @media(max-width:700px){
+    .eat-list{ grid-template-columns:1fr; }
+    .eat-row:nth-child(odd), .eat-row:nth-child(even){ padding-left:0; padding-right:0; }
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top:1px solid var(--line); padding:48px 28px 60px;
+    color:var(--foam-dim); font-size:0.85rem;
+  }
+  footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:20px;}
+  footer .note{ max-width:46ch; }
+
+  .note-banner{
+    max-width:1120px; margin:0 auto 0; padding:14px 28px;
+    font-size:0.78rem; color:var(--foam-dim); border-top:1px dashed var(--line);
+  }
+
+  /* ---------- FESTIVAL CALENDAR ---------- */
+  .fest-grid{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line);
+  }
+  .fest-month{ background:var(--night); padding:20px 16px; min-height:96px; }
+  .fest-month .fm-num{ font-size:0.82rem; color:var(--foam-dim); }
+  .fest-month.active{ background:linear-gradient(120deg, var(--mud-deep), var(--mud) 85%); }
+  .fest-month.active .fm-num{ color:var(--dark-text-dim); }
+  .fest-month .fm-name{ font-family:'Noto Serif KR',serif; font-weight:700; font-size:1.05rem; margin-top:10px; color:var(--dark-text); }
+  .fest-month .fm-desc{ font-size:0.76rem; margin-top:6px; color:var(--dark-text-dim); }
+  @media(max-width:700px){ .fest-grid{ grid-template-columns:repeat(2,1fr); } }
+
+  /* ---------- 추천 여행 코스 ---------- */
+  .course-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line);
+  }
+  .course-card{ background:var(--night); padding:28px 24px; display:flex; flex-direction:column; gap:14px; }
+  .course-badge{
+    align-self:flex-start; font-size:0.78rem; padding:5px 14px; border-radius:100px; font-weight:600;
+  }
+  .course-badge.couple{ background:rgba(192,123,34,0.12); color:var(--lantern); border:1px solid rgba(192,123,34,0.35); }
+  .course-badge.parents{ background:rgba(47,93,87,0.10); color:#1F4A44; border:1px solid rgba(47,93,87,0.35); }
+  .course-badge.kids{ background:rgba(181,80,63,0.10); color:#B5503F; border:1px solid rgba(181,80,63,0.35); }
+  .course-badge.solo{ background:rgba(60,84,120,0.10); color:#34507A; border:1px solid rgba(60,84,120,0.35); }
+  .course-card h3{ font-size:1.2rem; }
+  .course-step{ display:flex; gap:10px; font-size:0.86rem; color:var(--foam-dim); line-height:1.5; }
+  .course-step .c-time{ flex-shrink:0; width:36px; color:var(--lantern); font-weight:600; font-size:0.8rem; }
+  @media(max-width:900px){ .course-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- 다녀온 이야기 (체험 후기) ---------- */
+  /* 카드 자체는 .wrap 폭(페이지 폭)에 맞춰 꽉 채우고, 사진은 폭만 고정(300px)해서
+     원본 비율(900x950)로 렌더링 — 카드가 넓어져도 사진 높이는 이전과 그대로 유지되고
+     잘리지 않습니다. 남는 공간은 텍스트 영역(.review-body)이 채웁니다. */
+  .review-card{
+    display:grid; grid-template-columns:300px 1fr;
+    background:var(--night-2); border:1px solid var(--line);
+    overflow:hidden;
+  }
+  .review-photo{ position:relative; aspect-ratio:900/950; }
+  .review-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .review-body{ padding:24px 36px; display:flex; flex-direction:column; gap:12px; justify-content:center; }
+  .review-meta{ font-size:0.84rem; color:var(--lantern); font-weight:600; }
+  .review-body h3{ font-size:1.4rem; line-height:1.4; }
+  .review-body p{ font-size:0.98rem; line-height:1.7; color:var(--foam-dim); max-width:58ch; }
+  .review-tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:2px; }
+  .review-tag{
+    font-size:0.8rem; padding:5px 14px; border-radius:100px;
+    background:rgba(192,123,34,0.10); color:var(--lantern); border:1px solid rgba(192,123,34,0.3);
+  }
+  @media(max-width:560px){
+    .review-card{ grid-template-columns:1fr; }
+    .review-body{ padding:18px 20px; gap:10px; }
+    .review-body h3{ font-size:1.15rem; }
+    .review-body p{ font-size:0.9rem; }
+  }
+
+  /* 후기 카드 아래 사진 4장 갤러리 — 카드와 같은 폭(페이지 폭)으로 꽉 채우되,
+     타일 높이는 이전 폭(620px 카드 기준)과 같은 149px로 고정해서 사진이 늘어나 보이지 않게 합니다. */
+  .review-gallery{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:8px;
+    margin-top:14px;
+  }
+  .review-gallery-item{ aspect-ratio:1/1; overflow:hidden; background:var(--night-2); }
+  .review-gallery-item img{ width:100%; height:100%; object-fit:cover; display:block; }
+  @media(min-width:561px){
+    .review-gallery-item{ aspect-ratio:auto; height:149px; }
+  }
+  @media(max-width:560px){
+    .review-gallery{ grid-template-columns:repeat(2,1fr); }
+  }
+
+  /* ---------- 맨 위로 버튼 (전 페이지 공통, js/app.js가 자동으로 생성해서 붙입니다) ---------- */
+  /* 색상은 var(--lantern)을 그대로 써서 지역별 테마 색과 자연스럽게 맞춰집니다. */
+  .to-top-btn{
+    position:fixed; right:24px; bottom:24px; z-index:80;
+    width:46px; height:46px; border:none; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--lantern); color:#fff; cursor:pointer;
+    box-shadow:0 8px 20px rgba(0,0,0,0.22);
+    opacity:0; visibility:hidden; transform:translateY(10px) scale(0.9);
+    transition:opacity .3s ease, transform .3s ease, visibility .3s, background .15s;
+  }
+  .to-top-btn.show{ opacity:1; visibility:visible; transform:translateY(0) scale(1); }
+  .to-top-btn:hover{ background:var(--lantern-dim); }
+  .to-top-btn svg{ width:20px; height:20px; }
+  @media(max-width:560px){
+    .to-top-btn{ right:16px; bottom:16px; width:42px; height:42px; }
+    .to-top-btn svg{ width:18px; height:18px; }
+  }
+
+/* =====================================================================
+   2026-09-09 보성 기준 개편 — 아래 블록은 전 권역 공용입니다.
+   (지역별로 달라지는 값은 전부 --lantern 등 CSS 변수로만 처리했으므로
+    다른 권역 페이지에 그대로 전파해도 색상은 각자 테마를 따라갑니다)
+   ===================================================================== */
+
+/* ---------- 1. 해도 등심선 구분선 ----------
+   섹션 위쪽에 얕은 물 → 깊은 물로 이어지는 수심 등고선을 그립니다.
+   장식이 아니라 "여기서부터 물이 깊어진다"는 이 사이트의 주제를 그대로 쓴 구분선입니다. */
+  .section--tideline{ position:relative; }
+  .section--tideline::before{
+    content:""; position:absolute; left:0; right:0; top:0; height:26px;
+    background-image:
+      repeating-linear-gradient(90deg, transparent 0 5px, rgba(47,93,87,0.18) 5px 6px),
+      linear-gradient(180deg, rgba(47,93,87,0.10), transparent);
+    -webkit-mask-image:linear-gradient(180deg, #000, transparent);
+    mask-image:linear-gradient(180deg, #000, transparent);
+    pointer-events:none;
+  }
+
+/* ---------- 2. 바다 섹션 (#tide) ----------
+   물때표는 페이지에서 유일하게 바다색을 쓰는 구간입니다.
+   크림색 한 톤으로 이어지던 페이지에서 여기만 색이 바뀌어 기준점 역할을 합니다. */
+  .section--sea{
+    background:
+      radial-gradient(ellipse at 88% -20%, rgba(255,255,255,0.9), transparent 58%),
+      linear-gradient(178deg, #E9F3F7 0%, #CCE2EC 52%, #B2D3E2 100%);
+    border-top:1px solid rgba(47,93,87,0.16);
+    border-bottom:1px solid rgba(47,93,87,0.16);
+  }
+  .section--sea .kicker{ color:#1E6E7C; }
+  .section--sea .section-head p{ color:#3D5A63; }
+  .section--sea .tide-note{ color:#41606A; }
+  /* 날씨 카드도 갈색 대신 바다 톤으로 — 배경사진(sky.jpg)이 있으면 그 위에 얹힙니다 */
+  .section--sea .weather-card{ background:linear-gradient(100deg, #1E5A6B 0%, #2E7D8C 55%, #4FA0AE 100%); }
+  body.has-photo[data-region="boseong"] .section--sea .weather-card{
+    background-image:
+      linear-gradient(100deg, rgba(20,72,86,0.94) 0%, rgba(30,90,107,0.80) 42%, rgba(46,125,140,0.34) 70%, rgba(79,160,174,0.10) 88%),
+      url("../img/boseong/sky.jpg?v=2277129444");
+    background-size:cover; background-position:center; background-repeat:no-repeat;
+  }
+
+  /* ---------- 물때 카드 ----------
+     하루 한 칸에 날짜 · 달(음력) · 일출일몰 · 물때 이름 · 물때 번호 · 간만조 시각을 담습니다. */
+  .section--sea .tide-strip{ background:rgba(47,93,87,0.16); }
+  .section--sea .tide-day{ background:rgba(255,255,255,0.74); text-align:left; padding:18px 15px 16px; }
+  .section--sea .tide-day.is-today{ background:#FFFFFF; box-shadow:inset 0 0 0 2px rgba(30,110,124,0.34); }
+
+  .td-top{ display:flex; align-items:baseline; gap:7px; }
+  .td-top .d-label{ font-size:0.78rem; color:var(--foam-dim); }
+  .td-top .d-date{ font-size:1.06rem; font-weight:600; color:var(--ink); margin-top:0; }
+
+  .td-astro{ margin-top:9px; display:flex; flex-direction:column; gap:4px; font-size:0.72rem; color:var(--foam-dim); }
+  .td-astro .row{ display:flex; align-items:center; gap:5px; }
+  .td-astro svg{ width:13px; height:13px; flex:none; }
+
+  .td-name{ margin-top:12px; font-family:'Noto Serif KR', serif; font-size:1.02rem; font-weight:700; color:var(--ink); }
+  .section--sea .tide-day .d-muldae{
+    font-size:0.8rem; font-family:'Noto Sans KR', sans-serif; font-weight:400;
+    color:var(--foam-dim); margin-top:3px;
+  }
+  .section--sea .tide-day .d-muldae .num{ font-weight:600; color:var(--ink); }
+  .section--sea .tide-day .d-muldae.spring .num{ color:var(--lantern); }
+  .section--sea .d-gauge{ background:rgba(30,110,124,0.15); margin-top:9px; }
+  .section--sea .d-gauge-fill.mid{ background:#3E8C9B; opacity:0.75; }
+  .section--sea .d-gauge-fill.neap{ background:#7E939B; opacity:0.55; }
+
+  /* 간조·만조 표 — 저/고 · 시각 · 조위(cm) 3열 */
+  .td-events{ margin-top:13px; border-top:1px solid var(--line); padding-top:9px; display:grid; gap:4px; }
+  .td-ev{ display:grid; grid-template-columns:auto 1fr auto; gap:8px; align-items:baseline; font-size:0.76rem; }
+  .td-ev .k{ color:#2E7D8C; font-weight:600; }
+  .td-ev.high .k{ color:var(--lantern); }
+  .td-ev .t{ color:var(--foam); font-variant-numeric:tabular-nums; }
+  .td-ev .h{ color:var(--foam-dim); font-variant-numeric:tabular-nums; }
+  .td-events .pending{ font-size:0.72rem; color:var(--foam-dim); line-height:1.7; }
+  .tide-unit{ margin-top:12px; font-size:0.74rem; color:#41606A; }
+
+/* ---------- 3. 바다지수 게이지 (갯벌체험지수 / 바다낚시지수) ----------
+   국립해양조사원 5단계 지수를 그대로 5칸 막대로 보여줍니다.
+   .catch-group-head 오른쪽, "더보기" 버튼 왼쪽에 붙습니다. */
+  .sea-index{
+    display:inline-flex; align-items:center; gap:10px;
+    margin-left:auto; padding:7px 12px;
+    border:1px solid var(--line); border-radius:2px;
+    background:rgba(255,255,255,0.45);
+    white-space:nowrap;
+  }
+  .sea-index[hidden]{ display:none; }
+  .si-head{ display:flex; flex-direction:column; gap:2px; }
+  .si-label{ font-size:0.72rem; color:var(--foam-dim); letter-spacing:0.01em; }
+  .si-grade{ font-size:0.88rem; font-weight:600; color:var(--foam); }
+  .si-steps{ display:flex; gap:3px; align-items:flex-end; height:20px; }
+  .si-steps i{
+    display:block; width:7px; border-radius:1px;
+    background:rgba(38,51,46,0.13);
+    transition:background 0.2s ease;
+  }
+  .si-steps i:nth-child(1){ height:8px; }
+  .si-steps i:nth-child(2){ height:11px; }
+  .si-steps i:nth-child(3){ height:14px; }
+  .si-steps i:nth-child(4){ height:17px; }
+  .si-steps i:nth-child(5){ height:20px; }
+  /* 등급(1=매우나쁨 ~ 5=매우좋음)만큼 칸이 차오릅니다 */
+  .sea-index[data-grade="1"] .si-steps i:nth-child(-n+1),
+  .sea-index[data-grade="2"] .si-steps i:nth-child(-n+2),
+  .sea-index[data-grade="3"] .si-steps i:nth-child(-n+3),
+  .sea-index[data-grade="4"] .si-steps i:nth-child(-n+4),
+  .sea-index[data-grade="5"] .si-steps i:nth-child(-n+5){ background:var(--si-tone, var(--lantern)); }
+  .sea-index[data-grade="1"]{ --si-tone:#B4453A; }
+  .sea-index[data-grade="2"]{ --si-tone:#C97A2E; }
+  .sea-index[data-grade="3"]{ --si-tone:#C0A227; }
+  .sea-index[data-grade="4"]{ --si-tone:#4E8A54; }
+  .sea-index[data-grade="5"]{ --si-tone:#2F7A5E; }
+  .sea-index.is-loading .si-grade{ color:var(--foam-dim); }
+  .si-when{ font-size:0.7rem; color:var(--foam-dim); }
+  /* 모바일: 배지/더보기 한 줄 → 설명 한 줄 → 지수 게이지 한 줄로 쌓습니다.
+     (기본 한 줄 배치로는 설명 문구가 세로로 눌려 읽을 수 없게 됩니다) */
+  @media (max-width:700px){
+    .catch-group-head{ flex-wrap:wrap; row-gap:11px; align-items:center; }
+    .catch-group-head .method-badge{ order:1; }
+    .catch-group-head .desc{ order:2; flex:1 1 100%; }
+    .catch-group-head .sea-index{ order:3; flex:1 1 100%; margin-left:0; justify-content:space-between; }
+  }
+
+/* ---------- 4. 포인트/어종 카드 벡터 아이콘 ----------
+   js/app.js의 아이콘 세트가 data-icon 값을 보고 SVG를 넣어줍니다. */
+  .ico{ display:inline-block; line-height:0; flex:none; }
+  .ico svg{ display:block; width:100%; height:100%; }
+
+  .catch-group-head .method-badge{ display:inline-flex; align-items:center; gap:7px; }
+  .method-badge .ico{ width:18px; height:18px; }
+
+  /* 어종·패류 카드: 왼쪽에 색 있는 벡터 아이콘 */
+  /* 아이콘은 카드 오른쪽 위 — 글이 왼쪽에서 바로 시작되도록 */
+  .catch-card{ display:grid; grid-template-columns:1fr 52px; column-gap:16px; align-items:start; }
+  .catch-card .ico{ width:52px; height:52px; grid-column:2; grid-row:1 / span 3; align-self:start; }
+  .catch-card .season,
+  .catch-card h3,
+  .catch-card p,
+  .catch-card .cc-rule,
+  .catch-card .cc-more{ grid-column:1; }   /* 나중에 붙는 금어기·안내 링크도 글 칸에 둔다 */
+  .catch-card h3{ margin-top:6px; }
+  @media (max-width:700px){
+    .catch-card{ grid-template-columns:1fr 42px; column-gap:13px; }
+    .catch-card .ico{ width:42px; height:42px; }
+  }
+
+  /* 포인트 행: 포인트명 앞에 방식 아이콘 */
+  .point .pname{ display:flex; align-items:flex-start; gap:9px; }
+  .point .pname .ico{ width:20px; height:20px; margin-top:2px; }
+  .point .pname .pname-text{ display:block; }
+
+/* ---------- 5. 향토 먹거리 카드 ----------
+   기존 .eat-list / .eat-row(2단 목록 + 가격)를 대체합니다.
+   가격은 표시하지 않습니다 — 식당마다 다르고 자주 바뀌어 오히려 신뢰를 떨어뜨립니다. */
+  .eat-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line);
+  }
+  .eat-card{
+    background:var(--night);
+    padding:26px 22px 24px;
+    display:flex; flex-direction:column; gap:12px;
+  }
+  .eat-card .ico{ width:56px; height:56px; }
+  .eat-card .name{ font-family:'Noto Serif KR', serif; font-size:1.18rem; font-weight:700; color:var(--ink); }
+  .eat-card .desc{ font-size:0.86rem; line-height:1.75; color:var(--foam-dim); }
+  .eat-card .when{
+    margin-top:auto; padding-top:12px; border-top:1px solid var(--line);
+    font-size:0.76rem; color:var(--lantern);
+  }
+  @media (max-width:900px){ .eat-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:560px){ .eat-grid{ grid-template-columns:1fr; } }
+
+/* ---------- 6. 해안가 관광지 4곳 (#coastspot) ----------
+   전라남도관광재단 해안가마을 관광자원 데이터 기반 섹션 */
+  .spot-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+  .spot-card{
+    border:1px solid var(--line); background:var(--night);
+    padding:22px 20px 20px; display:flex; flex-direction:column; gap:10px;
+    border-top:3px solid var(--lantern);
+  }
+  .spot-card .spot-kind{ font-size:0.72rem; color:var(--sand); }
+  .spot-card h3{ font-family:'Noto Serif KR', serif; font-size:1.1rem; color:var(--ink); }
+  .spot-card .spot-addr{ font-size:0.78rem; color:var(--foam-dim); }
+  .spot-card .spot-desc{ font-size:0.84rem; line-height:1.72; color:var(--foam-dim); }
+  .spot-note{ margin-top:16px; font-size:0.76rem; color:var(--foam-dim); }
+  @media (max-width:900px){ .spot-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:520px){ .spot-grid{ grid-template-columns:1fr; } }
+
+  @media (prefers-reduced-motion: reduce){
+    .si-steps i{ transition:none; }
+  }
+  .sea-index.is-offline{ opacity:0.62; }
+  .sea-index.is-offline .si-grade{ font-weight:400; color:var(--foam-dim); }
+  /* 지수 게이지가 들어간 그룹 헤드는 세로 가운데 정렬로 맞춥니다 */
+  .catch-group-head:has(.sea-index){ align-items:center; }
+
+  /* 더보기 버튼은 그룹 헤드가 아니라 목록 바로 아래에 둡니다.
+     누르면 항목이 버튼 위쪽이 아니라 바로 그 자리에서 이어지므로 흐름이 자연스럽습니다. */
+  .more-row{ display:flex; justify-content:center; padding-top:16px; }
+  .more-row .more-btn{ margin-left:0; padding:8px 20px; }
+
+/* ── 하단 푸터 (2026-09-14) ── */
+footer.site-footer .footer-brand .mark { font-size: 1.15rem; }
+footer.site-footer .footer-tagline { margin-top: 6px; }
+footer.site-footer .footer-links { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: flex-start; }
+footer.site-footer a { color: var(--foam); text-decoration: none; }
+footer.site-footer a:hover { color: var(--lantern); text-decoration: underline; }
+footer.site-footer .fc-label { font-size: 0.75rem; letter-spacing: 0.08em; margin-bottom: 4px; }
+footer.site-footer .footer-bottom { display: block; margin-top: 28px; padding-top: 18px; border-top: 1px dashed var(--line); font-size: 0.78rem; line-height: 1.6; }
+footer.site-footer .footer-bottom p + p { margin-top: 6px; }
+@media (max-width: 640px) {
+  footer.site-footer .wrap { flex-direction: column; }
+}
+
+/* ── 상단 헤더 반응형 정리 (2026-09-14) ── */
+.brand .mark{white-space:nowrap;}
+.navbar{gap:16px;}
+.navlinks a{white-space:nowrap;}
+.muldae-badge{white-space:nowrap;flex-shrink:0;}
+/* 메뉴가 길어지면(제주 권역 등) 넓은 화면에서도 머리글이 1120px 칸을 넘어 물때 배지가 삐져나왔습니다.
+   줄지 않던 .navlinks 를 모든 폭에서 줄어들고 넘치면 밀어서 보게 합니다 (2026-09-19) */
+.navlinks{min-width:0;flex:0 1 auto;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.navlinks::-webkit-scrollbar{display:none;}
+@media (max-width:1100px){
+  .navlinks{gap:16px;font-size:0.86rem;min-width:0;flex:1 1 auto;justify-content:flex-start;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+  .navlinks::-webkit-scrollbar{display:none;}
+  .brand .sub{display:none;}
+}
+@media (max-width:760px){
+  .navbar{padding:10px 16px;gap:10px;}
+  .brand .sub{display:none;}
+  .brand .mark{font-size:1.12rem;letter-spacing:0;}
+  .muldae-badge{flex-shrink:1;min-width:0;padding:5px 10px;font-size:0.72rem;}
+  .muldae-badge #headerMuldae{overflow:hidden;text-overflow:ellipsis;}
+}
+/* ★ 휴대폰에서 머리글의 물때 뱃지가 글자 없이 '빈 동그라미' 로만 보이던 것
+   (2026-09-25 주인 지적). 로고·언어 단추와 한 줄에 들어가지 못해 글자가 0까지
+   줄고 앞의 점(.dot)만 남았습니다. 뜻 모를 동그라미 하나가 떠 있는 꼴이었습니다.
+   좁은 화면에서는 아예 감춥니다 — 물때는 본문 '물때정보' 칸에 따로 있습니다. */
+@media (max-width:560px){
+  .navbar .muldae-badge{display:none;}
+}
+
+/* ── 한글 줄바꿈 + 먹거리 모바일 정리 (2026-09-14) ── */
+body{word-break:keep-all;overflow-wrap:break-word;}
+@media (max-width:560px){
+  .section-head{margin-bottom:28px;}
+  .section-head h2{font-size:1.6rem;}
+  .eat-grid{grid-template-columns:1fr;}
+  .eat-card{display:grid;grid-template-columns:44px 1fr;column-gap:14px;row-gap:4px;padding:16px;align-items:start;}
+  .eat-card .ico{width:44px;height:44px;grid-column:1;grid-row:1 / span 3;}
+  .eat-card > *:not(.ico){grid-column:2;}
+  .eat-card .name{font-size:1.05rem;}
+  .eat-card .desc{font-size:0.85rem;line-height:1.6;}
+  .eat-card .when{margin-top:2px;padding-top:0;border-top:0;font-size:0.75rem;}
+}
+/* fest-grid 긴 단어 줄바꿈 (keep-all 예외) */
+.fest-month{min-width:0;}
+.fest-month .fm-name,.fest-month .fm-desc{word-break:normal;overflow-wrap:anywhere;}
+/* ── 물때표 정리: 날씨 배너 높이 축소, 카드 간격 (2026-09-15) ── */
+.weather-card{padding:12px 22px;gap:16px;margin-bottom:18px;}
+.w-icon{width:36px;height:36px;}
+.w-temp{font-size:1.45rem;line-height:1.2;}
+.w-label{font-size:0.78rem;margin-top:0;}
+.w-stat{flex-direction:row;align-items:baseline;gap:6px;}
+.w-stat-val{font-size:0.98rem;}
+.section--sea .tide-day .d-muldae{margin-top:12px;}
+@media(max-width:600px){ .weather-card{padding:10px 16px;gap:12px;} .w-stats{gap:14px;} }
+
+/* ── 사이트 로고 (2026-09-15) ── */
+.brand{align-items:center;gap:10px;}
+.brand .logo{width:34px;height:34px;flex:none;display:block;}
+.brand .mark{letter-spacing:0;}
+@media (max-width:760px){
+  .brand{gap:8px;}
+  .brand .logo{width:30px;height:30px;}
+}
+
+/* ── 공공데이터 연동 (2026-09-15): 실제 숙소 · 티맵 인기 순위 · 축제 실제 일정 ── */
+.stay-card .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.stay-card.real h3{line-height:1.35}
+.stay-links{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.stay-links a{font-size:.72rem;font-weight:700;padding:4px 9px;border-radius:999px;background:var(--night-2);color:var(--foam);text-decoration:none;white-space:nowrap}
+.stay-links a:hover{background:var(--lantern);color:#fff}
+.stay-card.stay-more{display:flex;align-items:center;border:1px dashed rgba(38,51,46,.28);text-decoration:none;color:inherit;min-height:120px}
+.stay-card.stay-more:hover{border-color:var(--lantern)}
+.stay-card.stay-more .meta{color:var(--lantern)}
+.stay-loading{grid-column:1/-1;font-size:.85rem;color:var(--foam-dim);padding:8px 0}
+.stay-credit{margin-top:14px;font-size:.72rem;color:var(--foam-dim)}
+
+.tmap-rank{margin-top:34px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.55);padding:20px 22px}
+.tr-head h3{font-size:1.2rem}
+.tr-head p{font-size:.84rem;color:var(--foam-dim);margin-top:6px}
+.tr-tabs{display:flex;gap:6px;margin-top:14px}
+.tr-tabs button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;font:inherit;font-size:.84rem;cursor:pointer;color:var(--foam)}
+.tr-tabs button.on{background:var(--foam);border-color:var(--foam);color:#FFFBF3;font-weight:700}
+.tr-list{list-style:none;margin:12px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 18px}
+.tr-list a{display:flex;align-items:center;gap:10px;padding:8px 4px;border-bottom:1px dashed var(--line);text-decoration:none;color:var(--foam);min-width:0}
+.tr-list a:hover .nm{color:var(--lantern);text-decoration:underline}
+.tr-list .rk{flex:none;width:24px;height:24px;border-radius:50%;background:var(--night-2);display:flex;align-items:center;justify-content:center;font-size:.78rem}
+.tr-list li:nth-child(-n+3) .rk{background:var(--lantern);color:#fff}
+.tr-list .nm{font-weight:600;font-size:.92rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.tr-list .ct,.tr-list .ar{flex:none;font-size:.72rem;color:var(--foam-dim);margin-left:auto}
+.tr-list .ar{margin-left:4px}
+.tr-src{margin-top:10px;font-size:.72rem;color:var(--foam-dim)}
+
+.fest-real{margin-bottom:22px}
+.fest-real h3{font-size:1.15rem;margin-bottom:12px}
+.fr-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.fr-card{display:flex;gap:12px;align-items:stretch;border:1px solid var(--line);border-radius:16px;background:#fff;overflow:hidden;text-decoration:none;color:var(--foam);transition:.2s}
+.fr-card:hover{border-color:var(--lantern);transform:translateY(-2px)}
+.fr-card img{width:92px;flex:none;object-fit:cover}
+.fr-body{padding:10px 12px 10px 0;display:flex;flex-direction:column;gap:2px;min-width:0}
+.fr-card:not(:has(img)) .fr-body{padding-left:14px}
+.fr-badge{align-self:flex-start;font-size:.68rem;font-weight:700;padding:1px 8px;border-radius:999px;background:var(--night-2);color:var(--lantern)}
+.fr-badge.now{background:var(--lantern);color:#fff}
+.fr-body b{font-size:.95rem;line-height:1.35}
+.fr-date{font-size:.8rem;color:var(--foam)}
+.fr-addr{font-size:.72rem;color:var(--foam-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fr-src{margin-top:10px;font-size:.72rem;color:var(--foam-dim)}
+@media (max-width:640px){
+  .tmap-rank{padding:16px}
+  .tr-list{grid-template-columns:1fr}
+}
+/* ── 지자체 공식 관광 홈페이지 링크 (축제 섹션) ── */
+.fest-head-row{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.fest-head-row .section-head{flex:1 1 420px}
+.tour-official{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:16px;border:1px solid var(--line);background:#fff;text-decoration:none;color:var(--foam);box-shadow:0 4px 14px rgba(43,33,22,.06);transition:.2s;max-width:100%}
+.tour-official:hover{transform:translateY(-2px);border-color:var(--lantern);box-shadow:0 10px 24px rgba(43,33,22,.12)}
+.tour-official img{height:40px;width:auto;max-width:220px;object-fit:contain;display:block}
+.tour-official.dark{background:#1F3B37;border-color:#1F3B37;color:#F3ECDD}
+.tour-official.emblem img{height:34px}
+.tour-official .to-ico{font-size:1.5rem;line-height:1}
+.tour-official .to-txt{display:flex;flex-direction:column;line-height:1.3}
+.tour-official .to-txt b{font-size:.92rem}
+.tour-official .to-txt small{font-size:.72rem;opacity:.75;white-space:nowrap}
+@media (max-width:640px){ .fest-head-row{gap:10px} .tour-official{margin-bottom:18px} .tour-official img{height:32px;max-width:180px} }
+
+/* ── 향토 먹거리 카드 컴팩트 (아이콘 왼쪽 · 글 오른쪽) ── */
+.eat-grid{grid-template-columns:repeat(3,1fr)}
+.eat-card{display:grid;grid-template-columns:40px 1fr;column-gap:14px;row-gap:3px;padding:16px 18px;align-items:start}
+.eat-card .ico{width:40px;height:40px;grid-column:1;grid-row:1 / span 3}
+.eat-card > *:not(.ico){grid-column:2}
+.eat-card .name{font-size:1.02rem;line-height:1.35}
+.eat-card .desc{font-size:.8rem;line-height:1.55}
+.eat-card .when{margin-top:2px;padding-top:0;border-top:0;font-size:.72rem}
+@media (max-width:900px){ .eat-grid{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:560px){ .eat-grid{grid-template-columns:1fr} .eat-card{padding:14px} }
+
+/* ── 축제 카드 테마 색 · 벡터 그림 ── */
+.fest-month{position:relative;overflow:hidden}
+.fest-month > *{position:relative;z-index:1}
+.fest-month .fm-art{position:absolute;right:-8px;bottom:-10px;width:88px;height:88px;z-index:0;pointer-events:none;fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.fest-month.active .fm-art{stroke:rgba(255,255,255,.26)}
+.fest-month.active .fm-tag{display:inline-block;margin-left:6px;font-size:.66rem;padding:1px 7px;border-radius:999px;background:rgba(255,255,255,.16);color:#fff;vertical-align:1px}
+.fest-month.active.t-flower{background:linear-gradient(135deg,#6E3560,#B0598A)}
+.fest-month.active.t-seafood{background:linear-gradient(135deg,#17505C,#2E8A8A)}
+.fest-month.active.t-food{background:linear-gradient(135deg,#7A4B16,#C0862C)}
+.fest-month.active.t-light{background:linear-gradient(135deg,#17213F,#3A4C86)}
+.fest-month.active.t-light .fm-art{stroke:rgba(242,182,92,.45)}
+.fest-month.active.t-music{background:linear-gradient(135deg,#3F3170,#6C5AAE)}
+.fest-month.active.t-history{background:linear-gradient(135deg,#5E2323,#A34A38)}
+.fest-month.active.t-sea{background:linear-gradient(135deg,#174D7A,#3A89BE)}
+.fest-month.active.t-eco{background:linear-gradient(135deg,#264D30,#5B8A4A)}
+.fest-month:not(.active).s-spring{background:#F8EFF2}
+.fest-month:not(.active).s-summer{background:#EAF4F2}
+.fest-month:not(.active).s-autumn{background:#F7EEE0}
+.fest-month:not(.active).s-winter{background:#EEF2F6}
+.fest-month:not(.active) .fm-art{width:56px;height:56px;right:8px;bottom:6px;stroke:rgba(38,51,46,.12)}
+/* ── 시간별 물높이 그래프 ── */
+.tide-graph{position:relative;margin-top:18px;border:1px solid var(--line);border-radius:18px;background:#fff;padding:14px 16px 10px}
+.tide-graph .tg-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.tide-graph .tg-head b{font-size:.98rem}
+.tide-graph .tg-tabs{display:flex;gap:4px}
+.tide-graph .tg-tabs button{border:1px solid var(--line);background:transparent;border-radius:999px;padding:4px 12px;font:inherit;font-size:.8rem;cursor:pointer;color:inherit}
+.tide-graph .tg-tabs button.on{background:#2E8A8A;border-color:#2E8A8A;color:#fff;font-weight:700}
+.tide-graph .tg-plot{position:relative;margin-top:6px}
+.tide-graph svg{display:block;width:100%;height:auto;touch-action:pan-y;cursor:crosshair}
+.tide-graph .tg-grid{stroke:rgba(38,51,46,.08);stroke-width:1}
+.tide-graph .tg-axis{font-size:11px;fill:#8A7E6E}
+.tide-graph .tg-line{fill:none;stroke:#2E8A8A;stroke-width:2.4;stroke-linejoin:round}
+.tide-graph .tg-dot.high{fill:#C07B22;stroke:#fff;stroke-width:2}
+.tide-graph .tg-dot.low{fill:#2F5D57;stroke:#fff;stroke-width:2}
+.tide-graph .tg-lbl{font-size:11.5px;font-weight:700}
+.tide-graph .tg-lbl.high{fill:#9A6A1A}.tide-graph .tg-lbl.low{fill:#2F5D57}
+.tide-graph .tg-now{stroke:#D9642E;stroke-width:1.5;stroke-dasharray:4 3}
+.tide-graph .tg-nowlbl{font-size:11px;fill:#D9642E;font-weight:700}
+.tide-graph .tg-hline{stroke:rgba(38,51,46,.35);stroke-width:1}
+.tide-graph .tg-hdot{fill:#fff;stroke:#2E8A8A;stroke-width:2.5}
+.tide-graph .tg-tip{position:absolute;top:0;transform:translateX(-50%);background:#26332E;color:#fff;font-size:.75rem;font-weight:700;padding:3px 8px;border-radius:8px;white-space:nowrap;pointer-events:none}
+.tide-graph .tg-foot{font-size:.72rem;color:var(--foam-dim);margin-top:4px}
+.tide-graph.dark{background:rgba(255,255,255,.06);border-color:rgba(243,236,221,.12);color:#F3ECDD}
+.tide-graph.dark .tg-grid{stroke:rgba(243,236,221,.08)}
+.tide-graph.dark .tg-axis{fill:rgba(243,236,221,.55)}
+.tide-graph.dark .tg-line{stroke:#8FD0C6}
+.tide-graph.dark .tg-dot.low{fill:#6FA8A0}
+.tide-graph.dark .tg-lbl.high{fill:#F2B65C}.tide-graph.dark .tg-lbl.low{fill:#9EE0D4}
+.tide-graph.dark .tg-tabs button{border-color:rgba(243,236,221,.25)}
+.tide-graph.dark .tg-tabs button.on{background:#F2B65C;border-color:#F2B65C;color:#2A1B08}
+.tide-graph.dark .tg-hline{stroke:rgba(243,236,221,.4)}
+.tide-graph.dark .tg-tip{background:#F2B65C;color:#2A1B08}
+.tide-graph.dark .tg-foot{color:rgba(243,236,221,.55)}
+@media (max-width:640px){ .tide-graph{padding:12px 10px 8px} .tide-graph .tg-lbl{font-size:14px} .tide-graph .tg-axis{font-size:13px} }
+.fest-head-row .tour-official{align-self:flex-end;margin-bottom:44px}
+@media (max-width:1100px){ .fest-head-row .tour-official{margin-bottom:28px} }
+@media (max-width:640px){ .fest-head-row .tour-official{align-self:flex-start;margin-top:-12px;margin-bottom:22px} }
+
+/* ── 포인트 배너 강조 v2 (색 배경 · 큰 개수 · 지도 버튼) ── */
+body[data-region] a.sinan-banner{background:linear-gradient(120deg,#A9621F 0%,#E0922F 100%);border:0;color:#fff;padding:18px 22px;border-radius:20px;gap:18px;min-height:104px;box-shadow:0 14px 32px rgba(169,98,31,.35)}
+body[data-region] a.sinan-banner.fishing{background:linear-gradient(120deg,#163F3B 0%,#2E7A70 100%);box-shadow:0 14px 32px rgba(22,63,59,.35)}
+body[data-region] a.sinan-banner::before{content:'';position:absolute;right:170px;top:0;bottom:0;width:220px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 110'%3E%3Cg fill='none' stroke='white' stroke-opacity='.22' stroke-width='2'%3E%3Cpath d='M0 80c30-18 55-18 80 0s55 18 80 0 40-12 40-12'/%3E%3Cpath d='M0 98c30-18 55-18 80 0s55 18 80 0 40-12 40-12'/%3E%3C/g%3E%3Cg fill='white' fill-opacity='.28'%3E%3Cpath d='M60 58s-12-13-12-21a12 12 0 0 1 24 0c0 8-12 21-12 21z'/%3E%3Cpath d='M120 44s-9-10-9-16a9 9 0 0 1 18 0c0 6-9 16-9 16z'/%3E%3Cpath d='M165 62s-7-8-7-13a7 7 0 0 1 14 0c0 5-7 13-7 13z'/%3E%3C/g%3E%3C/svg%3E") no-repeat center/contain;pointer-events:none}
+body[data-region] a.sinan-banner:hover{transform:translateY(-3px);box-shadow:0 20px 40px rgba(0,0,0,.25)}
+body[data-region] a.sinan-banner .count-box{background:rgba(255,255,255,.16);border:2px solid rgba(255,255,255,.35);min-width:92px;padding:12px 10px;border-radius:16px}
+body[data-region] a.sinan-banner .count-box .n{font-size:38px;color:#fff}
+body[data-region] a.sinan-banner .count-box .n::after{content:'곳';font-size:15px;font-weight:700;margin-left:2px}
+body[data-region] a.sinan-banner .count-box .t{color:rgba(255,255,255,.9);font-size:12px;font-weight:700}
+body[data-region] a.sinan-banner .banner-mid{position:relative;z-index:1}
+body[data-region] a.sinan-banner .banner-mid .title{color:#fff;font-size:18px;white-space:normal;line-height:1.4}
+body[data-region] a.sinan-banner .banner-mid .desc{color:rgba(255,255,255,.85);font-size:12.5px;margin-top:4px}
+body[data-region] a.sinan-banner .btn-more{position:relative;z-index:1;background:#fff;color:#A9621F;font-size:14px;padding:13px 20px;box-shadow:0 6px 16px rgba(0,0,0,.18)}
+body[data-region] a.sinan-banner.fishing .btn-more{background:#fff;color:#163F3B}
+@keyframes sbRingW{0%{box-shadow:0 0 0 0 rgba(255,255,255,.7)}70%,100%{box-shadow:0 0 0 12px rgba(255,255,255,0)}}
+body[data-region] a.sinan-banner .btn-more,body[data-region] a.sinan-banner.fishing .btn-more{animation:sbNudge 1.4s ease-in-out infinite,sbRingW 1.8s ease-out infinite}
+body[data-region] a.sinan-banner::after{background:linear-gradient(100deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.28) 50%,rgba(255,255,255,0) 100%)}
+@media (max-width:768px){
+  body[data-region] a.sinan-banner{padding:16px !important;border-radius:18px}
+  body[data-region] a.sinan-banner::before{right:0;width:160px;opacity:.8}
+  body[data-region] a.sinan-banner .count-box{min-width:78px}
+  body[data-region] a.sinan-banner .count-box .n{font-size:30px}
+  body[data-region] a.sinan-banner .banner-mid .title{font-size:15px}
+  body[data-region] a.sinan-banner .btn-more{border-radius:14px !important;min-height:48px;font-size:15px !important}
+}
+@media (prefers-reduced-motion:reduce){ body[data-region] a.sinan-banner .btn-more{animation:none} }
+
+/* 히어로 아래 포인트 바로가기 버튼 */
+.hero-points{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.hero-points a{display:inline-flex;align-items:center;gap:10px;padding:10px 16px 10px 12px;border-radius:16px;text-decoration:none;color:#fff;font-weight:700;font-size:.95rem;background:linear-gradient(120deg,#A9621F,#E0922F);box-shadow:0 8px 20px rgba(169,98,31,.35);transition:.2s}
+.hero-points a.fishing{background:linear-gradient(120deg,#163F3B,#2E7A70);box-shadow:0 8px 20px rgba(22,63,59,.35)}
+.hero-points a:hover{transform:translateY(-2px)}
+.hero-points a b{display:inline-flex;align-items:center;justify-content:center;min-width:44px;height:34px;padding:0 8px;border-radius:10px;background:rgba(255,255,255,.2);font-size:1.15rem}
+.hero-points a small{display:block;font-size:.72rem;font-weight:500;opacity:.85}
+@media (max-width:640px){ .hero-points a{flex:1 1 100%} }
+/* ── 물때표 2주(14일) ── */
+.tide-strip .tide-week-label{grid-column:1/-1;background:rgba(255,255,255,.55);padding:7px 14px;font-size:.8rem;font-weight:700;color:var(--foam);text-align:left;letter-spacing:.02em}
+.tide-strip .tide-week-label span{font-weight:500;color:var(--foam-dim);margin-left:6px}
+.section--sea .tide-strip .tide-week-label{background:rgba(255,255,255,.5);color:#1E5A6B}
+.tide-more{display:none;margin:10px auto 0;border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 18px;font:inherit;font-size:.85rem;font-weight:700;color:var(--foam);cursor:pointer}
+@media (max-width:760px){
+  .tide-strip:not(.show-wk2) .wk2{display:none}
+  .tide-more{display:block}
+}
+/* ── 해안가 관광지: 한국관광공사 관광지 카드 ── */
+.spot-card.real{text-decoration:none;color:inherit;transition:.2s;overflow:hidden;cursor:pointer;display:flex;flex-direction:column}
+.spot-card.real:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(43,33,22,.12)}
+.spot-card.real:hover h3{color:var(--lantern)}
+.spot-card .spot-photo{margin:-22px -20px 12px;height:130px;overflow:hidden;background:var(--night-2)}
+.spot-card .spot-photo img{width:100%;height:100%;object-fit:cover;display:block}
+/* 사진을 아직 못 구한 명소 카드에 js/spot-art.js 가 넣는 벡터 그림입니다.
+   사진이 들어오면 .sp-real 이 대신 들어가므로 이 칸은 저절로 없어집니다 (2026-09-19) */
+.spot-card .spot-photo.sp-art{position:relative;background:var(--night-2)}
+.spot-card .spot-photo.sp-art svg{display:block;width:100%;height:100%}
+.spot-card .sp-art figcaption{position:absolute;left:8px;top:8px;padding:2px 9px;border-radius:10px;font-size:.66rem;color:#fff;background:rgba(0,0,0,.35)}
+.spot-card .spot-photo.noimg{display:flex;align-items:center;justify-content:center;background:linear-gradient(140deg,var(--night-2),var(--night));color:var(--foam-dim);font-size:.8rem;letter-spacing:.02em;text-align:center;padding:0 14px}
+.spot-card .spot-desc:empty{display:none}
+/* ── 권역 네비게이터 (헤더 아래 얇은 한 줄) ── */
+.region-nav{background:rgba(239,231,214,.96);border-top:1px solid var(--line)}
+.region-nav .rn-inner{max-width:1120px;margin:0 auto;padding:0 28px;display:flex;align-items:center;gap:14px;height:38px}
+.region-nav .rn-label{flex:none;font-size:.72rem;font-weight:700;color:var(--foam-dim);letter-spacing:.04em}
+.region-nav .rn-list{display:flex;align-items:stretch;gap:2px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;height:100%;flex:1;min-width:0}
+.region-nav .rn-list::-webkit-scrollbar{display:none}
+.region-nav a{position:relative;flex:none;display:flex;align-items:center;padding:0 10px;font-size:.84rem;color:var(--foam);text-decoration:none;white-space:nowrap;border-bottom:2px solid transparent;transition:.15s}
+.region-nav a:hover{color:var(--lantern)}
+.region-nav a.on{color:var(--lantern);font-weight:700;border-bottom-color:var(--lantern)}
+.region-nav a.rn-cross{margin-left:8px;color:#2F5D57;font-weight:700;border-left:1px solid var(--line);padding-left:14px}
+@media (hover:hover){
+  .region-nav a[data-tip]:hover::after{content:attr(data-tip);position:fixed;transform:translate(-30%,34px);background:#26332E;color:#fff;font-size:.72rem;font-weight:500;padding:4px 9px;border-radius:8px;white-space:nowrap;pointer-events:none;z-index:60}
+}
+@media (max-width:760px){
+  .region-nav .rn-inner{padding:0 12px;gap:8px;height:36px}
+  .region-nav .rn-label{display:none}
+  .region-nav .rn-list{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 14px,#000 calc(100% - 14px),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 14px,#000 calc(100% - 14px),transparent 100%)}
+  .region-nav a{padding:0 9px;font-size:.82rem}
+}
+/* ── 숙소 섹션 트립닷컴 광고 배너 ── */
+.stay-head-row{display:flex;align-items:center;justify-content:space-between;gap:32px;margin-bottom:44px}
+.stay-head-row .section-head{margin-bottom:0;flex:1 1 420px}
+.trip-ad-wrap{flex:0 0 420px;min-width:0}
+.trip-ad{position:relative;width:100%;height:112px;border-radius:14px;overflow:hidden;display:block;color:#fff;text-decoration:none;box-shadow:0 10px 26px rgba(14,27,77,.22);transition:transform .2s,box-shadow .2s}
+.trip-ad:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(14,27,77,.3)}
+.trip-ad .ta-art{position:absolute;inset:0;width:100%;height:100%}
+.trip-ad .ta-body{position:relative;display:flex;flex-direction:row;justify-content:space-between;align-items:center;gap:12px;height:100%;padding:12px 16px 12px 18px;box-sizing:border-box}
+.trip-ad .ta-top{display:flex;align-items:center;gap:8px;font-size:.72rem}
+.trip-ad .ta-ad{background:#FFE7A8;color:#0E1B4D;font-weight:700;border-radius:4px;padding:0 6px;line-height:1.6}
+.trip-ad .ta-brand{font-weight:700;letter-spacing:.01em;font-size:.86rem}
+.trip-ad .ta-title{font-size:1.08rem;line-height:1.32;margin-top:0;font-weight:700;white-space:nowrap;text-shadow:0 1px 6px rgba(8,16,50,.7)}
+.trip-ad .ta-text{display:flex;flex-direction:column;min-width:0}
+.trip-ad .ta-sub{font-size:.76rem;line-height:1.4;color:#DCE4FF;margin-top:3px;text-shadow:0 1px 5px rgba(8,16,50,.8)}
+.trip-ad .ta-btn{flex:none;align-self:flex-end;white-space:nowrap;background:#fff;color:#3264FF;font-weight:700;font-size:.82rem;padding:4px 12px;border-radius:999px}
+.trip-ad:hover .ta-btn{background:#FFE7A8;color:#0E1B4D}
+.trip-ad-note{font-size:.72rem;line-height:1.5;color:var(--foam-dim);margin:8px 2px 0}
+@media (max-width:1100px){.trip-ad-wrap{flex-basis:360px}}
+@media (max-width:860px){
+  .stay-head-row{flex-direction:column;align-items:stretch;gap:20px;margin-bottom:28px}
+  .stay-head-row .section-head{flex:none}
+  .trip-ad-wrap{flex:none;width:100%}
+  .trip-ad{height:100px}
+  .trip-ad .ta-title{font-size:.96rem}
+  .trip-ad .ta-body{padding:10px 12px 12px 16px;gap:8px}
+  .trip-ad .ta-btn{font-size:.76rem;padding:4px 10px}
+  .trip-ad .ta-sub{font-size:.72rem}
+}
+
+/* ── 관광지·축제 설명 팝업 ── */
+.spot-card.real:focus-visible,.fr-card:focus-visible{outline:2px solid var(--lantern);outline-offset:2px}
+.spot-card .spot-more{margin-top:auto;padding-top:10px;font-size:.78rem;font-weight:700;color:var(--lantern)}
+.fr-card{cursor:pointer}
+.fr-more{margin-top:2px;font-size:.72rem;font-weight:700;color:var(--lantern)}
+body.ip-open{overflow:hidden}
+.ip-overlay{position:fixed;inset:0;z-index:1000;background:rgba(28,22,14,.5);display:flex;align-items:center;justify-content:center;padding:20px}
+.ip-overlay[hidden]{display:none}
+.ip-box{position:relative;width:100%;max-width:520px;max-height:min(86vh,760px);overflow-y:auto;background:#FFFBF3;border-radius:18px;box-shadow:0 24px 60px rgba(28,22,14,.35);animation:ipIn .18s ease-out}
+@keyframes ipIn{from{transform:translateY(12px);opacity:.6}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.ip-box{animation:none}}
+.ip-close{position:absolute;top:10px;right:10px;z-index:2;width:34px;height:34px;border:0;border-radius:50%;background:rgba(255,251,243,.92);color:var(--ink);font-size:1.4rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.ip-close:focus-visible{outline:2px solid var(--lantern)}
+.ip-photo{height:210px;background:var(--night-2)}
+.ip-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.ip-body{padding:18px 22px 20px}
+.ip-kicker{font-size:.75rem;color:var(--lantern);font-weight:700;padding-right:40px}
+.ip-title{margin:4px 0 6px;font-size:1.3rem;color:var(--ink);padding-right:30px}
+.ip-line{font-size:.84rem;color:var(--foam-dim);line-height:1.6}
+.ip-desc{margin:12px 0 0;font-size:.92rem;line-height:1.85;color:var(--foam);white-space:pre-line;word-break:keep-all}
+.ip-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.ip-btn{display:inline-flex;align-items:center;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--foam);font-size:.84rem;font-weight:600;text-decoration:none}
+.ip-btn:hover{border-color:var(--lantern);color:var(--lantern)}
+.ip-btn.main{background:var(--lantern);border-color:var(--lantern);color:#fff}
+.ip-btn.main:hover{filter:brightness(1.05);color:#fff}
+.ip-src{margin:14px 0 0;font-size:.7rem;color:var(--foam-dim);line-height:1.5}
+@media (max-width:600px){
+  .ip-overlay{align-items:flex-end;padding:0}
+  .ip-box{max-width:none;max-height:88vh;border-radius:18px 18px 0 0}
+  .ip-photo{height:180px}
+  .ip-body{padding:16px 18px 22px}
+  .ip-btn{flex:1 1 auto;justify-content:center}
+}
+/* 간조 알림 캘린더 */
+.ics-box{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:10px 0 0}
+.ics-btn{border:1px solid var(--lantern);background:var(--lantern);color:#fff;font-weight:700;font-size:.88rem;padding:9px 16px;border-radius:999px;cursor:pointer;font-family:inherit}
+.ics-btn:hover{filter:brightness(1.06)}
+.ics-btn:disabled{opacity:.6;cursor:default}
+.ics-btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.ics-msg{font-size:.8rem;color:var(--foam-dim);line-height:1.6;flex:1 1 260px}
+@media (max-width:520px){.ics-btn{width:100%}}
+/* 자동 구성 추천 코스 */
+.course-card.auto .course-step .c-text{word-break:keep-all}
+.course-why{margin:10px 0 0;font-size:.78rem;line-height:1.6;color:var(--foam-dim)}
+.course-src{margin:16px 0 0;font-size:.74rem;line-height:1.6;color:var(--foam-dim)}
+/* 푸터 운영책임자 */
+footer.site-footer .fc-owner{font-size:.9rem;font-weight:600;margin-bottom:2px}
+/* 제철 어종 카드의 금어기 표시 */
+.cc-rule{display:flex;flex-direction:column;gap:2px;margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);text-decoration:none;font-size:.76rem;line-height:1.5;color:var(--foam-dim)}
+.cc-rule b{font-size:.74rem;font-weight:700;color:var(--lantern);letter-spacing:.02em}
+.cc-rule.now b{color:#fff;background:#C0522B;border-radius:999px;padding:1px 8px;align-self:flex-start}
+.cc-rule .cc-size{color:var(--foam-dim)}
+.cc-rule:hover b{text-decoration:underline}
+.cc-more{display:inline-block;justify-self:start;margin-top:10px;font-size:.78rem;font-weight:700;color:var(--lantern);text-decoration:none;border-bottom:1px solid rgba(192,123,34,.4);padding-bottom:1px}
+.cc-more:hover{border-bottom-color:var(--lantern)}
+.catch-card .cc-more{grid-column:1}
+
+/* ── 하단 푸터 정돈 (2026-09-16) ────────────────────────────────
+   브랜드·운영자 / 메뉴 세 묶음 / 고지 줄로 나눠 세로 위계를 만듭니다. */
+footer.site-footer{ background:linear-gradient(180deg, transparent, rgba(147,113,63,.05)); }
+footer.site-footer .wrap.footer-top{
+  display:grid; grid-template-columns:minmax(240px,1fr) minmax(0,1.9fr);
+  gap:44px; align-items:start; justify-content:initial;
+}
+footer.site-footer .footer-brand .brand{ display:inline-flex; align-items:center; gap:9px; text-decoration:none; }
+footer.site-footer .footer-brand .logo{ width:30px; height:30px; }
+footer.site-footer .footer-brand .mark{ font-family:'Noto Serif KR',serif; font-size:1.2rem; font-weight:700; color:var(--ink); }
+footer.site-footer .footer-tagline{ margin-top:10px; font-size:.86rem; line-height:1.7; color:var(--foam-dim); }
+footer.site-footer .footer-owner{
+  margin-top:16px; padding-top:14px; border-top:1px dashed var(--line);
+  font-size:.8rem; line-height:1.8; color:var(--foam-dim);
+}
+footer.site-footer .footer-owner b{ color:var(--foam); font-weight:600; }
+footer.site-footer .footer-owner a{ color:var(--foam-dim); }
+footer.site-footer .footer-nav{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:26px; }
+footer.site-footer .fn-col{ display:flex; flex-direction:column; align-items:flex-start; gap:10px; }
+footer.site-footer .fn-col h2{
+  margin:0 0 2px; font-family:inherit; font-size:.73rem; font-weight:700;
+  letter-spacing:.11em; color:var(--sand); border:0; padding:0;
+}
+footer.site-footer .fn-col a{ font-size:.87rem; line-height:1.4; color:var(--foam); }
+footer.site-footer .fn-col a:hover{ color:var(--lantern); text-decoration:none; border-bottom:1px solid var(--lantern); }
+footer.site-footer .wrap.footer-bottom{
+  display:block; margin-top:34px; padding-top:18px;
+  border-top:1px dashed var(--line); font-size:.78rem; line-height:1.7;
+}
+footer.site-footer .footer-note{ max-width:92ch; color:var(--foam-dim); }
+footer.site-footer .copyright{ margin-top:8px; font-size:.75rem; color:var(--foam-dim); opacity:.82; }
+@media (max-width:860px){
+  footer.site-footer .wrap.footer-top{ grid-template-columns:1fr; gap:30px; }
+}
+@media (max-width:560px){
+  footer.site-footer .footer-nav{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px 18px; }
+}
+
+/* 언어 선택(헤더 오른쪽) — 한국어판·중국어판 공용 */
+.lang-pick{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:#fff;flex-shrink:0}
+.lang-pick a,.lang-pick span{padding:5px 12px;font-size:.8rem;font-weight:600;color:var(--foam-dim);text-decoration:none;line-height:1.5;white-space:nowrap}
+.lang-pick a+a,.lang-pick a+span,.lang-pick span+a{border-left:1px solid var(--line)}
+.lang-pick a:hover{color:var(--lantern)}
+.lang-pick .on{background:var(--lantern);color:#fff}
+@media (max-width:640px){.lang-pick a,.lang-pick span{padding:4px 10px;font-size:.75rem}}
+
+/* 제주 권역 페이지 (2026-09-17) — 채취 금지·출입통제 안내 상자 */
+.jeju-rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin:6px 0 28px}
+.jeju-rules .jr-box{background:#FFFDF8;border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.jeju-rules .jr-box.warn{border-color:#E3B9A4;background:#FFF6F1}
+.jeju-rules h3{font-size:1rem;margin:0 0 8px;color:var(--foam)}
+.jeju-rules .jr-box.warn h3{color:#A5461F}
+.jeju-rules p{margin:0;font-size:.9rem;line-height:1.7;color:var(--foam-dim)}
+.jr-list{margin:0 0 8px;padding-left:1.1em;display:grid;gap:6px;font-size:.9rem;line-height:1.6;color:var(--foam-dim)}
+.jr-list b{color:var(--foam)}
+.jr-list a{color:var(--lantern);white-space:nowrap}
+.jr-small{font-size:.84rem;line-height:1.7;color:var(--foam-dim)}
+.jeju-rules .jr-small{margin-top:8px}
+body.jeju-region .hero{background:radial-gradient(ellipse at 88% 10%,rgba(224,158,72,.18),transparent 40%),radial-gradient(ellipse at 10% 90%,rgba(63,127,147,.16),transparent 55%),linear-gradient(175deg,#F5F8F4 0%,#E8F0EA 50%,#D8E6DF 100%)}
+
+/* 제주 사진 명소(인생사진) */
+body.jeju-region .quicknav .row{grid-template-columns:repeat(8,1fr)}
+@media(max-width:700px){body.jeju-region .quicknav .row{grid-template-columns:repeat(4,1fr)}}
+.photo-spot{position:relative;display:flex;flex-direction:column;gap:8px}
+.photo-spot .ph-num{font-family:'Noto Serif KR',serif;font-size:1.6rem;line-height:1;color:var(--lantern);opacity:.55}
+.photo-spot .ph-shot{font-size:.92rem;line-height:1.6;color:var(--ink);font-weight:600}
+.photo-spot .ph-row{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;font-size:.8rem}
+.photo-spot .ph-row span{flex:0 0 3.2em;color:var(--foam-dim)}
+.photo-spot .ph-row b{font-weight:600;color:var(--ink)}
+.photo-spot .ph-chk{font-style:normal;font-size:.7rem;padding:1px 6px;border-radius:8px;background:var(--night-2);color:var(--foam-dim)}
+.photo-spot .ph-tip{font-size:.8rem;line-height:1.6;color:var(--foam-dim);padding-left:10px;border-left:2px solid var(--line)}
+.photo-spot .ph-foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px;padding-top:6px;border-top:1px dashed var(--line)}
+.photo-spot .ph-foot a{font-size:.78rem;color:var(--lantern);white-space:nowrap}
+
+/* 사진 명소 카드의 사진·구도 그림 (tools/photo-art.ps1) */
+.photo-spot .pa-img{margin:-22px -20px 6px;position:relative;overflow:hidden;border-radius:inherit;border-bottom-left-radius:0;border-bottom-right-radius:0}
+.photo-spot .pa-img svg,.photo-spot .pa-img img{display:block;width:100%;aspect-ratio:8/5;height:auto;object-fit:cover}
+.photo-spot .pa-img figcaption{position:absolute;left:0;right:0;bottom:0;padding:14px 10px 6px;font-size:.66rem;line-height:1.4;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.6))}
+.photo-spot .pa-img figcaption a{color:#fff;text-decoration:underline}
+.jh-chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 18px}
+.jh-chips button{font:inherit;font-size:.85rem;padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+.jh-chips button[aria-pressed="true"]{background:var(--lantern);border-color:var(--lantern);color:#fff}
+.jh-chips button:focus-visible{outline:2px solid var(--lantern);outline-offset:2px}
+.jh-gallery [hidden]{display:none!important}
+
+/* 제주 권역 히어로 실사 사진 (data/jeju-photos.json) */
+body.jeju-region.has-photo .hero{position:relative;background-image:linear-gradient(100deg,rgba(251,246,234,.97) 0%,rgba(251,246,234,.92) 34%,rgba(248,241,224,.62) 50%,rgba(243,230,202,.18) 68%,rgba(231,207,160,0) 84%),var(--hero-img);background-size:auto,cover;background-position:center,center;background-repeat:no-repeat}
+@media(max-width:700px){body.jeju-region.has-photo .hero{background-image:linear-gradient(180deg,rgba(251,246,234,.72) 0%,rgba(251,246,234,.93) 55%,rgba(251,246,234,.97) 100%),var(--hero-img)}}
+.hero-credit{position:absolute;right:12px;bottom:10px;z-index:3;max-width:70%;font-size:.66rem;line-height:1.4;color:#fff;background:rgba(0,0,0,.42);padding:3px 9px;border-radius:8px;text-decoration:none}
+.hero-credit:hover{background:rgba(0,0,0,.6)}
+.h-hero .hero-credit{bottom:auto;top:84px}
+.tr-list li{min-width:0}.tr-info{display:flex;flex-wrap:wrap;gap:4px 10px;padding:2px 4px 8px 34px;font-size:.74rem;color:var(--foam-dim);border-bottom:1px dashed var(--line);margin-top:-1px}.tr-info a{color:var(--lantern);text-decoration:none}.tr-info a:hover{text-decoration:underline}.tr-list li:has(.tr-info)>a{border-bottom:0}
+.tr-list .tr-info a{display:inline;padding:0;border:0;gap:0}
+
+/* 카카오톡 공유 줄 · 카카오내비 (js/kakao-share.js) */
+.ks-bar{border-top:1px solid var(--line);background:var(--night-2)}
+.ks-inner{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding-block:18px}
+.ks-label{font-size:.9rem;color:var(--foam-dim);margin-right:auto}
+.ks-btn{display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:.88rem;font-weight:600;padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+.ks-btn svg{width:18px;height:18px}
+.ks-kakao{background:#FEE500;border-color:#FEE500;color:#191919}
+.ks-btn:focus-visible{outline:2px solid var(--lantern);outline-offset:2px}
+.ks-navi{color:#1a73e8!important;font-weight:600;white-space:nowrap}
+.ks-static{display:none}
+.ks-mobile .ks-static{display:inline}
+.ks-toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;z-index:9999;background:#23302D;color:#fff;font-size:.88rem;padding:10px 16px;border-radius:10px;transition:.25s}
+.ks-toast.on{opacity:1;transform:translate(-50%,0)}
+@media(max-width:560px){.ks-label{width:100%;margin-right:0;font-size:.84rem}.ks-inner{gap:8px;padding-block:14px}.ks-btn{flex:1 1 0;justify-content:center;padding:8px 10px;font-size:.84rem;white-space:nowrap}}   /* 두 단추를 반씩 나란히 (2026-09-22) */
+.photo-spot .pa-t3 img{object-fit:contain;background:#E8EEF0}
+.spot-card .spot-photo.sp-real{position:relative;height:170px}.spot-card .sp-real figcaption{position:absolute;left:0;right:0;bottom:0;padding:12px 10px 5px;font-size:.64rem;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.55))}.spot-card .sp-real.pa-t3 img{object-fit:contain;background:#E8EEF0}
+.cr-wrap{overflow-x:auto;margin:10px 0 26px}.cr-table{width:100%;border-collapse:collapse;font-size:.84rem;min-width:620px}.cr-table th,.cr-table td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left;vertical-align:middle}.cr-table th{font-size:.76rem;color:var(--foam-dim)}.cr-table img{width:96px;height:64px;object-fit:cover;border-radius:6px;display:block}.cr-table small{display:block;color:var(--foam-dim);font-size:.72rem}.cr-table a{color:var(--lantern)}.cr h2 em{font-style:normal;font-size:.8em;color:var(--foam-dim)}
+/* 휴대폰: 제주 권역 히어로 사진 위 글자 읽기 쉽게, 사진 출처는 오른쪽 위 한 줄 */
+@media(max-width:700px){
+  body.jeju-region.has-photo .hero::after{content:"";position:absolute;inset:0;height:auto;z-index:1;background:linear-gradient(180deg,rgba(251,246,234,.86) 0%,rgba(251,246,234,.8) 60%,rgba(251,246,234,.55) 100%);pointer-events:none}
+  body.jeju-region.has-photo .hero .hero-inner{position:relative;z-index:3}
+  .hero-credit,.h-hero .hero-credit{top:8px;bottom:auto;right:8px;max-width:58%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .h-hero .h-hero-in{padding-top:52px}
+}
+
+/* 이번 주 언제 갈까 — 권역 페이지 물때표 위 (2026-09-18, js/week-plan.js) */
+.wp-card{margin:0 0 18px;background:#FFFBF3;color:#2B2116;border:1px solid #E7DFD0;border-radius:18px;padding:18px;box-shadow:0 8px 22px rgba(30,60,70,.08)}
+.wp-card:empty{display:none}
+.wp-kick{font-size:.75rem;font-weight:700;letter-spacing:.06em;color:#C07B22}
+.wp-title{font-size:1.2rem;margin:4px 0 2px;color:#2B2116;text-wrap:balance}
+.wp-title em{font-style:normal;color:#2F5D57}
+.wp-lead{font-size:.88rem;color:#6B6152;margin:0 0 12px;line-height:1.55}
+.wp-lead b{color:#2B2116}
+.wp-week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;align-items:end;max-width:640px}
+.wp-day{text-align:center;font-size:.72rem;color:#6B6152}
+.wp-day .star{display:block;height:1.1em;color:#C07B22;font-size:.85rem;line-height:1.1}
+.wp-day .bar{height:78px;display:flex;align-items:flex-end;justify-content:center;margin:2px 0 5px}
+.wp-day .bar i{width:72%;max-width:34px;border-radius:7px 7px 3px 3px;background:#BFD3CF;transition:height .6s ease}
+.wp-day.good .bar i{background:#6F9A93}
+.wp-day.best .bar i{background:#2F5D57}
+.wp-day b{display:block;font-size:.86rem;color:#2B2116}
+.wp-day.best b{color:#2F5D57}
+.wp-day.today b{text-decoration:underline;text-decoration-color:#C07B22;text-underline-offset:3px}
+.wp-day .dm{display:block;font-size:.66rem;white-space:nowrap}
+.wp-legend{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 8px;margin-top:10px;padding-top:8px;border-top:1px dashed #E7DFD0;font-size:.72rem;color:#6B6152;max-width:640px}
+.wp-note{margin:10px 0 0;font-size:.84rem;background:#F4ECDD;border-radius:10px;padding:9px 11px;color:#5B4D38;max-width:640px}
+.wp-note b{color:#2B2116}
+.wp-note[hidden]{display:none}
+@media (max-width:640px){
+  .wp-card{padding:16px 12px}
+  .wp-week{gap:3px}
+  .wp-day .dm{font-size:.6rem}
+}
+/* 휴대폰 권역 첫 화면 줄이기 (2026-09-19) — 홈 화면(home.css 640px 분기)과 같은 잣대.
+   .hero h1 의 clamp(2.1rem, 4.6vw, 3.4rem) 은 화면폭 730px 아래에서 늘 2.1rem(33.6px)에 묶여
+   제목이 4~5줄로 늘고, 위아래 여백(110·96px)까지 더해 히어로 하나가 760px 를 넘었습니다.
+   전남·제주·확대 권역·중국어판 히어로에 똑같이 적용됩니다. */
+@media (max-width:640px){
+  .hero{padding:56px 20px 44px}
+  .hero .eyebrow-line{margin-bottom:14px;font-size:.82rem}
+  .hero h1{font-size:1.7rem;line-height:1.34}
+  .hero p.lede{margin-top:14px;font-size:.95rem}
+  .hero-cta{margin-top:22px}
+}
+
+/* 권역 소개 띠(boseong-band) 휴대폰 축소 (2026-09-20) — 제목 2.1rem·위아래 여백·숫자 칸 20px 여백이
+   합쳐져 휴대폰에서 한 화면을 다 차지했습니다. 홈·히어로와 같은 잣대로 줄입니다. */
+@media (max-width:760px){
+  .boseong-band{padding:44px 20px}
+  .boseong-band .wrap{gap:22px}
+  .boseong-band h2{font-size:1.5rem}
+  .boseong-band .left p{margin-top:10px!important;font-size:.95rem}
+  .boseong-band .right{flex-basis:100%}
+  .fact{padding:12px 14px}
+  .fact .num{font-size:1.25rem}
+  .fact .label{font-size:.74rem;margin-top:3px}
+}
+
+/* 메뉴가 많은 쪽(권역·중국어 첫 화면)에서 마지막 항목이 잘려 '축'·'禁' 처럼 보였습니다.
+   넓은 화면부터 간격을 좁혀 한 줄에 담기게 합니다 (2026-09-20) */
+/* 위쪽 메뉴가 여섯 칸으로 늘어, 안쪽 너비(1120px)에 맞춰 기본부터 촘촘히 둡니다 (2026-09-20) */
+.navlinks{gap:16px;font-size:0.86rem;}
+@media (max-width:1240px){ .navlinks{gap:13px;font-size:0.83rem;} }
+@media (max-width:1040px){ .navlinks{gap:10px;font-size:0.8rem;} }
+@media (max-width:1000px){ .brand .sub{display:none;} .navlinks{gap:9px;font-size:0.78rem;} }
+/* 좁아지면 머리띠 물때 딱지는 접습니다 — 히어로에 같은 내용이 크게 나옵니다 (2026-09-20) */
+@media (max-width:920px) and (min-width:761px){ .navbar .muldae-badge{display:none;} }
+
+/* 휴대폰에서 바로가기 아이콘이 3칸씩 놓이는데 7~8개라 마지막 줄에 빈 칸이 남아 회색 자국처럼 보였습니다.
+   남는 자리는 마지막 항목이 채우게 합니다 (2026-09-20) */
+@media(max-width:700px){
+  .quicknav .row .qn-item:last-child:nth-child(3n+1){grid-column:1 / -1}
+  .quicknav .row .qn-item:last-child:nth-child(3n+2){grid-column:span 2}
+}
+
+/* 옆으로 더 있어요 표시 — js/app.js 가 xs-l·xs-r 을 붙였다 뗍니다 (2026-09-20) */
+.xs-l{box-shadow:inset 30px 0 22px -22px rgba(0,0,0,.55)}
+.xs-r{box-shadow:inset -30px 0 22px -22px rgba(0,0,0,.55)}
+.xs-l.xs-r{box-shadow:inset 30px 0 22px -22px rgba(0,0,0,.55),inset -30px 0 22px -22px rgba(0,0,0,.55)}
+.xs-go{position:sticky;z-index:4;flex:0 0 auto;align-self:center;display:none;align-items:center;justify-content:center;width:34px;height:34px;padding:0;border-radius:50%;border:1px solid rgba(255,255,255,.4);background:rgba(20,30,28,.62);color:#FFFBF3;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);box-shadow:0 2px 10px rgba(0,0,0,.3)}
+.xs-go svg{width:17px;height:17px}
+.xs-go-l{left:4px;margin-right:-40px}
+.xs-go-r{right:4px;margin-left:-40px}
+.h-site.xs-l>.xs-go-l,.h-site.xs-r>.xs-go-r{display:flex}
+.xs-go:hover{background:#F2B65C;color:#23302D;border-color:#F2B65C}
+.xs-go:focus-visible{outline:2px solid #FFFBF3;outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.xs-go{transition:none}}
+
+/* 포인트 목록 위 '처음이신가요?' 접이식 띠 (2026-09-20)
+   기본은 접혀 있습니다. 82쪽에 같은 글이 통째로 펼쳐져 있으면 검색엔진이 중복으로 보고,
+   목록을 스캔하러 온 사람에게는 포인트가 아래로 밀리기 때문입니다. */
+.firsttime{margin:0 0 20px;border:1px solid var(--line);border-radius:14px;background:#FFFBF3}
+.firsttime>summary{list-style:none;cursor:pointer;padding:13px 18px;font-size:.92rem;font-weight:700;color:var(--foam);display:flex;align-items:center;gap:8px}
+.firsttime>summary::-webkit-details-marker{display:none}
+.firsttime>summary::before{content:"?";flex:none;width:20px;height:20px;border-radius:50%;background:var(--lantern);color:#fff;font-size:.74rem;display:flex;align-items:center;justify-content:center}
+.firsttime>summary::after{content:"펼쳐 보기";margin-left:auto;font-weight:500;font-size:.8rem;color:var(--foam-dim)}
+.firsttime[open]>summary::after{content:"접기"}
+.firsttime>summary:hover{color:var(--lantern)}
+.firsttime>summary:focus-visible{outline:2px solid var(--lantern);outline-offset:2px;border-radius:14px}
+.ft-body{padding:2px 18px 16px;border-top:1px dashed var(--line);margin-top:2px}
+.ft-body p{margin:10px 0 0;font-size:.89rem;line-height:1.8;color:var(--foam)}
+.ft-body p b{color:var(--lantern)}
+/* 본문 글씨와 느낌이 겹쳐 안 보이던 것을 알약 단추로 바꿨습니다 (2026-09-20) */
+.ft-more{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px!important}
+.ft-more a{display:inline-flex;align-items:center;font-size:.83rem;font-weight:700;color:var(--foam);background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 15px;text-decoration:none;transition:border-color .15s,color .15s,background .15s}
+.ft-more a:hover{border-color:var(--lantern);color:var(--lantern);background:#FFF8EC}
+.ft-more a:focus-visible{outline:2px solid var(--lantern);outline-offset:2px}
+@media(max-width:620px){.firsttime>summary{padding:12px 14px;font-size:.88rem}.firsttime>summary::after,.firsttime[open]>summary::after{content:""}.ft-body{padding:2px 14px 14px}}
+
+/* 광고 자리 — 모든 쪽 공통 (2026-09-22, js/ads.js · data/ads.json)
+   옆 카드와 같은 모양. 배너 바로 위 '광고 · 쿠팡 파트너스'(첫 부분·본문과 다른 색) */
+/* 배너를 감싸던 상자(바탕·테두리·안여백)를 뺐습니다 — 배너만 보이면 된다는 주인 판단(2026-09-24).
+   안여백이 없어지니 배너가 칸을 그대로 쓰고, 줄이거나 넘칠 일도 줄어듭니다.
+   '광고 · 쿠팡 파트너스' 라벨은 경제적 이해관계 표기라 그대로 둡니다 */
+.ad-slot{background:none;border:0;border-radius:0;padding:0;min-width:0}
+.ad-slot[hidden]{display:none}
+.ad-slot.ad-wait{padding:0;border:0;min-height:1px;background:none}
+.ad-label{display:flex;align-items:center;gap:6px;margin:0 0 8px;font-size:.8rem;font-weight:600;color:#6B5E4F;line-height:1.3}
+.ad-label span{display:inline-block;font-size:.72rem;font-weight:700;line-height:1;color:#fff;background:#C07B22;border-radius:999px;padding:4px 9px}
+/* 배너 자체에 그림이 꽉 차 있어 테두리 없이도 구분됩니다. overflow 는 남깁니다 — 넘치면 잘라 냅니다 */
+.ad-body{overflow:hidden;border:0;border-radius:0;background:none;box-shadow:none}
+/* 제휴 링크 카드(트립닷컴 등) — 숙소 칸의 옆 카드와 같은 크기·모양. 사진 자리는 브랜드 색 바탕 + '광고' 배지로
+   실제 숙소 사진과 한눈에 다르게 (2026-09-22). 한국어 .stay-row · 중국어 .zr-stays 둘 다 */
+.ad-slot.ad-linkcard{padding:0;background:none;border:0;border-radius:0}
+.ad-card{display:flex;flex-direction:column;height:100%;text-decoration:none;color:inherit;border:1px dashed rgba(38,51,46,.32);background:#FFFBF3;overflow:hidden;transition:.18s}
+.ad-card:hover{border-color:var(--lantern,#C07B22)}
+.zr-stays .ad-card{border-radius:12px}
+.ad-card-ph{position:relative;height:110px;display:flex;align-items:center;justify-content:center}
+.zr-stays .ad-card-ph{height:auto;aspect-ratio:16/9}
+.ad-card-brand{color:#fff;font-weight:700;font-size:1.15rem;letter-spacing:.01em}
+.ad-card-label{position:absolute;left:8px;bottom:8px;display:inline-flex;align-items:center;gap:5px;font-size:.66rem;line-height:1;color:#fff;background:rgba(0,0,0,.32);padding:3px 9px 3px 3px;border-radius:100px}
+.ad-card-label .ad-badge{background:#C07B22;color:#fff;border-radius:100px;padding:3px 7px;font-weight:700}
+.ad-card-bd{padding:13px;display:flex;flex-direction:column;gap:6px}
+.ad-card-bd b{font-size:.9rem;font-weight:600;color:var(--ink,#2B2116)}
+.ad-card-bd span{font-size:.76rem;font-weight:600;color:var(--lantern,#C07B22)}
+/* 명소 카드 종류 표시 — 비어 있으면 숨기고(해변·항구 등은 뺌), 배로 가는 곳만 배지 (2026-09-22) */
+.spot-card .spot-kind:empty{display:none}
+.spot-card .spot-kind.ferry{display:inline-block;align-self:flex-end;width:max-content;font-size:.7rem;font-weight:700;line-height:1.5;color:#2F5D57;background:rgba(47,93,87,.1);border-radius:999px;padding:2px 9px;margin-bottom:-35px;position:relative;z-index:1}   /* 제목 줄 오른쪽 끝으로 (2026-09-22 주인) */
+.spot-card .spot-kind.ferry + h3{padding-right:96px}   /* 긴 이름이 배지와 겹치지 않게 */
+
+/* 휴대폰 글자 크기 정리 + 단추·입력칸 글꼴 통일 (2026-09-22 주인 지시 — 모바일 전수 점검) */
+button,input,select,textarea{font-family:inherit}
+@media (max-width:560px){
+  .section-head h2{font-size:1.3rem}
+  .hero h1{font-size:1.45rem}
+  body[data-region] a.sinan-banner .count-box .n{font-size:24px}
+}
+
+/* 태블릿(481~1000px): 이번 주 물때를 네 칸씩 — 일곱 칸이면 하루 칸이 108px 아래로 줄지 못해 쪽이 옆으로 밀리던 것(여수 등, 768px에서 861px) (2026-09-22) */
+@media (min-width:481px) and (max-width:1000px){ .tide-strip{grid-template-columns:repeat(4,minmax(0,1fr))} }
+@media (min-width:641px) and (max-width:900px){ .spot-grid{grid-template-columns:repeat(3,minmax(0,1fr))} }   /* 태블릿: 명소 카드 세 장씩 — 두 장씩이면 한 장이 340×330 으로 커서 (2026-09-22) */
+
+/* PC 에서는 칸 머리말이 640px 에 묶여 두 줄로 접히던 것 — 폭을 넓혀 한 줄에 담습니다(쪽이 길어지지 않게) (2026-09-23 주인 지시) */
+@media (min-width:1081px){
+  .section-head{ max-width:min(1060px,100%); }
+  .section-head p{ max-width:none; }
+}
+
+/* 권역 쪽 물때표 칸 — 이번 주 물때와 '현재 날씨'를 나란히(남는 자리 활용), 휴대폰은 한 줄씩 (2026-09-23 주인 지시) */
+/* 날씨 칸은 온도·파고뿐이라 넓으면 허전합니다 — 주간 칸을 더 넓게 (2026-09-23 주인 지시) */
+.tide-row{display:grid;grid-template-columns:minmax(0,2.5fr) minmax(0,1fr);gap:16px;align-items:stretch;margin-bottom:26px}
+.tide-row .wp-card{margin-bottom:0;height:100%}
+.tide-row .weather-card{margin-bottom:0;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:10px;border-radius:18px;padding:20px 22px}
+.tide-row .weather-card .w-head{font-size:.8rem;font-weight:700;letter-spacing:.04em;color:rgba(255,251,243,.82)}
+.tide-row .weather-card .w-icon{width:44px;height:44px}
+.tide-row .weather-card .w-main{min-width:0}
+.tide-row .weather-card .w-temp{font-size:2.1rem;line-height:1.1}
+.tide-row .weather-card .w-stats{margin-left:0;gap:20px;width:100%;border-top:1px solid rgba(255,251,243,.2);padding-top:10px}
+@media (max-width:900px){
+  .tide-row{grid-template-columns:minmax(0,1fr);gap:12px;margin-bottom:20px}
+  .tide-row .weather-card{flex-direction:row;flex-wrap:wrap;align-items:center;gap:14px;padding:16px 18px}
+  .tide-row .weather-card .w-head{flex-basis:100%;margin-bottom:-4px}
+  .tide-row .weather-card .w-stats{width:auto;margin-left:auto;border-top:0;padding-top:0}
+}
+/* 권역 소개 띠 — PC 에서 숫자 네 칸을 한 줄로 펴서 자리를 넓게 씁니다 (2026-09-23 주인 지시) */
+@media (min-width:1081px){
+  .boseong-band .wrap{gap:40px;align-items:center}
+  .boseong-band .left{flex:1 1 420px}
+  .boseong-band .left p{max-width:none!important}
+  .boseong-band .right{flex:1 1 520px;grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+/* 날씨를 아직 못 불러왔으면 물때 카드가 폭을 다 씁니다 (2026-09-23) */
+.tide-row.no-weather{grid-template-columns:minmax(0,1fr)}
+
+/* 푸터의 재방문 안내 — 네이버에서 '바다가자' 로는 노래가 나와 못 찾고 '바다가자닷컴' 으로는
+   나옵니다. 그 말을 각인시키는 것이 재방문의 열쇠라 모든 쪽 푸터에 둡니다 (2026-09-24 주인 지시) */
+.footer-find{margin:10px 0 0;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.footer-find > span{font-size:.84rem;color:var(--foam-dim)}   /* 꼬리말이 밝은 바탕이 되어 흰 글씨가 안 보였습니다 (2026-09-24) */
+/* .nv-box · .nv-go 모양은 css/gate.css 에 한 번만 두고 함께 씁니다 */
+.footer-find .nv-box{display:inline-flex;align-items:center;gap:9px;background:#fff;
+  border:2px solid #03C75A;border-radius:9px;padding:5px 5px 5px 8px;text-decoration:none}
+.footer-find .nv-n{display:inline-flex;flex:none}
+.footer-find .nv-n svg{width:21px;height:21px;display:block}
+.footer-find .nv-box b{font-size:.95rem;font-weight:800;color:#1A1A1A}
+.footer-find .nv-go{display:inline-flex;align-items:center;justify-content:center;
+  width:25px;height:25px;background:#03C75A;border-radius:6px;flex:none}
+.footer-find .nv-go svg{width:14px;height:14px;fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round}
+
+/* ── 로고를 네이버 검색창 모양으로 (2026-09-24 주인 지시) ──
+   신생 사이트라 이름을 알리는 것이 먼저입니다. '바다가자' 로는 노래에 밀려
+   검색이 안 되고 '바다가자닷컴' 으로는 나옵니다. 그 말을 각인시킵니다.
+   글자를 누르면 우리 첫 화면, 돋보기를 누르면 실제 네이버 검색으로 갑니다 —
+   보이는 대로 움직여야 헷갈리지 않습니다. 검색이 실제로 일어나면
+   검색량이 올라가 노출에도 보탬이 됩니다. */
+.brand.nv-logo{
+  display:inline-flex; align-items:center; gap:8px; flex:none;
+  background:#fff; border:2px solid #03C75A; border-radius:11px;
+  padding:4px 5px 4px 7px; box-shadow:0 1px 3px rgba(0,0,0,.08);
+  color:var(--ink); text-decoration:none;
+}
+.brand.nv-logo .nv-n,
+.brand.nv-logo .nv-go{
+  width:26px; height:26px; background:#03C75A; border-radius:6px;
+  display:grid; place-items:center; flex:none;
+}
+.brand.nv-logo .nv-n svg{width:15px; height:15px; display:block;}
+.brand.nv-logo .nv-go svg{width:15px; height:15px; display:block; stroke:#fff; fill:none; stroke-width:2.4;}
+.brand.nv-logo .mark{
+  font-family:'Noto Serif KR',serif; font-weight:700; font-size:1.22rem;
+  letter-spacing:0; white-space:nowrap; color:var(--ink);
+}
+.brand.nv-logo:hover .nv-go{background:#02b152;}
+@media (max-width:760px){
+  .brand.nv-logo{gap:6px; padding:4px 5px 4px 6px; border-radius:10px;}
+  .brand.nv-logo .nv-n,
+  .brand.nv-logo .nv-go{width:23px; height:23px; border-radius:5px;}
+  .brand.nv-logo .nv-n svg,
+  .brand.nv-logo .nv-go svg{width:13px; height:13px;}
+  .brand.nv-logo .mark{font-size:1.05rem;}
+}
+
+/* ── 광고가 겹쳐 나오는 것 막기 (2026-09-24 주인 지시) ──
+   PC용·모바일용 자리가 쌍으로 박혀 있고 js/ads.js 가 화면 폭으로 가립니다.
+   그런데 스크립트가 늦게 돌거나 판정이 어긋나면 둘 다 보여, 같은 배너가 두 번 나옵니다.
+   실제로 주인 화면에서 그랬습니다. 스크립트에만 맡기지 않고 여기서도 막습니다. */
+@media (max-width:900px){
+  [data-ad-slot$="-pc"]{display:none !important}
+}
+@media (min-width:901px){
+  [data-ad-slot$="-mobile"]{display:none !important}
+}
+
+/* 먹거리 격자 — 격자 바탕을 선 색으로 칠해 칸 사이 선을 만들던 방식이라, 먹거리가 4~5개인 권역은
+   끝에 회색 빈칸이 드러났습니다(42쪽). 카드마다 제 테두리를 그리고 격자 바탕은 비웁니다 (2026-09-24) */
+.eat-grid{background:transparent;border:0}
+.eat-card{box-shadow:0 0 0 1px var(--line)}
+/* 머리 메뉴가 9개인 쪽(제주 7권역 — '사진 명소' 가 더해짐)은 PC 에서 '추천코…' 로 잘렸습니다.
+   메뉴가 9개 이상인 줄만 간격과 글자를 조금 줄입니다 (2026-09-24) */
+@media (min-width:761px){
+  .navlinks:has(> a:nth-child(9)){gap:12px;font-size:0.82rem}
+}
+@media (min-width:761px) and (max-width:1240px){
+  .navlinks:has(> a:nth-child(9)){gap:9px;font-size:0.78rem}
+}
+/* 바로가기·잡히는 것 격자도 먹거리처럼 — 격자 바탕을 선 색으로 칠해 선을 만들던 방식이라 칸 수가 안 맞으면
+   회색 빈칸이 드러났습니다(제주 7쪽: 휴대폰 바로가기, PC 잡히는 것 2개 + 빈칸). 카드마다 제 테두리를 그립니다 (2026-09-24) */
+.quicknav .row, .catch-grid{background:transparent;border:0}
+.qn-item, .catch-card{box-shadow:0 0 0 1px var(--line)}
+/* 제주 휴대폰 바로가기는 4칸 — 3칸용 '마지막 칸 늘이기' 가 걸려 칸이 어긋나던 것을 되돌립니다 */
+@media(max-width:700px){
+  body.jeju-region .quicknav .row .qn-item:last-child{grid-column:auto}
+}
+
+/* ★ 휴대폰에서 읽기·누르기 쉽게  (2026-09-26 전수검사로 찾음)
+   다녀가시는 분의 78%가 휴대폰입니다. 크롬으로 432쪽을 360px 로 그려 재어
+   두 가지를 찾았습니다.
+     · 12px 아래 글자        작은 화면에서 읽기 어렵습니다
+     · 30px 아래 누름자리    손가락으로 누르기 어렵습니다('中文' 이 45x26 이었습니다)
+
+   ※ 반드시 파일 맨 뒤에 둡니다. 처음에 1019줄에 넣었더니 뒤의 .lang-pick(1405)·
+     .hero-credit(1453)·@media 640px(1409) 가 그대로 덮어써 하나도 듣지 않았습니다.
+
+   글자 크기는 그대로 두고 누르는 자리만 키웁니다 — 짜임새를 건드리지 않습니다. */
+@media (max-width:760px){
+  .region-nav .rn-label{font-size:.75rem}                        /* 11.5px → 12px */
+  .lang-pick a,.lang-pick span{padding:8px 12px}                 /* 높이 26 → 32px */
+  .hero-credit{padding:6px 9px;font-size:.7rem}                  /* 높이 21 → 27px */
+}
+@media (max-width:640px){
+  .lang-pick a,.lang-pick span{padding:8px 11px;font-size:.75rem}
+}
+@media (max-width:760px){
+  /* 머리글 메뉴는 글자만 있어 세로가 19px 이었습니다. 줄 간격 안에서 위아래를
+     넓혀 31px 로 만듭니다 — 머리글 높이는 그대로입니다. */
+  .navlinks a{padding:6px 0}
+}
+@media (max-width:760px){
+  /* 꼬리말 메뉴도 글자만 있어 세로 19px 이었습니다. 줄 사이를 벌려 손가락으로
+     누를 수 있게 합니다 — 줄 간격이 늘 뿐 짜임새는 그대로입니다. */
+  .footer-nav .fn-col a{display:block;padding:6px 0}
+}
+@media (max-width:760px){
+  /* 2px 씩 모자라 걸리던 두 자리를 채웁니다 (2026-09-26 전수검사) */
+  .hero-credit{padding:7px 10px}                    /* 28 → 30px */
+  .coastline .head > a{display:inline-block;padding:5px 0}   /* 22 → 32px */
+}
+
+/* 자료 기준일 — '이 자료가 언제 것인가' (2026-09-26 주인 지시)
+   포인트 3,603곳을 매달 다시 확인할 수는 없습니다. 그러나 언제 것인지 밝히면
+   최신이 아니어도 정직하고, 보는 분도 '반년 전 자료구나' 하고 판단할 수 있습니다.
+   tools/add-data-age.py 가 갱신 대장(data/refresh-plan.json)에서 날짜를 읽어 넣습니다. */
+.data-age{max-width:92ch;margin:0 0 10px;font-size:.84rem;line-height:1.7;color:var(--foam-dim)}
+.data-age b{color:var(--foam)}
+.data-age small{font-size:.78rem;opacity:.85}

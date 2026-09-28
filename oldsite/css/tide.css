@@ -1,0 +1,229 @@
+/* 전국 물때표 쪽 (tide/) — 밝은 바탕에 바다 파랑·등불색으로 또렷하게 (2026-09-23 주인 지시: 색상도 가시성 높게)
+   참고서의 '오늘의 바다' 칸(ts-*)을 그대로 쓰되, 짙은 녹색 대신 밝은 색으로 덮어씁니다. */
+.tide-page{background:#F2F7FB}
+
+/* 머리 */
+.tp-hero{background:linear-gradient(160deg,#E7F1F9,#F7FBFD 55%,#FFFBF3);border-bottom:1px solid #DCE7F0;padding:34px 0 30px}
+.tp-hero .tp-kick{display:inline-block;font-size:.82rem;font-weight:800;color:#fff;background:#1F5F8B;border-radius:999px;padding:4px 14px}
+.tp-hero h1{font-family:'Noto Serif KR',serif;font-size:2.1rem;line-height:1.35;color:#12242F;margin:12px 0 10px}
+.tp-hero p{font-size:1rem;line-height:1.8;color:#3E4C57;max-width:none}
+.tp-hero p b{color:#1F5F8B}
+.tp-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.tp-map-tx .tp-links{margin-top:16px;padding-top:16px;border-top:1px solid #E6EDF3}  /* 지도 옆 빈자리를 씁니다 */
+.tp-links a{display:inline-flex;align-items:center;padding:11px 22px;border-radius:999px;background:#1F5F8B;color:#fff;font-weight:800;font-size:.95rem;text-decoration:none}
+.tp-links a.s{background:#fff;color:#1F5F8B;border:2px solid #5B9BC8}
+.tp-links a:hover{background:#12466B;color:#fff;border-color:#12466B}
+
+/* 지도 */
+.tp-map{padding:26px 0 6px}
+.tp-map-in{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:26px;align-items:stretch;padding:20px 24px;border:1px solid #DCE7F0;border-radius:20px;background:#fff;box-shadow:0 6px 22px rgba(31,95,139,.07)}
+.tp-map-svg{display:flex;justify-content:center}
+.tp-map-svg .hm-svg{width:100%;max-width:300px;height:auto}
+.tp-map-svg .hm-r{cursor:pointer}
+.tp-map-tx{display:flex;flex-direction:column;height:100%}
+.tp-map-tx h2{font-family:'Noto Serif KR',serif;font-size:1.35rem;color:#12242F;margin:0 0 12px}
+.tp-map-tx ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.tp-map-tx li{font-size:.94rem;line-height:1.6;color:#3E4C57;padding-left:22px;position:relative}
+.tp-map-tx li::before{content:"";position:absolute;left:0;top:7px;width:9px;height:9px;border-radius:50%;background:#F2B65C}
+.tp-map-tx li b{color:#1F5F8B}
+.tp-map-tx .tp-note{margin-bottom:auto}
+.tp-note{margin-top:14px;font-size:.85rem;line-height:1.6;color:#66727C}
+
+/* 그림 지도 모양 — 첫 화면(css/gate.css)과 같은 규칙을 이 쪽에도 둡니다 */
+.hm-inland{fill:#E4E1DA;stroke:#fff;stroke-width:1.5}
+.hm-inl{font-size:12px;fill:#9A968C;text-anchor:middle}
+.hm-dots circle{fill:#1F5F8B;opacity:.28;pointer-events:none}
+.hm-r polygon{fill:var(--c);fill-opacity:.3;stroke:#fff;stroke-width:1.6;transition:fill-opacity .15s}
+.hm-r:hover polygon,.hm-r:focus polygon{fill-opacity:.62}
+.hm-r:focus{outline:none}
+.hm-r:focus-visible .hm-pill{stroke:#F2B65C;stroke-width:3}
+.hm-pill{fill:#fff;stroke:var(--c);stroke-width:1.5;filter:drop-shadow(0 1px 2px rgba(0,0,0,.15))}
+.hm-r:hover .hm-pill{fill:var(--c)}
+.hm-lb{font-size:12.5px;font-weight:700;fill:#1F2A33;text-anchor:middle;pointer-events:none}
+.hm-r:hover .hm-lb{fill:#fff}
+.hm-lead{stroke:var(--c);stroke-width:1.2;stroke-dasharray:2 2}
+
+/* 오늘 물때 칸 — 짙은 녹색을 밝은 색으로 */
+.tide-page .h-today{background:#F2F7FB;color:#12242F;padding:26px 0 34px}
+.tide-page .h-today .kicker{color:#1F5F8B;font-weight:800}
+.tide-page .h-today h2.serif{color:#12242F}
+.tide-page .ts-head p{color:#546069}
+.tide-page .h-today #tsDate{color:#546069}
+.tide-page .ts-more{color:#1F5F8B;font-weight:800}
+.tide-page .ts-groups button{background:#fff;border:1.5px solid #9CC0DA;color:#1F5F8B;font-weight:700}
+.tide-page .ts-groups button:hover{background:#E7F1F9;border-color:#1F5F8B}
+.tide-page .ts-groups button[aria-selected="true"]{background:#1F5F8B;border-color:#1F5F8B;color:#fff;box-shadow:0 3px 10px rgba(31,95,139,.3)}
+.tide-page .ts-regions button{background:#fff;border:1.5px solid #D6E2EC;color:#2B3942;font-weight:600}
+.tide-page .ts-regions button:hover{background:#FFF4E2;border-color:#F2B65C}
+.tide-page .ts-regions button[aria-selected="true"]{background:#F2B65C;border-color:#D89726;color:#2A1B08;font-weight:800}
+.tide-page .ts-card{background:#fff;border:1px solid #DCE7F0;box-shadow:0 3px 12px rgba(31,95,139,.06)}
+.tide-page .ts-label{color:#6B7A85}
+.tide-page .ts-muldae b{color:#12242F}
+.tide-page .ts-muldae span{color:#B8761C}
+.tide-page .ts-gauge{background:#E6EDF3}
+.tide-page .ts-gauge i{background:linear-gradient(90deg,#5B9BC8,#F2B65C)}
+.tide-page .ts-verdict{color:#2B3942}
+.tide-page .ts-verdict b{color:#1F5F8B}
+.tide-page .ts-tides li{color:#2B3942}
+.tide-page .ts-tides li .k{background:#E1EFF8;color:#1F5F8B;font-weight:700}
+.tide-page .ts-tides li.high .k{background:#FCEBCF;color:#9A6413}
+.tide-page .ts-weather b,.tide-page .ts-sun b{color:#12242F}
+.tide-page .ts-tides .muted,.tide-page .ts-sub,.tide-page .ts-src,.tide-page .ts-credit{color:#6B7A85}
+.tide-page .ts-plan{background:#fff;border:1px solid #DCE7F0}
+.tide-page .ts-plan .tp-kick{color:#1F5F8B}
+.tide-page .tp-title{color:#12242F}
+.tide-page .tp-lead,.tide-page .tp-legend,.tide-page .tp-note{color:#546069}
+.tide-page .ts-week .wk{background:#F4F8FB;border-color:#DCE7F0;color:#2B3942}
+.tide-page .ts-week .wk b,.tide-page .ts-week .wk .d{color:#12242F}
+.tide-page .ts-idx .ti-grade{color:#12242F}
+.tide-page .ts-idx .ti-place,.tide-page .ts-idx .ti-detail{color:#6B7A85}
+.tide-page .ts-learnbtn a{background:#1F5F8B;color:#fff;border-color:#1F5F8B;box-shadow:0 4px 14px rgba(31,95,139,.25)}
+.tide-page .ts-learnbtn a:hover{background:#12466B;border-color:#12466B}
+.tide-page .ts-install{background:#fff;border:1px solid #DCE7F0;color:#2B3942}
+
+/* 더 보기 카드 */
+.tp-more{padding:8px 0 44px}
+.tp-more h2{font-family:'Noto Serif KR',serif;font-size:1.35rem;color:#12242F;margin:0 0 14px}
+.tp-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.tpc{display:block;padding:18px 20px;border:1px solid #DCE7F0;border-top:4px solid #5B9BC8;border-radius:16px;background:#fff;text-decoration:none;transition:box-shadow .15s,border-color .15s}
+.tpc:nth-child(2){border-top-color:#F2B65C}
+.tpc:nth-child(3){border-top-color:#6FB7B0}
+.tpc:hover{border-color:#5B9BC8;box-shadow:0 6px 18px rgba(31,95,139,.12)}
+.tpc b{display:block;font-family:'Noto Serif KR',serif;font-size:1.06rem;color:#12242F;margin-bottom:6px}
+.tpc small{display:block;font-size:.86rem;line-height:1.6;color:#546069}
+.tp-ad{padding:10px 0 0}
+
+@media (max-width:900px){
+  .tp-map-in{grid-template-columns:minmax(0,1fr);gap:14px;padding:16px 14px}
+  .tp-cards{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:560px){
+  .tp-hero{padding:24px 0 22px}
+  .tp-hero h1{font-size:1.6rem}
+  .tp-hero p{font-size:.95rem}
+  .tp-links a{width:100%;justify-content:center}
+  .tp-map-svg .hm-svg{max-width:230px}
+  .tp-map-tx h2{font-size:1.2rem}
+}
+
+/* 시간별 물높이 그래프 — 참고서의 어두운 색 대신 밝게 (2026-09-23) */
+.tide-page .h-today .tide-graph{background:#fff;border:1px solid #DCE7F0;box-shadow:0 3px 12px rgba(31,95,139,.06)}
+.tide-page .h-today .tide-graph .tg-head b,.tide-page .h-today .tide-graph .tg-axis,.tide-page .h-today .tide-graph .tg-lbl{fill:#2B3942;color:#2B3942}
+.tide-page .h-today .tide-graph .tg-head,.tide-page .h-today .tide-graph .tg-foot{display:flex;color:#546069}
+.tide-page .h-today .tide-graph .tg-tabs button{border:1.5px solid #D6E2EC;color:#1F5F8B;background:#fff}
+.tide-page .h-today .tide-graph .tg-tabs button[aria-selected="true"]{background:#1F5F8B;border-color:#1F5F8B;color:#fff}
+
+/* 전국 물때 지도(카카오) — 전국을 한 장에, 확대하면 포인트까지 (2026-09-23 주인 지시) */
+.tp-map-wrap{position:relative}
+.tm-map{width:100%;height:644px;border-radius:16px;overflow:hidden;background:#E7F1F9}
+.tm-map.tm-off{display:none}
+.tm-fallback{padding:10px 0}
+.tm-count{margin:10px 0 0;font-size:.84rem;color:#66727C;text-align:center}
+/* 권역 핀 — 점이 실제 자리에 오도록 왼쪽 끝 기준(xAnchor 0), 눈에 잘 띄게 (2026-09-23 주인 지시) */
+.tm-pin{display:inline-flex;align-items:center;gap:7px;padding:6px 13px 6px 8px;border-radius:999px;background:#fff;border:2px solid #1F5F8B;
+  box-shadow:0 3px 10px rgba(0,0,0,.28);font-size:.92rem;font-weight:800;color:#0F2733;text-decoration:none;white-space:nowrap;margin-left:-15px}
+.tm-pin .tm-dot{width:14px;height:14px;border-radius:50%;background:#1F5F8B;border:2px solid #fff;box-shadow:0 0 0 1.5px #1F5F8B;flex:none}
+.tm-pin em{font-style:normal;font-weight:800;color:#C0522B;font-size:.86rem}
+.tm-pin:hover{background:#1F5F8B;color:#fff;border-color:#12466B}
+.tm-pin:hover .tm-dot{background:#fff;box-shadow:0 0 0 1.5px #fff}
+.tm-pin:hover em{color:#FFD79A}
+.tm-pin.on{background:#C0522B;border-color:#8E3A1C;color:#fff;box-shadow:0 4px 14px rgba(192,82,43,.5)}
+.tm-pin.on .tm-dot{background:#fff;box-shadow:0 0 0 1.5px #fff}
+.tm-pin.on em{color:#FFE2C2}
+/* 확대 정도에 따라 보여 주는 만큼 달라집니다 */
+.tm-map[data-zoom="far"] .tm-pin{padding:0;border-radius:50%;width:20px;height:20px;justify-content:center;border-width:3px;margin-left:-10px;background:#1F5F8B}
+.tm-map[data-zoom="far"] .tm-pin .tm-dot{width:8px;height:8px;background:#fff;border:0;box-shadow:none}
+.tm-map[data-zoom="far"] .tm-pin b,.tm-map[data-zoom="far"] .tm-pin em{display:none}
+.tm-map[data-zoom="far"] .tm-pin.on{background:#C0522B}
+.tm-map[data-zoom="mid"] .tm-pin em{display:none}
+
+  font-size:.76rem;font-weight:600;color:#2B3942;text-decoration:none;white-space:nowrap;transform:translateX(-50%);box-shadow:0 1px 3px rgba(0,0,0,.14)}
+.tm-spot i{width:7px;height:7px;border-radius:50%;background:#5B9BC8;flex:none}
+.tm-spot.g i{background:#2E8B6F}
+.tm-spot:hover{border-color:#1F5F8B;color:#12242F}
+@media (max-width:900px){
+  .tm-map{height:437px}
+}
+
+/* 2주 물때표 (2026-09-23 주인 지시) */
+.tp-14{padding:6px 0 40px}
+.tp-14 .sec-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.tp-kick2{font-size:.78rem;font-weight:800;color:#1F5F8B;background:#E7F1F9;border-radius:999px;padding:4px 12px}
+.tp-14 h2{font-family:'Noto Serif KR',serif;font-size:1.35rem;color:#12242F;margin:0}
+.t14{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+.t14-day{background:#fff;border:1px solid #DCE7F0;border-radius:14px;padding:11px 12px 12px}
+.t14-day.today{border-color:#1F5F8B;border-width:2px;box-shadow:0 4px 14px rgba(31,95,139,.14)}
+.t14-top{display:flex;align-items:baseline;gap:6px;margin-bottom:7px}
+.t14-top b{font-family:'Noto Serif KR',serif;font-size:1.02rem;color:#12242F}
+.t14-top span{font-size:.8rem;color:#66727C}
+.t14-mul{display:flex;align-items:baseline;gap:6px}
+.t14-mul b{font-size:.96rem;font-weight:800;color:#1F5F8B}
+.t14-mul span{font-size:.78rem;color:#66727C}
+.t14-mul.spring b{color:#C0522B}
+.t14-mul.spring span{color:#B8761C}
+.t14-bar{height:6px;border-radius:999px;background:#EBF1F6;margin:7px 0 9px;overflow:hidden}
+.t14-bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#5B9BC8,#F2B65C)}
+.t14-ev{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.t14-ev li{display:flex;align-items:center;gap:6px;font-size:.84rem;color:#2B3942}
+.t14-ev .k{font-size:.7rem;font-weight:800;border-radius:999px;padding:1px 6px;background:#E1EFF8;color:#1F5F8B}
+.t14-ev li.h .k{background:#FCEBCF;color:#9A6413}
+.t14-ev .t{font-weight:700;font-variant-numeric:tabular-nums}
+.t14-ev .v{margin-left:auto;color:#8A959E;font-size:.78rem}
+.t14-wait{margin:2px 0 0;font-size:.8rem;color:#8A959E}
+.t14-src,.t14-note{margin:10px 0 0;font-size:.82rem;color:#66727C}
+.tp-learn-cta{margin:18px 0 0;text-align:center}
+.tp-learn-cta a{display:inline-flex;align-items:center;gap:8px;padding:13px 30px;border-radius:999px;background:#1F5F8B;color:#fff;font-weight:800;font-size:1rem;text-decoration:none;box-shadow:0 4px 16px rgba(31,95,139,.28)}
+.tp-learn-cta a:hover{background:#12466B}
+@media (max-width:1080px){ .t14{grid-template-columns:repeat(4,minmax(0,1fr))} }
+@media (max-width:760px){ .t14{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px} .t14-day{padding:9px 10px 10px} .tp-learn-cta a{width:100%;justify-content:center} }
+
+/* 오늘 물때 카드 — 빈 자리 없이 여섯 칸으로 (2026-09-23 주인 지시: 공간 활용) */
+.tide-page .ts-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:stretch}
+.tide-page .ts-grid .ts-card{display:flex;flex-direction:column}
+.tide-page .ts-verdict{margin-top:auto}
+.tide-page .ts-tides{margin-top:4px;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:16px;row-gap:8px}   /* 간조·만조 넷을 두 줄로 (2026-09-23 주인 지시) */
+.tide-page .ts-sun{gap:8px}
+/* '다음 간조' 줄이 흰 글자라 밝은 바탕에 묻히던 것 */
+.tide-page .ts-next{background:#EEF5FA;border:1px solid #DCE7F0}
+.tide-page .ts-next small{color:#66727C}
+.tide-page .ts-next b{color:#12242F}
+.tide-page .ts-next .r b{color:#B8761C}
+/* 바다 지수 두 칸도 같은 줄에서 같은 모양으로 */
+.tide-page .ts-grid .ts-idx .ti-grade{font-family:'Noto Serif KR',serif;font-size:1.5rem;margin-top:6px;color:#12242F}
+.tide-page .ts-grid .ts-idx .ti-place{margin-top:2px}
+@media (max-width:1080px){ .tide-page .ts-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:620px){ .tide-page .ts-grid{grid-template-columns:minmax(0,1fr)} }
+
+/* 카드 세 묶음 — 성격이 같은 것끼리(물때 / 하늘·바다 / 지수) (2026-09-23 주인 판단) */
+.tide-page .ts-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;padding:0;overflow:hidden}
+.tide-page .ts-pair .tsp{padding:16px 18px;display:flex;flex-direction:column;min-width:0}
+.tide-page .ts-pair .tsp + .tsp{border-left:1px solid #E6EEF5}
+.tide-page .ts-pair-tide .tsp:first-child{background:linear-gradient(160deg,#F7FBFD,#fff)}
+.tide-page .ts-pair .ts-idx{display:flex;flex-direction:column;gap:2px}
+.tide-page .ts-pair .ti-grade{font-family:'Noto Serif KR',serif;font-size:1.5rem;color:#12242F;margin-top:4px}
+.tide-page .ts-pair .ti-place,.tide-page .ts-pair .ti-detail{font-size:.82rem;color:#66727C;line-height:1.6}
+.tide-page .ts-pair .ts-verdict{margin-top:10px}
+@media (max-width:1080px){ .tide-page .ts-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:760px){
+  .tide-page .ts-grid{grid-template-columns:minmax(0,1fr)}
+  .tide-page .ts-pair{grid-template-columns:minmax(0,1fr)}
+  .tide-page .ts-pair .tsp + .tsp{border-left:0;border-top:1px solid #E6EEF5}
+}
+
+/* ── 물때표 더보기 (2026-09-24 주인 지시) ──
+   열네 칸을 처음부터 펼치면 자리를 너무 먹습니다. 이레치만 보이고 단추로 펼칩니다. */
+.t14 .t14-later{display:none}
+.t14.t14-open .t14-later{display:block}
+.t14-more-btn{
+  display:block; width:100%; margin:14px 0 0; padding:13px 16px;
+  background:#fff; border:1px solid var(--line); border-radius:12px;
+  font-family:inherit; font-size:14px; font-weight:700; color:var(--ink);
+  cursor:pointer; transition:background .15s, border-color .15s;
+}
+.t14-more-btn:hover{background:#FFFBF3; border-color:var(--lantern)}
+.t14-more-btn span{color:var(--lantern); margin-left:2px}
+/* '홈 화면에 추가' 안내 — 첫 화면의 어두운 칸에 맞춘 연노랑 글씨라 물때표 쪽 흰 카드에서 안 보였습니다 (2026-09-24) */
+.ts-install{background:#FFF8EC;border-color:#E5C48F}
+.ts-install p{color:#2B2116}
+.ts-install p small{color:#6B5E4F}
+.ts-install .ti-x{color:#8A7D6B}

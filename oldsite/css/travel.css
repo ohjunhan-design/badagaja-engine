@@ -1,0 +1,75 @@
+/* 관광 · 맛집 · 숙소 (travel/) — 2026-09-23
+   바탕과 머리말은 물때표 쪽(css/tide.css)을 그대로 쓰고, 여기서는 목록 부분만 더합니다. */
+
+.tv-sec { padding: 30px 0 34px; }
+.tv-sec.alt { background: #F4F9FC; border-top: 1px solid #E4EDF3; border-bottom: 1px solid #E4EDF3; }
+.tv-kick { margin: 0 0 4px; font-size: .78rem; font-weight: 800; letter-spacing: .1em; color: #C07B22; }
+
+.tv-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 0 0 12px; }
+.tv-head h2 { font-family: 'Noto Serif KR', serif; font-size: 1.5rem; color: #12242F; margin: 0; }
+.tv-head h2 span { font-size: .95rem; font-weight: 500; color: #5B6C78; }
+.tv-head h2 em { font-style: normal; font-size: .9rem; font-weight: 600; color: #5B6C78; }
+.tv-more { font-size: .88rem; font-weight: 700; color: #1F5F8B; text-decoration: none; white-space: nowrap; }
+.tv-more:hover { text-decoration: underline; }
+
+/* 권역 고르기 — 묶음별로 한 줄씩 */
+.tv-pick { display: grid; gap: 8px; margin: 6px 0 18px; }
+.tv-grow { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+.tv-grow > b { flex: none; width: 66px; font-size: .84rem; color: #5B6C78; }
+.tv-rbtn { border: 1px solid #DCE7F0; border-radius: 999px; padding: 6px 13px; font: inherit; font-size: .85rem;
+  color: #2B3942; background: #fff; cursor: pointer; transition: all .16s; }
+.tv-rbtn:hover { border-color: #F2B65C; color: #9A6413; }
+.tv-rbtn.on { background: #1F5F8B; border-color: #1F5F8B; color: #fff; font-weight: 700; }
+
+/* 갈래 단추 */
+.tv-tabs { display: flex; gap: 7px; flex-wrap: wrap; margin: 0 0 14px; }
+.tv-tab { display: inline-flex; align-items: center; gap: 6px; border: 1px solid #DCE7F0; border-radius: 999px;
+  padding: 8px 16px; font: inherit; font-size: .9rem; color: #2B3942; background: #fff; cursor: pointer; transition: all .16s; }
+.tv-tab em { font-style: normal; font-size: .78rem; color: #7B8B95; }
+.tv-tab:hover { border-color: #F2B65C; }
+.tv-tab.on { background: #12242F; border-color: #12242F; color: #fff; font-weight: 700; }
+.tv-tab.on em { color: rgba(255, 255, 255, .7); }
+.tv-tab.off { opacity: .4; cursor: default; }
+
+/* 목록 카드 */
+.tv-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 12px; }
+.tv-card { border: 1px solid #E4EDF3; border-radius: 14px; padding: 14px 16px; background: #fff; }
+.tv-card b { display: block; font-size: .98rem; color: #12242F; margin-bottom: 3px; word-break: keep-all; }
+.tv-card p { margin: 6px 0 0; font-size: .86rem; line-height: 1.65; color: #4A5A66; }
+.tv-card small { display: block; font-size: .78rem; color: #7B8B95; }
+.tv-kind, .tv-when, .tv-theme { display: inline-block; font-size: .75rem; font-weight: 700; border-radius: 999px; padding: 2px 9px; }
+.tv-kind { background: #EAF3FA; color: #1F5F8B; }
+.tv-when { background: #FCF1DF; color: #9A6413; }
+.tv-theme { background: #EFF6EF; color: #3B6B3B; }
+.tv-steps { margin: 8px 0 0; padding-left: 18px; }
+.tv-steps li { font-size: .84rem; line-height: 1.7; color: #4A5A66; }
+.tv-none { font-size: .9rem; color: #7B8B95; margin: 4px 0 0; }
+
+/* 동행 고르기 */
+.tv-tpick { display: flex; gap: 7px; flex-wrap: wrap; margin: 0 0 14px; }
+.tv-tbtn { border: 1px solid #DCE7F0; border-radius: 999px; padding: 7px 15px; font: inherit; font-size: .87rem;
+  color: #2B3942; background: #fff; cursor: pointer; transition: all .16s; }
+.tv-tbtn:hover { border-color: #F2B65C; }
+.tv-tbtn.on { background: #2F5D57; border-color: #2F5D57; color: #fff; font-weight: 700; }
+
+.tv-ad { padding: 8px 20px 26px; display: flex; flex-direction: column; align-items: center; }
+.tv-ad .ad-slot { width: 100%; display: flex; flex-direction: column; align-items: center; }
+
+@media (max-width: 720px) {
+  .tv-sec { padding: 22px 0 26px; }
+  .tv-head h2 { font-size: 1.22rem; }
+  .tv-grow > b { width: 100%; margin-bottom: -2px; }
+  .tv-list { grid-template-columns: 1fr; }
+  /* 권역이 57개라 단추 칸이 길어집니다 — 접지 않고 촘촘하게 (2026-09-23) */
+  .tv-pick { gap: 6px; }
+  .tv-grow { gap: 5px; }
+  .tv-rbtn { padding: 5px 10px; font-size: .82rem; }
+}
+
+/* 이번 달에 열리는 축제 — 눈에 띄게 (2026-09-23 주인 지시) */
+.tv-when.now { background: #1F5F8B; color: #fff; }
+
+/* 권역 칸 아래 안내·링크·광고 — 그림 지도를 빼면서 이 자리로 옮겼습니다 */
+#tvPanel .tp-note { margin-top: 18px; }
+#tvPanel .tp-links { margin-top: 14px; }
+.tv-ad1 { margin: 18px auto 0; display: flex; flex-direction: column; align-items: center; }

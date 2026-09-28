@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<!-- 경남 바다 여행 첫 화면 — 전남 첫 화면(index.html)처럼 손으로 관리하는 쪽입니다.
+     내용의 출처: data/coast-regions*.json 의 open:true 권역(이름·소개·색·명소·제철·축제·코스),
+                  point/gyeongnam/ 의 카드 수(포인트 개수), <권역>.html 의 og:image(카드 사진)
+     오늘의 바다는 js/app.js(물때 계산)·js/coast-data.js(좌표·관측소)와
+     api/tide-cache.php · api/weather-jeju.php 를 씁니다 — 권역 쪽과 같은 곳입니다.
+     권역 자료를 고친 뒤에는 이 쪽의 숫자와 카드도 함께 손봐 주세요. -->
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<base href="../">
+<title>경남 바다 여행 — 물때·낚시·해루질 포인트 | 바다가자닷컴</title>
+<meta name="description" content="경상남도 해안 6개 권역의 물때와 낚시·해루질 포인트 751곳, 제철 해산물과 축제, 추천 코스를 한곳에.">
+<link rel="canonical" href="https://badagaja.com/gyeongnam/">
+<link rel="alternate" hreflang="ko" href="https://badagaja.com/gyeongnam/">
+<link rel="alternate" hreflang="zh-Hans" href="https://badagaja.com/zh-cn/gyeongnam/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="바다가자닷컴"><meta property="og:locale" content="ko_KR">
+<meta property="og:title" content="경남 바다 여행"><meta property="og:description" content="경상남도 해안 6개 권역의 물때와 낚시·해루질 포인트 751곳, 제철 해산물과 축제, 추천 코스를 한곳에.">
+<meta property="og:url" content="https://badagaja.com/gyeongnam/"><meta property="og:image" content="https://badagaja.com/img/coast/namhae-hero.jpg?v=3926067475"><meta name="twitter:title" content="경남 바다 여행"><meta name="twitter:description" content="경상남도 해안 6개 권역의 물때와 낚시·해루질 포인트 751곳, 제철 해산물과 축제, 추천 코스를 한곳에."><meta name="twitter:image" content="https://badagaja.com/img/coast/namhae-hero.jpg?v=3926067475">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700;900&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=202609262116">
+<link rel="stylesheet" href="css/home.css?v=202609262116">
+<link rel="shortcut icon" href="https://badagaja.com/favicon.ico">
+<link rel="icon" href="https://badagaja.com/favicon.svg" type="image/svg+xml">
+<script type="application/ld+json" id="ld-main">{"@context":"https://schema.org","@type":"CollectionPage","name":"경남 바다 여행","description":"경상남도 해안 6개 권역의 물때와 낚시·해루질 포인트 751곳, 제철 해산물과 축제, 추천 코스를 한곳에.","url":"https://badagaja.com/gyeongnam/","inLanguage":"ko","publisher":{"@type":"Organization","name":"바다가자닷컴","url":"https://badagaja.com/"}}</script>
+</head>
+<body class="home" data-region="namhae">
+
+<header>
+  <div class="navbar">
+    <a class="brand nv-logo" href="./" aria-label="바다가자닷컴 홈"><span class="nv-n"><svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M4 3h5.3l5.1 7.6V3H20v18h-5.3L9.6 13.4V21H4z"/></svg></span><span class="mark">바다가자닷컴</span><span class="nv-go"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l5 5" stroke-linecap="round"/></svg></span></a>
+    <nav class="navlinks">
+      <a href="gyeongnam/#today">오늘의 바다</a>
+      <a href="gyeongnam/#regions">경남 권역</a>
+      <a href="gyeongnam/#species">해루질·낚시</a>
+      <a href="gyeongnam/#season">제철·축제</a>
+      <a href="rule.html">금어기</a>
+      <a href="https://badagaja.com/guide/#regions">전국 바다</a>
+    </nav>
+    <div class="lang-pick"><span class="on" aria-current="page">한국어</span><a href="zh-cn/gyeongnam/" lang="zh-Hans" hreflang="zh-Hans">中文</a></div>
+    <div class="muldae-badge"><span class="dot"></span> <span id="headerMuldae">오늘 물때 보기</span></div>
+  </div>
+</header>
+
+<section class="h-hero" id="top">
+  <div class="h-slides" aria-hidden="true"><div class="h-slide on" style="background-image:url('img/coast/namhae-hero.jpg?v=3926067475')"></div></div>
+  <div class="h-shade" aria-hidden="true"></div>
+  <div class="wrap h-hero-in">
+    <div class="h-eyebrow">경남 해안 6개 권역 바다여행 안내서</div>
+    <h1 class="serif"><span class="accent">바다가자닷컴</span>에서 알려드리는<br>경남 바다여행</h1>
+    <nav class="h-site" aria-label="여행지 선택"><a class="on" href="gyeongnam/" aria-current="page"><b>경남여행</b><small>경남 바다 6개 권역</small></a><a href="./"><b>전국 바다</b><small>전국 57개 권역 첫 화면</small></a></nav>
+    <p class="h-lede">남해 보물섬에서 한려수도 통영·거제, 진해만까지. 권역마다 물때와 낚시·해루질 포인트, 제철 해산물과 축제, 하루 코스를 정리했습니다.</p>
+    <form class="h-search" role="search" autocomplete="off" onsubmit="return false">
+      <label class="sr-only" for="hSearch">경남 권역, 포인트, 제철 해산물, 축제, 바닷가 명소를 검색할 수 있습니다</label>
+      <svg class="h-search-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <input id="hSearch" type="search" placeholder="경남 권역·포인트·제철 해산물·축제·명소 검색" aria-controls="hResults" aria-expanded="false">
+      <div class="h-results" id="hResults" role="listbox" hidden></div>
+    </form>
+    <div class="h-quick" aria-label="많이 찾는 검색어"><span>많이 찾는</span><button type="button" data-q="감성돔">감성돔</button><button type="button" data-q="볼락">볼락</button><button type="button" data-q="무늬오징어">무늬오징어</button><button type="button" data-q="참돔">참돔</button><button type="button" data-q="도다리">도다리</button><button type="button" data-q="축제">축제</button></div>
+  </div>
+  <div class="wrap">
+    <div class="h-stats">
+      <div><b>6</b><span>경남 해안 시·군</span></div>
+      <div><b>751</b><span>해루질·낚시 포인트</span></div>
+      <div><b>48</b><span>바닷가 명소</span></div>
+      <div><b>13</b><span>지역 축제</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="h-today" id="today">
+  <div class="wrap">
+    <div class="ts-head">
+      <div>
+        <div class="kicker">오늘의 바다</div>
+        <h2 class="serif" id="tsTitle">오늘의 바다는</h2>
+        <p id="tsDate">물때를 계산하고 있습니다</p>
+      </div>
+      <a class="ts-more" id="tsMore" href="namhae.html#tide">물때표 2주 전체 보기 →</a>
+    </div>
+    <div class="ts-regions" id="tsRegions" role="tablist" aria-label="권역 선택"></div>
+    <div class="ts-grid">
+      <div class="ts-card ts-main">
+        <div class="ts-label">오늘 물때</div>
+        <div class="ts-muldae"><b id="tsMuldae">–</b><span id="tsMuldaeName"></span></div>
+        <div class="ts-gauge"><i id="tsGauge"></i></div>
+        <div class="ts-next" id="tsNext" hidden><div><small>다음 간조</small><b id="tsNextTime">–</b></div><div class="r"><small id="tsNextLab">지금부터</small><b id="tsNextIn">–</b></div></div>
+        <p class="ts-verdict" id="tsVerdict">물때를 계산하고 있습니다</p>
+      </div>
+      <div class="ts-card">
+        <div class="ts-label">간조 · 만조</div>
+        <ul class="ts-tides" id="tsTides"><li class="muted">간조·만조 시각</li></ul>
+        <div class="ts-src" id="tsTideSrc"></div>
+      </div>
+      <div class="ts-card">
+        <div class="ts-label">날씨 · 파고</div>
+        <div class="ts-weather"><b id="tsTemp">–</b><span id="tsSky">하늘·바람</span></div>
+        <div class="ts-sub" id="tsWave"></div>
+      </div>
+      <div class="ts-card">
+        <div class="ts-label">일출 · 일몰</div>
+        <div class="ts-sun"><span>해뜸 <b id="tsRise">–</b></span><span>해짐 <b id="tsSet">–</b></span></div>
+        <div class="ts-sub">물때·일출·일몰은 계산값입니다</div>
+      </div>
+    </div>
+    <div class="ts-plan" id="tsPlan">
+      <div class="tp-kick">이번 주 언제 갈까</div>
+      <h3 class="tp-title" id="tpTitle">이번 주 물때를 살펴보고 있어요</h3>
+      <p class="tp-lead" id="tpLead"></p>
+      <div class="ts-week" id="tsWeek" aria-label="이번 주 물때"></div>
+      <div class="tp-legend"><span>막대가 길수록 물이 많이 빠져요</span><span id="tpBasis">낮 간조 기준</span></div>
+      <p class="tp-note" id="tpNote" hidden></p>
+    </div>
+    <div class="ts-install" id="tsInstall" hidden>
+      <span class="ti-ic" aria-hidden="true">📲</span>
+      <p><b>홈 화면에 추가해 두세요</b><small>앱처럼 한 번에 열리고, 내가 고른 바다가 먼저 나옵니다</small></p>
+      <button type="button" id="tsInstallGo">방법 보기</button>
+      <button type="button" class="ti-x" id="tsInstallX" aria-label="안내 닫기">×</button>
+    </div>
+    <div class="ts-howto" id="tsHowto" hidden role="dialog" aria-modal="true" aria-labelledby="tsHowtoT">
+      <div class="th-box"><h3 id="tsHowtoT">홈 화면에 추가하는 방법</h3><ol id="tsHowtoSteps"></ol><button type="button" id="tsHowtoClose">알겠어요</button></div>
+    </div>
+    <div id="tsGraph"></div>
+    <div class="ts-index" id="tsIndex">
+      <div class="ts-card ts-idx" data-type="mudflat"><div class="ts-label">🦪 갯벌체험지수</div><div class="ti-grade">–</div><div class="ti-place">권역별 지수</div><div class="ti-detail"></div></div>
+      <div class="ts-card ts-idx" data-type="beach"><div class="ts-label">🏖️ 해수욕지수</div><div class="ti-grade">–</div><div class="ti-place">권역별 지수</div><div class="ti-detail"></div></div>
+    </div>
+    <p class="ts-credit">바다 지수: 국립해양조사원 생활해양예보지수 · 가까운 예보 장소 기준</p>
+  </div>
+</section>
+
+<section class="section h-regions" id="regions">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">경남 해안선을 따라</div>
+      <h2>경남 바다, 어디로 갈까요</h2>
+      <p>경남 해안을 6개 권역으로 나눴습니다. 카드를 누르면 물때·낚시·해루질 포인트와 먹거리로 바로 이동합니다. 다른 지역 바다는 <a class="hr-cross" href="https://badagaja.com/guide/#regions">전국 바다 →</a></p>
+    </div>
+    <div class="hr-layout" id="hrLayout">
+      <div class="hr-map-wrap"><div class="hr-map" id="hrMap"></div></div>
+      <div class="rc-grid"><a class="rc" href="namhae.html" style="--c:#2F6B5E" data-slug="namhae"><img src="img/coast/namhae-hero.jpg?v=3926067475" alt="남해 바다 풍경" loading="lazy"><span class="rc-no">301</span><div class="rc-body"><h3>남해</h3><p>죽방렴과 다랑논, 은빛 모래의 섬</p><span class="rc-count"><span>낚시 131</span><span>해루질 24</span></span></div></a><a class="rc" href="sacheon.html" style="--c:#34557A" data-slug="sacheon"><img src="img/coast/sacheon-hero.jpg?v=3469020456" alt="사천·하동 바다 풍경" loading="lazy"><span class="rc-no">302</span><div class="rc-body"><h3>사천·하동</h3><p>삼천포항과 실안 노을이 있는 바다</p><span class="rc-count"><span>낚시 67</span><span>해루질 8</span></span></div></a><a class="rc" href="goseong.html" style="--c:#6A4A36" data-slug="goseong"><img src="img/coast/goseong-hero.jpg?v=3614095625" alt="고성 바다 풍경" loading="lazy"><span class="rc-no">303</span><div class="rc-body"><h3>고성</h3><p>공룡 발자국이 남은 가리비 바다</p><span class="rc-count"><span>낚시 54</span><span>해루질 1</span></span></div></a><a class="rc" href="tongyeong.html" style="--c:#2B5D7A" data-slug="tongyeong"><img src="img/coast/tongyeong-hero.jpg?v=2175099577" alt="통영 바다 풍경" loading="lazy"><span class="rc-no">304</span><div class="rc-body"><h3>통영</h3><p>언덕 벽화 마을과 섬들이 이어진 바다</p><span class="rc-count"><span>낚시 222</span><span>해루질 20</span></span></div></a><a class="rc" href="geoje.html" style="--c:#1F5E57" data-slug="geoje"><img src="img/coast/geoje-hero.jpg?v=1475372241" alt="거제 바다 풍경" loading="lazy"><span class="rc-no">305</span><div class="rc-body"><h3>거제</h3><p>몽돌 해변과 유람선 항구가 있는 섬</p><span class="rc-count"><span>낚시 118</span><span>해루질 27</span></span></div></a><a class="rc" href="changwon.html" style="--c:#43477A" data-slug="changwon"><img src="img/coast/changwon-hero.jpg?v=450485262" alt="창원 바다 풍경" loading="lazy"><span class="rc-no">306</span><div class="rc-body"><h3>창원</h3><p>마산만·진해만에 섬과 어항이 모인 바다</p><span class="rc-count"><span>낚시 71</span><span>해루질 8</span></span></div></a></div>
+    </div>
+  </div>
+</section>
+
+<section class="section h-season" id="season">
+  <div class="wrap">
+    <div class="ss-top">
+      <div class="section-head">
+        <div class="kicker">이달의 바다</div>
+        <h2>이달, 지금 경남 바다에서는</h2>
+        <p>경남 6개 권역의 제철 어종·해산물과 축제를 달별로 모았습니다. 이름 옆 숫자는 그 달에 만날 수 있는 권역 수입니다.</p>
+      </div>
+      <div class="ss-nav">
+        <button type="button" id="ssPrev" aria-label="이전 달">‹</button>
+        <b id="ssMonth">–</b>
+        <button type="button" id="ssNext" aria-label="다음 달">›</button>
+      </div>
+    </div>
+    <div class="ss-layout">
+      <div class="ss-col">
+      <div class="ss-box">
+        <h3 class="serif">제철 어종·해산물 <small id="ssCatchCount"></small></h3>
+        <div class="ss-chips" id="ssCatch"></div>
+      </div>
+        <aside class="ad-slot" data-ad-slot="hub-season-pc" hidden></aside>
+      </div>
+      <div class="ss-box">
+        <h3 class="serif">이달의 축제 <small id="ssFestCount"></small></h3>
+        <div class="ss-fests" id="ssFest"></div>
+        <p class="ss-note">축제 일정은 매년 조금씩 바뀌니 방문 전 확정 공고를 확인하세요.</p>
+        <aside class="ad-slot" data-ad-slot="hub-season-mobile" hidden></aside>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section class="section h-species" id="species">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="spTitle">이달에 잡을 수 있는 것</h2>
+      <p id="spLede">경남 바다에서 만나는 해루질 대상과 낚시 어종을 달마다 정리했습니다. 누르면 잡는 법과 채비, 금어기까지 볼 수 있습니다.</p>
+    </div>
+    <div class="sp-tabs" id="spTabs">
+      <button type="button" class="on" data-sec="all">전체</button>
+      <button type="button" data-sec="catch">해루질</button>
+      <button type="button" data-sec="fish">낚시</button>
+    </div>
+    <div class="sp-grid" id="spGrid"><p class="sp-loading">권역을 고르면 그 바다의 포인트를 보여 줍니다.</p></div>
+    <div class="sp-more">
+      <a href="catch/">해루질 대상 →</a>
+      <a href="fish/">낚시 어종 →</a>
+      <a href="rule.html">금어기·크기 →</a>
+    </div>
+  </div>
+</section>
+
+<section class="section h-course" id="course">
+  <div class="wrap">
+    <div class="hc-top">
+      <div class="section-head">
+        <div class="kicker">추천 여행 코스</div>
+        <h2>누구와 떠나시나요</h2>
+        <p>경남 권역마다 동행에 맞춘 하루 코스를 준비했습니다. 바람과 물때에 맞춰 순서를 바꿔도 좋아요.</p>
+      </div>
+      <div class="hc-tabs" role="tablist" aria-label="동행 선택"><button type="button" role="tab" data-k="가족" aria-selected="true">👪 가족과</button><button type="button" role="tab" data-k="커플" aria-selected="false">💑 연인과</button><button type="button" role="tab" data-k="부모님" aria-selected="false">👵 부모님과</button><button type="button" role="tab" data-k="혼자" aria-selected="false">🧍 혼자</button></div>
+    </div>
+    <div class="hc-scroller">
+      <div class="hc-track" id="hcTrack"><a class="hc-card" data-k="가족" href="namhae.html#course" style="--c:#2F6B5E" hidden><div class="ph noph"><span>남해</span></div><div class="bd"><h3>죽방렴에서 방조어부림까지 동쪽 해안</h3><ol><li><span>지족해협 죽방렴</span></li><li><span>물건리 방조어부림</span></li><li><span>송정솔바람해변</span></li></ol><span class="go">남해 권역 자세히 →</span></div></a><a class="hc-card" data-k="가족" href="sacheon.html#course" style="--c:#34557A" hidden><div class="ph noph"><span>사천·하동</span></div><div class="bd"><h3>케이블카 타고 어시장, 배 타고 신수도</h3><ol><li><span>사천바다케이블카</span></li><li><span>삼천포용궁수산시장</span></li><li><span>신수도</span></li></ol><span class="go">사천·하동 권역 자세히 →</span></div></a><a class="hc-card" data-k="가족" href="goseong.html#course" style="--c:#6A4A36" hidden><div class="ph noph"><span>고성</span></div><div class="bd"><h3>공룡 발자국 보고 봉수대 오르기</h3><ol><li><span>상족암군립공원</span></li><li><span>맥전포항</span></li><li><span>좌이산</span></li></ol><span class="go">고성 권역 자세히 →</span></div></a><a class="hc-card" data-k="가족" href="tongyeong.html#course" style="--c:#2B5D7A" hidden><div class="ph noph"><span>통영</span></div><div class="bd"><h3>케이블카와 벽화 골목, 달아공원 노을까지</h3><ol><li><span>통영케이블카</span></li><li><span>동피랑벽화마을</span></li><li><span>달아공원</span></li></ol><span class="go">통영 권역 자세히 →</span></div></a><a class="hc-card" data-k="가족" href="geoje.html#course" style="--c:#1F5E57" hidden><div class="ph noph"><span>거제</span></div><div class="bd"><h3>구조라에서 배 타고 외도 정원으로</h3><ol><li><span>구조라해수욕장</span></li><li><span>외도 보타니아</span></li><li><span>와현모래숲해변</span></li></ol><span class="go">거제 권역 자세히 →</span></div></a><a class="hc-card" data-k="가족" href="changwon.html#course" style="--c:#43477A" hidden><div class="ph noph"><span>창원</span></div><div class="bd"><h3>명동에서 걸어서 섬 두 곳, 배로 한 곳</h3><ol><li><span>진해해양공원</span></li><li><span>우도</span></li><li><span>소쿠리섬</span></li></ol><span class="go">창원 권역 자세히 →</span></div></a><a class="hc-card" data-k="커플" href="sacheon.html#course" style="--c:#34557A" hidden><div class="ph noph"><span>사천·하동</span></div><div class="bd"><h3>선진리성 벚꽃길에서 실안 노을까지</h3><ol><li><span>사천 선진리성</span></li><li><span>비토섬</span></li><li><span>실안해안도로</span></li></ol><span class="go">사천·하동 권역 자세히 →</span></div></a><a class="hc-card" data-k="커플" href="goseong.html#course" style="--c:#6A4A36" hidden><div class="ph noph"><span>고성</span></div><div class="bd"><h3>당항포에서 해지개다리 야경까지</h3><ol><li><span>당항포관광지</span></li><li><span>해맞이공원</span></li><li><span>해지개다리</span></li></ol><span class="go">고성 권역 자세히 →</span></div></a><a class="hc-card" data-k="커플" href="tongyeong.html#course" style="--c:#2B5D7A" hidden><div class="ph noph"><span>통영</span></div><div class="bd"><h3>달아항 도선으로 두 섬 걷기</h3><ol><li><span>연대도·만지도 출렁다리</span></li><li><span>달아공원</span></li><li><span>동피랑벽화마을</span></li></ol><span class="go">통영 권역 자세히 →</span></div></a><a class="hc-card" data-k="커플" href="geoje.html#course" style="--c:#1F5E57" hidden><div class="ph noph"><span>거제</span></div><div class="bd"><h3>몽돌 소리 듣고 바람의언덕 오르기</h3><ol><li><span>학동흑진주몽돌해변</span></li><li><span>바람의언덕</span></li><li><span>구조라해수욕장</span></li></ol><span class="go">거제 권역 자세히 →</span></div></a><a class="hc-card" data-k="커플" href="changwon.html#course" style="--c:#43477A" hidden><div class="ph noph"><span>창원</span></div><div class="bd"><h3>구산반도 끝에서 저도 다리 건너 진동까지</h3><ol><li><span>원전항</span></li><li><span>저도연륙교</span></li><li><span>광암해수욕장</span></li></ol><span class="go">창원 권역 자세히 →</span></div></a><a class="hc-card" data-k="부모님" href="namhae.html#course" style="--c:#2F6B5E" hidden><div class="ph noph"><span>남해</span></div><div class="bd"><h3>다랑논 마을과 금산 바다 전망</h3><ol><li><span>가천 다랭이마을</span></li><li><span>금산 보리암</span></li><li><span>상주은모래비치</span></li></ol><span class="go">남해 권역 자세히 →</span></div></a><a class="hc-card" data-k="부모님" href="sacheon.html#course" style="--c:#34557A" hidden><div class="ph noph"><span>사천·하동</span></div><div class="bd"><h3>노량 포구에서 대도 섬마을로</h3><ol><li><span>노량항</span></li><li><span>대도</span></li><li><span>비토섬</span></li></ol><span class="go">사천·하동 권역 자세히 →</span></div></a><a class="hc-card" data-k="부모님" href="tongyeong.html#course" style="--c:#2B5D7A" hidden><div class="ph noph"><span>통영</span></div><div class="bd"><h3>한산도 역사 산책 뒤 미륵산 전망</h3><ol><li><span>한산도 제승당</span></li><li><span>통영케이블카</span></li><li><span>동피랑벽화마을</span></li></ol><span class="go">통영 권역 자세히 →</span></div></a><a class="hc-card" data-k="부모님" href="changwon.html#course" style="--c:#43477A" hidden><div class="ph noph"><span>창원</span></div><div class="bd"><h3>돝섬 산책 뒤 어시장 구경</h3><ol><li><span>돝섬해상유원지</span></li><li><span>마산어시장</span></li><li><span>저도연륙교</span></li></ol><span class="go">창원 권역 자세히 →</span></div></a><a class="hc-card" data-k="혼자" href="namhae.html#course" style="--c:#2F6B5E" hidden><div class="ph noph"><span>남해</span></div><div class="bd"><h3>벽련항에서 배 타고 노도 한 바퀴</h3><ol><li><span>노도</span></li><li><span>상주은모래비치</span></li><li><span>미조항</span></li></ol><span class="go">남해 권역 자세히 →</span></div></a><a class="hc-card" data-k="혼자" href="goseong.html#course" style="--c:#6A4A36" hidden><div class="ph noph"><span>고성</span></div><div class="bd"><h3>용암포에서 자란만 바라보기</h3><ol><li><span>용암포항</span></li><li><span>자란만</span></li><li><span>상족암군립공원</span></li></ol><span class="go">고성 권역 자세히 →</span></div></a><a class="hc-card" data-k="혼자" href="geoje.html#course" style="--c:#1F5E57" hidden><div class="ph noph"><span>거제</span></div><div class="bd"><h3>섬 북쪽 돌벽과 해전 공원, 가조도 노을</h3><ol><li><span>매미성</span></li><li><span>칠천량해전공원</span></li><li><span>가조도 노을이물드는언덕</span></li></ol><span class="go">거제 권역 자세히 →</span></div></a></div>
+    </div>
+  </div>
+</section>
+
+<section class="section h-about" id="about">
+  <div class="wrap">
+    <div class="ha-row">
+      <div class="ha-item"><span class="ha-ico" aria-hidden="true">🗺️</span><div><b>권역 고르기</b><p>경남 6개 권역 중 가고 싶은 곳을 고르세요.</p></div></div>
+      <div class="ha-item"><span class="ha-ico" aria-hidden="true">🎣</span><div><b>물때·낚시·해루질</b><p>권역 쪽에서 오늘 물때와 포인트를 봅니다.</p></div></div>
+      <div class="ha-item"><span class="ha-ico" aria-hidden="true">🍽️</span><div><b>제철 먹거리·축제</b><p>달마다 바뀌는 제철 해산물과 축제까지.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap footer-top">
+    <div class="footer-brand">
+      <a class="brand" href="./" aria-label="바다가자닷컴 홈"><svg class="logo" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="13" fill="#2F5D57"/><path d="M24 43C24 43 10.5 29 10.5 19.5a13.5 13.5 0 0 1 27 0C37.5 29 24 43 24 43Z" fill="#FFFBF3"/><circle cx="24" cy="15" r="3.6" fill="#E5A94F"/><path d="M15.5 23q2.1-2.4 4.25 0t4.25 0t4.25 0t4.25 0" stroke="#2F5D57" stroke-width="2.6" fill="none" stroke-linecap="round"/></svg><span class="mark">바다가자닷컴</span></a>
+      <p class="footer-tagline">물때에 맞춰 떠나는 경남 바다 여행 안내</p><div class="footer-find"><span>다시 찾으실 땐</span><a class="nv-box" href="https://search.naver.com/search.naver?query=%EB%B0%94%EB%8B%A4%EA%B0%80%EC%9E%90%EB%8B%B7%EC%BB%B4" target="_blank" rel="noopener" aria-label="네이버에서 바다가자닷컴 검색하기"><span class="nv-n"><svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="7" fill="#03C75A"/><path d="M22.6 20.9 16.8 12H11v16h6.1v-8.9L22.9 28H29V12h-6.4v8.9Z" fill="#fff"/></svg></span><b>바다가자닷컴</b><span class="nv-go"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg></span></a></div>
+      <p class="footer-owner">운영책임자 <b>오준한</b><br><a href="mailto:ohjunhan@gmail.com">ohjunhan@gmail.com</a></p>
+    </div>
+    <nav class="footer-nav" aria-label="하단 메뉴">
+      <div class="fn-col"><h2>둘러보기</h2><a href="gyeongnam/#regions">경남 권역</a><a href="gyeongnam/#season">제철·축제</a><a href="gyeongnam/#course">추천 코스</a></div>
+      <div class="fn-col"><h2>잡는 법</h2><a href="catch/">해루질 대상</a><a href="fish/">낚시 어종</a><a href="rule.html">금어기·크기</a><a href="gear.html">장비·안전</a></div>
+      <div class="fn-col"><h2>다른 바다</h2><a href="https://badagaja.com/guide/#regions">전국 바다</a><a href="jeonnam/">전남여행</a><a href="jeju/">제주여행</a><a href="about.html">바다가자닷컴 소개</a><a href="sources.html">자료 출처</a><a href="privacy.html">개인정보처리방침</a></div>
+    </nav>
+  </div>
+  <div class="wrap footer-bottom">
+    <p class="footer-note">본 자료는 참고용입니다. 어촌계·지자체 규정과 현장 안내를 반드시 확인하세요.</p>
+    <p class="copyright">© 2026 바다가자닷컴 (badagaja.com)</p>
+  </div>
+</footer>
+
+<div style="display:none" aria-hidden="true">
+  <div id="tideStrip"></div>
+  <div id="tideStatus"></div>
+  <div id="weatherIcon"></div>
+  <div id="weatherTemp"></div>
+  <div id="weatherLabel"></div>
+  <div id="weatherWave"></div>
+  <div id="weatherWatertemp"></div>
+</div>
+
+<script src="point/map-config.js?v=202609262116"></script>
+<script src="js/coast-data.js?v=202609262116"></script>
+<script src="js/tide-graph.js?v=202609262116"></script>
+<script src="js/app.js?v=202609262116"></script>
+<script id="hubData" type="application/json">{"catch":{"1":[{"n":"볼락","r":["남해","고성","통영","창원"]},{"n":"감성돔","r":["남해","고성","통영"]},{"n":"대구","r":["거제"]},{"n":"학꽁치","r":["거제"]}],"2":[{"n":"볼락","r":["남해","고성","통영","창원"]},{"n":"감성돔","r":["남해","고성","통영"]},{"n":"학꽁치","r":["거제"]}],"3":[{"n":"볼락","r":["남해","고성","통영","창원"]},{"n":"도다리","r":["사천·하동","고성","창원"]},{"n":"감성돔","r":["남해"]},{"n":"갑오징어","r":["사천·하동"]},{"n":"참돔","r":["남해"]}],"4":[{"n":"도다리","r":["사천·하동","고성","창원"]},{"n":"볼락","r":["남해","고성"]},{"n":"참돔","r":["남해","통영"]},{"n":"감성돔","r":["남해"]},{"n":"갑오징어","r":["사천·하동"]}],"11":[{"n":"감성돔","r":["남해","고성","통영"]},{"n":"볼락","r":["고성","통영","창원"]},{"n":"갑오징어","r":["고성","창원"]},{"n":"무늬오징어","r":["남해","통영"]},{"n":"참돔","r":["남해","통영"]},{"n":"갈치","r":["사천·하동"]},{"n":"벵에돔","r":["거제"]},{"n":"전갱이","r":["거제"]},{"n":"주꾸미","r":["창원"]},{"n":"학꽁치","r":["거제"]}],"12":[{"n":"볼락","r":["남해","고성","통영","창원"]},{"n":"감성돔","r":["남해","고성","통영"]},{"n":"대구","r":["거제"]},{"n":"학꽁치","r":["거제"]}],"9":[{"n":"갑오징어","r":["고성","창원"]},{"n":"무늬오징어","r":["남해","통영"]},{"n":"참돔","r":["남해","통영"]},{"n":"갈치","r":["사천·하동"]},{"n":"문어","r":["사천·하동"]},{"n":"벵에돔","r":["거제"]},{"n":"전갱이","r":["거제"]},{"n":"주꾸미","r":["창원"]}],"10":[{"n":"감성돔","r":["고성","통영"]},{"n":"갑오징어","r":["고성","창원"]},{"n":"무늬오징어","r":["남해","통영"]},{"n":"참돔","r":["남해","통영"]},{"n":"갈치","r":["사천·하동"]},{"n":"벵에돔","r":["거제"]},{"n":"전갱이","r":["거제"]},{"n":"주꾸미","r":["창원"]}],"5":[{"n":"도다리","r":["사천·하동","고성","창원"]},{"n":"참돔","r":["남해","통영"]}],"6":[{"n":"참돔","r":["남해","통영"]},{"n":"문어","r":["사천·하동"]},{"n":"벵에돔","r":["거제"]}],"7":[{"n":"문어","r":["사천·하동"]},{"n":"벵에돔","r":["거제"]},{"n":"참돔","r":["남해"]}],"8":[{"n":"문어","r":["사천·하동"]},{"n":"벵에돔","r":["거제"]},{"n":"전갱이","r":["거제"]},{"n":"참돔","r":["남해"]}]},"fest":{"5":[{"n":"보물섬 해산물축제","r":"남해","s":"namhae","c":"#2F6B5E","d":"맨손 물고기잡이·수산물 즉석 경매와 할인 판매","p":"미조면 미조항 북항 일원"},{"n":"창원 진동불꽃낙화축제","r":"창원","s":"changwon","c":"#43477A","d":"광암항 바다 위로 낙화가 떨어지는 밤 행사","p":"마산합포구 진동면 광암항 일원"}],"10":[{"n":"남해 독일마을 맥주축제","r":"남해","s":"namhae","c":"#2F6B5E","d":"독일식 맥주와 음식, 거리 퍼레이드와 공연(10월 9~11일)","p":"삼동면 독일마을 일원"},{"n":"마산가고파국화축제","r":"창원","s":"changwon","c":"#43477A","d":"마산 바닷가 공원을 국화로 꾸미는 가을 축제","p":"3·15해양누리공원·합포수변공원 일원"}],"3":[{"n":"사천비토섬 별주부전 축제","r":"사천·하동","s":"sacheon","c":"#34557A","d":"용왕제와 수궁가 공연, 가족 참여 놀이","p":"서포면 비토해양낚시공원 일원"},{"n":"진해군항제","r":"창원","s":"changwon","c":"#43477A","d":"벚꽃 길과 군악의장 행사가 열리는 봄 축제","p":"진해구 중원로터리·여좌천 일원"}],"8":[{"n":"삼천포항 자연산 전어축제","r":"사천·하동","s":"sacheon","c":"#34557A","d":"맨손 전어잡기·무료 시식과 불꽃놀이","p":"삼천포항 팔포음식특화지구"},{"n":"통영한산대첩축제","r":"통영","s":"tongyeong","c":"#2B5D7A","d":"한산해전 재현과 해상 불꽃쇼, 거북선 노젓기","p":"통영한산대첩광장·강구안·이순신공원 일원"}],"1":[{"n":"새해 해맞이 행사","r":"고성","s":"goseong","c":"#6A4A36","d":"새해 첫날 해맞이 기원제와 떡 나눔","p":"동해면 해맞이공원·고성읍 남산공원"}],"9":[{"n":"경남고성공룡세계엑스포","r":"고성","s":"goseong","c":"#6A4A36","d":"공룡 전시와 화석 발굴 체험, 토요일 불꽃쇼(9월 22일~11월 1일)","p":"회화면 당항포관광지 일원"}],"11":[{"n":"어부장터X포트빌리지 통영","r":"통영","s":"tongyeong","c":"#2B5D7A","d":"굴·장어·멍게 등 통영 수산물 먹거리 장터","p":"도남동 트라이애슬론광장"}],"6":[{"n":"거제옥포대첩축제","r":"거제","s":"geoje","c":"#1F5E57","d":"옥포 해전 뮤지컬과 해상 불꽃·드론 공연","p":"옥포수변공원 일원"},{"n":"남부면 수국축제","r":"거제","s":"geoje","c":"#1F5E57","d":"항구 수국길을 따라 걷는 초여름 꽃 축제","p":"남부면 저구항·매물도여객선터미널 일원"}]}}</script>
+<script id="hubIndex" type="application/json">[{"t":"권역","n":"남해","u":"namhae.html","m":"포인트 155곳"},{"t":"권역","n":"사천·하동","u":"sacheon.html","m":"포인트 75곳"},{"t":"권역","n":"고성","u":"goseong.html","m":"포인트 55곳"},{"t":"권역","n":"통영","u":"tongyeong.html","m":"포인트 242곳"},{"t":"권역","n":"거제","u":"geoje.html","m":"포인트 145곳"},{"t":"권역","n":"창원","u":"changwon.html","m":"포인트 79곳"},{"t":"해루질","n":"문항어촌체험휴양마을","u":"point/gyeongnam/namhae_gleaning.html","m":"남해 · 해루질 포인트"},{"t":"해루질","n":"냉천어촌체험휴양마을(냉천갯벌체험장)","u":"point/gyeongnam/namhae_gleaning.html","m":"남해 · 해루질 포인트"},{"t":"해루질","n":"유포어촌체험휴양마을","u":"point/gyeongnam/namhae_gleaning.html","m":"남해 · 해루질 포인트"},{"t":"해루질","n":"이어어촌체험휴양마을","u":"point/gyeongnam/namhae_gleaning.html","m":"남해 · 해루질 포인트"},{"t":"해루질","n":"지족어촌체험휴양마을","u":"point/gyeongnam/namhae_gleaning.html","m":"남해 · 해루질 포인트"},{"t":"해루질","n":"은점어촌체험휴양마을","u":"point/gyeongnam/namhae_gleaning.html","m":"남해 · 해루질 포인트"},{"t":"해루질","n":"설리어촌체험휴양마을","u":"point/gyeongnam/namhae_gleaning.html","m":"남해 · 해루질 포인트"},{"t":"해루질","n":"전도어촌체험휴양마을","u":"point/gyeongnam/namhae_gleaning.html","m":"남해 · 해루질 포인트"},{"t":"해루질","n":"남상리 방파제 아래 조간대","u":"point/gyeongnam/namhae_gleaning.html","m":"남해 · 해루질 포인트"},{"t":"해루질","n":"금포마을 방파제 아래 조간대","u":"point/gyeongnam/namhae_gleaning.html","m":"남해 · 해루질 포인트"},{"t":"해루질","n":"모상개 해수욕장 우측 모래밭","u":"point/gyeongnam/namhae_gleaning.html","m":"남해 · 해루질 포인트"},{"t":"해루질","n":"설리해수욕장","u":"point/gyeongnam/namhae_gleaning.html","m":"남해 · 해루질 포인트"},{"t":"해루질","n":"미조항 아래 조간대","u":"point/gyeongnam/namhae_gleaning.html","m":"남해 · 해루질 포인트"},{"t":"해루질","n":"초전몽돌해변","u":"point/gyeongnam/namhae_gleaning.html","m":"남해 · 해루질 포인트"},{"t":"해루질","n":"사촌해수욕장","u":"point/gyeongnam/namhae_gleaning.html","m":"남해 · 해루질 포인트"},{"t":"해루질","n":"송정솔바람해수욕장","u":"point/gyeongnam/namhae_gleaning.html","m":"남해 · 해루질 포인트"},{"t":"해루질","n":"월포해수욕장","u":"point/gyeongnam/namhae_gleaning.html","m":"남해 · 해루질 포인트"},{"t":"해루질","n":"항도방파제","u":"point/gyeongnam/namhae_gleaning.html","m":"남해 · 해루질 포인트"},{"t":"해루질","n":"원천항","u":"point/gyeongnam/namhae_gleaning.html","m":"남해 · 해루질 포인트"},{"t":"해루질","n":"항도몽돌해변","u":"point/gyeongnam/namhae_gleaning.html","m":"남해 · 해루질 포인트"},{"t":"해루질","n":"창선도","u":"point/gyeongnam/namhae_gleaning.html","m":"남해 · 해루질 포인트"},{"t":"해루질","n":"상주은모래비치","u":"point/gyeongnam/namhae_gleaning.html","m":"남해 · 해루질 포인트"},{"t":"해루질","n":"노도 갯벌","u":"point/gyeongnam/namhae_gleaning.html","m":"남해 · 해루질 포인트"},{"t":"해루질","n":"두곡해수욕장","u":"point/gyeongnam/namhae_gleaning.html","m":"남해 · 해루질 포인트"},{"t":"낚시","n":"물건항 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"가천 갯바위(다랭이마을)","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"갈화리 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"초전 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"노루목 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"지족(창선교)북단 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"모천 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"미조항","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"문항리 선착장","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"구미동 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"신촌마을 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"서상 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"홍현리 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"사촌 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"원천리 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"감암 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"설리 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"가인마을 해안도로 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"노도","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"차면리 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"백련마을 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"서대리 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"보천마을 방파제,갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"사포마을 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"해바리마을 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"광천리 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"고순마을 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"유포마을 방파제,갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"정포리 방파제, 우미도","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"월곡마을 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"작장리 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"남상리 방파제,몽돌밭","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"염해 방파제, 갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"왕지마을 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"수원늘등대, 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"선소리 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"문항마을(상장도,하장도)","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"동흥마을 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"영지리 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"고암마을 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"장곶이(진동리) 갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"부윤리 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"해창마을 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"전도마을 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"둔촌마을 방파제,갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"양화금 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"아현마을 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"지족(창선교)남단 좌측 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"금송마을 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"단항마을 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"창선대교(단항방파제)","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"냉천마을 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"율도 방파제,갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"대벽방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"왕후박 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"적량마을 방파제,갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"장포항 방파제,갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"장곶이,모상개 갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"동대만(곤유,신촌,식포)","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"언포마을 방파제,갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"가인마을 방파제,갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"은점 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"월포 방파제, 갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"향촌마을 방파제,갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"소량마을 방파제,갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"두모방파제,정촌방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"화계리 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"덕월리(남해골프장) 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"장항마을 방파제,갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"예계마을 방파제,갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"선구 방파제,갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"유구마을 방파제,갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"평산리 방파제,갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"항도마을 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"미조 호도(범섬)","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"미조 조도","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"노구 방파제,갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"가인포 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"금포마을 방파제,몽돌밭","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"상주 방파제(국립수산과학원 방파제)","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"대량마을 방파제,갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"미조 북방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"송정리방파제,갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"가천 다랭이마을","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"응봉산 갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"구산 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"호도","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"상주 은모래비치","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"노도 내항","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"노량대교 인근","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"평산 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"남해충렬사 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"광천리 남 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"종현지구 복지회관 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"유구마을 해안 갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"곤유마을 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"평산동 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"장포항 하얀등대 남 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"은점 빨간등대 큰방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"섬호리 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"적량마을 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"여계마을 해안 갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"추도 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"물건 흰등대 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"상주 국립해양수산과학원 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"향촌마을 신방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"언포마을 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"염해 방파제 옆 갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"신흥리 선창","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"율도 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"서상리 갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"모상개 돌섬","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"두곡 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"냉천 큰 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"팔랑 하얀등대 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"수장포 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"게섬 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"차면리방파제북측입표부근","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"노량수도","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"월곡마을 남방파제 옆 갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"구노량 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"봉우 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"부윤리 방파제 옆 갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"용소리 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"모상개 해수욕장 우측 갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"서상 빨간등대 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"개구리섬 인근","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"영지리 작은 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"동갈화항 방파제","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"양화금 방파제 옆 갯바위","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"낚시","n":"남해도 가천 갯바위(레이다기지)","u":"point/gyeongnam/namhae_fishing.html","m":"남해 · 낚시 포인트"},{"t":"해루질","n":"대도어촌체험휴양마을","u":"point/gyeongnam/sacheon_gleaning.html","m":"사천·하동 · 해루질 포인트"},{"t":"해루질","n":"다맥어촌체험휴양마을","u":"point/gyeongnam/sacheon_gleaning.html","m":"사천·하동 · 해루질 포인트"},{"t":"해루질","n":"비토어촌체험휴양마을(비토섬 갯벌)","u":"point/gyeongnam/sacheon_gleaning.html","m":"사천·하동 · 해루질 포인트"},{"t":"해루질","n":"남일대 해수욕장 모래밭","u":"point/gyeongnam/sacheon_gleaning.html","m":"사천·하동 · 해루질 포인트"},{"t":"해루질","n":"삼천포항 아래 조간대","u":"point/gyeongnam/sacheon_gleaning.html","m":"사천·하동 · 해루질 포인트"},{"t":"해루질","n":"비토섬","u":"point/gyeongnam/sacheon_gleaning.html","m":"사천·하동 · 해루질 포인트"},{"t":"해루질","n":"남일대해수욕장","u":"point/gyeongnam/sacheon_gleaning.html","m":"사천·하동 · 해루질 포인트"},{"t":"해루질","n":"월등도","u":"point/gyeongnam/sacheon_gleaning.html","m":"사천·하동 · 해루질 포인트"},{"t":"낚시","n":"삼천포항","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"늑도마을 방파제","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"비토섬(동남쪽방파제,월등도)","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"신수도 방파제","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"마도 (삼천포)","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"삼천포 노산방파제","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"산분령 유료낚시터","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"대도 방파제 부근","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"다맥마을 방파제","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"실안 방파제","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"사천대교앞 방파제","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"남해대교(노량리권)","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"중평리,대치리방파제","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"양포리, 술상리 방파제","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"연막마을,나팔마을 방파제","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"신노량 방파제","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"선진리 포구","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"구포마을 선창, 방파제","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"종포마을 물양장, 서택방조제","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"머구섬 방파제, 제방","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"검도 선착장","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"자혜리 선착장","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"명선마을 선착장","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"신평마을 방파제","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"저도(딱섬)","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"대방진굴항 방파제(삼천포흰등대)","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"광포 방파제","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"실안 영복마을 갯바위","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"삼천포대교 주차장","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"삼천포화력발전 방파제,중바위","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"삼천포,노산방파제,목섬","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"진널 방파제, 갯바위","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"남일대방파제, 코끼리바위","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"초양도 방파제","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"남일대 해수욕장","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"금문들 앞","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"조도마을 앞","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"늑도 흰등대","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"미룡 방파제","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"별학도 방파제","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"신도 방파제","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"법도 맞은편","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"잘푸여 갯바위","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"신수도 남쪽 갯바위(구 초소)","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"삼천포대교 밑 갯바위","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"장천 남동측","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"초양도 남동측","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"환덕리 묵곡천","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"산분령 앞 마동도","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"코끼리 바위","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"대포 방파제","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"대치 방파제(*하동 마리나 포인트)","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"대도 북쪽 곶부리","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"뺑뺑이골 앞","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"덕진포교","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"비토도 해양 낚시공원","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"치섬등대 갯바위","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"대구마을 방파제","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"신수도 북쪽 갯바위","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"삼분갑 근처 갯바위(*삼천포 마리나 포인트)","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"중봉산 밑 방파제","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"중평항 방파제","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"삼천포항 방파제","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"안도마을 방파제","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"한려주유소 앞 (광양만 쪽 바다)","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"화곡관광농원 앞 (사천대교 쪽 바다)","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"낚시","n":"마도 갯바위","u":"point/gyeongnam/sacheon_fishing.html","m":"사천·하동 · 낚시 포인트"},{"t":"해루질","n":"동화어촌체험휴양마을","u":"point/gyeongnam/goseong_gleaning.html","m":"고성 · 해루질 포인트"},{"t":"낚시","n":"맥전포항 방파제","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"우두포 방파제","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"남포항 방파제","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"자란도 방파제","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"당항포 방파제","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"동화리 앞","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"여객선터미널 방파제","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"봉화골 방파제","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"입암마을 방파제","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"고성비룡낚시","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"송천리 평촌마을","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"상족암, 입암마을 방파제","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"맥전포 방파제, 갯바위","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"하촌,솔섬선착장","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"미룡리 앞섬,대포선착장","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"미룡리 대포마을 선착장","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"송천 지포마을 방파제","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"송천참다래마을","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"용태리 해포(삼태)마을 방파제, 갯바위","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"덕명리 봉화골 방파제,갯바위","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"덕명마을 방파제","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"덕산마을 방파제,갯바위","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"장지마을 앞 포구","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"상족암 유람선 뒷편","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"오토캠핑장 앞","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"삼태선착장 맞은편","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"동화마을 방파제","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"법동마을,주례마을 선착장","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"덕곡마을 방파제","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"전도마을(범바위골) 선착장","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"가룡포 방파제","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"용정리갯바위,매이리선착장","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"매정마을,세포마을 선착장","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"내산리 방파제","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"대천(돈막)마을,검포마을 선착장","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"장기리 선착장","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"막개(막포)마을 선착장","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"좌부천마을 선착장","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"장산마을 선착장","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"병산리 방파제","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"판곡리 갯바위","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"구선창,꼽두름 선착장","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"포교마을 방파제,갯바위","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"두모마을 방파제","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"군령포 선착장","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"신부마을 방파제","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"봉암리 선착장","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"장항 방파제","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"구학포 선착장,갯바위","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"화정리 오정동 선착장","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"화당리 방파제","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"당동방파제,신용리방파제","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":".솔섬 맞은편","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"낚시","n":"해상펜션 앞 (당항포 쪽 바다)","u":"point/gyeongnam/goseong_fishing.html","m":"고성 · 낚시 포인트"},{"t":"해루질","n":"궁항어촌체험휴양마을","u":"point/gyeongnam/tongyeong_gleaning.html","m":"통영 · 해루질 포인트"},{"t":"해루질","n":"연명어촌체험휴양마을","u":"point/gyeongnam/tongyeong_gleaning.html","m":"통영 · 해루질 포인트"},{"t":"해루질","n":"유동어촌체험휴양마을","u":"point/gyeongnam/tongyeong_gleaning.html","m":"통영 · 해루질 포인트"},{"t":"해루질","n":"학림도 바지락체험장","u":"point/gyeongnam/tongyeong_gleaning.html","m":"통영 · 해루질 포인트"},{"t":"해루질","n":"예곡마을 어촌체험","u":"point/gyeongnam/tongyeong_gleaning.html","m":"통영 · 해루질 포인트"},{"t":"해루질","n":"욕지도","u":"point/gyeongnam/tongyeong_gleaning.html","m":"통영 · 해루질 포인트"},{"t":"해루질","n":"사량도","u":"point/gyeongnam/tongyeong_gleaning.html","m":"통영 · 해루질 포인트"},{"t":"해루질","n":"비진도","u":"point/gyeongnam/tongyeong_gleaning.html","m":"통영 · 해루질 포인트"},{"t":"해루질","n":"연화도 조간대","u":"point/gyeongnam/tongyeong_gleaning.html","m":"통영 · 해루질 포인트"},{"t":"해루질","n":"비진도해수욕장","u":"point/gyeongnam/tongyeong_gleaning.html","m":"통영 · 해루질 포인트"},{"t":"해루질","n":"흰작살해변","u":"point/gyeongnam/tongyeong_gleaning.html","m":"통영 · 해루질 포인트"},{"t":"해루질","n":"연대도 조간대","u":"point/gyeongnam/tongyeong_gleaning.html","m":"통영 · 해루질 포인트"},{"t":"해루질","n":"한산도","u":"point/gyeongnam/tongyeong_gleaning.html","m":"통영 · 해루질 포인트"},{"t":"해루질","n":"추도 갯벌","u":"point/gyeongnam/tongyeong_gleaning.html","m":"통영 · 해루질 포인트"},{"t":"해루질","n":"추봉도 갯벌","u":"point/gyeongnam/tongyeong_gleaning.html","m":"통영 · 해루질 포인트"},{"t":"해루질","n":"학림도","u":"point/gyeongnam/tongyeong_gleaning.html","m":"통영 · 해루질 포인트"},{"t":"해루질","n":"두미도","u":"point/gyeongnam/tongyeong_gleaning.html","m":"통영 · 해루질 포인트"},{"t":"해루질","n":"미륵도","u":"point/gyeongnam/tongyeong_gleaning.html","m":"통영 · 해루질 포인트"},{"t":"해루질","n":"곤리도","u":"point/gyeongnam/tongyeong_gleaning.html","m":"통영 · 해루질 포인트"},{"t":"해루질","n":"도남항등대","u":"point/gyeongnam/tongyeong_gleaning.html","m":"통영 · 해루질 포인트"},{"t":"낚시","n":"통영등대낚시공원","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"욕지도 덕동해수욕장 주변","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"한산도(관암마을,해갑도)","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"욕지권(연화도)","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"욕지도(유동마을,양판구미)","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"한산권(소매물도)","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"상사량도(금평,진촌)","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"하사량도(덕동)","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"연명항 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"상양지마을 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"풍화리(서부마을) 선착장","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"삼덕항","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"가오치 마을 앞","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"수월항 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"영운리","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"진송말 부근 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"노적항 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"호두마을 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"삼여(뽕나무강정) 부근 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"낮은목 부근 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"삼덕항 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"유촌마을 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"추도","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"잠포마을 앞","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"비진도 외항선착장","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"이운항 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"승방마을 앞","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"목과항 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"목가동섬","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"하포마을 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"손덕마을 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"용머리","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"수월리 앞","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"통영대교(해양공원)","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"인평동(민양마을) 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"소매물도 선착장","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"평림동 축구장 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"만지도,연대도","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"수우도","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"오곡도","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"세포마을,벌포마을 선착장","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"선촌마을,상삼마을 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"향촌마을,대양화 선착장","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"동부마을(양화개)","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"북신만(마구촌,소포마을)","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"좌진마을 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"갈목마을 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"평림동(우릿개,우포마을)방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"따신몰 선착장","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"달아마을,통영해양과학관","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"중화마을 선착장","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"물개마을 방파제,갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"마동(척포) 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"해란낚시공원,함박마을","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"동호항 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"궁항,장촌 선착장","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"도남동 마리나리조트 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"송계마을 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"지도","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"어의도","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"신리마을 선착장","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"내포마을,적촌마을,죽촌마을","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"학섬, 노전마을 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"학림도,저도,송도","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"수도","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"마상촌,오륜동 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"죽림만(기호마을,대안마을)","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"해간도,연기마을 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"예포마을,딱섬 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"분지포 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"동촌마을,서촌마을 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"구집마을 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"죽림신도시 해안도로","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"적덕마을, 입도(갓섬)","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"논아랫개,봉전,남촌,수산연구원","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"미수동","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"만지도 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"노대도","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"신봉","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"매물도 등대섬 주변","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"염호리 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"용호 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"장도 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"좌사리도","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"장평 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"우도","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"내지항 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"연대도","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"연화도 동두","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"연화도","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"죽림리 해안","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"비진도 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"추봉도","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"갈도","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"두미도 북부방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"구을비도","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"국도 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"도산면 법항리 해안","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"도산면 가오치","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"욕지도 청사 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"사량도 대항마을 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"오리바위 끝","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"연등 끝","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"돌 무너진 자리","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"샛개마을 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"멀둥나래 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"진강정 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"용두암 중앙","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"지도 남서측 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"반하도 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"아랫마을 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"막끝 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"너부렁여 근처","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"미끄럼바위 근처","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"벌포항 선착장","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"함박항 선창","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"통단항 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"대매물도 대항방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"비진도 상투바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"욕지항 북방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"똥여","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"미조항 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"하사량도 외지마을 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"하사량도 레이더기지 부근 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"하사량도 묵방 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"우포마을 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"매여","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"연화항 서측 끝","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"노적마을 쇠고락 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"모개도 부근 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"진등끝 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"추도강정선창","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"비진도 동북쪽 곶부리","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"대매물도 수리바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"비진도 비둘기강정 부근 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"고래등","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"대매물도 당금방파제 꺽인자리","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"하사량도 은포마을 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"신리마을회관 북측","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"용두단","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"염소자리","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"입정포 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"의암마을 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"통영수산과학관 해안도로","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"예포마을 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"대고포 선착장","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"창동마을 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"야소마을 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"의항마을 농기구 보관창고 앞","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"빗바위 근처","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"한숨자리 인근","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"용초도 삼여","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"얼굴바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"소매물도 남쪽 취끝","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"소매물도 마을 서측 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"대매물도 동섬치","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"대송끝 곶부리","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"풍화리 남서측 곶부리","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"척포 곶부리 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"야포마을 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"등대포인트","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"의자여","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"목섬 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"장작지 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"문어포마을 선착장","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"남구마을 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"연화항 인근 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"상사량도 돈지항 부근 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"상사량도 염소자리","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"소고포 선착장","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"삼각여","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"구들빗등","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"상사량도 내지항 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"비진도 내항 마을 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"양판구미 일대","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"대매물도 설풍자리","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"농바위 끝","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"소쿠리강정 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"십리골마을 동측 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"북바위 근처","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"귀신여","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"연화항 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"빗바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"문턱개 북측","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"가마동섬","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"갈도북측","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"청석골","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"하사량도 동포 해안도로 제방","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"욕지끝바리","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"매물도 대항 선창","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"통곶지비 부근 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"호두마을 뒤등","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"네바위 사이 골창","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"여차마을끝단 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"구멍섬 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"장곡마을 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"높은여","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"이운항 동쪽 해안 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"상사량도 대항해수욕장 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"의항마을 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"용초도 철탑 동측 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"제승당 선착장","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"상사량도 돈지마을 남쪽 곶부리","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"번자리","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"촛대바위 인근","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"대도호선착장","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"개막동 동측","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"용초 뒤등 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"진두마을 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"여차마을 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"연화리 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"대바위 인근","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"용머리치 끝","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"물내려오는곳","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"물선치","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"상사량도 술미도","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"연화도 반하도 골창","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"하사량도 능양항 방파제","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"궁항항 선착장","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"비진도 설품단 부근 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"고래바위 끝바리","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"낚시","n":"갈도 매여 앞 갯바위","u":"point/gyeongnam/tongyeong_fishing.html","m":"통영 · 낚시 포인트"},{"t":"해루질","n":"도장포어촌체험휴양마을","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"해루질","n":"다대어촌체험휴양마을","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"해루질","n":"계도어촌체험휴양마을","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"해루질","n":"탑포어촌체험휴양마을","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"해루질","n":"산달도어촌체험휴양마을","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"해루질","n":"쌍근어촌체험휴양마을","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"해루질","n":"농소 몽돌해변 조간대","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"해루질","n":"망치몽돌해변 조간대","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"해루질","n":"명사 해수욕장 모래밭","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"해루질","n":"학동 몽돌해수욕장 조간대","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"해루질","n":"흥남해수욕장 조간대","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"해루질","n":"구조라해수욕장 호안로 아래 모래밭","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"해루질","n":"여차항 몽돌해수욕장 조간대","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"해루질","n":"함목해수욕장 모래밭","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"해루질","n":"옆개해수욕장 북측 모래밭","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"해루질","n":"칠천도 갯벌","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"해루질","n":"물안해수욕장","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"해루질","n":"황포해수욕장","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"해루질","n":"노랑버덩","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"해루질","n":"사곡해수욕장","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"해루질","n":"덕포해수욕장","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"해루질","n":"흥남해수욕장","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"해루질","n":"와현해수욕장","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"해루질","n":"지세포항","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"해루질","n":"옥계해수욕장","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"해루질","n":"가조도","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"해루질","n":"능포항","u":"point/gyeongnam/geoje_gleaning.html","m":"거제 · 해루질 포인트"},{"t":"낚시","n":"계도어촌체험마을 유료낚시터","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"선창 가두리식 유료낚시터","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"법동복합낚시공원","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"덕포어촌계 유료낚시터","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"어구낚시정보화마을 유료낚시터","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"거제-칠천도(옥계마을,씨름섬)","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"거제-가조도(진두마을,답곡마을)","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"가배마을 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"실전항 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"구조라항","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"성포항 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"지세포항 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"해금강 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"다대항","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"수산마을 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"여차항 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"어구마을 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"학동 용바위","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"와현","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"시방 갯바위","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"물안마을 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"덕포방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"다포방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"옥계","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"송진포항 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"다대방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"한산권(화도,방화도)","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"거제도(청포마을,들막고개)","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"외포 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"농소 몽돌해변","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"산달 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"능포방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"죽림항","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"지심도","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"망치몽돌해변 갯바위","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"내도 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"명사 해수욕장","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"양화","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"율포항 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"한내리 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"칠천도","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"도장포","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"대계방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"외포 닭섬","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"장목항 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"장승포 메인항","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"유호리 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"대곡리","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"학동 몽돌해수욕장","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"흥남 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"거제-이수도","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"거제-외도(바깥섬)","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"거제-내도(안섬)","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"거제-지심도(동백섬)","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"갈곶도(해금강)","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"홍포방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"거제-대병대도","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"거제-산달도","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"오지막 해안 끝바리","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"오포 흑산태","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"함박금 선착장","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"흥남해수욕장 몽돌밭","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"구조라해수욕장 호안로 갯바위","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"하사근마을 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"석포항 서방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"유계항 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"황포항 여객선 선착장","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"아지랑마을 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"내평마을 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"덕곡마을 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"망치마을 곶부리","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"사곡항 해안 제방","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"대포 계단바위","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"윗당넘 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"대금항 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"청곡항 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"여차항 몽돌해수욕장 갯바위","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"연구마을 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"황덕도 입도 선착장","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"창촌마을 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"관포항 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"하유교마을 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"군령포마을 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"능포항 동방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"녹산마을 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"덕포 초소밑 갯바위","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"궁농항 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"아사마을 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"연구마을 회관 앞 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"장승포 나래바위","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"송포마을 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"옥림항 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"신전마을 작은 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"예구마을 제방 끝 갯바위","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"여차 남쪽끝 갯바위","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"함목해수욕장 갯바위","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"광리마을 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"구영항 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"군황포 선착장","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"상유교마을 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"근포마을 곶부리","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"금포항 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"금곡마을(멸치막)방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"어온마을 방파제 남측 갯바위","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"칠천대교 아래","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"신전마을 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"구조라항 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"진두마을 제방 끝 갯바위","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"옆개해수욕장 북측 갯바위","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"계도 어촌 체험 낚시터","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"옥계마을 농협 앞 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"답곡마을 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"창촌마을 북쪽 끝 선창","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"한내공단 입구 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"해금강 도세치 끝","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"후포항 방파제","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"서이말 갯바위 일대","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"낚시","n":"양지암 북바위","u":"point/gyeongnam/geoje_fishing.html","m":"거제 · 낚시 포인트"},{"t":"해루질","n":"고현어촌체험휴양마을","u":"point/gyeongnam/changwon_gleaning.html","m":"창원 · 해루질 포인트"},{"t":"해루질","n":"거북이행복어촌체험휴양마을","u":"point/gyeongnam/changwon_gleaning.html","m":"창원 · 해루질 포인트"},{"t":"해루질","n":"소쿠리섬 갯벌","u":"point/gyeongnam/changwon_gleaning.html","m":"창원 · 해루질 포인트"},{"t":"해루질","n":"장구선착장","u":"point/gyeongnam/changwon_gleaning.html","m":"창원 · 해루질 포인트"},{"t":"해루질","n":"장구섬","u":"point/gyeongnam/changwon_gleaning.html","m":"창원 · 해루질 포인트"},{"t":"해루질","n":"광암해수욕장","u":"point/gyeongnam/changwon_gleaning.html","m":"창원 · 해루질 포인트"},{"t":"해루질","n":"동섬","u":"point/gyeongnam/changwon_gleaning.html","m":"창원 · 해루질 포인트"},{"t":"해루질","n":"욱곡방파제","u":"point/gyeongnam/changwon_gleaning.html","m":"창원 · 해루질 포인트"},{"t":"낚시","n":"창원해양공원 방파제","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"욱곡 방파제","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"선두마을 앞","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"광암항 방파제","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"속천항 방파제","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"명동선착장(음지도)","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"행암 방파제","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"소포마을 방파제","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"원전 메인항","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"저도 연륙교","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"가포 해양신도시","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"행암 해안갯바위","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"구산면 해안도로","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"안골항","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"진해만 곰섬","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"초리도 서측","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"송아도 방파제","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"하구지 방파제","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"수우도","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"현동 방파제","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"난포리 해안도로","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"반동초등학교 앞","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"구산 방파제","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"상용호 방파제","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"삼우골 서측","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"합포마을 남측","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"하용호 방파제","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"실리도(S선상7호콘도)","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"진해송도, 연도방파제","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"부산(진해)신항만 방파제","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"웅동만, 와성만","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"잠도","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"초리도","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"소쿠리섬","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"마창대교,귀산용호마을","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"석교마을,귀산 갯마을","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"지리도","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"우도(友島)","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"수치마을,합포마을","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"삼포방파제,갯바위","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"진해루(이동제방)","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"진해하수종말처리장(소죽도)","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"장천 방파제","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"막개도","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"삼포마을 방파제","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"시락리 정곡마을선착장","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"심리갯바위,해암사","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"원전제방,설진방파제","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"구복리(마을회관)선착장","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"심리 방파제","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"옥계갯바위, 잘패해안","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"구산방파제,죽전마을","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"덕동 방파제","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"난포리 방파제,갯바위","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"난포리갯바위(넉두바위)","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"옥계방파제,경남대수련원","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"창포리 방파제","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"고현방파제,장기선착장","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"중촌마을,주도 방파제","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"시락리 선착장","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"마산 동진교","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"미리마을 선착장,갯바위","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"장구방파제,장구마을","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"군령선착장,도만선착장","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"석곡리방파제(명주마을)","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"미리마을, 명주마을 갯바위","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"도만 방파제","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"우도 서측","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"구복마을 방파제","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"주도마을 앞","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"낚시","n":"잠도 서측","u":"point/gyeongnam/changwon_fishing.html","m":"창원 · 낚시 포인트"},{"t":"제철","n":"감성돔","u":"namhae.html#catch","m":"남해·고성·통영"},{"t":"제철","n":"볼락","u":"namhae.html#catch","m":"남해·고성·통영·창원"},{"t":"제철","n":"무늬오징어","u":"namhae.html#catch","m":"남해·통영"},{"t":"제철","n":"참돔","u":"namhae.html#catch","m":"남해·통영"},{"t":"제철","n":"도다리","u":"sacheon.html#catch","m":"사천·하동·고성·창원"},{"t":"제철","n":"문어","u":"sacheon.html#catch","m":"사천·하동"},{"t":"제철","n":"갈치","u":"sacheon.html#catch","m":"사천·하동"},{"t":"제철","n":"갑오징어","u":"sacheon.html#catch","m":"사천·하동·고성·창원"},{"t":"제철","n":"벵에돔","u":"geoje.html#catch","m":"거제"},{"t":"제철","n":"전갱이","u":"geoje.html#catch","m":"거제"},{"t":"제철","n":"대구","u":"geoje.html#catch","m":"거제"},{"t":"제철","n":"학꽁치","u":"geoje.html#catch","m":"거제"},{"t":"제철","n":"주꾸미","u":"changwon.html#catch","m":"창원"},{"t":"5월","n":"보물섬 해산물축제","u":"namhae.html#festival","m":"남해 · 미조면 미조항 북항 일원","f":1},{"t":"10월","n":"남해 독일마을 맥주축제","u":"namhae.html#festival","m":"남해 · 삼동면 독일마을 일원","f":1},{"t":"명소","n":"상주은모래비치","u":"namhae.html","m":"남해 · 해변"},{"t":"명소","n":"송정솔바람해변","u":"namhae.html","m":"남해 · 해변"},{"t":"명소","n":"미조항","u":"namhae.html","m":"남해 · 항구"},{"t":"명소","n":"물건리 방조어부림","u":"namhae.html","m":"남해 · 숲"},{"t":"명소","n":"지족해협 죽방렴","u":"namhae.html","m":"남해 · 전통 어업"},{"t":"명소","n":"가천 다랭이마을","u":"namhae.html","m":"남해 · 마을"},{"t":"명소","n":"노도","u":"namhae.html","m":"남해 · 섬"},{"t":"명소","n":"금산 보리암","u":"namhae.html","m":"남해 · 산·사찰"},{"t":"3월","n":"사천비토섬 별주부전 축제","u":"sacheon.html#festival","m":"사천·하동 · 서포면 비토해양낚시공원 일원","f":1},{"t":"8월","n":"삼천포항 자연산 전어축제","u":"sacheon.html#festival","m":"사천·하동 · 삼천포항 팔포음식특화지구","f":1},{"t":"명소","n":"삼천포용궁수산시장","u":"sacheon.html","m":"사천·하동 · 수산시장"},{"t":"명소","n":"사천바다케이블카","u":"sacheon.html","m":"사천·하동 · 케이블카"},{"t":"명소","n":"실안해안도로","u":"sacheon.html","m":"사천·하동 · 해안도로"},{"t":"명소","n":"신수도","u":"sacheon.html","m":"사천·하동 · 섬"},{"t":"명소","n":"비토섬","u":"sacheon.html","m":"사천·하동 · 섬"},{"t":"명소","n":"사천 선진리성","u":"sacheon.html","m":"사천·하동 · 성곽"},{"t":"명소","n":"노량항","u":"sacheon.html","m":"사천·하동 · 항구"},{"t":"명소","n":"대도","u":"sacheon.html","m":"사천·하동 · 섬"},{"t":"1월","n":"새해 해맞이 행사","u":"goseong.html#festival","m":"고성 · 동해면 해맞이공원·고성읍 남산공원","f":1},{"t":"9월","n":"경남고성공룡세계엑스포","u":"goseong.html#festival","m":"고성 · 회화면 당항포관광지 일원","f":1},{"t":"명소","n":"상족암군립공원","u":"goseong.html","m":"고성 · 해안·화석지"},{"t":"명소","n":"맥전포항","u":"goseong.html","m":"고성 · 항구"},{"t":"명소","n":"용암포항","u":"goseong.html","m":"고성 · 항구"},{"t":"명소","n":"좌이산","u":"goseong.html","m":"고성 · 산·전망"},{"t":"명소","n":"자란만","u":"goseong.html","m":"고성 · 만·양식어장"},{"t":"명소","n":"해지개다리","u":"goseong.html","m":"고성 · 해안 산책로"},{"t":"명소","n":"당항포관광지","u":"goseong.html","m":"고성 · 관광지"},{"t":"명소","n":"해맞이공원","u":"goseong.html","m":"고성 · 전망 공원"},{"t":"8월","n":"통영한산대첩축제","u":"tongyeong.html#festival","m":"통영 · 통영한산대첩광장·강구안·이순신공원 일원","f":1},{"t":"11월","n":"어부장터X포트빌리지 통영","u":"tongyeong.html#festival","m":"통영 · 도남동 트라이애슬론광장","f":1},{"t":"명소","n":"동피랑벽화마을","u":"tongyeong.html","m":"통영 · 마을·전망"},{"t":"명소","n":"통영케이블카","u":"tongyeong.html","m":"통영 · 케이블카·전망"},{"t":"명소","n":"달아공원","u":"tongyeong.html","m":"통영 · 전망·노을"},{"t":"명소","n":"한산도 제승당","u":"tongyeong.html","m":"통영 · 섬·역사유적"},{"t":"명소","n":"연대도·만지도 출렁다리","u":"tongyeong.html","m":"통영 · 섬"},{"t":"명소","n":"욕지도","u":"tongyeong.html","m":"통영 · 섬"},{"t":"명소","n":"사량도 옥녀봉","u":"tongyeong.html","m":"통영 · 섬·산행"},{"t":"명소","n":"소매물도 등대섬","u":"tongyeong.html","m":"통영 · 섬·등대"},{"t":"6월","n":"거제옥포대첩축제","u":"geoje.html#festival","m":"거제 · 옥포수변공원 일원","f":1},{"t":"6월","n":"남부면 수국축제","u":"geoje.html#festival","m":"거제 · 남부면 저구항·매물도여객선터미널 일원","f":1},{"t":"명소","n":"구조라해수욕장","u":"geoje.html","m":"거제 · 해변"},{"t":"명소","n":"와현모래숲해변","u":"geoje.html","m":"거제 · 해변"},{"t":"명소","n":"외도 보타니아","u":"geoje.html","m":"거제 · 섬·정원"},{"t":"명소","n":"학동흑진주몽돌해변","u":"geoje.html","m":"거제 · 해변"},{"t":"명소","n":"바람의언덕","u":"geoje.html","m":"거제 · 전망·언덕"},{"t":"명소","n":"매미성","u":"geoje.html","m":"거제 · 해안 명소"},{"t":"명소","n":"칠천량해전공원","u":"geoje.html","m":"거제 · 섬·전시관"},{"t":"명소","n":"가조도 노을이물드는언덕","u":"geoje.html","m":"거제 · 섬·노을"},{"t":"3월","n":"진해군항제","u":"changwon.html#festival","m":"창원 · 진해구 중원로터리·여좌천 일원","f":1},{"t":"5월","n":"창원 진동불꽃낙화축제","u":"changwon.html#festival","m":"창원 · 마산합포구 진동면 광암항 일원","f":1},{"t":"10월","n":"마산가고파국화축제","u":"changwon.html#festival","m":"창원 · 3·15해양누리공원·합포수변공원 일원","f":1},{"t":"명소","n":"마산어시장","u":"changwon.html","m":"창원 · 시장"},{"t":"명소","n":"돝섬해상유원지","u":"changwon.html","m":"창원 · 섬·공원"},{"t":"명소","n":"광암해수욕장","u":"changwon.html","m":"창원 · 해변"},{"t":"명소","n":"저도연륙교","u":"changwon.html","m":"창원 · 다리·산책"},{"t":"명소","n":"원전항","u":"changwon.html","m":"창원 · 항구"},{"t":"명소","n":"진해해양공원","u":"changwon.html","m":"창원 · 공원·전망"},{"t":"명소","n":"우도","u":"changwon.html","m":"창원 · 섬마을"},{"t":"명소","n":"소쿠리섬","u":"changwon.html","m":"창원 · 섬·야영"}]</script>
+<script id="hubSpecies" type="application/json">[{"sec":"fish","slug":"gamseongdom","n":"감성돔","one":"갯바위 낚시의 대표 대상입니다. 조류를 읽는 눈이 필요해 난이도가 높습니다.","lv":"어려움","m":[1,2,9,10,11,12],"cnt":3,"ban":[[5,1,5,31]],"bt":"5월 1일 ~ 5월 31일","by":false,"sz":"25cm 이하"},{"sec":"fish","slug":"gapojingeo","n":"갑오징어","one":"가을 에깅의 대표 대상입니다. 무게감 있는 입질이 특징입니다.","lv":"보통","m":[9,10,11],"cnt":3,"ban":[],"bt":"","by":false,"sz":""},{"sec":"catch","slug":"godung","n":"고둥","one":"갯바위와 자갈밭에 흔합니다. 어렵지 않아 가족 단위로 많이 합니다.","lv":"쉬움","m":[1,2,3,4,5,6,7,8,9,10,11,12],"cnt":2,"ban":[],"bt":"","by":false,"sz":""},{"sec":"fish","slug":"dodari","n":"도다리","one":"봄을 알리는 생선으로 알려져 있습니다. 바닥에 납작하게 붙어 있습니다.","lv":"쉬움","m":[3,4,5],"cnt":3,"ban":[[12,1,1,31]],"bt":"12월 1일 ~ 다음 해 1월 31일","by":false,"sz":"20cm 이하"},{"sec":"fish","slug":"muni","n":"무늬오징어","one":"에깅(오징어 루어낚시)에서 가장 인기 있는 대상입니다. 몸집이 크고 힘이 좋습니다.","lv":"어려움","m":[9,10,11],"cnt":2,"ban":[],"bt":"","by":false,"sz":""},{"sec":"catch","slug":"bajirak","n":"바지락","one":"모래 섞인 갯벌 표층에 얕게 묻혀 있어, 해루질을 처음 하는 분에게 가장 무난한 대상입니다.","lv":"쉬움","m":[4,5,6,7,8,9,10],"cnt":5,"ban":[],"bt":"","by":false,"sz":""},{"sec":"fish","slug":"byeongedom","n":"벵에돔","one":"여름 갯바위에서 많이 노리는 대상입니다. 표층에서 무는 경우가 많습니다.","lv":"보통","m":[1,2,12],"cnt":1,"ban":[],"bt":"","by":false,"sz":""},{"sec":"fish","slug":"bollak","n":"볼락","one":"겨울밤 방파제에서 인기 있는 대상입니다. 가벼운 장비로 즐길 수 있습니다.","lv":"쉬움","m":[1,2,3,12],"cnt":4,"ban":[],"bt":null,"by":false,"sz":"15cm 이하"},{"sec":"fish","slug":"jukkumi","n":"주꾸미","one":"가을 초보자에게 가장 인기 있는 대상입니다.","lv":"쉬움","m":[],"cnt":1,"ban":[[5,11,8,31]],"bt":"5월 11일 ~ 8월 31일","by":false,"sz":null},{"sec":"fish","slug":"chamdom","n":"참돔","one":"갯바위·방파제의 대표 대상입니다. 큰 것은 힘이 매우 셉니다.","lv":"보통","m":[1,2,3,4,5,6,7,8,9,10,11,12],"cnt":2,"ban":[],"bt":null,"by":false,"sz":"24cm 이하"},{"sec":"fish","slug":"hakkongchi","n":"학꽁치","one":"표층에서 무리 지어 다닙니다. 가족 단위로 하기 좋습니다.","lv":"쉬움","m":[1,2,10,11,12],"cnt":1,"ban":[],"bt":"","by":false,"sz":""}]</script>
+<script>
+/* 이달에 잡을 수 있는 것 — 아래 hubSpecies 는 data/species-index.json 중 이 지역 권역에
+   실제로 적혀 있는 종만 골라 둔 것입니다(동해 쪽에 갯벌 대상이 뜨지 않도록).
+   전남 첫 화면(js/home.js)의 같은 칸과 그리는 방식·금어기 표시가 같습니다. */
+(function () {
+  var grid = document.getElementById('spGrid'), tabs = document.getElementById('spTabs');
+  if (!grid) return;
+  var LIST = [];
+  try { LIST = JSON.parse(document.getElementById('hubSpecies').textContent); } catch (e) { return; }
+  var kst = new Date(Date.now() + (new Date().getTimezoneOffset() + 540) * 60000);
+  var M = kst.getMonth() + 1, DAY = kst.getDate(), sec = 'all', SHOW = 8;
+  function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+  function inBan(s) {
+    if (!s.ban || !s.ban.length || s.by) return false;
+    return s.ban.some(function (b) {
+      var a = b[0] * 100 + b[1], z = b[2] * 100 + b[3], t = M * 100 + DAY;
+      return a <= z ? (t >= a && t <= z) : (t >= a || t <= z);
+    });
+  }
+  function fold(total) {
+    var row = document.getElementById('spFold');
+    if (!row) { row = el('div', 'sp-fold'); row.id = 'spFold'; grid.parentNode.insertBefore(row, grid.nextSibling); }
+    row.innerHTML = ''; grid.classList.remove('expanded');
+    if (total <= SHOW) { row.hidden = true; return; }
+    row.hidden = false;
+    var b = el('button', 'sp-foldbtn', (total - SHOW) + '개 더 보기 ▾'); b.type = 'button';
+    b.addEventListener('click', function () {
+      var open = grid.classList.toggle('expanded');
+      b.textContent = open ? '접기 ▴' : (total - SHOW) + '개 더 보기 ▾';
+      if (!open) grid.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    });
+    row.appendChild(b);
+  }
+  function draw() {
+    var list = LIST.filter(function (s) { return s.m.indexOf(M) > -1 && (sec === 'all' || s.sec === sec); });
+    list.sort(function (a, b) { return (inBan(a) ? 1 : 0) - (inBan(b) ? 1 : 0) || a.n.localeCompare(b.n, 'ko'); });
+    grid.innerHTML = '';
+    document.getElementById('spTitle').textContent = M + '월에 잡을 수 있는 것';
+    if (!list.length) { grid.appendChild(el('p', 'sp-loading', '이 달에 정리된 대상이 없습니다.')); fold(0); return; }
+    list.forEach(function (s) {
+      var a = el('a', 'sp-card' + (inBan(s) ? ' banned' : ''));
+      a.href = s.sec + '/' + s.slug + '.html';
+      var head = el('div', 'sp-top');
+      head.appendChild(el('b', null, s.n));
+      head.appendChild(el('span', 'sp-tag ' + s.sec, s.sec === 'catch' ? '해루질' : '낚시'));
+      a.appendChild(head);
+      a.appendChild(el('p', null, s.one));
+      var meta = el('div', 'sp-meta');
+      if (s.lv) meta.appendChild(el('span', null, '난이도 ' + s.lv));
+      if (s.cnt) meta.appendChild(el('span', null, s.cnt + '개 시·군'));
+      if (s.sz) meta.appendChild(el('span', null, s.sz + ' 금지'));
+      a.appendChild(meta);
+      if (inBan(s)) a.appendChild(el('span', 'sp-ban', '지금 금어기 · ' + s.bt));
+      else if (s.by) a.appendChild(el('span', 'sp-ban notice', '금어기 있음 · 고시 확인'));
+      grid.appendChild(a);
+    });
+    fold(list.length);
+  }
+  [].forEach.call(tabs.querySelectorAll('button'), function (b) {
+    b.addEventListener('click', function () {
+      sec = b.getAttribute('data-sec');
+      [].forEach.call(tabs.children, function (x) { x.classList.toggle('on', x === b); });
+      draw();
+    });
+  });
+  draw();
+})();
+
+/* 권역 지도 — 전남 첫 화면(js/home.js)과 같은 방식입니다. 카카오 지도 키는 point/map-config.js 에서 옵니다.
+   좌표는 js/coast-data.js 의 권역 대표 좌표를 씁니다. 키가 없거나 지도를 못 불러오면 지도 칸을 숨깁니다. */
+(function () {
+  var box = document.getElementById('hrMap'), layout = document.getElementById('hrLayout');
+  var key = (window.BADAGAJA_MAP || {}).kakaoJsKey, C = window.BADAGAJA_COAST || {};
+  if (!box || !key) { layout && layout.classList.add('no-map'); return; }
+  var REGS = [{"s":"namhae","n":"남해","c":"#2F6B5E","p":155},{"s":"sacheon","n":"사천·하동","c":"#34557A","p":75},{"s":"goseong","n":"고성","c":"#6A4A36","p":55},{"s":"tongyeong","n":"통영","c":"#2B5D7A","p":242},{"s":"geoje","n":"거제","c":"#1F5E57","p":145},{"s":"changwon","n":"창원","c":"#43477A","p":79}];
+  var cards = {};
+  [].forEach.call(document.querySelectorAll('.rc'), function (c) { cards[c.getAttribute('data-slug')] = c; });
+  function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+  var started = false;
+  function start() {
+    if (started) return; started = true;
+    var sc = document.createElement('script');
+    sc.src = 'https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=' + encodeURIComponent(key);
+    sc.onload = function () { try { kakao.maps.load(init); } catch (e) { layout.classList.add('no-map'); } };
+    sc.onerror = function () { layout.classList.add('no-map'); };
+    document.head.appendChild(sc);
+  }
+  function init() {
+    var map = new kakao.maps.Map(box, { center: new kakao.maps.LatLng(36.5, 126.4), level: 11 });
+    // 두 손가락(또는 휠)로 확대됩니다. 처음 크기에서는 지도를 끌 수 없게 두어
+    // 한 손가락으로 쓸면 쪽이 그대로 스크롤됩니다 (2026-09-23 주인 지시)
+    map.setZoomable(true);
+    map.setDraggable(false);
+    kakao.maps.event.addListener(map, 'zoom_changed', function () {
+      map.setDraggable(map.getLevel() < 11);
+    });
+    map.addControl(new kakao.maps.ZoomControl(), kakao.maps.ControlPosition.RIGHT);
+    var bounds = new kakao.maps.LatLngBounds(), pins = {}, n = 0;
+    REGS.forEach(function (r) {
+      var co = C[r.s]; if (!co || co.lat == null) return;
+      var pos = new kakao.maps.LatLng(co.lat, co.lng);
+      var a = el('a', 'hr-pin'); a.href = r.s + '.html'; a.style.setProperty('--c', r.c);
+      a.title = r.n + ' 포인트 ' + r.p + '곳';
+      a.appendChild(el('i', 'dot'));
+      var lb = el('span', 'lb', r.n + ' '); lb.appendChild(el('em', null, String(r.p))); a.appendChild(lb);
+      a.addEventListener('mouseenter', function () { hl(r.s, true); });
+      a.addEventListener('mouseleave', function () { hl(r.s, false); });
+      pins[r.s] = a; n++;
+      new kakao.maps.CustomOverlay({ position: pos, content: a, yAnchor: .5, zIndex: 3 }).setMap(map);
+      bounds.extend(pos);
+    });
+    if (!n) { layout.classList.add('no-map'); return; }
+    function fit() { map.relayout(); map.setBounds(bounds, 30, 40, 30, 40); }
+    fit(); setTimeout(fit, 400);
+    window.addEventListener('resize', function () { clearTimeout(fit.t); fit.t = setTimeout(fit, 250); });
+    function hl(s, on) { cards[s] && cards[s].classList.toggle('on', on); pins[s] && pins[s].classList.toggle('on', on); }
+    Object.keys(cards).forEach(function (s) {
+      cards[s].addEventListener('mouseenter', function () { hl(s, true); });
+      cards[s].addEventListener('mouseleave', function () { hl(s, false); });
+    });
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) { if (es.some(function (e) { return e.isIntersecting; })) { io.disconnect(); start(); } }, { rootMargin: '300px' });
+    io.observe(box);
+  } else start();
+})();
+
+/* 홈 화면에 추가 안내 — 휴대폰에서만, 닫으면 다시 안 보입니다(전남 첫 화면과 같은 방식). */
+(function () {
+  var box = document.getElementById('tsInstall'); if (!box) return;
+  function get(k) { try { return localStorage.getItem(k) || ''; } catch (e) { return ''; } }
+  function set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  var ua = navigator.userAgent || '';
+  var standalone = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone;
+  if (standalone || get('bdg-install-off') || !/Mobi|Android|iPhone|iPad/i.test(ua)) return;
+  var deferred = null;
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); deferred = e; });
+  var inApp = /NAVER|KAKAOTALK|Instagram|FBAN|FBAV|Line\/|DaumApps/i.test(ua);
+  var ios = /iPhone|iPad|iPod/i.test(ua), samsung = /SamsungBrowser/i.test(ua);
+  var steps = inApp ? ['지금은 앱 안에서 열린 화면이라 홈 화면에 추가할 수 없어요.', '화면 구석의 ⋮ 또는 ⋯ 메뉴에서 <b>다른 브라우저로 열기</b>를 누르세요.', '열린 브라우저에서 이 안내를 다시 눌러 주세요.']
+    : ios ? ['사파리 아래쪽의 <b>공유 버튼</b>(네모에 위 화살표)을 누릅니다.', '목록을 올려 <b>홈 화면에 추가</b>를 누릅니다.', '오른쪽 위 <b>추가</b>를 누르면 끝입니다.']
+    : samsung ? ['아래쪽 <b>≡ 메뉴</b>를 누릅니다.', '<b>현재 페이지 추가</b> → <b>홈 화면</b>을 고릅니다.', '<b>추가</b>를 누르면 끝입니다.']
+    : ['오른쪽 위 <b>⋮ 메뉴</b>를 누릅니다.', '<b>홈 화면에 추가</b>(또는 앱 설치)를 누릅니다.', '<b>추가</b>를 누르면 끝입니다.'];
+  box.hidden = false;
+  var how = document.getElementById('tsHowto');
+  document.getElementById('tsInstallGo').addEventListener('click', function () {
+    if (deferred) { deferred.prompt(); deferred.userChoice.then(function (c) { if (c && c.outcome === 'accepted') { set('bdg-install-off', '1'); box.hidden = true; } }); deferred = null; return; }
+    document.getElementById('tsHowtoSteps').innerHTML = steps.map(function (t) { return '<li>' + t + '</li>'; }).join('');
+    how.hidden = false; document.getElementById('tsHowtoClose').focus();
+  });
+  function closeHow() { how.hidden = true; }
+  document.getElementById('tsHowtoClose').addEventListener('click', closeHow);
+  how.addEventListener('click', function (e) { if (e.target === how) closeHow(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !how.hidden) closeHow(); });
+  document.getElementById('tsInstallX').addEventListener('click', function () { set('bdg-install-off', '1'); box.hidden = true; });
+})();
+
+/* 통합 검색 — 아래 hubIndex(권역·포인트·제철·축제·명소)를 이름으로 걸러 보여 줍니다.
+   전남·제주 첫 화면은 js/home.js 가 home-data.js 로 같은 일을 하는데 그쪽은 전남 자료만 담고 있어,
+   이 지역 자료를 쪽 안에 실어 따로 씁니다. */
+(function () {
+  var input = document.getElementById('hSearch'), out = document.getElementById('hResults');
+  if (!input || !out) return;
+  var IDX = [];
+  try { IDX = JSON.parse(document.getElementById('hubIndex').textContent); } catch (e) { return; }
+  var GRP = ['권역', '해루질', '낚시', '제철', '축제', '명소'];
+  function norm(s) { return (s || '').replace(/[\s·()\[\]]/g, '').toLowerCase(); }
+  function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+  function close() { out.hidden = true; out.innerHTML = ''; input.setAttribute('aria-expanded', 'false'); }
+  function run() {
+    var q = norm(input.value);
+    if (q.length < 1) return close();
+    var hit = IDX.filter(function (x) { return norm(x.n).indexOf(q) > -1; });
+    if (!hit.length) {
+      out.innerHTML = ''; out.appendChild(el('div', 'grp', '검색 결과가 없어요'));
+      out.hidden = false; input.setAttribute('aria-expanded', 'true'); return;
+    }
+    out.innerHTML = '';
+    var shown = 0;
+    GRP.forEach(function (g) {
+      var rows = hit.filter(function (x) { return (x.f ? '축제' : x.t) === g; });
+      if (!rows.length || shown >= 24) return;
+      out.appendChild(el('div', 'grp', g === '축제' ? '축제 ' + rows.length + '개' : g));
+      rows.slice(0, 8).forEach(function (x) {
+        var a = el('a'); a.href = x.u; a.setAttribute('role', 'option');
+        a.appendChild(el('span', x.f ? 'tag fest' : 'tag', x.t));
+        a.appendChild(el('span', null, x.n));
+        if (x.m) a.appendChild(el('span', 'meta', x.m));
+        out.appendChild(a); shown++;
+      });
+    });
+    out.hidden = false; input.setAttribute('aria-expanded', 'true');
+  }
+  input.addEventListener('input', run);
+  input.addEventListener('focus', function () { if (input.value) run(); });
+  // 많이 찾는 말 버튼은 검색창 밖에 있어, 여기서 빼지 않으면 눌러도 바로 닫힙니다.
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.h-search') && !e.target.closest('.h-quick')) close();
+  });
+  input.addEventListener('keydown', function (e) { if (e.key === 'Escape') { input.value = ''; close(); } });
+  [].forEach.call(document.querySelectorAll('.h-quick button'), function (b) {
+    b.addEventListener('click', function () { input.value = b.dataset.q; input.focus(); run(); });
+  });
+})();
+
+/* 오늘의 바다 — 물때 계산은 js/app.js 의 BADAGAJA_TIDE, 권역 좌표·관측소는 js/coast-data.js 를 씁니다.
+   자료를 부르는 곳은 권역 쪽과 같습니다: 조석 api/tide-cache.php, 날씨 api/weather-jeju.php(좌표 기준).
+   전남·제주 첫 화면은 js/home.js 가 같은 일을 하지만 그쪽 자료(home-data.js)에 묶여 있어 여기서는 따로 씁니다. */
+(function () {
+  var T = window.BADAGAJA_TIDE, C = window.BADAGAJA_COAST || {};
+  var box = document.getElementById('tsRegions');
+  if (!T || !box) return;
+  var REGS = [{"s":"namhae","n":"남해","c":"#2F6B5E","p":155},{"s":"sacheon","n":"사천·하동","c":"#34557A","p":75},{"s":"goseong","n":"고성","c":"#6A4A36","p":55},{"s":"tongyeong","n":"통영","c":"#2B5D7A","p":242},{"s":"geoje","n":"거제","c":"#1F5E57","p":145},{"s":"changwon","n":"창원","c":"#43477A","p":79}];
+  var DAY = ['일', '월', '화', '수', '목', '금', '토'];
+  var KEY = 'bdg-today-gyeongnam';
+  var $ = function (id) { return document.getElementById(id); };
+  function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+  function saved() { try { return localStorage.getItem(KEY) || ''; } catch (e) { return ''; } }
+  function kst() { return new Date(Date.now() + (new Date().getTimezoneOffset() + 540) * 60000); }
+  function toMin(hm) { var p = hm.split(':'); return +p[0] * 60 + +p[1]; }
+  function hmText(hm) {                      // "13:33" → "오후 1시 33분"
+    var p = hm.split(':'), h = +p[0], mi = +p[1];
+    var part = h < 12 ? '오전' : (h < 18 ? '오후' : '저녁'), hh = h % 12 === 0 ? 12 : h % 12;
+    return part + ' ' + hh + '시' + (mi ? ' ' + mi + '분' : '');
+  }
+  function dayWord(d, i) { return i === 0 ? '오늘' : (i === 1 ? '내일' : DAY[d.getDay()] + '요일'); }
+  /* ---------- 이번 주 언제 갈까 ----------
+     전남 첫 화면(js/home.js)의 week()/plan()/drawWeek() 과 같은 방식입니다.
+     1) 음력 물때 계산만으로 먼저 그리고, 2) 조석 자료가 오면 실제 낮 간조 높이로 다시 그립니다.
+     이 묶음에는 제주가 없으므로 제주용 분기(물살 약한 날 고르기)는 두지 않았습니다. */
+  function drawWeek(rows, byTide) {
+    var w = $('tsWeek'); if (!w) return;
+    w.innerHTML = '';
+    rows.forEach(function (x, i) {
+      var c = el('div', 'ts-day' + (i === 0 ? ' today' : '') + (x.best ? ' best' : (x.good ? ' good' : '')));
+      c.appendChild(el('span', 'star', x.best ? '★' : (x.good ? '☆' : '')));
+      var bar = el('div', 'bar'), fill = el('i'); fill.style.height = x.h + '%'; bar.appendChild(fill); c.appendChild(bar);
+      c.appendChild(el('b', null, i === 0 ? '오늘' : DAY[x.d.getDay()]));
+      c.appendChild(el('span', 'dm', x.d.getDate() + ' · ' + x.m + '물'));
+      c.title = (x.d.getMonth() + 1) + '월 ' + x.d.getDate() + '일 ' + x.m + '물'
+        + (x.low ? ' · 낮 간조 ' + x.low.time : (byTide ? ' · 낮 간조 없음' : ''));
+      w.appendChild(c);
+    });
+    var weekend = rows.filter(function (x) { var g = x.d.getDay(); return g === 0 || g === 6; });
+    var note = $('tpNote');
+    if (note) {
+      var calm = weekend.length && weekend.every(function (x) { return x.inten <= 40; });
+      var big = weekend.length && weekend.some(function (x) { return x.inten >= 68; });
+      if (calm) { note.innerHTML = '이번 주말은 <b>조금</b> 무렵이라 물이 적게 빠집니다. 해루질보다는 <b>낚시</b>가 낫습니다.'; note.hidden = false; }
+      else if (big) { note.innerHTML = '이번 주말은 <b>사리</b> 무렵이라 물이 많이 빠집니다. 가족 해루질하기 좋은 주말이에요.'; note.hidden = false; }
+      else note.hidden = true;
+    }
+  }
+  function week(d0) {
+    if (!$('tsWeek')) return;
+    var rows = [];
+    for (var i = 0; i < 7; i++) {
+      var d = new Date(d0); d.setDate(d.getDate() + i);
+      var m = T.calcMuldae(d), inten = T.calcIntensity(m);
+      rows.push({ d: d, m: m, inten: inten, h: Math.max(8, Math.round(inten * 0.92)) });
+    }
+    var top = rows.reduce(function (a, b) { return b.inten > a.inten ? b : a; });
+    top.best = true;
+    rows.forEach(function (x) { if (!x.best && x.inten >= 68) x.good = true; });
+    $('tpTitle').innerHTML = '물이 가장 많이 빠지는 날은 <em>' + dayWord(top.d, rows.indexOf(top)) + '</em>이에요';
+    $('tpLead').textContent = (top.d.getMonth() + 1) + '월 ' + top.d.getDate() + '일 · ' + top.m + '물 · 음력으로 계산한 물때입니다';
+    $('tpBasis').textContent = '물때 계산 기준';
+    drawWeek(rows, false);
+  }
+  function plan(data, d0, reg, cc) {
+    if (!data || !data.days || !data.days.length || !$('tsWeek')) return;
+    var rows = [];
+    for (var i = 0; i < 7; i++) {
+      var d = new Date(d0); d.setDate(d.getDate() + i);
+      var key = (d.getMonth() + 1) + '/' + d.getDate();
+      var day = data.days.filter(function (x) { return x.date === key; })[0];
+      var sun = cc ? T.sunTimes(d, cc[0], cc[1]) : null;
+      var a = sun ? toMin(sun.rise) + 60 : 420, b = sun ? toMin(sun.set) - 60 : 1020, low = null;
+      ((day && day.events) || []).forEach(function (e) {
+        if (e.type !== '간조' || e.level == null || e.level === '') return;
+        var t = toMin(e.time); if (t < a || t > b) return;   // 낮 시간(해뜬 뒤 1시간 ~ 해지기 1시간 전)만
+        if (!low || +e.level < low.level) low = { time: e.time, level: +e.level };
+      });
+      var m = T.calcMuldae(d);
+      rows.push({ d: d, m: m, inten: T.calcIntensity(m), low: low });
+    }
+    var lv = rows.filter(function (x) { return x.low; }).map(function (x) { return x.low.level; });
+    if (lv.length < 3) return;                  // 자료가 모자라면 계산값 그대로 둔다
+    var mx = Math.max.apply(null, lv), mn = Math.min.apply(null, lv), span = Math.max(1, mx - mn);
+    rows.forEach(function (x) { x.h = x.low ? Math.round(18 + (mx - x.low.level) / span * 76) : 6; });
+    var best = rows.filter(function (x) { return x.low; }).reduce(function (p, q) { return q.low.level < p.low.level ? q : p; });
+    best.best = true;
+    rows.forEach(function (x) { if (!x.best && x.low && x.low.level <= mn + span * 0.35) x.good = true; });
+    $('tpTitle').innerHTML = '해루질은 <em>' + dayWord(best.d, rows.indexOf(best)) + '</em>이 가장 좋아요';
+    $('tpLead').innerHTML = '<b>' + (best.d.getMonth() + 1) + '월 ' + best.d.getDate() + '일 ' + hmText(best.low.time)
+      + ' 간조</b> · 이번 주 낮 시간에 물이 가장 많이 빠집니다';
+    $('tpBasis').textContent = '낮 간조 기준 · ' + (data.point || reg.n);
+    drawWeek(rows, true);
+  }
+  /* ---------- 다음 간조까지 남은 시간 (1분마다 다시 씀) ---------- */
+  var nextTimer = null;
+  function nextLow(data) {
+    var box = $('tsNext'); if (!box || !data || !data.days) return;
+    function paint() {
+      var now = kst(), nowMin = now.getHours() * 60 + now.getMinutes(), found = null;
+      for (var i = 0; i < Math.min(2, data.days.length) && !found; i++) {
+        (data.days[i].events || []).some(function (e) {
+          if (e.type !== '간조') return false;
+          var t = toMin(e.time) + i * 1440;
+          if (t >= nowMin - 40) { found = { time: e.time, diff: t - nowMin, tomorrow: i === 1 }; return true; }
+          return false;
+        });
+      }
+      if (!found) { box.hidden = true; return; }
+      $('tsNextTime').textContent = (found.tomorrow ? '내일 ' : '') + found.time;
+      if (found.diff <= 30) {
+        $('tsNextLab').textContent = '지금은';
+        $('tsNextIn').textContent = found.diff < -10 ? '간조가 막 지났어요' : '간조 무렵이에요';
+      } else {
+        var h = Math.floor(found.diff / 60), mm = found.diff % 60;
+        $('tsNextLab').textContent = '지금부터';
+        $('tsNextIn').textContent = (h ? h + '시간 ' : '') + (mm ? mm + '분' : '') + ' 뒤';
+      }
+      box.hidden = false;
+    }
+    paint();
+    clearInterval(nextTimer); nextTimer = setInterval(paint, 60000);
+  }
+  var cur = REGS.some(function (r) { return r.s === saved(); }) ? saved() : REGS[0].s, req = 0;
+  REGS.forEach(function (r) {
+    var b = el('button', null, r.n); b.type = 'button'; b.setAttribute('role', 'tab'); b.dataset.r = r.s;
+    b.addEventListener('click', function () { pick(r.s, true); });
+    box.appendChild(b);
+  });
+  function pick(s, user) {
+    cur = s;
+    if (user) { try { localStorage.setItem(KEY, s); } catch (e) {} }
+    var reg = REGS.filter(function (r) { return r.s === s; })[0], co = C[s] || {};
+    [].forEach.call(box.children, function (b) { b.setAttribute('aria-selected', b.dataset.r === s ? 'true' : 'false'); });
+    var now = new Date(Date.now() + (new Date().getTimezoneOffset() + 540) * 60000);
+    var d = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var m = T.calcMuldae(d), inten = T.calcIntensity(m), lab = T.tideLabel(inten);
+    $('tsTitle').textContent = '오늘 ' + reg.n + ' 바다는';
+    $('tsDate').textContent = (d.getMonth() + 1) + '월 ' + d.getDate() + '일 (' + DAY[d.getDay()] + ') 기준';
+    $('tsMuldae').textContent = m + '물';
+    $('tsMuldaeName').textContent = lab.text;
+    $('tsGauge').style.width = inten + '%';
+    $('tsVerdict').textContent = inten >= 68 ? '물이 많이 빠지는 날이에요. 갯벌이 넓게 드러나 해루질하기 좋습니다.'
+      : inten <= 32 ? '물이 적게 빠지는 조금 무렵이에요. 물살이 약해 방파제·선착장 낚시가 편합니다.'
+      : '물이 중간쯤 드나드는 날이에요. 간조 시각에 맞춰 나가면 좋습니다.';
+    $('tsMore').href = s + '.html#tide';
+    $('tsMore').textContent = reg.n + ' 물때표 2주 전체 보기 →';
+    var cc = T.coords[s] || (co.lat != null ? [co.lat, co.lng] : null);
+    var sun = cc ? T.sunTimes(d, cc[0], cc[1]) : null;
+    $('tsRise').textContent = sun ? sun.rise : '–'; $('tsSet').textContent = sun ? sun.set : '–';
+    week(d);
+    if ($('tsNext')) $('tsNext').hidden = true;
+    $('tsTides').innerHTML = '<li class="muted">간조·만조 시각</li>'; $('tsTideSrc').textContent = '';
+    $('tsTemp').textContent = '–'; $('tsSky').textContent = '불러오는 중'; $('tsWave').textContent = '';
+    var my = ++req;
+    fetch('api/tide-cache.php?region=' + s, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (data) {
+      if (my !== req) return;
+      var ev = data && data.days && data.days[0] && data.days[0].events, ul = $('tsTides');
+      ul.innerHTML = '';
+      if (!ev || !ev.length) { ul.innerHTML = '<li class="muted">오늘 간조·만조 시각을 불러오지 못했어요</li>'; return; }
+      ev.forEach(function (e) {
+        var li = el('li', e.type === '만조' ? 'high' : '');
+        li.appendChild(el('span', 'k', e.type)); li.appendChild(el('b', null, e.time)); ul.appendChild(li);
+      });
+      $('tsTideSrc').textContent = (data.source === 'beach' ? '기상청 해수욕장 조석' : '국립해양조사원 조석예보')
+        + ' · ' + (data.point || (co.station && co.station.name) || reg.n);
+      nextLow(data);
+      plan(data, d, reg, cc);
+    }).catch(function () { if (my === req) $('tsTides').innerHTML = '<li class="muted">간조·만조 정보 준비 중</li>'; });
+    fetch('api/weather-jeju.php?region=' + s, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (w) {
+      if (my !== req) return;
+      if (!w || w.available === false) { $('tsSky').textContent = '이 권역은 관측 정보가 없어요'; return; }
+      $('tsTemp').textContent = (w.temp != null && w.temp !== '') ? w.temp + '°' : '–';
+      $('tsSky').textContent = w.label || '';
+      $('tsWave').textContent = (w.wave != null && w.wave !== '')
+        ? '파고 ' + w.wave + 'm · ' + (w.point || reg.n) : (w.point || reg.n) + ' 관측';
+    }).catch(function () { if (my === req) $('tsSky').textContent = '날씨 정보 준비 중'; });
+    // 시간별 물높이 그래프 — js/tide-graph.js
+    if (window.BADAGAJA_TIDEGRAPH && document.getElementById('tsGraph') && co.lat != null) {
+      window.BADAGAJA_TIDEGRAPH.mount(document.getElementById('tsGraph'), s, { dark: true, coords: [co.lat, co.lng] });
+    }
+    // 생활해양예보지수 (갯벌체험·바다낚시·해수욕) — api/seaidx.php
+    [].forEach.call(document.querySelectorAll('.ts-idx'), function (card) {
+      var t = card.dataset.type, g = card.querySelector('.ti-grade'),
+          pl = card.querySelector('.ti-place'), de = card.querySelector('.ti-detail');
+      card.className = 'ts-card ts-idx'; g.textContent = '–'; pl.textContent = '불러오는 중'; de.textContent = '';
+      fetch('api/seaidx.php?type=' + t + '&region=' + s).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (x) {
+        if (my !== req) return;
+        if (!x || !x.available) { card.classList.add('off'); g.textContent = '정보 없음'; pl.textContent = '이 권역 가까이에 예보 장소가 없어요'; return; }
+        card.classList.add('g' + x.grade); g.textContent = x.label;
+        pl.textContent = x.point + (x.outside ? ' (' + x.outside + ')' : '') + ' · ' + x.distance + 'km · ' + x.when;
+        var det = x.detail || {}, parts = [];
+        if (t === 'mudflat') { if (det.start && det.end && det.start !== det.end) parts.push('체험 가능 ' + det.start + '~' + det.end); if (det.weather) parts.push(det.weather); }
+        if (t === 'beach') { if (det.open) parts.push(det.open === '폐장' ? '폐장 기간(안전요원 없음)' : det.open); if (det.watertemp) parts.push('수온 ' + det.watertemp + '℃'); if (det.wave) parts.push('파고 ' + det.wave + 'm'); }
+        if (t === 'fishing') {
+          if (x.fish && x.fish.length) parts.push(x.fish.slice(0, 3).map(function (f) { return f.fish + ' ' + f.label; }).join(' · '));
+          if (det.watertemp) parts.push('수온 ' + det.watertemp + '℃');
+        }
+        de.textContent = parts.join(' · ');
+      }).catch(function () { if (my === req) { card.classList.add('off'); g.textContent = '–'; pl.textContent = '지수를 불러오지 못했어요'; } });
+    });
+  }
+  pick(cur, false);
+})();
+
+/* 이달의 제철·축제 — 위 hubData 를 읽어 이번 달부터 보여 주고 ‹ › 로 달을 옮깁니다. */
+(function () {
+  var D = {}; try { D = JSON.parse(document.getElementById('hubData').textContent); } catch (e) { return; }
+  var kst = new Date(Date.now() + (new Date().getTimezoneOffset() + 540) * 60000);
+  var m = kst.getMonth() + 1;
+  var $ = function (id) { return document.getElementById(id); };
+  function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+  function draw() {
+    $('ssMonth').textContent = m + '월';
+    var cs = (D.catch || {})[m] || [], cb = $('ssCatch');
+    cb.innerHTML = ''; $('ssCatchCount').textContent = cs.length + '종';
+    if (!cs.length) cb.appendChild(el('p', 'ss-empty', '이 달에 표시할 제철 정보가 없어요.'));
+    cs.forEach(function (c) {
+      var b = el('button', 'ss-chip'); b.type = 'button'; b.title = c.r.join(' · ');
+      b.appendChild(document.createTextNode(c.n + ' '));
+      b.appendChild(el('small', null, c.r.length + '곳'));
+      cb.appendChild(b);
+    });
+    var fs = (D.fest || {})[m] || [], fb = $('ssFest');
+    fb.innerHTML = ''; $('ssFestCount').textContent = fs.length ? fs.length + '개' : '';   /* 0개는 숫자를 감춤 (2026-09-24) */
+    if (!fs.length) fb.appendChild(el('p', 'ss-empty', m + '월에는 등록된 축제가 없어요. 다음 달을 확인해 보세요.'));
+    fs.forEach(function (f) {
+      var a = el('a', 'ss-fest'); a.href = f.s + '.html#festival'; a.style.setProperty('--c', f.c);
+      a.appendChild(el('span', 'r', f.r + ' · ' + m + '월 예정'));
+      a.appendChild(el('b', null, f.n));
+      a.appendChild(el('span', null, (f.p ? f.p + ' · ' : '') + f.d));
+      fb.appendChild(a);
+    });
+  }
+  $('ssPrev').addEventListener('click', function () { m = m === 1 ? 12 : m - 1; draw(); });
+  $('ssNext').addEventListener('click', function () { m = m === 12 ? 1 : m + 1; draw(); });
+  draw();
+})();
+/* 동행별 코스 — 카드는 이미 그려 두고 고른 것만 보여 줍니다. */
+(function () {
+  var tabs = document.querySelectorAll('.hc-tabs button'), cards = document.querySelectorAll('.hc-card');
+  if (!tabs.length) return;
+  function show(k) {
+    [].forEach.call(tabs, function (t) { t.setAttribute('aria-selected', t.dataset.k === k ? 'true' : 'false'); });
+    [].forEach.call(cards, function (c) { c.hidden = c.dataset.k !== k; });
+  }
+  [].forEach.call(tabs, function (t) { t.addEventListener('click', function () { show(t.dataset.k); }); });
+  show(tabs[0].dataset.k);
+})();
+</script>
+<script src="js/kakao-share.js?v=202609262116" defer></script>
+<script src="js/ads-data.js?v=202609262116"></script>
+<script src="js/ads.js?v=202609262116"></script>
+<script src="js/hit.js?v=202609262116" defer></script>
+</body>
+</html>

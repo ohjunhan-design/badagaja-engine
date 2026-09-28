@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>방문 기록 | 바다가자닷컴</title>
+<meta name="description" content="바다가자닷컴 방문 기록 보기 — 운영자 전용 쪽입니다.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="shortcut icon" href="https://badagaja.com/favicon.ico">
+<link rel="icon" href="https://badagaja.com/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --ink:#2B2116; --dim:#6B6152; --line:#E7DFD0; --paper:#FFFBF3; --sea:#2F5D57; --lantern:#C07B22; }
+  *{box-sizing:border-box}
+  [hidden]{display:none !important}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Noto Sans KR',system-ui,sans-serif;line-height:1.6}
+  .wrap{max-width:900px;margin:0 auto;padding:24px 16px 64px}
+  h1{font-size:1.3rem;margin:0 0 4px}
+  .sub{color:var(--dim);font-size:.86rem;margin:0 0 20px}
+  .gate{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+  .gate input{flex:1;min-width:200px;padding:11px 13px;border:1px solid var(--line);border-radius:10px;font-size:1rem;background:#fff}
+  .gate button{padding:11px 18px;border:0;border-radius:10px;background:var(--sea);color:#fff;font-weight:700;font-size:.95rem;cursor:pointer}
+  .msg{padding:12px 14px;border-radius:10px;background:#fff;border:1px solid var(--line);color:var(--dim);font-size:.88rem}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:10px;margin:16px 0}
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px}
+  .card b{display:block;font-size:1.45rem;line-height:1.2;font-variant-numeric:tabular-nums}
+  .card span{font-size:.8rem;color:var(--dim)}
+  h2{font-size:1rem;margin:26px 0 10px}
+  .tw{width:100%;overflow-x:auto}
+  table{width:100%;min-width:280px;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:.88rem}
+  th,td{padding:9px 10px;word-break:break-all;text-align:left;border-bottom:1px solid var(--line)}
+  th{background:#F6F1E6;font-weight:600;font-size:.82rem;color:var(--dim)}
+  td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  tr:last-child td{border-bottom:0}
+  .bars{display:flex;align-items:flex-end;gap:3px;height:120px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}
+  .bars div{flex:1;background:var(--sea);border-radius:3px 3px 0 0;min-height:2px;position:relative}
+  .bars div span{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:.62rem;color:var(--dim)}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0}
+  select{padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#fff}
+  a{color:var(--lantern)}
+  .foot{margin-top:30px;font-size:.78rem;color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>바다가자닷컴 방문 기록</h1>
+  <p class="sub">쿠키를 쓰지 않고 날짜별 합계만 모읍니다. 검색 로봇은 세지 않습니다.</p>
+
+  <div class="gate" id="gate">
+    <input id="tok" type="password" placeholder="열쇠말을 넣어 주세요" autocomplete="off">
+    <button id="go" type="button">보기</button>
+  </div>
+  <div class="msg" id="msg">열쇠말을 넣으면 기록을 불러옵니다. 열쇠말은 서버 설정 파일(config.php)에 적어 둔 값입니다.</div>
+
+  <div id="body" hidden>
+    <div class="row">
+      <label for="month">달 고르기</label>
+      <select id="month"></select>
+      <button type="button" id="logout" style="margin-left:auto;flex:0 0 auto;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer">열쇠말 지우기</button>
+    </div>
+    <div class="cards">
+      <div class="card"><b id="cToday">–</b><span>오늘 조회</span></div>
+      <div class="card"><b id="cTodayV">–</b><span>오늘 방문</span></div>
+      <div class="card"><b id="cMonth">–</b><span>이 달 조회</span></div>
+      <div class="card"><b id="cMonthV">–</b><span>이 달 방문</span></div>
+      <div class="card"><b id="cMobile">–</b><span>휴대폰 비율</span></div>
+    </div>
+    <h2>날마다</h2>
+    <div class="bars" id="bars"></div>
+    <h2>많이 본 쪽</h2>
+    <div class="tw"><table><thead><tr><th>주소</th><th class="n">조회</th></tr></thead><tbody id="tPages"></tbody></table></div>
+    <h2>어디서 들어왔나</h2>
+    <div class="tw"><table><thead><tr><th>들어온 곳</th><th class="n">조회</th></tr></thead><tbody id="tFrom"></tbody></table></div>
+    <h2>언어</h2>
+    <div class="tw"><table><thead><tr><th>쪽 종류</th><th class="n">조회</th></tr></thead><tbody id="tLang"></tbody></table></div>
+    <p class="foot">기록은 서버 api/stats 폴더에 달마다 한 파일로 쌓입니다. 개인정보(IP·기기 식별값)는 저장하지 않습니다.</p>
+  </div>
+</div>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var KEY = 'bgStatsToken';
+  var token = '';
+  try { token = localStorage.getItem(KEY) || ''; } catch (e) {}
+
+  function num(n) { return (n || 0).toLocaleString('ko-KR'); }
+  function rows(tb, obj, link) {
+    tb.innerHTML = '';
+    var keys = Object.keys(obj || {});
+    if (!keys.length) { tb.innerHTML = '<tr><td colspan="2">아직 기록이 없습니다</td></tr>'; return; }
+    keys.forEach(function (k) {
+      var tr = document.createElement('tr');
+      var td1 = document.createElement('td');
+      if (link && k.charAt(0) === '/') { var a = document.createElement('a'); a.href = k; a.textContent = k; a.target = '_blank'; a.rel = 'noopener'; td1.appendChild(a); }
+      else { td1.textContent = k; }
+      var td2 = document.createElement('td'); td2.className = 'n'; td2.textContent = num(obj[k]);
+      tr.appendChild(td1); tr.appendChild(td2); tb.appendChild(tr);
+    });
+  }
+
+  function draw(d) {
+    var now = new Date();
+    var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+    var today = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate());
+    var t = d.days[today] || { views: 0, visits: 0 };
+    $('cToday').textContent = num(t.views);
+    $('cTodayV').textContent = num(t.visits);
+    $('cMonth').textContent = num(d.sum.views);
+    $('cMonthV').textContent = num(d.sum.visits);
+    var mob = (d.sum.device && d.sum.device.mobile) || 0, desk = (d.sum.device && d.sum.device.desktop) || 0;
+    $('cMobile').textContent = (mob + desk) ? Math.round(mob * 100 / (mob + desk)) + '%' : '–';
+
+    var bars = $('bars'); bars.innerHTML = '';
+    // 그 달의 날짜를 모두 칸으로 깔고, 기록이 없는 날은 0으로 둡니다
+    var ym = d.month.split('-'), last = new Date(+ym[0], +ym[1], 0).getDate();
+    var days = [];
+    for (var i = 1; i <= last; i++) { var k = d.month + '-' + pad(i); days.push(k); if (!d.days[k]) d.days[k] = { views: 0, visits: 0 }; }
+    var max = 1;
+    days.forEach(function (k) { max = Math.max(max, d.days[k].views || 0); });
+    days.forEach(function (k) {
+      var el = document.createElement('div');
+      el.style.height = Math.max(2, Math.round((d.days[k].views || 0) * 100 / max)) + '%';
+      el.title = k + ' · 조회 ' + num(d.days[k].views) + ' · 방문 ' + num(d.days[k].visits);
+      if (k.slice(-2) === '01' || k.slice(-2) % 5 === 0) { var s = document.createElement('span'); s.textContent = k.slice(-2); el.appendChild(s); }
+      bars.appendChild(el);
+    });
+
+    rows($('tPages'), d.sum.pages, true);
+    rows($('tFrom'), d.sum.from, false);
+    rows($('tLang'), { '한국어 쪽': (d.sum.lang && d.sum.lang.ko) || 0, '중국어 쪽': (d.sum.lang && d.sum.lang.zh) || 0 }, false);
+
+    var sel = $('month');
+    if (!sel.options.length) {
+      (d.months || [d.month]).slice().reverse().forEach(function (m) {
+        var o = document.createElement('option'); o.value = m; o.textContent = m; sel.appendChild(o);
+      });
+      sel.value = d.month;
+      sel.onchange = function () { load(sel.value); };
+    }
+  }
+
+  function load(month) {
+    $('msg').textContent = '불러오는 중입니다…';
+    fetch('api/stats.php?t=' + encodeURIComponent(token) + (month ? '&month=' + month : ''))
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (!d.ok) { $('msg').textContent = d.reason || '불러오지 못했습니다'; $('body').hidden = true; $('gate').hidden = false; return; }
+        $('msg').hidden = true; $('gate').hidden = true; $('body').hidden = false;
+        draw(d);
+      })
+      .catch(function () { $('msg').textContent = '서버에 닿지 못했습니다'; });
+  }
+
+  $('go').onclick = function () {
+    token = $('tok').value.trim();
+    if (!token) return;
+    try { localStorage.setItem(KEY, token); } catch (e) {}
+    load();
+  };
+  $('tok').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('go').click(); });
+  $('logout').onclick = function () { try { localStorage.removeItem(KEY); } catch (e) {} location.reload(); };
+  if (token) { $('tok').value = token; load(); }
+})();
+</script>
+</body>
+</html>

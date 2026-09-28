@@ -1,0 +1,220 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>히어로 통합 시안 — 보내 주신 그림대로</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;800&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+ *{box-sizing:border-box}
+ body{margin:0;background:#F5F0E4;font-family:'Noto Sans KR',sans-serif;color:#17303F}
+ .wrap{max-width:1240px;margin:0 auto;padding:0 20px}
+
+ /* 히어로 */
+ .gh{position:relative;overflow:hidden;background:#BFE3F5}
+ .gh-bg{position:absolute;inset:0}
+ .gh-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 60%;display:block}
+ .gh-bg::after{content:"";position:absolute;inset:0;
+   background:linear-gradient(95deg,rgba(226,244,253,.96) 0%,rgba(226,244,253,.92) 38%,rgba(226,244,253,.55) 62%,rgba(226,244,253,.18) 100%),
+              linear-gradient(180deg,rgba(226,244,253,.30),rgba(226,244,253,0) 30%,rgba(232,247,255,.55))}
+ .gh-in{position:relative;padding:22px 20px 26px}
+
+ .gh-top{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+ .gh-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+ .gh-logo svg{width:46px;height:46px;flex:none}
+ .gh-logo b{display:block;font-family:'Noto Serif KR',serif;font-size:1.7rem;color:#12557F;line-height:1.1}
+ .gh-logo small{display:block;font-size:.72rem;letter-spacing:.06em;color:#3C7FA8;font-weight:700}
+ .gh-top i{font-style:normal;font-size:.9rem;font-weight:700;color:#2E6F97;line-height:1.5;
+   border-left:2px solid rgba(46,111,151,.3);padding-left:16px}
+
+ .gh-h{margin:16px 0 0}
+ .gh-h h1{font-family:'Noto Serif KR',serif;font-size:2.5rem;line-height:1.22;margin:0;color:#0E4F79;letter-spacing:-.01em}
+ .gh-h h1 em{font-style:normal;color:#0C86C6}
+ .gh-h p{margin:8px 0 0;font-size:1.06rem;font-weight:700;color:#2C6C93}
+
+ /* 검색줄 — 한 덩어리 흰 알약 안에 세 칸 */
+ .gh-find{display:flex;align-items:center;gap:0;margin:18px 0 0;background:#fff;border-radius:999px;
+   padding:7px 7px 7px 10px;box-shadow:0 6px 20px rgba(14,79,121,.18);max-width:760px}
+ .gf{display:flex;align-items:center;gap:10px;padding:8px 16px;text-decoration:none;color:inherit;flex:1;min-width:0}
+ .gf+.gf{border-left:1px solid rgba(23,48,63,.12)}
+ .gf svg{width:21px;height:21px;flex:none;color:#1F8BC8}
+ .gf b{font-size:.96rem;font-weight:700;display:block;line-height:1.25;white-space:nowrap}
+ .gf small{display:block;font-size:.73rem;color:#7B8B95;white-space:nowrap}
+ .gf .car{margin-left:auto;color:#95A6B1;font-size:.8rem}
+ .gf-go{flex:none;display:flex;align-items:center;gap:8px;margin-left:8px;padding:12px 26px;border-radius:999px;
+   background:#1683D8;color:#fff;border:0;cursor:pointer;font:inherit;font-size:1rem;font-weight:800;white-space:nowrap}
+ .gf-go:hover{background:#0C6FBC}
+ .gf-go svg{width:19px;height:19px;color:#fff}
+
+ /* 여섯 걸음 */
+ .st{margin:20px 0 0;background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.9);
+   border-radius:22px;padding:14px 12px;box-shadow:0 6px 22px rgba(14,79,121,.10)}
+ .st-row{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;align-items:stretch}
+ .st-ar{display:none}
+ .sc{display:flex;flex-direction:column;gap:6px;padding:11px 10px 12px;border-radius:16px;background:var(--bg);
+   border:1px solid rgba(23,48,63,.06);text-decoration:none;color:inherit;text-align:center;
+   transition:transform .16s,box-shadow .16s}
+ .sc:hover{transform:translateY(-3px);box-shadow:0 10px 22px rgba(14,79,121,.16)}
+ .sc-h{display:flex;align-items:center;justify-content:center;gap:7px}
+ .sc-no{display:inline-grid;place-items:center;width:25px;height:25px;border-radius:50%;
+   background:var(--c);color:#fff;font-size:.76rem;font-weight:800;flex:none}
+ .sc-t{font-size:.97rem;font-weight:800;color:var(--c);white-space:nowrap}
+ .sc-s{font-size:.82rem;font-weight:700;color:#2B4453}
+ .sc-ph{display:block;width:100%;aspect-ratio:148/115;border-radius:12px;overflow:hidden;background:#DCE9EE}
+ .sc-ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}
+ .sc:hover .sc-ph img{transform:scale(1.05)}
+ .sc-d{font-size:.76rem;color:#5E7382;line-height:1.5;margin-top:auto}
+
+ /* 숫자 띠 */
+ .nb{display:flex;flex-wrap:wrap;align-items:center;margin:14px 0 0;
+   background:rgba(255,255,255,.74);border-radius:18px;padding:12px 6px}
+ .nb a{flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:center;gap:9px;text-decoration:none;color:inherit;
+   padding:4px 6px;border-right:1px solid rgba(23,48,63,.10)}
+ .nb a:last-of-type{border-right:0}
+ .nb-cta{flex:none;padding:0 14px 0 18px;font-family:'Noto Serif KR',serif;font-weight:800;
+   font-size:.94rem;line-height:1.35;color:#1683D8;text-align:center;white-space:nowrap}
+ .nb svg{width:26px;height:26px;color:#1F8BC8;flex:none}
+ .nb b{display:block;font-size:1.02rem;font-weight:800;color:#12557F;line-height:1.2;white-space:nowrap}
+ .nb small{display:block;font-size:.72rem;color:#6C8090;white-space:nowrap}
+ .nb a:hover b{color:#0C86C6}
+ .gh-credit{margin:10px 0 0;font-size:.72rem;color:#6E8492;text-align:right}
+
+ @media (min-width:1081px){
+   .gh-in{padding:26px 20px 30px;max-width:1240px;margin:0 auto}
+   .st-row{grid-template-columns:repeat(11,auto);justify-content:center;gap:0}
+   .sc{width:184px}
+   .st-ar{display:grid;place-items:center;width:20px;color:#8FB7CE;font-size:1.35rem;font-weight:700}
+ }
+ @media (max-width:1080px){
+   .gh-h h1{font-size:2rem}
+   .st-row{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+   .nb{row-gap:10px}
+   .nb a{flex:1 1 30%}
+   .nb a:nth-of-type(3n){border-right:0}
+   .nb-cta{flex:1 1 100%;padding:6px 0 0;white-space:normal}
+   .nb-cta br{display:none}
+ }
+ @media (max-width:620px){
+   .gh-in{padding:16px 16px 20px}
+   .gh-logo svg{width:38px;height:38px}
+   .gh-logo b{font-size:1.36rem}
+   .gh-top{gap:10px}
+   .gh-top i{font-size:.74rem;padding-left:10px;line-height:1.45}
+   .gh-h h1{font-size:1.62rem}
+   .gh-h p{font-size:.88rem}
+   .gh-find{flex-wrap:wrap;border-radius:20px;padding:6px;gap:2px}
+   .gf{flex:1 1 100%;padding:9px 12px}
+   .gf+.gf{border-left:0;border-top:1px solid rgba(23,48,63,.12)}
+   .gf-go{flex:1 1 100%;margin:4px 0 0;justify-content:center;padding:12px 16px;font-size:.96rem}
+   .nb a{flex:1 1 42%}
+   .nb a:nth-of-type(3n){border-right:1px solid rgba(23,48,63,.10)}
+   .nb a:nth-of-type(2n){border-right:0}
+   .st{padding:10px 8px;border-radius:18px}
+   .st-row{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+   .sc{padding:9px 8px 10px;border-radius:13px;gap:5px}
+   .sc-no{width:22px;height:22px;font-size:.7rem}
+   .sc-t{font-size:.88rem}
+   .sc-s{font-size:.75rem}
+   .sc-d{font-size:.7rem;line-height:1.4}
+   .sc-ph{aspect-ratio:16/8.4;border-radius:10px}   /* 휴대폰에선 사진을 납작하게 — 여섯 칸이 한 화면에 */
+   .sc-ph4{background:#fff}
+   .sc-ph4 img{object-fit:contain;object-position:50% 50%}
+   .sc-s{margin-top:-2px}
+   .nb{padding:10px 4px}
+   .nb b{font-size:.94rem}
+   .nb small{font-size:.68rem}
+ }
+</style></head><body>
+
+<section class="gh">
+  <div class="gh-bg" aria-hidden="true"><img src="../img/yeosu/hero.jpg?v=3012168707" alt=""></div>
+  <div class="gh-in">
+
+    <div class="gh-top">
+      <a class="gh-logo" href="../index.html">
+        <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+          <circle cx="33" cy="15" r="6.5" fill="#F6B44B"/>
+          <path d="M4 30c4 0 4-4 8-4s4 4 8 4 4-4 8-4 4 4 8 4 4-4 8-4" stroke="#1F8BC8" stroke-width="3.4" stroke-linecap="round"/>
+          <path d="M4 39c4 0 4-4 8-4s4 4 8 4 4-4 8-4 4 4 8 4 4-4 8-4" stroke="#7FD0EE" stroke-width="3.4" stroke-linecap="round"/>
+        </svg>
+        <span><b>바다가자</b><small>badagaja.com</small></span>
+      </a>
+      <i>바다를 알고 가면<br>바다가 더 즐겁습니다!</i>
+    </div>
+
+    <div class="gh-h">
+      <h1>오늘, <em>어디로 바다</em> 갈까요?</h1>
+      <p>낚시 · 해루질부터 물때 · 포인트 · 채비 · 여행까지 한곳에서!</p>
+    </div>
+
+    <form class="gh-find" action="../guide/" method="get">
+      <a class="gf" href="../guide/#regions">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>
+        <span><b>지역 선택</b><small>전국 57개 권역</small></span><span class="car">▾</span>
+      </a>
+      <a class="gf" href="../catch/">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12c4-5 10-5 14 0-4 5-10 5-14 0Z"/><path d="M17 12l4-3v6l-4-3Z"/><circle cx="8" cy="12" r="1" fill="currentColor"/></svg>
+        <span><b>낚시 / 해루질</b><small>활동 선택</small></span><span class="car">▾</span>
+      </a>
+      <button class="gf-go" type="submit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.4-3.4"/></svg>
+        포인트 찾기 <span aria-hidden="true">›</span>
+      </button>
+    </form>
+
+    <div class="st"><div class="st-row">
+      <a class="sc" style="--c:#1F6FB2;--bg:#EAF3FB" href="../guide/#regions">
+        <span class="sc-h"><b class="sc-no">01</b><span class="sc-t">어디로 갈까?</span></span>
+        <span class="sc-s">57개 바다 권역</span>
+        <span class="sc-ph"><img src="../img/ui/step/1.webp?v=3541627360" alt="" loading="lazy"></span>
+        <span class="sc-d">전남 · 제주 · 경남 · 강원 등</span>
+      </a>
+      <span class="st-ar" aria-hidden="true">›</span>
+      <a class="sc" style="--c:#1E8A5F;--bg:#E9F6F0" href="../catch/">
+        <span class="sc-h"><b class="sc-no">02</b><span class="sc-t">무엇을 할까?</span></span>
+        <span class="sc-s">낚시 · 해루질</span>
+        <span class="sc-ph"><img src="../img/ui/step/2.webp?v=1075189779" alt="" loading="lazy"></span>
+        <span class="sc-d">낚시 / 해루질 선택</span>
+      </a>
+      <span class="st-ar" aria-hidden="true">›</span>
+      <a class="sc" style="--c:#E08A1E;--bg:#FDF4E6" href="../guide/#regions">
+        <span class="sc-h"><b class="sc-no">03</b><span class="sc-t">어디서 할까?</span></span>
+        <span class="sc-s">3,144개 포인트</span>
+        <span class="sc-ph"><img src="../img/ui/step/3.webp?v=3800040024" alt="" loading="lazy"></span>
+        <span class="sc-d">갯벌 · 갯바위 · 방파제 · 선착장</span>
+      </a>
+      <span class="st-ar" aria-hidden="true">›</span>
+      <a class="sc" style="--c:#7A4FC0;--bg:#F2EDFB" href="../tide/">
+        <span class="sc-h"><b class="sc-no">04</b><span class="sc-t">오늘 괜찮을까?</span></span>
+        <span class="sc-s">물때 · 날씨 · 파고</span>
+        <span class="sc-ph sc-ph4"><img src="../img/ui/step/4.webp?v=3610727209" alt="" loading="lazy"></span>
+        <span class="sc-d">간조 · 만조 · 바람 · 파고</span>
+      </a>
+      <span class="st-ar" aria-hidden="true">›</span>
+      <a class="sc" style="--c:#0F9A9A;--bg:#E5F6F5" href="../gear.html">
+        <span class="sc-h"><b class="sc-no">05</b><span class="sc-t">무엇을 준비할까?</span></span>
+        <span class="sc-s">어종 · 채비 · 장비 · 안전</span>
+        <span class="sc-ph"><img src="../img/ui/step/5.webp?v=2568099839" alt="" loading="lazy"></span>
+        <span class="sc-d">잡는 법 · 금어기 · 안전수칙</span>
+      </a>
+      <span class="st-ar" aria-hidden="true">›</span>
+      <a class="sc" style="--c:#D9558A;--bg:#FCECF3" href="../festival/">
+        <span class="sc-h"><b class="sc-no">06</b><span class="sc-t">무엇을 즐길까?</span></span>
+        <span class="sc-s">관광 · 맛집 · 숙소</span>
+        <span class="sc-ph"><img src="../img/ui/step/6.webp?v=2375898937" alt="" loading="lazy"></span>
+        <span class="sc-d">축제 · 명소 · 체험 · 숙소</span>
+      </a>
+    </div></div>
+
+    <div class="nb">
+      <a href="../guide/#regions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 14c3 0 3-3 6-3s3 3 6 3 3-3 6-3 3 3 4 3"/><path d="M2 19c3 0 3-3 6-3s3 3 6 3 3-3 6-3 3 3 4 3"/><circle cx="17" cy="6" r="3"/></svg><span><b>57개 권역</b><small>전국 바다 정보</small></span></a>
+      <a href="../guide/#regions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg><span><b>3,144개 포인트</b><small>해루질 · 낚시 포인트</small></span></a>
+      <a href="../fish/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12c4-5 10-5 14 0-4 5-10 5-14 0Z"/><path d="M17 12l4-3v6l-4-3Z"/><circle cx="8" cy="12" r="1" fill="currentColor"/></svg><span><b>35개 어종</b><small>어종 · 해루질 안내</small></span></a>
+      <a href="../rule.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4 6v6c0 5 3.4 8.2 8 9 4.6-.8 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg><span><b>51종 규정</b><small>금어기 · 금지체장</small></span></a>
+      <a href="../festival/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 18h16M6 18V9l6-4 6 4v9"/><path d="M10 18v-5h4v5"/></svg><span><b>190개 축제</b><small>축제 · 행사 정보</small></span></a>
+      <a href="../guide/#regions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3v8a2 2 0 0 0 4 0V3M7 11v10"/><path d="M17 3c-1.6 1.6-2 3.4-2 5.5 0 1.4.7 2.5 2 2.5v10"/></svg><span><b>187개 먹거리</b><small>지역 맛집 정보</small></span></a>
+      <span class="nb-cta">지금, 바다로<br>떠나볼까요?</span>
+    </div>
+
+    <p class="gh-credit">사진: 한국관광공사 · 여수 오동도</p>
+  </div>
+</section>
+
+<div class="wrap" style="padding:26px 20px;color:#66727C;font-size:.9rem">(아래로 전국 바다지도 · 목차 · 광고가 이어집니다)</div>
+</body></html>

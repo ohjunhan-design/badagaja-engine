@@ -1,0 +1,127 @@
+/* 포인트 지도(카카오맵) */
+.map-wrap.kmap-on{aspect-ratio:auto;height:min(560px,70vh);background:#E9EEF0}
+.map-wrap.kmap-on > svg,.map-wrap.kmap-on > a,.map-wrap.kmap-on > .map-point,.map-wrap.kmap-on > .map-note,.map-wrap.kmap-on > div[style*="linear-gradient"]{display:none !important}
+.kmap{position:absolute;inset:0}
+.map-wrap.kmap-on .map-chip{z-index:5;top:auto !important;bottom:12px;left:12px}
+.kmap-type{position:absolute;left:12px;top:12px;z-index:5;display:flex;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.12)}
+.kmap-type button{border:0;background:#fff;color:var(--ink);font:inherit;font-size:13px;font-weight:700;padding:9px 14px;cursor:pointer}
+.kmap-type button + button{border-left:1px solid var(--line)}
+.kmap-type button.on{background:#2B2116;color:#fff}
+.kmap-lock{position:absolute;right:12px;top:12px;z-index:5;border:0;border-radius:999px;background:rgba(43,33,22,.82);color:#fff;font:inherit;font-size:12px;font-weight:700;padding:8px 12px;cursor:pointer}
+.kpin{width:28px;height:28px;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.35);color:#fff;font:900 11px/1 'Noto Sans KR',system-ui,sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:transform .15s}
+.kpin.gA{background:#2F5D57}.kpin.gB{background:#C07B22}.kpin.gC{background:#8A7E6E}
+.kpin.area{background:rgba(255,255,255,.92);border:2px dashed #C07B22;color:#6B4A12;box-shadow:0 1px 5px rgba(0,0,0,.25)}
+.kpin.area.gA{border-color:#2F5D57;color:#2F5D57}.kpin.area.gC{border-color:#8A7E6E;color:#5E554A}
+.kpin:hover,.kpin.on{transform:scale(1.25);z-index:3}
+.kpin.on{outline:3px solid rgba(229,169,79,.7)}
+.kmap-pop{position:relative;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 28px rgba(0,0,0,.22);padding:12px 14px;min-width:236px;max-width:270px;font-size:13px;line-height:1.45;white-space:normal}
+.kmap-pop b{display:block;font-size:14px;padding-right:18px;word-break:keep-all}
+.kmap-pop .x{position:absolute;right:6px;top:4px;border:0;background:none;font-size:20px;line-height:1;color:#8A7E6E;cursor:pointer;padding:4px}
+.kmap-pop .acc{display:inline-block;margin-top:4px;font-size:11px;font-weight:700;color:#2F5D57}
+.kmap-pop .acc.area{color:#9A6A1A}
+.kmap-pop .act{display:flex;gap:6px;margin-top:10px}
+.kmap-pop .act .go,.kmap-pop .act .nav{flex:1;text-align:center;border-radius:10px;font:inherit;font-size:12px;font-weight:700;padding:8px 6px;text-decoration:none;cursor:pointer;white-space:nowrap}
+.kmap-pop .act .go{border:0;background:#2B2116;color:#fff}
+.kmap-pop .act .nav{border:1px solid #F5D6A3;background:#FFF0D6;color:#9A6A1A}
+.kmap-leg{font-size:10px;color:#2F5D57}
+.kmap-leg.area{color:#9A6A1A}
+.kmap-missing{margin-top:10px;font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.kmap-missing button{border:1px solid var(--line);background:#fff;border-radius:999px;font:inherit;font-size:11px;padding:4px 10px;cursor:pointer;color:var(--ink)}
+button.kmap-card{border:0;background:none;padding:0;font-family:inherit;cursor:pointer;margin-right:12px}
+@media (max-width:640px){
+  .map-wrap.kmap-on{height:62vh;border-radius:14px}
+  .kmap-type button{padding:8px 11px;font-size:12px}
+  .kmap-pop{min-width:190px}
+}
+
+/* 대상 어종 → 잡는 법 안내 링크 */
+.sp-link{color:#B5713A;font-weight:700;text-decoration:none;border-bottom:1px dotted rgba(181,113,58,.6)}
+.sp-link:hover{color:#8F5526;border-bottom-style:solid}
+.sp-link-note{margin:0 0 14px;font-size:12px;color:#6B5E4F;background:#FFFBF3;border:1px solid #EDE3D0;border-radius:12px;padding:9px 13px;line-height:1.6}
+
+/* ── 포인트 페이지 하단 푸터 (2026-09-18) ──────────────────────
+   포인트 페이지는 css/style.css 를 읽지 않아 푸터가 꾸밈 없이(로고가 화면 가득) 나오던 문제 수정.
+   style.css 의 '하단 푸터 정돈' 과 같은 모양을 포인트 페이지 색으로 옮김. */
+footer.site-footer{margin-top:24px;padding:40px 0 48px;border-top:1px solid var(--line);background:linear-gradient(180deg,transparent,rgba(147,113,63,.05));color:var(--muted);font-size:13px}
+footer.site-footer a{color:var(--ink);text-decoration:none}
+footer.site-footer a:hover{color:var(--orange)}
+footer.site-footer .wrap.footer-top{display:grid;grid-template-columns:minmax(240px,1fr) minmax(0,1.9fr);gap:44px;align-items:start}
+footer.site-footer .footer-brand .brand{display:inline-flex;align-items:center;gap:9px}
+footer.site-footer .logo{width:30px;height:30px;flex:none;display:block}
+footer.site-footer .footer-brand .mark{font-family:'Noto Serif KR',serif;font-size:19px;font-weight:700;color:var(--ink)}
+footer.site-footer .footer-tagline{margin-top:10px;line-height:1.7}
+footer.site-footer .footer-owner{margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);font-size:12.5px;line-height:1.8}
+footer.site-footer .footer-owner b{color:var(--ink);font-weight:600}
+footer.site-footer .footer-owner a{color:var(--muted)}
+footer.site-footer .footer-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+footer.site-footer .fn-col{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+footer.site-footer .fn-col h2{margin:0 0 2px;font-size:11.5px;font-weight:700;letter-spacing:.11em;color:#8A7E6E}
+footer.site-footer .fn-col a{font-size:14px;line-height:1.4}
+footer.site-footer .wrap.footer-bottom{display:block;margin-top:34px;padding-top:18px;border-top:1px dashed var(--line);font-size:12.5px;line-height:1.7}
+footer.site-footer .copyright{margin-top:8px;font-size:12px;opacity:.82}
+@media (max-width:860px){footer.site-footer .wrap.footer-top{grid-template-columns:1fr;gap:30px}}
+@media (max-width:560px){footer.site-footer .footer-nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 18px}}
+
+/* 카카오톡 공유 줄 (js/kakao-share.js) — 이 쪽들은 css/style.css 를 부르지 않아 따로 적습니다 (2026-09-20) */
+.ks-bar{border-top:1px solid var(--line,#EDE3D0);background:#EFE6D3}
+.ks-inner{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding-block:18px}
+.ks-label{font-size:.9rem;color:#6E6353;margin-right:auto}
+.ks-btn{display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:.88rem;font-weight:600;padding:9px 16px;border-radius:999px;border:1px solid var(--line,#EDE3D0);background:#fff;color:var(--ink,#2B2116);cursor:pointer}
+.ks-btn svg{width:18px;height:18px;flex:none}
+.ks-kakao{background:#FEE500;border-color:#FEE500;color:#191919}
+.ks-btn:focus-visible{outline:2px solid var(--orange,#C07B22);outline-offset:2px}
+.ks-navi{color:#1a73e8!important;font-weight:600;white-space:nowrap}
+.ks-static{display:none}
+.ks-mobile .ks-static{display:inline}
+.ks-toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;z-index:9999;background:#23302D;color:#fff;font-size:.88rem;padding:10px 16px;border-radius:10px;transition:.25s}
+.ks-toast.on{opacity:1;transform:translate(-50%,0)}
+@media(max-width:560px){.ks-label{width:100%;margin-right:0}}
+
+/* 휴대폰 포인트 쪽 큰 제목 — 쪽 안 style 의 clamp(1.7rem…) 를 덮어씀 (2026-09-22) */
+@media (max-width:560px){ h1.serif{font-size:1.45rem !important} }
+
+/* ── 로고를 네이버 검색창 모양으로 (2026-09-24 주인 지시) ──
+   신생 사이트라 이름을 알리는 것이 먼저입니다. '바다가자' 로는 노래에 밀려
+   검색이 안 되고 '바다가자닷컴' 으로는 나옵니다. 그 말을 각인시킵니다.
+   글자를 누르면 우리 첫 화면, 돋보기를 누르면 실제 네이버 검색으로 갑니다 —
+   보이는 대로 움직여야 헷갈리지 않습니다. 검색이 실제로 일어나면
+   검색량이 올라가 노출에도 보탬이 됩니다. */
+.brand.nv-logo{
+  display:inline-flex; align-items:center; gap:8px; flex:none;
+  background:#fff; border:2px solid #03C75A; border-radius:11px;
+  padding:4px 5px 4px 7px; box-shadow:0 1px 3px rgba(0,0,0,.08);
+  color:var(--ink); text-decoration:none;
+}
+.brand.nv-logo .nv-n,
+.brand.nv-logo .nv-go{
+  width:26px; height:26px; background:#03C75A; border-radius:6px;
+  display:grid; place-items:center; flex:none;
+}
+.brand.nv-logo .nv-n svg{width:15px; height:15px; display:block;}
+.brand.nv-logo .nv-go svg{width:15px; height:15px; display:block; stroke:#fff; fill:none; stroke-width:2.4;}
+.brand.nv-logo .mark{
+  font-family:'Noto Serif KR',serif; font-weight:700; font-size:1.22rem;
+  letter-spacing:0; white-space:nowrap; color:var(--ink);
+}
+.brand.nv-logo:hover .nv-go{background:#02b152;}
+@media (max-width:760px){
+  .brand.nv-logo{gap:6px; padding:4px 5px 4px 6px; border-radius:10px;}
+  .brand.nv-logo .nv-n,
+  .brand.nv-logo .nv-go{width:23px; height:23px; border-radius:5px;}
+  .brand.nv-logo .nv-n svg,
+  .brand.nv-logo .nv-go svg{width:13px; height:13px;}
+  .brand.nv-logo .mark{font-size:1.05rem;}
+}
+
+/* 꼬리말 '다시 찾으실 땐 네이버 바다가자닷컴' — css/style.css 에만 모양이 있어 포인트 쪽에서
+   네이버 N 그림이 화면을 가득 채웠습니다 (2026-09-24 주인 제보). 포인트 쪽 꼬리말은 밝은 바탕이라 글자색만 다릅니다 */
+.footer-find{margin:10px 0 0;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.footer-find > span{font-size:.84rem;color:var(--muted)}
+.footer-find .nv-box{display:inline-flex;align-items:center;gap:9px;background:#fff;
+  border:2px solid #03C75A;border-radius:9px;padding:5px 5px 5px 8px;text-decoration:none}
+.footer-find .nv-n{display:inline-flex;flex:none}
+.footer-find .nv-n svg{width:21px;height:21px;display:block}
+.footer-find .nv-box b{font-size:.95rem;font-weight:800;color:#1A1A1A}
+.footer-find .nv-go{display:inline-flex;align-items:center;justify-content:center;
+  width:25px;height:25px;background:#03C75A;border-radius:6px;flex:none}
+.footer-find .nv-go svg{width:14px;height:14px;fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round}

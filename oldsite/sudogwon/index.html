@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<!-- 인천·경기 바다 여행 첫 화면 — 전남 첫 화면(index.html)처럼 손으로 관리하는 쪽입니다.
+     내용의 출처: data/coast-regions*.json 의 open:true 권역(이름·소개·색·명소·제철·축제·코스),
+                  point/sudogwon/ 의 카드 수(포인트 개수), <권역>.html 의 og:image(카드 사진)
+     오늘의 바다는 js/app.js(물때 계산)·js/coast-data.js(좌표·관측소)와
+     api/tide-cache.php · api/weather-jeju.php 를 씁니다 — 권역 쪽과 같은 곳입니다.
+     권역 자료를 고친 뒤에는 이 쪽의 숫자와 카드도 함께 손봐 주세요. -->
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<base href="../">
+<title>인천·경기 바다 여행 — 물때·낚시·해루질 포인트 | 바다가자닷컴</title>
+<meta name="description" content="인천·경기 해안 5개 권역의 물때와 낚시·해루질 포인트 316곳, 제철 해산물과 축제, 추천 코스를 한곳에.">
+<link rel="canonical" href="https://badagaja.com/sudogwon/">
+<link rel="alternate" hreflang="ko" href="https://badagaja.com/sudogwon/">
+<link rel="alternate" hreflang="zh-Hans" href="https://badagaja.com/zh-cn/sudogwon/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="바다가자닷컴"><meta property="og:locale" content="ko_KR">
+<meta property="og:title" content="인천·경기 바다 여행"><meta property="og:description" content="인천·경기 해안 5개 권역의 물때와 낚시·해루질 포인트 316곳, 제철 해산물과 축제, 추천 코스를 한곳에.">
+<meta property="og:url" content="https://badagaja.com/sudogwon/"><meta property="og:image" content="https://badagaja.com/img/coast/ganghwa-hero.jpg?v=1780335185"><meta name="twitter:title" content="인천·경기 바다 여행"><meta name="twitter:description" content="인천·경기 해안 5개 권역의 물때와 낚시·해루질 포인트 316곳, 제철 해산물과 축제, 추천 코스를 한곳에."><meta name="twitter:image" content="https://badagaja.com/img/coast/ganghwa-hero.jpg?v=1780335185">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700;900&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=202609262116">
+<link rel="stylesheet" href="css/home.css?v=202609262116">
+<link rel="shortcut icon" href="https://badagaja.com/favicon.ico">
+<link rel="icon" href="https://badagaja.com/favicon.svg" type="image/svg+xml">
+<script type="application/ld+json" id="ld-main">{"@context":"https://schema.org","@type":"CollectionPage","name":"인천·경기 바다 여행","description":"인천·경기 해안 5개 권역의 물때와 낚시·해루질 포인트 316곳, 제철 해산물과 축제, 추천 코스를 한곳에.","url":"https://badagaja.com/sudogwon/","inLanguage":"ko","publisher":{"@type":"Organization","name":"바다가자닷컴","url":"https://badagaja.com/"}}</script>
+</head>
+<body class="home" data-region="ganghwa">
+
+<header>
+  <div class="navbar">
+    <a class="brand nv-logo" href="./" aria-label="바다가자닷컴 홈"><span class="nv-n"><svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M4 3h5.3l5.1 7.6V3H20v18h-5.3L9.6 13.4V21H4z"/></svg></span><span class="mark">바다가자닷컴</span><span class="nv-go"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l5 5" stroke-linecap="round"/></svg></span></a>
+    <nav class="navlinks">
+      <a href="sudogwon/#today">오늘의 바다</a>
+      <a href="sudogwon/#regions">인천·경기 권역</a>
+      <a href="sudogwon/#species">해루질·낚시</a>
+      <a href="sudogwon/#season">제철·축제</a>
+      <a href="rule.html">금어기</a>
+      <a href="https://badagaja.com/guide/#regions">전국 바다</a>
+    </nav>
+    <div class="lang-pick"><span class="on" aria-current="page">한국어</span><a href="zh-cn/sudogwon/" lang="zh-Hans" hreflang="zh-Hans">中文</a></div>
+    <div class="muldae-badge"><span class="dot"></span> <span id="headerMuldae">오늘 물때 보기</span></div>
+  </div>
+</header>
+
+<section class="h-hero" id="top">
+  <div class="h-slides" aria-hidden="true"><div class="h-slide on" style="background-image:url('img/coast/ganghwa-hero.jpg?v=1780335185')"></div></div>
+  <div class="h-shade" aria-hidden="true"></div>
+  <div class="wrap h-hero-in">
+    <div class="h-eyebrow">인천·경기 해안 5개 권역 바다여행 안내서</div>
+    <h1 class="serif"><span class="accent">바다가자닷컴</span>에서 알려드리는<br>인천·경기 바다여행</h1>
+    <nav class="h-site" aria-label="여행지 선택"><a class="on" href="sudogwon/" aria-current="page"><b>인천·경기여행</b><small>인천·경기 바다 5개 권역</small></a><a href="./"><b>전국 바다</b><small>전국 57개 권역 첫 화면</small></a></nav>
+    <p class="h-lede">강화 갯벌과 영종·옹진 섬들에서 시화방조제 건너 대부도, 화성 제부도까지. 권역마다 물때와 낚시·해루질 포인트, 제철 해산물과 축제, 하루 코스를 정리했습니다.</p>
+    <form class="h-search" role="search" autocomplete="off" onsubmit="return false">
+      <label class="sr-only" for="hSearch">인천·경기 권역, 포인트, 제철 해산물, 축제, 바닷가 명소를 검색할 수 있습니다</label>
+      <svg class="h-search-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <input id="hSearch" type="search" placeholder="인천·경기 권역·포인트·제철 해산물·축제·명소 검색" aria-controls="hResults" aria-expanded="false">
+      <div class="h-results" id="hResults" role="listbox" hidden></div>
+    </form>
+    <div class="h-quick" aria-label="많이 찾는 검색어"><span>많이 찾는</span><button type="button" data-q="망둥어">망둥어</button><button type="button" data-q="숭어">숭어</button><button type="button" data-q="농어">농어</button><button type="button" data-q="밴댕이">밴댕이</button><button type="button" data-q="주꾸미">주꾸미</button><button type="button" data-q="축제">축제</button></div>
+  </div>
+  <div class="wrap">
+    <div class="h-stats">
+      <div><b>5</b><span>인천·경기 해안 시·군</span></div>
+      <div><b>316</b><span>해루질·낚시 포인트</span></div>
+      <div><b>40</b><span>바닷가 명소</span></div>
+      <div><b>11</b><span>지역 축제</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="h-today" id="today">
+  <div class="wrap">
+    <div class="ts-head">
+      <div>
+        <div class="kicker">오늘의 바다</div>
+        <h2 class="serif" id="tsTitle">오늘의 바다는</h2>
+        <p id="tsDate">물때를 계산하고 있습니다</p>
+      </div>
+      <a class="ts-more" id="tsMore" href="ganghwa.html#tide">물때표 2주 전체 보기 →</a>
+    </div>
+    <div class="ts-regions" id="tsRegions" role="tablist" aria-label="권역 선택"></div>
+    <div class="ts-grid">
+      <div class="ts-card ts-main">
+        <div class="ts-label">오늘 물때</div>
+        <div class="ts-muldae"><b id="tsMuldae">–</b><span id="tsMuldaeName"></span></div>
+        <div class="ts-gauge"><i id="tsGauge"></i></div>
+        <div class="ts-next" id="tsNext" hidden><div><small>다음 간조</small><b id="tsNextTime">–</b></div><div class="r"><small id="tsNextLab">지금부터</small><b id="tsNextIn">–</b></div></div>
+        <p class="ts-verdict" id="tsVerdict">물때를 계산하고 있습니다</p>
+      </div>
+      <div class="ts-card">
+        <div class="ts-label">간조 · 만조</div>
+        <ul class="ts-tides" id="tsTides"><li class="muted">간조·만조 시각</li></ul>
+        <div class="ts-src" id="tsTideSrc"></div>
+      </div>
+      <div class="ts-card">
+        <div class="ts-label">날씨 · 파고</div>
+        <div class="ts-weather"><b id="tsTemp">–</b><span id="tsSky">하늘·바람</span></div>
+        <div class="ts-sub" id="tsWave"></div>
+      </div>
+      <div class="ts-card">
+        <div class="ts-label">일출 · 일몰</div>
+        <div class="ts-sun"><span>해뜸 <b id="tsRise">–</b></span><span>해짐 <b id="tsSet">–</b></span></div>
+        <div class="ts-sub">물때·일출·일몰은 계산값입니다</div>
+      </div>
+    </div>
+    <div class="ts-plan" id="tsPlan">
+      <div class="tp-kick">이번 주 언제 갈까</div>
+      <h3 class="tp-title" id="tpTitle">이번 주 물때를 살펴보고 있어요</h3>
+      <p class="tp-lead" id="tpLead"></p>
+      <div class="ts-week" id="tsWeek" aria-label="이번 주 물때"></div>
+      <div class="tp-legend"><span>막대가 길수록 물이 많이 빠져요</span><span id="tpBasis">낮 간조 기준</span></div>
+      <p class="tp-note" id="tpNote" hidden></p>
+    </div>
+    <div class="ts-install" id="tsInstall" hidden>
+      <span class="ti-ic" aria-hidden="true">📲</span>
+      <p><b>홈 화면에 추가해 두세요</b><small>앱처럼 한 번에 열리고, 내가 고른 바다가 먼저 나옵니다</small></p>
+      <button type="button" id="tsInstallGo">방법 보기</button>
+      <button type="button" class="ti-x" id="tsInstallX" aria-label="안내 닫기">×</button>
+    </div>
+    <div class="ts-howto" id="tsHowto" hidden role="dialog" aria-modal="true" aria-labelledby="tsHowtoT">
+      <div class="th-box"><h3 id="tsHowtoT">홈 화면에 추가하는 방법</h3><ol id="tsHowtoSteps"></ol><button type="button" id="tsHowtoClose">알겠어요</button></div>
+    </div>
+    <div id="tsGraph"></div>
+    <div class="ts-index" id="tsIndex">
+      <div class="ts-card ts-idx" data-type="mudflat"><div class="ts-label">🦪 갯벌체험지수</div><div class="ti-grade">–</div><div class="ti-place">권역별 지수</div><div class="ti-detail"></div></div>
+      <div class="ts-card ts-idx" data-type="beach"><div class="ts-label">🏖️ 해수욕지수</div><div class="ti-grade">–</div><div class="ti-place">권역별 지수</div><div class="ti-detail"></div></div>
+    </div>
+    <p class="ts-credit">바다 지수: 국립해양조사원 생활해양예보지수 · 가까운 예보 장소 기준</p>
+  </div>
+</section>
+
+<section class="section h-regions" id="regions">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">인천·경기 해안선을 따라</div>
+      <h2>인천·경기 바다, 어디로 갈까요</h2>
+      <p>인천·경기 해안을 5개 권역으로 나눴습니다. 카드를 누르면 물때·낚시·해루질 포인트와 먹거리로 바로 이동합니다. 다른 지역 바다는 <a class="hr-cross" href="https://badagaja.com/guide/#regions">전국 바다 →</a></p>
+    </div>
+    <div class="hr-layout" id="hrLayout">
+      <div class="hr-map-wrap"><div class="hr-map" id="hrMap"></div></div>
+      <div class="rc-grid"><a class="rc" href="ganghwa.html" style="--c:#4A5A3A" data-slug="ganghwa"><img src="img/coast/ganghwa-hero.jpg?v=1780335185" alt="강화 바다 풍경" loading="lazy"><span class="rc-no">401</span><div class="rc-body"><h3>강화</h3><p>옛 돈대와 넓은 남단 갯벌이 있는 바다</p><span class="rc-count"><span>낚시 27</span><span>해루질 22</span></span></div></a><a class="rc" href="yeongjong.html" style="--c:#2E5573" data-slug="yeongjong"><img src="img/coast/yeongjong-hero.jpg?v=3424958119" alt="영종 바다 풍경" loading="lazy"><span class="rc-no">402</span><div class="rc-body"><h3>영종</h3><p>공항 옆 해변과 다리로 이어진 섬들</p><span class="rc-count"><span>낚시 32</span><span>해루질 14</span></span></div></a><a class="rc" href="ongjin.html" style="--c:#1E5F5F" data-slug="ongjin"><img src="img/coast/ongjin-hero.jpg?v=4246930611" alt="옹진 섬 바다 풍경" loading="lazy"><span class="rc-no">403</span><div class="rc-body"><h3>옹진 섬</h3><p>다리로 닿는 영흥도와 배로 가는 섬들</p><span class="rc-count"><span>낚시 124</span><span>해루질 29</span></span></div></a><a class="rc" href="daebu.html" style="--c:#5E4660" data-slug="daebu"><img src="img/coast/daebu-hero.jpg?v=1677179918" alt="대부·오이도 바다 풍경" loading="lazy"><span class="rc-no">404</span><div class="rc-body"><h3>대부·오이도</h3><p>방조제로 이어진 오이도와 대부도 갯벌</p><span class="rc-count"><span>낚시 24</span><span>해루질 12</span></span></div></a><a class="rc" href="hwaseong.html" style="--c:#6E4A2A" data-slug="hwaseong"><img src="img/coast/hwaseong-hero.jpg?v=65392196" alt="화성 바다 풍경" loading="lazy"><span class="rc-no">405</span><div class="rc-body"><h3>화성</h3><p>물때에 열리는 제부도 바닷길의 바다</p><span class="rc-count"><span>낚시 23</span><span>해루질 9</span></span></div></a></div>
+    </div>
+  </div>
+</section>
+
+<section class="section h-season" id="season">
+  <div class="wrap">
+    <div class="ss-top">
+      <div class="section-head">
+        <div class="kicker">이달의 바다</div>
+        <h2>이달, 지금 인천·경기 바다에서는</h2>
+        <p>인천·경기 5개 권역의 제철 어종·해산물과 축제를 달별로 모았습니다. 이름 옆 숫자는 그 달에 만날 수 있는 권역 수입니다.</p>
+      </div>
+      <div class="ss-nav">
+        <button type="button" id="ssPrev" aria-label="이전 달">‹</button>
+        <b id="ssMonth">–</b>
+        <button type="button" id="ssNext" aria-label="다음 달">›</button>
+      </div>
+    </div>
+    <div class="ss-layout">
+      <div class="ss-col">
+      <div class="ss-box">
+        <h3 class="serif">제철 어종·해산물 <small id="ssCatchCount"></small></h3>
+        <div class="ss-chips" id="ssCatch"></div>
+      </div>
+        <aside class="ad-slot" data-ad-slot="hub-season-pc" hidden></aside>
+      </div>
+      <div class="ss-box">
+        <h3 class="serif">이달의 축제 <small id="ssFestCount"></small></h3>
+        <div class="ss-fests" id="ssFest"></div>
+        <p class="ss-note">축제 일정은 매년 조금씩 바뀌니 방문 전 확정 공고를 확인하세요.</p>
+        <aside class="ad-slot" data-ad-slot="hub-season-mobile" hidden></aside>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section class="section h-species" id="species">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="spTitle">이달에 잡을 수 있는 것</h2>
+      <p id="spLede">인천·경기 바다에서 만나는 해루질 대상과 낚시 어종을 달마다 정리했습니다. 누르면 잡는 법과 채비, 금어기까지 볼 수 있습니다.</p>
+    </div>
+    <div class="sp-tabs" id="spTabs">
+      <button type="button" class="on" data-sec="all">전체</button>
+      <button type="button" data-sec="catch">해루질</button>
+      <button type="button" data-sec="fish">낚시</button>
+    </div>
+    <div class="sp-grid" id="spGrid"><p class="sp-loading">권역을 고르면 그 바다의 포인트를 보여 줍니다.</p></div>
+    <div class="sp-more">
+      <a href="catch/">해루질 대상 →</a>
+      <a href="fish/">낚시 어종 →</a>
+      <a href="rule.html">금어기·크기 →</a>
+    </div>
+  </div>
+</section>
+
+<section class="section h-course" id="course">
+  <div class="wrap">
+    <div class="hc-top">
+      <div class="section-head">
+        <div class="kicker">추천 여행 코스</div>
+        <h2>누구와 떠나시나요</h2>
+        <p>인천·경기 권역마다 동행에 맞춘 하루 코스를 준비했습니다. 바람과 물때에 맞춰 순서를 바꿔도 좋아요.</p>
+      </div>
+      <div class="hc-tabs" role="tablist" aria-label="동행 선택"><button type="button" role="tab" data-k="가족" aria-selected="true">👪 가족과</button><button type="button" role="tab" data-k="커플" aria-selected="false">💑 연인과</button><button type="button" role="tab" data-k="부모님" aria-selected="false">👵 부모님과</button><button type="button" role="tab" data-k="혼자" aria-selected="false">🧍 혼자</button></div>
+    </div>
+    <div class="hc-scroller">
+      <div class="hc-track" id="hcTrack"><a class="hc-card" data-k="가족" href="ganghwa.html#course" style="--c:#4A5A3A" hidden><div class="ph noph"><span>강화</span></div><div class="bd"><h3>갯벌센터에서 석모도 노을까지</h3><ol><li><span>강화갯벌센터</span></li><li><span>민머루해수욕장</span></li><li><span>석모도 보문사</span></li></ol><span class="go">강화 권역 자세히 →</span></div></a><a class="hc-card" data-k="가족" href="yeongjong.html#course" style="--c:#2E5573" hidden><div class="ph noph"><span>영종</span></div><div class="bd"><h3>무의도 건너 소무의도 한 바퀴</h3><ol><li><span>마시안해변</span></li><li><span>하나개해수욕장</span></li><li><span>소무의도</span></li></ol><span class="go">영종 권역 자세히 →</span></div></a><a class="hc-card" data-k="가족" href="ongjin.html#course" style="--c:#1E5F5F" hidden><div class="ph noph"><span>옹진 섬</span></div><div class="bd"><h3>목섬 모랫길 걷고 영흥도 해변 잇기</h3><ol><li><span>선재도 목섬</span></li><li><span>십리포해수욕장</span></li><li><span>장경리해수욕장</span></li></ol><span class="go">옹진 섬 권역 자세히 →</span></div></a><a class="hc-card" data-k="가족" href="daebu.html#course" style="--c:#5E4660" hidden><div class="ph noph"><span>대부·오이도</span></div><div class="bd"><h3>갯벌 유적과 누에섬 바닷길</h3><ol><li><span>오이도박물관</span></li><li><span>방아머리해변</span></li><li><span>탄도항 누에섬</span></li></ol><span class="go">대부·오이도 권역 자세히 →</span></div></a><a class="hc-card" data-k="가족" href="hwaseong.html#course" style="--c:#6E4A2A" hidden><div class="ph noph"><span>화성</span></div><div class="bd"><h3>요트 항구에서 솔밭 해변까지</h3><ol><li><span>전곡항</span></li><li><span>궁평항</span></li><li><span>궁평리해수욕장</span></li></ol><span class="go">화성 권역 자세히 →</span></div></a><a class="hc-card" data-k="커플" href="yeongjong.html#course" style="--c:#2E5573" hidden><div class="ph noph"><span>영종</span></div><div class="bd"><h3>을왕리에서 선녀바위 노을까지</h3><ol><li><span>왕산해수욕장</span></li><li><span>을왕리해수욕장</span></li><li><span>선녀바위해변</span></li></ol><span class="go">영종 권역 자세히 →</span></div></a><a class="hc-card" data-k="커플" href="ongjin.html#course" style="--c:#1E5F5F" hidden><div class="ph noph"><span>옹진 섬</span></div><div class="bd"><h3>덕적도·소야도 1박 섬 여행</h3><ol><li><span>덕적도 서포리해수욕장</span></li><li><span>소야도 떼뿌루해변</span></li><li><span>선재도 목섬</span></li></ol><span class="go">옹진 섬 권역 자세히 →</span></div></a><a class="hc-card" data-k="커플" href="daebu.html#course" style="--c:#5E4660" hidden><div class="ph noph"><span>대부·오이도</span></div><div class="bd"><h3>오이도에서 방조제 건너 대부도로</h3><ol><li><span>오이도 빨간등대</span></li><li><span>시화나래휴게소 달전망대</span></li><li><span>구봉도 낙조전망대</span></li></ol><span class="go">대부·오이도 권역 자세히 →</span></div></a><a class="hc-card" data-k="커플" href="hwaseong.html#course" style="--c:#6E4A2A" hidden><div class="ph noph"><span>화성</span></div><div class="bd"><h3>케이블카로 건너 제부도 한 바퀴</h3><ol><li><span>서해랑 제부도해상케이블카</span></li><li><span>제부도 매바위</span></li><li><span>제부도 바닷길</span></li></ol><span class="go">화성 권역 자세히 →</span></div></a><a class="hc-card" data-k="부모님" href="ganghwa.html#course" style="--c:#4A5A3A" hidden><div class="ph noph"><span>강화</span></div><div class="bd"><h3>염하 물길 따라 돈대 걷기</h3><ol><li><span>초지진</span></li><li><span>광성보</span></li><li><span>동막해수욕장</span></li></ol><span class="go">강화 권역 자세히 →</span></div></a><a class="hc-card" data-k="부모님" href="daebu.html#course" style="--c:#5E4660" hidden><div class="ph noph"><span>대부·오이도</span></div><div class="bd"><h3>수목원 산책 뒤 누에섬 노을</h3><ol><li><span>경기도 바다향기수목원</span></li><li><span>탄도항 누에섬</span></li><li><span>방아머리해변</span></li></ol><span class="go">대부·오이도 권역 자세히 →</span></div></a><a class="hc-card" data-k="부모님" href="hwaseong.html#course" style="--c:#6E4A2A" hidden><div class="ph noph"><span>화성</span></div><div class="bd"><h3>매향리 평화길과 국화도 섬 나들이</h3><ol><li><span>매향리 평화생태공원</span></li><li><span>궁평항</span></li><li><span>국화도</span></li></ol><span class="go">화성 권역 자세히 →</span></div></a><a class="hc-card" data-k="혼자" href="ganghwa.html#course" style="--c:#4A5A3A" hidden><div class="ph noph"><span>강화</span></div><div class="bd"><h3>새우젓 포구와 교동 옛 시장</h3><ol><li><span>외포항</span></li><li><span>교동 대룡시장</span></li><li><span>석모도 보문사</span></li></ol><span class="go">강화 권역 자세히 →</span></div></a><a class="hc-card" data-k="혼자" href="yeongjong.html#course" style="--c:#2E5573" hidden><div class="ph noph"><span>영종</span></div><div class="bd"><h3>새 다리 건너 북쪽 섬 걷기</h3><ol><li><span>신도·시도·모도</span></li><li><span>장봉도</span></li><li><span>마시안해변</span></li></ol><span class="go">영종 권역 자세히 →</span></div></a><a class="hc-card" data-k="혼자" href="ongjin.html#course" style="--c:#1E5F5F" hidden><div class="ph noph"><span>옹진 섬</span></div><div class="bd"><h3>자월도에서 대이작도 풀등까지</h3><ol><li><span>자월도 장골해수욕장</span></li><li><span>승봉도 이일레해변</span></li><li><span>대이작도 풀등</span></li></ol><span class="go">옹진 섬 권역 자세히 →</span></div></a></div>
+    </div>
+  </div>
+</section>
+
+<section class="section h-about" id="about">
+  <div class="wrap">
+    <div class="ha-row">
+      <div class="ha-item"><span class="ha-ico" aria-hidden="true">🗺️</span><div><b>권역 고르기</b><p>인천·경기 5개 권역 중 가고 싶은 곳을 고르세요.</p></div></div>
+      <div class="ha-item"><span class="ha-ico" aria-hidden="true">🎣</span><div><b>물때·낚시·해루질</b><p>권역 쪽에서 오늘 물때와 포인트를 봅니다.</p></div></div>
+      <div class="ha-item"><span class="ha-ico" aria-hidden="true">🍽️</span><div><b>제철 먹거리·축제</b><p>달마다 바뀌는 제철 해산물과 축제까지.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap footer-top">
+    <div class="footer-brand">
+      <a class="brand" href="./" aria-label="바다가자닷컴 홈"><svg class="logo" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="13" fill="#2F5D57"/><path d="M24 43C24 43 10.5 29 10.5 19.5a13.5 13.5 0 0 1 27 0C37.5 29 24 43 24 43Z" fill="#FFFBF3"/><circle cx="24" cy="15" r="3.6" fill="#E5A94F"/><path d="M15.5 23q2.1-2.4 4.25 0t4.25 0t4.25 0t4.25 0" stroke="#2F5D57" stroke-width="2.6" fill="none" stroke-linecap="round"/></svg><span class="mark">바다가자닷컴</span></a>
+      <p class="footer-tagline">물때에 맞춰 떠나는 인천·경기 바다 여행 안내</p><div class="footer-find"><span>다시 찾으실 땐</span><a class="nv-box" href="https://search.naver.com/search.naver?query=%EB%B0%94%EB%8B%A4%EA%B0%80%EC%9E%90%EB%8B%B7%EC%BB%B4" target="_blank" rel="noopener" aria-label="네이버에서 바다가자닷컴 검색하기"><span class="nv-n"><svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="7" fill="#03C75A"/><path d="M22.6 20.9 16.8 12H11v16h6.1v-8.9L22.9 28H29V12h-6.4v8.9Z" fill="#fff"/></svg></span><b>바다가자닷컴</b><span class="nv-go"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg></span></a></div>
+      <p class="footer-owner">운영책임자 <b>오준한</b><br><a href="mailto:ohjunhan@gmail.com">ohjunhan@gmail.com</a></p>
+    </div>
+    <nav class="footer-nav" aria-label="하단 메뉴">
+      <div class="fn-col"><h2>둘러보기</h2><a href="sudogwon/#regions">인천·경기 권역</a><a href="sudogwon/#season">제철·축제</a><a href="sudogwon/#course">추천 코스</a></div>
+      <div class="fn-col"><h2>잡는 법</h2><a href="catch/">해루질 대상</a><a href="fish/">낚시 어종</a><a href="rule.html">금어기·크기</a><a href="gear.html">장비·안전</a></div>
+      <div class="fn-col"><h2>다른 바다</h2><a href="https://badagaja.com/guide/#regions">전국 바다</a><a href="jeonnam/">전남여행</a><a href="jeju/">제주여행</a><a href="about.html">바다가자닷컴 소개</a><a href="sources.html">자료 출처</a><a href="privacy.html">개인정보처리방침</a></div>
+    </nav>
+  </div>
+  <div class="wrap footer-bottom">
+    <p class="footer-note">본 자료는 참고용입니다. 어촌계·지자체 규정과 현장 안내를 반드시 확인하세요.</p>
+    <p class="copyright">© 2026 바다가자닷컴 (badagaja.com)</p>
+  </div>
+</footer>
+
+<div style="display:none" aria-hidden="true">
+  <div id="tideStrip"></div>
+  <div id="tideStatus"></div>
+  <div id="weatherIcon"></div>
+  <div id="weatherTemp"></div>
+  <div id="weatherLabel"></div>
+  <div id="weatherWave"></div>
+  <div id="weatherWatertemp"></div>
+</div>
+
+<script src="point/map-config.js?v=202609262116"></script>
+<script src="js/coast-data.js?v=202609262116"></script>
+<script src="js/tide-graph.js?v=202609262116"></script>
+<script src="js/app.js?v=202609262116"></script>
+<script id="hubData" type="application/json">{"catch":{"8":[{"n":"망둥어","r":["강화","영종","대부·오이도","화성"]},{"n":"우럭","r":["영종","옹진 섬","대부·오이도","화성"]},{"n":"광어","r":["영종","옹진 섬","화성"]},{"n":"농어","r":["강화","옹진 섬"]}],"9":[{"n":"망둥어","r":["강화","영종","대부·오이도","화성"]},{"n":"우럭","r":["영종","옹진 섬","대부·오이도","화성"]},{"n":"광어","r":["영종","옹진 섬","화성"]},{"n":"주꾸미","r":["영종","옹진 섬","대부·오이도"]},{"n":"농어","r":["강화","옹진 섬"]},{"n":"주꾸미·갑오징어","r":["화성"]}],"10":[{"n":"망둥어","r":["강화","영종","대부·오이도","화성"]},{"n":"우럭","r":["영종","옹진 섬","대부·오이도","화성"]},{"n":"광어","r":["영종","옹진 섬","화성"]},{"n":"주꾸미","r":["영종","옹진 섬","대부·오이도"]},{"n":"농어","r":["강화","옹진 섬"]},{"n":"주꾸미·갑오징어","r":["화성"]}],"11":[{"n":"망둥어","r":["강화","영종","대부·오이도","화성"]},{"n":"우럭","r":["영종","옹진 섬","대부·오이도","화성"]},{"n":"주꾸미","r":["영종","옹진 섬","대부·오이도"]},{"n":"주꾸미·갑오징어","r":["화성"]}],"4":[{"n":"우럭","r":["옹진 섬","대부·오이도","화성"]},{"n":"숭어","r":["강화","대부·오이도"]}],"5":[{"n":"우럭","r":["영종","옹진 섬","대부·오이도","화성"]},{"n":"광어","r":["영종","옹진 섬","화성"]},{"n":"숭어","r":["강화","대부·오이도"]},{"n":"밴댕이","r":["강화"]}],"6":[{"n":"우럭","r":["영종","옹진 섬","대부·오이도","화성"]},{"n":"광어","r":["영종","옹진 섬","화성"]},{"n":"농어","r":["강화","옹진 섬"]},{"n":"숭어","r":["강화","대부·오이도"]},{"n":"밴댕이","r":["강화"]}],"7":[{"n":"우럭","r":["영종","옹진 섬","대부·오이도","화성"]},{"n":"광어","r":["영종","옹진 섬","화성"]},{"n":"농어","r":["강화","옹진 섬"]}]},"fest":{"9":[{"n":"DMZ 평화 페스타","r":"강화","s":"ganghwa","c":"#4A5A3A","d":"교동 철책길 걷기와 화개정원 명상 등 접경지역 체험 행사","p":"교동면 교동도 일원"},{"n":"섬마을밴드 음악축제","r":"옹진 섬","s":"ongjin","c":"#1E5F5F","d":"섬 주민 음악동아리가 무대에 오르는 생활문화 축제","p":"자월면 대이작도 해양생태관 야외무대"},{"n":"시흥갯골축제","r":"대부·오이도","s":"daebu","c":"#5E4660","d":"옛 염전과 갯골 길을 걷는 열기구·염전 체험 축제","p":"시흥시 동서로 287 시흥갯골생태공원"},{"n":"대부포도축제","r":"대부·오이도","s":"daebu","c":"#5E4660","d":"포도 직판·경매와 전시, 가족 참여 행사","p":"대부황금로 1480-7 대부바다향기테마파크"},{"n":"대부해솔길 걷기 축제","r":"대부·오이도","s":"daebu","c":"#5E4660","d":"대부도 해안 5km를 함께 걷는 행사","p":"대부바다향기테마파크 일원"},{"n":"화성송산포도축제","r":"화성","s":"hwaseong","c":"#6E4A2A","d":"포도밟기 체험과 궁평항 노을 보며 즐기는 음악 공연","p":"서신면 화성에코팜테마파크(궁평항 인근)"}],"10":[{"n":"강화도 새우젓축제","r":"강화","s":"ganghwa","c":"#4A5A3A","d":"새우젓 직판과 담그기·왕새우 잡기 체험, 공연","p":"내가면 외포항 일원"}],"5":[{"n":"무의도 구석구석 국제 트레일런","r":"영종","s":"yeongjong","c":"#2E5573","d":"섬 산길과 해안을 달리는 트레일 달리기 대회","p":"무의도 일원"},{"n":"문밖으로 나온 무의도","r":"영종","s":"yeongjong","c":"#2E5573","d":"주민 공연과 섬 먹거리 장터가 열린 마을 축제","p":"무의도 선착장 일대"},{"n":"화성 뱃놀이 축제","r":"화성","s":"hwaseong","c":"#6E4A2A","d":"요트·보트 승선 체험과 불꽃놀이","p":"서신면 전곡항 일원(제부도·궁평항·백미리 연계)"}],"8":[{"n":"주섬주섬 음악회","r":"옹진 섬","s":"ongjin","c":"#1E5F5F","d":"해변 영화·물놀이·가수 공연·불꽃놀이가 열리는 여름 음악회","p":"덕적면 서포리해수욕장 일대"}]}}</script>
+<script id="hubIndex" type="application/json">[{"t":"권역","n":"강화","u":"ganghwa.html","m":"포인트 49곳"},{"t":"권역","n":"영종","u":"yeongjong.html","m":"포인트 46곳"},{"t":"권역","n":"옹진 섬","u":"ongjin.html","m":"포인트 153곳"},{"t":"권역","n":"대부·오이도","u":"daebu.html","m":"포인트 36곳"},{"t":"권역","n":"화성","u":"hwaseong.html","m":"포인트 32곳"},{"t":"해루질","n":"강화 동막해변 갯벌","u":"point/sudogwon/ganghwa_gleaning.html","m":"강화 · 해루질 포인트"},{"t":"해루질","n":"강화갯벌센터 앞 갯벌(여차리)","u":"point/sudogwon/ganghwa_gleaning.html","m":"강화 · 해루질 포인트"},{"t":"해루질","n":"석모도 민머루해변 갯벌","u":"point/sudogwon/ganghwa_gleaning.html","m":"강화 · 해루질 포인트"},{"t":"해루질","n":"볼음도 갯벌(백합 체험)","u":"point/sudogwon/ganghwa_gleaning.html","m":"강화 · 해루질 포인트"},{"t":"해루질","n":"주문도 갯벌","u":"point/sudogwon/ganghwa_gleaning.html","m":"강화 · 해루질 포인트"},{"t":"해루질","n":"강화 동검도 갯벌","u":"point/sudogwon/ganghwa_gleaning.html","m":"강화 · 해루질 포인트"},{"t":"해루질","n":"강화 장화리 갯벌","u":"point/sudogwon/ganghwa_gleaning.html","m":"강화 · 해루질 포인트"},{"t":"해루질","n":"강화 양도면 삼흥리 해안","u":"point/sudogwon/ganghwa_gleaning.html","m":"강화 · 해루질 포인트"},{"t":"해루질","n":"교동도 해안 갯벌","u":"point/sudogwon/ganghwa_gleaning.html","m":"강화 · 해루질 포인트"},{"t":"해루질","n":"강화 섬안교·장흥리 갯벌 갯벌","u":"point/sudogwon/ganghwa_gleaning.html","m":"강화 · 해루질 포인트"},{"t":"해루질","n":"교동도 양갑리 냇물 하구 갯벌","u":"point/sudogwon/ganghwa_gleaning.html","m":"강화 · 해루질 포인트"},{"t":"해루질","n":"강화 동검도 해안 갯벌","u":"point/sudogwon/ganghwa_gleaning.html","m":"강화 · 해루질 포인트"},{"t":"해루질","n":"강화도","u":"point/sudogwon/ganghwa_gleaning.html","m":"강화 · 해루질 포인트"},{"t":"해루질","n":"주문도","u":"point/sudogwon/ganghwa_gleaning.html","m":"강화 · 해루질 포인트"},{"t":"해루질","n":"볼음도","u":"point/sudogwon/ganghwa_gleaning.html","m":"강화 · 해루질 포인트"},{"t":"해루질","n":"석모도","u":"point/sudogwon/ganghwa_gleaning.html","m":"강화 · 해루질 포인트"},{"t":"해루질","n":"선수선착장","u":"point/sudogwon/ganghwa_gleaning.html","m":"강화 · 해루질 포인트"},{"t":"해루질","n":"교동도","u":"point/sudogwon/ganghwa_gleaning.html","m":"강화 · 해루질 포인트"},{"t":"해루질","n":"선수포구","u":"point/sudogwon/ganghwa_gleaning.html","m":"강화 · 해루질 포인트"},{"t":"해루질","n":"영뜰해변","u":"point/sudogwon/ganghwa_gleaning.html","m":"강화 · 해루질 포인트"},{"t":"해루질","n":"어류정항","u":"point/sudogwon/ganghwa_gleaning.html","m":"강화 · 해루질 포인트"},{"t":"해루질","n":"주문도살곶이항선착장","u":"point/sudogwon/ganghwa_gleaning.html","m":"강화 · 해루질 포인트"},{"t":"낚시","n":"강화 광성보 해안(장어마을~광성보)","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"낚시","n":"강화 초지대교·황산도해변","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"낚시","n":"석모도 섬돌모루","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"낚시","n":"석모도 석포리 선착장","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"낚시","n":"강화 외포항 방파제·외포리 선착장","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"낚시","n":"석모도 민머루해변","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"낚시","n":"강화 초지항 방파제","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"낚시","n":"교동도 월선포 선착장","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"낚시","n":"석모도 어류정항 동측방파제","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"낚시","n":"강화 선두리 선착장·방파제","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"낚시","n":"강화 섬안교·장흥리 갯벌","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"낚시","n":"강화 동막해수욕장","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"낚시","n":"하리낚시터 북측 (석모도)","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"낚시","n":"교동도 북단 해안","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"낚시","n":"교동도 양갑리 냇물 하구","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"낚시","n":"교동도 남산포","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"낚시","n":"미법도 선착장","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"낚시","n":"서검도 선착장","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"낚시","n":"교동도 죽산포","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"낚시","n":"강화 황산도 갯바위","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"낚시","n":"석모도 하리 선착장","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"낚시","n":"강화 건평리 포구","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"낚시","n":"강화 분오리돈대·분오리포구","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"낚시","n":"강화 동검도 해안","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"낚시","n":"강화 후포항(선수포구) 방파제","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"낚시","n":"강화 장화리 낙조조망지","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"낚시","n":"강화 여차리 포구","u":"point/sudogwon/ganghwa_fishing.html","m":"강화 · 낚시 포인트"},{"t":"해루질","n":"무의도 큰무리 어촌체험마을","u":"point/sudogwon/yeongjong_gleaning.html","m":"영종 · 해루질 포인트"},{"t":"해루질","n":"무의도 포내 어촌체험마을","u":"point/sudogwon/yeongjong_gleaning.html","m":"영종 · 해루질 포인트"},{"t":"해루질","n":"마시안 갯벌체험장(마시안어촌체험마을)","u":"point/sudogwon/yeongjong_gleaning.html","m":"영종 · 해루질 포인트"},{"t":"해루질","n":"영종도 을왕리해변 갯벌·암반","u":"point/sudogwon/yeongjong_gleaning.html","m":"영종 · 해루질 포인트"},{"t":"해루질","n":"남북동 어촌체험마을 갯벌","u":"point/sudogwon/yeongjong_gleaning.html","m":"영종 · 해루질 포인트"},{"t":"해루질","n":"영종도 왕산해변 갯벌","u":"point/sudogwon/yeongjong_gleaning.html","m":"영종 · 해루질 포인트"},{"t":"해루질","n":"영종도 구읍뱃터 갯바위 해루질","u":"point/sudogwon/yeongjong_gleaning.html","m":"영종 · 해루질 포인트"},{"t":"해루질","n":"영종도 선녀바위해변 해루질","u":"point/sudogwon/yeongjong_gleaning.html","m":"영종 · 해루질 포인트"},{"t":"해루질","n":"영종도 거잠포 해변 해루질","u":"point/sudogwon/yeongjong_gleaning.html","m":"영종 · 해루질 포인트"},{"t":"해루질","n":"무의도 광명선착장 아래 조간대","u":"point/sudogwon/yeongjong_gleaning.html","m":"영종 · 해루질 포인트"},{"t":"해루질","n":"선녀바위","u":"point/sudogwon/yeongjong_gleaning.html","m":"영종 · 해루질 포인트"},{"t":"해루질","n":"영종도 마시안 해변","u":"point/sudogwon/yeongjong_gleaning.html","m":"영종 · 해루질 포인트"},{"t":"해루질","n":"덕점방파제","u":"point/sudogwon/yeongjong_gleaning.html","m":"영종 · 해루질 포인트"},{"t":"해루질","n":"무의도","u":"point/sudogwon/yeongjong_gleaning.html","m":"영종 · 해루질 포인트"},{"t":"낚시","n":"영종도 을왕리 선착장","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"영종도 예단포 방파제","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"영종도 삼목항 방파제(삼목선착장)","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"영종도 왕산 갯바위(왕산마리나 옆)","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"영종도 북측 제방","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"영종도 북측수문(통개수로 배수갑문)","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"영종도 잠진도 선착장","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"영종도 남측수문","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"영종도 을왕리 갯바위(해변 산책로)","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"영종도 선녀바위","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"무의도 광명항 방파제","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"소무의도 선착장(샘꾸미)","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"무의도 광명방파제 옆 갯바위","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"영종도 거잠포 선착장","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"영종도 남측제방 초소","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"무의도 광명선착장 자갈밭","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"무의도 하나개해수욕장 끝 갯바위","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"무의도 광명선착장 동측 갯바위","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"무의도 광명선착장","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"영종도 북측 모래채집장","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"삼목수문 (영종도·용유도)","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"실미도북서측 갯바위 (무의도)","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"영종도방조제 비상주차공간주면 석축","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"무의도 곶부리","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"실미도해변 갯바위 (무의도)","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"때무리 동측 갯바위 (무의도)","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"잠진도 연육교 (영종도·용유도)","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"무의도 실미해변 방파제","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"영종도 구읍뱃터 동쪽 해안로(영종해변)","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"영종도 마시란(마시안) 방파제","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"영종도 인천대교 아래 석축","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"낚시","n":"영종도 모래 채집장","u":"point/sudogwon/yeongjong_fishing.html","m":"영종 · 낚시 포인트"},{"t":"해루질","n":"선재 어촌체험마을(목섬·사메기 갯벌)","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"이작 어촌체험마을(큰풀안해변)","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"모도리 어촌체험마을","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"영암 어촌체험마을","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"영흥도 십리포해변 해루질","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"영흥도 내리 갯벌(꽃섬~하늘고래전망대 갯골)","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"장봉도 작은멀곶 해루질","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"덕적도 서포리해변 해루질","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"소야도 떼뿌루해변 해루질","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"자월도 큰말해변 해루질","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"소청도 해안(스트로마톨라이트 일대)","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"승봉도 이일레해변 해루질","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"연평도 해안 해루질","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"백령도 콩돌해변 암반 해루질","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"대청도 해안 해루질","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"굴업도 목기미해변 해루질","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"시도 수기해변 해루질","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"십리포해수욕장","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"덕적도","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"소야도","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"선재도","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"노가리해변","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"작은멀곳","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"굴업도","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"밧지름해변","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"작은풀안해변","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"연평도","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"대청도","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"해루질","n":"콩돌해변","u":"point/sudogwon/ongjin_gleaning.html","m":"옹진 섬 · 해루질 포인트"},{"t":"낚시","n":"영흥도 진두선착장·진두항 방파제","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"대연평항 방파제(안목)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"덕적도 서포리해수욕장 방파제","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"선재도 방파제","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"백령도 용기포항 방파제","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"대청도 옥죽포항 방파제","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"소청도 답동항 방파제","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"영흥도 농어바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"영흥도 진여","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"영흥도 십리포해수욕장 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"영흥도 양로봉 갯바위(신노루)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"연평도 구지도(토끼섬) 북측 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"대청도 사탄동해변 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"소연평항 방파제·선착장","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"대연평도 구리동해변 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"선재도 측도(연도교 주변)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"선재도 선착장","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"덕적도 진리선착장","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"장봉도 옹암방파제(죽은여)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"대이작도 선착장 옆 제방","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"영흥도 용담리해수욕장","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"백령도 두무진","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"백령도 사곶해변","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"자월도 장골해변","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"덕적도 소재해변 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"소야도 남서쪽 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"조각공원 동측 갯바위 (신도·시도·모도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"옹암선착장 남쪽 갯바위 (장봉도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"신도 남측 끝단 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"신도 동측 끝단 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"소청도 소청리 북단 방파제","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"조각공원 서측 갯바위 (신도·시도·모도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"굴업도 선착장","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"곽암 (대청도·소청도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"백아도 큰말 동쪽방파제","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"덕적도 큰이마, 작은이마","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"문갑도 한월리해수욕장 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"덕적도 밭지름해수욕장 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"백아도 큰말 선착장 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"덕적도 능동자갈마당 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"달바위선착장 (자월도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"채석장 부근 (장봉도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"소야도 변도 방파제","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"덕적도 서포리 선착장","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"덕적도 정자바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"대청도 독바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"대청도 서풍받이 끝","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"승봉도 부채바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"떡바위 (자월도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"대이작도 작은풀안해수욕장 정자 부근","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"시노도 갯바위 (연평도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"백아도 서쪽 곶부리","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"백아도 백아리 선착장","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"선갑도 선착장","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"굴업도 해수욕장 동쪽 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"감마금뿌리 (연평도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"승봉도 동양콘도 앞","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"소청도 분바위 방파제","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"덕적도 파락금이 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"문갑도 문갑해수욕장 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"승봉도 이일레선착장 옆 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"진촌해수욕장 선착장 (장봉도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"굴업도 북쪽 선착장","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"금능해수욕장 남측 갯바위 (연평도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"수기해변 서측 갯바위 (신도·시도·모도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"시모도 연육교","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"검은서 (연평도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"굴뿌리 (자월도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"굴업도 마을 동쪽 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"대청도 서풍받이 서쪽 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"조각공원 북측 갯바위 (신도·시도·모도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"굴업도 마을 북쪽 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"승봉도 참나무골","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"소청도 예동 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"승봉도 철탑앞 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"입암두 부근 갯바위 (자월도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"문갑도 진뿌리","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"수기해변 동측 갯바위 (신도·시도·모도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"백아도 백아항 동쪽 방파제","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"진촌 서갯바위 (장봉도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"채석장 북갯바위(가막머리) (장봉도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"대청도 검은낭 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"소야도 떼뿌루해수욕장 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"승봉도 촛대바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"큰굴 부근 (자월도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"영흥도 비석바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"굴업도 마을 서쪽 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"선갑도 제방 남쪽","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"승봉도 남대문바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"덕적도 덕적항 서방파제","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"선재도 목섬 연결 제방","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"선재도 영흥대교 선착장","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"영흥도 장경리해수욕장","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"선재도 딴뚱우리","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"백령도 콩돌해변","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"백령도 용트림바위 주변","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"대청도 농여해변","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"소청도 촛대바위 주변","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"백령도 진촌리 현무암 해안","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"소이작도 큰말 선착장","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"울도 갯바위·방파제","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"소야도 방파제","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"문갑도 방파제","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"지도(덕적면) 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"굴업도 해수욕장 북쪽 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"백아도 백아항 방파제","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"마바위 (자월도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"옹암선착장 (장봉도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"소청도 예동항 방파제","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"대이작도 오형제바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"항도(목섬) 부근 (자월도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"분모골 (자월도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"광산 선착장 (연평도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"소야도 뒷장불","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"신지도 대량곶 부근 갯바위 (영흥도·선재도·대부도·구봉도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"모이도 갯바위 (연평도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"얼굴바위 앞 (연평도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"야달선착장 (장봉도)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"소청도 마진포항 방파제","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"소청도 예동항 동쪽 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"대청도 지두리해변 갯바위","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"영흥도 석섬","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"장봉도 옹암해변","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"낚시","n":"대청도 기름아가리(기름바다)","u":"point/sudogwon/ongjin_fishing.html","m":"옹진 섬 · 낚시 포인트"},{"t":"해루질","n":"선감 어촌체험마을","u":"point/sudogwon/daebu_gleaning.html","m":"대부·오이도 · 해루질 포인트"},{"t":"해루질","n":"오이도 어촌체험마을 갯벌","u":"point/sudogwon/daebu_gleaning.html","m":"대부·오이도 · 해루질 포인트"},{"t":"해루질","n":"탄도 어촌체험마을 갯벌","u":"point/sudogwon/daebu_gleaning.html","m":"대부·오이도 · 해루질 포인트"},{"t":"해루질","n":"종현 어촌체험마을(구봉도 낙조마을)","u":"point/sudogwon/daebu_gleaning.html","m":"대부·오이도 · 해루질 포인트"},{"t":"해루질","n":"흘곶 어촌체험마을","u":"point/sudogwon/daebu_gleaning.html","m":"대부·오이도 · 해루질 포인트"},{"t":"해루질","n":"풍도 어촌체험마을","u":"point/sudogwon/daebu_gleaning.html","m":"대부·오이도 · 해루질 포인트"},{"t":"해루질","n":"대부도 방아머리해수욕장 갯벌","u":"point/sudogwon/daebu_gleaning.html","m":"대부·오이도 · 해루질 포인트"},{"t":"해루질","n":"구봉도 주변 해상·갯벌","u":"point/sudogwon/daebu_gleaning.html","m":"대부·오이도 · 해루질 포인트"},{"t":"해루질","n":"오이도","u":"point/sudogwon/daebu_gleaning.html","m":"대부·오이도 · 해루질 포인트"},{"t":"해루질","n":"누에섬","u":"point/sudogwon/daebu_gleaning.html","m":"대부·오이도 · 해루질 포인트"},{"t":"해루질","n":"구봉솔숲해수욕장","u":"point/sudogwon/daebu_gleaning.html","m":"대부·오이도 · 해루질 포인트"},{"t":"해루질","n":"풍도","u":"point/sudogwon/daebu_gleaning.html","m":"대부·오이도 · 해루질 포인트"},{"t":"낚시","n":"시화방조제 낚시 구간(175번 초소 인근)","u":"point/sudogwon/daebu_fishing.html","m":"대부·오이도 · 낚시 포인트"},{"t":"낚시","n":"대부도 방아머리 선착장","u":"point/sudogwon/daebu_fishing.html","m":"대부·오이도 · 낚시 포인트"},{"t":"낚시","n":"오이도 빨강등대 방파제","u":"point/sudogwon/daebu_fishing.html","m":"대부·오이도 · 낚시 포인트"},{"t":"낚시","n":"시흥 월곶포구 방파제","u":"point/sudogwon/daebu_fishing.html","m":"대부·오이도 · 낚시 포인트"},{"t":"낚시","n":"대부도 메추리섬","u":"point/sudogwon/daebu_fishing.html","m":"대부·오이도 · 낚시 포인트"},{"t":"낚시","n":"대부도 선재대교 입구 선착장","u":"point/sudogwon/daebu_fishing.html","m":"대부·오이도 · 낚시 포인트"},{"t":"낚시","n":"대부도 탄도항 방파제·제방","u":"point/sudogwon/daebu_fishing.html","m":"대부·오이도 · 낚시 포인트"},{"t":"낚시","n":"대부도 말부흥 선착장","u":"point/sudogwon/daebu_fishing.html","m":"대부·오이도 · 낚시 포인트"},{"t":"낚시","n":"대부도 쪽박섬","u":"point/sudogwon/daebu_fishing.html","m":"대부·오이도 · 낚시 포인트"},{"t":"낚시","n":"대부도 바구리 방조제","u":"point/sudogwon/daebu_fishing.html","m":"대부·오이도 · 낚시 포인트"},{"t":"낚시","n":"구봉도 개미허리 갯바위","u":"point/sudogwon/daebu_fishing.html","m":"대부·오이도 · 낚시 포인트"},{"t":"낚시","n":"대부도 고래뿌리 선착장","u":"point/sudogwon/daebu_fishing.html","m":"대부·오이도 · 낚시 포인트"},{"t":"낚시","n":"풍도 채석장 남측","u":"point/sudogwon/daebu_fishing.html","m":"대부·오이도 · 낚시 포인트"},{"t":"낚시","n":"풍도 북동측 돌출부","u":"point/sudogwon/daebu_fishing.html","m":"대부·오이도 · 낚시 포인트"},{"t":"낚시","n":"풍도 채석장 북측","u":"point/sudogwon/daebu_fishing.html","m":"대부·오이도 · 낚시 포인트"},{"t":"낚시","n":"풍도 남측 방파제","u":"point/sudogwon/daebu_fishing.html","m":"대부·오이도 · 낚시 포인트"},{"t":"낚시","n":"시화방조제 중간선착장 좌우 100m","u":"point/sudogwon/daebu_fishing.html","m":"대부·오이도 · 낚시 포인트"},{"t":"낚시","n":"시흥 거북섬(시화MTV)","u":"point/sudogwon/daebu_fishing.html","m":"대부·오이도 · 낚시 포인트"},{"t":"낚시","n":"시화호 조력발전소~시화나래휴게소 구간","u":"point/sudogwon/daebu_fishing.html","m":"대부·오이도 · 낚시 포인트"},{"t":"낚시","n":"시흥 배곧한울공원 해변","u":"point/sudogwon/daebu_fishing.html","m":"대부·오이도 · 낚시 포인트"},{"t":"낚시","n":"풍도 선착장 부근","u":"point/sudogwon/daebu_fishing.html","m":"대부·오이도 · 낚시 포인트"},{"t":"낚시","n":"선감도 갯바위","u":"point/sudogwon/daebu_fishing.html","m":"대부·오이도 · 낚시 포인트"},{"t":"낚시","n":"안산 누에섬(탄도 바닷길)","u":"point/sudogwon/daebu_fishing.html","m":"대부·오이도 · 낚시 포인트"},{"t":"낚시","n":"대부도 종현마을 갯바위","u":"point/sudogwon/daebu_fishing.html","m":"대부·오이도 · 낚시 포인트"},{"t":"해루질","n":"제부 어촌체험마을 갯벌","u":"point/sudogwon/hwaseong_gleaning.html","m":"화성 · 해루질 포인트"},{"t":"해루질","n":"궁평 어촌체험마을 갯벌","u":"point/sudogwon/hwaseong_gleaning.html","m":"화성 · 해루질 포인트"},{"t":"해루질","n":"백미리 어촌체험마을","u":"point/sudogwon/hwaseong_gleaning.html","m":"화성 · 해루질 포인트"},{"t":"해루질","n":"전곡리 어촌체험마을","u":"point/sudogwon/hwaseong_gleaning.html","m":"화성 · 해루질 포인트"},{"t":"해루질","n":"고온리(매향리) 갯벌","u":"point/sudogwon/hwaseong_gleaning.html","m":"화성 · 해루질 포인트"},{"t":"해루질","n":"국화도 갯벌","u":"point/sudogwon/hwaseong_gleaning.html","m":"화성 · 해루질 포인트"},{"t":"해루질","n":"제부도해수욕장","u":"point/sudogwon/hwaseong_gleaning.html","m":"화성 · 해루질 포인트"},{"t":"해루질","n":"궁평항","u":"point/sudogwon/hwaseong_gleaning.html","m":"화성 · 해루질 포인트"},{"t":"해루질","n":"국화도","u":"point/sudogwon/hwaseong_gleaning.html","m":"화성 · 해루질 포인트"},{"t":"낚시","n":"궁평항 피싱피어","u":"point/sudogwon/hwaseong_fishing.html","m":"화성 · 낚시 포인트"},{"t":"낚시","n":"제부도 피싱피어","u":"point/sudogwon/hwaseong_fishing.html","m":"화성 · 낚시 포인트"},{"t":"낚시","n":"국화도 방파제","u":"point/sudogwon/hwaseong_fishing.html","m":"화성 · 낚시 포인트"},{"t":"낚시","n":"전곡항 선착장 부근","u":"point/sudogwon/hwaseong_fishing.html","m":"화성 · 낚시 포인트"},{"t":"낚시","n":"화성 고온항","u":"point/sudogwon/hwaseong_fishing.html","m":"화성 · 낚시 포인트"},{"t":"낚시","n":"궁평항 작은방파제 끝","u":"point/sudogwon/hwaseong_fishing.html","m":"화성 · 낚시 포인트"},{"t":"낚시","n":"입파도 동남측 돌출부","u":"point/sudogwon/hwaseong_fishing.html","m":"화성 · 낚시 포인트"},{"t":"낚시","n":"입파도 북동측 끝단","u":"point/sudogwon/hwaseong_fishing.html","m":"화성 · 낚시 포인트"},{"t":"낚시","n":"입파도 북서측 끝단","u":"point/sudogwon/hwaseong_fishing.html","m":"화성 · 낚시 포인트"},{"t":"낚시","n":"국화도 선착장","u":"point/sudogwon/hwaseong_fishing.html","m":"화성 · 낚시 포인트"},{"t":"낚시","n":"입파도 남측 곶부리","u":"point/sudogwon/hwaseong_fishing.html","m":"화성 · 낚시 포인트"},{"t":"낚시","n":"제부도 소방서 앞","u":"point/sudogwon/hwaseong_fishing.html","m":"화성 · 낚시 포인트"},{"t":"낚시","n":"입파도 서측 갯바위","u":"point/sudogwon/hwaseong_fishing.html","m":"화성 · 낚시 포인트"},{"t":"낚시","n":"국화도 서쪽 곶부리","u":"point/sudogwon/hwaseong_fishing.html","m":"화성 · 낚시 포인트"},{"t":"낚시","n":"국화도 매박섬(토끼섬)","u":"point/sudogwon/hwaseong_fishing.html","m":"화성 · 낚시 포인트"},{"t":"낚시","n":"국화도 해수욕장 서측 갯바위","u":"point/sudogwon/hwaseong_fishing.html","m":"화성 · 낚시 포인트"},{"t":"낚시","n":"입파도 선착장","u":"point/sudogwon/hwaseong_fishing.html","m":"화성 · 낚시 포인트"},{"t":"낚시","n":"입파도 방파제","u":"point/sudogwon/hwaseong_fishing.html","m":"화성 · 낚시 포인트"},{"t":"낚시","n":"화옹방조제(화성방조제)","u":"point/sudogwon/hwaseong_fishing.html","m":"화성 · 낚시 포인트"},{"t":"낚시","n":"궁평 제방 바깥쪽·방조제 쪽","u":"point/sudogwon/hwaseong_fishing.html","m":"화성 · 낚시 포인트"},{"t":"낚시","n":"매향리 선착장","u":"point/sudogwon/hwaseong_fishing.html","m":"화성 · 낚시 포인트"},{"t":"낚시","n":"남양방조제 배수갑문 바다쪽","u":"point/sudogwon/hwaseong_fishing.html","m":"화성 · 낚시 포인트"},{"t":"낚시","n":"백미리 선착장","u":"point/sudogwon/hwaseong_fishing.html","m":"화성 · 낚시 포인트"},{"t":"제철","n":"망둥어","u":"ganghwa.html#catch","m":"강화·영종·대부·오이도·화성"},{"t":"제철","n":"숭어","u":"ganghwa.html#catch","m":"강화·대부·오이도"},{"t":"제철","n":"농어","u":"ganghwa.html#catch","m":"강화·옹진 섬"},{"t":"제철","n":"밴댕이","u":"ganghwa.html#catch","m":"강화"},{"t":"제철","n":"주꾸미","u":"yeongjong.html#catch","m":"영종·옹진 섬·대부·오이도"},{"t":"제철","n":"우럭","u":"yeongjong.html#catch","m":"영종·옹진 섬·대부·오이도·화성"},{"t":"제철","n":"광어","u":"yeongjong.html#catch","m":"영종·옹진 섬·화성"},{"t":"제철","n":"주꾸미·갑오징어","u":"hwaseong.html#catch","m":"화성"},{"t":"9월","n":"DMZ 평화 페스타","u":"ganghwa.html#festival","m":"강화 · 교동면 교동도 일원","f":1},{"t":"10월","n":"강화도 새우젓축제","u":"ganghwa.html#festival","m":"강화 · 내가면 외포항 일원","f":1},{"t":"명소","n":"초지진","u":"ganghwa.html","m":"강화 · 유적"},{"t":"명소","n":"광성보","u":"ganghwa.html","m":"강화 · 유적"},{"t":"명소","n":"동막해수욕장","u":"ganghwa.html","m":"강화 · 해변"},{"t":"명소","n":"강화갯벌센터","u":"ganghwa.html","m":"강화 · 생태전시관"},{"t":"명소","n":"외포항","u":"ganghwa.html","m":"강화 · 항구"},{"t":"명소","n":"민머루해수욕장","u":"ganghwa.html","m":"강화 · 해변"},{"t":"명소","n":"석모도 보문사","u":"ganghwa.html","m":"강화 · 사찰"},{"t":"명소","n":"교동 대룡시장","u":"ganghwa.html","m":"강화 · 시장"},{"t":"5월","n":"무의도 구석구석 국제 트레일런","u":"yeongjong.html#festival","m":"영종 · 무의도 일원","f":1},{"t":"5월","n":"문밖으로 나온 무의도","u":"yeongjong.html#festival","m":"영종 · 무의도 선착장 일대","f":1},{"t":"명소","n":"을왕리해수욕장","u":"yeongjong.html","m":"영종 · 해변"},{"t":"명소","n":"왕산해수욕장","u":"yeongjong.html","m":"영종 · 해변"},{"t":"명소","n":"선녀바위해변","u":"yeongjong.html","m":"영종 · 해변·바위"},{"t":"명소","n":"마시안해변","u":"yeongjong.html","m":"영종 · 해변"},{"t":"명소","n":"하나개해수욕장","u":"yeongjong.html","m":"영종 · 해변"},{"t":"명소","n":"소무의도","u":"yeongjong.html","m":"영종 · 섬"},{"t":"명소","n":"신도·시도·모도","u":"yeongjong.html","m":"영종 · 섬"},{"t":"명소","n":"장봉도","u":"yeongjong.html","m":"영종 · 섬"},{"t":"8월","n":"주섬주섬 음악회","u":"ongjin.html#festival","m":"옹진 섬 · 덕적면 서포리해수욕장 일대","f":1},{"t":"9월","n":"섬마을밴드 음악축제","u":"ongjin.html#festival","m":"옹진 섬 · 자월면 대이작도 해양생태관 야외무대","f":1},{"t":"명소","n":"선재도 목섬","u":"ongjin.html","m":"옹진 섬 · 섬·바닷길"},{"t":"명소","n":"십리포해수욕장","u":"ongjin.html","m":"옹진 섬 · 해변"},{"t":"명소","n":"장경리해수욕장","u":"ongjin.html","m":"옹진 섬 · 해변"},{"t":"명소","n":"덕적도 서포리해수욕장","u":"ongjin.html","m":"옹진 섬 · 해변"},{"t":"명소","n":"소야도 떼뿌루해변","u":"ongjin.html","m":"옹진 섬 · 해변"},{"t":"명소","n":"자월도 장골해수욕장","u":"ongjin.html","m":"옹진 섬 · 해변"},{"t":"명소","n":"승봉도 이일레해변","u":"ongjin.html","m":"옹진 섬 · 해변"},{"t":"명소","n":"대이작도 풀등","u":"ongjin.html","m":"옹진 섬 · 모래섬"},{"t":"9월","n":"시흥갯골축제","u":"daebu.html#festival","m":"대부·오이도 · 시흥시 동서로 287 시흥갯골생태공원","f":1},{"t":"9월","n":"대부포도축제","u":"daebu.html#festival","m":"대부·오이도 · 대부황금로 1480-7 대부바다향기테마파크","f":1},{"t":"9월","n":"대부해솔길 걷기 축제","u":"daebu.html#festival","m":"대부·오이도 · 대부바다향기테마파크 일원","f":1},{"t":"명소","n":"오이도 빨간등대","u":"daebu.html","m":"대부·오이도 · 전망대·등대"},{"t":"명소","n":"오이도박물관","u":"daebu.html","m":"대부·오이도 · 박물관"},{"t":"명소","n":"시화나래휴게소 달전망대","u":"daebu.html","m":"대부·오이도 · 전망대"},{"t":"명소","n":"방아머리해변","u":"daebu.html","m":"대부·오이도 · 해변"},{"t":"명소","n":"구봉도 낙조전망대","u":"daebu.html","m":"대부·오이도 · 해안 산책로"},{"t":"명소","n":"경기도 바다향기수목원","u":"daebu.html","m":"대부·오이도 · 수목원"},{"t":"명소","n":"탄도항 누에섬","u":"daebu.html","m":"대부·오이도 · 항구·바닷길"},{"t":"명소","n":"풍도","u":"daebu.html","m":"대부·오이도 · 섬"},{"t":"5월","n":"화성 뱃놀이 축제","u":"hwaseong.html#festival","m":"화성 · 서신면 전곡항 일원(제부도·궁평항·백미리 연계)","f":1},{"t":"9월","n":"화성송산포도축제","u":"hwaseong.html#festival","m":"화성 · 서신면 화성에코팜테마파크(궁평항 인근)","f":1},{"t":"명소","n":"제부도 바닷길","u":"hwaseong.html","m":"화성 · 섬·바닷길"},{"t":"명소","n":"제부도 매바위","u":"hwaseong.html","m":"화성 · 바위·해안"},{"t":"명소","n":"서해랑 제부도해상케이블카","u":"hwaseong.html","m":"화성 · 케이블카"},{"t":"명소","n":"전곡항","u":"hwaseong.html","m":"화성 · 항구"},{"t":"명소","n":"궁평항","u":"hwaseong.html","m":"화성 · 항구"},{"t":"명소","n":"궁평리해수욕장","u":"hwaseong.html","m":"화성 · 해변"},{"t":"명소","n":"매향리 평화생태공원","u":"hwaseong.html","m":"화성 · 공원"},{"t":"명소","n":"국화도","u":"hwaseong.html","m":"화성 · 섬"}]</script>
+<script id="hubSpecies" type="application/json">[{"sec":"catch","slug":"nakji","n":"낙지","one":"전남 갯벌의 대표 대상입니다. 구멍을 찾아 파는 방식이라 체력과 요령이 모두 필요합니다.","lv":"어려움","m":[6,7,8,9,10,11],"cnt":1,"ban":[[6,1,6,30]],"bt":"6월 1일 ~ 6월 30일","by":false,"sz":null},{"sec":"fish","slug":"nongeo","n":"농어","one":"루어낚시 대상으로 인기가 높습니다. 힘이 좋아 손맛이 강합니다.","lv":"보통","m":[5,6,7,8,9,10],"cnt":2,"ban":[],"bt":null,"by":false,"sz":"30cm 이하"},{"sec":"fish","slug":"mangdungeo","n":"망둥어","one":"초보자와 아이들이 가장 쉽게 잡는 대상입니다.","lv":"쉬움","m":[6,7,8,9],"cnt":4,"ban":[],"bt":"","by":false,"sz":""},{"sec":"catch","slug":"bajirak","n":"바지락","one":"모래 섞인 갯벌 표층에 얕게 묻혀 있어, 해루질을 처음 하는 분에게 가장 무난한 대상입니다.","lv":"쉬움","m":[4,5,6,7,8,9,10],"cnt":2,"ban":[],"bt":"","by":false,"sz":""},{"sec":"fish","slug":"sungeo","n":"숭어","one":"봄철 연안에서 흔히 보이는 대상입니다. 무리 지어 다닙니다.","lv":"쉬움","m":[1,9,10,11,12],"cnt":2,"ban":[],"bt":"","by":false,"sz":""},{"sec":"fish","slug":"ureok","n":"우럭","one":"방파제에서 가장 흔하게 만나는 대상입니다. 바닥 가까이에 붙어 있어 채비가 단순합니다.","lv":"쉬움","m":[1,2,3,4,5,6,7,8,9,10,11,12],"cnt":4,"ban":[],"bt":null,"by":false,"sz":"23cm 이하"},{"sec":"fish","slug":"jukkumi","n":"주꾸미","one":"가을 초보자에게 가장 인기 있는 대상입니다.","lv":"쉬움","m":[],"cnt":3,"ban":[[5,11,8,31]],"bt":"5월 11일 ~ 8월 31일","by":false,"sz":null}]</script>
+<script>
+/* 이달에 잡을 수 있는 것 — 아래 hubSpecies 는 data/species-index.json 중 이 지역 권역에
+   실제로 적혀 있는 종만 골라 둔 것입니다(동해 쪽에 갯벌 대상이 뜨지 않도록).
+   전남 첫 화면(js/home.js)의 같은 칸과 그리는 방식·금어기 표시가 같습니다. */
+(function () {
+  var grid = document.getElementById('spGrid'), tabs = document.getElementById('spTabs');
+  if (!grid) return;
+  var LIST = [];
+  try { LIST = JSON.parse(document.getElementById('hubSpecies').textContent); } catch (e) { return; }
+  var kst = new Date(Date.now() + (new Date().getTimezoneOffset() + 540) * 60000);
+  var M = kst.getMonth() + 1, DAY = kst.getDate(), sec = 'all', SHOW = 8;
+  function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+  function inBan(s) {
+    if (!s.ban || !s.ban.length || s.by) return false;
+    return s.ban.some(function (b) {
+      var a = b[0] * 100 + b[1], z = b[2] * 100 + b[3], t = M * 100 + DAY;
+      return a <= z ? (t >= a && t <= z) : (t >= a || t <= z);
+    });
+  }
+  function fold(total) {
+    var row = document.getElementById('spFold');
+    if (!row) { row = el('div', 'sp-fold'); row.id = 'spFold'; grid.parentNode.insertBefore(row, grid.nextSibling); }
+    row.innerHTML = ''; grid.classList.remove('expanded');
+    if (total <= SHOW) { row.hidden = true; return; }
+    row.hidden = false;
+    var b = el('button', 'sp-foldbtn', (total - SHOW) + '개 더 보기 ▾'); b.type = 'button';
+    b.addEventListener('click', function () {
+      var open = grid.classList.toggle('expanded');
+      b.textContent = open ? '접기 ▴' : (total - SHOW) + '개 더 보기 ▾';
+      if (!open) grid.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    });
+    row.appendChild(b);
+  }
+  function draw() {
+    var list = LIST.filter(function (s) { return s.m.indexOf(M) > -1 && (sec === 'all' || s.sec === sec); });
+    list.sort(function (a, b) { return (inBan(a) ? 1 : 0) - (inBan(b) ? 1 : 0) || a.n.localeCompare(b.n, 'ko'); });
+    grid.innerHTML = '';
+    document.getElementById('spTitle').textContent = M + '월에 잡을 수 있는 것';
+    if (!list.length) { grid.appendChild(el('p', 'sp-loading', '이 달에 정리된 대상이 없습니다.')); fold(0); return; }
+    list.forEach(function (s) {
+      var a = el('a', 'sp-card' + (inBan(s) ? ' banned' : ''));
+      a.href = s.sec + '/' + s.slug + '.html';
+      var head = el('div', 'sp-top');
+      head.appendChild(el('b', null, s.n));
+      head.appendChild(el('span', 'sp-tag ' + s.sec, s.sec === 'catch' ? '해루질' : '낚시'));
+      a.appendChild(head);
+      a.appendChild(el('p', null, s.one));
+      var meta = el('div', 'sp-meta');
+      if (s.lv) meta.appendChild(el('span', null, '난이도 ' + s.lv));
+      if (s.cnt) meta.appendChild(el('span', null, s.cnt + '개 시·군'));
+      if (s.sz) meta.appendChild(el('span', null, s.sz + ' 금지'));
+      a.appendChild(meta);
+      if (inBan(s)) a.appendChild(el('span', 'sp-ban', '지금 금어기 · ' + s.bt));
+      else if (s.by) a.appendChild(el('span', 'sp-ban notice', '금어기 있음 · 고시 확인'));
+      grid.appendChild(a);
+    });
+    fold(list.length);
+  }
+  [].forEach.call(tabs.querySelectorAll('button'), function (b) {
+    b.addEventListener('click', function () {
+      sec = b.getAttribute('data-sec');
+      [].forEach.call(tabs.children, function (x) { x.classList.toggle('on', x === b); });
+      draw();
+    });
+  });
+  draw();
+})();
+
+/* 권역 지도 — 전남 첫 화면(js/home.js)과 같은 방식입니다. 카카오 지도 키는 point/map-config.js 에서 옵니다.
+   좌표는 js/coast-data.js 의 권역 대표 좌표를 씁니다. 키가 없거나 지도를 못 불러오면 지도 칸을 숨깁니다. */
+(function () {
+  var box = document.getElementById('hrMap'), layout = document.getElementById('hrLayout');
+  var key = (window.BADAGAJA_MAP || {}).kakaoJsKey, C = window.BADAGAJA_COAST || {};
+  if (!box || !key) { layout && layout.classList.add('no-map'); return; }
+  var REGS = [{"s":"ganghwa","n":"강화","c":"#4A5A3A","p":49},{"s":"yeongjong","n":"영종","c":"#2E5573","p":46},{"s":"ongjin","n":"옹진 섬","c":"#1E5F5F","p":153},{"s":"daebu","n":"대부·오이도","c":"#5E4660","p":36},{"s":"hwaseong","n":"화성","c":"#6E4A2A","p":32}];
+  var cards = {};
+  [].forEach.call(document.querySelectorAll('.rc'), function (c) { cards[c.getAttribute('data-slug')] = c; });
+  function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+  var started = false;
+  function start() {
+    if (started) return; started = true;
+    var sc = document.createElement('script');
+    sc.src = 'https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=' + encodeURIComponent(key);
+    sc.onload = function () { try { kakao.maps.load(init); } catch (e) { layout.classList.add('no-map'); } };
+    sc.onerror = function () { layout.classList.add('no-map'); };
+    document.head.appendChild(sc);
+  }
+  function init() {
+    var map = new kakao.maps.Map(box, { center: new kakao.maps.LatLng(36.5, 126.4), level: 11 });
+    // 두 손가락(또는 휠)로 확대됩니다. 처음 크기에서는 지도를 끌 수 없게 두어
+    // 한 손가락으로 쓸면 쪽이 그대로 스크롤됩니다 (2026-09-23 주인 지시)
+    map.setZoomable(true);
+    map.setDraggable(false);
+    kakao.maps.event.addListener(map, 'zoom_changed', function () {
+      map.setDraggable(map.getLevel() < 11);
+    });
+    map.addControl(new kakao.maps.ZoomControl(), kakao.maps.ControlPosition.RIGHT);
+    var bounds = new kakao.maps.LatLngBounds(), pins = {}, n = 0;
+    REGS.forEach(function (r) {
+      var co = C[r.s]; if (!co || co.lat == null) return;
+      var pos = new kakao.maps.LatLng(co.lat, co.lng);
+      var a = el('a', 'hr-pin'); a.href = r.s + '.html'; a.style.setProperty('--c', r.c);
+      a.title = r.n + ' 포인트 ' + r.p + '곳';
+      a.appendChild(el('i', 'dot'));
+      var lb = el('span', 'lb', r.n + ' '); lb.appendChild(el('em', null, String(r.p))); a.appendChild(lb);
+      a.addEventListener('mouseenter', function () { hl(r.s, true); });
+      a.addEventListener('mouseleave', function () { hl(r.s, false); });
+      pins[r.s] = a; n++;
+      new kakao.maps.CustomOverlay({ position: pos, content: a, yAnchor: .5, zIndex: 3 }).setMap(map);
+      bounds.extend(pos);
+    });
+    if (!n) { layout.classList.add('no-map'); return; }
+    function fit() { map.relayout(); map.setBounds(bounds, 30, 40, 30, 40); }
+    fit(); setTimeout(fit, 400);
+    window.addEventListener('resize', function () { clearTimeout(fit.t); fit.t = setTimeout(fit, 250); });
+    function hl(s, on) { cards[s] && cards[s].classList.toggle('on', on); pins[s] && pins[s].classList.toggle('on', on); }
+    Object.keys(cards).forEach(function (s) {
+      cards[s].addEventListener('mouseenter', function () { hl(s, true); });
+      cards[s].addEventListener('mouseleave', function () { hl(s, false); });
+    });
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) { if (es.some(function (e) { return e.isIntersecting; })) { io.disconnect(); start(); } }, { rootMargin: '300px' });
+    io.observe(box);
+  } else start();
+})();
+
+/* 홈 화면에 추가 안내 — 휴대폰에서만, 닫으면 다시 안 보입니다(전남 첫 화면과 같은 방식). */
+(function () {
+  var box = document.getElementById('tsInstall'); if (!box) return;
+  function get(k) { try { return localStorage.getItem(k) || ''; } catch (e) { return ''; } }
+  function set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  var ua = navigator.userAgent || '';
+  var standalone = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone;
+  if (standalone || get('bdg-install-off') || !/Mobi|Android|iPhone|iPad/i.test(ua)) return;
+  var deferred = null;
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); deferred = e; });
+  var inApp = /NAVER|KAKAOTALK|Instagram|FBAN|FBAV|Line\/|DaumApps/i.test(ua);
+  var ios = /iPhone|iPad|iPod/i.test(ua), samsung = /SamsungBrowser/i.test(ua);
+  var steps = inApp ? ['지금은 앱 안에서 열린 화면이라 홈 화면에 추가할 수 없어요.', '화면 구석의 ⋮ 또는 ⋯ 메뉴에서 <b>다른 브라우저로 열기</b>를 누르세요.', '열린 브라우저에서 이 안내를 다시 눌러 주세요.']
+    : ios ? ['사파리 아래쪽의 <b>공유 버튼</b>(네모에 위 화살표)을 누릅니다.', '목록을 올려 <b>홈 화면에 추가</b>를 누릅니다.', '오른쪽 위 <b>추가</b>를 누르면 끝입니다.']
+    : samsung ? ['아래쪽 <b>≡ 메뉴</b>를 누릅니다.', '<b>현재 페이지 추가</b> → <b>홈 화면</b>을 고릅니다.', '<b>추가</b>를 누르면 끝입니다.']
+    : ['오른쪽 위 <b>⋮ 메뉴</b>를 누릅니다.', '<b>홈 화면에 추가</b>(또는 앱 설치)를 누릅니다.', '<b>추가</b>를 누르면 끝입니다.'];
+  box.hidden = false;
+  var how = document.getElementById('tsHowto');
+  document.getElementById('tsInstallGo').addEventListener('click', function () {
+    if (deferred) { deferred.prompt(); deferred.userChoice.then(function (c) { if (c && c.outcome === 'accepted') { set('bdg-install-off', '1'); box.hidden = true; } }); deferred = null; return; }
+    document.getElementById('tsHowtoSteps').innerHTML = steps.map(function (t) { return '<li>' + t + '</li>'; }).join('');
+    how.hidden = false; document.getElementById('tsHowtoClose').focus();
+  });
+  function closeHow() { how.hidden = true; }
+  document.getElementById('tsHowtoClose').addEventListener('click', closeHow);
+  how.addEventListener('click', function (e) { if (e.target === how) closeHow(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !how.hidden) closeHow(); });
+  document.getElementById('tsInstallX').addEventListener('click', function () { set('bdg-install-off', '1'); box.hidden = true; });
+})();
+
+/* 통합 검색 — 아래 hubIndex(권역·포인트·제철·축제·명소)를 이름으로 걸러 보여 줍니다.
+   전남·제주 첫 화면은 js/home.js 가 home-data.js 로 같은 일을 하는데 그쪽은 전남 자료만 담고 있어,
+   이 지역 자료를 쪽 안에 실어 따로 씁니다. */
+(function () {
+  var input = document.getElementById('hSearch'), out = document.getElementById('hResults');
+  if (!input || !out) return;
+  var IDX = [];
+  try { IDX = JSON.parse(document.getElementById('hubIndex').textContent); } catch (e) { return; }
+  var GRP = ['권역', '해루질', '낚시', '제철', '축제', '명소'];
+  function norm(s) { return (s || '').replace(/[\s·()\[\]]/g, '').toLowerCase(); }
+  function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+  function close() { out.hidden = true; out.innerHTML = ''; input.setAttribute('aria-expanded', 'false'); }
+  function run() {
+    var q = norm(input.value);
+    if (q.length < 1) return close();
+    var hit = IDX.filter(function (x) { return norm(x.n).indexOf(q) > -1; });
+    if (!hit.length) {
+      out.innerHTML = ''; out.appendChild(el('div', 'grp', '검색 결과가 없어요'));
+      out.hidden = false; input.setAttribute('aria-expanded', 'true'); return;
+    }
+    out.innerHTML = '';
+    var shown = 0;
+    GRP.forEach(function (g) {
+      var rows = hit.filter(function (x) { return (x.f ? '축제' : x.t) === g; });
+      if (!rows.length || shown >= 24) return;
+      out.appendChild(el('div', 'grp', g === '축제' ? '축제 ' + rows.length + '개' : g));
+      rows.slice(0, 8).forEach(function (x) {
+        var a = el('a'); a.href = x.u; a.setAttribute('role', 'option');
+        a.appendChild(el('span', x.f ? 'tag fest' : 'tag', x.t));
+        a.appendChild(el('span', null, x.n));
+        if (x.m) a.appendChild(el('span', 'meta', x.m));
+        out.appendChild(a); shown++;
+      });
+    });
+    out.hidden = false; input.setAttribute('aria-expanded', 'true');
+  }
+  input.addEventListener('input', run);
+  input.addEventListener('focus', function () { if (input.value) run(); });
+  // 많이 찾는 말 버튼은 검색창 밖에 있어, 여기서 빼지 않으면 눌러도 바로 닫힙니다.
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.h-search') && !e.target.closest('.h-quick')) close();
+  });
+  input.addEventListener('keydown', function (e) { if (e.key === 'Escape') { input.value = ''; close(); } });
+  [].forEach.call(document.querySelectorAll('.h-quick button'), function (b) {
+    b.addEventListener('click', function () { input.value = b.dataset.q; input.focus(); run(); });
+  });
+})();
+
+/* 오늘의 바다 — 물때 계산은 js/app.js 의 BADAGAJA_TIDE, 권역 좌표·관측소는 js/coast-data.js 를 씁니다.
+   자료를 부르는 곳은 권역 쪽과 같습니다: 조석 api/tide-cache.php, 날씨 api/weather-jeju.php(좌표 기준).
+   전남·제주 첫 화면은 js/home.js 가 같은 일을 하지만 그쪽 자료(home-data.js)에 묶여 있어 여기서는 따로 씁니다. */
+(function () {
+  var T = window.BADAGAJA_TIDE, C = window.BADAGAJA_COAST || {};
+  var box = document.getElementById('tsRegions');
+  if (!T || !box) return;
+  var REGS = [{"s":"ganghwa","n":"강화","c":"#4A5A3A","p":49},{"s":"yeongjong","n":"영종","c":"#2E5573","p":46},{"s":"ongjin","n":"옹진 섬","c":"#1E5F5F","p":153},{"s":"daebu","n":"대부·오이도","c":"#5E4660","p":36},{"s":"hwaseong","n":"화성","c":"#6E4A2A","p":32}];
+  var DAY = ['일', '월', '화', '수', '목', '금', '토'];
+  var KEY = 'bdg-today-sudogwon';
+  var $ = function (id) { return document.getElementById(id); };
+  function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+  function saved() { try { return localStorage.getItem(KEY) || ''; } catch (e) { return ''; } }
+  function kst() { return new Date(Date.now() + (new Date().getTimezoneOffset() + 540) * 60000); }
+  function toMin(hm) { var p = hm.split(':'); return +p[0] * 60 + +p[1]; }
+  function hmText(hm) {                      // "13:33" → "오후 1시 33분"
+    var p = hm.split(':'), h = +p[0], mi = +p[1];
+    var part = h < 12 ? '오전' : (h < 18 ? '오후' : '저녁'), hh = h % 12 === 0 ? 12 : h % 12;
+    return part + ' ' + hh + '시' + (mi ? ' ' + mi + '분' : '');
+  }
+  function dayWord(d, i) { return i === 0 ? '오늘' : (i === 1 ? '내일' : DAY[d.getDay()] + '요일'); }
+  /* ---------- 이번 주 언제 갈까 ----------
+     전남 첫 화면(js/home.js)의 week()/plan()/drawWeek() 과 같은 방식입니다.
+     1) 음력 물때 계산만으로 먼저 그리고, 2) 조석 자료가 오면 실제 낮 간조 높이로 다시 그립니다.
+     이 묶음에는 제주가 없으므로 제주용 분기(물살 약한 날 고르기)는 두지 않았습니다. */
+  function drawWeek(rows, byTide) {
+    var w = $('tsWeek'); if (!w) return;
+    w.innerHTML = '';
+    rows.forEach(function (x, i) {
+      var c = el('div', 'ts-day' + (i === 0 ? ' today' : '') + (x.best ? ' best' : (x.good ? ' good' : '')));
+      c.appendChild(el('span', 'star', x.best ? '★' : (x.good ? '☆' : '')));
+      var bar = el('div', 'bar'), fill = el('i'); fill.style.height = x.h + '%'; bar.appendChild(fill); c.appendChild(bar);
+      c.appendChild(el('b', null, i === 0 ? '오늘' : DAY[x.d.getDay()]));
+      c.appendChild(el('span', 'dm', x.d.getDate() + ' · ' + x.m + '물'));
+      c.title = (x.d.getMonth() + 1) + '월 ' + x.d.getDate() + '일 ' + x.m + '물'
+        + (x.low ? ' · 낮 간조 ' + x.low.time : (byTide ? ' · 낮 간조 없음' : ''));
+      w.appendChild(c);
+    });
+    var weekend = rows.filter(function (x) { var g = x.d.getDay(); return g === 0 || g === 6; });
+    var note = $('tpNote');
+    if (note) {
+      var calm = weekend.length && weekend.every(function (x) { return x.inten <= 40; });
+      var big = weekend.length && weekend.some(function (x) { return x.inten >= 68; });
+      if (calm) { note.innerHTML = '이번 주말은 <b>조금</b> 무렵이라 물이 적게 빠집니다. 해루질보다는 <b>낚시</b>가 낫습니다.'; note.hidden = false; }
+      else if (big) { note.innerHTML = '이번 주말은 <b>사리</b> 무렵이라 물이 많이 빠집니다. 가족 해루질하기 좋은 주말이에요.'; note.hidden = false; }
+      else note.hidden = true;
+    }
+  }
+  function week(d0) {
+    if (!$('tsWeek')) return;
+    var rows = [];
+    for (var i = 0; i < 7; i++) {
+      var d = new Date(d0); d.setDate(d.getDate() + i);
+      var m = T.calcMuldae(d), inten = T.calcIntensity(m);
+      rows.push({ d: d, m: m, inten: inten, h: Math.max(8, Math.round(inten * 0.92)) });
+    }
+    var top = rows.reduce(function (a, b) { return b.inten > a.inten ? b : a; });
+    top.best = true;
+    rows.forEach(function (x) { if (!x.best && x.inten >= 68) x.good = true; });
+    $('tpTitle').innerHTML = '물이 가장 많이 빠지는 날은 <em>' + dayWord(top.d, rows.indexOf(top)) + '</em>이에요';
+    $('tpLead').textContent = (top.d.getMonth() + 1) + '월 ' + top.d.getDate() + '일 · ' + top.m + '물 · 음력으로 계산한 물때입니다';
+    $('tpBasis').textContent = '물때 계산 기준';
+    drawWeek(rows, false);
+  }
+  function plan(data, d0, reg, cc) {
+    if (!data || !data.days || !data.days.length || !$('tsWeek')) return;
+    var rows = [];
+    for (var i = 0; i < 7; i++) {
+      var d = new Date(d0); d.setDate(d.getDate() + i);
+      var key = (d.getMonth() + 1) + '/' + d.getDate();
+      var day = data.days.filter(function (x) { return x.date === key; })[0];
+      var sun = cc ? T.sunTimes(d, cc[0], cc[1]) : null;
+      var a = sun ? toMin(sun.rise) + 60 : 420, b = sun ? toMin(sun.set) - 60 : 1020, low = null;
+      ((day && day.events) || []).forEach(function (e) {
+        if (e.type !== '간조' || e.level == null || e.level === '') return;
+        var t = toMin(e.time); if (t < a || t > b) return;   // 낮 시간(해뜬 뒤 1시간 ~ 해지기 1시간 전)만
+        if (!low || +e.level < low.level) low = { time: e.time, level: +e.level };
+      });
+      var m = T.calcMuldae(d);
+      rows.push({ d: d, m: m, inten: T.calcIntensity(m), low: low });
+    }
+    var lv = rows.filter(function (x) { return x.low; }).map(function (x) { return x.low.level; });
+    if (lv.length < 3) return;                  // 자료가 모자라면 계산값 그대로 둔다
+    var mx = Math.max.apply(null, lv), mn = Math.min.apply(null, lv), span = Math.max(1, mx - mn);
+    rows.forEach(function (x) { x.h = x.low ? Math.round(18 + (mx - x.low.level) / span * 76) : 6; });
+    var best = rows.filter(function (x) { return x.low; }).reduce(function (p, q) { return q.low.level < p.low.level ? q : p; });
+    best.best = true;
+    rows.forEach(function (x) { if (!x.best && x.low && x.low.level <= mn + span * 0.35) x.good = true; });
+    $('tpTitle').innerHTML = '해루질은 <em>' + dayWord(best.d, rows.indexOf(best)) + '</em>이 가장 좋아요';
+    $('tpLead').innerHTML = '<b>' + (best.d.getMonth() + 1) + '월 ' + best.d.getDate() + '일 ' + hmText(best.low.time)
+      + ' 간조</b> · 이번 주 낮 시간에 물이 가장 많이 빠집니다';
+    $('tpBasis').textContent = '낮 간조 기준 · ' + (data.point || reg.n);
+    drawWeek(rows, true);
+  }
+  /* ---------- 다음 간조까지 남은 시간 (1분마다 다시 씀) ---------- */
+  var nextTimer = null;
+  function nextLow(data) {
+    var box = $('tsNext'); if (!box || !data || !data.days) return;
+    function paint() {
+      var now = kst(), nowMin = now.getHours() * 60 + now.getMinutes(), found = null;
+      for (var i = 0; i < Math.min(2, data.days.length) && !found; i++) {
+        (data.days[i].events || []).some(function (e) {
+          if (e.type !== '간조') return false;
+          var t = toMin(e.time) + i * 1440;
+          if (t >= nowMin - 40) { found = { time: e.time, diff: t - nowMin, tomorrow: i === 1 }; return true; }
+          return false;
+        });
+      }
+      if (!found) { box.hidden = true; return; }
+      $('tsNextTime').textContent = (found.tomorrow ? '내일 ' : '') + found.time;
+      if (found.diff <= 30) {
+        $('tsNextLab').textContent = '지금은';
+        $('tsNextIn').textContent = found.diff < -10 ? '간조가 막 지났어요' : '간조 무렵이에요';
+      } else {
+        var h = Math.floor(found.diff / 60), mm = found.diff % 60;
+        $('tsNextLab').textContent = '지금부터';
+        $('tsNextIn').textContent = (h ? h + '시간 ' : '') + (mm ? mm + '분' : '') + ' 뒤';
+      }
+      box.hidden = false;
+    }
+    paint();
+    clearInterval(nextTimer); nextTimer = setInterval(paint, 60000);
+  }
+  var cur = REGS.some(function (r) { return r.s === saved(); }) ? saved() : REGS[0].s, req = 0;
+  REGS.forEach(function (r) {
+    var b = el('button', null, r.n); b.type = 'button'; b.setAttribute('role', 'tab'); b.dataset.r = r.s;
+    b.addEventListener('click', function () { pick(r.s, true); });
+    box.appendChild(b);
+  });
+  function pick(s, user) {
+    cur = s;
+    if (user) { try { localStorage.setItem(KEY, s); } catch (e) {} }
+    var reg = REGS.filter(function (r) { return r.s === s; })[0], co = C[s] || {};
+    [].forEach.call(box.children, function (b) { b.setAttribute('aria-selected', b.dataset.r === s ? 'true' : 'false'); });
+    var now = new Date(Date.now() + (new Date().getTimezoneOffset() + 540) * 60000);
+    var d = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var m = T.calcMuldae(d), inten = T.calcIntensity(m), lab = T.tideLabel(inten);
+    $('tsTitle').textContent = '오늘 ' + reg.n + ' 바다는';
+    $('tsDate').textContent = (d.getMonth() + 1) + '월 ' + d.getDate() + '일 (' + DAY[d.getDay()] + ') 기준';
+    $('tsMuldae').textContent = m + '물';
+    $('tsMuldaeName').textContent = lab.text;
+    $('tsGauge').style.width = inten + '%';
+    $('tsVerdict').textContent = inten >= 68 ? '물이 많이 빠지는 날이에요. 갯벌이 넓게 드러나 해루질하기 좋습니다.'
+      : inten <= 32 ? '물이 적게 빠지는 조금 무렵이에요. 물살이 약해 방파제·선착장 낚시가 편합니다.'
+      : '물이 중간쯤 드나드는 날이에요. 간조 시각에 맞춰 나가면 좋습니다.';
+    $('tsMore').href = s + '.html#tide';
+    $('tsMore').textContent = reg.n + ' 물때표 2주 전체 보기 →';
+    var cc = T.coords[s] || (co.lat != null ? [co.lat, co.lng] : null);
+    var sun = cc ? T.sunTimes(d, cc[0], cc[1]) : null;
+    $('tsRise').textContent = sun ? sun.rise : '–'; $('tsSet').textContent = sun ? sun.set : '–';
+    week(d);
+    if ($('tsNext')) $('tsNext').hidden = true;
+    $('tsTides').innerHTML = '<li class="muted">간조·만조 시각</li>'; $('tsTideSrc').textContent = '';
+    $('tsTemp').textContent = '–'; $('tsSky').textContent = '불러오는 중'; $('tsWave').textContent = '';
+    var my = ++req;
+    fetch('api/tide-cache.php?region=' + s, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (data) {
+      if (my !== req) return;
+      var ev = data && data.days && data.days[0] && data.days[0].events, ul = $('tsTides');
+      ul.innerHTML = '';
+      if (!ev || !ev.length) { ul.innerHTML = '<li class="muted">오늘 간조·만조 시각을 불러오지 못했어요</li>'; return; }
+      ev.forEach(function (e) {
+        var li = el('li', e.type === '만조' ? 'high' : '');
+        li.appendChild(el('span', 'k', e.type)); li.appendChild(el('b', null, e.time)); ul.appendChild(li);
+      });
+      $('tsTideSrc').textContent = (data.source === 'beach' ? '기상청 해수욕장 조석' : '국립해양조사원 조석예보')
+        + ' · ' + (data.point || (co.station && co.station.name) || reg.n);
+      nextLow(data);
+      plan(data, d, reg, cc);
+    }).catch(function () { if (my === req) $('tsTides').innerHTML = '<li class="muted">간조·만조 정보 준비 중</li>'; });
+    fetch('api/weather-jeju.php?region=' + s, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (w) {
+      if (my !== req) return;
+      if (!w || w.available === false) { $('tsSky').textContent = '이 권역은 관측 정보가 없어요'; return; }
+      $('tsTemp').textContent = (w.temp != null && w.temp !== '') ? w.temp + '°' : '–';
+      $('tsSky').textContent = w.label || '';
+      $('tsWave').textContent = (w.wave != null && w.wave !== '')
+        ? '파고 ' + w.wave + 'm · ' + (w.point || reg.n) : (w.point || reg.n) + ' 관측';
+    }).catch(function () { if (my === req) $('tsSky').textContent = '날씨 정보 준비 중'; });
+    // 시간별 물높이 그래프 — js/tide-graph.js
+    if (window.BADAGAJA_TIDEGRAPH && document.getElementById('tsGraph') && co.lat != null) {
+      window.BADAGAJA_TIDEGRAPH.mount(document.getElementById('tsGraph'), s, { dark: true, coords: [co.lat, co.lng] });
+    }
+    // 생활해양예보지수 (갯벌체험·바다낚시·해수욕) — api/seaidx.php
+    [].forEach.call(document.querySelectorAll('.ts-idx'), function (card) {
+      var t = card.dataset.type, g = card.querySelector('.ti-grade'),
+          pl = card.querySelector('.ti-place'), de = card.querySelector('.ti-detail');
+      card.className = 'ts-card ts-idx'; g.textContent = '–'; pl.textContent = '불러오는 중'; de.textContent = '';
+      fetch('api/seaidx.php?type=' + t + '&region=' + s).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (x) {
+        if (my !== req) return;
+        if (!x || !x.available) { card.classList.add('off'); g.textContent = '정보 없음'; pl.textContent = '이 권역 가까이에 예보 장소가 없어요'; return; }
+        card.classList.add('g' + x.grade); g.textContent = x.label;
+        pl.textContent = x.point + (x.outside ? ' (' + x.outside + ')' : '') + ' · ' + x.distance + 'km · ' + x.when;
+        var det = x.detail || {}, parts = [];
+        if (t === 'mudflat') { if (det.start && det.end && det.start !== det.end) parts.push('체험 가능 ' + det.start + '~' + det.end); if (det.weather) parts.push(det.weather); }
+        if (t === 'beach') { if (det.open) parts.push(det.open === '폐장' ? '폐장 기간(안전요원 없음)' : det.open); if (det.watertemp) parts.push('수온 ' + det.watertemp + '℃'); if (det.wave) parts.push('파고 ' + det.wave + 'm'); }
+        if (t === 'fishing') {
+          if (x.fish && x.fish.length) parts.push(x.fish.slice(0, 3).map(function (f) { return f.fish + ' ' + f.label; }).join(' · '));
+          if (det.watertemp) parts.push('수온 ' + det.watertemp + '℃');
+        }
+        de.textContent = parts.join(' · ');
+      }).catch(function () { if (my === req) { card.classList.add('off'); g.textContent = '–'; pl.textContent = '지수를 불러오지 못했어요'; } });
+    });
+  }
+  pick(cur, false);
+})();
+
+/* 이달의 제철·축제 — 위 hubData 를 읽어 이번 달부터 보여 주고 ‹ › 로 달을 옮깁니다. */
+(function () {
+  var D = {}; try { D = JSON.parse(document.getElementById('hubData').textContent); } catch (e) { return; }
+  var kst = new Date(Date.now() + (new Date().getTimezoneOffset() + 540) * 60000);
+  var m = kst.getMonth() + 1;
+  var $ = function (id) { return document.getElementById(id); };
+  function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+  function draw() {
+    $('ssMonth').textContent = m + '월';
+    var cs = (D.catch || {})[m] || [], cb = $('ssCatch');
+    cb.innerHTML = ''; $('ssCatchCount').textContent = cs.length + '종';
+    if (!cs.length) cb.appendChild(el('p', 'ss-empty', '이 달에 표시할 제철 정보가 없어요.'));
+    cs.forEach(function (c) {
+      var b = el('button', 'ss-chip'); b.type = 'button'; b.title = c.r.join(' · ');
+      b.appendChild(document.createTextNode(c.n + ' '));
+      b.appendChild(el('small', null, c.r.length + '곳'));
+      cb.appendChild(b);
+    });
+    var fs = (D.fest || {})[m] || [], fb = $('ssFest');
+    fb.innerHTML = ''; $('ssFestCount').textContent = fs.length ? fs.length + '개' : '';   /* 0개는 숫자를 감춤 (2026-09-24) */
+    if (!fs.length) fb.appendChild(el('p', 'ss-empty', m + '월에는 등록된 축제가 없어요. 다음 달을 확인해 보세요.'));
+    fs.forEach(function (f) {
+      var a = el('a', 'ss-fest'); a.href = f.s + '.html#festival'; a.style.setProperty('--c', f.c);
+      a.appendChild(el('span', 'r', f.r + ' · ' + m + '월 예정'));
+      a.appendChild(el('b', null, f.n));
+      a.appendChild(el('span', null, (f.p ? f.p + ' · ' : '') + f.d));
+      fb.appendChild(a);
+    });
+  }
+  $('ssPrev').addEventListener('click', function () { m = m === 1 ? 12 : m - 1; draw(); });
+  $('ssNext').addEventListener('click', function () { m = m === 12 ? 1 : m + 1; draw(); });
+  draw();
+})();
+/* 동행별 코스 — 카드는 이미 그려 두고 고른 것만 보여 줍니다. */
+(function () {
+  var tabs = document.querySelectorAll('.hc-tabs button'), cards = document.querySelectorAll('.hc-card');
+  if (!tabs.length) return;
+  function show(k) {
+    [].forEach.call(tabs, function (t) { t.setAttribute('aria-selected', t.dataset.k === k ? 'true' : 'false'); });
+    [].forEach.call(cards, function (c) { c.hidden = c.dataset.k !== k; });
+  }
+  [].forEach.call(tabs, function (t) { t.addEventListener('click', function () { show(t.dataset.k); }); });
+  show(tabs[0].dataset.k);
+})();
+</script>
+<script src="js/kakao-share.js?v=202609262116" defer></script>
+<script src="js/ads-data.js?v=202609262116"></script>
+<script src="js/ads.js?v=202609262116"></script>
+<script src="js/hit.js?v=202609262116" defer></script>
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>/* PC 버전으로 보기(첫 화면만, 2026-09-22) — 휴대폰에 저장된 선택이면 화면 폭을 1280 으로 */try{if(localStorage.getItem("bdg-pcview")==="1")document.querySelector("meta[name=viewport]").setAttribute("content","width=1280")}catch(e){}</script>
+<title>바다가자닷컴 — 전국 물때표와 해루질·낚시 포인트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700;900&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=202609262116">
+<link rel="stylesheet" href="css/home.css?v=202609262116">
+<link rel="stylesheet" href="css/gate.css?v=202609262116">
+<meta name="description" content="어느 물때에 어디로 가야 하는지. 전국 57개 권역의 물때표와 3,500곳 이상의 해루질·낚시 포인트를 알려드립니다.">
+<meta property="og:type" content="website"><meta property="og:site_name" content="바다가자닷컴"><meta property="og:locale" content="ko_KR">
+<meta property="og:title" content="바다가자닷컴 — 전국 물때표와 해루질·낚시 포인트"><meta property="og:description" content="어느 물때에 어디로 가야 하는지. 전국 57개 권역의 물때표와 3,500곳 이상의 해루질·낚시 포인트를 알려드립니다.">
+<meta property="og:url" content="https://badagaja.com/"><meta property="og:image" content="https://badagaja.com/img/boseong/hero.jpg?v=2789956585">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="바다가자닷컴 — 전국 물때표와 해루질·낚시 포인트"><meta name="twitter:description" content="어느 물때에 어디로 가야 하는지. 전국 57개 권역의 물때표와 3,500곳 이상의 해루질·낚시 포인트를 알려드립니다."><meta name="twitter:image" content="https://badagaja.com/img/boseong/hero.jpg?v=2789956585">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"바다가자닷컴","alternateName":"바다가자닷컴 바다여행 가이드","url":"https://badagaja.com/","description":"어느 물때에 어디로 가야 하는지. 전국 57개 권역의 물때표와 3,500곳 이상의 해루질·낚시 포인트를 알려드립니다.","inLanguage":"ko","publisher":{"@type":"Organization","name":"바다가자닷컴","alternateName":"바다가자닷컴 바다여행 가이드","url":"https://badagaja.com/","email":"ohjunhan@gmail.com","logo":{"@type":"ImageObject","url":"https://badagaja.com/icon-512.png","width":512,"height":512}}}</script>
+<meta name="msvalidate.01" content="32B64F91BADB2372D5921F34317D2FF3">
+<link rel="canonical" href="https://badagaja.com/">
+<link rel="alternate" hreflang="ko" href="https://badagaja.com/">
+<link rel="alternate" hreflang="zh-Hans" href="https://badagaja.com/zh-cn/">
+<link rel="alternate" type="application/rss+xml" title="바다가자닷컴 새 소식" href="https://badagaja.com/rss.xml">
+<link rel="shortcut icon" href="https://badagaja.com/favicon.ico">
+<link rel="icon" href="https://badagaja.com/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="https://badagaja.com/apple-touch-icon.png">
+<link rel="manifest" href="https://badagaja.com/manifest.webmanifest">
+<meta name="theme-color" content="#2F5D57">
+<link rel="preload" as="image" href="img/coast/taean-hero.jpg?v=3125325243">
+</head>
+<body class="home home-gate" data-site="all">
+
+<header>
+  <div class="navbar">
+    <a class="brand nv-logo" href="./" aria-label="바다가자닷컴 홈"><span class="nv-n"><svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M4 3h5.3l5.1 7.6V3H20v18h-5.3L9.6 13.4V21H4z"/></svg></span><span class="mark">바다가자닷컴</span><span class="nv-go"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l5 5" stroke-linecap="round"/></svg></span></a>
+    <nav class="navlinks">
+      <a href="guide/#regions">권역별 안내</a>
+      <a href="tide/">물때표</a>
+      <a href="festival/">지역축제정보</a>
+    </nav>
+    <div class="lang-pick"><span class="on" aria-current="page">한국어</span><a href="zh-cn/" lang="zh-Hans" hreflang="zh-Hans">中文</a></div>
+    <div class="muldae-badge"><span class="dot"></span> <span id="headerMuldae">오늘 물때 보기</span></div>
+  </div>
+</header>
+
+<section class="g-hero" id="top">
+  <div class="g-hero-bg" aria-hidden="true"><img src="img/coast/taean-hero.jpg?v=3125325243" alt="해가 지는 태안 만리포 바다"></div>
+  <div class="g-hero-shade" aria-hidden="true"></div>
+  <div class="wrap g-hero-in">
+    <div class="g-hero-txt">
+      <span class="g-eyebrow">바다가자 동호회가 알려드리는 바닷가 여행</span>
+      <h1 class="serif"><span class="l1">바다를 알고 가면</span><span class="l2">바다가 더 <em>즐겁습니다</em></span></h1>
+      <p class="g-lede">첫 갯벌에서 무엇을 찾아야 하는지, 어느 물때에 어디로 가야 하는지 — 바다가자닷컴이 알려드립니다.</p>
+      <form class="g-search" action="guide/" method="get" role="search">
+        <label class="sr-only" for="gq">권역·어종·축제·포인트 검색</label>
+        <svg class="g-search-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input id="gq" name="q" type="search" placeholder="지금, 바다에 갈 준비 되셨나요?" autocomplete="off">
+        <button type="submit">찾아보기</button>
+      </form>
+      <p class="g-quick"><span>이렇게 찾아보세요</span>
+        <a href="guide/?q=9%EC%9B%94%20%ED%95%B4%EB%A3%A8%EC%A7%88">9월 해루질</a><a href="guide/?q=%EC%9D%B4%EB%B2%88%EC%A3%BC%20%EB%82%9A%EC%8B%9C">이번주 낚시</a><a href="guide/?q=%EC%8B%A0%EC%95%88%20%EA%B0%AF%EB%B2%8C">신안 갯벌</a><a href="guide/?q=%EC%97%AC%EC%88%98%20%EC%B6%95%EC%A0%9C">여수 축제</a><a href="guide/?q=%EA%B0%90%EC%84%B1%EB%8F%94">감성돔</a><a href="rule.html">금어기</a>
+      </p>
+</div>
+  </div>
+  <p class="g-credit">사진: Olga Lipunova · 태안 만리포 일몰</p>
+</section>
+
+<div class="g-stats">
+  <div class="wrap">
+    <a href="guide/#regions"><b>57</b><span>전국 바다 권역</span></a>
+    <a href="guide/#regions"><b>3,603</b><span>해루질·낚시 포인트</span></a>
+    <a href="guide/#species"><b>35</b><span>제철 어종·해루질 안내</span></a>
+    <a href="festival/"><b>190</b><span>바다 축제</span></a>
+    <a href="guide/#regions"><b>277</b><span>권역별 향토 먹거리</span></a>
+  </div>
+</div>
+
+<section class="stw" aria-label="바다가자닷컴 이용 순서">
+  <div class="wrap">
+    <p class="stw-t"><b>바다가자닷컴은 이렇게 안내합니다</b><span>여섯 걸음이면 오늘 갈 바다가 정해집니다</span></p>
+    <div class="st-row">
+      <a class="sc" style="--c:#1F6FB2;--bg:#EAF3FB" href="guide/#regions">
+        <span class="sc-h"><b class="sc-no">01</b><span class="sc-t">어디로 갈까?</span></span>
+        <span class="sc-s">57개 바다 권역</span>
+        <span class="sc-ph"><img src="img/ui/step/1.webp?v=3541627360" alt="전국 바다 권역을 나눈 지도" loading="lazy" width="269" height="130"></span>
+        <span class="sc-d">전남 · 제주 · 경남 · 강원 등</span>
+      </a>
+      <span class="st-ar" aria-hidden="true">›</span>
+      <div class="sc sc-two" style="--c:#1E8A5F;--bg:#E9F6F0">
+        <a class="sc-cover" href="catch/" aria-label="낚시와 해루질 고르기"></a>
+        <span class="sc-h"><b class="sc-no">02</b><span class="sc-t">무엇을 할까?</span></span>
+        <span class="sc-s">낚시 · 해루질</span>
+        <span class="sc-ph sc-stack"><img src="img/ui/step/2.webp?v=1075189779" alt="갯바위 낚시와 갯벌 해루질" loading="lazy" width="268" height="87">
+          <span class="sc-pills">
+            <a class="sc-pill pf" href="fish/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12c4-4.6 10-4.6 14 0-4 4.6-10 4.6-14 0Z"/><path d="M17 12l4-2.8v5.6L17 12Z"/><circle cx="8" cy="12" r="1"/></svg>낚시</a>
+            <a class="sc-pill pc" href="catch/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4c4.4 0 8 3.6 8 8v4H4v-4c0-4.4 3.6-8 8-8Z"/><path d="M12 4v12M8.4 4.8 6 16M15.6 4.8 18 16"/></svg>해루질</a>
+          </span>
+        </span>
+        <span class="sc-d">낚시 / 해루질 선택</span>
+      </div>
+      <span class="st-ar" aria-hidden="true">›</span>
+      <a class="sc" style="--c:#E08A1E;--bg:#FDF4E6" href="guide/#regions">
+        <span class="sc-h"><b class="sc-no">03</b><span class="sc-t">어디서 할까?</span></span>
+        <span class="sc-s">3,603개 포인트</span>
+        <span class="sc-ph"><img src="img/ui/step/3.webp?v=3800040024" alt="갯바위가 늘어선 바닷가" loading="lazy" width="269" height="112"></span>
+        <span class="sc-d">갯벌 · 갯바위 · 방파제 · 선착장</span>
+      </a>
+      <span class="st-ar" aria-hidden="true">›</span>
+      <a class="sc" style="--c:#7A4FC0;--bg:#F2EDFB" href="tide/">
+        <span class="sc-h"><b class="sc-no">04</b><span class="sc-t">오늘 괜찮을까?</span></span>
+        <span class="sc-s">물때 · 날씨 · 파고</span>
+        <span class="sc-ph sc-info">
+          <span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 13c3 0 3-3 6-3s3 3 6 3 3-3 6-3 2 1.6 2 1.6"/><path d="M2 18c3 0 3-3 6-3s3 3 6 3 3-3 6-3 2 1.6 2 1.6"/></svg><b>물때</b><em id="stTide">오늘 물때</em></span>
+          <span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="9" r="3.4"/><path d="M9 2.6v1.8M9 13.6v1.8M2.6 9h1.8M13.6 9h1.8M4.5 4.5l1.3 1.3M12.2 12.2l1.3 1.3M13.5 4.5l-1.3 1.3M5.8 12.2l-1.3 1.3"/><path d="M11 19a3.4 3.4 0 0 1 6.5-1.4A3 3 0 1 1 18 22h-7a1.6 1.6 0 0 1 0-3Z"/></svg><b>날씨</b><em id="stSky">오늘 날씨</em></span>
+          <span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 10c3 0 3-3 6-3s3 3 6 3 3-3 6-3 2 1.6 2 1.6"/><path d="M2 15c3 0 3-3 6-3s3 3 6 3 3-3 6-3 2 1.6 2 1.6"/><path d="M2 20c3 0 3-3 6-3s3 3 6 3 3-3 6-3 2 1.6 2 1.6"/></svg><b>파고</b><em id="stWave">바다 상태</em></span>
+        </span>
+        <span class="sc-d">간조 · 만조 · 바람 · 파고</span>
+      </a>
+      <span class="st-ar" aria-hidden="true">›</span>
+      <a class="sc" style="--c:#0F9A9A;--bg:#E5F6F5" href="gear.html">
+        <span class="sc-h"><b class="sc-no">05</b><span class="sc-t">무엇을 준비할까?</span></span>
+        <span class="sc-s">어종 · 채비 · 장비</span>
+        <span class="sc-ph"><img src="img/ui/step/5.webp?v=2568099839" alt="낚싯대와 채비함, 장화" loading="lazy" width="268" height="117"></span>
+        <span class="sc-d">잡는 법 · 금어기 · 안전수칙</span>
+      </a>
+      <span class="st-ar" aria-hidden="true">›</span>
+      <a class="sc" style="--c:#D9558A;--bg:#FCECF3" href="travel/">
+        <span class="sc-h"><b class="sc-no">06</b><span class="sc-t">무엇을 즐길까?</span></span>
+        <span class="sc-s">관광 · 맛집 · 숙소</span>
+        <span class="sc-ph sc-stack"><img src="img/ui/step/6.webp?v=2375898937" alt="해산물 밥상과 바닷가 숙소" loading="lazy" width="270" height="103">
+          <span class="sc-trio">
+            <span class="sc-one"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h4l1.6-2h6.8L17 8h4v11H3V8Z"/><circle cx="12" cy="13" r="3.4"/></svg>관광</span>
+            <span class="sc-one"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3v7a2 2 0 0 0 4 0V3M8 10v11"/><path d="M17 3c-1.4 1.6-2 3.4-2 5.4 0 1.4.8 2.6 2 2.6v10"/></svg>맛집</span>
+            <span class="sc-one"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18V7M3 12h13a5 5 0 0 1 5 5v1M3 18h18"/><circle cx="7.5" cy="9.5" r="1.8"/></svg>숙박</span>
+          </span>
+        </span>
+        <span class="sc-d">축제 · 명소 · 체험 · 숙소</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap g-main">
+  <section class="g-panel g-today" id="tide">
+    <div class="gp-head"><h2>물때정보</h2><a class="gp-btn" href="tide/">전국 물때표 보기</a></div>
+    <a class="gt-ph" href="tide/"><img id="gtPhoto" src="img/sinan/hero.jpg?v=4072387617" alt="전남 신안 바다" loading="lazy"><span class="gt-tag" id="gtTag">전남 신안</span><span class="gt-cap">오늘 물때와 날씨를 확인하고 출발하세요</span></a>
+    <div class="gt-grid">
+      <div><span>오늘 물때</span><b id="tsMuldae">계산 중</b></div>
+      <div><span>물살</span><b id="tsMuldaeName">–</b></div>
+    </div>
+    <p class="gt-foot">물이 멈춰 있는 시간보다 <b>도는 시간</b>에 입질이 잦습니다. 권역이 8초마다 바뀝니다.</p>
+    <div class="gt-graph" id="tsGraph"></div>
+    <p class="gt-more"><a href="muldae.html">물때 보는 방법 →</a></p>
+  </section>
+
+  <section class="g-panel g-book" id="book">
+    <div class="gp-head"><h2>초보자를 위한 바다생활 가이드</h2></div>
+    <div class="gb-list">
+      <a class="gb" href="catch/basics.html"><span class="gb-th"><img src="img/species/bajirak.jpg?v=1315470487" alt="바지락 사진" loading="lazy"></span><span class="gb-tx"><b>초보자를 위한 해루질 준비물</b><small>처음 갯벌에 서는 분이 챙길 것과 조심할 것</small></span></a>
+      <a class="gb" href="catch/"><span class="gb-th"><img src="img/species/matjogae.jpg?v=2086161272" alt="맛조개 사진" loading="lazy"></span><span class="gb-tx"><b>해루질 대상 17가지</b><small>바지락·맛조개·낙지까지, 대상별 시기와 잡는 법</small></span></a>
+      <a class="gb" href="fish/"><span class="gb-th"><img src="img/species/ureok.jpg?v=3221619713" alt="우럭 사진" loading="lazy"></span><span class="gb-tx"><b>낚시 어종 18가지</b><small>어종별 채비법, 입질이 오는 자리, 기타 준비물 안내</small></span></a>
+      <a class="gb" href="gear.html"><span class="gb-th"><img src="img/coast/yeongdeok-hero.jpg?v=2325428010" alt="등대가 선 곶과 그 아래 항구" loading="lazy"></span><span class="gb-tx"><b>장비와 안전</b><small>갯벌·갯바위에 나가기 전 챙길 장비와 안전 수칙</small></span></a>
+      <a class="gb" href="rule.html"><span class="gb-th"><img src="img/species/nakji.jpg?v=1030437116" alt="낙지 사진" loading="lazy"></span><span class="gb-tx"><b>금어기·크기·마을어장</b><small>잡으면 안 되는 철과 크기, 들어가면 안 되는 구역</small></span></a>
+    </div>
+  </section>
+
+  <section class="g-panel g-clubpanel">
+    <div class="gcp-in">
+      <span class="gc-tag">창립회원 모집 중</span>
+      <h2>바다는 혼자보다<br>둘이 안전합니다</h2>
+      <p>참고서를 다 읽어도 첫 걸음은 어렵습니다. 물때를 아는 사람과 함께 들어가고 함께 나옵니다.</p>
+      <ul>
+        <li>물때에 맞춰 같이 나갑니다</li>
+        <li>2인 1조로 서로를 봅니다</li>
+        <li>처음 오신 분은 짝을 지어</li>
+        <li>다녀온 자리는 함께 치웁니다</li>
+      </ul>
+      <a class="gcp-btn" href="club.html">동호회 살펴보기 →</a>
+      <small>같이 다니는 사람들 이야기</small>
+    </div>
+  </section>
+</div>
+
+<div class="wrap g-ad">
+  <aside class="ad-slot" data-ad-slot="index-mid-pc" hidden></aside>
+  <aside class="ad-slot" data-ad-slot="index-mid-mobile" hidden></aside>
+</div>
+
+<!--home-map-->
+<div class="wrap"><section class="hm" id="map" aria-labelledby="hmT">
+  <div class="hm-left">
+    <div class="hm-head"><em>전국 바다지도</em><h2 id="hmT">어느 바다로 갈까요</h2></div>
+    <div class="hm-map"><svg class="hm-svg" viewBox="0 0 255 353" role="img" aria-label="전국 바다 지역 지도 — 지역을 누르면 그 지역으로 갑니다" xmlns="http://www.w3.org/2000/svg">
+<polygon class="hm-inland" points="72.7,116.1 88.3,112.9 103.8,103.3 129.7,103.3 137.4,109.7 119.3,135.3 114.1,160.9 106.4,176.9 93.4,180.1 85.7,173.7 77.9,160.9 80.5,141.7"/>
+<text class="hm-inl" x="99.6" y="140.4">충북</text>
+<a href="sudogwon/" class="hm-r" style="--c:#6B7FA3" aria-label="인천·경기 바다"><polygon points="39.1,70.0 46.8,55.3 67.5,39.3 90.8,32.9 96.0,58.5 93.4,87.3 103.8,103.3 88.3,112.9 72.7,116.1 54.6,118.0 52.0,112.9 46.8,103.3 41.7,93.7 42.7,86.0 37.5,79.0"/><polygon points="29.2,73.8 36.5,76.4 39.6,68.7 32.3,64.9"/><rect class="hm-pill" x="24.2" y="72.3" width="81.5" height="22" rx="11"/><text class="hm-lb" x="65.0" y="87.3">인천·경기</text></a>
+<a href="gangwon/" class="hm-r" style="--c:#3C6E71" aria-label="강원 바다"><polygon points="90.8,32.9 119.3,32.9 132.8,13.7 145.2,42.5 163.3,68.1 176.3,90.5 184.0,111.6 150.4,112.9 137.4,109.7 129.7,103.3 103.8,103.3 93.4,87.3 96.0,58.5"/><rect class="hm-pill" x="119.5" y="49.9" width="41.0" height="22" rx="11"/><text class="hm-lb" x="140.0" y="64.9">강원</text></a>
+<a href="chungnam/" class="hm-r" style="--c:#3B7EA1" aria-label="충남 바다"><polygon points="54.6,118.0 72.7,116.1 80.5,141.7 77.9,160.9 85.7,173.7 62.4,173.7 46.8,178.8 39.1,170.5 37.5,157.7 28.7,144.9 17.3,132.1 26.1,118.6 36.5,122.5 44.2,117.4"/><polygon points="27.7,155.8 32.3,153.2 31.3,144.9 27.2,148.1"/><rect class="hm-pill" x="35.7" y="129.9" width="41.0" height="22" rx="11"/><text class="hm-lb" x="56.2" y="144.9">충남</text></a>
+<a href="jeonbuk/" class="hm-r" style="--c:#5A8F5A" aria-label="전북 바다"><polygon points="46.8,178.8 62.4,173.7 85.7,173.7 93.4,180.1 106.4,176.9 111.6,192.9 98.6,215.3 94.5,231.3 72.7,224.9 52.0,221.7 33.9,215.3 36.5,204.4 42.7,192.9 39.1,183.3"/><polygon points="30.3,192.9 34.4,192.9 33.9,189.0 29.7,189.7"/><rect class="hm-pill" x="52.2" y="183.0" width="41.0" height="22" rx="11"/><text class="hm-lb" x="72.7" y="198.0">전북</text></a>
+<a href="jeonnam/" class="hm-r" style="--c:#C07B22" aria-label="전남 바다"><polygon points="33.9,215.3 52.0,221.7 72.7,224.9 94.5,231.3 102.2,247.3 101.2,260.7 90.8,251.8 85.7,269.7 77.9,278.0 67.5,272.2 59.8,279.3 49.4,287.0 38.0,289.5 32.3,276.1 29.2,256.9 26.1,240.9 31.3,224.9"/><polygon points="17.3,276.1 27.7,272.2 30.3,282.5 20.9,286.3"/><polygon points="45.8,287.0 52.0,285.7 52.0,290.8 45.8,290.8"/><polygon points="13.2,253.7 18.4,252.4 18.9,258.2 13.7,259.4"/><polygon points="8.0,266.5 12.7,265.2 12.7,269.7 8.0,270.3"/><rect class="hm-pill" x="39.3" y="234.2" width="41.0" height="22" rx="11"/><text class="hm-lb" x="59.8" y="249.2">전남</text></a>
+<a href="gyeongnam/" class="hm-r" style="--c:#2F5873" aria-label="경남 바다"><polygon points="94.5,231.3 98.6,215.3 111.6,192.9 129.7,202.5 155.6,200.6 165.9,198.0 163.3,205.7 165.9,215.3 163.3,228.1 155.6,239.0 145.2,237.7 137.4,250.5 124.5,248.6 114.1,244.1 106.4,247.3 102.2,247.3"/><polygon points="142.6,250.5 151.4,244.1 153.0,253.7 146.2,262.0"/><polygon points="105.9,253.0 115.2,253.0 116.7,260.7 109.0,262.6"/><rect class="hm-pill" x="106.6" y="209.9" width="41.0" height="22" rx="11"/><text class="hm-lb" x="127.1" y="224.9">경남</text></a>
+<a href="busanulsan/" class="hm-r" style="--c:#4A6FA5" aria-label="부산·울산 바다"><polygon points="165.9,198.0 190.3,198.0 185.6,212.1 178.9,231.3 168.5,239.6 155.6,239.0 163.3,228.1 165.9,215.3 163.3,205.7"/><line class="hm-lead" x1="176.3" y1="221.7" x2="162.4" y2="224.9"/><rect class="hm-pill" x="162.4" y="209.9" width="81.5" height="22" rx="11"/><text class="hm-lb" x="203.2" y="224.9">부산·울산</text></a>
+<a href="gyeongbuk/" class="hm-r" style="--c:#4A4F7A" aria-label="경북 바다"><polygon points="137.4,109.7 150.4,112.9 184.0,111.6 187.7,141.7 186.6,160.9 195.4,175.0 191.8,183.3 190.3,198.0 165.9,198.0 155.6,200.6 129.7,202.5 111.6,192.9 106.4,176.9 114.1,160.9 119.3,135.3"/><rect class="hm-pill" x="137.7" y="138.2" width="41.0" height="22" rx="11"/><text class="hm-lb" x="158.2" y="153.2">경북</text></a>
+<a href="jeju/" class="hm-r" style="--c:#2F8C8C" aria-label="제주 바다"><polygon points="18.9,335.0 26.1,341.4 41.7,339.4 57.2,332.4 59.8,324.1 46.8,319.0 31.3,323.4 20.9,328.6"/><polygon points="26.1,304.2 30.3,304.2 30.3,307.4 26.1,307.4"/><line class="hm-lead" x1="58.7" y1="328.6" x2="65.2" y2="327.3"/><rect class="hm-pill" x="65.2" y="312.3" width="41.0" height="22" rx="11"/><text class="hm-lb" x="85.7" y="327.3">제주</text></a>
+</svg></div>
+  </div>
+  <div class="hm-menu">
+    <p class="hm-menu-t">바다가자닷컴에서 볼 수 있는 것</p>
+      <div class="hm-g"><b>물때</b><div class="hm-b"><a href="tide/">전국 물때표</a><a href="muldae.html">물때표 보는 법</a><a href="guide/">바다참고서</a><a href="data.html">자료 목차</a></div></div>
+      <div class="hm-g"><b>잡기</b><div class="hm-b"><a href="catch/">해루질 대상 17</a><a href="fish/">낚시 어종 18</a><a href="guide/#regions">포인트 3,603곳</a><a href="guide/#species">월별 타겟 어종</a></div></div>
+      <div class="hm-g"><b>처음이라면</b><div class="hm-b"><a href="catch/basics.html">해루질 왕초보 기초</a><a href="fish/basics.html">바다낚시 왕초보 기초</a><a href="gear.html">장비와 안전</a><a href="rule.html">금어기 · 크기 · 마을어장</a></div></div>
+      <div class="hm-g"><b>권역별 축제 및 관광명소 안내</b><div class="hm-b"><a href="festival/">바다 축제 190</a><a href="guide/#course">동행별 코스</a><a href="guide/#regions">향토 먹거리 · 명소</a></div></div>
+    <p class="hm-menu-n">지도에서 지역을 누르면 그 지역 권역으로 갑니다</p>
+  </div>
+</section></div>
+<!--/home-map-->
+
+
+<footer class="site-footer">
+  <div class="wrap footer-top">
+    <div class="footer-brand">
+      <a class="brand" href="./" aria-label="바다가자닷컴 홈"><svg class="logo" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="13" fill="#2F5D57"/><path d="M24 43C24 43 10.5 29 10.5 19.5a13.5 13.5 0 0 1 27 0C37.5 29 24 43 24 43Z" fill="#FFFBF3"/><circle cx="24" cy="15" r="3.6" fill="#E5A94F"/><path d="M15.5 23q2.1-2.4 4.25 0t4.25 0t4.25 0t4.25 0" stroke="#2F5D57" stroke-width="2.6" fill="none" stroke-linecap="round"/></svg><span class="mark">바다가자닷컴</span></a>
+      <p class="footer-tagline">물때에 맞춰 떠나는 바다 여행 안내</p>
+<div class="footer-find"><span>다시 찾으실 땐</span><a class="nv-box" href="https://search.naver.com/search.naver?query=%EB%B0%94%EB%8B%A4%EA%B0%80%EC%9E%90%EB%8B%B7%EC%BB%B4" target="_blank" rel="noopener" aria-label="네이버에서 바다가자닷컴 검색하기"><span class="nv-n"><svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="7" fill="#03C75A"/><path d="M22.6 20.9 16.8 12H11v16h6.1v-8.9L22.9 28H29V12h-6.4v8.9Z" fill="#fff"/></svg></span><b>바다가자닷컴</b><span class="nv-go"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg></span></a></div>
+      <p class="footer-owner">운영책임자 <b>오준한</b><br><a href="mailto:ohjunhan@gmail.com">ohjunhan@gmail.com</a></p>
+    </div>
+    <nav class="footer-nav" aria-label="하단 메뉴">
+      <div class="fn-col">
+        <h2>둘러보기</h2>
+        <a href="./tide/">오늘의 바다</a>
+        <a href="guide/#regions">전체 권역</a>
+        <a href="festival/">축제 달력</a>
+        <a href="jeju/festival.html">제주 축제</a>
+      </div>
+      <div class="fn-col">
+        <h2>잡는 법</h2>
+        <a href="catch/">해루질 대상</a>
+        <a href="fish/">낚시 어종</a>
+        <a href="rule.html">금어기·크기</a>
+        <a href="gear.html">장비·안전</a>
+      </div>
+      <div class="fn-col">
+        <h2>사이트</h2>
+        <a href="about.html">바다가자닷컴 소개</a>
+        <a href="data.html">자료 목차</a><a href="sources.html">자료 출처</a>
+        <a href="privacy.html">개인정보처리방침</a>
+        <a href="photos.html">사진 출처</a>
+        <a href="mailto:ohjunhan@gmail.com?subject=%5B%EB%B0%94%EB%8B%A4%EA%B0%80%EC%9E%90%5D%20%EC%A0%95%EB%B3%B4%20%EC%98%A4%EB%A5%98%20%EC%A0%9C%EB%B3%B4">정보 오류 제보</a>
+      </div>
+    </nav>
+  </div>
+  <div class="wrap footer-bottom">
+    <p class="pcview"><a href="#" id="pcView">PC 버전으로 보기</a></p>
+    <p class="footer-note">※ 포인트·물때·숙소 정보는 방문 전 확인하세요. 갯벌 채취·낚시 규정은 어촌계·지자체 안내를 따릅니다.</p>
+    <p class="copyright">© 2026 바다가자닷컴(badagaja.com) · 사이트의 글·사진·자료를 무단으로 복제·배포할 수 없습니다. <a href="copyright.html" style="color:inherit;text-decoration:underline">자료를 쓰실 때</a></p>
+  </div>
+</footer>
+<script>(function(){var a=document.getElementById("pcView");if(!a)return;var on=false;try{on=localStorage.getItem("bdg-pcview")==="1"}catch(e){}a.textContent=on?"휴대폰 화면으로 돌아가기":"PC 버전으로 보기";a.addEventListener("click",function(e){e.preventDefault();try{if(on)localStorage.removeItem("bdg-pcview");else localStorage.setItem("bdg-pcview","1")}catch(x){}location.reload()})})();</script>
+
+<div style="display:none" aria-hidden="true">
+  <div id="tsGroups"></div>
+  <div id="tsRegions"></div>
+  <div id="tsTitle"></div>
+  <div id="tsDate"></div>
+  <i id="tsGauge"></i>
+  <div id="tsVerdict"></div>
+  <div id="tsNext"><b id="tsNextTime"></b><small id="tsNextLab"></small><b id="tsNextIn"></b></div>
+  <ul id="tsTides"></ul>
+  <div id="tsTideSrc"></div>
+  <b id="tsTemp"></b><span id="tsSky"></span><div id="tsWave"></div>
+  <b id="tsRise"></b><b id="tsSet"></b>
+  <a id="tsMore" href="./#tide"></a>
+  <div id="tsWeek"></div>
+  <h3 id="tpTitle"></h3><p id="tpLead"></p><span id="tpBasis"></span><p id="tpNote"></p>
+  <div id="tideStrip"></div>
+  <div id="tideStatus"></div>
+  <div id="weatherIcon"></div>
+  <div id="weatherTemp"></div>
+  <div id="weatherLabel"></div>
+  <div id="weatherWave"></div>
+  <div id="weatherWatertemp"></div>
+</div>
+
+<script src="js/app.js?v=202609262116"></script>
+<script src="js/tide-graph.js?v=202609262116"></script>
+<script src="js/coast-data.js?v=202609262116"></script>
+<script src="js/home-data.js?v=202609262116"></script>
+<script src="js/nation-data.js?v=202609262116"></script>
+<script src="js/home.js?v=202609262116"></script>
+<script src="js/gate-tide.js?v=202609262116"></script>
+<script src="js/kakao-share.js?v=202609262116" defer></script>
+<script src="js/hit.js?v=202609262116" defer></script>
+<script src="js/ads-data.js?v=202609262116"></script>
+<script src="js/ads.js?v=202609262116"></script>
+</body>
+</html>

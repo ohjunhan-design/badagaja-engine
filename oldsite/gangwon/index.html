@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<!-- 강원 바다 여행 첫 화면 — 전남 첫 화면(index.html)처럼 손으로 관리하는 쪽입니다.
+     내용의 출처: data/coast-regions*.json 의 open:true 권역(이름·소개·색·명소·제철·축제·코스),
+                  point/gangwon/ 의 카드 수(포인트 개수), <권역>.html 의 og:image(카드 사진)
+     오늘의 바다는 js/app.js(물때 계산)·js/coast-data.js(좌표·관측소)와
+     api/tide-cache.php · api/weather-jeju.php 를 씁니다 — 권역 쪽과 같은 곳입니다.
+     권역 자료를 고친 뒤에는 이 쪽의 숫자와 카드도 함께 손봐 주세요. -->
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<base href="../">
+<title>강원 바다 여행 — 물때·낚시·해루질 포인트 | 바다가자닷컴</title>
+<meta name="description" content="강원특별자치도 해안 6개 권역의 물때와 낚시·해루질 포인트 222곳, 제철 해산물과 축제, 추천 코스를 한곳에.">
+<link rel="canonical" href="https://badagaja.com/gangwon/">
+<link rel="alternate" hreflang="ko" href="https://badagaja.com/gangwon/">
+<link rel="alternate" hreflang="zh-Hans" href="https://badagaja.com/zh-cn/gangwon/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="바다가자닷컴"><meta property="og:locale" content="ko_KR">
+<meta property="og:title" content="강원 바다 여행"><meta property="og:description" content="강원특별자치도 해안 6개 권역의 물때와 낚시·해루질 포인트 222곳, 제철 해산물과 축제, 추천 코스를 한곳에.">
+<meta property="og:url" content="https://badagaja.com/gangwon/"><meta property="og:image" content="https://badagaja.com/img/coast/samcheok-hero.jpg?v=320703705"><meta name="twitter:title" content="강원 바다 여행"><meta name="twitter:description" content="강원특별자치도 해안 6개 권역의 물때와 낚시·해루질 포인트 222곳, 제철 해산물과 축제, 추천 코스를 한곳에."><meta name="twitter:image" content="https://badagaja.com/img/coast/samcheok-hero.jpg?v=320703705">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700;900&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=202609262116">
+<link rel="stylesheet" href="css/home.css?v=202609262116">
+<link rel="shortcut icon" href="https://badagaja.com/favicon.ico">
+<link rel="icon" href="https://badagaja.com/favicon.svg" type="image/svg+xml">
+<script type="application/ld+json" id="ld-main">{"@context":"https://schema.org","@type":"CollectionPage","name":"강원 바다 여행","description":"강원특별자치도 해안 6개 권역의 물때와 낚시·해루질 포인트 222곳, 제철 해산물과 축제, 추천 코스를 한곳에.","url":"https://badagaja.com/gangwon/","inLanguage":"ko","publisher":{"@type":"Organization","name":"바다가자닷컴","url":"https://badagaja.com/"}}</script>
+</head>
+<body class="home" data-region="samcheok">
+
+<header>
+  <div class="navbar">
+    <a class="brand nv-logo" href="./" aria-label="바다가자닷컴 홈"><span class="nv-n"><svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M4 3h5.3l5.1 7.6V3H20v18h-5.3L9.6 13.4V21H4z"/></svg></span><span class="mark">바다가자닷컴</span><span class="nv-go"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l5 5" stroke-linecap="round"/></svg></span></a>
+    <nav class="navlinks">
+      <a href="gangwon/#today">오늘의 바다</a>
+      <a href="gangwon/#regions">강원 권역</a>
+      <a href="gangwon/#species">해루질·낚시</a>
+      <a href="gangwon/#season">제철·축제</a>
+      <a href="rule.html">금어기</a>
+      <a href="https://badagaja.com/guide/#regions">전국 바다</a>
+    </nav>
+    <div class="lang-pick"><span class="on" aria-current="page">한국어</span><a href="zh-cn/gangwon/" lang="zh-Hans" hreflang="zh-Hans">中文</a></div>
+    <div class="muldae-badge"><span class="dot"></span> <span id="headerMuldae">오늘 물때 보기</span></div>
+  </div>
+</header>
+
+<section class="h-hero" id="top">
+  <div class="h-slides" aria-hidden="true"><div class="h-slide on" style="background-image:url('img/coast/samcheok-hero.jpg?v=320703705')"></div></div>
+  <div class="h-shade" aria-hidden="true"></div>
+  <div class="wrap h-hero-in">
+    <div class="h-eyebrow">강원 해안 6개 권역 바다여행 안내서</div>
+    <h1 class="serif"><span class="accent">바다가자닷컴</span>에서 알려드리는<br>강원 바다여행</h1>
+    <nav class="h-site" aria-label="여행지 선택"><a class="on" href="gangwon/" aria-current="page"><b>강원여행</b><small>강원 바다 6개 권역</small></a><a href="./"><b>전국 바다</b><small>전국 57개 권역 첫 화면</small></a></nav>
+    <p class="h-lede">삼척에서 고성 최북단까지, 동해 바닷가를 여섯 권역으로 나눠 안내합니다.. 권역마다 물때와 낚시·해루질 포인트, 제철 해산물과 축제, 하루 코스를 정리했습니다.</p>
+    <form class="h-search" role="search" autocomplete="off" onsubmit="return false">
+      <label class="sr-only" for="hSearch">강원 권역, 포인트, 제철 해산물, 축제, 바닷가 명소를 검색할 수 있습니다</label>
+      <svg class="h-search-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <input id="hSearch" type="search" placeholder="강원 권역·포인트·제철 해산물·축제·명소 검색" aria-controls="hResults" aria-expanded="false">
+      <div class="h-results" id="hResults" role="listbox" hidden></div>
+    </form>
+    <div class="h-quick" aria-label="많이 찾는 검색어"><span>많이 찾는</span><button type="button" data-q="감성돔">감성돔</button><button type="button" data-q="가자미">가자미</button><button type="button" data-q="고등어">고등어</button><button type="button" data-q="학꽁치">학꽁치</button><button type="button" data-q="임연수">임연수</button><button type="button" data-q="축제">축제</button></div>
+  </div>
+  <div class="wrap">
+    <div class="h-stats">
+      <div><b>6</b><span>강원 해안 시·군</span></div>
+      <div><b>222</b><span>해루질·낚시 포인트</span></div>
+      <div><b>48</b><span>바닷가 명소</span></div>
+      <div><b>18</b><span>지역 축제</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="h-today" id="today">
+  <div class="wrap">
+    <div class="ts-head">
+      <div>
+        <div class="kicker">오늘의 바다</div>
+        <h2 class="serif" id="tsTitle">오늘의 바다는</h2>
+        <p id="tsDate">물때를 계산하고 있습니다</p>
+      </div>
+      <a class="ts-more" id="tsMore" href="samcheok.html#tide">물때표 2주 전체 보기 →</a>
+    </div>
+    <div class="ts-regions" id="tsRegions" role="tablist" aria-label="권역 선택"></div>
+    <div class="ts-grid">
+      <div class="ts-card ts-main">
+        <div class="ts-label">오늘 물때</div>
+        <div class="ts-muldae"><b id="tsMuldae">–</b><span id="tsMuldaeName"></span></div>
+        <div class="ts-gauge"><i id="tsGauge"></i></div>
+        <div class="ts-next" id="tsNext" hidden><div><small>다음 간조</small><b id="tsNextTime">–</b></div><div class="r"><small id="tsNextLab">지금부터</small><b id="tsNextIn">–</b></div></div>
+        <p class="ts-verdict" id="tsVerdict">물때를 계산하고 있습니다</p>
+      </div>
+      <div class="ts-card">
+        <div class="ts-label">간조 · 만조</div>
+        <ul class="ts-tides" id="tsTides"><li class="muted">간조·만조 시각</li></ul>
+        <div class="ts-src" id="tsTideSrc"></div>
+      </div>
+      <div class="ts-card">
+        <div class="ts-label">날씨 · 파고</div>
+        <div class="ts-weather"><b id="tsTemp">–</b><span id="tsSky">하늘·바람</span></div>
+        <div class="ts-sub" id="tsWave"></div>
+      </div>
+      <div class="ts-card">
+        <div class="ts-label">일출 · 일몰</div>
+        <div class="ts-sun"><span>해뜸 <b id="tsRise">–</b></span><span>해짐 <b id="tsSet">–</b></span></div>
+        <div class="ts-sub">물때·일출·일몰은 계산값입니다</div>
+      </div>
+    </div>
+    <div class="ts-plan" id="tsPlan">
+      <div class="tp-kick">이번 주 언제 갈까</div>
+      <h3 class="tp-title" id="tpTitle">이번 주 물때를 살펴보고 있어요</h3>
+      <p class="tp-lead" id="tpLead"></p>
+      <div class="ts-week" id="tsWeek" aria-label="이번 주 물때"></div>
+      <div class="tp-legend"><span>막대가 길수록 물이 많이 빠져요</span><span id="tpBasis">낮 간조 기준</span></div>
+      <p class="tp-note" id="tpNote" hidden></p>
+    </div>
+    <div class="ts-install" id="tsInstall" hidden>
+      <span class="ti-ic" aria-hidden="true">📲</span>
+      <p><b>홈 화면에 추가해 두세요</b><small>앱처럼 한 번에 열리고, 내가 고른 바다가 먼저 나옵니다</small></p>
+      <button type="button" id="tsInstallGo">방법 보기</button>
+      <button type="button" class="ti-x" id="tsInstallX" aria-label="안내 닫기">×</button>
+    </div>
+    <div class="ts-howto" id="tsHowto" hidden role="dialog" aria-modal="true" aria-labelledby="tsHowtoT">
+      <div class="th-box"><h3 id="tsHowtoT">홈 화면에 추가하는 방법</h3><ol id="tsHowtoSteps"></ol><button type="button" id="tsHowtoClose">알겠어요</button></div>
+    </div>
+    <div id="tsGraph"></div>
+    <div class="ts-index" id="tsIndex">
+      <div class="ts-card ts-idx" data-type="mudflat"><div class="ts-label">🦪 갯벌체험지수</div><div class="ti-grade">–</div><div class="ti-place">권역별 지수</div><div class="ti-detail"></div></div>
+      <div class="ts-card ts-idx" data-type="beach"><div class="ts-label">🏖️ 해수욕지수</div><div class="ti-grade">–</div><div class="ti-place">권역별 지수</div><div class="ti-detail"></div></div>
+    </div>
+    <p class="ts-credit">바다 지수: 국립해양조사원 생활해양예보지수 · 가까운 예보 장소 기준</p>
+  </div>
+</section>
+
+<section class="section h-regions" id="regions">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">강원 해안선을 따라</div>
+      <h2>강원 바다, 어디로 갈까요</h2>
+      <p>강원 해안을 6개 권역으로 나눴습니다. 카드를 누르면 물때·낚시·해루질 포인트와 먹거리로 바로 이동합니다. 다른 지역 바다는 <a class="hr-cross" href="https://badagaja.com/guide/#regions">전국 바다 →</a></p>
+    </div>
+    <div class="hr-layout" id="hrLayout">
+      <div class="hr-map-wrap"><div class="hr-map" id="hrMap"></div></div>
+      <div class="rc-grid"><a class="rc" href="samcheok.html" style="--c:#2E5E4E" data-slug="samcheok"><img src="img/coast/samcheok-hero.jpg?v=320703705" alt="삼척 바다 풍경" loading="lazy"><span class="rc-no">701</span><div class="rc-body"><h3>삼척</h3><p>절벽 사이 포구가 이어지는 강원 남쪽 바다</p><span class="rc-count"><span>낚시 36</span><span>해루질 15</span></span></div></a><a class="rc" href="donghae.html" style="--c:#1D4E6E" data-slug="donghae"><img src="img/coast/donghae-hero.jpg?v=1683313542" alt="동해 바다 풍경" loading="lazy"><span class="rc-no">702</span><div class="rc-body"><h3>동해</h3><p>골목과 등대가 내려다보는 항구 도시</p><span class="rc-count"><span>낚시 16</span><span>해루질 9</span></span></div></a><a class="rc" href="gangneung.html" style="--c:#4A3F6B" data-slug="gangneung"><img src="img/coast/gangneung-hero.jpg?v=1162090535" alt="강릉 바다 풍경" loading="lazy"><span class="rc-no">703</span><div class="rc-body"><h3>강릉</h3><p>경포 해변과 정동진 해돋이의 긴 해안</p><span class="rc-count"><span>낚시 30</span><span>해루질 18</span></span></div></a><a class="rc" href="yangyang.html" style="--c:#2F6B6B" data-slug="yangyang"><img src="img/coast/yangyang-hero.jpg?v=1981390619" alt="양양 바다 풍경" loading="lazy"><span class="rc-no">704</span><div class="rc-body"><h3>양양</h3><p>서핑 해변과 바닷가 절이 이어지는 곳</p><span class="rc-count"><span>낚시 30</span><span>해루질 13</span></span></div></a><a class="rc" href="sokcho.html" style="--c:#24476B" data-slug="sokcho"><img src="img/coast/sokcho-hero.jpg?v=2457212343" alt="속초 바다 풍경" loading="lazy"><span class="rc-no">705</span><div class="rc-body"><h3>속초</h3><p>항구 시장과 호수, 해변이 모인 도시</p><span class="rc-count"><span>낚시 13</span><span>해루질 3</span></span></div></a><a class="rc" href="gwgoseong.html" style="--c:#3D5A40" data-slug="gwgoseong"><img src="img/coast/gwgoseong-hero.jpg?v=336160152" alt="강원 고성 바다 풍경" loading="lazy"><span class="rc-no">706</span><div class="rc-body"><h3>강원 고성</h3><p>호수와 포구가 이어지는 최북단 바다</p><span class="rc-count"><span>낚시 26</span><span>해루질 13</span></span></div></a></div>
+    </div>
+  </div>
+</section>
+
+<section class="section h-season" id="season">
+  <div class="wrap">
+    <div class="ss-top">
+      <div class="section-head">
+        <div class="kicker">이달의 바다</div>
+        <h2>이달, 지금 강원 바다에서는</h2>
+        <p>강원 6개 권역의 제철 어종·해산물과 축제를 달별로 모았습니다. 이름 옆 숫자는 그 달에 만날 수 있는 권역 수입니다.</p>
+      </div>
+      <div class="ss-nav">
+        <button type="button" id="ssPrev" aria-label="이전 달">‹</button>
+        <b id="ssMonth">–</b>
+        <button type="button" id="ssNext" aria-label="다음 달">›</button>
+      </div>
+    </div>
+    <div class="ss-layout">
+      <div class="ss-col">
+      <div class="ss-box">
+        <h3 class="serif">제철 어종·해산물 <small id="ssCatchCount"></small></h3>
+        <div class="ss-chips" id="ssCatch"></div>
+      </div>
+        <aside class="ad-slot" data-ad-slot="hub-season-pc" hidden></aside>
+      </div>
+      <div class="ss-box">
+        <h3 class="serif">이달의 축제 <small id="ssFestCount"></small></h3>
+        <div class="ss-fests" id="ssFest"></div>
+        <p class="ss-note">축제 일정은 매년 조금씩 바뀌니 방문 전 확정 공고를 확인하세요.</p>
+        <aside class="ad-slot" data-ad-slot="hub-season-mobile" hidden></aside>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section class="section h-species" id="species">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="spTitle">이달에 잡을 수 있는 것</h2>
+      <p id="spLede">강원 바다에서 만나는 해루질 대상과 낚시 어종을 달마다 정리했습니다. 누르면 잡는 법과 채비, 금어기까지 볼 수 있습니다.</p>
+    </div>
+    <div class="sp-tabs" id="spTabs">
+      <button type="button" class="on" data-sec="all">전체</button>
+      <button type="button" data-sec="catch">해루질</button>
+      <button type="button" data-sec="fish">낚시</button>
+    </div>
+    <div class="sp-grid" id="spGrid"><p class="sp-loading">권역을 고르면 그 바다의 포인트를 보여 줍니다.</p></div>
+    <div class="sp-more">
+      <a href="catch/">해루질 대상 →</a>
+      <a href="fish/">낚시 어종 →</a>
+      <a href="rule.html">금어기·크기 →</a>
+    </div>
+  </div>
+</section>
+
+<section class="section h-course" id="course">
+  <div class="wrap">
+    <div class="hc-top">
+      <div class="section-head">
+        <div class="kicker">추천 여행 코스</div>
+        <h2>누구와 떠나시나요</h2>
+        <p>강원 권역마다 동행에 맞춘 하루 코스를 준비했습니다. 바람과 물때에 맞춰 순서를 바꿔도 좋아요.</p>
+      </div>
+      <div class="hc-tabs" role="tablist" aria-label="동행 선택"><button type="button" role="tab" data-k="가족" aria-selected="true">👪 가족과</button><button type="button" role="tab" data-k="커플" aria-selected="false">💑 연인과</button><button type="button" role="tab" data-k="부모님" aria-selected="false">👵 부모님과</button><button type="button" role="tab" data-k="혼자" aria-selected="false">🧍 혼자</button></div>
+    </div>
+    <div class="hc-scroller">
+      <div class="hc-track" id="hcTrack"><a class="hc-card" data-k="가족" href="samcheok.html#course" style="--c:#2E5E4E" hidden><div class="ph noph"><span>삼척</span></div><div class="bd"><h3>장호항 카누 뒤 임원 전망 공원</h3><ol><li><span>장호항</span></li><li><span>해신당공원</span></li><li><span>수로부인헌화공원</span></li></ol><span class="go">삼척 권역 자세히 →</span></div></a><a class="hc-card" data-k="가족" href="donghae.html#course" style="--c:#1D4E6E" hidden><div class="ph noph"><span>동해</span></div><div class="bd"><h3>망상에서 어달까지 해변 잇기</h3><ol><li><span>망상해변</span></li><li><span>대진해변</span></li><li><span>어달해변</span></li></ol><span class="go">동해 권역 자세히 →</span></div></a><a class="hc-card" data-k="가족" href="yangyang.html#course" style="--c:#2F6B6B" hidden><div class="ph noph"><span>양양</span></div><div class="bd"><h3>낙산사 해돋이 뒤 해변 산책</h3><ol><li><span>낙산사</span></li><li><span>낙산해변</span></li><li><span>수산항</span></li></ol><span class="go">양양 권역 자세히 →</span></div></a><a class="hc-card" data-k="가족" href="sokcho.html#course" style="--c:#24476B" hidden><div class="ph noph"><span>속초</span></div><div class="bd"><h3>갯배 타고 아바이마을, 시장 구경</h3><ol><li><span>아바이마을</span></li><li><span>속초관광수산시장</span></li><li><span>영금정</span></li></ol><span class="go">속초 권역 자세히 →</span></div></a><a class="hc-card" data-k="가족" href="gwgoseong.html#course" style="--c:#3D5A40" hidden><div class="ph noph"><span>강원 고성</span></div><div class="bd"><h3>거진항에서 송지호까지 해변 잇기</h3><ol><li><span>거진항</span></li><li><span>송지호해변</span></li><li><span>능파대</span></li></ol><span class="go">강원 고성 권역 자세히 →</span></div></a><a class="hc-card" data-k="커플" href="samcheok.html#course" style="--c:#2E5E4E" hidden><div class="ph noph"><span>삼척</span></div><div class="bd"><h3>삼척해변에서 새천년해안도로 드라이브</h3><ol><li><span>이사부사자공원</span></li><li><span>삼척해변</span></li><li><span>새천년해안도로</span></li></ol><span class="go">삼척 권역 자세히 →</span></div></a><a class="hc-card" data-k="커플" href="donghae.html#course" style="--c:#1D4E6E" hidden><div class="ph noph"><span>동해</span></div><div class="bd"><h3>묵호 언덕 골목과 전망대 걷기</h3><ol><li><span>묵호항</span></li><li><span>묵호등대</span></li><li><span>도째비골 스카이밸리</span></li></ol><span class="go">동해 권역 자세히 →</span></div></a><a class="hc-card" data-k="커플" href="gangneung.html#course" style="--c:#4A3F6B" hidden><div class="ph noph"><span>강릉</span></div><div class="bd"><h3>경포에서 안목 커피거리까지</h3><ol><li><span>경포해변</span></li><li><span>안목해변</span></li><li><span>정동진해변</span></li></ol><span class="go">강릉 권역 자세히 →</span></div></a><a class="hc-card" data-k="커플" href="yangyang.html#course" style="--c:#2F6B6B" hidden><div class="ph noph"><span>양양</span></div><div class="bd"><h3>하조대 정자와 서핑 해변</h3><ol><li><span>하조대</span></li><li><span>서피비치</span></li><li><span>수산항</span></li></ol><span class="go">양양 권역 자세히 →</span></div></a><a class="hc-card" data-k="커플" href="sokcho.html#course" style="--c:#24476B" hidden><div class="ph noph"><span>속초</span></div><div class="bd"><h3>바다향기로 걷고 대포항 먹거리</h3><ol><li><span>외옹치 바다향기로</span></li><li><span>대포항</span></li><li><span>속초해변</span></li></ol><span class="go">속초 권역 자세히 →</span></div></a><a class="hc-card" data-k="커플" href="gwgoseong.html#course" style="--c:#3D5A40" hidden><div class="ph noph"><span>강원 고성</span></div><div class="bd"><h3>바위 절벽 정자 두 곳 걷기</h3><ol><li><span>능파대</span></li><li><span>천학정</span></li><li><span>청간정</span></li></ol><span class="go">강원 고성 권역 자세히 →</span></div></a><a class="hc-card" data-k="부모님" href="samcheok.html#course" style="--c:#2E5E4E" hidden><div class="ph noph"><span>삼척</span></div><div class="bd"><h3>맹방에서 초곡까지 해안 산책</h3><ol><li><span>덕봉산 해안생태탐방로</span></li><li><span>초곡 용굴촛대바위길</span></li><li><span>장호항</span></li></ol><span class="go">삼척 권역 자세히 →</span></div></a><a class="hc-card" data-k="부모님" href="gangneung.html#course" style="--c:#4A3F6B" hidden><div class="ph noph"><span>강릉</span></div><div class="bd"><h3>주문진항 구경 뒤 아들바위 산책</h3><ol><li><span>주문진항</span></li><li><span>소돌아들바위공원</span></li><li><span>사천진해변</span></li></ol><span class="go">강릉 권역 자세히 →</span></div></a><a class="hc-card" data-k="부모님" href="yangyang.html#course" style="--c:#2F6B6B" hidden><div class="ph noph"><span>양양</span></div><div class="bd"><h3>남애항에서 죽도까지 바닷가 절 들르기</h3><ol><li><span>남애항</span></li><li><span>휴휴암</span></li><li><span>죽도해변</span></li></ol><span class="go">양양 권역 자세히 →</span></div></a><a class="hc-card" data-k="부모님" href="gwgoseong.html#course" style="--c:#3D5A40" hidden><div class="ph noph"><span>강원 고성</span></div><div class="bd"><h3>통일전망대 들렀다 화진포 산책</h3><ol><li><span>통일안보공원</span></li><li><span>대진항</span></li><li><span>화진포해변</span></li></ol><span class="go">강원 고성 권역 자세히 →</span></div></a><a class="hc-card" data-k="혼자" href="donghae.html#course" style="--c:#1D4E6E" hidden><div class="ph noph"><span>동해</span></div><div class="bd"><h3>한섬 산책 뒤 추암 해돋이</h3><ol><li><span>한섬해변</span></li><li><span>추암 촛대바위</span></li><li><span>묵호항</span></li></ol><span class="go">동해 권역 자세히 →</span></div></a><a class="hc-card" data-k="혼자" href="gangneung.html#course" style="--c:#4A3F6B" hidden><div class="ph noph"><span>강릉</span></div><div class="bd"><h3>정동진 해돋이와 바다부채길</h3><ol><li><span>정동진해변</span></li><li><span>정동심곡 바다부채길</span></li><li><span>금진해변</span></li></ol><span class="go">강릉 권역 자세히 →</span></div></a><a class="hc-card" data-k="혼자" href="sokcho.html#course" style="--c:#24476B" hidden><div class="ph noph"><span>속초</span></div><div class="bd"><h3>영랑호 둘레길과 장사항</h3><ol><li><span>영금정</span></li><li><span>영랑호</span></li><li><span>장사항</span></li></ol><span class="go">속초 권역 자세히 →</span></div></a></div>
+    </div>
+  </div>
+</section>
+
+<section class="section h-about" id="about">
+  <div class="wrap">
+    <div class="ha-row">
+      <div class="ha-item"><span class="ha-ico" aria-hidden="true">🗺️</span><div><b>권역 고르기</b><p>강원 6개 권역 중 가고 싶은 곳을 고르세요.</p></div></div>
+      <div class="ha-item"><span class="ha-ico" aria-hidden="true">🎣</span><div><b>물때·낚시·해루질</b><p>권역 쪽에서 오늘 물때와 포인트를 봅니다.</p></div></div>
+      <div class="ha-item"><span class="ha-ico" aria-hidden="true">🍽️</span><div><b>제철 먹거리·축제</b><p>달마다 바뀌는 제철 해산물과 축제까지.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap footer-top">
+    <div class="footer-brand">
+      <a class="brand" href="./" aria-label="바다가자닷컴 홈"><svg class="logo" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="13" fill="#2F5D57"/><path d="M24 43C24 43 10.5 29 10.5 19.5a13.5 13.5 0 0 1 27 0C37.5 29 24 43 24 43Z" fill="#FFFBF3"/><circle cx="24" cy="15" r="3.6" fill="#E5A94F"/><path d="M15.5 23q2.1-2.4 4.25 0t4.25 0t4.25 0t4.25 0" stroke="#2F5D57" stroke-width="2.6" fill="none" stroke-linecap="round"/></svg><span class="mark">바다가자닷컴</span></a>
+      <p class="footer-tagline">물때에 맞춰 떠나는 강원 바다 여행 안내</p><div class="footer-find"><span>다시 찾으실 땐</span><a class="nv-box" href="https://search.naver.com/search.naver?query=%EB%B0%94%EB%8B%A4%EA%B0%80%EC%9E%90%EB%8B%B7%EC%BB%B4" target="_blank" rel="noopener" aria-label="네이버에서 바다가자닷컴 검색하기"><span class="nv-n"><svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="7" fill="#03C75A"/><path d="M22.6 20.9 16.8 12H11v16h6.1v-8.9L22.9 28H29V12h-6.4v8.9Z" fill="#fff"/></svg></span><b>바다가자닷컴</b><span class="nv-go"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg></span></a></div>
+      <p class="footer-owner">운영책임자 <b>오준한</b><br><a href="mailto:ohjunhan@gmail.com">ohjunhan@gmail.com</a></p>
+    </div>
+    <nav class="footer-nav" aria-label="하단 메뉴">
+      <div class="fn-col"><h2>둘러보기</h2><a href="gangwon/#regions">강원 권역</a><a href="gangwon/#season">제철·축제</a><a href="gangwon/#course">추천 코스</a></div>
+      <div class="fn-col"><h2>잡는 법</h2><a href="catch/">해루질 대상</a><a href="fish/">낚시 어종</a><a href="rule.html">금어기·크기</a><a href="gear.html">장비·안전</a></div>
+      <div class="fn-col"><h2>다른 바다</h2><a href="https://badagaja.com/guide/#regions">전국 바다</a><a href="jeonnam/">전남여행</a><a href="jeju/">제주여행</a><a href="about.html">바다가자닷컴 소개</a><a href="sources.html">자료 출처</a><a href="privacy.html">개인정보처리방침</a></div>
+    </nav>
+  </div>
+  <div class="wrap footer-bottom">
+    <p class="footer-note">본 자료는 참고용입니다. 어촌계·지자체 규정과 현장 안내를 반드시 확인하세요.</p>
+    <p class="copyright">© 2026 바다가자닷컴 (badagaja.com)</p>
+  </div>
+</footer>
+
+<div style="display:none" aria-hidden="true">
+  <div id="tideStrip"></div>
+  <div id="tideStatus"></div>
+  <div id="weatherIcon"></div>
+  <div id="weatherTemp"></div>
+  <div id="weatherLabel"></div>
+  <div id="weatherWave"></div>
+  <div id="weatherWatertemp"></div>
+</div>
+
+<script src="point/map-config.js?v=202609262116"></script>
+<script src="js/coast-data.js?v=202609262116"></script>
+<script src="js/tide-graph.js?v=202609262116"></script>
+<script src="js/app.js?v=202609262116"></script>
+<script id="hubData" type="application/json">{"catch":{"1":[{"n":"임연수","r":["동해","속초","강원 고성"]},{"n":"쥐노래미(놀래미)","r":["양양","강원 고성"]},{"n":"감성돔","r":["삼척"]},{"n":"대구","r":["강원 고성"]}],"10":[{"n":"가자미","r":["삼척","동해","양양","강원 고성"]},{"n":"고등어","r":["삼척","속초"]},{"n":"쥐노래미(놀래미)","r":["양양","강원 고성"]},{"n":"감성돔","r":["삼척"]},{"n":"망상어","r":["속초"]},{"n":"문어","r":["강릉"]},{"n":"방어","r":["양양"]},{"n":"삼치","r":["강릉"]},{"n":"전갱이","r":["동해"]},{"n":"황열기(불볼락)","r":["강릉"]}],"11":[{"n":"가자미","r":["삼척","동해","양양","강원 고성"]},{"n":"도루묵","r":["강릉","속초"]},{"n":"쥐노래미(놀래미)","r":["양양","강원 고성"]},{"n":"감성돔","r":["삼척"]},{"n":"망상어","r":["속초"]},{"n":"문어","r":["강릉"]},{"n":"방어","r":["양양"]},{"n":"삼치","r":["강릉"]}],"12":[{"n":"임연수","r":["동해","속초","강원 고성"]},{"n":"도루묵","r":["강릉","속초"]},{"n":"쥐노래미(놀래미)","r":["양양","강원 고성"]},{"n":"감성돔","r":["삼척"]},{"n":"대구","r":["강원 고성"]},{"n":"방어","r":["양양"]}],"4":[{"n":"가자미","r":["삼척","동해","양양","강원 고성"]},{"n":"쥐노래미(놀래미)","r":["양양","강원 고성"]},{"n":"학꽁치","r":["삼척","양양"]},{"n":"망상어","r":["속초"]},{"n":"숭어","r":["동해"]},{"n":"황열기(불볼락)","r":["강릉"]}],"5":[{"n":"가자미","r":["삼척","동해","양양","강원 고성"]},{"n":"쥐노래미(놀래미)","r":["양양","강원 고성"]},{"n":"학꽁치","r":["삼척","양양"]},{"n":"망상어","r":["속초"]},{"n":"문어","r":["강릉"]},{"n":"숭어","r":["동해"]},{"n":"황열기(불볼락)","r":["강릉"]}],"6":[{"n":"가자미","r":["삼척","동해","양양","강원 고성"]},{"n":"쥐노래미(놀래미)","r":["양양","강원 고성"]},{"n":"망상어","r":["속초"]},{"n":"문어","r":["강릉"]},{"n":"황열기(불볼락)","r":["강릉"]}],"7":[{"n":"가자미","r":["삼척","동해","양양","강원 고성"]},{"n":"쥐노래미(놀래미)","r":["양양","강원 고성"]},{"n":"망상어","r":["속초"]},{"n":"문어","r":["강릉"]},{"n":"전갱이","r":["동해"]},{"n":"황열기(불볼락)","r":["강릉"]}],"8":[{"n":"가자미","r":["삼척","동해","양양","강원 고성"]},{"n":"고등어","r":["삼척","속초"]},{"n":"쥐노래미(놀래미)","r":["양양","강원 고성"]},{"n":"망상어","r":["속초"]},{"n":"문어","r":["강릉"]},{"n":"전갱이","r":["동해"]},{"n":"황열기(불볼락)","r":["강릉"]}],"9":[{"n":"가자미","r":["삼척","동해","양양","강원 고성"]},{"n":"고등어","r":["삼척","속초"]},{"n":"쥐노래미(놀래미)","r":["양양","강원 고성"]},{"n":"망상어","r":["속초"]},{"n":"문어","r":["강릉"]},{"n":"방어","r":["양양"]},{"n":"삼치","r":["강릉"]},{"n":"전갱이","r":["동해"]},{"n":"황열기(불볼락)","r":["강릉"]}],"3":[{"n":"임연수","r":["동해","속초","강원 고성"]},{"n":"쥐노래미(놀래미)","r":["양양","강원 고성"]},{"n":"학꽁치","r":["삼척","양양"]},{"n":"대구","r":["강원 고성"]},{"n":"숭어","r":["동해"]}],"2":[{"n":"임연수","r":["동해","속초","강원 고성"]},{"n":"쥐노래미(놀래미)","r":["양양","강원 고성"]},{"n":"대구","r":["강원 고성"]}]},"fest":{"2":[{"n":"삼척 정월대보름제","r":"삼척","s":"samcheok","c":"#2E5E4E","d":"유네스코 인류무형유산 기줄다리기를 중심으로 한 대보름 행사","p":"삼척시내 일원"},{"n":"양양 낙산해변 달빛 모닥불축제","r":"양양","s":"yangyang","c":"#2F6B6B","d":"겨울 바닷가에서 모닥불을 쬐며 공연을 보는 축제","p":"낙산해변 백사장"}],"4":[{"n":"삼척 맹방 유채꽃축제","r":"삼척","s":"samcheok","c":"#2E5E4E","d":"바다 옆 유채꽃밭과 벚꽃길을 걷는 봄 축제","p":"근덕면 상맹방리 유채꽃밭"},{"n":"강릉 경포벚꽃축제","r":"강릉","s":"gangneung","c":"#4A3F6B","d":"경포호를 두른 벚꽃길을 걷는 봄 축제","p":"경포호 일원(경포 습지광장)"},{"n":"양양 남대천 벚꽃축제","r":"양양","s":"yangyang","c":"#2F6B6B","d":"남대천 둑길 벚꽃을 따라 걷는 봄 축제","p":"양양읍 송이조각공원 일원"},{"n":"영랑호 벚꽃축제","r":"속초","s":"sokcho","c":"#24476B","d":"호숫가 벚꽃길을 걷는 봄맞이 행사","p":"영랑호 잔디마당"}],"5":[{"n":"삼척 장미축제","r":"삼척","s":"samcheok","c":"#2E5E4E","d":"오십천 둔치를 채운 장미 정원 축제","p":"오십천 장미공원 일원"}],"7":[{"n":"동해 해변 뮤직 페스티벌","r":"동해","s":"donghae","c":"#1D4E6E","d":"여름밤 두 해변을 옮겨 가며 여는 음악 공연","p":"추암해변·망상해변"},{"n":"경포 썸머 페스티벌","r":"강릉","s":"gangneung","c":"#4A3F6B","d":"해수욕장 야간 개장과 함께 열리는 공연 축제","p":"경포해변 특설무대·중앙광장"},{"n":"속초 썸머페스티벌","r":"속초","s":"sokcho","c":"#24476B","d":"물놀이 행사와 해변 공연이 이어지는 여름 축제","p":"속초해수욕장"}],"9":[{"n":"동해 무릉제","r":"동해","s":"donghae","c":"#1D4E6E","d":"동해 시민이 함께 여는 가을 종합 축제","p":"천곡동 일원"}],"6":[{"n":"강릉단오제","r":"강릉","s":"gangneung","c":"#4A3F6B","d":"유네스코 인류무형유산 단오 제례와 민속놀이","p":"남대천 단오장"},{"n":"실향민문화축제","r":"속초","s":"sokcho","c":"#24476B","d":"실향민의 음식과 이야기를 나누는 축제","p":"속초엑스포 잔디광장"},{"n":"저도 대문어축제","r":"강원 고성","s":"gwgoseong","c":"#3D5A40","d":"저도어장 대문어 요리 시식과 판매","p":"현내면 대진항 일원"}],"10":[{"n":"강릉커피축제","r":"강릉","s":"gangneung","c":"#4A3F6B","d":"커피 체험과 공연을 도시 곳곳에서 여는 가을 축제","p":"안목 커피거리 등 시내 일원"},{"n":"양양송이연어축제","r":"양양","s":"yangyang","c":"#2F6B6B","d":"가을 송이와 돌아오는 연어를 주제로 한 생태 축제","p":"양양 남대천 둔치"},{"n":"설악문화제","r":"속초","s":"sokcho","c":"#24476B","d":"속초 대표 가을 문화 축제","p":"속초엑스포 잔디광장·설악로데오거리"},{"n":"고성명태축제","r":"강원 고성","s":"gwgoseong","c":"#3D5A40","d":"명태 음식과 맨손 물고기잡기 체험","p":"거진읍 거진11리해변 일원"}]}}</script>
+<script id="hubIndex" type="application/json">[{"t":"권역","n":"삼척","u":"samcheok.html","m":"포인트 51곳"},{"t":"권역","n":"동해","u":"donghae.html","m":"포인트 25곳"},{"t":"권역","n":"강릉","u":"gangneung.html","m":"포인트 48곳"},{"t":"권역","n":"양양","u":"yangyang.html","m":"포인트 43곳"},{"t":"권역","n":"속초","u":"sokcho.html","m":"포인트 16곳"},{"t":"권역","n":"강원 고성","u":"gwgoseong.html","m":"포인트 39곳"},{"t":"해루질","n":"장호어촌체험마을","u":"point/gangwon/samcheok_gleaning.html","m":"삼척 · 해루질 포인트"},{"t":"해루질","n":"갈남어촌체험마을","u":"point/gangwon/samcheok_gleaning.html","m":"삼척 · 해루질 포인트"},{"t":"해루질","n":"용화해변 암반(해루질)","u":"point/gangwon/samcheok_gleaning.html","m":"삼척 · 해루질 포인트"},{"t":"해루질","n":"초곡항 서측 조간대","u":"point/gangwon/samcheok_gleaning.html","m":"삼척 · 해루질 포인트"},{"t":"해루질","n":"갈남항 서측 조간대","u":"point/gangwon/samcheok_gleaning.html","m":"삼척 · 해루질 포인트"},{"t":"해루질","n":"노곡항 남측 조간대","u":"point/gangwon/samcheok_gleaning.html","m":"삼척 · 해루질 포인트"},{"t":"해루질","n":"신남해수욕장","u":"point/gangwon/samcheok_gleaning.html","m":"삼척 · 해루질 포인트"},{"t":"해루질","n":"맹방해수욕장","u":"point/gangwon/samcheok_gleaning.html","m":"삼척 · 해루질 포인트"},{"t":"해루질","n":"덕산해수욕장","u":"point/gangwon/samcheok_gleaning.html","m":"삼척 · 해루질 포인트"},{"t":"해루질","n":"궁촌해수욕장","u":"point/gangwon/samcheok_gleaning.html","m":"삼척 · 해루질 포인트"},{"t":"해루질","n":"임원해수욕장","u":"point/gangwon/samcheok_gleaning.html","m":"삼척 · 해루질 포인트"},{"t":"해루질","n":"초곡용굴촛대바위길","u":"point/gangwon/samcheok_gleaning.html","m":"삼척 · 해루질 포인트"},{"t":"해루질","n":"증산해수욕장","u":"point/gangwon/samcheok_gleaning.html","m":"삼척 · 해루질 포인트"},{"t":"해루질","n":"비화항","u":"point/gangwon/samcheok_gleaning.html","m":"삼척 · 해루질 포인트"},{"t":"해루질","n":"작은후진해변","u":"point/gangwon/samcheok_gleaning.html","m":"삼척 · 해루질 포인트"},{"t":"낚시","n":"덕산항 방파제","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"초곡항 방파제","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"후진방파제(새천년해안도로)","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"노곡항 방파제","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"호산항 방파제","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"월천 북방파제","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"신남항 빨간등대 방파제","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"새천년도로 아래 갯바위","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"비화진 물양장","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"갈남항 동방파제","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"동막리 대진방파제","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"궁촌항 방파제","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"맹방해변 원투","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"임원 대왕바위(도미굴)","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"임원항 동방파제 테트라포드","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"작은후진 갯바위","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"증산 군초소 갯바위","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"덕산리 갯바위","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"삼표(동양)시멘트 앞 석축","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"덕봉산 갯바위(마읍천 합수부)","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"동막리 초소 앞 갯바위","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"작진항 방파제","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"임원리 갯바위 홈통","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"월천 남방파제·백섬","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"고포항 갯바위","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"월천해변 갯바위","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"호산리 해안제방 간출여","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"초곡 군소초 갯바위","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"용화 물양장","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"궁촌 고래바위·갯바위","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"용화리 초소앞 갯바위","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"갈남 월미도·넓덕여·독립여","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"초곡항 서측 갯바위","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"장호항 갯바위","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"갈남항 서측 갯바위","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"낚시","n":"노곡항 남측 갯바위","u":"point/gangwon/samcheok_fishing.html","m":"삼척 · 낚시 포인트"},{"t":"해루질","n":"어달·대진 연안(전복 해루질)","u":"point/gangwon/donghae_gleaning.html","m":"동해 · 해루질 포인트"},{"t":"해루질","n":"어달리항 북측 방조제 아래 조간대","u":"point/gangwon/donghae_gleaning.html","m":"동해 · 해루질 포인트"},{"t":"해루질","n":"동해기도원 조간대","u":"point/gangwon/donghae_gleaning.html","m":"동해 · 해루질 포인트"},{"t":"해루질","n":"묵호항","u":"point/gangwon/donghae_gleaning.html","m":"동해 · 해루질 포인트"},{"t":"해루질","n":"대진해수욕장","u":"point/gangwon/donghae_gleaning.html","m":"동해 · 해루질 포인트"},{"t":"해루질","n":"망상해수욕장","u":"point/gangwon/donghae_gleaning.html","m":"동해 · 해루질 포인트"},{"t":"해루질","n":"어달해수욕장","u":"point/gangwon/donghae_gleaning.html","m":"동해 · 해루질 포인트"},{"t":"해루질","n":"추암해수욕장","u":"point/gangwon/donghae_gleaning.html","m":"동해 · 해루질 포인트"},{"t":"해루질","n":"한섬해수욕장","u":"point/gangwon/donghae_gleaning.html","m":"동해 · 해루질 포인트"},{"t":"낚시","n":"어달항 동방파제(빨간등대)","u":"point/gangwon/donghae_fishing.html","m":"동해 · 낚시 포인트"},{"t":"낚시","n":"묵호항 방파제(파출소앞·빨간등대)","u":"point/gangwon/donghae_fishing.html","m":"동해 · 낚시 포인트"},{"t":"낚시","n":"천곡항(한섬) 방파제 테트라포드","u":"point/gangwon/donghae_fishing.html","m":"동해 · 낚시 포인트"},{"t":"낚시","n":"감추사 갯바위","u":"point/gangwon/donghae_fishing.html","m":"동해 · 낚시 포인트"},{"t":"낚시","n":"추암 촛대바위 갯바위","u":"point/gangwon/donghae_fishing.html","m":"동해 · 낚시 포인트"},{"t":"낚시","n":"한섬 고불개 갯바위(동해기도원 앞)","u":"point/gangwon/donghae_fishing.html","m":"동해 · 낚시 포인트"},{"t":"낚시","n":"어달해변 갯바위","u":"point/gangwon/donghae_fishing.html","m":"동해 · 낚시 포인트"},{"t":"낚시","n":"동해항","u":"point/gangwon/donghae_fishing.html","m":"동해 · 낚시 포인트"},{"t":"낚시","n":"전천 물양장","u":"point/gangwon/donghae_fishing.html","m":"동해 · 낚시 포인트"},{"t":"낚시","n":"망상해변 원투","u":"point/gangwon/donghae_fishing.html","m":"동해 · 낚시 포인트"},{"t":"낚시","n":"대진동 갯바위","u":"point/gangwon/donghae_fishing.html","m":"동해 · 낚시 포인트"},{"t":"낚시","n":"용정 방파제","u":"point/gangwon/donghae_fishing.html","m":"동해 · 낚시 포인트"},{"t":"낚시","n":"하평해변·가세마을 갯바위","u":"point/gangwon/donghae_fishing.html","m":"동해 · 낚시 포인트"},{"t":"낚시","n":"묵호 해경방파제","u":"point/gangwon/donghae_fishing.html","m":"동해 · 낚시 포인트"},{"t":"낚시","n":"어달리항 북측 방조제","u":"point/gangwon/donghae_fishing.html","m":"동해 · 낚시 포인트"},{"t":"낚시","n":"동해기도원 갯바위","u":"point/gangwon/donghae_fishing.html","m":"동해 · 낚시 포인트"},{"t":"해루질","n":"소돌어촌체험마을","u":"point/gangwon/gangneung_gleaning.html","m":"강릉 · 해루질 포인트"},{"t":"해루질","n":"심곡어촌체험마을","u":"point/gangwon/gangneung_gleaning.html","m":"강릉 · 해루질 포인트"},{"t":"해루질","n":"강문해변(해루질)","u":"point/gangwon/gangneung_gleaning.html","m":"강릉 · 해루질 포인트"},{"t":"해루질","n":"소돌해변","u":"point/gangwon/gangneung_gleaning.html","m":"강릉 · 해루질 포인트"},{"t":"해루질","n":"주문진항","u":"point/gangwon/gangneung_gleaning.html","m":"강릉 · 해루질 포인트"},{"t":"해루질","n":"안인해변","u":"point/gangwon/gangneung_gleaning.html","m":"강릉 · 해루질 포인트"},{"t":"해루질","n":"금진해변","u":"point/gangwon/gangneung_gleaning.html","m":"강릉 · 해루질 포인트"},{"t":"해루질","n":"사천진해수욕장","u":"point/gangwon/gangneung_gleaning.html","m":"강릉 · 해루질 포인트"},{"t":"해루질","n":"경포해변","u":"point/gangwon/gangneung_gleaning.html","m":"강릉 · 해루질 포인트"},{"t":"해루질","n":"향호해변","u":"point/gangwon/gangneung_gleaning.html","m":"강릉 · 해루질 포인트"},{"t":"해루질","n":"정동진","u":"point/gangwon/gangneung_gleaning.html","m":"강릉 · 해루질 포인트"},{"t":"해루질","n":"안목해변","u":"point/gangwon/gangneung_gleaning.html","m":"강릉 · 해루질 포인트"},{"t":"해루질","n":"강문해변","u":"point/gangwon/gangneung_gleaning.html","m":"강릉 · 해루질 포인트"},{"t":"해루질","n":"영진해변","u":"point/gangwon/gangneung_gleaning.html","m":"강릉 · 해루질 포인트"},{"t":"해루질","n":"사근진해변","u":"point/gangwon/gangneung_gleaning.html","m":"강릉 · 해루질 포인트"},{"t":"해루질","n":"주문진해수욕장","u":"point/gangwon/gangneung_gleaning.html","m":"강릉 · 해루질 포인트"},{"t":"해루질","n":"연곡해수욕장","u":"point/gangwon/gangneung_gleaning.html","m":"강릉 · 해루질 포인트"},{"t":"해루질","n":"남항진해변","u":"point/gangwon/gangneung_gleaning.html","m":"강릉 · 해루질 포인트"},{"t":"낚시","n":"사천진항 빨간등대 방파제","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"소돌항 동방파제","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"심곡항 방파제","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"강릉항(안목) 큰방파제","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"금진항 방파제","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"주문진항 동방파제","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"남항진 방파제·뒷목","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"영진항 방파제","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"정동진항 방파제","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"안인항 방파제","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"오리진항(오리진포구)","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"강문 방파제","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"옥계항","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"안목 작은방파제","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"사천진 본동 갯바위","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"사근진 방파제","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"안인 염전방파제","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"남항진해변 원투","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"연곡해변 원투","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"사천진 요트장 방파제","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"사천 하평해변 갯바위","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"연곡천 합수부 수중여밭","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"사근진 갯바위","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"한라시멘트 방파제","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"남항진 솔바람다리 일원","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"영동화력(강릉에코파워) 방파제","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"주수천·낙풍천 합수부","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"정동진해변 원투","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"안인진 허이대·통일공원 갯바위","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"낚시","n":"등명낙가사 앞 갯바위","u":"point/gangwon/gangneung_fishing.html","m":"강릉 · 낚시 포인트"},{"t":"해루질","n":"남애어촌체험마을","u":"point/gangwon/yangyang_gleaning.html","m":"양양 · 해루질 포인트"},{"t":"해루질","n":"수산어촌체험마을","u":"point/gangwon/yangyang_gleaning.html","m":"양양 · 해루질 포인트"},{"t":"해루질","n":"동호해변(해루질)","u":"point/gangwon/yangyang_gleaning.html","m":"양양 · 해루질 포인트"},{"t":"해루질","n":"남애항 북측 조간대","u":"point/gangwon/yangyang_gleaning.html","m":"양양 · 해루질 포인트"},{"t":"해루질","n":"남애항 남측 조간대","u":"point/gangwon/yangyang_gleaning.html","m":"양양 · 해루질 포인트"},{"t":"해루질","n":"수산항","u":"point/gangwon/yangyang_gleaning.html","m":"양양 · 해루질 포인트"},{"t":"해루질","n":"남애항","u":"point/gangwon/yangyang_gleaning.html","m":"양양 · 해루질 포인트"},{"t":"해루질","n":"인구해수욕장","u":"point/gangwon/yangyang_gleaning.html","m":"양양 · 해루질 포인트"},{"t":"해루질","n":"낙산해수욕장","u":"point/gangwon/yangyang_gleaning.html","m":"양양 · 해루질 포인트"},{"t":"해루질","n":"물치항","u":"point/gangwon/yangyang_gleaning.html","m":"양양 · 해루질 포인트"},{"t":"해루질","n":"설악해수욕장","u":"point/gangwon/yangyang_gleaning.html","m":"양양 · 해루질 포인트"},{"t":"해루질","n":"갯마을해수욕장","u":"point/gangwon/yangyang_gleaning.html","m":"양양 · 해루질 포인트"},{"t":"해루질","n":"후진항","u":"point/gangwon/yangyang_gleaning.html","m":"양양 · 해루질 포인트"},{"t":"낚시","n":"수산항 큰방파제","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"남애항 동방파제","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"후진항 방파제(설악해수욕장 방파제)","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"동산항 동방파제","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"죽도암 갯바위","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"낙산해변 원투","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"물치항 동방파제","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"낙산항(전진항) 동방파제","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"정암해변 원투","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"오산항 방파제","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"기사문항 동방파제","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"인구항 방파제(죽도방파제)","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"하조대 갯바위·등대 주변","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"하조대 방파제","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"동호리 방파제","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"동산리 갯바위(카리브 갯바위 등)","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"설악해수욕장 수중여밭","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"남애3리 양야도 갯바위","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"휴휴암 갯바위(거북바위·넓덕바위)","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"전진 갯바위(낙산사 아래)","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"동호리 갯바위(군초소)","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"수산 큰방 갯바위","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"쏠비치 앞 갯바위","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"수산항 작은방파제","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"인구해변 원투","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"광진리 방파제","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"38선휴게소(기사문해변) 갯바위","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"무궁화동산 갯바위","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"남애항 북측 갯바위2","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"낚시","n":"남애항 남측 갯바위","u":"point/gangwon/yangyang_fishing.html","m":"양양 · 낚시 포인트"},{"t":"해루질","n":"대포항","u":"point/gangwon/sokcho_gleaning.html","m":"속초 · 해루질 포인트"},{"t":"해루질","n":"장사항","u":"point/gangwon/sokcho_gleaning.html","m":"속초 · 해루질 포인트"},{"t":"해루질","n":"외옹치해수욕장","u":"point/gangwon/sokcho_gleaning.html","m":"속초 · 해루질 포인트"},{"t":"낚시","n":"속초해변 방파제(청호해수욕장 방파제)","u":"point/gangwon/sokcho_fishing.html","m":"속초 · 낚시 포인트"},{"t":"낚시","n":"외옹치 갯바위","u":"point/gangwon/sokcho_fishing.html","m":"속초 · 낚시 포인트"},{"t":"낚시","n":"장사항 동방파제","u":"point/gangwon/sokcho_fishing.html","m":"속초 · 낚시 포인트"},{"t":"낚시","n":"대포항 방파제","u":"point/gangwon/sokcho_fishing.html","m":"속초 · 낚시 포인트"},{"t":"낚시","n":"영금정 갯바위(감자바위·넓덕바위)","u":"point/gangwon/sokcho_fishing.html","m":"속초 · 낚시 포인트"},{"t":"낚시","n":"동명항 방파제(보행 구간)","u":"point/gangwon/sokcho_fishing.html","m":"속초 · 낚시 포인트"},{"t":"낚시","n":"외옹치항 방파제","u":"point/gangwon/sokcho_fishing.html","m":"속초 · 낚시 포인트"},{"t":"낚시","n":"장사항 서방파제","u":"point/gangwon/sokcho_fishing.html","m":"속초 · 낚시 포인트"},{"t":"낚시","n":"영랑동 방파제","u":"point/gangwon/sokcho_fishing.html","m":"속초 · 낚시 포인트"},{"t":"낚시","n":"설악해맞이공원 방파제(설악산입구 방파제)","u":"point/gangwon/sokcho_fishing.html","m":"속초 · 낚시 포인트"},{"t":"낚시","n":"속초항 북방파제·동명방파제 테트라포드","u":"point/gangwon/sokcho_fishing.html","m":"속초 · 낚시 포인트"},{"t":"낚시","n":"외옹치해변 원투","u":"point/gangwon/sokcho_fishing.html","m":"속초 · 낚시 포인트"},{"t":"낚시","n":"영랑동 T자 방파제","u":"point/gangwon/sokcho_fishing.html","m":"속초 · 낚시 포인트"},{"t":"해루질","n":"오호어촌체험마을","u":"point/gangwon/gwgoseong_gleaning.html","m":"강원 고성 · 해루질 포인트"},{"t":"해루질","n":"봉포해변 조간대","u":"point/gangwon/gwgoseong_gleaning.html","m":"강원 고성 · 해루질 포인트"},{"t":"해루질","n":"송지호해수욕장","u":"point/gangwon/gwgoseong_gleaning.html","m":"강원 고성 · 해루질 포인트"},{"t":"해루질","n":"아야진해수욕장","u":"point/gangwon/gwgoseong_gleaning.html","m":"강원 고성 · 해루질 포인트"},{"t":"해루질","n":"천진해수욕장","u":"point/gangwon/gwgoseong_gleaning.html","m":"강원 고성 · 해루질 포인트"},{"t":"해루질","n":"가진해수욕장","u":"point/gangwon/gwgoseong_gleaning.html","m":"강원 고성 · 해루질 포인트"},{"t":"해루질","n":"삼포해수욕장","u":"point/gangwon/gwgoseong_gleaning.html","m":"강원 고성 · 해루질 포인트"},{"t":"해루질","n":"마차진해수욕장","u":"point/gangwon/gwgoseong_gleaning.html","m":"강원 고성 · 해루질 포인트"},{"t":"해루질","n":"봉포해수욕장","u":"point/gangwon/gwgoseong_gleaning.html","m":"강원 고성 · 해루질 포인트"},{"t":"해루질","n":"문암해변","u":"point/gangwon/gwgoseong_gleaning.html","m":"강원 고성 · 해루질 포인트"},{"t":"해루질","n":"화진포해수욕장","u":"point/gangwon/gwgoseong_gleaning.html","m":"강원 고성 · 해루질 포인트"},{"t":"해루질","n":"교암리해수욕장","u":"point/gangwon/gwgoseong_gleaning.html","m":"강원 고성 · 해루질 포인트"},{"t":"해루질","n":"봉수대해수욕장","u":"point/gangwon/gwgoseong_gleaning.html","m":"강원 고성 · 해루질 포인트"},{"t":"낚시","n":"거진항 동방파제","u":"point/gangwon/gwgoseong_fishing.html","m":"강원 고성 · 낚시 포인트"},{"t":"낚시","n":"공현진항 동방파제","u":"point/gangwon/gwgoseong_fishing.html","m":"강원 고성 · 낚시 포인트"},{"t":"낚시","n":"아야진항 동방파제","u":"point/gangwon/gwgoseong_fishing.html","m":"강원 고성 · 낚시 포인트"},{"t":"낚시","n":"대진항 동방파제","u":"point/gangwon/gwgoseong_fishing.html","m":"강원 고성 · 낚시 포인트"},{"t":"낚시","n":"가진항 방파제","u":"point/gangwon/gwgoseong_fishing.html","m":"강원 고성 · 낚시 포인트"},{"t":"낚시","n":"봉포항 동방파제","u":"point/gangwon/gwgoseong_fishing.html","m":"강원 고성 · 낚시 포인트"},{"t":"낚시","n":"초도항 방파제(화진포방파제)","u":"point/gangwon/gwgoseong_fishing.html","m":"강원 고성 · 낚시 포인트"},{"t":"낚시","n":"아야진해변 원투","u":"point/gangwon/gwgoseong_fishing.html","m":"강원 고성 · 낚시 포인트"},{"t":"낚시","n":"문암2리 방파제·능파대 갯바위","u":"point/gangwon/gwgoseong_fishing.html","m":"강원 고성 · 낚시 포인트"},{"t":"낚시","n":"백도항 방파제(문암1리)","u":"point/gangwon/gwgoseong_fishing.html","m":"강원 고성 · 낚시 포인트"},{"t":"낚시","n":"반암해변 원투","u":"point/gangwon/gwgoseong_fishing.html","m":"강원 고성 · 낚시 포인트"},{"t":"낚시","n":"천진리 방파제","u":"point/gangwon/gwgoseong_fishing.html","m":"강원 고성 · 낚시 포인트"},{"t":"낚시","n":"오호항 방파제(죽왕방파제)","u":"point/gangwon/gwgoseong_fishing.html","m":"강원 고성 · 낚시 포인트"},{"t":"낚시","n":"오호리 갯바위(서낭바위 일대)","u":"point/gangwon/gwgoseong_fishing.html","m":"강원 고성 · 낚시 포인트"},{"t":"낚시","n":"반암항 방파제","u":"point/gangwon/gwgoseong_fishing.html","m":"강원 고성 · 낚시 포인트"},{"t":"낚시","n":"반암항 복합낚시공원","u":"point/gangwon/gwgoseong_fishing.html","m":"강원 고성 · 낚시 포인트"},{"t":"낚시","n":"청간정 선창 갯바위","u":"point/gangwon/gwgoseong_fishing.html","m":"강원 고성 · 낚시 포인트"},{"t":"낚시","n":"거진해변 원투","u":"point/gangwon/gwgoseong_fishing.html","m":"강원 고성 · 낚시 포인트"},{"t":"낚시","n":"백도 갯바위","u":"point/gangwon/gwgoseong_fishing.html","m":"강원 고성 · 낚시 포인트"},{"t":"낚시","n":"송지호해변 원투","u":"point/gangwon/gwgoseong_fishing.html","m":"강원 고성 · 낚시 포인트"},{"t":"낚시","n":"화진포해변 원투","u":"point/gangwon/gwgoseong_fishing.html","m":"강원 고성 · 낚시 포인트"},{"t":"낚시","n":"공현진 갯바위","u":"point/gangwon/gwgoseong_fishing.html","m":"강원 고성 · 낚시 포인트"},{"t":"낚시","n":"아야진 기차바위","u":"point/gangwon/gwgoseong_fishing.html","m":"강원 고성 · 낚시 포인트"},{"t":"낚시","n":"아야진 서방파제 갯바위","u":"point/gangwon/gwgoseong_fishing.html","m":"강원 고성 · 낚시 포인트"},{"t":"낚시","n":"교암리 방파제","u":"point/gangwon/gwgoseong_fishing.html","m":"강원 고성 · 낚시 포인트"},{"t":"낚시","n":"봉포해변 갯바위","u":"point/gangwon/gwgoseong_fishing.html","m":"강원 고성 · 낚시 포인트"},{"t":"제철","n":"감성돔","u":"samcheok.html#catch","m":"삼척"},{"t":"제철","n":"가자미","u":"samcheok.html#catch","m":"삼척·동해·양양·강원 고성"},{"t":"제철","n":"고등어","u":"samcheok.html#catch","m":"삼척·속초"},{"t":"제철","n":"학꽁치","u":"samcheok.html#catch","m":"삼척·양양"},{"t":"제철","n":"임연수","u":"donghae.html#catch","m":"동해·속초·강원 고성"},{"t":"제철","n":"전갱이","u":"donghae.html#catch","m":"동해"},{"t":"제철","n":"숭어","u":"donghae.html#catch","m":"동해"},{"t":"제철","n":"삼치","u":"gangneung.html#catch","m":"강릉"},{"t":"제철","n":"문어","u":"gangneung.html#catch","m":"강릉"},{"t":"제철","n":"황열기(불볼락)","u":"gangneung.html#catch","m":"강릉"},{"t":"제철","n":"도루묵","u":"gangneung.html#catch","m":"강릉·속초"},{"t":"제철","n":"방어","u":"yangyang.html#catch","m":"양양"},{"t":"제철","n":"쥐노래미(놀래미)","u":"yangyang.html#catch","m":"양양·강원 고성"},{"t":"제철","n":"망상어","u":"sokcho.html#catch","m":"속초"},{"t":"제철","n":"대구","u":"gwgoseong.html#catch","m":"강원 고성"},{"t":"2월","n":"삼척 정월대보름제","u":"samcheok.html#festival","m":"삼척 · 삼척시내 일원","f":1},{"t":"4월","n":"삼척 맹방 유채꽃축제","u":"samcheok.html#festival","m":"삼척 · 근덕면 상맹방리 유채꽃밭","f":1},{"t":"5월","n":"삼척 장미축제","u":"samcheok.html#festival","m":"삼척 · 오십천 장미공원 일원","f":1},{"t":"명소","n":"삼척해변","u":"samcheok.html","m":"삼척 · 해변"},{"t":"명소","n":"이사부사자공원","u":"samcheok.html","m":"삼척 · 공원"},{"t":"명소","n":"새천년해안도로","u":"samcheok.html","m":"삼척 · 해안도로"},{"t":"명소","n":"덕봉산 해안생태탐방로","u":"samcheok.html","m":"삼척 · 산책로"},{"t":"명소","n":"초곡 용굴촛대바위길","u":"samcheok.html","m":"삼척 · 해안 탐방로"},{"t":"명소","n":"장호항","u":"samcheok.html","m":"삼척 · 항구"},{"t":"명소","n":"해신당공원","u":"samcheok.html","m":"삼척 · 공원·전시관"},{"t":"명소","n":"수로부인헌화공원","u":"samcheok.html","m":"삼척 · 전망 공원"},{"t":"7월","n":"동해 해변 뮤직 페스티벌","u":"donghae.html#festival","m":"동해 · 추암해변·망상해변","f":1},{"t":"9월","n":"동해 무릉제","u":"donghae.html#festival","m":"동해 · 천곡동 일원","f":1},{"t":"명소","n":"망상해변","u":"donghae.html","m":"동해 · 해변"},{"t":"명소","n":"대진해변","u":"donghae.html","m":"동해 · 해변"},{"t":"명소","n":"어달해변","u":"donghae.html","m":"동해 · 해변"},{"t":"명소","n":"도째비골 스카이밸리","u":"donghae.html","m":"동해 · 전망대"},{"t":"명소","n":"묵호등대","u":"donghae.html","m":"동해 · 등대·골목"},{"t":"명소","n":"묵호항","u":"donghae.html","m":"동해 · 항구"},{"t":"명소","n":"한섬해변","u":"donghae.html","m":"동해 · 해변"},{"t":"명소","n":"추암 촛대바위","u":"donghae.html","m":"동해 · 바위·해변"},{"t":"4월","n":"강릉 경포벚꽃축제","u":"gangneung.html#festival","m":"강릉 · 경포호 일원(경포 습지광장)","f":1},{"t":"6월","n":"강릉단오제","u":"gangneung.html#festival","m":"강릉 · 남대천 단오장","f":1},{"t":"7월","n":"경포 썸머 페스티벌","u":"gangneung.html#festival","m":"강릉 · 경포해변 특설무대·중앙광장","f":1},{"t":"10월","n":"강릉커피축제","u":"gangneung.html#festival","m":"강릉 · 안목 커피거리 등 시내 일원","f":1},{"t":"명소","n":"주문진항","u":"gangneung.html","m":"강릉 · 항구"},{"t":"명소","n":"소돌아들바위공원","u":"gangneung.html","m":"강릉 · 해안 공원"},{"t":"명소","n":"사천진해변","u":"gangneung.html","m":"강릉 · 해변"},{"t":"명소","n":"경포해변","u":"gangneung.html","m":"강릉 · 해변"},{"t":"명소","n":"안목해변","u":"gangneung.html","m":"강릉 · 해변"},{"t":"명소","n":"정동진해변","u":"gangneung.html","m":"강릉 · 해변"},{"t":"명소","n":"정동심곡 바다부채길","u":"gangneung.html","m":"강릉 · 해안 탐방로"},{"t":"명소","n":"금진해변","u":"gangneung.html","m":"강릉 · 해변"},{"t":"2월","n":"양양 낙산해변 달빛 모닥불축제","u":"yangyang.html#festival","m":"양양 · 낙산해변 백사장","f":1},{"t":"4월","n":"양양 남대천 벚꽃축제","u":"yangyang.html#festival","m":"양양 · 양양읍 송이조각공원 일원","f":1},{"t":"10월","n":"양양송이연어축제","u":"yangyang.html#festival","m":"양양 · 양양 남대천 둔치","f":1},{"t":"명소","n":"남애항","u":"yangyang.html","m":"양양 · 항구"},{"t":"명소","n":"휴휴암","u":"yangyang.html","m":"양양 · 사찰"},{"t":"명소","n":"죽도해변","u":"yangyang.html","m":"양양 · 해변"},{"t":"명소","n":"하조대","u":"yangyang.html","m":"양양 · 정자·바위 절벽"},{"t":"명소","n":"서피비치","u":"yangyang.html","m":"양양 · 해변"},{"t":"명소","n":"수산항","u":"yangyang.html","m":"양양 · 항구"},{"t":"명소","n":"낙산사","u":"yangyang.html","m":"양양 · 사찰"},{"t":"명소","n":"낙산해변","u":"yangyang.html","m":"양양 · 해변"},{"t":"4월","n":"영랑호 벚꽃축제","u":"sokcho.html#festival","m":"속초 · 영랑호 잔디마당","f":1},{"t":"6월","n":"실향민문화축제","u":"sokcho.html#festival","m":"속초 · 속초엑스포 잔디광장","f":1},{"t":"7월","n":"속초 썸머페스티벌","u":"sokcho.html#festival","m":"속초 · 속초해수욕장","f":1},{"t":"10월","n":"설악문화제","u":"sokcho.html#festival","m":"속초 · 속초엑스포 잔디광장·설악로데오거리","f":1},{"t":"명소","n":"외옹치 바다향기로","u":"sokcho.html","m":"속초 · 해안 산책로"},{"t":"명소","n":"대포항","u":"sokcho.html","m":"속초 · 항구"},{"t":"명소","n":"속초해변","u":"sokcho.html","m":"속초 · 해변"},{"t":"명소","n":"아바이마을","u":"sokcho.html","m":"속초 · 마을"},{"t":"명소","n":"속초관광수산시장","u":"sokcho.html","m":"속초 · 시장"},{"t":"명소","n":"영금정","u":"sokcho.html","m":"속초 · 정자·갯바위"},{"t":"명소","n":"영랑호","u":"sokcho.html","m":"속초 · 호수"},{"t":"명소","n":"장사항","u":"sokcho.html","m":"속초 · 항구"},{"t":"6월","n":"저도 대문어축제","u":"gwgoseong.html#festival","m":"강원 고성 · 현내면 대진항 일원","f":1},{"t":"10월","n":"고성명태축제","u":"gwgoseong.html#festival","m":"강원 고성 · 거진읍 거진11리해변 일원","f":1},{"t":"명소","n":"통일안보공원","u":"gwgoseong.html","m":"강원 고성 · 안보 관광지"},{"t":"명소","n":"대진항","u":"gwgoseong.html","m":"강원 고성 · 항구"},{"t":"명소","n":"화진포해변","u":"gwgoseong.html","m":"강원 고성 · 해변"},{"t":"명소","n":"거진항","u":"gwgoseong.html","m":"강원 고성 · 항구"},{"t":"명소","n":"송지호해변","u":"gwgoseong.html","m":"강원 고성 · 해변"},{"t":"명소","n":"능파대","u":"gwgoseong.html","m":"강원 고성 · 바위·지질명소"},{"t":"명소","n":"천학정","u":"gwgoseong.html","m":"강원 고성 · 정자"},{"t":"명소","n":"청간정","u":"gwgoseong.html","m":"강원 고성 · 정자"}]</script>
+<script id="hubSpecies" type="application/json">[{"sec":"fish","slug":"gamseongdom","n":"감성돔","one":"갯바위 낚시의 대표 대상입니다. 조류를 읽는 눈이 필요해 난이도가 높습니다.","lv":"어려움","m":[1,2,9,10,11,12],"cnt":1,"ban":[[5,1,5,31]],"bt":"5월 1일 ~ 5월 31일","by":false,"sz":"25cm 이하"},{"sec":"fish","slug":"godeungeo","n":"고등어","one":"무리가 들어오면 쉽게 잡히는 대상입니다.","lv":"쉬움","m":[9,10,11],"cnt":2,"ban":[[5,1,5,31]],"bt":"5월 1일 ~ 5월 31일","by":true,"sz":"21cm 이하"},{"sec":"fish","slug":"noraemi","n":"노래미","one":"우럭과 같은 자리에서 자주 함께 올라옵니다.","lv":"쉬움","m":[4,5,6,7,8,9,10],"cnt":2,"ban":[],"bt":"","by":false,"sz":""},{"sec":"fish","slug":"sungeo","n":"숭어","one":"봄철 연안에서 흔히 보이는 대상입니다. 무리 지어 다닙니다.","lv":"쉬움","m":[1,9,10,11,12],"cnt":1,"ban":[],"bt":"","by":false,"sz":""},{"sec":"fish","slug":"hakkongchi","n":"학꽁치","one":"표층에서 무리 지어 다닙니다. 가족 단위로 하기 좋습니다.","lv":"쉬움","m":[1,2,10,11,12],"cnt":2,"ban":[],"bt":"","by":false,"sz":""}]</script>
+<script>
+/* 이달에 잡을 수 있는 것 — 아래 hubSpecies 는 data/species-index.json 중 이 지역 권역에
+   실제로 적혀 있는 종만 골라 둔 것입니다(동해 쪽에 갯벌 대상이 뜨지 않도록).
+   전남 첫 화면(js/home.js)의 같은 칸과 그리는 방식·금어기 표시가 같습니다. */
+(function () {
+  var grid = document.getElementById('spGrid'), tabs = document.getElementById('spTabs');
+  if (!grid) return;
+  var LIST = [];
+  try { LIST = JSON.parse(document.getElementById('hubSpecies').textContent); } catch (e) { return; }
+  var kst = new Date(Date.now() + (new Date().getTimezoneOffset() + 540) * 60000);
+  var M = kst.getMonth() + 1, DAY = kst.getDate(), sec = 'all', SHOW = 8;
+  function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+  function inBan(s) {
+    if (!s.ban || !s.ban.length || s.by) return false;
+    return s.ban.some(function (b) {
+      var a = b[0] * 100 + b[1], z = b[2] * 100 + b[3], t = M * 100 + DAY;
+      return a <= z ? (t >= a && t <= z) : (t >= a || t <= z);
+    });
+  }
+  function fold(total) {
+    var row = document.getElementById('spFold');
+    if (!row) { row = el('div', 'sp-fold'); row.id = 'spFold'; grid.parentNode.insertBefore(row, grid.nextSibling); }
+    row.innerHTML = ''; grid.classList.remove('expanded');
+    if (total <= SHOW) { row.hidden = true; return; }
+    row.hidden = false;
+    var b = el('button', 'sp-foldbtn', (total - SHOW) + '개 더 보기 ▾'); b.type = 'button';
+    b.addEventListener('click', function () {
+      var open = grid.classList.toggle('expanded');
+      b.textContent = open ? '접기 ▴' : (total - SHOW) + '개 더 보기 ▾';
+      if (!open) grid.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    });
+    row.appendChild(b);
+  }
+  function draw() {
+    var list = LIST.filter(function (s) { return s.m.indexOf(M) > -1 && (sec === 'all' || s.sec === sec); });
+    list.sort(function (a, b) { return (inBan(a) ? 1 : 0) - (inBan(b) ? 1 : 0) || a.n.localeCompare(b.n, 'ko'); });
+    grid.innerHTML = '';
+    document.getElementById('spTitle').textContent = M + '월에 잡을 수 있는 것';
+    if (!list.length) { grid.appendChild(el('p', 'sp-loading', '이 달에 정리된 대상이 없습니다.')); fold(0); return; }
+    list.forEach(function (s) {
+      var a = el('a', 'sp-card' + (inBan(s) ? ' banned' : ''));
+      a.href = s.sec + '/' + s.slug + '.html';
+      var head = el('div', 'sp-top');
+      head.appendChild(el('b', null, s.n));
+      head.appendChild(el('span', 'sp-tag ' + s.sec, s.sec === 'catch' ? '해루질' : '낚시'));
+      a.appendChild(head);
+      a.appendChild(el('p', null, s.one));
+      var meta = el('div', 'sp-meta');
+      if (s.lv) meta.appendChild(el('span', null, '난이도 ' + s.lv));
+      if (s.cnt) meta.appendChild(el('span', null, s.cnt + '개 시·군'));
+      if (s.sz) meta.appendChild(el('span', null, s.sz + ' 금지'));
+      a.appendChild(meta);
+      if (inBan(s)) a.appendChild(el('span', 'sp-ban', '지금 금어기 · ' + s.bt));
+      else if (s.by) a.appendChild(el('span', 'sp-ban notice', '금어기 있음 · 고시 확인'));
+      grid.appendChild(a);
+    });
+    fold(list.length);
+  }
+  [].forEach.call(tabs.querySelectorAll('button'), function (b) {
+    b.addEventListener('click', function () {
+      sec = b.getAttribute('data-sec');
+      [].forEach.call(tabs.children, function (x) { x.classList.toggle('on', x === b); });
+      draw();
+    });
+  });
+  draw();
+})();
+
+/* 권역 지도 — 전남 첫 화면(js/home.js)과 같은 방식입니다. 카카오 지도 키는 point/map-config.js 에서 옵니다.
+   좌표는 js/coast-data.js 의 권역 대표 좌표를 씁니다. 키가 없거나 지도를 못 불러오면 지도 칸을 숨깁니다. */
+(function () {
+  var box = document.getElementById('hrMap'), layout = document.getElementById('hrLayout');
+  var key = (window.BADAGAJA_MAP || {}).kakaoJsKey, C = window.BADAGAJA_COAST || {};
+  if (!box || !key) { layout && layout.classList.add('no-map'); return; }
+  var REGS = [{"s":"samcheok","n":"삼척","c":"#2E5E4E","p":51},{"s":"donghae","n":"동해","c":"#1D4E6E","p":25},{"s":"gangneung","n":"강릉","c":"#4A3F6B","p":48},{"s":"yangyang","n":"양양","c":"#2F6B6B","p":43},{"s":"sokcho","n":"속초","c":"#24476B","p":16},{"s":"gwgoseong","n":"강원 고성","c":"#3D5A40","p":39}];
+  var cards = {};
+  [].forEach.call(document.querySelectorAll('.rc'), function (c) { cards[c.getAttribute('data-slug')] = c; });
+  function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+  var started = false;
+  function start() {
+    if (started) return; started = true;
+    var sc = document.createElement('script');
+    sc.src = 'https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=' + encodeURIComponent(key);
+    sc.onload = function () { try { kakao.maps.load(init); } catch (e) { layout.classList.add('no-map'); } };
+    sc.onerror = function () { layout.classList.add('no-map'); };
+    document.head.appendChild(sc);
+  }
+  function init() {
+    var map = new kakao.maps.Map(box, { center: new kakao.maps.LatLng(36.5, 126.4), level: 11 });
+    // 두 손가락(또는 휠)로 확대됩니다. 처음 크기에서는 지도를 끌 수 없게 두어
+    // 한 손가락으로 쓸면 쪽이 그대로 스크롤됩니다 (2026-09-23 주인 지시)
+    map.setZoomable(true);
+    map.setDraggable(false);
+    kakao.maps.event.addListener(map, 'zoom_changed', function () {
+      map.setDraggable(map.getLevel() < 11);
+    });
+    map.addControl(new kakao.maps.ZoomControl(), kakao.maps.ControlPosition.RIGHT);
+    var bounds = new kakao.maps.LatLngBounds(), pins = {}, n = 0;
+    REGS.forEach(function (r) {
+      var co = C[r.s]; if (!co || co.lat == null) return;
+      var pos = new kakao.maps.LatLng(co.lat, co.lng);
+      var a = el('a', 'hr-pin'); a.href = r.s + '.html'; a.style.setProperty('--c', r.c);
+      a.title = r.n + ' 포인트 ' + r.p + '곳';
+      a.appendChild(el('i', 'dot'));
+      var lb = el('span', 'lb', r.n + ' '); lb.appendChild(el('em', null, String(r.p))); a.appendChild(lb);
+      a.addEventListener('mouseenter', function () { hl(r.s, true); });
+      a.addEventListener('mouseleave', function () { hl(r.s, false); });
+      pins[r.s] = a; n++;
+      new kakao.maps.CustomOverlay({ position: pos, content: a, yAnchor: .5, zIndex: 3 }).setMap(map);
+      bounds.extend(pos);
+    });
+    if (!n) { layout.classList.add('no-map'); return; }
+    function fit() { map.relayout(); map.setBounds(bounds, 30, 40, 30, 40); }
+    fit(); setTimeout(fit, 400);
+    window.addEventListener('resize', function () { clearTimeout(fit.t); fit.t = setTimeout(fit, 250); });
+    function hl(s, on) { cards[s] && cards[s].classList.toggle('on', on); pins[s] && pins[s].classList.toggle('on', on); }
+    Object.keys(cards).forEach(function (s) {
+      cards[s].addEventListener('mouseenter', function () { hl(s, true); });
+      cards[s].addEventListener('mouseleave', function () { hl(s, false); });
+    });
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) { if (es.some(function (e) { return e.isIntersecting; })) { io.disconnect(); start(); } }, { rootMargin: '300px' });
+    io.observe(box);
+  } else start();
+})();
+
+/* 홈 화면에 추가 안내 — 휴대폰에서만, 닫으면 다시 안 보입니다(전남 첫 화면과 같은 방식). */
+(function () {
+  var box = document.getElementById('tsInstall'); if (!box) return;
+  function get(k) { try { return localStorage.getItem(k) || ''; } catch (e) { return ''; } }
+  function set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  var ua = navigator.userAgent || '';
+  var standalone = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone;
+  if (standalone || get('bdg-install-off') || !/Mobi|Android|iPhone|iPad/i.test(ua)) return;
+  var deferred = null;
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); deferred = e; });
+  var inApp = /NAVER|KAKAOTALK|Instagram|FBAN|FBAV|Line\/|DaumApps/i.test(ua);
+  var ios = /iPhone|iPad|iPod/i.test(ua), samsung = /SamsungBrowser/i.test(ua);
+  var steps = inApp ? ['지금은 앱 안에서 열린 화면이라 홈 화면에 추가할 수 없어요.', '화면 구석의 ⋮ 또는 ⋯ 메뉴에서 <b>다른 브라우저로 열기</b>를 누르세요.', '열린 브라우저에서 이 안내를 다시 눌러 주세요.']
+    : ios ? ['사파리 아래쪽의 <b>공유 버튼</b>(네모에 위 화살표)을 누릅니다.', '목록을 올려 <b>홈 화면에 추가</b>를 누릅니다.', '오른쪽 위 <b>추가</b>를 누르면 끝입니다.']
+    : samsung ? ['아래쪽 <b>≡ 메뉴</b>를 누릅니다.', '<b>현재 페이지 추가</b> → <b>홈 화면</b>을 고릅니다.', '<b>추가</b>를 누르면 끝입니다.']
+    : ['오른쪽 위 <b>⋮ 메뉴</b>를 누릅니다.', '<b>홈 화면에 추가</b>(또는 앱 설치)를 누릅니다.', '<b>추가</b>를 누르면 끝입니다.'];
+  box.hidden = false;
+  var how = document.getElementById('tsHowto');
+  document.getElementById('tsInstallGo').addEventListener('click', function () {
+    if (deferred) { deferred.prompt(); deferred.userChoice.then(function (c) { if (c && c.outcome === 'accepted') { set('bdg-install-off', '1'); box.hidden = true; } }); deferred = null; return; }
+    document.getElementById('tsHowtoSteps').innerHTML = steps.map(function (t) { return '<li>' + t + '</li>'; }).join('');
+    how.hidden = false; document.getElementById('tsHowtoClose').focus();
+  });
+  function closeHow() { how.hidden = true; }
+  document.getElementById('tsHowtoClose').addEventListener('click', closeHow);
+  how.addEventListener('click', function (e) { if (e.target === how) closeHow(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !how.hidden) closeHow(); });
+  document.getElementById('tsInstallX').addEventListener('click', function () { set('bdg-install-off', '1'); box.hidden = true; });
+})();
+
+/* 통합 검색 — 아래 hubIndex(권역·포인트·제철·축제·명소)를 이름으로 걸러 보여 줍니다.
+   전남·제주 첫 화면은 js/home.js 가 home-data.js 로 같은 일을 하는데 그쪽은 전남 자료만 담고 있어,
+   이 지역 자료를 쪽 안에 실어 따로 씁니다. */
+(function () {
+  var input = document.getElementById('hSearch'), out = document.getElementById('hResults');
+  if (!input || !out) return;
+  var IDX = [];
+  try { IDX = JSON.parse(document.getElementById('hubIndex').textContent); } catch (e) { return; }
+  var GRP = ['권역', '해루질', '낚시', '제철', '축제', '명소'];
+  function norm(s) { return (s || '').replace(/[\s·()\[\]]/g, '').toLowerCase(); }
+  function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+  function close() { out.hidden = true; out.innerHTML = ''; input.setAttribute('aria-expanded', 'false'); }
+  function run() {
+    var q = norm(input.value);
+    if (q.length < 1) return close();
+    var hit = IDX.filter(function (x) { return norm(x.n).indexOf(q) > -1; });
+    if (!hit.length) {
+      out.innerHTML = ''; out.appendChild(el('div', 'grp', '검색 결과가 없어요'));
+      out.hidden = false; input.setAttribute('aria-expanded', 'true'); return;
+    }
+    out.innerHTML = '';
+    var shown = 0;
+    GRP.forEach(function (g) {
+      var rows = hit.filter(function (x) { return (x.f ? '축제' : x.t) === g; });
+      if (!rows.length || shown >= 24) return;
+      out.appendChild(el('div', 'grp', g === '축제' ? '축제 ' + rows.length + '개' : g));
+      rows.slice(0, 8).forEach(function (x) {
+        var a = el('a'); a.href = x.u; a.setAttribute('role', 'option');
+        a.appendChild(el('span', x.f ? 'tag fest' : 'tag', x.t));
+        a.appendChild(el('span', null, x.n));
+        if (x.m) a.appendChild(el('span', 'meta', x.m));
+        out.appendChild(a); shown++;
+      });
+    });
+    out.hidden = false; input.setAttribute('aria-expanded', 'true');
+  }
+  input.addEventListener('input', run);
+  input.addEventListener('focus', function () { if (input.value) run(); });
+  // 많이 찾는 말 버튼은 검색창 밖에 있어, 여기서 빼지 않으면 눌러도 바로 닫힙니다.
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.h-search') && !e.target.closest('.h-quick')) close();
+  });
+  input.addEventListener('keydown', function (e) { if (e.key === 'Escape') { input.value = ''; close(); } });
+  [].forEach.call(document.querySelectorAll('.h-quick button'), function (b) {
+    b.addEventListener('click', function () { input.value = b.dataset.q; input.focus(); run(); });
+  });
+})();
+
+/* 오늘의 바다 — 물때 계산은 js/app.js 의 BADAGAJA_TIDE, 권역 좌표·관측소는 js/coast-data.js 를 씁니다.
+   자료를 부르는 곳은 권역 쪽과 같습니다: 조석 api/tide-cache.php, 날씨 api/weather-jeju.php(좌표 기준).
+   전남·제주 첫 화면은 js/home.js 가 같은 일을 하지만 그쪽 자료(home-data.js)에 묶여 있어 여기서는 따로 씁니다. */
+(function () {
+  var T = window.BADAGAJA_TIDE, C = window.BADAGAJA_COAST || {};
+  var box = document.getElementById('tsRegions');
+  if (!T || !box) return;
+  var REGS = [{"s":"samcheok","n":"삼척","c":"#2E5E4E","p":51},{"s":"donghae","n":"동해","c":"#1D4E6E","p":25},{"s":"gangneung","n":"강릉","c":"#4A3F6B","p":48},{"s":"yangyang","n":"양양","c":"#2F6B6B","p":43},{"s":"sokcho","n":"속초","c":"#24476B","p":16},{"s":"gwgoseong","n":"강원 고성","c":"#3D5A40","p":39}];
+  var DAY = ['일', '월', '화', '수', '목', '금', '토'];
+  var KEY = 'bdg-today-gangwon';
+  var $ = function (id) { return document.getElementById(id); };
+  function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+  function saved() { try { return localStorage.getItem(KEY) || ''; } catch (e) { return ''; } }
+  function kst() { return new Date(Date.now() + (new Date().getTimezoneOffset() + 540) * 60000); }
+  function toMin(hm) { var p = hm.split(':'); return +p[0] * 60 + +p[1]; }
+  function hmText(hm) {                      // "13:33" → "오후 1시 33분"
+    var p = hm.split(':'), h = +p[0], mi = +p[1];
+    var part = h < 12 ? '오전' : (h < 18 ? '오후' : '저녁'), hh = h % 12 === 0 ? 12 : h % 12;
+    return part + ' ' + hh + '시' + (mi ? ' ' + mi + '분' : '');
+  }
+  function dayWord(d, i) { return i === 0 ? '오늘' : (i === 1 ? '내일' : DAY[d.getDay()] + '요일'); }
+  /* ---------- 이번 주 언제 갈까 ----------
+     전남 첫 화면(js/home.js)의 week()/plan()/drawWeek() 과 같은 방식입니다.
+     1) 음력 물때 계산만으로 먼저 그리고, 2) 조석 자료가 오면 실제 낮 간조 높이로 다시 그립니다.
+     이 묶음에는 제주가 없으므로 제주용 분기(물살 약한 날 고르기)는 두지 않았습니다. */
+  function drawWeek(rows, byTide) {
+    var w = $('tsWeek'); if (!w) return;
+    w.innerHTML = '';
+    rows.forEach(function (x, i) {
+      var c = el('div', 'ts-day' + (i === 0 ? ' today' : '') + (x.best ? ' best' : (x.good ? ' good' : '')));
+      c.appendChild(el('span', 'star', x.best ? '★' : (x.good ? '☆' : '')));
+      var bar = el('div', 'bar'), fill = el('i'); fill.style.height = x.h + '%'; bar.appendChild(fill); c.appendChild(bar);
+      c.appendChild(el('b', null, i === 0 ? '오늘' : DAY[x.d.getDay()]));
+      c.appendChild(el('span', 'dm', x.d.getDate() + ' · ' + x.m + '물'));
+      c.title = (x.d.getMonth() + 1) + '월 ' + x.d.getDate() + '일 ' + x.m + '물'
+        + (x.low ? ' · 낮 간조 ' + x.low.time : (byTide ? ' · 낮 간조 없음' : ''));
+      w.appendChild(c);
+    });
+    var weekend = rows.filter(function (x) { var g = x.d.getDay(); return g === 0 || g === 6; });
+    var note = $('tpNote');
+    if (note) {
+      var calm = weekend.length && weekend.every(function (x) { return x.inten <= 40; });
+      var big = weekend.length && weekend.some(function (x) { return x.inten >= 68; });
+      if (calm) { note.innerHTML = '이번 주말은 <b>조금</b> 무렵이라 물이 적게 빠집니다. 해루질보다는 <b>낚시</b>가 낫습니다.'; note.hidden = false; }
+      else if (big) { note.innerHTML = '이번 주말은 <b>사리</b> 무렵이라 물이 많이 빠집니다. 가족 해루질하기 좋은 주말이에요.'; note.hidden = false; }
+      else note.hidden = true;
+    }
+  }
+  function week(d0) {
+    if (!$('tsWeek')) return;
+    var rows = [];
+    for (var i = 0; i < 7; i++) {
+      var d = new Date(d0); d.setDate(d.getDate() + i);
+      var m = T.calcMuldae(d), inten = T.calcIntensity(m);
+      rows.push({ d: d, m: m, inten: inten, h: Math.max(8, Math.round(inten * 0.92)) });
+    }
+    var top = rows.reduce(function (a, b) { return b.inten > a.inten ? b : a; });
+    top.best = true;
+    rows.forEach(function (x) { if (!x.best && x.inten >= 68) x.good = true; });
+    $('tpTitle').innerHTML = '물이 가장 많이 빠지는 날은 <em>' + dayWord(top.d, rows.indexOf(top)) + '</em>이에요';
+    $('tpLead').textContent = (top.d.getMonth() + 1) + '월 ' + top.d.getDate() + '일 · ' + top.m + '물 · 음력으로 계산한 물때입니다';
+    $('tpBasis').textContent = '물때 계산 기준';
+    drawWeek(rows, false);
+  }
+  function plan(data, d0, reg, cc) {
+    if (!data || !data.days || !data.days.length || !$('tsWeek')) return;
+    var rows = [];
+    for (var i = 0; i < 7; i++) {
+      var d = new Date(d0); d.setDate(d.getDate() + i);
+      var key = (d.getMonth() + 1) + '/' + d.getDate();
+      var day = data.days.filter(function (x) { return x.date === key; })[0];
+      var sun = cc ? T.sunTimes(d, cc[0], cc[1]) : null;
+      var a = sun ? toMin(sun.rise) + 60 : 420, b = sun ? toMin(sun.set) - 60 : 1020, low = null;
+      ((day && day.events) || []).forEach(function (e) {
+        if (e.type !== '간조' || e.level == null || e.level === '') return;
+        var t = toMin(e.time); if (t < a || t > b) return;   // 낮 시간(해뜬 뒤 1시간 ~ 해지기 1시간 전)만
+        if (!low || +e.level < low.level) low = { time: e.time, level: +e.level };
+      });
+      var m = T.calcMuldae(d);
+      rows.push({ d: d, m: m, inten: T.calcIntensity(m), low: low });
+    }
+    var lv = rows.filter(function (x) { return x.low; }).map(function (x) { return x.low.level; });
+    if (lv.length < 3) return;                  // 자료가 모자라면 계산값 그대로 둔다
+    var mx = Math.max.apply(null, lv), mn = Math.min.apply(null, lv), span = Math.max(1, mx - mn);
+    rows.forEach(function (x) { x.h = x.low ? Math.round(18 + (mx - x.low.level) / span * 76) : 6; });
+    var best = rows.filter(function (x) { return x.low; }).reduce(function (p, q) { return q.low.level < p.low.level ? q : p; });
+    best.best = true;
+    rows.forEach(function (x) { if (!x.best && x.low && x.low.level <= mn + span * 0.35) x.good = true; });
+    $('tpTitle').innerHTML = '해루질은 <em>' + dayWord(best.d, rows.indexOf(best)) + '</em>이 가장 좋아요';
+    $('tpLead').innerHTML = '<b>' + (best.d.getMonth() + 1) + '월 ' + best.d.getDate() + '일 ' + hmText(best.low.time)
+      + ' 간조</b> · 이번 주 낮 시간에 물이 가장 많이 빠집니다';
+    $('tpBasis').textContent = '낮 간조 기준 · ' + (data.point || reg.n);
+    drawWeek(rows, true);
+  }
+  /* ---------- 다음 간조까지 남은 시간 (1분마다 다시 씀) ---------- */
+  var nextTimer = null;
+  function nextLow(data) {
+    var box = $('tsNext'); if (!box || !data || !data.days) return;
+    function paint() {
+      var now = kst(), nowMin = now.getHours() * 60 + now.getMinutes(), found = null;
+      for (var i = 0; i < Math.min(2, data.days.length) && !found; i++) {
+        (data.days[i].events || []).some(function (e) {
+          if (e.type !== '간조') return false;
+          var t = toMin(e.time) + i * 1440;
+          if (t >= nowMin - 40) { found = { time: e.time, diff: t - nowMin, tomorrow: i === 1 }; return true; }
+          return false;
+        });
+      }
+      if (!found) { box.hidden = true; return; }
+      $('tsNextTime').textContent = (found.tomorrow ? '내일 ' : '') + found.time;
+      if (found.diff <= 30) {
+        $('tsNextLab').textContent = '지금은';
+        $('tsNextIn').textContent = found.diff < -10 ? '간조가 막 지났어요' : '간조 무렵이에요';
+      } else {
+        var h = Math.floor(found.diff / 60), mm = found.diff % 60;
+        $('tsNextLab').textContent = '지금부터';
+        $('tsNextIn').textContent = (h ? h + '시간 ' : '') + (mm ? mm + '분' : '') + ' 뒤';
+      }
+      box.hidden = false;
+    }
+    paint();
+    clearInterval(nextTimer); nextTimer = setInterval(paint, 60000);
+  }
+  var cur = REGS.some(function (r) { return r.s === saved(); }) ? saved() : REGS[0].s, req = 0;
+  REGS.forEach(function (r) {
+    var b = el('button', null, r.n); b.type = 'button'; b.setAttribute('role', 'tab'); b.dataset.r = r.s;
+    b.addEventListener('click', function () { pick(r.s, true); });
+    box.appendChild(b);
+  });
+  function pick(s, user) {
+    cur = s;
+    if (user) { try { localStorage.setItem(KEY, s); } catch (e) {} }
+    var reg = REGS.filter(function (r) { return r.s === s; })[0], co = C[s] || {};
+    [].forEach.call(box.children, function (b) { b.setAttribute('aria-selected', b.dataset.r === s ? 'true' : 'false'); });
+    var now = new Date(Date.now() + (new Date().getTimezoneOffset() + 540) * 60000);
+    var d = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var m = T.calcMuldae(d), inten = T.calcIntensity(m), lab = T.tideLabel(inten);
+    $('tsTitle').textContent = '오늘 ' + reg.n + ' 바다는';
+    $('tsDate').textContent = (d.getMonth() + 1) + '월 ' + d.getDate() + '일 (' + DAY[d.getDay()] + ') 기준';
+    $('tsMuldae').textContent = m + '물';
+    $('tsMuldaeName').textContent = lab.text;
+    $('tsGauge').style.width = inten + '%';
+    $('tsVerdict').textContent = inten >= 68 ? '물이 많이 빠지는 날이에요. 갯벌이 넓게 드러나 해루질하기 좋습니다.'
+      : inten <= 32 ? '물이 적게 빠지는 조금 무렵이에요. 물살이 약해 방파제·선착장 낚시가 편합니다.'
+      : '물이 중간쯤 드나드는 날이에요. 간조 시각에 맞춰 나가면 좋습니다.';
+    $('tsMore').href = s + '.html#tide';
+    $('tsMore').textContent = reg.n + ' 물때표 2주 전체 보기 →';
+    var cc = T.coords[s] || (co.lat != null ? [co.lat, co.lng] : null);
+    var sun = cc ? T.sunTimes(d, cc[0], cc[1]) : null;
+    $('tsRise').textContent = sun ? sun.rise : '–'; $('tsSet').textContent = sun ? sun.set : '–';
+    week(d);
+    if ($('tsNext')) $('tsNext').hidden = true;
+    $('tsTides').innerHTML = '<li class="muted">간조·만조 시각</li>'; $('tsTideSrc').textContent = '';
+    $('tsTemp').textContent = '–'; $('tsSky').textContent = '불러오는 중'; $('tsWave').textContent = '';
+    var my = ++req;
+    fetch('api/tide-cache.php?region=' + s, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (data) {
+      if (my !== req) return;
+      var ev = data && data.days && data.days[0] && data.days[0].events, ul = $('tsTides');
+      ul.innerHTML = '';
+      if (!ev || !ev.length) { ul.innerHTML = '<li class="muted">오늘 간조·만조 시각을 불러오지 못했어요</li>'; return; }
+      ev.forEach(function (e) {
+        var li = el('li', e.type === '만조' ? 'high' : '');
+        li.appendChild(el('span', 'k', e.type)); li.appendChild(el('b', null, e.time)); ul.appendChild(li);
+      });
+      $('tsTideSrc').textContent = (data.source === 'beach' ? '기상청 해수욕장 조석' : '국립해양조사원 조석예보')
+        + ' · ' + (data.point || (co.station && co.station.name) || reg.n);
+      nextLow(data);
+      plan(data, d, reg, cc);
+    }).catch(function () { if (my === req) $('tsTides').innerHTML = '<li class="muted">간조·만조 정보 준비 중</li>'; });
+    fetch('api/weather-jeju.php?region=' + s, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (w) {
+      if (my !== req) return;
+      if (!w || w.available === false) { $('tsSky').textContent = '이 권역은 관측 정보가 없어요'; return; }
+      $('tsTemp').textContent = (w.temp != null && w.temp !== '') ? w.temp + '°' : '–';
+      $('tsSky').textContent = w.label || '';
+      $('tsWave').textContent = (w.wave != null && w.wave !== '')
+        ? '파고 ' + w.wave + 'm · ' + (w.point || reg.n) : (w.point || reg.n) + ' 관측';
+    }).catch(function () { if (my === req) $('tsSky').textContent = '날씨 정보 준비 중'; });
+    // 시간별 물높이 그래프 — js/tide-graph.js
+    if (window.BADAGAJA_TIDEGRAPH && document.getElementById('tsGraph') && co.lat != null) {
+      window.BADAGAJA_TIDEGRAPH.mount(document.getElementById('tsGraph'), s, { dark: true, coords: [co.lat, co.lng] });
+    }
+    // 생활해양예보지수 (갯벌체험·바다낚시·해수욕) — api/seaidx.php
+    [].forEach.call(document.querySelectorAll('.ts-idx'), function (card) {
+      var t = card.dataset.type, g = card.querySelector('.ti-grade'),
+          pl = card.querySelector('.ti-place'), de = card.querySelector('.ti-detail');
+      card.className = 'ts-card ts-idx'; g.textContent = '–'; pl.textContent = '불러오는 중'; de.textContent = '';
+      fetch('api/seaidx.php?type=' + t + '&region=' + s).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (x) {
+        if (my !== req) return;
+        if (!x || !x.available) { card.classList.add('off'); g.textContent = '정보 없음'; pl.textContent = '이 권역 가까이에 예보 장소가 없어요'; return; }
+        card.classList.add('g' + x.grade); g.textContent = x.label;
+        pl.textContent = x.point + (x.outside ? ' (' + x.outside + ')' : '') + ' · ' + x.distance + 'km · ' + x.when;
+        var det = x.detail || {}, parts = [];
+        if (t === 'mudflat') { if (det.start && det.end && det.start !== det.end) parts.push('체험 가능 ' + det.start + '~' + det.end); if (det.weather) parts.push(det.weather); }
+        if (t === 'beach') { if (det.open) parts.push(det.open === '폐장' ? '폐장 기간(안전요원 없음)' : det.open); if (det.watertemp) parts.push('수온 ' + det.watertemp + '℃'); if (det.wave) parts.push('파고 ' + det.wave + 'm'); }
+        if (t === 'fishing') {
+          if (x.fish && x.fish.length) parts.push(x.fish.slice(0, 3).map(function (f) { return f.fish + ' ' + f.label; }).join(' · '));
+          if (det.watertemp) parts.push('수온 ' + det.watertemp + '℃');
+        }
+        de.textContent = parts.join(' · ');
+      }).catch(function () { if (my === req) { card.classList.add('off'); g.textContent = '–'; pl.textContent = '지수를 불러오지 못했어요'; } });
+    });
+  }
+  pick(cur, false);
+})();
+
+/* 이달의 제철·축제 — 위 hubData 를 읽어 이번 달부터 보여 주고 ‹ › 로 달을 옮깁니다. */
+(function () {
+  var D = {}; try { D = JSON.parse(document.getElementById('hubData').textContent); } catch (e) { return; }
+  var kst = new Date(Date.now() + (new Date().getTimezoneOffset() + 540) * 60000);
+  var m = kst.getMonth() + 1;
+  var $ = function (id) { return document.getElementById(id); };
+  function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+  function draw() {
+    $('ssMonth').textContent = m + '월';
+    var cs = (D.catch || {})[m] || [], cb = $('ssCatch');
+    cb.innerHTML = ''; $('ssCatchCount').textContent = cs.length + '종';
+    if (!cs.length) cb.appendChild(el('p', 'ss-empty', '이 달에 표시할 제철 정보가 없어요.'));
+    cs.forEach(function (c) {
+      var b = el('button', 'ss-chip'); b.type = 'button'; b.title = c.r.join(' · ');
+      b.appendChild(document.createTextNode(c.n + ' '));
+      b.appendChild(el('small', null, c.r.length + '곳'));
+      cb.appendChild(b);
+    });
+    var fs = (D.fest || {})[m] || [], fb = $('ssFest');
+    fb.innerHTML = ''; $('ssFestCount').textContent = fs.length ? fs.length + '개' : '';   /* 0개는 숫자를 감춤 (2026-09-24) */
+    if (!fs.length) fb.appendChild(el('p', 'ss-empty', m + '월에는 등록된 축제가 없어요. 다음 달을 확인해 보세요.'));
+    fs.forEach(function (f) {
+      var a = el('a', 'ss-fest'); a.href = f.s + '.html#festival'; a.style.setProperty('--c', f.c);
+      a.appendChild(el('span', 'r', f.r + ' · ' + m + '월 예정'));
+      a.appendChild(el('b', null, f.n));
+      a.appendChild(el('span', null, (f.p ? f.p + ' · ' : '') + f.d));
+      fb.appendChild(a);
+    });
+  }
+  $('ssPrev').addEventListener('click', function () { m = m === 1 ? 12 : m - 1; draw(); });
+  $('ssNext').addEventListener('click', function () { m = m === 12 ? 1 : m + 1; draw(); });
+  draw();
+})();
+/* 동행별 코스 — 카드는 이미 그려 두고 고른 것만 보여 줍니다. */
+(function () {
+  var tabs = document.querySelectorAll('.hc-tabs button'), cards = document.querySelectorAll('.hc-card');
+  if (!tabs.length) return;
+  function show(k) {
+    [].forEach.call(tabs, function (t) { t.setAttribute('aria-selected', t.dataset.k === k ? 'true' : 'false'); });
+    [].forEach.call(cards, function (c) { c.hidden = c.dataset.k !== k; });
+  }
+  [].forEach.call(tabs, function (t) { t.addEventListener('click', function () { show(t.dataset.k); }); });
+  show(tabs[0].dataset.k);
+})();
+</script>
+<script src="js/kakao-share.js?v=202609262116" defer></script>
+<script src="js/ads-data.js?v=202609262116"></script>
+<script src="js/ads.js?v=202609262116"></script>
+<script src="js/hit.js?v=202609262116" defer></script>
+</body>
+</html>

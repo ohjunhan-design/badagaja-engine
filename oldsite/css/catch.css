@@ -1,0 +1,64 @@
+/* 해루질 대상 페이지 */
+.cg-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:12px;margin:14px 0}
+.cg-facts>div{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:#fff}
+.cg-facts span{display:block;font-size:.74rem;color:var(--foam-dim);margin-bottom:3px}
+.cg-facts b{font-size:.92rem;color:var(--ink);font-weight:700;line-height:1.6;word-break:keep-all}
+.cg-facts small{display:block;margin-top:5px;font-size:.76rem;line-height:1.6;color:var(--foam-dim);font-weight:400;word-break:keep-all}
+.cg-facts.top>div{background:#FFFBF3;border-color:var(--lantern)}
+.cg-steps{counter-reset:s;list-style:none;padding:0;margin:12px 0}
+.cg-steps li{counter-increment:s;position:relative;list-style:none;border:1px solid var(--line);border-radius:12px;background:#fff;padding:14px 16px 14px 52px;margin:0 0 8px;font-size:.94rem;line-height:1.8;color:var(--foam)}
+.cg-steps li::before{content:counter(s);position:absolute;left:14px;top:13px;width:26px;height:26px;border-radius:50%;background:var(--lantern);color:#fff;font-size:.8rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+.cg-tip{border-left:4px solid var(--lantern);background:#FFFBF3;border-radius:0 12px 12px 0;padding:12px 16px;font-size:.9rem;line-height:1.8}
+.cg-tip b{color:var(--lantern);margin-right:6px}
+.cg-warn{border:1px solid #d9a58a;border-left:4px solid #C0522B;border-radius:12px;padding:14px 18px;background:#fbeee6;margin:14px 0}
+.cg-warn b{color:#9c3d16}.cg-warn p{color:#6b3b22;margin:4px 0 0}
+.cg-note{font-size:.82rem;color:var(--foam-dim);line-height:1.7}
+.cg-grid a small{display:block;font-size:.74rem;color:var(--foam-dim);margin-top:3px}
+
+/* 대상별 단면 그림 */
+.cg-art{margin:18px 0 6px}
+.cg-art svg{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:14px;background:#DCE6EA}
+.cg-art figcaption{margin-top:8px;font-size:.8rem;color:var(--foam-dim);line-height:1.6}
+/* 권역별 포인트 목록 바로 가기 */
+.cg-points{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:12px 0 0;font-size:.82rem;color:var(--foam-dim)}
+.cg-points a{border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:#fff;color:var(--foam);text-decoration:none;font-size:.82rem}
+.cg-points a:hover{border-color:var(--lantern);color:var(--lantern)}
+
+/* 왕초보 그림 강의 (tools/lesson.ps1) */
+.ls{margin:34px 0 10px;padding:26px 0 8px;border-top:2px solid var(--lantern)}
+.ls-kicker{font-size:.8rem;letter-spacing:.04em;color:var(--lantern);font-weight:700;margin:0}
+.ls-head h2{margin:6px 0 8px;text-wrap:balance}
+.ls-lede{font-size:1rem;line-height:1.9;color:var(--foam);max-width:62ch}
+.ls-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:18px}
+.ls-card{position:relative;margin:0;border:1px solid var(--line);border-radius:16px;background:#fff;overflow:hidden;display:flex;flex-direction:column}
+.ls-card svg{display:block;width:100%;height:auto;border-bottom:1px solid var(--line)}
+.ls-no{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;margin-right:8px;border-radius:50%;background:var(--lantern);color:#fff;font-style:normal;font-weight:700;font-size:.8rem;vertical-align:1px}
+.ls-card figcaption{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px}
+.ls-card figcaption b{font-size:1.02rem;color:var(--ink)}
+.ls-card figcaption span{font-size:.9rem;line-height:1.8;color:var(--foam)}
+.ls-card figcaption span b{font-size:inherit;color:#8a5312}
+.ls-end{margin-top:18px;padding:16px 18px;border-radius:14px;background:#FFFBF3;border:1px dashed var(--lantern);font-size:.94rem;line-height:1.85}
+@media(max-width:420px){.ls-grid{grid-template-columns:1fr}}
+.sp-photo{margin:16px 0 8px}.sp-photo img{display:block;width:100%;height:auto;max-height:440px;object-fit:contain;border-radius:14px;border:1px solid var(--line);background:#EEF2F2}.sp-photo figcaption{margin-top:6px;font-size:.74rem;color:var(--foam-dim)}.sp-photo figcaption a{color:inherit}
+/* 기초 쪽으로 가는 안내 (2026-09-18) */
+.cg-top-ad{margin:16px 0 2px;display:flex;flex-direction:column;align-items:center}   /* 대상 목록 위 광고 (2026-09-23) */
+.ls-basic{margin:10px 0 0;padding:12px 14px;border-radius:12px;background:#EEF4F2;color:#2F5D57;font-size:.9rem;display:flex;align-items:center;justify-content:space-between;gap:10px 14px;flex-wrap:wrap}
+.ls-basic a{font-weight:700;color:#2F5D57}
+/* 기초 바로가기 단추 (2026-09-22 주인 지시) — 문장 속 글자 링크라 눈에 잘 안 띄던 것 */
+.ls-basic .ls-basic-btn{flex:none;display:inline-flex;align-items:center;background:#2F5D57;color:#FFFBF3;border-radius:999px;padding:9px 16px;font-size:.88rem;text-decoration:none;box-shadow:0 2px 8px rgba(47,93,87,.22)}
+.ls-basic .ls-basic-btn:hover{background:#244A45}
+@media (max-width:560px){ .ls-basic .ls-basic-btn{width:100%;justify-content:center} }
+
+/* 갯벌에 나가기 전 법으로 정해진 것 (2026-09-20) */
+.ls-law{margin-top:20px;padding:20px 22px;border-radius:16px;background:#FFF4E2;border:1px solid #E7C892}
+.ls-law h3{margin:0 0 10px;font-size:1.06rem;color:#8A4B10}
+.ls-law ul{margin:0;padding-left:18px}
+.ls-law li{margin:8px 0;font-size:.94rem;line-height:1.8}
+.ls-law li b{color:#8A4B10}
+.ls-law-src{margin:12px 0 0;font-size:.78rem;color:var(--foam-dim)}
+@media(max-width:620px){.ls-law{padding:16px 15px}.ls-law li{font-size:.9rem}}
+/* 대상별 '잡히는 곳' — 묶음(전남·충남…)별 묶음 제목과, 권역마다 한 줄 설명 (2026-09-21) */
+.sp-grp{margin:18px 0 8px;font-size:.95rem;font-weight:700;color:var(--ink);display:flex;align-items:baseline;gap:8px}
+.sp-grp small{font-size:.78rem;font-weight:400;color:var(--foam-dim)}
+.sp-grid a{gap:4px}
+.sp-grid p{margin:4px 0 0;font-size:.82rem;line-height:1.65;color:var(--foam-dim);word-break:keep-all}

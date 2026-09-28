@@ -1,0 +1,98 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>여섯 걸음 띠 — 5차 시안(그림)</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;900&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+ *{box-sizing:border-box}
+ body{margin:0;background:#F5F0E4;font-family:'Noto Sans KR',sans-serif;color:#12242F}
+ .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+ .hero{height:180px;background:linear-gradient(120deg,#20343B,#3C5A63 60%,#7E6A4B);color:#FFFBF3;display:flex;align-items:center}
+ .hero h1{font-family:'Noto Serif KR',serif;font-size:1.85rem;margin:0}
+ .hero p{margin:6px 0 0;color:rgba(255,251,243,.8);font-size:.92rem}
+ .tagline{display:inline-block;font-size:.76rem;font-weight:700;background:rgba(255,251,243,.16);border-radius:999px;padding:4px 12px;margin-bottom:8px}
+ .jn{position:relative;padding:26px 0 30px;background:radial-gradient(1200px 220px at 50% -60px, rgba(31,95,139,.12), transparent 70%),linear-gradient(180deg,#EDF5FB,#F7FBFD 55%,#F5F0E4)}
+ .jn-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+ .jn-head b{font-family:'Noto Serif KR',serif;font-size:1.45rem}
+ .jn-head span{font-size:.92rem;color:#5A6872}
+ .jn-head .dot{width:6px;height:6px;border-radius:50%;background:#F2B65C}
+ .jn-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+ .jn-card{position:relative;overflow:hidden;display:flex;flex-direction:column;border-radius:18px;background:var(--bg);
+   border:1px solid rgba(18,36,47,.07);text-decoration:none;color:inherit;box-shadow:0 4px 14px rgba(18,36,47,.07);transition:transform .16s,box-shadow .16s}
+ .jn-card:hover{transform:translateY(-4px);box-shadow:0 12px 26px rgba(18,36,47,.16)}
+ .jn-ph{position:relative;display:block;height:132px;overflow:hidden}
+ .jn-art{width:100%;height:100%;display:block}
+ .jn-ph::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(9,26,36,.5))}
+ .jn-no{position:absolute;left:11px;top:10px;z-index:2;display:inline-grid;place-items:center;width:30px;height:30px;border-radius:10px;
+   background:var(--c);color:#fff;font-size:.84rem;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+ .jn-ph .cap{position:absolute;left:12px;bottom:10px;z-index:2;color:#fff;font-family:'Noto Serif KR',serif;font-size:1.06rem;text-shadow:0 2px 10px rgba(0,0,0,.55)}
+ .jn-bd{display:block;padding:14px 15px 15px}
+ .jn-t{display:block;font-family:'Noto Serif KR',serif;font-size:1.16rem;line-height:1.3}
+ .jn-sub{display:block;margin-top:5px;font-size:.84rem;line-height:1.55;color:#5A6872}
+ .jn-go{display:block;margin-top:7px;font-size:.8rem;font-weight:800;color:var(--c);opacity:0;transform:translateX(-4px);transition:.16s}
+ .jn-go i{font-style:normal}
+ .jn-card:hover .jn-go{opacity:1;transform:none}
+ .jn-stats{position:relative;overflow:hidden;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-top:14px;padding:16px 18px;
+   border-radius:20px;color:#fff;background:linear-gradient(100deg,#123F5E,#1F5F8B 45%,#2E8B9E 100%);box-shadow:0 8px 22px rgba(18,63,94,.28)}
+ .jn-st{position:relative;display:flex;align-items:center;gap:10px}
+ .jn-st + .jn-st::before{content:"";position:absolute;left:-6px;top:6px;bottom:6px;width:1px;background:rgba(255,255,255,.18)}
+ .jn-sic{opacity:.9;display:flex}
+ .jn-sv b{font-family:'Noto Serif KR',serif;font-size:1.45rem}
+ .jn-sv em{font-style:normal;font-size:.84rem;margin-left:3px;opacity:.95}
+ .jn-sv small{display:block;font-size:.76rem;opacity:.82;margin-top:1px}
+ @media (max-width:1080px){ .jn-grid{grid-template-columns:repeat(3,minmax(0,1fr))} .jn-stats{grid-template-columns:repeat(3,minmax(0,1fr))} .jn-st + .jn-st::before{display:none} }
+ @media (max-width:620px){
+   .jn{padding:18px 0 24px}
+   .jn-head b{font-size:1.2rem}
+   .jn-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+   .jn-ph{height:104px}
+   .jn-ph .cap{font-size:.96rem}
+   .jn-bd{padding:11px 12px 12px}
+   .jn-t{font-size:1.04rem}
+   .jn-sub{font-size:.79rem}
+   .jn-stats{grid-template-columns:repeat(2,minmax(0,1fr));padding:14px}
+   .jn-sv b{font-size:1.25rem}
+ }
+</style></head><body>
+<section class="hero"><div class="wrap">
+  <span class="tagline">동호회와 함께하는 바다참고서</span>
+  <h1>바다를 알고 가면 바다가 더 즐겁습니다</h1>
+  <p>(히어로 자리 — 실제 쪽에서는 사진과 검색창이 들어갑니다)</p>
+</div></section>
+<section class="jn"><div class="wrap">
+  <div class="jn-head"><b>바다가자는 이렇게 안내합니다</b><span class="dot"></span><span>여섯 걸음이면 오늘 갈 바다가 정해집니다</span></div>
+  <div class="jn-grid">
+    <a class="jn-card" style="--c:#1F5F8B;--bg:#E7F1FA" href="#">
+      <span class="jn-ph"><svg class="jn-art" viewBox="0 0 320 150" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="s1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#BFE0F2"/><stop offset="1" stop-color="#7FC0E4"/></linearGradient><linearGradient id="w1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2E86B8"/><stop offset="1" stop-color="#1B5C86"/></linearGradient></defs><rect width="320" height="150" fill="url(#s1)"/><rect y="92" width="320" height="58" fill="url(#w1)"/><path d="M0 92 q 26 -7 52 0 t 52 0 t 52 0 t 52 0 t 52 0 t 60 0 V150 H0 Z" fill="url(#w1)" opacity="0.55"/><path d="M0 101 q 26 -7 52 0 t 52 0 t 52 0 t 52 0 t 52 0 t 60 0 V150 H0 Z" fill="url(#w1)" opacity="0.35"/><path d="M0 110 q 26 -7 52 0 t 52 0 t 52 0 t 52 0 t 52 0 t 60 0 V150 H0 Z" fill="url(#w1)" opacity="0.22"/><path d="M40 86c14-10 30-4 44-12s26-18 44-14 26 16 44 16 30-8 44-2 24 14 36 12v14H40z" fill="#EFE3C8"/><circle cx="118" cy="62" r="15" fill="#fff" opacity=".9"/><path d="M118 52c-6 0-10 4-10 10 0 7 10 16 10 16s10-9 10-16c0-6-4-10-10-10z" fill="#C0522B"/><circle cx="118" cy="62" r="3.6" fill="#fff"/><circle cx="196" cy="74" r="9" fill="#fff" opacity=".75"/><circle cx="196" cy="74" r="4" fill="#1F5F8B"/><circle cx="70" cy="78" r="8" fill="#fff" opacity=".7"/><circle cx="70" cy="78" r="3.4" fill="#1F5F8B"/></svg><b class="jn-no">01</b><span class="cap">어디로 갈까?</span></span>
+      <span class="jn-bd"><b class="jn-t">57개 바다 권역</b><span class="jn-sub">전남 · 제주 · 경남 · 충남 · 강원</span><span class="jn-go">보러 가기 <i>›</i></span></span>
+    </a>
+    <a class="jn-card" style="--c:#1F7A5C;--bg:#E4F4EC" href="#">
+      <span class="jn-ph"><svg class="jn-art" viewBox="0 0 320 150" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="s2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CDECDF"/><stop offset="1" stop-color="#8ED8BC"/></linearGradient><linearGradient id="w2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2E9E79"/><stop offset="1" stop-color="#17654B"/></linearGradient></defs><rect width="320" height="150" fill="url(#s2)"/><rect y="80" width="320" height="70" fill="url(#w2)"/><path d="M0 80 q 26 -7 52 0 t 52 0 t 52 0 t 52 0 t 52 0 t 60 0 V150 H0 Z" fill="url(#w2)" opacity="0.55"/><path d="M0 89 q 26 -7 52 0 t 52 0 t 52 0 t 52 0 t 52 0 t 60 0 V150 H0 Z" fill="url(#w2)" opacity="0.35"/><path d="M0 98 q 26 -7 52 0 t 52 0 t 52 0 t 52 0 t 52 0 t 60 0 V150 H0 Z" fill="url(#w2)" opacity="0.22"/><g transform="translate(96,52)"><path d="M0 22c0-13 16-24 34-24 12 0 20 7 20 7s-6 9-6 15 6 15 6 15-8 7-20 7C16 42 0 33 0 22z" fill="#FFFBF3" opacity=".95"/><path d="M0 22-16 9v26L0 22z" fill="#FFFBF3" opacity=".95"/><circle cx="40" cy="16" r="3" fill="#1F3D4C"/></g><g transform="translate(206,96)"><path d="M0 0c0-12 10-20 22-20s22 8 22 20z" fill="#FFE2B8"/><path d="M22-20 8 0M22-20l14 20M22-20v20" stroke="#D9A45B" stroke-width="2"/></g><path d="M40 104c8-4 16-4 24 0" stroke="#FFFBF3" stroke-width="3" fill="none" opacity=".7" stroke-linecap="round"/></svg><b class="jn-no">02</b><span class="cap">무엇을 할까?</span></span>
+      <span class="jn-bd"><b class="jn-t">낚시 · 해루질</b><span class="jn-sub">대상 35종 · 잡는 법과 채비</span><span class="jn-go">보러 가기 <i>›</i></span></span>
+    </a>
+    <a class="jn-card" style="--c:#B8761C;--bg:#FCF1DF" href="#">
+      <span class="jn-ph"><svg class="jn-art" viewBox="0 0 320 150" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="s3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCE3BE"/><stop offset="1" stop-color="#F7C57E"/></linearGradient><linearGradient id="w3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3E92B8"/><stop offset="1" stop-color="#1F5F8B"/></linearGradient></defs><rect width="320" height="150" fill="url(#s3)"/><rect y="96" width="320" height="54" fill="url(#w3)"/><path d="M0 96 q 26 -7 52 0 t 52 0 t 52 0 t 52 0 t 52 0 t 60 0 V150 H0 Z" fill="url(#w3)" opacity="0.55"/><path d="M0 105 q 26 -7 52 0 t 52 0 t 52 0 t 52 0 t 52 0 t 60 0 V150 H0 Z" fill="url(#w3)" opacity="0.35"/><path d="M0 114 q 26 -7 52 0 t 52 0 t 52 0 t 52 0 t 52 0 t 60 0 V150 H0 Z" fill="url(#w3)" opacity="0.22"/><path d="M170 100l26-46 26 46z" fill="#7C8B93"/><path d="M196 54l-9 16h18z" fill="#A8B6BD"/><g transform="translate(96,40)"><rect x="-9" y="10" width="18" height="52" rx="3" fill="#FFFBF3"/><rect x="-9" y="22" width="18" height="10" fill="#C0522B"/><rect x="-9" y="42" width="18" height="10" fill="#C0522B"/><rect x="-12" y="2" width="24" height="9" rx="3" fill="#2B3942"/><circle cx="0" cy="-2" r="5" fill="#F2B65C"/></g><path d="M48 104c14-12 30-12 44 0s30 12 44 0" stroke="#8C9AA2" stroke-width="7" fill="none" stroke-linecap="round" opacity=".55"/></svg><b class="jn-no">03</b><span class="cap">어디서 할까?</span></span>
+      <span class="jn-bd"><b class="jn-t">3,144개 포인트</b><span class="jn-sub">갯벌 · 갯바위 · 방파제 · 선착장</span><span class="jn-go">보러 가기 <i>›</i></span></span>
+    </a>
+    <a class="jn-card" style="--c:#5B4B9E;--bg:#EEEBFA" href="#">
+      <span class="jn-ph"><svg class="jn-art" viewBox="0 0 320 150" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="s4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#DCD8F6"/><stop offset="1" stop-color="#B3AAE8"/></linearGradient><linearGradient id="w4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6F63C4"/><stop offset="1" stop-color="#443A8E"/></linearGradient></defs><rect width="320" height="150" fill="url(#s4)"/><rect y="70" width="320" height="80" fill="url(#w4)" opacity=".35"/><path d="M0 108c30 0 46-46 80-46s50 46 80 46 46-46 80-46 50 46 80 46v42H0z" fill="url(#w4)" opacity=".85"/><path d="M0 108c30 0 46-46 80-46s50 46 80 46 46-46 80-46 50 46 80 46" stroke="#FFFBF3" stroke-width="3" fill="none"/><circle cx="80" cy="62" r="6" fill="#F2B65C" stroke="#FFFBF3" stroke-width="2.5"/><circle cx="160" cy="108" r="6" fill="#FFFBF3"/><circle cx="240" cy="62" r="6" fill="#F2B65C" stroke="#FFFBF3" stroke-width="2.5"/><circle cx="262" cy="34" r="16" fill="#FFF3D6" opacity=".9"/></svg><b class="jn-no">04</b><span class="cap">오늘 괜찮을까?</span></span>
+      <span class="jn-bd"><b class="jn-t">물때 · 날씨 · 파고</b><span class="jn-sub">간조 · 만조 · 바람 · 바다지수</span><span class="jn-go">보러 가기 <i>›</i></span></span>
+    </a>
+    <a class="jn-card" style="--c:#0F7B7B;--bg:#E1F4F3" href="#">
+      <span class="jn-ph"><svg class="jn-art" viewBox="0 0 320 150" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="s5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C9EDEB"/><stop offset="1" stop-color="#8FD9D5"/></linearGradient><linearGradient id="w5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A9C98"/><stop offset="1" stop-color="#106663"/></linearGradient></defs><rect width="320" height="150" fill="url(#s5)"/><rect y="104" width="320" height="46" fill="url(#w5)"/><path d="M0 104 q 26 -7 52 0 t 52 0 t 52 0 t 52 0 t 52 0 t 60 0 V150 H0 Z" fill="url(#w5)" opacity="0.45"/><path d="M0 113 q 26 -7 52 0 t 52 0 t 52 0 t 52 0 t 52 0 t 60 0 V150 H0 Z" fill="url(#w5)" opacity="0.30"/><g transform="translate(112,34)"><path d="M0 0h44l10 22H-10z" fill="#FFFBF3"/><rect x="-10" y="22" width="64" height="44" rx="6" fill="#E9DCBF"/><rect x="8" y="36" width="28" height="7" rx="3.5" fill="#C0522B"/></g><path d="M212 40v54" stroke="#FFFBF3" stroke-width="4" stroke-linecap="round"/><path d="M212 40c14 6 22 18 24 32" stroke="#FFFBF3" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="236" cy="78" r="5" fill="#F2B65C"/><path d="M62 96l10-30 10 30z" fill="#FFFBF3" opacity=".85"/></svg><b class="jn-no">05</b><span class="cap">무엇을 준비할까?</span></span>
+      <span class="jn-bd"><b class="jn-t">채비 · 장비 · 안전</b><span class="jn-sub">금어기 · 크기 · 안전 수칙</span><span class="jn-go">보러 가기 <i>›</i></span></span>
+    </a>
+    <a class="jn-card" style="--c:#B44A6E;--bg:#FBE9F0" href="#">
+      <span class="jn-ph"><svg class="jn-art" viewBox="0 0 320 150" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="s6" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F8D8E4"/><stop offset="1" stop-color="#EFAFC6"/></linearGradient><linearGradient id="w6" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D0688C"/><stop offset="1" stop-color="#93375A"/></linearGradient></defs><rect width="320" height="150" fill="url(#s6)"/><rect y="98" width="320" height="52" fill="url(#w6)"/><path d="M0 98 q 26 -7 52 0 t 52 0 t 52 0 t 52 0 t 52 0 t 60 0 V150 H0 Z" fill="url(#w6)" opacity="0.40"/><path d="M0 107 q 26 -7 52 0 t 52 0 t 52 0 t 52 0 t 52 0 t 60 0 V150 H0 Z" fill="url(#w6)" opacity="0.26"/><g transform="translate(150,44)"><circle r="26" fill="#FFFBF3" opacity=".95"/><circle r="17" fill="#FFE2B8"/><circle cx="-6" cy="-5" r="4" fill="#C0522B"/><circle cx="7" cy="2" r="4.6" fill="#C0522B"/><circle cx="-2" cy="9" r="3.4" fill="#C0522B"/></g><path d="M40 52v46M40 52c-6 4-8 12-6 18h12c2-6 0-14-6-18z" stroke="#FFFBF3" stroke-width="3" fill="none" stroke-linecap="round"/><g transform="translate(250,44)"><path d="M0 0v54M-10 0c0 8 4 12 10 12s10-4 10-12" stroke="#FFFBF3" stroke-width="3" fill="none" stroke-linecap="round"/></g><g opacity=".9"><path d="M96 30l4 9 9 4-9 4-4 9-4-9-9-4 9-4z" fill="#FFF3D6"/><path d="M206 24l3 7 7 3-7 3-3 7-3-7-7-3 7-3z" fill="#FFF3D6"/></g></svg><b class="jn-no">06</b><span class="cap">무엇을 즐길까?</span></span>
+      <span class="jn-bd"><b class="jn-t">축제 · 맛집 · 숙소</b><span class="jn-sub">명소 · 체험마을 · 코스</span><span class="jn-go">보러 가기 <i>›</i></span></span>
+    </a>
+  </div>
+  <div class="jn-stats">
+      <div class="jn-st"><span class="jn-sic"><svg viewBox="0 0 24 24" width="24" height="24"><path d="M2 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><path d="M2 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span><span class="jn-sv"><b>57</b><em>개 권역</em><small>전국 바다</small></span></div>
+      <div class="jn-st"><span class="jn-sic"><svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="9" r="2.7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></span><span class="jn-sv"><b>3,144</b><em>개 포인트</em><small>해루질 · 낚시</small></span></div>
+      <div class="jn-st"><span class="jn-sic"><svg viewBox="0 0 24 24" width="24" height="24"><path d="M5 12c0-3 4-6 9-6 3 0 5 2 5 2s-1.5 2.6-1.5 4 1.5 4 1.5 4-2 2-5 2c-5 0-9-3-9-6z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5 12 2 9.5v5L5 12z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></span><span class="jn-sv"><b>35</b><em>종 어종</em><small>제철 안내</small></span></div>
+      <div class="jn-st"><span class="jn-sic"><svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 3 5 6v6c0 4 3 6.8 7 9 4-2.2 7-5 7-9V6l-7-3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span><span class="jn-sv"><b>51</b><em>종 규정</em><small>금어기 · 크기</small></span></div>
+      <div class="jn-st"><span class="jn-sic"><svg viewBox="0 0 24 24" width="24" height="24"><path d="M4 20V9l8-5 8 5v11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 20v-6h6v6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></span><span class="jn-sv"><b>190</b><em>개 축제</em><small>행사 일정</small></span></div>
+      <div class="jn-st"><span class="jn-sic"><svg viewBox="0 0 24 24" width="24" height="24"><path d="M6 3v8a2 2 0 0 0 4 0V3M8 11v10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M17 3c-1.6 0-3 1.8-3 4.4 0 2 .8 3.2 2 3.6V21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><span class="jn-sv"><b>277</b><em>개 먹거리</em><small>지역 맛집</small></span></div>
+  </div>
+</div></section>
+<div class="wrap" style="padding:26px 20px;color:#66727C;font-size:.9rem">(아래로 전국 바다지도 · 목차 · 광고가 이어집니다)</div>
+</body></html>

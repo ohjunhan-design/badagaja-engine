@@ -1,0 +1,362 @@
+/* 입구(첫 화면) — badagaja.com 의 대문 (2026-09-21)
+   깊은 내용은 guide/ 바다참고서 대표 쪽에 있습니다. 여기는 길을 나누는 자리입니다. */
+.home-gate{background:var(--night)}
+
+/* 히어로 */
+.g-hero{position:relative;overflow:hidden;min-height:clamp(380px,52vh,520px);display:flex;align-items:center}
+.g-hero-bg{position:absolute;inset:0}
+.g-hero-bg img{width:100%;height:100%;object-fit:cover;object-position:60% 55%;filter:brightness(1.08) saturate(1.04)}
+.g-hero-shade{position:absolute;inset:0;background:
+  linear-gradient(100deg,rgba(16,24,30,.9) 0%,rgba(16,24,30,.74) 34%,rgba(16,24,30,.36) 62%,rgba(16,24,30,.16) 88%),
+  linear-gradient(180deg,rgba(16,24,30,.18) 0%,rgba(16,24,30,0) 42%,rgba(16,24,30,.38) 100%)}
+.g-hero-in{position:relative;z-index:2;width:100%;padding-top:44px;padding-bottom:44px}
+.g-hero-txt{max-width:640px;color:#FFFBF3}
+.g-eyebrow{display:inline-block;font-size:.83rem;font-weight:700;color:#F3E3C4;background:rgba(0,0,0,.28);
+  border:1px solid rgba(255,255,255,.2);padding:6px 14px;border-radius:999px;backdrop-filter:blur(6px);margin-bottom:16px}
+.g-hero h1{margin:0 0 14px;line-height:1.3;letter-spacing:-.025em;text-shadow:0 3px 18px rgba(0,0,0,.34)}
+.g-hero h1 .l1{display:block;font-weight:400;font-size:clamp(1.05rem,2vw,1.5rem);color:rgba(255,251,243,.88);margin-bottom:4px;letter-spacing:.01em}
+.g-hero h1 .l2{display:block;font-weight:900;font-size:clamp(1.9rem,4.4vw,3.05rem)}
+.g-hero h1 em{font-style:normal;color:#F0C173}
+.g-lede{margin:0 0 20px;font-size:1.02rem;line-height:1.8;color:rgba(255,251,243,.93);max-width:52ch;text-shadow:0 1px 8px rgba(0,0,0,.28)}
+.g-search{display:flex;align-items:center;gap:8px;background:rgba(255,251,243,.97);border-radius:14px;
+  padding:8px 8px 8px 16px;max-width:520px;box-shadow:0 8px 26px rgba(0,0,0,.22)}
+.g-search-ico{width:19px;height:19px;color:var(--foam-dim);flex:none}
+.g-search input{flex:1;min-width:0;border:0;background:none;outline:none;font-size:.98rem;font-family:inherit;color:var(--foam)}
+.g-search button{flex:none;border:0;background:var(--teal);color:#FFFBF3;border-radius:10px;padding:10px 19px;
+  font-weight:700;font-size:.92rem;font-family:inherit;cursor:pointer;white-space:nowrap}
+.g-search button:hover{background:#24473F}
+.g-quick{margin:14px 0 0;display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:.85rem;color:rgba(255,251,243,.8)}
+.g-quick a{border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:5px 13px;color:#FFFBF3;
+  background:rgba(0,0,0,.22);text-decoration:none;font-size:.85rem}
+.g-quick a:hover{border-color:#E5A94F;color:#F0C173}
+.g-club{position:absolute;right:max(24px,calc((100% - 1120px)/2));top:50%;transform:translateY(-50%);z-index:3;
+  width:248px;padding:20px 22px;border-radius:18px;color:#F3ECDD;
+  background:rgba(36,71,63,.93);border:1px solid rgba(229,169,79,.5);backdrop-filter:blur(5px)}
+.gc-tag{display:inline-block;font-size:.73rem;font-weight:700;background:#E5A94F;color:#2A1B08;border-radius:999px;padding:3px 11px;margin-bottom:10px}
+.g-club b{display:block;font-family:'Noto Serif KR',serif;font-size:1.12rem;line-height:1.5;margin-bottom:8px;color:#FFFBF3}
+.g-club p{margin:0 0 14px;font-size:.83rem;line-height:1.7;color:rgba(243,236,221,.85)}
+.g-club>a{display:block;text-align:center;background:#E5A94F;color:#2A1B08;border-radius:11px;padding:10px;font-weight:700;font-size:.9rem;text-decoration:none}
+.g-club>a:hover{background:#D9993B}
+.g-club small{display:block;text-align:center;margin-top:9px;font-size:.74rem;color:rgba(243,236,221,.6)}
+.g-credit{position:absolute;right:12px;bottom:10px;z-index:3;margin:0;font-size:.68rem;color:rgba(255,251,243,.86);
+  background:rgba(22,30,36,.45);border-radius:999px;padding:3px 11px;backdrop-filter:blur(3px)}
+
+/* 숫자 띠 */
+.g-stats{background:#FFFBF3;border-bottom:1px solid var(--line)}
+.g-stats .wrap{display:grid;grid-template-columns:repeat(5,1fr)}
+/* 다섯 칸 모두 눌러서 그 자료로 갑니다 (2026-09-21) */
+.g-stats a{display:block;text-align:center;padding:12px 8px;border-left:1px solid var(--line);text-decoration:none}
+.g-stats a:first-child{border-left:0}
+.g-stats a:hover{background:#F7F1E4}
+.g-stats a:hover b{color:var(--lantern)}
+.g-stats b{display:block;font-family:'Noto Serif KR',serif;font-size:1.36rem;color:var(--teal);line-height:1.3}
+.g-stats span{font-size:.76rem;color:var(--foam-dim)}
+
+/* 여섯 걸음 — 오늘 갈 바다를 정하는 순서 (2026-09-23 주인 지시, 바로가기 줄을 대신합니다) */
+.stw{background:linear-gradient(180deg,#F3F9FD,#FBFDFE 62%,var(--night));border-bottom:1px solid var(--line);
+  padding:24px 0 28px}
+.stw-t{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:0 0 14px}
+.stw-t b{font-family:'Noto Serif KR',serif;font-size:1.34rem;color:var(--ink)}
+.stw-t span{font-size:.92rem;color:var(--foam-dim)}
+.st-row{display:grid;grid-template-columns:repeat(11,auto);justify-content:center;align-items:stretch}
+.st-ar{display:grid;place-items:center;width:20px;color:#8FB7CE;font-size:1.35rem;font-weight:700}
+.sc{width:184px;display:flex;flex-direction:column;gap:6px;padding:11px 10px 12px;border-radius:16px;
+  background:var(--bg);border:1px solid rgba(23,48,63,.06);text-decoration:none;color:inherit;text-align:center;
+  transition:transform .16s,box-shadow .16s}
+.sc:hover{transform:translateY(-3px);box-shadow:0 10px 22px rgba(14,79,121,.16)}
+.sc-h{display:flex;align-items:center;justify-content:center;gap:7px}
+.sc-no{display:inline-grid;place-items:center;width:25px;height:25px;border-radius:50%;
+  background:var(--c);color:#fff;font-size:.76rem;font-weight:800;flex:none}
+.sc-t{font-size:.97rem;font-weight:800;color:var(--c);white-space:nowrap}
+.sc-s{font-size:.82rem;font-weight:700;color:#2B4453}
+.sc-ph{display:block;width:100%;aspect-ratio:148/115;border-radius:12px;overflow:hidden;background:#DCE9EE}
+.sc-ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}
+.sc:hover .sc-ph img{transform:scale(1.05)}
+.sc-d{font-size:.76rem;color:#5E7382;line-height:1.5;margin-top:auto}
+/* 02 칸 — 낚시를 누르면 낚시 쪽, 해루질을 누르면 해루질 쪽으로 (2026-09-23 주인 지시)
+   그림에 박힌 글자는 흐리므로 사진은 글자 위까지만 쓰고 단추는 화면 글자로 그립니다 */
+.sc-two{position:relative}
+.sc-cover{position:absolute;inset:0;z-index:1;border-radius:inherit}
+.sc-two .sc-ph{position:relative;z-index:2}
+.sc-stack{display:flex;flex-direction:column;background:#fff}
+.sc-stack img{flex:1 1 auto;min-height:0}
+.sc-pills{display:flex;gap:5px;padding:6px 6px 7px;flex:none}
+.sc-pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:999px;
+  font-size:.76rem;font-weight:800;color:#fff;text-decoration:none;white-space:nowrap;transition:filter .16s}
+.sc-pill svg{width:15px;height:15px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.sc-pill.pf{background:#1668C4}
+.sc-pill.pc{background:#1E8A5F}
+.sc-pill:hover{filter:brightness(1.12)}
+.sc-pill:focus-visible{outline:2px solid #17303F;outline-offset:2px}
+/* 06 칸 — 관광·맛집·숙박 글자도 화면 글자로 */
+.sc-trio{display:flex;gap:4px;padding:7px 5px 8px;flex:none}
+.sc-one{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.7rem;font-weight:800;color:#D9558A}
+.sc-one svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+
+/* 04 칸 — 그림 대신 화면 글자로 그립니다(어느 화면에서도 또렷하게, 2026-09-23) */
+.sc-info{display:flex;flex-direction:column;justify-content:center;gap:9px;background:#fff;padding:10px 11px}
+.si{display:flex;align-items:center;gap:8px;min-width:0}
+.si svg{width:22px;height:22px;flex:none;fill:none;stroke:#7A4FC0;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.si b{font-size:.8rem;font-weight:800;color:#2B4453;flex:none}
+.si em{font-style:normal;font-size:.74rem;color:#6B7A85;margin-left:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+@media (max-width:1080px){
+  .st-row{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  .st-ar{display:none}
+  .sc{width:auto}
+  .sc-ph{aspect-ratio:16/9}     /* 칸이 넓어지면 사진만 커지지 않게 납작하게 */
+}
+@media (max-width:620px){
+  .stw{padding:18px 0 22px}
+  .stw-t b{font-size:1.1rem}
+  .stw-t span{font-size:.82rem}
+  .st-row{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .sc{padding:9px 8px 10px;border-radius:13px;gap:5px}
+  .sc-no{width:22px;height:22px;font-size:.7rem}
+  .sc-t{font-size:.88rem}
+  .sc-s{font-size:.75rem}
+  .sc-d{font-size:.7rem;line-height:1.4}
+  .sc-ph{aspect-ratio:16/8.4;border-radius:10px}   /* 휴대폰에선 사진을 납작하게 — 여섯 칸이 한 화면에 */
+  .sc-stack{aspect-ratio:16/11}      /* 02·06 칸은 사진 아래에 단추가 있어 조금 높게 */
+  .sc-pill{font-size:.7rem;padding:5px 3px}
+  .sc-pill svg{width:13px;height:13px}
+  .sc-one{font-size:.64rem}
+  .sc-one svg{width:15px;height:15px}
+  .si b{font-size:.74rem}
+  .si em{font-size:.68rem}
+  .si svg{width:18px;height:18px}
+  .sc-info{gap:6px;padding:7px 8px}
+}
+
+/* 본문 3단 */
+.g-main{display:grid;grid-template-columns:1.02fr 1.18fr .8fr;gap:18px;padding-top:26px;padding-bottom:10px}
+.g-panel{border:1px solid var(--line);border-radius:18px;background:#FFFBF3;overflow:hidden;display:flex;flex-direction:column}
+.gp-head{display:flex;align-items:baseline;gap:8px;padding:16px 18px 10px}
+.gp-head h2{margin:0;font-family:'Noto Serif KR',serif;font-size:1.12rem;color:var(--ink)}
+.gp-head a{margin-left:auto;font-size:.8rem;color:var(--foam-dim);text-decoration:none}
+.gp-head a:hover{color:var(--lantern)}
+.gt-ph{display:block;position:relative;height:152px;margin:0 0 2px;text-decoration:none}
+.gt-ph img{width:100%;height:100%;object-fit:cover;display:block}
+.gt-tag{position:absolute;left:12px;top:12px;background:var(--teal);color:#FFFBF3;font-size:.72rem;font-weight:700;border-radius:999px;padding:4px 11px}
+.gt-cap{position:absolute;left:0;right:0;bottom:0;padding:24px 16px 11px;color:#FFFBF3;font-size:.9rem;font-weight:700;
+  background:linear-gradient(transparent,rgba(24,38,34,.84))}
+.gt-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:13px 16px 4px}
+.gt-grid div{background:var(--night);border:1px solid var(--line);border-radius:11px;padding:10px 13px}
+.gt-grid span{display:block;font-size:.73rem;color:var(--foam-dim)}
+.gt-grid b{font-size:1rem;color:var(--ink)}
+.gt-foot{padding:10px 16px 0;margin:0;font-size:.83rem;line-height:1.7;color:var(--foam-dim)}
+.gt-more{margin:auto 0 0;padding:12px 16px 16px;font-size:.86rem}
+.gt-more a{color:var(--teal);font-weight:700;text-decoration:none}
+
+.gb-list{padding:4px 12px 12px;display:flex;flex-direction:column;gap:8px}
+.gb{display:flex;gap:12px;border-radius:12px;padding:8px;border:1px solid transparent;text-decoration:none}
+.gb:hover{border-color:var(--line);background:var(--night)}
+.gb-th{width:78px;height:60px;border-radius:9px;overflow:hidden;flex:none;background:#DCE9EE}
+.gb-th img{width:100%;height:100%;object-fit:cover;display:block}
+.gb-tx{min-width:0}
+.gb-tx b{display:block;font-size:.93rem;color:var(--ink);margin-bottom:2px}
+.gb-tx small{display:block;font-size:.79rem;color:var(--foam-dim);line-height:1.6}
+.gb-chip{display:inline-block;margin-top:5px;font-style:normal;font-size:.7rem;color:var(--lantern-dim);
+  background:#FFF6E7;border:1px solid rgba(192,123,34,.3);border-radius:999px;padding:1px 9px}
+.gb-more{margin:auto 0 0;padding:4px 16px 16px;display:flex;gap:14px;flex-wrap:wrap;font-size:.85rem}
+.gb-more a{color:var(--teal);font-weight:700;text-decoration:none}
+
+.g-clubpanel{background:linear-gradient(165deg,#2F5D57,#20403A);border-color:rgba(47,93,87,.4);color:#F3ECDD}
+.gcp-in{padding:20px}
+.g-clubpanel h2{margin:0 0 9px;font-family:'Noto Serif KR',serif;font-size:1.2rem;color:#FFFBF3;line-height:1.5}
+.g-clubpanel p{margin:0 0 14px;font-size:.86rem;line-height:1.75;color:rgba(243,236,221,.86)}
+.g-clubpanel ul{margin:0 0 17px;padding:0;list-style:none}
+.g-clubpanel li{position:relative;padding:5px 0 5px 19px;font-size:.87rem;color:rgba(243,236,221,.92)}
+.g-clubpanel li::before{content:'';position:absolute;left:2px;top:13px;width:6px;height:6px;border-radius:50%;background:#E5A94F}
+.gcp-btn{display:block;text-align:center;background:#E5A94F;color:#2A1B08;border-radius:11px;padding:11px;font-weight:700;font-size:.92rem;text-decoration:none}
+.gcp-btn:hover{background:#D9993B}
+.g-clubpanel small{display:block;text-align:center;margin-top:9px;font-size:.75rem;color:rgba(243,236,221,.58)}
+
+/* 아래 넷 */
+.g-four{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding-top:14px;padding-bottom:36px}
+.gf{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#FFFBF3;text-decoration:none;display:block}
+.gf:hover{border-color:var(--lantern)}
+.gf-ph{display:block;height:132px;background:#DCE9EE;overflow:hidden}
+.gf-ph img{width:100%;height:100%;object-fit:cover;display:block}
+.gf-regions{background:#EDF2EE;display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:5px;padding:12px}
+.gf-regions i{font-style:normal;font-size:.74rem;background:#FFFBF3;border:1px solid var(--line);border-radius:999px;
+  padding:3px 9px;color:var(--foam-dim);white-space:nowrap}
+.gf-regions b{color:var(--teal)}
+.gf-bd{display:block;padding:13px 15px 16px}
+.gf-bd em{display:block;font-style:normal;font-size:.74rem;font-weight:700;color:var(--lantern);margin-bottom:3px}
+.gf-bd b{display:block;font-size:1rem;color:var(--ink);font-family:'Noto Serif KR',serif;margin-bottom:5px}
+.gf-bd small{display:block;font-size:.82rem;color:var(--foam-dim);line-height:1.6}
+
+/* 좁아지면 동호회 상자를 히어로 아래로 내립니다.
+   .g-hero 가 flex 라 position 만 풀면 상자가 옆에 좁게 서 버립니다 — display 도 함께 풉니다 (2026-09-21) */
+@media (max-width:1240px){
+  .g-hero{display:block}
+  .g-club{position:static;transform:none;width:auto;margin:0 24px 26px}
+}
+@media (max-width:720px){ .g-club{margin:0 16px 22px} }
+@media (max-width:1080px){
+  .g-main{grid-template-columns:1fr 1fr}
+  .g-clubpanel{grid-column:1 / -1}
+  .g-four{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:720px){
+  .g-hero{min-height:auto}
+  .g-hero-in{padding-top:26px;padding-bottom:24px}
+  .g-stats .wrap{grid-template-columns:repeat(3,1fr)}
+  .g-stats a:nth-child(4){border-left:0}
+  .g-main{grid-template-columns:1fr}
+  .g-four{grid-template-columns:1fr}
+  .g-search button{padding:10px 15px}
+}
+
+/* ---------- 입구 머리글 — 메뉴를 가운데로 (2026-09-21) ----------
+   .navbar 는 온 사이트가 함께 쓰는 짜임새라(규칙 7: 기준은 전남) 여기서만 덮어씁니다.
+   동호회 단추는 메뉴 밖으로 빼 오른쪽에 두고, 메뉴만 좌우 여백을 자동으로 채워 가운데에 섭니다. */
+body.home-gate .navlinks{margin-left:auto;margin-right:auto}
+@media (max-width:1100px){ body.home-gate .navlinks{margin-left:16px;margin-right:auto} }
+
+/* ---------- 물때 칸 속 작은 물높이 그래프 (2026-09-21) ----------
+   '오늘 물때·물살' 칸과 같은 모양의 작은 칸 하나로 둡니다.
+   제목줄(시간별 물높이)과 관측소줄은 접습니다 — 칸이 좁아 두 줄로 밀려 났습니다.
+   출처는 물때정보 자세히 보기(guide/#today) 쪽에 그대로 적혀 있습니다. */
+.gt-graph{padding:11px 16px 0}
+.gt-graph:empty{display:none}
+.g-today .tide-graph{margin:0;background:var(--night);border:1px solid var(--line);border-radius:11px;padding:8px 10px 6px}
+.g-today .tide-graph .tg-head,
+.g-today .tide-graph .tg-foot{display:none}
+.g-today .tide-graph .tg-plot{margin:0}
+/* 그래프 글자는 칸 폭에 맞춰 줄어드니, 옆 글자와 비슷해 보이도록 키워 둡니다 */
+.g-today .tide-graph .tg-axis{font-size:15px}
+.g-today .tide-graph .tg-lbl{font-size:15px}
+/* 물높이 예보를 못 받으면 빈 칸만 남으므로 아예 접습니다 */
+.g-today .gt-graph:not(:has(.tg-plot)){display:none}
+.g-today .gt-ph img{transition:opacity .35s ease}
+/* 좁은 휴대폰(420px 이하) 머리글 — '바다가자 동호회 →' 단추 때문에 360px 화면에서 쪽이 47px 옆으로 밀리던 것 (2026-09-22)
+   동호회 연결은 남기고(네이버 심사) 글자만 '동호회 →'로, 이미 점만 보이던 오늘 물때 배지는 숨김 */
+@media (max-width:420px){
+  
+  body.home-gate .navbar .muldae-badge{display:none}
+}
+
+/* 첫 화면 가운데 광고 (index-mid-pc / -mobile) — 왼쪽 문구 + 오른쪽 배너, 휴대폰은 문구 위. 광고가 꺼져 있으면 칸째 사라짐 */
+.g-ad{padding-top:14px;padding-bottom:4px}
+.g-ad:not(:has(.ad-slot:not([hidden]))){display:none}
+.g-ad .ad-slot{border-radius:16px}
+.ad-intro-row{display:flex;align-items:center;gap:18px}
+.ad-intro-txt{flex:0 0 250px;padding-right:18px;border-right:1px dashed rgba(38,51,46,.2);display:flex;flex-direction:column;gap:4px;min-width:0}
+.ad-intro-kicker{font-size:.78rem;font-weight:700;color:#C07B22}
+.ad-intro-title{font-family:'Noto Serif KR',serif;font-size:1.15rem;font-weight:700;color:#2B2116;line-height:1.35}
+.ad-intro-desc{font-size:.8rem;color:#6B5E4F;line-height:1.55}
+.ad-intro-row .ad-body{flex:1;min-width:0}
+@media (max-width:900px){
+  .ad-intro-row{display:block}
+  .ad-intro-txt{padding:0 0 10px;border-right:0;gap:2px}
+  .ad-intro-title{font-size:1.05rem}
+}
+/* 휴대폰 바로가기 카드 — 아이콘 옆에 두면 글자 칸이 70px 뿐이라 제목이 넘침(360px). 아이콘을 위로 쌓아 글자 칸을 카드 폭만큼 */
+@media (max-width:560px){
+}
+@media (max-width:340px){ .navbar{gap:6px} }   /* 320px 휴대폰에서 언어 단추가 1px 넘치던 것 */
+
+@media (max-width:900px){ .g-club{display:none} }   /* 휴대폰: 히어로 아래 동호회 모집 카드 숨김 — 맨 위 「동호회 →」 단추와 아래 동호회 칸은 그대로 (2026-09-22 주인 지시) */
+
+@media (max-width:720px){ .g-hero-in{padding-bottom:40px} .g-credit{bottom:8px;right:10px;font-size:.62rem} }   /* 휴대폰: 사진 출처가 '많이 찾는' 단추 줄을 가리던 것 — 단추 아래로 (2026-09-22) */
+
+/* 휴대폰 첫 화면 글자 크기 줄임 — 큰 제목이 두 줄로 나뉘고 설명이 화면을 많이 차지하던 것 (2026-09-22 주인 지시) */
+@media (max-width:560px){
+  .g-eyebrow{font-size:.74rem}
+  .g-hero h1{margin-bottom:10px}
+  .g-hero h1 .l1{font-size:.95rem}
+  .g-hero h1 .l2{font-size:1.6rem}
+  .g-lede{font-size:.9rem;line-height:1.7;margin-bottom:16px}
+  .g-search input{font-size:.9rem}
+}
+@media (max-width:360px){ .g-hero h1 .l2{font-size:1.45rem} .g-lede{font-size:.86rem} }
+
+/* PC 버전으로 보기 링크 (첫 화면 바닥글, 2026-09-22) */
+.footer-bottom .pcview{margin:0 0 16px;text-align:center}
+/* 네이버·삼성 브라우저 아래 막대에 가리지 않게 쪽 끝 여유 */
+footer.site-footer .footer-bottom{padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}
+.footer-bottom .pcview a{display:inline-block;padding:8px 16px;border:1px solid var(--line,#E5DCCB);border-radius:999px;background:#FFFBF3;font-size:.84rem;font-weight:700;color:#2F5D57;text-decoration:none}
+
+/* 물때정보 '권역 바꾸기' — 글자 링크 → 단추(화살표 없음), 바다 파랑 (2026-09-22 주인 지시) */
+.gp-head{align-items:center}
+.gp-head a.gp-btn{display:inline-flex;align-items:center;padding:7px 15px;border-radius:999px;background:#EAF3FA;border:1.5px solid #5B9BC8;color:#1F5F8B;font-size:.86rem;font-weight:700;line-height:1.2;white-space:nowrap;transition:background .15s,color .15s}
+.gp-head a.gp-btn:hover{background:#2E6F9E;border-color:#2E6F9E;color:#fff}
+.gp-head a.gp-btn:focus-visible{outline:2px solid #F2B65C;outline-offset:2px}
+@media (max-width:560px){ .gp-head a.gp-btn{font-size:.84rem;padding:7px 14px} }
+
+/* 첫 화면 전국 바다지도 — 왼쪽 지도(지역 9곳을 누르면 그 지역으로), 오른쪽 여행·축제·생물 카드 세 장 (2026-09-22 주인 지시·그림) */
+.hm{display:grid;grid-template-columns:minmax(0,0.8fr) minmax(0,1.75fr);gap:26px;align-items:stretch;margin:18px 0 36px;padding:20px 24px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(160deg,#EAF3FA,#F6FAFD 60%,#FFFBF3)}
+.hm-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin-bottom:6px}
+.hm-head em{flex-basis:100%;font-style:normal;font-size:.78rem;font-weight:700;color:#2E6F9E}
+.hm-head h2{font-family:'Noto Serif KR',serif;font-size:1.3rem;color:var(--ink);margin:0}
+.hm-head a{margin-left:auto;font-size:.82rem;font-weight:700;color:#1F5F8B;text-decoration:none;border:1.5px solid #5B9BC8;border-radius:999px;padding:4px 12px;background:#fff}
+.hm-head a:hover{background:#2E6F9E;border-color:#2E6F9E;color:#fff}
+.hm-map{display:flex;justify-content:center}
+.hm-svg{width:100%;max-width:252px;height:auto;display:block}
+.hm-inland{fill:#E4E1DA;stroke:#fff;stroke-width:1.5}
+.hm-inl{font-size:12px;fill:#9A968C;text-anchor:middle}
+.hm-dots circle{fill:#1F5F8B;opacity:.28;pointer-events:none}
+.hm-r polygon{fill:var(--c);fill-opacity:.3;stroke:#fff;stroke-width:1.6;transition:fill-opacity .15s}
+.hm-r:hover polygon,.hm-r:focus polygon{fill-opacity:.62}
+.hm-r:focus{outline:none}
+.hm-r:focus-visible .hm-pill{stroke:#F2B65C;stroke-width:3}
+.hm-pill{fill:#fff;stroke:var(--c);stroke-width:1.5;filter:drop-shadow(0 1px 2px rgba(0,0,0,.15))}
+.hm-r:hover .hm-pill{fill:var(--c)}
+.hm-lb{font-size:12.5px;font-weight:700;fill:#1F2A33;text-anchor:middle;pointer-events:none}
+.hm-r:hover .hm-lb{fill:#fff}
+.hm-lead{stroke:var(--c);stroke-width:1.2;stroke-dasharray:2 2}
+.hm-cards{display:grid;grid-template-rows:auto;align-content:start;gap:10px}   /* 카드가 지도 높이에 맞춰 늘어나지 않게 (2026-09-23 주인 지시) */
+@media (max-width:760px){
+  .hm{grid-template-columns:minmax(0,1fr);gap:14px;padding:16px 14px 18px}
+  .hm-svg{max-width:197px}
+  .hm-head h2{font-size:1.15rem}
+        }
+
+/* 바다지도 오른쪽 첫 칸 — 링크가 아니라 '이런 것들을 알려드립니다' 안내 (2026-09-23 주인 지시) */
+@media (max-width:760px){
+      }
+
+/* 첫 화면 지도 오른쪽 = 사이트 목차 (2026-09-23 주인 지시: 오른쪽을 다시 디자인) */
+.hm-menu{align-self:stretch;display:flex;flex-direction:column;justify-content:space-between;gap:14px;padding:20px 22px;border:1px solid var(--line);border-radius:18px;background:#fff}
+.hm-menu-t{margin:0;font-family:'Noto Serif KR',serif;font-size:1.2rem;color:var(--ink)}
+.hm-g{display:flex;flex-direction:column;gap:7px}
+.hm-g > b{font-size:.8rem;font-weight:800;color:#2E6F9E;letter-spacing:.03em}
+.hm-b{display:flex;flex-wrap:wrap;gap:7px}
+.hm-b a{display:inline-flex;align-items:center;padding:9px 17px;border-radius:999px;border:1.5px solid #DCE7F0;background:#F7FBFD;
+  color:#1F2A33;font-size:.9rem;font-weight:600;text-decoration:none;transition:background .15s,border-color .15s,color .15s}
+.hm-b a:hover{background:#2E6F9E;border-color:#2E6F9E;color:#fff}
+.hm-menu-n{margin:2px 0 0;font-size:.8rem;color:var(--foam-dim)}
+@media (max-width:760px){
+  .hm-menu{padding:14px 14px 16px;gap:12px}
+  .hm-menu-t{font-size:1.02rem}
+  .hm-b a{font-size:.83rem;padding:6px 12px}
+}
+
+
+/* 네이버 검색창 모양 안내 (2026-09-24 주인 지시)
+   네이버에서 '바다가자' 는 노래에 묻혀 안 나오고 '바다가자닷컴' 은 나옵니다.
+   사람들이 한눈에 알아보도록 네이버 초록(#03C75A) 검색창 꼴을 씁니다.
+   네이버 로고(N)는 쓰지 않습니다 — 상표라, 네이버가 만든 것처럼 보이면 안 됩니다.
+   누르면 실제로 네이버 검색 결과가 열립니다 */
+.nv-find{margin:16px 0 0;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.nv-lead{font-size:.88rem;color:rgba(255,251,243,.82)}
+.nv-box{display:inline-flex;align-items:center;gap:9px;background:#fff;border:2px solid #03C75A;
+  border-radius:10px;padding:6px 6px 6px 10px;text-decoration:none;transition:.16s;
+  box-shadow:0 2px 10px rgba(0,0,0,.18)}
+.nv-box:hover{box-shadow:0 4px 16px rgba(3,199,90,.35)}
+.nv-n{display:inline-flex;flex:none}
+.nv-n svg{width:24px;height:24px;display:block}
+.nv-box b{font-size:1.05rem;font-weight:800;color:#1A1A1A;letter-spacing:.01em}
+.nv-go{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;
+  background:#03C75A;border-radius:7px;flex:none}
+.nv-go svg{width:17px;height:17px;fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round}
+@media (max-width:560px){
+  .nv-find{gap:8px}
+  .nv-lead{font-size:.82rem;width:100%;margin-bottom:-4px}
+  .nv-box{padding:5px 5px 5px 8px}
+  .nv-n svg{width:21px;height:21px}
+  .nv-box b{font-size:.98rem}
+  .nv-go{width:27px;height:27px}
+}

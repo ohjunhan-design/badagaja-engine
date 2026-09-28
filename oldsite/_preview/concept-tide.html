@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>전국 물때표 — 개념 시안</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+ :root{--ink:#12242F;--sea:#1F5F8B;--sea2:#5B9BC8;--lan:#F2B65C;--lan2:#B8761C;--line:#DCE7F0;--muted:#66727C}
+ *{box-sizing:border-box}
+ body{margin:0;background:#F2F7FB;font-family:'Noto Sans KR',sans-serif;color:var(--ink)}
+ .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+ .tag{display:inline-block;font-size:.75rem;font-weight:800;color:#fff;background:#C0522B;border-radius:999px;padding:4px 12px;letter-spacing:.02em}
+ header.hero{background:linear-gradient(160deg,#E7F1F9,#FFFBF3);border-bottom:1px solid var(--line);padding:22px 0 20px}
+ header.hero h1{font-family:'Noto Serif KR',serif;font-size:1.9rem;margin:10px 0 6px}
+ header.hero p{margin:0;color:#3E4C57;font-size:.96rem}
+ .grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:16px;margin-top:18px}
+ .card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 4px 16px rgba(31,95,139,.07)}
+ /* 지도 */
+ .map{position:relative;overflow:hidden;border-radius:18px}
+ .map svg{display:block;width:100%;height:auto}
+ .pin .dot{fill:#5B9BC8;stroke:#fff;stroke-width:1.6}
+ .pin .dot.big{fill:#1F5F8B}
+ .pin .dot2{fill:#fff}
+ .lab .bg{fill:#fff;stroke:#BBD3E5;stroke-width:1.2;filter:drop-shadow(0 2px 4px rgba(0,0,0,.18))}
+ .lab .dot{fill:#5B9BC8;stroke:#fff;stroke-width:1.4}
+ .lab .dot.big{fill:#C0522B}
+ .lab .nm{font-size:13px;font-weight:700;fill:#12242F}
+ .lab .ml{font-size:13px;font-weight:800;fill:#1F5F8B;text-anchor:end}
+ .lab.on .bg{stroke:#C0522B;stroke-width:2.4}
+ .zoom{position:absolute;right:12px;top:12px;display:grid;gap:6px}
+ .zoom button{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:#fff;font-size:20px;font-weight:700;color:var(--sea);box-shadow:0 2px 6px rgba(0,0,0,.12);cursor:pointer}
+ .maphint{position:absolute;left:12px;bottom:12px;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:.8rem;color:#3E4C57}
+ .bubble{position:absolute;background:#fff;border:2px solid #C0522B;border-radius:14px;padding:10px 14px;box-shadow:0 8px 22px rgba(0,0,0,.18);font-size:.86rem;min-width:180px}
+ .bubble b{display:block;font-size:1rem;margin-bottom:4px}
+ .bubble .mul{color:#C0522B;font-weight:800}
+ .bubble .go{margin-top:8px;display:inline-block;background:var(--sea);color:#fff;border-radius:999px;padding:5px 12px;font-weight:700;font-size:.8rem}
+ /* 오른쪽 물때 패널 */
+ .panel{padding:18px 20px}
+ .panel .place{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+ .panel .place b{font-family:'Noto Serif KR',serif;font-size:1.3rem}
+ .panel .place span{font-size:.85rem;color:var(--muted)}
+ .mulrow{display:flex;align-items:flex-end;gap:10px;margin-top:12px}
+ .mulrow .big{font-family:'Noto Serif KR',serif;font-size:2.6rem;line-height:1}
+ .mulrow .st{font-weight:800;color:var(--lan2);padding-bottom:6px}
+ .gauge{height:9px;border-radius:999px;background:#E6EDF3;margin:10px 0 14px;overflow:hidden}
+ .gauge i{display:block;height:100%;width:72%;background:linear-gradient(90deg,var(--sea2),var(--lan))}
+ .tides{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+ .tides li{display:flex;align-items:center;gap:10px;font-size:.95rem}
+ .tides .k{font-size:.74rem;font-weight:700;border-radius:999px;padding:2px 9px;background:#E1EFF8;color:var(--sea)}
+ .tides li.h .k{background:#FCEBCF;color:var(--lan2)}
+ .tides .t{font-weight:700;font-variant-numeric:tabular-nums}
+ .tides .v{margin-left:auto;color:var(--muted);font-size:.85rem}
+ .mini{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+ .mini div{border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+ .mini small{display:block;color:var(--muted);font-size:.76rem;margin-bottom:3px}
+ .mini b{font-size:1.05rem}
+ .pbtns{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+ .pbtns a{flex:1 1 auto;text-align:center;border-radius:999px;padding:10px 14px;font-weight:800;font-size:.88rem;text-decoration:none;background:var(--sea);color:#fff}
+ .pbtns a.s{background:#fff;color:var(--sea);border:1.5px solid var(--sea2)}
+ .src{margin-top:10px;font-size:.78rem;color:var(--muted);line-height:1.5}
+ /* 아래 */
+ .below{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:16px;margin:16px 0 30px}
+ .sec-h{font-size:.78rem;font-weight:800;color:var(--sea);margin-bottom:4px}
+ .sec-t{font-family:'Noto Serif KR',serif;font-size:1.15rem;margin:0 0 12px}
+ .week{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;align-items:end;height:130px}
+ .week div{text-align:center}
+ .week i{display:block;margin:0 auto 6px;width:70%;border-radius:7px 7px 3px 3px;background:#9CC7E4}
+ .week .best i{background:var(--sea)}
+ .week .best em{color:var(--lan2)}
+ .week b{display:block;font-size:.84rem}
+ .week em{display:block;font-style:normal;font-size:.74rem;color:var(--muted)}
+ .legend{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-top:10px}
+ .note{margin-top:12px;background:#FFF8EC;border:1px solid #F4E3C4;border-radius:12px;padding:10px 12px;font-size:.86rem}
+ @media (max-width:860px){
+   .grid,.below{grid-template-columns:minmax(0,1fr)}
+   header.hero h1{font-size:1.45rem}
+   .map svg{max-height:420px;object-fit:cover}
+ }
+</style></head>
+<body>
+<header class="hero"><div class="wrap">
+  <span class="tag">개념 시안 · 적용 전</span>
+  <h1>전국 물때표</h1>
+  <p>지도를 움직이고 확대해 보세요. 물때를 볼 수 있는 곳이 핀으로 표시됩니다. 핀을 누르면 오른쪽에 그곳 물때가 나옵니다.</p>
+</div></header>
+
+<div class="wrap">
+  <div class="grid">
+    <div class="card map">
+      <svg viewBox="0 0 485 512" xmlns="http://www.w3.org/2000/svg"><image href="https://tile.openstreetmap.org/7/108/49.png" x="-189.6" y="-24.3" width="256" height="256"/><image href="https://tile.openstreetmap.org/7/108/50.png" x="-189.6" y="231.7" width="256" height="256"/><image href="https://tile.openstreetmap.org/7/108/51.png" x="-189.6" y="487.7" width="256" height="256"/><image href="https://tile.openstreetmap.org/7/109/49.png" x="66.4" y="-24.3" width="256" height="256"/><image href="https://tile.openstreetmap.org/7/109/50.png" x="66.4" y="231.7" width="256" height="256"/><image href="https://tile.openstreetmap.org/7/109/51.png" x="66.4" y="487.7" width="256" height="256"/><image href="https://tile.openstreetmap.org/7/110/49.png" x="322.4" y="-24.3" width="256" height="256"/><image href="https://tile.openstreetmap.org/7/110/50.png" x="322.4" y="231.7" width="256" height="256"/><image href="https://tile.openstreetmap.org/7/110/51.png" x="322.4" y="487.7" width="256" height="256"/><g class="lab on" transform="translate(26.0,426.8)"><rect x="-46" y="-15" width="92" height="30" rx="15" class="bg"/><circle cx="-33" cy="0" r="6" class="dot big"/><text x="-22" y="5" class="nm">신안</text><text x="34" y="5" class="ml">8물</text></g><g class="pin" transform="translate(46.4,404.4)"><circle r="7" class="dot "/><circle r="3" class="dot2"/></g><g class="lab" transform="translate(48.7,434.9)"><rect x="-46" y="-15" width="92" height="30" rx="15" class="bg"/><circle cx="-33" cy="0" r="6" class="dot "/><text x="-22" y="5" class="nm">목포</text><text x="34" y="5" class="ml">9물</text></g><g class="pin" transform="translate(48.2,378.1)"><circle r="7" class="dot "/><circle r="3" class="dot2"/></g><g class="pin" transform="translate(55.4,401.4)"><circle r="7" class="dot "/><circle r="3" class="dot2"/></g><g class="lab" transform="translate(28.4,482.1)"><rect x="-46" y="-15" width="92" height="30" rx="15" class="bg"/><circle cx="-33" cy="0" r="6" class="dot "/><text x="-22" y="5" class="nm">진도</text><text x="34" y="5" class="ml">11물</text></g><g class="pin" transform="translate(58.4,475.6)"><circle r="7" class="dot "/><circle r="3" class="dot2"/></g><g class="lab" transform="translate(85.0,485.7)"><rect x="-46" y="-15" width="92" height="30" rx="15" class="bg"/><circle cx="-33" cy="0" r="6" class="dot big"/><text x="-22" y="5" class="nm">완도</text><text x="34" y="5" class="ml">8물</text></g><g class="pin" transform="translate(86.2,463.4)"><circle r="7" class="dot "/><circle r="3" class="dot2"/></g><g class="pin" transform="translate(105.1,459.1)"><circle r="7" class="dot "/><circle r="3" class="dot2"/></g><g class="pin" transform="translate(123.3,443.9)"><circle r="7" class="dot "/><circle r="3" class="dot2"/></g><g class="lab" transform="translate(136.2,466.1)"><rect x="-46" y="-15" width="92" height="30" rx="15" class="bg"/><circle cx="-33" cy="0" r="6" class="dot big"/><text x="-22" y="5" class="nm">고흥</text><text x="34" y="5" class="ml">6물</text></g><g class="lab" transform="translate(173.6,453.6)"><rect x="-46" y="-15" width="92" height="30" rx="15" class="bg"/><circle cx="-33" cy="0" r="6" class="dot "/><text x="-22" y="5" class="nm">여수</text><text x="34" y="5" class="ml">3물</text></g><g class="pin" transform="translate(151.1,427.9)"><circle r="7" class="dot "/><circle r="3" class="dot2"/></g><g class="pin" transform="translate(175.1,416.2)"><circle r="7" class="dot "/><circle r="3" class="dot2"/></g><g class="lab" transform="translate(34.1,215.6)"><rect x="-46" y="-15" width="92" height="30" rx="15" class="bg"/><circle cx="-33" cy="0" r="6" class="dot "/><text x="-22" y="5" class="nm">태안</text><text x="34" y="5" class="ml">9물</text></g><g class="pin" transform="translate(51.7,205.3)"><circle r="7" class="dot "/><circle r="3" class="dot2"/></g><g class="pin" transform="translate(71.3,188.1)"><circle r="7" class="dot big"/><circle r="3" class="dot2"/></g><g class="lab" transform="translate(61.4,262.3)"><rect x="-46" y="-15" width="92" height="30" rx="15" class="bg"/><circle cx="-33" cy="0" r="6" class="dot "/><text x="-22" y="5" class="nm">보령</text><text x="34" y="5" class="ml">4물</text></g><g class="lab" transform="translate(71.2,288.0)"><rect x="-46" y="-15" width="92" height="30" rx="15" class="bg"/><circle cx="-33" cy="0" r="6" class="dot "/><text x="-22" y="5" class="nm">서천</text><text x="34" y="5" class="ml">11물</text></g><g class="pin" transform="translate(63.1,235.8)"><circle r="7" class="dot "/><circle r="3" class="dot2"/></g><g class="lab" transform="translate(75.9,301.5)"><rect x="-46" y="-15" width="92" height="30" rx="15" class="bg"/><circle cx="-33" cy="0" r="6" class="dot "/><text x="-22" y="5" class="nm">군산</text><text x="34" y="5" class="ml">3물</text></g><g class="pin" transform="translate(53.3,320.0)"><circle r="7" class="dot "/><circle r="3" class="dot2"/></g><g class="lab" transform="translate(61.3,342.0)"><rect x="-46" y="-15" width="92" height="30" rx="15" class="bg"/><circle cx="-33" cy="0" r="6" class="dot "/><text x="-22" y="5" class="nm">부안</text><text x="34" y="5" class="ml">4물</text></g><g class="pin" transform="translate(60.9,356.1)"><circle r="7" class="dot big"/><circle r="3" class="dot2"/></g><g class="lab" transform="translate(197.1,438.6)"><rect x="-46" y="-15" width="92" height="30" rx="15" class="bg"/><circle cx="-33" cy="0" r="6" class="dot "/><text x="-22" y="5" class="nm">남해</text><text x="34" y="5" class="ml">12물</text></g><g class="pin" transform="translate(197.9,415.4)"><circle r="7" class="dot "/><circle r="3" class="dot2"/></g><g class="pin" transform="translate(221.3,415.8)"><circle r="7" class="dot "/><circle r="3" class="dot2"/></g><g class="lab" transform="translate(235.3,431.7)"><rect x="-46" y="-15" width="92" height="30" rx="15" class="bg"/><circle cx="-33" cy="0" r="6" class="dot "/><text x="-22" y="5" class="nm">통영</text><text x="34" y="5" class="ml">12물</text></g><g class="lab" transform="translate(256.6,426.2)"><rect x="-46" y="-15" width="92" height="30" rx="15" class="bg"/><circle cx="-33" cy="0" r="6" class="dot "/><text x="-22" y="5" class="nm">거제</text><text x="34" y="5" class="ml">9물</text></g><g class="pin" transform="translate(253.6,399.6)"><circle r="7" class="dot "/><circle r="3" class="dot2"/></g><g class="lab" transform="translate(51.8,109.8)"><rect x="-46" y="-15" width="92" height="30" rx="15" class="bg"/><circle cx="-33" cy="0" r="6" class="dot big"/><text x="-22" y="5" class="nm">강화</text><text x="34" y="5" class="ml">6물</text></g><g class="lab" transform="translate(52.3,136.0)"><rect x="-46" y="-15" width="92" height="30" rx="15" class="bg"/><circle cx="-33" cy="0" r="6" class="dot "/><text x="-22" y="5" class="nm">영종</text><text x="34" y="5" class="ml">3물</text></g><g class="pin" transform="translate(59.8,156.2)"><circle r="7" class="dot "/><circle r="3" class="dot2"/></g><g class="lab" transform="translate(72.3,153.7)"><rect x="-46" y="-15" width="92" height="30" rx="15" class="bg"/><circle cx="-33" cy="0" r="6" class="dot "/><text x="-22" y="5" class="nm">대부</text><text x="34" y="5" class="ml">5물</text></g><g class="pin" transform="translate(75.9,169.9)"><circle r="7" class="dot big"/><circle r="3" class="dot2"/></g><g class="pin" transform="translate(287.5,404.6)"><circle r="7" class="dot "/><circle r="3" class="dot2"/></g><g class="lab" transform="translate(305.1,389.9)"><rect x="-46" y="-15" width="92" height="30" rx="15" class="bg"/><circle cx="-33" cy="0" r="6" class="dot "/><text x="-22" y="5" class="nm">부산 동</text><text x="34" y="5" class="ml">5물</text></g><g class="lab" transform="translate(325.3,358.2)"><rect x="-46" y="-15" width="92" height="30" rx="15" class="bg"/><circle cx="-33" cy="0" r="6" class="dot "/><text x="-22" y="5" class="nm">울산</text><text x="34" y="5" class="ml">11물</text></g><g class="pin" transform="translate(332.6,327.4)"><circle r="7" class="dot "/><circle r="3" class="dot2"/></g><g class="lab" transform="translate(330.4,292.0)"><rect x="-46" y="-15" width="92" height="30" rx="15" class="bg"/><circle cx="-33" cy="0" r="6" class="dot "/><text x="-22" y="5" class="nm">포항</text><text x="34" y="5" class="ml">12물</text></g><g class="lab" transform="translate(325.6,250.0)"><rect x="-46" y="-15" width="92" height="30" rx="15" class="bg"/><circle cx="-33" cy="0" r="6" class="dot big"/><text x="-22" y="5" class="nm">영덕</text><text x="34" y="5" class="ml">7물</text></g><g class="pin" transform="translate(328.2,204.6)"><circle r="7" class="dot "/><circle r="3" class="dot2"/></g><g class="pin" transform="translate(459.3,127.5)"><circle r="7" class="dot "/><circle r="3" class="dot2"/></g><g class="pin" transform="translate(311.5,145.1)"><circle r="7" class="dot "/><circle r="3" class="dot2"/></g><g class="pin" transform="translate(299.1,123.0)"><circle r="7" class="dot "/><circle r="3" class="dot2"/></g><g class="lab" transform="translate(282.9,97.1)"><rect x="-46" y="-15" width="92" height="30" rx="15" class="bg"/><circle cx="-33" cy="0" r="6" class="dot "/><text x="-22" y="5" class="nm">강릉</text><text x="34" y="5" class="ml">12물</text></g><g class="pin" transform="translate(262.1,67.6)"><circle r="7" class="dot big"/><circle r="3" class="dot2"/></g><g class="lab" transform="translate(251.6,48.0)"><rect x="-46" y="-15" width="92" height="30" rx="15" class="bg"/><circle cx="-33" cy="0" r="6" class="dot big"/><text x="-22" y="5" class="nm">속초</text><text x="34" y="5" class="ml">8물</text></g><g class="pin" transform="translate(241.9,26.0)"><circle r="7" class="dot "/><circle r="3" class="dot2"/></g></svg>
+      <div class="zoom"><button>+</button><button>−</button></div>
+      <div class="maphint">마우스 휠로 확대·축소 · 끌어서 이동</div>
+      <div class="bubble" style="left:34px;top:384px">
+        <b>신안 · 증도</b>
+        <div>오늘 <span class="mul">5물 · 물 많이 빠짐</span></div>
+        <div style="color:#66727C;font-size:.82rem;margin-top:2px">낮 간조 14:57 · 만조 21:28</div>
+        <span class="go">이 지점 물때 보기</span>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="place"><b>신안 증도</b><span>국립해양조사원 목포 관측소 기준</span></div>
+      <div class="mulrow"><div class="big">5물</div><div class="st">물 많이 빠짐</div></div>
+      <div class="gauge"><i></i></div>
+      <ul class="tides">
+        <li class="h"><span class="k">만조</span><span class="t">08:40</span><span class="v">612cm</span></li>
+        <li><span class="k">간조</span><span class="t">14:57</span><span class="v">98cm</span></li>
+        <li class="h"><span class="k">만조</span><span class="t">21:28</span><span class="v">598cm</span></li>
+        <li><span class="k">간조</span><span class="t">03:25</span><span class="v">104cm</span></li>
+      </ul>
+      <div class="mini">
+        <div><small>날씨 · 파고</small><b>21°C · 0.5m</b></div>
+        <div><small>해뜸 · 해짐</small><b>06:24 · 18:33</b></div>
+        <div><small>갯벌체험지수</small><b>보통</b></div>
+        <div><small>해수욕지수</small><b>매우 좋음</b></div>
+      </div>
+      <div class="pbtns"><a href="#">신안 2주 물때표</a><a class="s" href="#">물때표 보는 법</a></div>
+      <p class="src">간조·만조는 국립해양조사원 조석예보, 물때·일출은 계산값입니다. 바람·기압에 따라 실제와 다를 수 있어요.</p>
+    </div>
+  </div>
+
+  <div class="below">
+    <div class="card panel">
+      <div class="sec-h">이번 주 언제 갈까</div>
+      <h3 class="sec-t">해루질은 월요일이 가장 좋아요</h3>
+      <div class="week">
+        <div><i style="height:46px"></i><b>오늘</b><em>23 · 5물</em></div><div><i style="height:58px"></i><b>목</b><em>24 · 6물</em></div><div><i style="height:70px"></i><b>금</b><em>25 · 7물</em></div><div><i style="height:84px"></i><b>토</b><em>26 · 8물</em></div><div><i style="height:92px"></i><b>일</b><em>27 · 9물</em></div><div class="best"><i style="height:104px"></i><b>월</b><em>28 · 10물</em></div><div><i style="height:72px"></i><b>화</b><em>29 · 11물</em></div>
+      </div>
+      <div class="legend"><span>막대가 길수록 물이 많이 빠져요</span><span>낮 간조 기준</span></div>
+      <div class="note">이번 주말은 <b>사리</b> 무렵이라 물이 많이 빠집니다. 가족 해루질하기 좋은 주말이에요.</div>
+    </div>
+    <div class="card panel">
+      <div class="sec-h">시간별 물높이</div>
+      <h3 class="sec-t">오늘 · 내일 · 모레</h3>
+      <svg viewBox="0 0 560 210" style="width:100%;height:auto">
+        <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9CC7E4" stop-opacity=".55"/><stop offset="1" stop-color="#DCEBF6" stop-opacity=".15"/></linearGradient></defs>
+        <line x1="40" y1="170" x2="540" y2="170" stroke="#DCE7F0"/>
+        <path d="M40,60 C90,150 140,175 190,120 C240,66 290,44 340,96 C390,150 440,176 490,126 C515,100 530,84 540,76 L540,170 L40,170 Z" fill="url(#g)"/>
+        <path d="M40,60 C90,150 140,175 190,120 C240,66 290,44 340,96 C390,150 440,176 490,126 C515,100 530,84 540,76" fill="none" stroke="#1F5F8B" stroke-width="2.6"/>
+        <line x1="300" y1="30" x2="300" y2="170" stroke="#C0522B" stroke-dasharray="5 4"/>
+        <text x="300" y="24" font-size="13" fill="#C0522B" text-anchor="middle" font-weight="700">지금</text>
+        <circle cx="190" cy="120" r="5" fill="#1F5F8B"/><text x="190" y="142" font-size="13" fill="#3E4C57" text-anchor="middle">간조 03:25</text>
+        <circle cx="340" cy="96" r="5" fill="#B8761C"/><text x="340" y="86" font-size="13" fill="#B8761C" text-anchor="middle">만조 08:40</text>
+        <text x="40" y="192" font-size="12" fill="#66727C">0시</text><text x="290" y="192" font-size="12" fill="#66727C">12시</text><text x="530" y="192" font-size="12" fill="#66727C">24시</text>
+      </svg>
+    </div>
+  </div>
+</div>
+</body></html>
