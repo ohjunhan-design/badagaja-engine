@@ -25,6 +25,8 @@
 """
 import glob
 import os
+import subprocess
+import tempfile
 import sys
 import shutil
 
@@ -49,6 +51,104 @@ import shutil
 찾을이름 = ['chrome', 'chrome.exe', 'google-chrome',
             'google-chrome-stable', 'chromium', 'chromium-browser']
 
+
+
+# ── 재는 자리를 적는 데 쓰는 것들 (바깥 검수 11차) ──
+def 크롬판():
+    """크롬 판. **못 알아내면 그렇다고 적습니다** — 지어내지 않습니다.
+
+    ★ 윈도와 리눅스가 다릅니다 (2026-09-28)
+
+      리눅스 크롬은 `--version` 으로 잘 답합니다.
+      윈도 크롬은 잘 안 답합니다. 이미 떠 있으면
+      「기존 브라우저 세션에서 여는 중입니다」라 하고,
+      따로 띄우면 아무 말도 안 합니다.
+
+      대신 윈도에는 크롬이 깔린 자리에 **판 번호로 된 폴더**가
+      있습니다. Chrome/Application/141.0.7390.55/ 처럼.
+      그것을 읽으면 확실합니다.
+    """
+    try:
+        길 = 크롬찾기()
+    except Exception as e:
+        return '크롬을 못 찾았습니다: %s' % str(e)[:40]
+
+    if 윈도인가:
+        칸 = os.path.dirname(길)
+        판들 = []
+        try:
+            for 이름 in os.listdir(칸):
+                # 141.0.7390.55 처럼 숫자와 점으로만 된 폴더
+                if (os.path.isdir(os.path.join(칸, 이름))
+                        and 이름.replace('.', '').isdigit()
+                        and '.' in 이름):
+                    판들.append(이름)
+        except OSError as e:
+            return '깔린 자리를 못 읽었습니다: %s' % str(e)[:40]
+        if 판들:
+            판들.sort(key=lambda v: [int(x) for x in v.split('.')])
+            return 'Chrome ' + 판들[-1]
+        return '판 폴더를 못 찾았습니다 (%s)' % 칸
+
+    try:
+        r = subprocess.run([길, '--version'], capture_output=True,
+                           timeout=30)
+        덩이 = (r.stdout or r.stderr or b'')
+        return 덩이.decode('utf-8', 'replace').strip()[:60] or '(말이 없습니다)'
+    except subprocess.TimeoutExpired:
+        # ★ 2026-09-28 — 이것 때문에 416쪽을 못 잰 적이 있습니다.
+        #   그래서 여기서는 **적기만** 하고 판단은 안 합니다.
+        return '30초 안에 대답하지 않았습니다'
+    except OSError as e:
+        return '못 물어봤습니다: %s' % str(e)[:40]
+
+
+def 한글글꼴있나():
+    """한글 글꼴이 정말 깔려 있는가.
+
+    ★ 없으면 크롬이 한글을 대체 글꼴로 그려 **글자 너비가
+      달라집니다.** 그러면 넘침·줄바꿈이 어긋납니다.
+    """
+    if 윈도인가:
+        칸 = os.path.join(os.environ.get('WINDIR', r'C:\\Windows'), 'Fonts')
+        있는것 = []
+        for 이름 in ('malgun.ttf', 'gulim.ttc', 'batang.ttc'):
+            if os.path.exists(os.path.join(칸, 이름)):
+                있는것.append(이름)
+        return 있는것 or '없습니다'
+    try:
+        r = subprocess.run(['fc-list', ':lang=ko', 'family'],
+                           capture_output=True, text=True,
+                           encoding='utf-8', errors='replace', timeout=30)
+        줄들 = sorted(set(x.strip() for x in (r.stdout or '').split('\n')
+                          if x.strip()))
+        return 줄들[:4] or '없습니다'
+    except (OSError, subprocess.TimeoutExpired):
+        return 'fc-list 를 못 돌렸습니다'
+
+
+def 로케일():
+    import locale
+    try:
+        쓰는것 = str(locale.getlocale())
+    except Exception:
+        쓰는것 = '(못 읽음)'
+    return {
+        'LANG': os.environ.get('LANG') or '(없음)',
+        'LC_ALL': os.environ.get('LC_ALL') or '(없음)',
+        '쓰는것': 쓰는것,
+    }
+
+
+def 시간대():
+    """★ 물때는 시간대가 다르면 **하루가 밀립니다.**"""
+    import datetime
+    지금 = datetime.datetime.now()
+    return {
+        'TZ': os.environ.get('TZ') or '(없음)',
+        '지금': 지금.strftime('%Y-%m-%d %H:%M'),
+        'UTC와의차': str(지금.astimezone().utcoffset()),
+    }
 
 def 크롬찾기():
     """크롬 자리. 못 찾으면 **터뜨립니다** — 조용히 넘어가지 않습니다.
@@ -208,6 +308,24 @@ def 어디서도나():
         '파이썬': platform.python_version(),
         '코어': os.cpu_count(),
         '클라우드인가': bool(os.environ.get('GITHUB_ACTIONS')),
+        # ★ **재는 자리를 낱낱이 적습니다** (2026-09-28 바깥 검수 11차)
+        #
+        #   「클라우드에서 실패했으니 코드가 틀렸다고 바로 결론
+        #     내려도 안 되고, 윈도에서 통과했으니 코드가 맞다고
+        #     결론 내려도 안 됩니다. 지금은 재현성 검증 단계입니다.」
+        #
+        #   그러려면 **두 자리의 기록을 나란히 놓고 다른 줄만
+        #   보면 되게** 해야 합니다. 전에는 넷만 적어서, 글꼴이
+        #   없는 것도 시간대가 다른 것도 안 보였습니다.
+        '크롬판': 크롬판(),
+        '한글글꼴': 한글글꼴있나(),
+        '로케일': 로케일(),
+        '시간대': 시간대(),
+        '줄바꿈기본': repr(os.linesep),
+        '경로구분자': os.sep,
+        '작업폴더': os.getcwd(),
+        '파일이름인코딩': sys.getfilesystemencoding(),
+        '글자인코딩': sys.getdefaultencoding(),
     }
     남은 = 남은메모리GB()
     나옴['쓸수있는메모리GB'] = round(남은, 1) if 남은 is not None else None
