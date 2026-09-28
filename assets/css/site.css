@@ -943,3 +943,41 @@ a.badge{min-height:44px}
   .shots { grid-template-columns: 1fr; gap: 14px; }
   .shot img { height: 210px; }
 }
+
+/* ── 이번 주 언제 갈까 (2026-09-28 주인 지시)
+   옛 쪽에 있던 판단 한 줄을 되살립니다.
+   손님이 열네 칸을 훑어 스스로 고르게 두지 않습니다. */
+.when {
+  background: #FFFBF3;
+  border: 1px solid #EADFC9;
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin: 0 0 16px;
+}
+.when-k {
+  margin: 0 0 4px;
+  font-size: 12px;
+  letter-spacing: .04em;
+  color: #B08A4A;
+}
+.when-t {
+  margin: 0 0 4px;
+  font-size: 19px;
+  line-height: 1.4;
+  font-weight: 700;
+  color: #2C2417;
+}
+.when-s { margin: 0; font-size: 13px; color: #7A6F60; }
+.when-w {
+  margin: 12px 0 0;
+  padding: 9px 12px;
+  background: #F5EEE0;
+  border-radius: 9px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #4A4034;
+}
+@media (max-width: 480px) {
+  .when { padding: 14px; }
+  .when-t { font-size: 17px; }
+}
