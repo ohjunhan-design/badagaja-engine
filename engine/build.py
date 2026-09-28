@@ -1186,6 +1186,8 @@ def 권역쪽(d, 권역, 언어='ko'):
         if 열 and _사.get('파일'):
             _명소사진.setdefault(열, _사)
 
+    _쓴사진 = set()
+
     def _명소그림(이름):
         사 = _명소사진.get(이름)
         if not 사 and 이름:
@@ -1201,6 +1203,7 @@ def 권역쪽(d, 권역, 언어='ko'):
                     break
         if not 사:
             return ''
+        _쓴사진.add(사['파일'])
         찍은이 = 사.get('촬영자') or ''
         return ('<figure class="card-figure">'
                 '<img src="%s" alt="%s" loading="lazy" '
@@ -1228,6 +1231,49 @@ def 권역쪽(d, 권역, 언어='ko'):
            % esc((x['설명'] or {}).get(언어) or (x['설명'] or {}).get('ko'))
            if x.get('설명') else '')
         for x in v['명소'])
+
+    # ★ **남는 사진을 버리지 않습니다** (2026-09-28)
+    #
+    #   check_coverage 가 「자료에 142장인데 쪽에 129장」이라고
+    #   했습니다. 남은 13장은 모두 제주였고, 까닭이 둘이었습니다.
+    #
+    #     (가) 같은 명소에 사진이 두 장
+    #          성산에 「성산일출봉」이 두 장인데 첫 장만 쓰였습니다.
+    #     (나) 명소 목록에 없는 곳
+    #          대정의 「사계해변」은 명소 일곱 곳에 없습니다.
+    #
+    #   짝짓기 규칙을 더 촘촘히 만들 수도 있었지만, 그러면 자료가
+    #   늘 때마다 또 손봐야 합니다. **남는 것을 모아 보여주는** 쪽이
+    #   튼튼합니다 — 사진이 늘어도 저절로 나옵니다.
+    #
+    #   그리고 이것은 규칙 6-1 이기도 합니다.
+    #   **사람은 눈으로 봅니다.** 좋은 바다 사진을 자료에 쌓아 두고
+    #   안 보여 주면 없는 것과 같습니다.
+    남은사진 = [x for x in (d.명소사진(권역) or [])
+                if x.get('파일') and x['파일'] not in _쓴사진]
+    풍경칸 = ''
+    if 남은사진:
+        칸들 = ''
+        for 사 in 남은사진:
+            찍은이 = 사.get('촬영자') or ''
+            제목 = 사.get('제목') or ''
+            칸들 += ('<figure class="shot">'
+                     '<img src="%s" alt="%s" loading="lazy" '
+                     'width="%s" height="%s">'
+                     '<figcaption>사진 · %s%s</figcaption></figure>'
+                     % (esc(url.rel(쪽길, 사['파일'])), esc(제목),
+                        사.get('가로') or 960, 사.get('세로') or 640,
+                        esc(제목),
+                        ' · %s' % esc(찍은이) if 찍은이 else ''))
+        풍경칸 = ('<section class="section" id="scenery"><div class="wrap">'
+                  '<div class="section-head">'
+                  '<p class="kicker">%s</p>'
+                  '<h2 class="serif">%s</h2></div>'
+                  '<div class="shots">%s</div>'
+                  '</div></section>'
+                  % ('이 고장의 다른 풍경' if 언어 == 'ko' else '当地其他风景',
+                     '사진 %d장' % len(남은사진) if 언어 == 'ko'
+                     else '照片 %d 张' % len(남은사진), 칸들))
 
     코스칸 = ''.join(
         '<div class="card"><div class="card-head">'
@@ -1339,6 +1385,7 @@ def 권역쪽(d, 권역, 언어='ko'):
         '어종칸': ''.join(어종칸) or '<p class="notice">제철 어종을 정리하는 중입니다.</p>',
         '먹거리칸': 먹거리칸,
         '명소칸': 명소칸,
+        '풍경칸': 풍경칸,
         '축제칸': 축제칸,
         '코스칸': 코스칸,
         '마을칸': 마을칸,

@@ -169,6 +169,9 @@ def 볼쪽들(전부):
     for 이름, 무늬 in (('첫화면', 'index.html'),
                        ('묶음', 'chungnam/index.html'),
                        ('권역', 'taean.html'),
+                       # ★ 2026-09-28 — 풍경칸(.shots)이 있는 쪽입니다.
+                       #   표본에 없는 짜임은 **앞으로도 못 잽니다.**
+                       ('권역·풍경칸', 'seongsan.html'),
                        ('포인트목록', 'point/chungnam/taean_gleaning.html'),
                        ('해루질대상', 'catch/index.html'),
                        ('해루질하나', 'catch/bajirak.html'),

@@ -907,3 +907,36 @@ a.badge{min-height:44px}
 .gm-title{
   margin:2px 4px 8px;font-size:13px;font-weight:600;color:var(--dim);
 }
+
+/* ── 이 고장의 다른 풍경 (2026-09-28)
+   명소와 짝이 안 지어진 사진을 모아 보여 줍니다.
+   자료에 쌓아 두고 안 보여 주면 없는 것과 같습니다 (주인 규칙 6-1). */
+.shots {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 18px;
+}
+.shot {
+  margin: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--card, #fff);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .08);
+}
+.shot img {
+  display: block;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+.shot figcaption {
+  padding: 9px 12px 11px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted, #6b7280);
+}
+@media (max-width: 480px) {
+  /* 휴대폰에서는 두 칸이 너무 좁습니다 — 한 칸으로 크게 봅니다 */
+  .shots { grid-template-columns: 1fr; gap: 14px; }
+  .shot img { height: 210px; }
+}
