@@ -362,6 +362,34 @@ def 어긴줄(글, 몇=3):
     return 끝[:120]
 
 
+
+def 마지막말(번호, 몇=18):
+    """그 항목 검사기가 남긴 기록의 **끝 몇 줄**.
+
+    ★ 기록남기기() 가 tests/out/log/ 에 통째로 남깁니다.
+      여기서는 그 가운데 마지막 몇 줄만 꺼내 판정표에 붙입니다.
+      **까닭을 보려고 파일을 내려받게 하지 않습니다.**
+    """
+    칸 = os.path.join(ROOT, 'tests', 'out', 'log')
+    if not os.path.isdir(칸):
+        return []
+    # 기록 파일은 도구 이름으로 남습니다. 그 항목이 쓴 도구를 찾습니다.
+    도구 = None
+    for 번, _이름, 길, _빠 in 항목들:
+        if 번 == 번호:
+            도구 = os.path.basename(길)
+            break
+    if not 도구:
+        return []
+    맞는것 = [f for f in os.listdir(칸) if 도구.replace('.py', '') in f]
+    if not 맞는것:
+        return []
+    맞는것.sort(key=lambda f: os.path.getmtime(os.path.join(칸, f)))
+    글 = io.read(os.path.join(칸, 맞는것[-1]), default='')
+    줄들 = [x.rstrip() for x in 글.split('\n') if x.strip()]
+    return 줄들[-몇:]
+
+
 def 끝줄(글, 몇=1):
     줄 = [x for x in (글 or '').strip().split('\n') if x.strip()]
     return ' / '.join(줄[-몇:])[:90] if 줄 else '(아무 말도 없음)'
@@ -1073,6 +1101,27 @@ def main():
                              'INFRA_FAIL'):
                 print('    %-2s %-26s %s'
                       % (x['번호'], x['이름'][:26], x['증거'][:60]))
+
+        # ★ **죽거나 어긴 것은 검사기 말을 그대로 붙입니다** (2026-09-28)
+        #
+        #   한 줄 요약만으로는 까닭을 알 수 없었습니다.
+        #   2번이 클라우드에서만 죽는데 내 컴퓨터에서는 91가지가
+        #   다 통과해, 까닭을 보려고 판정 기록을 내려받아야 했습니다.
+        #
+        #   기록은 tests/out/log/ 에 있지만 그것도 받아야 보입니다.
+        #   **로그에 바로 찍으면 열어 보기만 하면 됩니다.**
+        #   「원인을 못 보면 고칠 수도 없습니다.」
+        아플것 = [x for x in sorted(결과, key=lambda v: int(v['번호']))
+                  if x['상태'] in ('FAIL', 'ERROR')]
+        for x in 아플것:
+            말 = 마지막말(x['번호'])
+            if not 말:
+                continue
+            print('')
+            print('  ── %s %s — 검사기가 한 말 (끝 %d줄)'
+                  % (x['번호'], x['이름'][:30], len(말)))
+            for 줄 in 말:
+                print('     | %s' % 줄[:110])
     print('  ' + '─' * 46)
     걸린 = (datetime.datetime.now() - 시작).total_seconds()
     print('  잰 때 %s · %d초 걸림'
