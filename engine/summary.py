@@ -74,8 +74,21 @@ def 까닭들(항목, 최대=12):
                        errors='replace').read().splitlines()
     except OSError:
         return []
-    고른것 = [x.rstrip() for x in 줄들
-              if x.lstrip().startswith(('✗', 'Traceback', '  File '))]
+    # ★ **어긴 줄만으로는 모자랍니다** (2026-09-29)
+    #
+    #   19번 롤백이 「✗ 되돌린 쪽이 첫 판과 바이트까지 같다」라고만
+    #   해서, **무엇이 어떻게 달랐는지** 알 수가 없었습니다.
+    #   검사기는 그 바로 뒤에 까닭을 적습니다. 그 줄도 담습니다.
+    고른것 = []
+    for i, 줄 in enumerate(줄들):
+        if 줄.lstrip().startswith(('✗', 'Traceback', '  File ')):
+            고른것.append(줄.rstrip())
+            # 바로 뒤에 들여쓴 설명이 있으면 함께 담습니다
+            for 뒤 in 줄들[i + 1:i + 4]:
+                if 뒤.strip() and 뒤.startswith(('      ', '	')):
+                    고른것.append(뒤.rstrip())
+                else:
+                    break
     if 고른것:
         return 고른것[:최대]
 

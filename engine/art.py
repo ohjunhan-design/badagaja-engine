@@ -122,7 +122,7 @@ def 흔적그림(어종):
     무늬 = 흔적무늬.get(어종.get('그림'), 흔적기본)
     흔적말 = 말of(어종, '흔적')
     return (
-        '<figure class="cg-art">\n'
+        '<figure class="cg-art photo--drawn">\n'
         '<svg viewBox="0 0 640 240" role="img"'
         ' aria-label="%s 찾을 때 보는 갯벌 표면 흔적 그림"'
         ' xmlns="http://www.w3.org/2000/svg">\n'
@@ -139,7 +139,7 @@ def 흔적그림(어종):
         '  <text x="620" y="34" text-anchor="end" font-size="12" fill="%s"'
         ' opacity=".8">바다가자닷컴 · badagaja.com</text>\n'
         '</svg>\n'
-        '<figcaption>%s — 표면에서 이런 자국을 찾습니다: %s</figcaption>\n'
+        '<figcaption>그림 · %s — 표면에서 이런 자국을 찾습니다: %s</figcaption>\n'
         '</figure>'
         % (조사(글(이름), '를'), 모래, 짙은모래, 짙은모래, 무늬,
            갯벌글씨, 갯벌글씨, 글(이름), 글(흔적말)))
@@ -227,7 +227,7 @@ def 단면그림(어종):
         설명 = ('갯벌 속이 아니라 바위와 돌 표면에 붙어 있습니다. '
                 '물이 빠진 뒤 바위틈을 살펴보세요.')
     return (
-        '<figure class="cg-art">\n'
+        '<figure class="cg-art photo--drawn">\n'
         '<svg viewBox="0 0 640 280" role="img"'
         ' aria-label="%s 있는 깊이와 갯벌 단면 그림"'
         ' xmlns="http://www.w3.org/2000/svg">\n'
@@ -246,7 +246,7 @@ def 단면그림(어종):
         '  <text x="640" y="26" text-anchor="end" font-size="14" fill="%s"'
         ' opacity=".9">바다가자닷컴 · badagaja.com</text>\n'
         '</svg>\n'
-        '<figcaption>%s — %s</figcaption>\n'
+        '<figcaption>그림 · %s — %s</figcaption>\n'
         '</figure>'
         % (조사(글(이름), '가'), 모래, 짙은모래, 깊이표, 몸, 물글씨,
            글(이름), 설명))
@@ -256,7 +256,7 @@ def 단면그림(어종):
 def 물때그림(누구='해루질'):
     """간조 앞뒤 1~2시간이 핵심임을 곡선으로 보입니다 (640×260)."""
     return (
-        '<figure class="cg-art">\n'
+        '<figure class="cg-art photo--drawn">\n'
         '<svg viewBox="0 0 640 290" role="img"'
         ' aria-label="물때 곡선과 %s 하기 좋은 시간대 그림"'
         ' xmlns="http://www.w3.org/2000/svg">\n'
@@ -290,7 +290,7 @@ def 물때그림(누구='해루질'):
         '  <text x="620" y="28" text-anchor="end" font-size="12" fill="%s"'
         ' opacity=".85">바다가자닷컴 · badagaja.com</text>\n'
         '</svg>\n'
-        '<figcaption>물때 곡선 — 간조 앞뒤 1~2시간이 핵심입니다. '
+        '<figcaption>그림 · 물때 곡선 — 간조 앞뒤 1~2시간이 핵심입니다. '
         '물이 들어오기 시작하면 바로 나오세요. 날짜별 간조 시각은 '
         '권역 쪽 물때표에서 볼 수 있습니다.</figcaption>\n'
         '</figure>'
@@ -357,7 +357,7 @@ def 자리그림(어종):
             "<path d='M430 116 l40 40' stroke='%s' stroke-width='2.6'/>"
             % (돌, 붉음, 풀빛, 풀빛, 붉음, 붉음, 붉음))
     return (
-        '<figure class="cg-art">\n'
+        '<figure class="cg-art photo--drawn">\n'
         '<svg viewBox="0 0 640 240" role="img"'
         ' aria-label="%s 노리는 장소 그림"'
         ' xmlns="http://www.w3.org/2000/svg">\n'
@@ -371,7 +371,7 @@ def 자리그림(어종):
         '  <text x="620" y="32" text-anchor="end" font-size="12" fill="%s"'
         ' opacity=".85">바다가자닷컴 · badagaja.com</text>\n'
         '</svg>\n'
-        '<figcaption>%s — %s</figcaption>\n'
+        '<figcaption>그림 · %s — %s</figcaption>\n'
         '</figure>'
         % (조사(글(이름), '를'), 바다, 짙은바다, 장면, 물글씨, 물글씨,
            글(이름), 글(어디)))
@@ -459,7 +459,7 @@ def 채비그림(어종):
                       "<path d='M320 60 V200' stroke='{선}' stroke-width='2'/>")
     부품 = 틀.format(선=물글씨, 바늘=풀빛, 짚=짚, 짙짚=짙은짚)
     return (
-        '<figure class="cg-art">\n'
+        '<figure class="cg-art photo--drawn">\n'
         '<svg viewBox="0 0 640 280" role="img" aria-label="%s 기본 채비 그림"'
         ' xmlns="http://www.w3.org/2000/svg">\n'
         '  <rect width="640" height="280" fill="%s"/>\n'
@@ -476,7 +476,7 @@ def 채비그림(어종):
         '  <text x="620" y="34" text-anchor="end" font-size="13" fill="%s"'
         ' opacity=".85">바다가자닷컴 · badagaja.com</text>\n'
         '</svg>\n'
-        '<figcaption>%s — %s</figcaption>\n'
+        '<figcaption>그림 · %s — %s</figcaption>\n'
         '</figure>'
         % (글(이름), 물빛, 바다, 모래, 부품, 물글씨, 글(이름), 물글씨,
            글(이름), 글(말of(어종, '채비')) or '기본 채비입니다.'))

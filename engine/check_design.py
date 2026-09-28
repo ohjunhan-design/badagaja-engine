@@ -39,6 +39,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, ROOT)
+from engine._art_overflow import 밖으로나간글자
 from engine import io   # noqa: E402
 from engine import machine   # noqa: E402  옛 사이트 자리는 한 곳에서만
 
@@ -450,6 +451,35 @@ def main():
         print('  · 어종 쪽 %d개에 모두 삽화가 있습니다 (모두 %d개 · 쪽마다 %.1f개)'
               % (len(셈), sum(셈), sum(셈) / len(셈)))
     print('')
+    # ── [5] 그림 안 글자가 그림 밖으로 나가지 않는가
+    #
+    #   ★ 2026-09-29 — 삽화를 되살리자 375px 에서 글자가 잘렸습니다.
+    #     SVG 는 줄바꿈하지 않아 viewBox 를 넘으면 그대로 잘립니다.
+    #     화면을 찍어 봐도 잘린 자리가 자연스러워 보여 놓치기 쉽습니다.
+    print('[5] 그림 안 글자가 그림 밖으로 나가지 않는가')
+    넘친것 = []
+    차례 = io.read_json(os.path.join(ROOT, 'data', 'raw', 'lessons.json'),
+                        default={}).get('차례') or {}
+    for 대상 in sorted(차례):
+        for 몇, 단 in enumerate(차례[대상], 1):
+            for 글, 오른쪽, 한계 in 밖으로나간글자(단.get('그림') or ''):
+                넘친것.append('%s %d단계 — 오른쪽 %d (한계 %d) 「%s」'
+                              % (대상, 몇, 오른쪽, 한계, 글[:32]))
+    if not 차례:
+        print('  ~ 배우는 차례 자료가 없습니다 — 잴 것이 없습니다.')
+    elif 넘친것:
+        막음.append('그림 밖으로 나간 글자 %d개' % len(넘친것))
+        print('  ✗ 그림 밖으로 나간 글자 %d개' % len(넘친것))
+        for x in 넘친것[:8]:
+            print('      %s' % x)
+        print('      → SVG 는 줄바꿈하지 않습니다. 넘치면 잘려 못 읽습니다.')
+        print('        textLength 를 주어 그림 안에 맞춥니다.')
+    else:
+        단계수 = sum(len(v) for v in 차례.values())
+        print('  · 배우는 차례 %d갈래 %d단계의 글자가 모두 그림 안에 있습니다'
+              % (len(차례), 단계수))
+    print('')
+
 
     print('')
 
