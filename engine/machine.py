@@ -222,8 +222,30 @@ def 크롬앞머리():
     #
     #   폴더는 임시 자리에 만들고 그대로 둡니다 — 클라우드는
     #   매번 새 기계이고, 내 컴퓨터는 임시 폴더라 저절로 치워집니다.
-    깃발.append('--user-data-dir=' + tempfile.mkdtemp(prefix='bada-chrome-'))
+    깃발.append('--user-data-dir=' + 크롬프로필자리())
     return 깃발
+
+
+def 크롬프로필자리():
+    """크롬이 쓸 **짧은** 프로필 자리 (2026-09-29).
+
+    ★ 리눅스 소켓 경로는 108바이트를 못 넘습니다
+
+      크롬은 프로필 폴더 안에 SingletonSocket 을 만듭니다.
+      폴더가 깊으면 그 길이를 넘겨 이렇게 죽습니다.
+
+          process_singleton_posix.cc:313] Socket path too long
+
+      깃허브 러너는 임시 폴더가 작업 폴더 안(.tmp)이라 깁니다.
+          /home/runner/work/badagaja-engine/badagaja-engine/.tmp/...
+      그래서 리눅스에서는 **/tmp 밑에 짧은 이름**으로 만듭니다.
+      윈도는 그런 제한이 없어 평소대로 둡니다.
+    """
+    if 윈도인가:
+        return tempfile.mkdtemp(prefix='bada-chrome-')
+    # 이름을 짧게 — /tmp/bc-abc123 쯤이면 30바이트 안쪽입니다
+    바탕 = '/tmp' if os.path.isdir('/tmp') else None
+    return tempfile.mkdtemp(prefix='bc-', dir=바탕)
 
 
 

@@ -46,6 +46,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 
 # 작업 폴더 옆에 둡니다 — 자료와 같은 드라이브라 옮겨 붙일 일도 없습니다
+윈도인가 = sys.platform.startswith('win')
+
 기본자리 = os.path.join(ROOT, '.tmp')
 
 
@@ -61,7 +63,32 @@ def 자리():
 
 
 def 맞춤():
-    """`tempfile` 이 쓰는 자리를 바꿉니다. 불러올 때 저절로 돕니다."""
+    """`tempfile` 이 쓰는 자리를 바꿉니다. 불러올 때 저절로 돕니다.
+
+    ★ **리눅스에서는 건드리지 않습니다** (2026-09-29 — 크롬이 죽었습니다)
+
+      이 파일은 윈도에서 C: 가 꽉 차던 것을 막으려 만들었습니다.
+      그런데 리눅스에서는 이것이 **크롬을 죽였습니다.**
+
+          process_singleton_posix.cc:313] Socket path too long
+
+      크롬은 TMPDIR 밑에 소켓을 만듭니다. 그 경로는
+      **108바이트**를 넘을 수 없습니다(유닉스 소켓 한계).
+
+          /home/runner/work/badagaja-engine/badagaja-engine/
+            .tmp/mutation-xxxxxxxx/.tmp/          ← 사본 안에 또 .tmp
+            .org.chromium.Chromium.XXXXXX/SingletonSocket
+          = 124바이트 → 넘칩니다
+
+      검사기는 사본에서 도니 `.tmp` 가 두 겹이 됩니다.
+      리눅스는 `/tmp` 가 짧고 러너 디스크도 넉넉하므로
+      **원래 자리를 그대로 둡니다.**
+
+      BADAGAJA_TMP 를 손수 적었다면 그 뜻을 존중합니다.
+    """
+    손수정함 = bool(os.environ.get('BADAGAJA_TMP'))
+    if not 윈도인가 and not 손수정함:
+        return None
     p = 자리()
     if not p:
         return None

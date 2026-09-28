@@ -42,6 +42,7 @@
 """
 import ast
 import os
+import tempfile
 import re
 import sys
 import glob
@@ -775,6 +776,83 @@ def 검사13_배포가검사를건너뛰지않나():
     print('')
 
 
+
+def 검사14_크롬소켓길이가넉넉한가():
+    """★ **크롬 소켓 경로는 108바이트를 못 넘습니다** (2026-09-29)
+
+    판정 #24 에서 크롬이 죽었습니다.
+
+        process_singleton_posix.cc:313] Socket path too long
+
+    크롬은 TMPDIR 밑에 `.org.chromium.Chromium.XXXXXX/SingletonSocket`
+    을 만듭니다. 유닉스 소켓 경로는 **108바이트**가 한계입니다.
+
+    그런데 `engine/tmp.py` 가 TMPDIR 을 작업 폴더 옆(`.tmp`)으로
+    옮기고 있었습니다. 윈도에서 C: 가 꽉 차던 것을 막으려
+    만든 것인데, 리눅스에서는 경로를 이렇게 길게 만듭니다.
+
+        /home/runner/work/badagaja-engine/badagaja-engine/
+          .tmp/mutation-xxxxxxxx/.tmp/        ← 사본 안에 또 .tmp
+          .org.chromium.Chromium.XXXXXX/SingletonSocket
+        = 124바이트 → 넘칩니다
+
+    **막으려던 것은 막았는데 다른 까닭으로 또 죽었습니다.**
+    고친 뒤 다음 판정을 본 덕에 알았습니다.
+
+    여기서는 두 가지를 봅니다.
+      · 리눅스에서 tmp 가 임시 자리를 건드리지 않는가
+      · 지금 재는 자리로 크롬 소켓을 만들면 108 안쪽인가
+    """
+    print('[14] 크롬 소켓 경로가 108바이트 안쪽인가')
+    try:
+        from engine import tmp as _t
+    except Exception as e:
+        막음.append('tmp 를 못 읽었습니다')
+        print('  ✗ engine/tmp.py 를 못 읽었습니다: %s' % str(e)[:60])
+        print('')
+        return
+
+    # ── ① 리눅스인 척하고 맞춤() 을 불러 봅니다
+    원래 = _t.윈도인가
+    원래환경 = os.environ.get('BADAGAJA_TMP')
+    try:
+        _t.윈도인가 = False
+        os.environ.pop('BADAGAJA_TMP', None)
+        난것 = _t.맞춤()
+    finally:
+        _t.윈도인가 = 원래
+        if 원래환경 is not None:
+            os.environ['BADAGAJA_TMP'] = 원래환경
+        _t.맞춤()          # 이 판의 자리를 되돌립니다
+
+    if 난것 is not None:
+        막음.append('리눅스에서 임시 자리를 옮깁니다 — 크롬이 죽습니다')
+        print('  ✗ 리눅스에서도 임시 자리를 옮깁니다: %s' % 난것)
+        print('      → 크롬 소켓 경로가 108바이트를 넘어 죽습니다.')
+        print('        tmp.맞춤() 은 리눅스에서 None 을 내야 합니다.')
+    else:
+        print('  · 리눅스에서는 임시 자리를 건드리지 않습니다')
+
+    # ── ② 지금 자리로 소켓을 만들면 몇 바이트인가
+    #      크롬이 덧붙이는 것: /.org.chromium.Chromium.XXXXXX/SingletonSocket
+    덧붙는것 = len('/.org.chromium.Chromium.XXXXXX/SingletonSocket')
+    # 리눅스에서만 걸리는 한계입니다. 윈도에서 돌 때는
+    # **클라우드였다면** 어땠을지를 셈해 봅니다.
+    if sys.platform.startswith('win'):
+        바탕 = '/tmp'
+    else:
+        바탕 = tempfile.gettempdir()
+    # 검사기는 사본 안에서 돕니다 — 한 겹 더 깊어질 수 있습니다
+    사본몫 = len('/mutation-xxxxxxxx')
+    잰길이 = len(바탕.encode('utf-8')) + 사본몫 + 덧붙는것
+    if 잰길이 >= 108:
+        막음.append('크롬 소켓 경로가 %d바이트 — 108 을 넘습니다' % 잰길이)
+        print('  ✗ %s 를 바탕으로 하면 %d바이트입니다' % (바탕, 잰길이))
+        print('      → 크롬이 뜨다 죽습니다. 바탕을 짧게 잡습니다.')
+    else:
+        print('  · %s 바탕으로 넉넉히 %d바이트 (한계 108)' % (바탕, 잰길이))
+    print('')
+
 def main():
     global 자세히
     자세히 = '--자세히' in sys.argv
@@ -803,6 +881,7 @@ def main():
     검사11_재는자리가내컴퓨터와같은가()
     검사12_옛쪽표본이저장소에있나()
     검사13_배포가검사를건너뛰지않나()
+    검사14_크롬소켓길이가넉넉한가()
     print('')
 
     if 알림:
