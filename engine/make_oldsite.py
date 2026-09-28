@@ -44,6 +44,8 @@ import io as io2
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
+sys.path.insert(0, ROOT)
+from engine import io   # noqa: E402
 
 # 옛 사이트가 있는 자리 (내 컴퓨터)
 옛뿌리 = os.environ.get('BADAGAJA_OLD_SRC', r'D:\바다가자\badagaja-site')
@@ -143,7 +145,16 @@ def main():
             print('      %s' % x)
         return 0 if not (다름 or 없음) else 1
 
+    # ★ **지우기는 만드는 일보다 어려워야 합니다** (계약-17)
+    #   26MB 를 말없이 지우고 다시 뜨면, 잘못 돌렸을 때
+    #   되돌릴 길이 없습니다. --yes 를 붙여야 지웁니다.
     if os.path.isdir(둘자리):
+        if '--yes' not in sys.argv:
+            셈 = sum(len(f) for _, _, f in os.walk(둘자리))
+            print('이미 %d개가 있습니다: %s' % (셈, 둘자리))
+            print('  지우고 다시 뜨려면 --yes 를 붙이세요.')
+            print('  지금 것과 견주기만 하려면 --check 를 붙이세요.')
+            return 1
         shutil.rmtree(둘자리)
     for 상대, 온길 in 것들:
         여기 = os.path.join(둘자리, 상대.replace('/', os.sep))
@@ -153,10 +164,10 @@ def main():
         #   35곳이 그대로 남았습니다. 마을 문의처 번호입니다.
         #   어느 꼴로 적혔든 개인 번호는 개인 번호입니다.
         if 상대.endswith(뜰꼬리):
-            글 = io2.open(온길, encoding='utf-8', errors='replace').read()
+            글 = io.read(온길, default='')
             글, 가린수 = 전화가리기(글)
             가린것[0] += 가린수
-            io2.open(여기, 'w', encoding='utf-8', newline='').write(글)
+            io.write(여기, 글)
         else:
             shutil.copy2(온길, 여기)
 

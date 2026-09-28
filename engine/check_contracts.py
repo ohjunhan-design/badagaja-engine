@@ -952,6 +952,42 @@ def 번호검사():
     return 번호들, 말
 
 
+
+# ── 계약-33 · 보고 나서 판단까지 되어야 한다 ────────────────
+def 계약33():
+    """check_actionable.py 를 그 자리에서 돌립니다.
+
+    ★ 자료가 화면에 나오는 것만으로는 모자랍니다 (바깥 검수 11차).
+      손님이 그것을 보고 **다음에 무엇을 할지 정할 수 있어야** 합니다.
+
+      물때표가 그 사례였습니다. 카드 열넷을 예쁘게 그려 놓고
+      「그래서 언제 가면 좋은가」를 빼 두었습니다.
+      사슬 검사는 못 잡았습니다 — 자료는 다 나왔기 때문입니다.
+    """
+    도구 = os.path.join(ROOT, 'engine', 'check_actionable.py')
+    if not os.path.exists(도구):
+        적기('33', '보고 나서 판단까지 되어야 한다', '안 잼',
+             'check_actionable.py 가 없습니다')
+        return
+    환경 = dict(os.environ)
+    환경['PYTHONIOENCODING'] = 'utf-8'
+    r = subprocess.run([sys.executable, 도구, '--strict'],
+                       capture_output=True, text=True, encoding='utf-8',
+                       errors='replace', env=환경, timeout=900)
+    글 = (r.stdout or '') + (r.stderr or '')
+    if r.returncode == 4:
+        # ★ 크롬이 없으면 **못 잰 것**입니다 — 통과가 아닙니다
+        적기('33', '보고 나서 판단까지 되어야 한다', '안 잼',
+             '크롬이 있어야 잽니다')
+    elif r.returncode == 0:
+        적기('33', '보고 나서 판단까지 되어야 한다', '지킴',
+             '보고 나서 판단까지 됩니다')
+    else:
+        끝 = [x.strip() for x in 글.split('\n')
+              if x.strip().startswith('✗')]
+        적기('33', '보고 나서 판단까지 되어야 한다', '어김',
+             (끝[0].lstrip('✗ ')[:70] if 끝 else '판단 칸이 없습니다'))
+
 def main():
     번호들, 번호탈 = 번호검사()
     print('계약 %d개를 지키고 있는지  (docs/CONTRACTS.md)' % len(번호들))
@@ -1008,6 +1044,7 @@ def main():
     계약31()
     계약32()
 
+    계약33()
     표 = {'지킴': '·', '어김': '✗', '안잼': '~', '해당없음': '-'}
     for x in sorted(결과, key=lambda v: v['번호']):
         print('  %s 계약-%s %-32s %s'

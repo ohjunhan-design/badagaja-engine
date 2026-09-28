@@ -1195,6 +1195,63 @@ def 시험_카나리():
         shutil.rmtree(t, ignore_errors=True)
 
 
+
+# ── check_coverage — 자료가 쪽까지 안 닿으면 잡는가 ────────
+def 시험_닿았나():
+    print('[27] check_coverage — 자료가 쪽까지 안 닿으면 잡는가')
+
+    글 = 돌리기('check_coverage.py')
+    봄('지금은 자료가 모두 손님 눈까지 닿는다',
+       '모두 손님 눈까지 닿습니다' in 글, 글[-500:])
+
+    # 권역 쪽에서 명소 이름을 지우면 잡아야 합니다
+    def 명소지우기(사본):
+        a = os.path.join(사본, 'taean.html')
+        if os.path.isfile(a):
+            s2 = io.read(a)
+            # 쪽 전체를 비우면 「볼 쪽이 없다」가 되니 한 쪽만 망칩니다
+            io.write(a, s2.replace('만리포', '□□□')
+                          .replace('신두리', '□□□'))
+
+    t, 사본 = 사이트사본(명소지우기)
+    try:
+        글 = 돌리기('check_coverage.py', 사이트=사본, 인자=['--strict'])
+        봄('명소 이름을 지우면 잡는다',
+           '끊김' in 글 and '✗' in 글, 글[-600:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
+# ── check_actionable — 판단이 사라지면 잡는가 (계약-33) ────
+def 시험_판단되나():
+    print('[28] check_actionable — 판단이 사라지면 잡는가')
+
+    # ★ 이 검사기는 **크롬으로 그려서** 봅니다.
+    #   판단 칸은 자바스크립트가 만들기 때문입니다.
+    #   크롬이 없으면 끝난값 4 (못 잰 것) 를 냅니다.
+    글 = 돌리기('check_actionable.py')
+    if '크롬' in 글 and '못 잰 것' in 글:
+        봄('크롬이 없으면 통과시키지 않는다', 'NOT_TESTED' in 글, 글[-300:])
+        print('')
+        return
+
+    봄('지금은 보고 나서 판단까지 된다',
+       '판단까지 됩니다' in 글, 글[-500:])
+
+    # 판단 칸을 만드는 줄을 지우면 잡아야 합니다
+    with isolate.일터() as 뿌리:
+        p2 = os.path.join(뿌리, 'assets', 'js', 'tide.js')
+        원 = io.read(p2)
+        상한것 = 원.replace('칸.appendChild(언제갈까(날들));', '')
+        봄('판단 칸을 정말 지웠다', 상한것 != 원)
+        io.write(p2, 상한것)
+        # 쪽을 다시 만들어야 그 자바스크립트를 씁니다
+        돌리기('build.py', 뿌리=뿌리)
+        글 = 돌리기('check_actionable.py', 인자=['--strict'], 뿌리=뿌리)
+        봄('판단이 사라지면 잡는다',
+           '판단 칸이 없는' in 글 or ('✗' in 글 and '0개에 있습니다' in 글),
+           글[-600:])
+
 def main():
     print('검사기가 잘못을 잡을 줄 아는지')
     print('')
@@ -1225,6 +1282,8 @@ def main():
     시험_옛쪽대비()
     시험_옛물때()
     시험_카나리()
+    시험_닿았나()
+    시험_판단되나()
     print('')
     if 실패:
         print('%d가지 통과 · %d가지 실패' % (통과, len(실패)))
