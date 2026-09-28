@@ -285,7 +285,11 @@
           var 한줄 = 만들기('div', 'td-t' + (e.type === '간조' ? ' td-t--low' : ''));
           한줄.appendChild(만들기('span', 'tt-k', e.type === '간조' ? '저' : '고'));
           한줄.appendChild(만들기('span', 'tt-v', e.time));
-          한줄.appendChild(만들기('span', 'tt-cm', e.level + ''));
+          // ★ **단위를 붙입니다** (2026-09-28 주인 지시)
+          //   전에는 숫자만 찍어 「725」가 무엇인지 알 수
+          //   없었습니다. 물높이는 해루질에서 가장 중요한
+          //   값입니다 — 얼마나 빠지는지가 그것으로 정해집니다.
+          한줄.appendChild(만들기('span', 'tt-cm', e.level + 'cm'));
           때.appendChild(한줄);
         });
       }

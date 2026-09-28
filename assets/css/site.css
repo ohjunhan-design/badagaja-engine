@@ -408,7 +408,10 @@ a.badge{min-height:44px}
 }
 .td-t--low .tt-k{background:#FFF0D6;color:var(--orange)}
 .tt-v{font-weight:700;color:var(--ink)}
-.tt-cm{color:#9A8F80;font-size:10px}
+/* 물높이 — 해루질에서 가장 중요한 값입니다 (2026-09-28 주인 지시)
+   10px 은 너무 작아 보이지 않았습니다. 12px 로 키우고
+   색도 조금 진하게 합니다. */
+.tt-cm{color:#7A6F60;font-size:12px;font-variant-numeric:tabular-nums}
 
 /* ── 첫 화면 · 묶음 쪽 ────────────────────────────────── */
 /* ── 사진이 든 카드 ───────────────────────────────────────

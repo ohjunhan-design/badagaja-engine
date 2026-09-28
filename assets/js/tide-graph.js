@@ -144,7 +144,28 @@
         cache[day] = { d: a[0], ev: ev }; go(a[0], ev);
       }).catch(function () { go(null); });
     }
-    ['오늘', '내일', '모레'].forEach(function (n, i) { var b = el('button', i === 0 ? 'on' : '', n); b.type = 'button'; b.addEventListener('click', function () { load(i); }); tabs.appendChild(b); });
+    // ★ **일주일치를 봅니다** (2026-09-28 주인 지시)
+    //   전에는 오늘·내일·모레 사흘뿐이었습니다. 물때를 보고
+    //   날을 잡는 분들은 주말까지 내다봅니다.
+    //   나흘째부터는 날짜(9/30)와 요일을 함께 적습니다.
+    var 요일들 = ['일', '월', '화', '수', '목', '금', '토'];
+    for (var 날 = 0; 날 < 7; 날++) {
+      (function (i) {
+        var 이름;
+        if (i === 0) { 이름 = '오늘'; }
+        else if (i === 1) { 이름 = '내일'; }
+        else if (i === 2) { 이름 = '모레'; }
+        else {
+          var t = new Date(); t.setDate(t.getDate() + i);
+          이름 = (t.getMonth() + 1) + '/' + t.getDate()
+                 + '(' + 요일들[t.getDay()] + ')';
+        }
+        var b = el('button', i === 0 ? 'on' : '', 이름);
+        b.type = 'button';
+        b.addEventListener('click', function () { load(i); });
+        tabs.appendChild(b);
+      })(날);
+    }
     load(0);
     return { load: load };
   }

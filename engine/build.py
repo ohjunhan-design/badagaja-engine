@@ -1374,7 +1374,7 @@ def 권역쪽(d, 권역, 언어='ko'):
         #   그리는 것은 assets/js/tide-graph.js 가 합니다.
         #   자료는 서버의 api/marine.php (국립해양조사원 조석예보).
         '물때자리': ('<div class="tide-strip" id="tideStrip" '
-                     'data-region="%s" data-station="%s" data-days="7"></div>'
+                     'data-region="%s" data-station="%s" data-days="14"></div>'
                      '<div class="tide-graph" id="tideGraph"></div>'
                      % (esc(권역), esc(물때.get('이름') or ''))),
         '포인트안내': (r.get('포인트안내') or
