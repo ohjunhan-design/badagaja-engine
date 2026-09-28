@@ -191,6 +191,48 @@ def main():
         봄('--yes 없이는 안 지운다',
            '지울 판이 없습니다' in 글 or '--yes 를 붙이세요' in 글, 글)
         봄('솎은 뒤에도 판이 남아 있다', len(os.listdir(판자리)) >= 2)
+        print('')
+
+        # ── 9. ★ 같은 초에 봉해도 차례가 맞는가
+        #
+        #   ★ 2026-09-29 — 19번이 **판정마다 들쭉날쭉**했습니다
+        #     (#26·#29 통과 · #27·#28·#30 어김)
+        #
+        #     판 이름도 만든때도 **초 단위**라, 같은 초에 봉한 두
+        #     판은 값이 똑같아 지문 글자로 차례가 떨어졌습니다.
+        #     클라우드는 빨라 판 둘이 같은 초에 봉해집니다.
+        #     로컬(윈도)은 느려 초가 갈려 늘 통과했습니다.
+        #
+        #     차례가 뒤집히면 「바로 앞 판」이 엉뚱한 것을 가리켜
+        #     **되돌리기가 틀린 판으로 갑니다.** 급할 때 못 씁니다.
+        print('[9] 같은 초에 봉해도 차례가 맞는가')
+        import json as _json
+        시험자리 = os.path.join(t, '차례시험')
+        os.makedirs(시험자리, exist_ok=True)
+        같은때 = '2026-01-01 00:00:00'
+        for 이름, 봉한때 in (('20260101-000000-ffffff', '2026-01-01 00:00:00.100000'),
+                             ('20260101-000000-000000', '2026-01-01 00:00:00.900000')):
+            d = os.path.join(시험자리, 이름)
+            os.makedirs(d, exist_ok=True)
+            with open(os.path.join(d, '_판.json'), 'w', encoding='utf-8') as f:
+                _json.dump({'만든때': 같은때, '봉한때': 봉한때, '쪽수': 1},
+                           f, ensure_ascii=False)
+        옛환경 = os.environ.get('BADAGAJA_RELEASE')
+        os.environ['BADAGAJA_RELEASE'] = 시험자리
+        try:
+            import importlib
+            import engine.release as _r
+            importlib.reload(_r)
+            차례 = _r.판들()
+        finally:
+            if 옛환경 is None:
+                os.environ.pop('BADAGAJA_RELEASE', None)
+            else:
+                os.environ['BADAGAJA_RELEASE'] = 옛환경
+            importlib.reload(_r)
+        봄('나중에 봉한 것이 맨 앞이다',
+           bool(차례) and 차례[0].endswith('000000'),
+           '난 차례: %s' % ' → '.join(x[-6:] for x in 차례))
 
     finally:
         shutil.rmtree(t, ignore_errors=True)

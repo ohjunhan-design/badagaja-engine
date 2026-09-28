@@ -94,10 +94,29 @@ def 판들():
             continue
         if not os.path.isdir(os.path.join(RELEASE, x)):
             continue
-        m = io.read_json(os.path.join(RELEASE, x, '_판.json'), default={})
-        나옴.append((m.get('만든때') or '', x))
+        길 = os.path.join(RELEASE, x)
+        m = io.read_json(os.path.join(길, '_판.json'), default={})
+        # ★ **만든때도 초 단위라 같은 초면 겹칩니다** (2026-09-29)
+        #
+        #   전에 「이름이 아니라 만든 때로 줄 세운다」고 고쳤는데,
+        #   그 만든때가 '%Y-%m-%d %H:%M:%S' 였습니다. 같은 초에
+        #   봉하면 값이 **똑같아** 결국 이름(지문 글자)으로
+        #   떨어집니다. 고침이 반만 된 것이었습니다.
+        #
+        #   클라우드는 빨라 판 둘이 같은 초에 봉해집니다. 그래서
+        #   19번 롤백이 **판정마다 들쭉날쭉** 했습니다.
+        #   (#26·#29 통과 · #27·#28·#30 어김)
+        #
+        #   봉한때(밀리초까지) → 만든때 → 폴더 시각 → 이름 차례로
+        #   가립니다. 앞엣것이 없으면 뒤엣것이 받습니다.
+        try:
+            폴더때 = os.path.getmtime(길)
+        except OSError:
+            폴더때 = 0.0
+        나옴.append((m.get('봉한때') or m.get('만든때') or '',
+                     폴더때, x))
     나옴.sort(reverse=True)
-    return [x for _, x in 나옴]
+    return [x for _, _, x in 나옴]
 
 
 def 지문(뿌리):
@@ -191,6 +210,9 @@ def 봉하기():
     io.write_json(os.path.join(자리, '_판.json'), {
         '이름': 이름,
         '만든때': 이제.strftime('%Y-%m-%d %H:%M:%S'),
+        # 차례를 가리는 값 — 밀리초까지 남깁니다. 화면에는
+        # 만든때를 쓰고, 이 값은 줄 세울 때만 씁니다.
+        '봉한때': 이제.strftime('%Y-%m-%d %H:%M:%S.%f'),
         '커밋': 지금커밋(),
         '커밋깨끗': 깨끗,
         '쪽수': 쪽수,
