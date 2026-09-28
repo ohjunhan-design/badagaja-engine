@@ -141,7 +141,24 @@ def 우리삭과음력(k들, 날들):
             capture_output=True, text=True, encoding='utf-8', timeout=300)
         m = re.search(r'id="R"[^>]*>(.*?)</div>', r.stdout, re.S)
         if not m:
-            raise RuntimeError('셈한 결과를 못 받았습니다')
+            # ★ **왜 못 받았는지 적습니다** (2026-09-28 바깥 검수 11차)
+            #
+            #   전에는 「셈한 결과를 못 받았습니다」만 말했습니다.
+            #   크롬이 안 떴는지, 떴는데 글을 못 그렸는지,
+            #   오류를 뱉었는지 하나도 알 수 없었습니다.
+            #   클라우드에서만 나는 일이라 더 답답했습니다.
+            까닭 = []
+            까닭.append('끝난값 %s' % r.returncode)
+            까닭.append('내놓은 글 %d자' % len(r.stdout or ''))
+            탈 = (r.stderr or '').strip()
+            if 탈:
+                줄들 = [x.strip() for x in 탈.split('\n') if x.strip()]
+                까닭.append('크롬이 한 말: ' + ' / '.join(줄들[-3:])[:200])
+            if r.stdout and 'id="R"' not in r.stdout:
+                까닭.append('쪽은 그렸는데 R 칸이 없습니다'
+                            ' (스크립트가 안 돌았습니다)')
+            raise RuntimeError('셈한 결과를 못 받았습니다 — '
+                               + ' · '.join(까닭))
         답 = json.loads(_h.unescape(m.group(1)))
         if not 답.get('열렸나'):
             raise RuntimeError('tide.js 가 삭시각을 안 내어 줍니다 '

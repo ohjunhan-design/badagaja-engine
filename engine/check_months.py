@@ -50,6 +50,11 @@ from engine import machine   # noqa: E402  크롬 자리·메모리는 machine.p
 NEW = os.environ.get('BADAGAJA_SITE', os.path.join(ROOT, 'site'))
 ASSETS = os.environ.get('BADAGAJA_ASSETS', os.path.join(ROOT, 'assets'))
 
+# ★ 크롬이 쪽을 못 그렸을 때 **왜 그런지** 적어 둡니다 (2026-09-28)
+#   전에는 None 만 넣어 「✗ 못 봤습니다」로만 찍혔습니다.
+#   클라우드에서만 나는 일이라 까닭을 볼 길이 없었습니다.
+못본까닭 = []
+
 # ★ 크롬 자리는 engine/machine.py 한 곳에서만 봅니다
 #   (2026-09-27 — 같은 목록이 검사기 6개에 베껴져 있었습니다.
 #    리눅스에서 돌리려면 여섯 곳을 다 고쳐야 했습니다)
@@ -183,6 +188,13 @@ def 시계돌려보기(쪽길, 때들):
                 capture_output=True, text=True, encoding='utf-8', timeout=120)
             m2 = re.search(r'id="R2"[^>]*>(.*?)</div>', r.stdout, re.S)
             if not m2:
+                탈 = (r.stderr or '').strip()
+                줄들 = [x.strip() for x in 탈.split('\n') if x.strip()]
+                못본까닭.append(
+                    '%s (%s) — 끝난값 %s · 글 %d자%s'
+                    % (때글, 이름, r.returncode, len(r.stdout or ''),
+                       (' · 크롬: ' + ' / '.join(줄들[-2:])[:120])
+                       if 줄들 else ''))
                 결과.append((때글, 이름, None))
                 continue
             결과.append((때글, 이름, json.loads(_h.unescape(m2.group(1)))))
@@ -217,6 +229,12 @@ def main():
         return 2
 
     못본것, 어긋남, 빈달 = [], [], []
+    if 못본까닭:
+        print('      ─ 못 본 까닭 ─')
+        for x in 못본까닭[:6]:
+            print('      | %s' % x)
+        if len(못본까닭) > 6:
+            print('      | … 그 밖 %d가지' % (len(못본까닭) - 6))
     for 때글, 이름, 답 in 결과:
         if 답 is None:
             못본것.append('%s (%s)' % (때글, 이름))
