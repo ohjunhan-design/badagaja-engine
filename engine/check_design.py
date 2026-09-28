@@ -118,6 +118,44 @@ OLD = os.environ.get('BADAGAJA_OLD', r'D:\바다가자\badagaja-site')
 ]
 
 
+# ── 사람이 보고 정한 것 ─────────────────────────────────
+_정한것 = None
+
+
+def _정한목록():
+    """data/design-accepted.json 을 한 번만 읽습니다."""
+    global _정한것
+    if _정한것 is None:
+        길 = os.path.join(ROOT, 'data', 'design-accepted.json')
+        try:
+            _정한것 = io.read_json(길, default={}).get('받아들인것') or []
+        except Exception:
+            _정한것 = []
+    return _정한것
+
+
+def 이미정했나(갈래, 한가지):
+    """사람이 보고 「뜻한 변경」이라 정한 것인가.
+
+    갈래·무엇·옛·새 가 **모두** 맞아야 합니다.
+    숫자가 또 달라지면 다시 묻습니다 — 한 번 받아들였다고
+    영원히 눈감지 않습니다.
+    """
+    이름, 옛수, 새수 = 한가지
+    for x in _정한목록():
+        if (x.get('갈래') == 갈래 and x.get('무엇') == 이름
+                and x.get('옛') == 옛수 and x.get('새') == 새수):
+            return True
+    return False
+
+
+def 정한까닭(갈래, 이름):
+    for x in _정한목록():
+        if x.get('갈래') == 갈래 and x.get('무엇') == 이름:
+            return x.get('까닭') or ''
+    return ''
+
+
 def 말이있나(s, 말들):
     낮 = s
     return any(x in 낮 for x in 말들)
@@ -176,6 +214,24 @@ def 견주기(갈래, 옛길, 새길, 자세히):
         # 있던 것이 아예 0 이 되면 눈에 띄게 적습니다
         if 새수 == 0 or 새수 * 2 < 옛수:
             줄어든것.append((이름, 옛수, 새수))
+
+    # ★ **사람이 보고 정한 것은 다시 묻지 않습니다** (2026-09-29)
+    #
+    #   물을 때마다 판정이 NOT_TESTED 로 멈춥니다. 한 번 보고
+    #   정한 것을 적어 두지 않으면 「봐 주세요」가 영원히
+    #   되풀이되고, 결국 아무도 안 보게 됩니다.
+    #
+    #   갈래·무엇·옛·새 가 모두 맞아야 넘어갑니다. 숫자가 또
+    #   달라지면 다시 묻습니다 — 한 번 받아들였다고 영원히
+    #   눈감지 않습니다.
+    받아들인것 = [x for x in 줄어든것 if 이미정했나(갈래, x)]
+    줄어든것 = [x for x in 줄어든것 if x not in 받아들인것]
+    if 받아들인것:
+        print('  ~ %-12s 사람이 보고 정한 것 %d가지는 넘어갑니다'
+              % (갈래, len(받아들인것)))
+        for 이름, a, b in 받아들인것:
+            print('        %-8s %5d → %5d  (%s)'
+                  % (이름, a, b, 정한까닭(갈래, 이름)[:52]))
 
     if 줄어든것:
         알림.append('%s — 크게 줄어든 것 %d가지' % (갈래, len(줄어든것)))
