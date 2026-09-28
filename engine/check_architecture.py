@@ -556,6 +556,49 @@ def 검사9_크롬을따로부르지않나():
         print('  · 모두 machine.크롬앞머리() 를 거칩니다')
     print('')
 
+
+def 검사10_일꾼한도가검사기보다넉넉한가():
+    """★ **일꾼이 검사기보다 먼저 죽으면 안 됩니다** (2026-09-28)
+
+    gate.yml 의 timeout-minutes 가 60 인데 gate.py 는 검사기
+    하나에 7200초(120분)를 주고 있었습니다. 앞뒤가 안 맞습니다.
+
+      · 검사기가 120분까지 버텨도 일꾼이 60분에 죽습니다
+      · 그때는 **판정 결과가 아예 안 남습니다**
+        왜 죽었는지도, 어디까지 쟀는지도 모릅니다
+
+    크롬 깃발을 고치자 416쪽을 진짜로 재기 시작했고, 5분이던
+    판정이 40분을 넘겼습니다. **제대로 재면 오래 걸리는 것이
+    맞습니다.** 그러니 한도를 재는 시간에 맞춰야지, 반대로
+    재는 것을 한도에 맞출 수는 없습니다.
+    """
+    print('[10] 일꾼 한도가 검사기 한도보다 넉넉한가')
+    일길 = os.path.join(ROOT, '.github', 'workflows', 'gate.yml')
+    일글 = io.read(일길, default='')
+    m = re.search(r'timeout-minutes:\s*(\d+)', 일글)
+    if not m:
+        알림.append('gate.yml 에 timeout-minutes 가 없습니다')
+        print('  ~ gate.yml 에 한도가 안 적혀 있습니다')
+        print('')
+        return
+    일꾼분 = int(m.group(1))
+    검글 = io.read(os.path.join(ROOT, 'engine', 'gate.py'), default='')
+    초들 = [int(x) for x in re.findall(r'시간=(\d+)', 검글)]
+    가장긴 = max(초들) if 초들 else 0
+    가장긴분 = (가장긴 + 59) // 60
+    print('  일꾼 %d분 · 가장 오래 기다리는 검사기 %d분'
+          % (일꾼분, 가장긴분))
+    if 가장긴분 >= 일꾼분:
+        막음.append('일꾼 한도(%d분)가 검사기 한도(%d분)보다 짧습니다'
+                    % (일꾼분, 가장긴분))
+        print('  ✗ 일꾼이 먼저 죽습니다 — 판정 결과가 아예 안 남습니다')
+        print('      gate.yml 의 timeout-minutes 를 늘리세요.')
+    else:
+        print('  · 일꾼이 검사기보다 %d분 더 버팁니다'
+              % (일꾼분 - 가장긴분))
+    print('')
+
+
 def main():
     global 자세히
     자세히 = '--자세히' in sys.argv
@@ -580,6 +623,7 @@ def main():
     print('')
     검사8_없음을빈것으로바꿔읽나()
     검사9_크롬을따로부르지않나()
+    검사10_일꾼한도가검사기보다넉넉한가()
     print('')
 
     if 알림:
