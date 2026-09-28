@@ -981,3 +981,65 @@ a.badge{min-height:44px}
   .when { padding: 14px; }
   .when-t { font-size: 17px; }
 }
+
+/* ── 어종·해루질 쪽 삽화와 배우는 차례 ─────────────────────
+   ★ 2026-09-29 — 옛 쪽에 있던 삽화 245개가 새 쪽에서 통째로
+     사라져 있었습니다. 그림을 되살리며 그 모양새도 함께
+     가져옵니다. 옛 css/catch.css 에서 옮기되, 빛깔은 이 사이트의
+     변수에 맞췄습니다 (--lantern→--orange · --foam→--muted).
+
+     주인 규칙 6-1 — 「사람은 눈으로 봅니다. 쪽에는 보이는 것이
+     있어야 합니다.」 그림만 넣고 모양새를 안 주면 화면에서
+     제구실을 못 합니다. */
+.cg-art { margin: 18px 0 6px; }
+.cg-art svg {
+  width: 100%; height: auto; display: block;
+  border: 1px solid var(--line); border-radius: var(--r-md);
+  background: #DCE6EA;
+}
+.cg-art figcaption {
+  margin-top: 8px; font-size: .84rem; color: var(--muted);
+  line-height: 1.7;
+}
+
+.ls { margin: 34px 0 10px; padding: 26px 0 8px;
+      border-top: 2px solid var(--orange); }
+.ls-kicker { font-size: .8rem; letter-spacing: .04em;
+             color: var(--orange); font-weight: 700; margin: 0; }
+.ls-head h2 { margin: 6px 0 8px; text-wrap: balance; }
+.ls-lede { font-size: 1rem; line-height: 1.9; color: var(--muted);
+           max-width: 62ch; }
+.ls-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px; margin-top: 18px;
+}
+.ls-card {
+  position: relative; margin: 0;
+  border: 1px solid var(--line); border-radius: var(--r-md);
+  background: var(--white); overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.ls-card svg { display: block; width: 100%; height: auto;
+               border-bottom: 1px solid var(--line); }
+.ls-no {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; margin-right: 8px; border-radius: 50%;
+  background: var(--orange); color: #fff; font-style: normal;
+  font-weight: 700; font-size: .8rem; vertical-align: 1px;
+}
+.ls-card figcaption { padding: 14px 16px 16px; display: flex;
+                      flex-direction: column; gap: 6px; }
+.ls-card figcaption b { font-size: 1.02rem; color: var(--ink); }
+.ls-card figcaption span { font-size: .9rem; line-height: 1.8;
+                           color: var(--muted); }
+.ls-card figcaption span b { font-size: inherit; color: #8a5312; }
+
+/* 휴대폰에서는 한 칸씩 — 360px 에서도 안 비어져 나오게 */
+@media (max-width: 640px) {
+  .ls-grid { grid-template-columns: 1fr; }
+}
+
+/* 넉 장일 때는 2×2 — 셋에 하나가 남으면 외롭게 보입니다 */
+.ls-grid--2 { grid-template-columns: repeat(2, 1fr); max-width: 780px; }
+@media (max-width: 640px) { .ls-grid--2 { grid-template-columns: 1fr; } }

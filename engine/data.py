@@ -249,6 +249,19 @@ class 자료:
         return [x for x in self.안내들
                 if 갈래 is None or x['갈래'] == 갈래]
 
+    # ── 배우는 차례 (그림 넉 장으로 가르치는 것) ─────────
+    @property
+    def 배우는차례(self):
+        """대상별 단계 그림. 옛 쪽에 있던 35갈래 141단계입니다.
+
+        ★ 2026-09-29 — 옛 쪽과 견주다 이것이 통째로 빠진 것을
+          찾았습니다. 손으로 그린 것이라 옛 생성기를 그대로
+          돌려 뽑아 자료로 두었습니다.
+        """
+        if getattr(self, '_차례', None) is None:
+            self._차례 = _읽기('lessons.json', default={}).get('차례', {})
+        return self._차례
+
     # ── 어종 ─────────────────────────────────────────────
     def 어종이름(self, 아이디, 언어='ko'):
         if not hasattr(self, '_어종표'):

@@ -342,6 +342,59 @@ def main():
             print('      보기: %s' % 보기)
     else:
         print('  · 자료에 있는 설명을 쪽이 모두 씁니다')
+
+    # ── [4] 어종 쪽에 삽화가 있는가 (주인 규칙 6-1)
+    #
+    #   ★ 2026-09-29 — 여기서 **삽화 245개가 통째로 사라진 것**을
+    #     찾았습니다. 해루질 17쪽 · 낚시 18쪽이 7개씩 잃었습니다.
+    #     자료는 멀쩡했고 엔진이 그리지 않았을 뿐이었습니다.
+    #
+    #     [1] 이 「크게 줄어든 것」으로 알려 주기는 했지만
+    #     **막지는 않았습니다.** 규칙 6-1 은 「보이는 것이 빠지면
+    #     배포를 막는다」고 했습니다. 그러니 막아야 합니다.
+    #
+    #     아이콘(24×24)은 세지 않습니다. 삽화만 셉니다.
+    print('[4] 어종 쪽에 삽화가 있는가 (주인 규칙 6-1)')
+    적어도 = 3
+    모자란쪽 = []
+    셈 = []
+    for 갈래 in ('catch', 'fish'):
+        칸 = os.path.join(NEW, 갈래)
+        if not os.path.isdir(칸):
+            continue
+        for 이름 in sorted(os.listdir(칸)):
+            if not 이름.endswith('.html') or 이름 == 'index.html':
+                continue
+            길 = os.path.join(칸, 이름)
+            글 = io.read(길, default='')
+            몇 = 0
+            for m in re.finditer(r'<svg[^>]*viewBox="([^"]*)"', 글):
+                칸값 = m.group(1).split()
+                if len(칸값) == 4:
+                    try:
+                        w, h = float(칸값[2]), float(칸값[3])
+                    except ValueError:
+                        continue
+                    if w >= 200 and h >= 150:
+                        몇 += 1
+            셈.append(몇)
+            if 몇 < 적어도:
+                모자란쪽.append('%s/%s %d개' % (갈래, 이름, 몇))
+    if not 셈:
+        print('  ~ 어종 쪽이 없습니다 — 먼저 build.py 로 만드세요.')
+    elif 모자란쪽:
+        막음.append('삽화가 %d개 미만인 어종 쪽 %d개' % (적어도, len(모자란쪽)))
+        print('  ✗ 삽화가 %d개도 안 되는 쪽 %d개' % (적어도, len(모자란쪽)))
+        for x in 모자란쪽[:8]:
+            print('      %s' % x)
+        print('      → 규칙 6-1: 쪽에는 보이는 것이 있어야 합니다.')
+        print('        engine/art.py 가 그립니다. 자료는')
+        print('        data/raw/guide.json 의 그림·깊이cm·흔적 입니다.')
+    else:
+        print('  · 어종 쪽 %d개에 모두 삽화가 있습니다 (모두 %d개 · 쪽마다 %.1f개)'
+              % (len(셈), sum(셈), sum(셈) / len(셈)))
+    print('')
+
     print('')
 
     if 알림:
