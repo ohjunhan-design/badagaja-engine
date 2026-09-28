@@ -70,6 +70,19 @@ jobs:
         with:
           python-version: '3.12'
 
+      # ★ **한글 글꼴을 깝니다** (2026-09-28)
+      #   gate.yml 과 같은 까닭입니다. 우분투 러너에는 한글
+      #   글꼴이 없어, 없이 재면 글자 너비가 달라집니다.
+      - name: 한글 글꼴 깔기
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-cjk fonts-nanum
+          fc-cache -f >/dev/null 2>&1 || true
+          if ! fc-list :lang=ko | grep -q .; then
+            echo "::error::한글 글꼴이 없습니다 — 이대로 재면 값이 어긋납니다"
+            exit 1
+          fi
+
       - name: 크롬 깔기
         uses: browser-actions/setup-chrome@v1
         id: chrome

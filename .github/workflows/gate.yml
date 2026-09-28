@@ -107,6 +107,30 @@ jobs:
         with:
           python-version: '3.12'
 
+      # ★ **한글 글꼴을 깝니다** (2026-09-28)
+      #
+      #   위 주석에 「글꼴을 고정한다」고 적어 두고 **정작 깔지
+      #   않고 있었습니다.** 적어 놓은 것과 하는 것이 달랐습니다.
+      #
+      #   우분투 러너에는 한글 글꼴이 없습니다. 그러면 크롬이
+      #   한글을 대체 글꼴로 그리고, 글자 너비가 달라져
+      #   줄바꿈·누름자리 크기가 내 컴퓨터와 어긋납니다.
+      #
+      #   그래서 4번(416쪽 렌더링)이 내 컴퓨터에서는 탈이 없는데
+      #   클라우드에서만 「손볼 곳 4건」이라 했습니다.
+      #   **쪽이 잘못된 것이 아니라 재는 자리가 달랐던 것**입니다.
+      - name: 한글 글꼴 깔기
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-cjk fonts-nanum
+          fc-cache -f >/dev/null 2>&1 || true
+          echo "깔린 한글 글꼴"
+          fc-list :lang=ko family | sort -u | head -8
+          if ! fc-list :lang=ko | grep -q .; then
+            echo "::error::한글 글꼴이 없습니다 — 이대로 재면 값이 어긋납니다"
+            exit 1
+          fi
+
       # 크롬 — 러너에 미리 깔려 있지만 자리를 못 박습니다.
       # 엣지는 쓰지 않습니다 (주인 규칙 25)
       - name: 크롬 깔기
@@ -184,7 +208,17 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: 판정결과
+          # ★ **검사기가 뱉은 말을 통째로 남깁니다** (2026-09-28)
+          #   4번이 「손볼 곳 4건」이라 했는데 그 4건이 무엇인지
+          #   볼 수가 없었습니다. 판정표는 한 줄 요약뿐이고,
+          #   전문은 tests/out/log/ 에 있는데 여기 안 담겼습니다.
+          #   **원인을 못 보면 고칠 수도 없습니다.**
+          #
+          #   (주석은 path: | 블록 **밖**에 둡니다. 리터럴 블록
+          #    안에서는 # 이 주석이 아니라 글자 그대로 값이 되어
+          #    설명글이 경로 패턴이 됩니다.)
           path: |
             tests/out/gate.json
             tests/out/*.txt
+            tests/out/log/*.txt
           retention-days: 30
