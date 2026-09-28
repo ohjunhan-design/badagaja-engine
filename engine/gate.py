@@ -327,13 +327,25 @@ def 죽은까닭(글):
         if 표 in 글:
             return 말
     if 'Traceback (most recent call last)' in 글:
-        # 파이썬이 뱉은 마지막 줄이 예외 이름입니다
-        줄들 = [x.strip() for x in 글.split('\n') if x.strip()]
+        # ★ **Traceback 블록 안에서 집어냅니다** (2026-09-28 · 바로 고침)
+        #
+        #   처음에는 「Error 나 Exception 이 든 줄」을 뒤에서부터
+        #   찾았습니다. 그런데 판정표에 예외 이름이 안 찍혔습니다.
+        #   그런 글자가 없는 예외도 있고(SystemExit 따위),
+        #   시험 출력에 Error 가 든 딴 줄이 섞이기도 합니다.
+        #
+        #   파이썬 Traceback 은 **들여쓰기 없는 첫 줄**이 예외입니다.
+        #   그 규칙으로 집습니다. 못 집으면 마지막 Traceback 줄을
+        #   그대로 보여 줍니다 — 아무것도 안 보여 주는 것보다 낫습니다.
+        토막 = 글.split('Traceback (most recent call last)')[-1]
         뒤 = ''
-        for x in reversed(줄들):
-            if ('Error' in x or 'Exception' in x) and ':' in x:
-                뒤 = x[:60]
+        for x in 토막.split('\n')[1:]:
+            if x and not x[0].isspace() and not x.startswith('Traceback'):
+                뒤 = x.strip()[:70]
                 break
+        if not 뒤:
+            줄들 = [x.strip() for x in 토막.split('\n') if x.strip()]
+            뒤 = 줄들[-1][:70] if 줄들 else ''
         return '파이썬이 넘어졌습니다%s' % (' — ' + 뒤 if 뒤 else '')
     return '까닭을 못 찾았습니다'
 
