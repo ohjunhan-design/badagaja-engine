@@ -680,7 +680,16 @@ def 검사12_옛쪽표본이저장소에있나():
       · **개인 휴대전화가 섞이지 않았는가** (저장소는 공개입니다)
     """
     print('[12] 옛 쪽 표본이 저장소에 있는가')
-    칸 = os.path.join(ROOT, 'oldsite')
+    # ★ **BADAGAJA_OLD 가 가리키는 곳을 봅니다** (2026-09-28 · 바로 고침)
+    #
+    #   처음에는 ROOT/oldsite 만 봤습니다. 그랬더니 뮤테이션이
+    #   사본에서 이 검사를 돌릴 때 **사본에는 oldsite 가 없어**
+    #   「표본이 없다」고 막았습니다.
+    #   제가 만든 검사가 제 발등을 찍었습니다.
+    #
+    #   표본이 어디 있는지는 BADAGAJA_OLD 가 압니다.
+    #   26MB 를 사본마다 뜨는 것보다 그 자리를 보는 것이 맞습니다.
+    칸 = os.environ.get('BADAGAJA_OLD') or os.path.join(ROOT, 'oldsite')
     if not os.path.isdir(칸):
         막음.append('옛 쪽 표본(oldsite/)이 없습니다')
         print('  ✗ oldsite/ 가 없습니다')
