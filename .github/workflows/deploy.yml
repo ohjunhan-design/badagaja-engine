@@ -106,6 +106,9 @@ jobs:
         run: |
           python engine/gate.py --full || true
           python engine/report.py --strict
+          # 판정표를 요약 칸에 올립니다 — 막혔을 때 까닭이
+          # 로그를 뒤지지 않아도 바로 보이게 (2026-09-29)
+          python engine/summary.py || true
           FINAL=$(python -c "import json,io;print(json.load(io.open('tests/out/gate.json',encoding='utf-8')).get('FINAL',''))")
           echo "판정: $FINAL"
           case "$FINAL" in
