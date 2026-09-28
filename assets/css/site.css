@@ -1043,3 +1043,19 @@ a.badge{min-height:44px}
 /* 넉 장일 때는 2×2 — 셋에 하나가 남으면 외롭게 보입니다 */
 .ls-grid--2 { grid-template-columns: repeat(2, 1fr); max-width: 780px; }
 @media (max-width: 640px) { .ls-grid--2 { grid-template-columns: 1fr; } }
+
+/* 같은 시기에 함께 나오는 것 — 한 번 갈 때 뭘 더 볼 수 있나 */
+.side-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px; margin: 10px 0 4px;
+}
+.side-item {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 12px 14px; border: 1px solid var(--line);
+  border-radius: var(--r-sm); background: var(--white);
+  text-decoration: none; color: var(--ink);
+}
+.side-item:hover { border-color: var(--orange); }
+.side-item b { font-size: 1rem; }
+.side-item span { font-size: .82rem; color: var(--muted); }
