@@ -759,7 +759,9 @@ a.badge{min-height:44px}
   margin:8px 2px 0;font-size:12px;color:var(--muted);
   text-align:right;line-height:1.5;
 }
-.photo--hero{margin:28px 0 4px}
+.photo--hero{margin:28px 0 4px;min-width:0}
+/* 사진 설명이 한 줄로 버티면 칸을 밀어냅니다 */
+.photo figcaption{min-width:0;word-break:keep-all;overflow-wrap:anywhere}
 .photo--hero img{border-radius:18px;aspect-ratio:16/9}
 @media (max-width:767px){
   .photo--hero{margin:20px 0 4px}
@@ -1135,6 +1137,11 @@ a.badge{min-height:44px}
   display:grid;grid-template-columns:minmax(0,1fr) 250px;
   gap:16px;align-items:stretch;margin:22px 0 4px;
 }
+/* ★ **격자 칸은 기본이 min-width:auto** 입니다 (2026-09-29)
+   그래서 안쪽 내용보다 좁아지지 않습니다. 375px 에서 쪽 전체가
+   405px 로 벌어져 **가로 스크롤**이 생겼습니다.
+   판정 4번(416쪽 전체 렌더링)이 잡았습니다. */
+.hero-side > *{min-width:0}
 .hero-side .photo--hero{margin:0;display:flex;flex-direction:column}
 /* 숫자 칸 네 개가 약 352px 입니다 — 사진도 그에 맞춥니다.
    둘이 같은 높이여야 한 덩어로 보입니다. */
@@ -1152,7 +1159,7 @@ a.badge{min-height:44px}
 
 /* 휴대폰은 세로로 — 사진 먼저, 숫자 아래 */
 @media (max-width:820px){
-  .hero-side{grid-template-columns:1fr;gap:12px}
+  .hero-side{grid-template-columns:minmax(0,1fr);gap:12px}
   .hero-side .photo--hero img{aspect-ratio:16/9}
   .hero-side .hero-stats{flex-direction:row;flex-wrap:wrap}
   .hero-side .hero-stats .hs{
@@ -1288,15 +1295,15 @@ body.fp-open{overflow:hidden}
 /* ── 권역 쪽도 사진 왼쪽 · 차림표 오른쪽 (2026-09-29 주인 지시) ──
    「전체페이지에 적용해줘」 — 묶음 쪽과 같은 꼴로 맞춥니다. */
 .hero-side .quicknav--side{
-  display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0;
-  align-content:start;
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;margin:0;align-content:start;
 }
-.hero-side .quicknav--side > *{min-height:0}
+.hero-side .quicknav--side > *{min-width:0;min-height:0}
 @media (max-width:820px){
-  .hero-side .quicknav--side{grid-template-columns:repeat(4,1fr)}
+  .hero-side .quicknav--side{grid-template-columns:repeat(4,minmax(0,1fr))}
 }
 @media (max-width:480px){
-  .hero-side .quicknav--side{grid-template-columns:repeat(3,1fr)}
+  .hero-side .quicknav--side{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 
 /* ── 요즘 많이 찾아가는 곳 (2026-09-29 주인 지적) ───────────
