@@ -1298,3 +1298,46 @@ body.fp-open{overflow:hidden}
 @media (max-width:480px){
   .hero-side .quicknav--side{grid-template-columns:repeat(3,1fr)}
 }
+
+/* ── 요즘 많이 찾아가는 곳 (2026-09-29 주인 지적) ───────────
+   「맛집정보에 예전 티맵데이터기반 추천이 있었는데 그게 사라졌어」
+
+   ★ **맛 평가가 아닙니다.** 내비게이션 목적지 순위입니다.
+     그래서 순위 숫자를 크게 두되, 까닭 줄을 바로 아래 둡니다. */
+.tr{
+  display:block;margin-top:26px;padding:20px 22px 18px;
+  background:var(--white,#fff);border:1px solid var(--line);
+  border-radius:var(--r-md,14px);
+}
+.tr[hidden]{display:none}
+.tr-head h3{margin:0;font-size:18px;font-weight:800}
+.tr-why{margin:6px 0 0;font-size:12.5px;line-height:1.65;color:var(--muted)}
+.tr-tabs{display:flex;gap:8px;margin:14px 0 10px;flex-wrap:wrap}
+.tr-tabs button{
+  min-height:38px;padding:8px 16px;border-radius:999px;
+  border:1px solid var(--line);background:#fff;color:var(--ink);
+  font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;
+}
+.tr-tabs button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.tr-tabs button:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.tr-list{
+  list-style:none;margin:0;padding:0;
+  display:grid;grid-template-columns:1fr 1fr;gap:2px 18px;
+}
+@media (max-width:640px){.tr-list{grid-template-columns:1fr}}
+.tr-list a{
+  display:flex;align-items:center;gap:10px;min-height:44px;
+  padding:7px 4px;text-decoration:none;color:inherit;
+  border-bottom:1px solid var(--line);
+}
+.tr-list a:hover .nm{color:var(--orange)}
+.tr-list .rk{
+  flex:none;width:22px;font-size:13px;font-weight:800;
+  color:var(--orange);text-align:center;
+}
+.tr-list .nm{
+  flex:1;min-width:0;font-size:14px;font-weight:700;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.tr-list .ct{flex:none;font-size:11.5px;color:var(--muted)}
+.tr-src{margin:14px 0 0;font-size:11.5px;line-height:1.6;color:var(--muted)}
