@@ -366,6 +366,77 @@ def main():
         print('  · 공유 미리보기가 모두 제대로입니다')
     print('')
 
+    # ── 걸러 놓은 사진이 쪽에 남아 있는가
+    #
+    #   ★ 2026-09-29 주인 지적 — 「명소들이 이미지 잘못들어간게 많아」
+    #
+    #   다대포해수욕장 자리에 **지하철역 승강장** 사진이 실려 있었습니다.
+    #   눈으로 골라 photo-reject.json 에 적었는데, **그 목록이 실제로
+    #   먹었는지**는 아무도 재지 않았습니다. 여기서 잽니다.
+    #
+    #   자료만 고치고 엔진이 안 읽으면 아무 일도 안 일어납니다.
+    print('[거른 사진] 명소와 다른 사진이 쪽에 남았나')
+    _거를것 = io.read_json(os.path.join(DATA, 'raw', 'photo-reject.json'),
+                           default={}) or {}
+    _거른길 = [x.get('파일') for x in _거를것.get('거를것', []) if x.get('파일')]
+    _남은것 = []
+    for _길 in 것들:
+        _글 = io.read(_길, default=chr(39)+chr(39)) or chr(39)+chr(39)
+        for _사 in _거른길:
+            # 쪽마다 상대 주소가 다르니 **파일 이름만** 견줍니다
+            if os.path.basename(_사) in _글:
+                _남은것.append((_길, os.path.basename(_사)))
+    if _거른길 and _남은것:
+        막음.append('거르기로 한 사진이 아직 %d곳에 있습니다' % len(_남은것))
+        for _길, _이 in _남은것[:6]:
+            print('  ✗ %s 에 %s' % (_길, _이))
+        print('      → data.py 사진들() 이 photo-reject.json 을 읽는지 보세요.')
+    elif _거른길:
+        print('  · 걸러 놓은 %d장이 어느 쪽에도 없습니다' % len(_거른길))
+    else:
+        print('  · 거를 사진이 없습니다')
+    print('')
+
+    # ── 사진이 **정말 그 명소에서 찍혔는가** (좌표로)
+    #
+    #   ★ 2026-09-29 주인 제안
+    #     「지역 명소 사진을 쓸 때 사진에 나온 곳 주소가 관광지 주소와
+    #       동일했으면 더 좋겠어. 검수할 때 이렇게 검수하면 더 좋지 않을까?」
+    #
+    #   맞는 말씀입니다. **이름으로는 못 가립니다.**
+    #     「다대포해수욕장역」과 「다대포해수욕장」은 이름이 거의 같은데
+    #     한쪽은 지하철역이고 한쪽은 바다입니다.
+    #   **좌표는 못 속입니다.**
+    #
+    #   위키미디어가 사진 좌표를 주므로 명소 좌표와 거리를 재어
+    #   data/raw/photo-distance.json 에 적어 둡니다.
+    print('[사진 거리] 사진이 정말 그 명소에서 찍혔나 (주인 제안)')
+    _거리 = io.read_json(os.path.join(DATA, 'raw', 'photo-distance.json'),
+                         default={}) or {}
+    _km = _거리.get('거리km') or {}
+    _먼것 = [(k, v) for k, v in _km.items() if v > 3]
+    _좀먼것 = [(k, v) for k, v in _km.items() if 1 < v <= 3]
+    if _먼것:
+        막음.append('명소와 3km 넘게 떨어진 사진 %d장' % len(_먼것))
+        for k, v in sorted(_먼것, key=lambda t: -t[1])[:6]:
+            print('  ✗ %.1fkm  %s' % (v, k))
+        print('      → photo-reject.json 에 적어 거르세요.')
+    if _좀먼것:
+        print('  ~ 1~3km 인 사진 %d장 (넓은 해변·섬이면 그럴 수 있습니다)'
+              % len(_좀먼것))
+        for k, v in sorted(_좀먼것, key=lambda t: -t[1])[:3]:
+            print('      %.2fkm  %s' % (v, k))
+    if _km and not _먼것:
+        print('  · 잰 %d장이 모두 명소에서 3km 안입니다' % len(_km))
+    # 못 잰 것은 **숨기지 않습니다** — 모르는 것을 안다고 하지 않습니다
+    _명소사진수 = len([x for x in 자료사진들() if x.get('쓰임') == 'spot'])
+    _못잰 = _명소사진수 - len(_km)
+    if _못잰 > 0:
+        print('  ~ %d장은 **찍은 곳을 몰라 못 쟀습니다**' % _못잰)
+        print('      (한국관광공사 사진은 좌표를 안 줍니다. '
+              '제목이 명소 이름과 같아 그것으로 봅니다)')
+    print('')
+
     if 알림:
         print('살펴볼 것 %d가지' % len(알림))
         for x in 알림:

@@ -1,0 +1,38 @@
+{
+  "_설명": "명소 사진이 실제로 그 명소에서 찍혔는가 — 좌표로 잰 거리(km)",
+  "_왜": [
+    "2026-09-29 주인 제안 —",
+    "「지역 명소 사진을 쓸 때 사진에 나온 곳 주소가 관광지 주소와",
+    " 동일했으면 더 좋겠어. 검수할 때 이렇게 검수하면 더 좋지 않을까?」",
+    "",
+    "★ 이름으로는 못 가립니다.",
+    "  「다대포해수욕장역」과 「다대포해수욕장」은 이름이 거의 같습니다.",
+    "  그런데 한쪽은 지하철역이고 한쪽은 바다입니다.",
+    "  **좌표는 못 속입니다.**"
+  ],
+  "_어떻게": [
+    "위키미디어 공용이 사진 좌표를 줍니다 (prop=coordinates).",
+    "명소 좌표는 data/raw/travel/*.json 에 있습니다.",
+    "둘 사이 거리를 재어 여기 적습니다.",
+    "engine/check_photos.py 의 [사진 거리] 가 이 값을 봅니다."
+  ],
+  "_기준": {
+    "좋음": "1km 안 — 같은 곳으로 봅니다",
+    "살핌": "1~3km — 넓은 해변·섬이면 그럴 수 있습니다. 알립니다",
+    "막음": "3km 넘음 — 다른 곳입니다"
+  },
+  "_잰날": "2026-09-29",
+  "거리km": {
+    "img/coast/yeongjong-somuuido.jpg": 0.252,
+    "img/coast/ongjin-deokjeokdo-seoporihaesuyokja.jpg": 0.65,
+    "img/coast/ongjin-jawoldo-janggolhaesuyokjang.jpg": 0.811,
+    "img/coast/daebu-bangameorihaebyeon.jpg": 0.618,
+    "img/coast/hongseong-kimjwajin.jpg": 0.034,
+    "img/coast/gochang-tidalflat.jpg": 1.318,
+    "img/coast/namhae-geumsan-boriam.jpg": 0.679,
+    "img/coast/geoje-hakdongheukjinjumongdolhaeby.jpg": 0.098,
+    "img/coast/busanwest-taejongdae.jpg": 0.258,
+    "img/coast/busaneast-gwanganrihaesuyokjang.jpg": 0.065,
+    "img/coast/busaneast-haedongyonggungsa.jpg": 0.027
+  }
+}

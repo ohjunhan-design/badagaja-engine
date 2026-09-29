@@ -17,8 +17,14 @@
     <p class="kicker">이 축제는</p>
     <h2 class="serif">{{축제이름}}</h2>
   </div>
-  {{{소개}}}
-  {{{프로그램}}}
+  <!-- ★ **두 칸으로 나눕니다** (2026-09-29 주인 지시)
+       「비어있는 공간을 잘 활용해」 — 소개글이 왼쪽 좁은 칸에만 흐르고
+       오른쪽 절반이 통째로 비어 있었습니다. 나란히 두면 세로가 줄고
+       스크롤이 짧아집니다. 프로그램이 없으면 한 칸으로 돌아갑니다. -->
+  <div class="two-col">
+    <div class="two-col-a">{{{소개}}}</div>
+    {{{프로그램}}}
+  </div>
 </div></section>
 
 <section class="section" id="ganeun"><div class="wrap">

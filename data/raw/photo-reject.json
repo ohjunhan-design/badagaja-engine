@@ -1,0 +1,31 @@
+{
+  "_설명": "명소와 다른 사진 — 쪽에 내지 않습니다",
+  "_왜": [
+    "2026-09-29 주인 지적 — 「명소들이 이미지 잘못들어간게 많아 … 사진검수해」",
+    "옛 사이트에서 옮겨 온 사진 중 위키미디어 계열이 명소와 어긋나 있었습니다.",
+    "다대포해수욕장 자리에 **지하철역 승강장** 사진이 실려 있었습니다.",
+    "규칙 3·4 — 대표 사진은 바다가 주제여야 하고, 건물·도로·지질 표본은 씁니다 X"
+  ],
+  "_어떻게": [
+    "photos.json 은 migrate_photos.py 가 만드는 생성물이라 손대지 않습니다.",
+    "거를 것만 여기 적고 data.py 가 읽을 때 걸러 냅니다 (규칙 26 — 엔진을 고칩니다).",
+    "check_photos.py 가 '거른 사진이 쪽에 남아 있나'를 봅니다."
+  ],
+  "_본사람": "클로드가 사진을 하나씩 눈으로 확인했습니다 (2026-09-29)",
+  "거를것": [
+    { "파일": "img/coast/busanwest-dadaepohaesuyokjang.jpg",
+      "명소": "다대포해수욕장", "무엇이었나": "부산 지하철 다대포해수욕장역 승강장" },
+    { "파일": "img/coast/busaneast-ilgwanghaesuyokjang.jpg",
+      "명소": "일광해수욕장", "무엇이었나": "동해선 일광역 승강장과 전동차" },
+    { "파일": "img/coast/daebu-oido-ppalgandeungdae.jpg",
+      "명소": "오이도 빨간등대", "무엇이었나": "김치인 묘 비석과 석물" },
+    { "파일": "img/coast/daebu-tandohang-nueseom.jpg",
+      "명소": "탄도항 누에섬", "무엇이었나": "대부광산 퇴적암층 채석장 연못" },
+    { "파일": "img/coast/gogunsan-munyeodo-jwittongseom.jpg",
+      "명소": "무녀도 쥐똥섬", "무엇이었나": "차 안에서 찍은 고군산대교 주탑과 도로" },
+    { "파일": "img/coast/goseong-danghangpogwangwangji.jpg",
+      "명소": "당항포관광지", "무엇이었나": "통영 당포성 — 고성이 아니라 다른 고장" },
+    { "파일": "img/coast/gyeongju-najeonggounmoraehaebyeon.jpg",
+      "명소": "나정고운모래해변", "무엇이었나": "제목이 'Starfish of Korea' — 해변이 아님" }
+  ]
+}

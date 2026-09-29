@@ -1,0 +1,118 @@
+#!/bin/sh
+# 올리기 전 검사 — **한 줄로 끝냅니다** (2026-09-29)
+#
+# ★ 왜 만들었나
+#
+#   2026-09-29 오픈 날, 저는 검사기를 `--strict` 없이 돌려
+#   끝난값 0 을 보고 「모든 검사가 통과했습니다」라고 보고했습니다.
+#   **판정은 `--strict` 로 돕니다.** 인자가 달랐습니다.
+#
+#   그 탓에 커밋 셋이 **같은 까닭으로** 막혀 40분을 버렸습니다.
+#   판정 한 번에 12~13분이 걸리기 때문입니다.
+#
+#   바깥 검수(지피티)가 이렇게 말했습니다 —
+#     「사람이 옵션을 선택하는 구조 자체를 없애십시오.
+#       ./check 딱 이것만 실행하면 내부적으로 항상 --strict 가
+#       되게 하세요.」
+#
+#   맞는 말입니다. **사람이 빠뜨릴 수 있는 것은 구조로 막습니다.**
+#
+# 쓰는 법
+#   ./check          빠른 검사 (1분 안쪽) — 늘 이것부터
+#   ./check full     416쪽 전체 화면까지 (12~13분) — 올리기 직전
+#
+# ★ 끝난값 4 는 「잴 형편이 안 됨」입니다 — 막지 않습니다.
+#   0 과 4 만 통과로 봅니다. 그 밖은 손볼 곳이 있는 것입니다.
+#
+# ★ 셸 변수는 **영문으로** 씁니다.
+#   sh 는 한글 변수 이름을 못 씁니다. 처음에 한글로 썼다가
+#   바로 죽었습니다. (깃허브 워크플로에서도 같은 탈을 겪었습니다)
+set -u
+
+HERE=$(cd "$(dirname "$0")" && pwd)
+cd "$HERE" || exit 1
+
+PY=${BADAGAJA_PYTHON:-python}
+KIND=${1:-fast}
+
+BAD=0
+SEEN=0
+
+run_one() {
+    name=$1
+    SEEN=$((SEEN + 1))
+    PYTHONIOENCODING=utf-8 "$PY" "engine/$name.py" --strict >/dev/null 2>&1
+    rc=$?
+    if [ "$rc" -ne 0 ] && [ "$rc" -ne 4 ]; then
+        BAD=$((BAD + 1))
+        printf '  x %-26s 끝난값 %s\n' "$name" "$rc"
+        printf '      → 자세히 보려면: python engine/%s.py --strict\n' "$name"
+    fi
+}
+
+run_page() {
+    page=$1
+    [ -f "$page" ] || return 0
+    SEEN=$((SEEN + 1))
+    PYTHONIOENCODING=utf-8 "$PY" engine/check_render.py "$page" >/dev/null 2>&1
+    rc=$?
+    if [ "$rc" -ne 0 ]; then
+        BAD=$((BAD + 1))
+        printf '  x 화면 %-22s 끝난값 %s\n' "$page" "$rc"
+        printf '      → 자세히 보려면: python engine/check_render.py %s\n' "$page"
+    fi
+}
+
+echo ''
+echo '  ── 올리기 전 검사 (언제나 --strict) ──────────────────'
+echo ''
+
+for f in engine/check_*.py; do
+    name=$(basename "$f" .py)
+    # check_render 는 인자를 줘야 잽니다. 아래에서 따로 돌립니다.
+    [ "$name" = 'check_render' ] && continue
+    run_one "$name"
+done
+
+# ★ **화면은 따로 잽니다** (2026-09-29)
+#   check_render 는 인자 없이 돌리면 쓰는 법만 찍고 끝난값 1 을 냅니다.
+#   그것을 「어김」으로 읽으면 안 됩니다.
+#
+#   빠른 갈래에서는 **갈래마다 한 쪽씩**만 봅니다.
+#   오늘 잡힌 375px 가로 넘침은 site.css 탓이라
+#   권역 쪽 하나만 봐도 잡혔을 것입니다.
+if [ "$KIND" = 'full' ]; then
+    echo '  · 416쪽 전체 화면을 잽니다 (11분쯤 걸립니다)'
+    SEEN=$((SEEN + 1))
+    PYTHONIOENCODING=utf-8 "$PY" engine/check_render.py --all >/dev/null 2>&1
+    rc=$?
+    if [ "$rc" -ne 0 ]; then
+        BAD=$((BAD + 1))
+        printf '  x %-26s 끝난값 %s\n' 'check_render --all' "$rc"
+    fi
+else
+    run_page 'site/index.html'
+    run_page 'site/gochang.html'
+    run_page 'site/jeonbuk/index.html'
+    run_page 'site/festival/index.html'
+fi
+
+echo ''
+if [ "$BAD" -eq 0 ]; then
+    printf '  · %d가지를 보았고 걸린 것이 없습니다.\n' "$SEEN"
+    if [ "$KIND" != 'full' ]; then
+        echo ''
+        echo '  ※ 이것은 **빠른 검사**입니다. 416쪽 전체 화면은 안 봤습니다.'
+        echo '    build.py · site.css · template/_head.html 을 고쳤으면'
+        echo '    **전체 쪽이 바뀝니다** — ./check full 로 한 번 더 보세요.'
+    fi
+    echo ''
+    exit 0
+fi
+
+printf '  손볼 곳 %d가지 (본 것 %d가지)\n' "$BAD" "$SEEN"
+echo ''
+echo '  ★ 이대로 올리면 **판정에서 막힙니다.**'
+echo '    판정 한 번에 12~13분이 걸립니다. 여기서 고치는 편이 빠릅니다.'
+echo ''
+exit 1

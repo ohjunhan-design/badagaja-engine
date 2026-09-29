@@ -167,41 +167,95 @@ def 몸무늬(갈래, y):
             "<circle cx='328' cy='{ym4}' r='3' fill='#fff'/>"),
         'worm': ("<path d='M286 {y} q34 -22 68 0 q-34 22 -68 0z' fill='{c}'/>"
                  "<path d='M300 {y} h40' stroke='{d}' stroke-width='1.5'/>"),
+        # ★ **굴 전용** (2026-09-29 주인 지적 — 「굴사진인데 이게 뭐야」)
+        #   굴은 조개가 아닙니다. 갯벌에 묻히지 않고 **바위에 붙어**
+        #   삽니다. 껍데기는 회백색이고 울퉁불퉁하며, 여럿이
+        #   **다닥다닥** 겹쳐 붙습니다. 그것이 굴을 굴로 보이게 합니다.
+        #   전에는 조개 무늬를 그대로 써서 **주황 타원**이 떠 있었습니다.
+        'rock': (
+            # 바위
+            "<path d='M238 {yp30} q18 -46 74 -50 q66 -4 92 20"
+            " q22 18 18 30 z' fill='#8A939A'/>"
+            "<path d='M262 {yp16} q14 -12 30 -8 M330 {yp20} q16 -10 30 -4'"
+            " stroke='#6E7C86' stroke-width='2' fill='none' opacity='.7'/>"
+            # 굴 껍데기 다섯 — 회백색, 울퉁불퉁, 겹쳐 붙어 있습니다
+            "<g fill='#E4E1D6' stroke='#A9A395' stroke-width='1.6'>"
+            "<path d='M272 {ym4} q-6 -16 8 -22 q18 -8 30 2 q10 8 2 18"
+            " q-16 10 -40 2 z'/>"
+            "<path d='M308 {ym14} q-4 -18 12 -22 q20 -6 30 6 q8 10 -2 18"
+            " q-18 8 -40 -2 z'/>"
+            "<path d='M348 {ym4} q-4 -16 12 -20 q18 -6 28 4 q8 8 0 16"
+            " q-18 8 -40 0 z'/>"
+            "<path d='M290 {yp8} q-4 -12 10 -16 q16 -4 24 4 q6 8 -2 12"
+            " q-16 6 -32 0 z'/>"
+            "<path d='M332 {yp10} q-4 -12 10 -16 q16 -4 24 4 q6 8 -2 12"
+            " q-16 6 -32 0 z'/></g>"
+            # 껍데기 결 — 굴 특유의 주름
+            "<g stroke='#B7B1A2' stroke-width='1.2' fill='none' opacity='.9'>"
+            "<path d='M280 {ym10} l6 14 M292 {ym12} l4 16'/>"
+            "<path d='M320 {ym20} l4 16 M332 {ym20} l2 16'/>"
+            "<path d='M360 {ym10} l4 14 M372 {ym10} l2 14'/></g>"),
         'crab': ("<ellipse cx='320' cy='{y}' rx='22' ry='15' fill='{c}'/>"
                  "<g stroke='{c}' stroke-width='4' stroke-linecap='round'>"
                  "<path d='M300 {yp4} l-16 10'/><path d='M340 {yp4} l16 10'/>"
                  "<path d='M304 {ym6} l-18 -8'/><path d='M336 {ym6} l18 -8'/>"
                  "</g><circle cx='313' cy='{ym6}' r='2.5' fill='#fff'/>"
                  "<circle cx='327' cy='{ym6}' r='2.5' fill='#fff'/>"),
-        'snail': ("<path d='M320 {yp16} a20 20 0 1 1 14 -34 a13 13 0 1 1"
-                  " -9 22 a7 7 0 1 1 5 -12' fill='none' stroke='{c}'"
-                  " stroke-width='7' stroke-linecap='round'/>"),
-        'rock': ("<path d='M250 116 q40 -34 88 -12 q46 -26 92 14 q26 22 -6 34"
-                 " h-176 q-24 -14 2 -36z' fill='#7d8a92'/><g fill='{c}'>"
-                 "<ellipse cx='300' cy='112' rx='16' ry='10'"
-                 " transform='rotate(-12 300 112)'/>"
-                 "<ellipse cx='348' cy='106' rx='14' ry='9'"
-                 " transform='rotate(8 348 106)'/>"
-                 "<ellipse cx='386' cy='118' rx='13' ry='8'"
-                 " transform='rotate(-6 386 118)'/></g>"),
-        'abalone': ("<path d='M250 116 q40 -34 88 -12 q46 -26 92 14 q26 22 -6"
-                    " 34 h-176 q-24 -14 2 -36z' fill='#7d8a92'/>"
-                    "<ellipse cx='330' cy='106' rx='30' ry='16' fill='{c}'/>"
-                    "<g fill='{d}'><circle cx='316' cy='102' r='2.5'/>"
-                    "<circle cx='326' cy='100' r='2.5'/>"
-                    "<circle cx='336' cy='101' r='2.5'/>"
-                    "<circle cx='346' cy='104' r='2.5'/></g>"),
-        'fish': ("<ellipse cx='324' cy='84' rx='30' ry='13' fill='{c}'/>"
-                 "<path d='M354 84 l22 -12 v24z' fill='{c}'/>"
-                 "<circle cx='306' cy='80' r='4' fill='#fff'/>"
-                 "<circle cx='306' cy='80' r='2' fill='#2A1B08'/>"
-                 "<path d='M300 95 l10 12 M330 95 l8 12' stroke='{c}'"
-                 " stroke-width='4' stroke-linecap='round'/>"),
+        # ★ **고둥·소라** (2026-09-29 주인 지적 — 그림이 허술함)
+        #   나선으로 감긴 껍데기와 **입구**가 있어야 고둥으로 보입니다.
+        #   전에는 선 하나로 소용돌이만 그려 달팽이 낙서 같았습니다.
+        'snail': (
+            "<path d='M300 {yp16} q-10 -30 10 -42 q22 -14 40 0"
+            " q16 12 6 26 q-8 12 -22 8 q-12 -4 -8 -14 q4 -8 12 -4'"
+            " fill='{c}' stroke='{d}' stroke-width='2'/>"
+            "<path d='M300 {yp16} q24 10 46 -4 q-6 12 -24 14"
+            " q-16 2 -22 -10 z' fill='{d}'/>"
+            "<path d='M322 {ym12} q10 -6 16 2 M316 {ym4} q12 -6 20 2'"
+            " stroke='{d}' stroke-width='1.6' fill='none' opacity='.75'/>"),
+        # ★ **전복** — 납작한 타원에 **숨구멍이 한 줄**로 뚫려 있습니다.
+        #   그 구멍줄이 전복을 전복으로 보이게 합니다 (2026-09-29).
+        'abalone': (
+            "<path d='M252 {yp30} q20 -44 76 -48 q64 -4 90 20"
+            " q22 18 16 28 z' fill='#8A939A'/>"
+            "<ellipse cx='324' cy='{ym4}' rx='36' ry='20' fill='{c}'/>"
+            "<ellipse cx='324' cy='{ym4}' rx='36' ry='20' fill='none'"
+            " stroke='{d}' stroke-width='2'/>"
+            "<g fill='{d}'><circle cx='302' cy='{ym12}' r='2.8'/>"
+            "<circle cx='313' cy='{ym14}' r='2.8'/>"
+            "<circle cx='325' cy='{ym14}' r='2.8'/>"
+            "<circle cx='337' cy='{ym12}' r='2.8'/></g>"
+            "<path d='M294 {y} q30 12 60 -2' stroke='{d}'"
+            " stroke-width='1.6' fill='none' opacity='.8'/>"),
+        # ★ **짱뚱어** — 갯벌 위를 기어 다니는 물고기.
+        #   **튀어나온 두 눈**과 지느러미로 기는 모습이 특징입니다
+        #   (2026-09-29 주인 지적 — 그냥 물고기로 보였습니다).
+        'fish': (
+            "<path d='M288 {y} q22 -14 48 -10 q26 4 38 10"
+            " q-12 8 -38 12 q-26 4 -48 -12 z' fill='{c}'/>"
+            "<path d='M374 {y} l16 -12 v26 z' fill='{d}'/>"
+            "<circle cx='300' cy='{ym10}' r='6.5' fill='{c}'/>"
+            "<circle cx='315' cy='{ym10}' r='6.5' fill='{c}'/>"
+            "<circle cx='300' cy='{ym10}' r='3.2' fill='#2B2116'/>"
+            "<circle cx='315' cy='{ym10}' r='3.2' fill='#2B2116'/>"
+            "<circle cx='299' cy='{ym12}' r='1.2' fill='#fff'/>"
+            "<circle cx='314' cy='{ym12}' r='1.2' fill='#fff'/>"
+            "<path d='M318 {yp8} q10 16 26 10 M300 {yp8} q-6 14 -18 12'"
+            " stroke='{d}' stroke-width='4' fill='none'"
+            " stroke-linecap='round'/>"
+            "<path d='M318 {ym4} q18 -10 36 -2' stroke='{d}'"
+            " stroke-width='2' fill='none' opacity='.8'/>"),
     }
+    # ★ **모르는 갈래면 그냥 타원이 나옵니다** — 그것이 오늘
+    #   굴이 「주황 타원」으로 보이던 까닭입니다 (2026-09-29).
+    #   자료에 있는 그림 값은 여기 **모두** 있어야 합니다.
+    #   engine/check_design.py 검사 8이 이것을 봅니다.
     틀 = 표.get(갈래, "<ellipse cx='320' cy='{y}' rx='24' ry='17' fill='{c}'/>")
     return 틀.format(y=y, y1=y - 19, y34=y - 34, y28=y - 28,
                      yp4=y + 4, yp12=y + 12, yp16=y + 16, yp22=y + 22,
-                     ym4=y - 4, ym6=y - 6, c=짚, d=짙은짚)
+                     ym4=y - 4, ym6=y - 6, ym10=y - 10,
+                     ym12=y - 12, ym14=y - 14, ym20=y - 20,
+                     yp8=y + 8, yp10=y + 10,
+                     yp20=y + 20, yp30=y + 30, c=짚, d=짙은짚)
 
 
 def 단면그림(어종):
@@ -298,6 +352,28 @@ def 물때그림(누구='해루질'):
            풀빛, 풀빛, 풀빛, 붉음, 붉음, 물글씨))
 
 
+def 잘잡히는자리(어디):
+    """★ **잘 잡히는 자리**를 자료에서 고릅니다 (2026-09-29 주인 지시)
+
+    자료의 「어디서」 글에 적힌 바닥·지형으로 고릅니다.
+    **없는 말을 지어내지 않습니다** — 맞는 것이 없으면 일반 안내를 냅니다.
+    """
+    개펄 = ('모래' in 어디 or '펄' in 어디)
+    구조물 = ('방파제' in 어디 or '선착장' in 어디 or '항' in 어디)
+    돌밭 = ('갯바위' in 어디 or '여' in 어디 or '암초' in 어디)
+    if 돌밭:
+        return {'x': 300, 'y': 196,
+                '글': '바위와 모래가 만나는 자리'}
+    if 개펄 and 구조물:
+        return {'x': 320, 'y': 196,
+                '글': '벽 아래 바닥을 끌어 노립니다'}
+    if 개펄:
+        return {'x': 300, 'y': 196, '글': '모래·펄 바닥을 끌어 노립니다'}
+    if 구조물:
+        return {'x': 340, 'y': 196, '글': '벽 모서리와 기둥 둘레'}
+    return {'x': 300, 'y': 196, '글': '물살이 부딪히는 자리'}
+
+
 # ── ④ 어디에 서서 노리나 (낚시) ───────────────────────────
 def 자리그림(어종):
     """서는 자리를 그립니다 (640×240). 「어디서」 글을 보고 고릅니다."""
@@ -340,6 +416,17 @@ def 자리그림(어종):
             " fill='%s' font-weight='700'>물이 섞이는 자리</text>"
             % (모래, 물글씨, 물글씨, 붉음, 붉음))
     else:
+        # ★ **어디가 잘 잡히는지 표시합니다** (2026-09-29 주인 지시)
+        #   「이 그림도 구체적으로 어떤 포인트가 더 잘 잡히는지
+        #     표시해 줬으면 좋겠어요」
+        #
+        #   전에는 「안쪽(초보) · 끝자락(물살) · 테트라포드(위험)」만
+        #   있었습니다. **서도 되는 자리**만 말하고 **잘 잡히는 자리**는
+        #   말하지 않았습니다. 낚시하러 온 분이 알고 싶은 것은 뒤쪽입니다.
+        #
+        #   ★ 자리는 **어종마다 다릅니다.** 자료의 「어디서」를 읽어
+        #     고릅니다 — 지어내지 않습니다.
+        어디잘 = 잘잡히는자리(어디)
         장면 = (
             "<rect x='60' y='120' width='420' height='34' fill='#9aa3a8'/>"
             "<rect x='60' y='154' width='420' height='46' fill='%s'/>"
@@ -355,7 +442,18 @@ def 자리그림(어종):
             "<text x='430' y='92' text-anchor='middle' font-size='13'"
             " fill='%s' font-weight='700'>끝자락(물살)</text>"
             "<path d='M430 116 l40 40' stroke='%s' stroke-width='2.6'/>"
-            % (돌, 붉음, 풀빛, 풀빛, 붉음, 붉음, 붉음))
+            # ── 잘 잡히는 자리 — 물속에 별표와 설명
+            "<g>"
+            "<path d='M%d 162 l4.6 9.4 10.4 1.5 -7.5 7.3 1.8 10.3"
+            " -9.3 -4.9 -9.3 4.9 1.8 -10.3 -7.5 -7.3 10.4 -1.5z'"
+            " fill='#E3A008' stroke='#fff' stroke-width='1.2'/>"
+            "<text x='%d' y='%d' text-anchor='middle' font-size='12.5'"
+            " fill='#fff' font-weight='700'"
+            " style='paint-order:stroke' stroke='#3C5460'"
+            " stroke-width='3.2'>%s</text>"
+            "</g>"
+            % (돌, 붉음, 풀빛, 풀빛, 붉음, 붉음, 붉음,
+               어디잘['x'] - 9, 어디잘['x'], 어디잘['y'], 어디잘['글']))
     return (
         '<figure class="cg-art photo--drawn">\n'
         '<svg viewBox="0 0 640 240" role="img"'
@@ -398,26 +496,78 @@ def 자리그림(어종):
         "<text x='344' y='96' font-size='14' fill='{짙짚}'>찌</text>"
         "<text x='334' y='154' font-size='14' fill='{선}'>봉돌</text>"
         "<text x='352' y='214' font-size='14' fill='{선}'>바늘·미끼</text>"),
+    # ★ **실제 지그헤드 모양으로 다시 그렸습니다** (2026-09-29 주인 지적)
+    #   「이미지가 현실성이 좀 떨어져 … 너무 허술하고」
+    #
+    #   전에는 주황 동그라미에 초록 나뭇잎이 붙은 꼴이라
+    #   **바늘이 보이지 않았습니다.** 지그헤드의 핵심은
+    #     ① 납 머리(무게)  ② 거기서 뻗은 바늘  ③ 꿰운 웜
+    #   셋입니다. 셋이 다 보여야 「왜 가벼우면 천천히 가라앉나」가
+    #   이해됩니다.
     'jighead': (
-        "<path d='M300 70 L330 150' stroke='{선}' stroke-width='2'/>"
-        "<circle cx='332' cy='156' r='11' fill='{짚}'/>"
-        "<path d='M332 156 q26 6 44 -6 q-10 16 -30 20' fill='#7aa27f'/>"
-        "<g stroke='{바늘}' stroke-width='2.4' fill='none'>"
-        "<path d='M340 164 q6 16 -6 20 q-10 4 -12 -6'/></g>"
-        "<text x='268' y='160' font-size='14' fill='{짙짚}'"
-        " text-anchor='end'>지그헤드</text>"
-        "<text x='384' y='176' font-size='14' fill='{선}'>웜</text>"),
+        # 원줄
+        "<path d='M290 66 L322 142' stroke='{선}' stroke-width='2'/>"
+        # 웜 — 길쭉한 몸통 + 물결 꼬리 (바늘을 덮습니다)
+        "<path d='M336 146 q40 0 54 8 q-14 10 -54 10 z' fill='#8FB98A'/>"
+        "<path d='M390 154 q16 -12 24 -4 q-6 12 -24 8 z' fill='#7AA27F'/>"
+        # 웜 몸통에 난 마디 (고무 미끼 느낌)
+        "<g stroke='#6E9A72' stroke-width='1.2' opacity='.8'>"
+        "<path d='M352 148 l-2 14'/><path d='M364 149 l-2 14'/>"
+        "<path d='M376 151 l-2 12'/></g>"
+        # 바늘 — 머리에서 뒤로 뻗어 **웜 등 위로** 굽어 나옵니다
+        "<g stroke='#5A6670' stroke-width='2.6' fill='none'"
+        " stroke-linecap='round'>"
+        "<path d='M330 158 q26 22 44 6 q10 -8 2 -18'/>"
+        "<path d='M376 146 l-6 -7 m6 7 l-8 2'/></g>"      # 미늘
+        # 납 머리 — 은회색 구슬. 눈이 있어 진짜처럼 보입니다
+        "<circle cx='328' cy='150' r='12' fill='#93A0A8'/>"
+        "<circle cx='328' cy='150' r='12' fill='none'"
+        " stroke='#6E7C86' stroke-width='1.4'/>"
+        "<circle cx='324' cy='146' r='3.4' fill='#2B2116'/>"
+        "<circle cx='323' cy='145' r='1.2' fill='#fff'/>"
+        # 줄을 매는 고리
+        "<path d='M322 142 q-4 -8 2 -10' stroke='#6E7C86'"
+        " stroke-width='2' fill='none'/>"
+        "<text x='300' y='184' font-size='14' fill='{짙짚}'"
+        " text-anchor='end'>납 머리</text>"
+        "<text x='396' y='186' font-size='14' fill='{선}'>웜</text>"
+        "<text x='372' y='128' font-size='13' fill='#5A6670'>바늘</text>"),
+    # ★ **실제 에기 모양으로 다시 그렸습니다** (2026-09-29 주인 지적)
+    #   「쭈꾸미도 이런에기는 시중에 없어 이게 에기인지도 모르고」
+    #
+    #   전에는 회전한 타원에 삼각형을 붙여 **물고기처럼** 보였습니다.
+    #   진짜 에기는
+    #     ① 새우를 닮은 통통한 몸    ② 등의 줄무늬
+    #     ③ 꼬리 쪽 **왕관 바늘**(침이 빙 둘러 여러 개)
+    #     ④ 배 앞쪽 봉돌(가라앉는 자세를 만듭니다)
+    #   입니다. 특히 왕관 바늘이 에기를 에기로 보이게 합니다.
     'egi': (
-        "<path d='M300 66 L336 140' stroke='{선}' stroke-width='2'/>"
-        "<g transform='rotate(24 340 160)'>"
-        "<ellipse cx='340' cy='160' rx='18' ry='34' fill='{짚}'/>"
-        "<path d='M340 126 l14 -12 -6 16z' fill='{짙짚}'/>"
-        "<g stroke='{바늘}' stroke-width='2.2' fill='none'>"
-        "<path d='M330 196 q-6 12 4 14'/>"
-        "<path d='M350 196 q6 12 -4 14'/></g></g>"
-        "<text x='286' y='154' font-size='14' fill='{짙짚}'"
+        "<path d='M296 64 L332 128' stroke='{선}' stroke-width='2'/>"
+        "<g transform='rotate(-18 360 154)'>"
+        # 몸통 — 새우처럼 등이 굽고 배가 통통합니다
+        "<path d='M326 150 q10 -20 38 -20 q34 0 50 20"
+        " q-16 20 -50 20 q-28 0 -38 -20 z' fill='{짚}'/>"
+        # 등 줄무늬
+        "<g stroke='{짙짚}' stroke-width='2' opacity='.85'>"
+        "<path d='M346 134 l-4 32'/><path d='M360 132 l-4 36'/>"
+        "<path d='M374 133 l-4 34'/><path d='M388 137 l-4 28'/></g>"
+        # 머리 쪽 눈
+        "<circle cx='334' cy='150' r='4' fill='#2B2116'/>"
+        "<circle cx='333' cy='149' r='1.4' fill='#fff'/>"
+        # 배 앞 봉돌 — 이것이 가라앉는 자세를 만듭니다
+        "<ellipse cx='340' cy='166' rx='9' ry='6' fill='#8A939A'/>"
+        # 꼬리 쪽 **왕관 바늘** — 침이 빙 둘러 있습니다
+        "<g stroke='#5A6670' stroke-width='2.2' fill='none'"
+        " stroke-linecap='round'>"
+        "<path d='M414 150 l16 -12'/><path d='M414 150 l18 -2'/>"
+        "<path d='M414 152 l18 8'/><path d='M414 154 l14 16'/>"
+        "<path d='M414 148 l10 -18'/></g>"
+        "<path d='M410 138 v28' stroke='#5A6670' stroke-width='3'/>"
+        "</g>"
+        "<text x='306' y='196' font-size='14' fill='{짙짚}'"
         " text-anchor='end'>에기</text>"
-        "<text x='384' y='206' font-size='14' fill='{선}'>바늘(간)</text>"),
+        "<text x='418' y='196' font-size='13' fill='#5A6670'>왕관 바늘</text>"
+        "<text x='330' y='206' font-size='13' fill='{선}'>봉돌</text>"),
     'sabiki': (
         "<path d='M320 60 V200' stroke='{선}' stroke-width='2'/>"
         "<g stroke='{바늘}' stroke-width='2' fill='none'>"

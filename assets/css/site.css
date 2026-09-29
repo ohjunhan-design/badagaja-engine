@@ -1348,3 +1348,204 @@ body.fp-open{overflow:hidden}
 }
 .tr-list .ct{flex:none;font-size:11.5px;color:var(--muted)}
 .tr-src{margin:14px 0 0;font-size:11.5px;line-height:1.6;color:var(--muted)}
+
+/* ── 「전국에서 나오는 곳」 칩 격자 (2026-09-29 주인 지적) ────
+   「하부 상세가 너무 많아 … 모바일에서도 창 길이가 너무 길고」
+
+   ★ 재 보니 소라 쪽 이 칸 하나가 **2,369px** 였습니다.
+     권역 줄 37개가 1,739px — 거의 전부였습니다.
+     그런데 설명이 붙은 것은 37%뿐이었습니다.
+
+   ★ 설명 없는 권역은 칩으로 촘촘히, 있는 것만 펼칩니다.
+     누르는 자리는 44px 을 지킵니다 — 촘촘하게 하느라
+     손가락이 못 닿으면 안 됩니다. */
+.area-chips{
+  list-style:none;margin:8px 0 0;padding:0;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));
+  gap:6px;
+}
+.area-chips a{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  min-height:44px;padding:8px 13px;
+  border:1px solid var(--line);border-radius:var(--r-full,999px);
+  background:var(--white,#fff);text-decoration:none;color:inherit;
+  transition:.14s;
+}
+.area-chips a:hover{
+  border-color:var(--orange);background:#FFF8EC;
+}
+.area-chips b{
+  font-size:13.5px;font-weight:700;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.area-chips i{
+  font-style:normal;flex:none;font-size:12px;color:var(--muted);
+}
+.area-chips a:hover i{color:var(--orange)}
+/* 설명이 붙은 권역은 그대로 펼칩니다 — 법·안전 이야기가 있습니다 */
+.area-group .area-chips + .area-list{margin-top:10px}
+
+/* 묶음 접기 — 가장 많은 묶음 하나만 펼쳐 둡니다 (2026-09-29) */
+details.area-group{
+  border-bottom:1px solid var(--line);
+}
+details.area-group > summary.area-name{
+  display:flex;align-items:center;gap:8px;
+  min-height:48px;padding:10px 4px;cursor:pointer;
+  list-style:none;font-size:15.5px;font-weight:800;
+}
+details.area-group > summary.area-name::-webkit-details-marker{display:none}
+/* 펼침 표시 — 오른쪽 꺾쇠 */
+details.area-group > summary.area-name::after{
+  content:"";margin-left:auto;flex:none;
+  width:8px;height:8px;border-right:2px solid var(--muted);
+  border-bottom:2px solid var(--muted);
+  transform:rotate(45deg);transition:transform .15s;
+}
+details.area-group[open] > summary.area-name::after{
+  transform:rotate(-135deg);
+}
+details.area-group > summary.area-name:hover{color:var(--orange)}
+details.area-group > summary.area-name:focus-visible{
+  outline:2px solid var(--orange);outline-offset:-2px;
+}
+details.area-group > summary .area-n{
+  font-size:12.5px;font-weight:500;color:var(--muted);
+}
+details.area-group .area-chips{margin-bottom:12px}
+details.area-group .area-list{margin-bottom:12px}
+
+/* ══════════════════════════════════════════════════════════
+   2026-09-29 주인 지시 묶음 — **공간을 아껴 씁니다**
+
+   「언제나 공간에대해 고민해보자 스크롤이 너무 길면 사람들이 지루해해」
+   「비어있는 공간을 잘 활용해」
+   「인용이 너무 길어 짧게 가자」
+
+   ★ 스크롤 길이는 **디자인이 아니라 내용 전달의 문제**입니다.
+     아래로 밀린 것은 없는 것과 같습니다 (규칙 6-2).
+   ══════════════════════════════════════════════════════════ */
+
+/* ── 포인트 배너 — 낚시는 초록, 해루질은 주황 (옛 .sinan-banner) */
+.pbn{display:grid;grid-template-columns:auto minmax(0,1fr) auto;
+     align-items:center;gap:16px;padding:16px 20px;border-radius:18px;
+     color:#fff;text-decoration:none;position:relative;overflow:hidden;
+     box-shadow:0 10px 24px rgba(0,0,0,.18);transition:transform .15s}
+.pbn:hover{transform:translateY(-2px)}
+.pbn--fish{background:linear-gradient(120deg,#163F3B 0%,#2E7A70 100%)}
+.pbn--gleaning{background:linear-gradient(120deg,#A9621F 0%,#E0922F 100%)}
+/* 물결 무늬 — 바다 사이트임을 색만으로 말합니다 */
+.pbn::after{content:'';position:absolute;inset:0;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60'%3E%3Cg fill='none' stroke='white' stroke-opacity='.18' stroke-width='2'%3E%3Cpath d='M0 40c30-16 55-16 80 0s55 16 80 0 40-10 40-10'/%3E%3Cpath d='M0 54c30-16 55-16 80 0s55 16 80 0 40-10 40-10'/%3E%3C/g%3E%3C/svg%3E")
+             no-repeat right center/auto 100%}
+.pbn-n{display:flex;flex-direction:column;align-items:center;
+       background:rgba(255,255,255,.16);border:2px solid rgba(255,255,255,.34);
+       border-radius:14px;padding:8px 12px;min-width:84px;position:relative;z-index:1}
+.pbn-n b{font-size:30px;line-height:1.1;font-weight:800}
+.pbn-n b::after{content:'곳';font-size:13px;margin-left:2px}
+.pbn-n i{font-style:normal;font-size:11.5px;font-weight:700;
+         color:rgba(255,255,255,.92);margin-top:2px}
+.pbn-mid{min-width:0;position:relative;z-index:1}
+.pbn-mid b{display:block;font-size:16.5px;font-weight:700;line-height:1.4}
+.pbn-mid i{display:block;font-style:normal;font-size:12.5px;margin-top:3px;
+           color:rgba(255,255,255,.86);line-height:1.5}
+.pbn-go{position:relative;z-index:1;background:#fff;border-radius:999px;
+        padding:10px 16px;font-size:13.5px;font-weight:700;white-space:nowrap}
+.pbn--fish .pbn-go{color:#163F3B}
+.pbn--gleaning .pbn-go{color:#A9621F}
+/* 긴 이름이 화면 밖으로 나가지 않게 합니다 —
+   휴대폰 375px 에서 「낚시 · 군산 방파제·갯바위·선착장」이 잘렸습니다.
+   화면을 찍어 보고서야 알았습니다 (규칙 6-2). */
+.pbn-mid b,.pbn-mid i{overflow-wrap:anywhere;word-break:keep-all}
+@media (max-width:640px){
+  /* 휴대폰에서는 단추를 아래로 내려 **엄지가 닿는 자리**에 둡니다 */
+  .pbn{grid-template-columns:auto minmax(0,1fr);gap:12px;padding:14px}
+  .pbn-go{grid-column:1/-1;text-align:center}
+  .pbn-mid b{font-size:14.5px;line-height:1.35}
+  /* 설명 한 줄은 **감춥니다.** 좁은 화면에서는 숫자와 이름이면 충분하고,
+     「스크롤이 길면 지루해」 하신 뜻에도 맞습니다 */
+  .pbn-mid i{display:none}
+  .pbn-n{min-width:68px;padding:7px 9px}
+  .pbn-n b{font-size:25px}
+}
+
+/* ── 두 칸 — 글이 왼쪽에만 흐르고 오른쪽이 비는 것을 막습니다 */
+.two-col{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);
+         gap:28px;align-items:start}
+.two-col-a{min-width:0}
+.two-col-b{min-width:0;background:var(--soft,#FAF6EE);border-radius:16px;
+           padding:16px 18px}
+.two-col-b .sub-head{margin-top:0}
+@media (max-width:860px){.two-col{grid-template-columns:1fr;gap:18px}}
+
+/* ── 사진 출처를 **사진 안에** 겹칩니다 (공간을 덜 먹습니다) */
+.card-figure{position:relative;margin:0}
+.card-figure figcaption{position:absolute;left:0;right:0;bottom:0;
+  font-size:10.5px;line-height:1.35;padding:10px 10px 5px;color:#fff;
+  background:linear-gradient(to top,rgba(0,0,0,.78) 0%,rgba(0,0,0,.45) 55%,rgba(0,0,0,0) 100%);text-shadow:0 1px 2px rgba(0,0,0,.5);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ── 명소 격자 — 칸이 **제 높이만** 쓰게 합니다
+      사진 있는 칸 하나가 높아지면 옆 칸까지 늘어나 빈 공간이 생겼습니다 */
+/*  ★ 클래스 이름은 `.grid` 입니다 — 처음에 `.cards` 로 썼다가
+       화면을 찍어 보고서야 알았습니다. **눈으로 봐야 압니다** (규칙 6-2). */
+.grid{align-items:start}
+/* 설명은 **두 줄까지만.** 「인용이 너무 길어 짧게 가자」 */
+.card--photo .card-body,.grid .card-body{
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+  overflow:hidden}
+
+/* ── 「처음이신가요?」 — **단추로 보이게** (2026-09-29 주인 지시)
+      전에는 ▶ 삼각형 하나뿐이라 누를 수 있는 줄 몰랐습니다.
+      처음 오신 분께 가장 필요한 안전 안내입니다. */
+.firsttime--btn{border:0;background:none;padding:0;margin:14px 0 0}
+.firsttime--btn>summary{display:flex;align-items:center;gap:10px;
+  list-style:none;cursor:pointer;padding:13px 18px;border-radius:14px;
+  background:linear-gradient(120deg,#B4471F 0%,#DE7A35 100%);color:#fff;
+  box-shadow:0 8px 20px rgba(180,71,31,.28);transition:transform .15s}
+.firsttime--btn>summary::-webkit-details-marker{display:none}
+.firsttime--btn>summary:hover{transform:translateY(-2px)}
+.firsttime--btn>summary b{font-size:15.5px;font-weight:800;white-space:nowrap}
+.firsttime--btn>summary em{font-style:normal;font-size:13px;
+  color:rgba(255,255,255,.9);min-width:0;overflow:hidden;text-overflow:ellipsis}
+.firsttime--btn .ft-ico{flex:0 0 auto;display:flex}
+.firsttime--btn .ft-ico svg{width:22px;height:22px;fill:none;
+  stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.firsttime--btn .ft-arrow{margin-left:auto;font-size:15px;transition:transform .2s}
+.firsttime--btn[open] .ft-arrow{transform:rotate(180deg)}
+.firsttime--btn .ft-body{padding:16px 18px 4px}
+@media (max-width:560px){
+  .firsttime--btn>summary{flex-wrap:wrap;gap:6px 10px}
+  .firsttime--btn>summary em{flex:1 0 100%;order:3}
+}
+
+/* ── 명소 사진 높이를 **고정**합니다 (2026-09-29 주인 지시)
+      「공간활용 잘하고」
+      사진이 원본 비율대로 커서 그 카드만 훌쩍 길어졌고,
+      옆 칸에는 그만큼 **빈자리가 생겼습니다.**
+      명소 393곳 중 사진이 있는 곳이 125곳(32%)뿐이라 더 도드라졌습니다.
+      가로세로를 16:9 로 맞추면 카드 높이가 고르게 됩니다. */
+.card-figure img{display:block;width:100%;aspect-ratio:16/9;
+                 object-fit:cover;border-radius:12px 12px 0 0}
+
+/* ── 묶음 접기 줄을 **단추로** 보이게 (2026-09-29 주인 지시)
+      「권역별로 표시를 하고 더보기 버튼으로 더 보고 싶은 사람은 볼 수 있게」
+      접어서 쪽을 줄여 놓고 아무도 못 펴면 자료를 숨긴 것과 같습니다. */
+.area-group>summary{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  cursor:pointer;list-style:none;padding:12px 14px;border-radius:12px;
+  background:var(--soft,#FAF6EE);transition:background .15s}
+.area-group>summary::-webkit-details-marker{display:none}
+.area-group>summary:hover{background:#F2EADA}
+.area-more{margin-left:auto;display:inline-flex;align-items:center;gap:5px;
+  background:#fff;border:1px solid var(--line,#E6DDCB);border-radius:999px;
+  padding:6px 13px;font-size:12.5px;font-weight:700;color:#1F6FB2;
+  white-space:nowrap}
+.area-more i{font-style:normal;font-size:11px;transition:transform .2s}
+.area-group[open] .area-more i{transform:rotate(180deg)}
+.area-group[open] .area-more::before{content:'접기 ';font-weight:700}
+.area-group[open] .area-more{font-size:0}
+.area-group[open] .area-more::before,.area-group[open] .area-more i{font-size:12.5px}
+@media (max-width:560px){
+  .area-group>summary{padding:11px 12px}
+  .area-more{padding:5px 11px;font-size:12px}
+}

@@ -66,6 +66,7 @@ class 자료:
         self._지도자료 = _읽기('map.json', default={})
         self._히어로 = None
         self._명소사진 = None
+        self._거른사진 = None
         self._포인트 = None
         self._권역 = None
         self._여행 = None
@@ -90,7 +91,30 @@ class 자료:
     #   이제 자료에서만 읽습니다. 주소를 짐작하지 않습니다.
     @property
     def 사진들(self):
-        return self._사진자료.get('사진') or []
+        # ★ **명소와 다른 사진을 걸러 냅니다** (2026-09-29 주인 지시)
+        #
+        #   「명소들이 이미지 잘못들어간게 많아 … 사진검수해」
+        #
+        #   옛 사이트에서 옮겨 온 위키미디어 계열 사진 가운데
+        #   **다대포해수욕장 자리에 지하철역 승강장**, 오이도 빨간등대
+        #   자리에 무덤 비석이 들어 있었습니다. 사진을 하나씩 눈으로
+        #   보고 골라 `data/raw/photo-reject.json` 에 적었습니다.
+        #
+        #   ★ photos.json 은 migrate_photos.py 가 만드는 **생성물**이라
+        #     손대지 않습니다. 고치면 다음 이사 때 되돌아갑니다 (규칙 26).
+        #     거를 것만 따로 두고 **읽을 때** 걸러 냅니다.
+        if self._거른사진 is None:
+            거를것 = _읽기('photo-reject.json', default={}) or {}
+            self._거른사진 = set(x.get('파일') for x in 거를것.get('거를것', [])
+                                 if x.get('파일'))
+        return [x for x in (self._사진자료.get('사진') or [])
+                if x.get('파일') not in self._거른사진]
+
+    @property
+    def 거른사진(self):
+        """검사기가 「걸러 놓은 것이 쪽에 남았나」를 볼 때 씁니다."""
+        self.사진들            # 채워 넣기
+        return self._거른사진
 
     def 히어로(self, 권역):
         """그 권역의 대표 사진. 없으면 None — **지어내지 않습니다.**"""

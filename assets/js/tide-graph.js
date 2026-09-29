@@ -111,7 +111,17 @@
       return d;
     })();
     svg.appendChild(s('path', { d: line + ' L' + X(pts[pts.length - 1][0]) + ' ' + (H - B) + ' L' + X(pts[0][0]) + ' ' + (H - B) + ' Z', fill: 'url(#' + gid + ')' }));
-    svg.appendChild(s('path', { d: line, class: 'tg-line' }));
+    // ★ **fill='none' 을 속성으로 박습니다** (2026-09-29 주인 지적)
+    //
+    //   SVG <path> 는 fill 기본값이 **검정**입니다.
+    //   스타일시트(tidegraph.css)가 .tg-line{fill:none} 을 주지만,
+    //   **CSS 가 실리기 전 찰나**에는 곡선 안쪽이 통째로 검게 보입니다.
+    //   주인이 그 순간을 보고 「뭐가 잘못되었어」 하셨습니다.
+    //
+    //   그리는 쪽에서 속성으로 박으면 **CSS 를 기다리지 않습니다.**
+    //   보이는 것을 스타일시트에만 맡기지 않습니다.
+    svg.appendChild(s('path', { d: line, class: 'tg-line',
+                                fill: 'none' }));
     // 만조·간조 표시: 물때표와 같은 고·저조 예보 시각이 있으면 그것을, 없으면 곡선에서 찾은 값
     var marks = (opt.events && opt.events.length) ? opt.events.map(function (ev) {
       var m = toMin(ev.time), a = pts[0], b = pts[pts.length - 1];
