@@ -94,6 +94,8 @@ jobs:
           mkdir -p _A
           lftp -c "
             set ftp:ssl-allow no;
+            set ftp:charset utf-8;
+            set file:charset utf-8;
             set net:max-retries 3;
             open -u \"$FTP_USERNAME\",\"$FTP_PASSWORD\" \"$FTP_SERVER\";
             mirror --parallel=4 /www/$CARD/ _A/;
@@ -125,6 +127,8 @@ jobs:
         run: |
           lftp -c "
             set ftp:ssl-allow no;
+            set ftp:charset utf-8;
+            set file:charset utf-8;
             set net:max-retries 3;
             open -u \"$FTP_USERNAME\",\"$FTP_PASSWORD\" \"$FTP_SERVER\";
             mirror -R --delete --parallel=4 _B/ /www/$CARD/;
@@ -178,6 +182,8 @@ jobs:
         run: |
           lftp -c "
             set ftp:ssl-allow no;
+            set ftp:charset utf-8;
+            set file:charset utf-8;
             set net:max-retries 3;
             open -u \"$FTP_USERNAME\",\"$FTP_PASSWORD\" \"$FTP_SERVER\";
             mirror -R --delete --parallel=4 _A/ /www/$CARD/;
@@ -198,6 +204,8 @@ jobs:
           mkdir -p _after
           lftp -c "
             set ftp:ssl-allow no;
+            set ftp:charset utf-8;
+            set file:charset utf-8;
             set net:max-retries 3;
             open -u \"$FTP_USERNAME\",\"$FTP_PASSWORD\" \"$FTP_SERVER\";
             mirror --parallel=4 /www/$CARD/ _after/;

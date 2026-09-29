@@ -81,7 +81,24 @@ jobs:
       - name: 한글 글꼴 깔기
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq fonts-noto-cjk fonts-nanum
+          sudo apt-get install -y -qq fonts-noto-cjk fonts-nanum locales
+          # ★ **로케일을 실제로 깝니다** (2026-09-29 — 배포가 막혔습니다)
+          #
+          #   LC_ALL 에 ko_KR.UTF-8 을 적어 두었는데 러너에는 그
+          #   로케일이 없었습니다. 그래서 이런 경고가 났고,
+          #
+          #       setlocale: LC_ALL: cannot change locale (ko_KR.UTF-8)
+          #
+          #   lftp 가 서버의 **한글 이름**을 물음표로 바꿔 못 찾았습니다.
+          #
+          #       550 ?????????: No such file or directory (/www/?????????)
+          #
+          #   되돌릴 것을 못 받아 배포가 그 자리에서 멈췄습니다.
+          #   「적어 두었다」와 「깔려 있다」는 다릅니다 — 글꼴 때도
+          #   같은 일을 겪었습니다.
+          sudo locale-gen ko_KR.UTF-8
+          sudo update-locale LANG=ko_KR.UTF-8
+          locale -a | grep -i ko_KR || echo '::warning::ko_KR 로케일이 아직 없습니다'
           fc-cache -f >/dev/null 2>&1 || true
           if ! fc-list :lang=ko | grep -q .; then
             echo "::error::한글 글꼴이 없습니다 — 이대로 재면 값이 어긋납니다"
@@ -174,6 +191,8 @@ jobs:
           lftp -c "
             set ftp:ssl-allow no;
             set net:max-retries 3;
+            set ftp:charset utf-8;
+            set file:charset utf-8;
             open -u \"$FTP_USERNAME\",\"$FTP_PASSWORD\" \"$FTP_SERVER\";
             mirror --only-newer --parallel=4 --exclude-glob _stage/ /www/ _before/;
           " || {
@@ -205,6 +224,8 @@ jobs:
           lftp -c "
             set ftp:ssl-allow no;
             set net:max-retries 3;
+            set ftp:charset utf-8;
+            set file:charset utf-8;
             open -u \"$FTP_USERNAME\",\"$FTP_PASSWORD\" \"$FTP_SERVER\";
             echo '── 1단계: 자산 (꾸밈·움직임·그림)';
             mirror -R --only-newer --parallel=4 site/assets/ /www/assets/;
@@ -243,6 +264,8 @@ jobs:
           lftp -c "
             set ftp:ssl-allow no;
             set net:max-retries 3;
+            set ftp:charset utf-8;
+            set file:charset utf-8;
             open -u \"$FTP_USERNAME\",\"$FTP_PASSWORD\" \"$FTP_SERVER\";
             mirror -R --parallel=4 _before/ /www/;
           "

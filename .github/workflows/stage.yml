@@ -72,7 +72,9 @@ jobs:
         run: python engine/build_id.py
 
       - name: lftp 설치
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp locales
+          sudo locale-gen ko_KR.UTF-8 >/dev/null 2>&1 || true
+          sudo update-locale LANG=ko_KR.UTF-8 >/dev/null 2>&1 || true
 
       - name: 올리기
         env:
@@ -112,6 +114,8 @@ jobs:
           #     먼저 지우면 그 틈에 들어온 손님이 빈 자리를 봅니다.
           lftp -c "
             set ftp:ssl-allow no;
+            set ftp:charset utf-8;
+            set file:charset utf-8;
             set net:max-retries 3;
             open -u \"$FTP_USERNAME\",\"$FTP_PASSWORD\" \"$FTP_SERVER\";
             mkdir -p /www/$CARD;

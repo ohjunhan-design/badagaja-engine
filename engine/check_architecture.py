@@ -853,6 +853,52 @@ def 검사14_크롬소켓길이가넉넉한가():
         print('  · %s 바탕으로 넉넉히 %d바이트 (한계 108)' % (바탕, 잰길이))
     print('')
 
+
+def 검사15_로케일을적어만두지않았나():
+    """★ **적어 두는 것과 깔려 있는 것은 다릅니다** (2026-09-29)
+
+    운영 배포가 여기서 막혔습니다.
+
+        LC_ALL: ko_KR.UTF-8        ← 일꾼에 적어 둠
+        setlocale: cannot change locale (ko_KR.UTF-8)   ← 없음
+
+    그러자 lftp 가 서버의 **한글 이름**을 물음표로 바꿔
+    못 찾았습니다.
+
+        550 ?????????: No such file or directory
+
+    되돌릴 것을 못 받아 배포가 멈췄습니다.
+    **글꼴 때도 똑같이 「고정한다」고 적고 안 깔았습니다.**
+    같은 병이 두 번째입니다.
+
+    그리고 FTP 로 한글 이름을 다루려면 lftp 에 글자 인코딩을
+    못 박아야 합니다.
+    """
+    print('[15] 로케일을 적어만 두고 안 깔지 않았나')
+    칸 = os.path.join(ROOT, '.github', 'workflows')
+    탈 = []
+    for f in sorted(os.listdir(칸) if os.path.isdir(칸) else []):
+        if not f.endswith(('.yml', '.yaml')):
+            continue
+        글 = io.read(os.path.join(칸, f), default='')
+        적었나 = 'ko_KR.UTF-8' in 글
+        깔았나 = 'locale-gen' in 글
+        if 적었나 and not 깔았나:
+            탈.append('%s — ko_KR.UTF-8 을 쓰는데 locale-gen 이 없습니다' % f)
+        # FTP 를 쓰면 글자 인코딩을 못 박아야 합니다
+        if 'lftp' in 글 and 'ftp:charset' not in 글:
+            탈.append('%s — lftp 를 쓰는데 ftp:charset 이 없습니다' % f)
+    if 탈:
+        막음.append('로케일·인코딩을 적어만 둔 일꾼 %d곳' % len(탈))
+        print('  ✗ %d곳' % len(탈))
+        for x in 탈:
+            print('      %s' % x)
+        print('      → 한글 이름 파일을 못 읽어 배포가 멈춥니다.')
+    else:
+        print('  · 로케일을 쓰는 일꾼은 모두 실제로 깔고,')
+        print('    FTP 를 쓰는 일꾼은 모두 글자 인코딩을 못 박습니다')
+    print('')
+
 def main():
     global 자세히
     자세히 = '--자세히' in sys.argv
@@ -882,6 +928,7 @@ def main():
     검사12_옛쪽표본이저장소에있나()
     검사13_배포가검사를건너뛰지않나()
     검사14_크롬소켓길이가넉넉한가()
+    검사15_로케일을적어만두지않았나()
     print('')
 
     if 알림:
