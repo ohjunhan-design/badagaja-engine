@@ -38,6 +38,7 @@ import subprocess
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, ROOT)
+from engine import isolate   # noqa: E402
 
 # ★ 차례를 **베껴 적지 않습니다** — engine/refresh.py 에서 읽습니다
 #   (2026-09-28 바깥 검수 6차 「Single Source of Truth」)
@@ -167,10 +168,27 @@ def 견주기(앞, 뒤):
     return 말
 
 
-def 돌리기(도구, 자료, 인자=()):
+처음본트리 = []
+
+
+def 돌리기(도구, 자료, 인자=(), 자산=None):
     환경 = dict(os.environ)
     환경['PYTHONIOENCODING'] = 'utf-8'
     환경['BADAGAJA_DATA'] = 자료
+    # ★ **자산도 사본으로 보냅니다** (2026-09-29 — 운영 배포가 막혔습니다)
+    #
+    #   자료(data/)만 사본으로 바꾸고 자산(assets/)은 진짜 것을
+    #   쓰고 있었습니다. migrate_tidegraph · migrate_home 은
+    #   assets/ 에 쓰므로 **본 트리가 더럽혀졌습니다.**
+    #
+    #       시험 때문에 바뀐 파일:
+    #         assets/css/tidegraph.css · assets/js/tide-graph.js
+    #
+    #   판정 2번(뮤테이션)이 「본 트리를 안 건드렸다」로 잡았고,
+    #   **운영 배포가 그 자리에서 멈췄습니다.** 검사가 제 구실을
+    #   한 것입니다. 시험이 원본을 고치면 다음 판정이 오염됩니다.
+    if 자산:
+        환경['BADAGAJA_ASSETS'] = 자산
     r = subprocess.run(
         [sys.executable, os.path.join(ROOT, 'engine', 도구)] + list(인자),
         capture_output=True, text=True, encoding='utf-8',
@@ -179,10 +197,21 @@ def 돌리기(도구, 자료, 인자=()):
 
 
 def 자료사본():
+    """자료와 **자산**을 함께 뜹니다.
+
+    자산을 안 뜨면 assets/ 에 쓰는 이관 도구가 본 트리를
+    더럽힙니다. (2026-09-29)
+    """
     t = tempfile.mkdtemp(prefix='idem-')
     사본 = os.path.join(t, 'data')
     shutil.copytree(os.path.join(ROOT, 'data'), 사본)
-    return t, 사본
+    자산사본 = os.path.join(t, 'assets')
+    원자산 = os.path.join(ROOT, 'assets')
+    if os.path.isdir(원자산):
+        shutil.copytree(원자산, 자산사본)
+    else:
+        os.makedirs(자산사본, exist_ok=True)
+    return t, 사본, 자산사본
 
 
 def 시험_하나씩(빠르게):
@@ -194,9 +223,9 @@ def 시험_하나씩(빠르게):
         if 옛것쓰나(도구) and not 옛저장소():
             못쟀다(도구, '옛 저장소가 없습니다')
             continue
-        t, 자료 = 자료사본()
+        t, 자료, 자산 = 자료사본()
         try:
-            코드, 글 = 돌리기(도구, 자료, 인자)
+            코드, 글 = 돌리기(도구, 자료, 인자, 자산)
             if 코드 != 0:
                 if 재료가없나(글):
                     못쟀다(도구, '옛 저장소가 없습니다')
@@ -204,7 +233,7 @@ def 시험_하나씩(빠르게):
                     봄('%s — 한 번째가 실패' % 도구, False, 글[-500:])
                 continue
             앞 = 지문(자료)
-            코드, 글 = 돌리기(도구, 자료, 인자)
+            코드, 글 = 돌리기(도구, 자료, 인자, 자산)
             if 코드 != 0:
                 봄('%s — 두 번째가 실패' % 도구, False, 글[-500:])
                 continue
@@ -224,11 +253,11 @@ def 시험_차례(빠르게):
     if not 옛저장소():
         못쟀다('차례 전체', '옛 저장소가 없습니다')
         return
-    t, 자료 = 자료사본()
+    t, 자료, 자산 = 자료사본()
     try:
         for 회 in (1, 2):
             for 도구, 인자, _ in 차례:
-                코드, 글 = 돌리기(도구, 자료, 인자)
+                코드, 글 = 돌리기(도구, 자료, 인자, 자산)
                 if 코드 != 0:
                     봄('차례 %d회 — %s 가 실패' % (회, 도구), False, 글[-400:])
                     return
@@ -266,10 +295,10 @@ def 시험_되돌림(빠르게):
     if not 옛저장소():
         못쟀다('차례 전체', '옛 저장소가 없습니다')
         return
-    t, 자료 = 자료사본()
+    t, 자료, 자산 = 자료사본()
     try:
         for 도구, 인자, _ in 차례:
-            코드, 글 = 돌리기(도구, 자료, 인자)
+            코드, 글 = 돌리기(도구, 자료, 인자, 자산)
             if 코드 != 0:
                 봄('차례를 못 돌렸습니다 — %s' % 도구, False, 글[-400:])
                 return
@@ -356,6 +385,8 @@ def 시험_집차림표():
 
 def main():
     빠르게 = '--fast' in sys.argv
+    global 처음본트리
+    _알았나, 처음본트리 = isolate.본트리가깨끗한가()
     print('이관 도구가 두 번 돌려도 같은가')
     print('  진짜 data/ 는 안 건드립니다 — 임시 사본에 대고 돌립니다')
     print('')
@@ -367,6 +398,40 @@ def main():
     print('')
     시험_집차림표()
     print('')
+
+    # ── ★ 나도 본 트리를 건드리지 않았는가 (2026-09-29)
+    #
+    #   운영 배포가 여기서 막혔습니다. 자료(data/)만 사본으로
+    #   바꾸고 **자산(assets/)은 진짜 것**을 쓰고 있었습니다.
+    #   migrate_tidegraph · migrate_home 이 assets/ 에 쓰므로
+    #   본 트리가 더럽혀졌습니다.
+    #
+    #       M assets/css/tidegraph.css
+    #       M assets/js/tide-graph.js
+    #
+    #   잡은 것은 2번(뮤테이션)이었습니다. 동시에 도는 다른
+    #   시험이 남긴 자국을 본 것입니다. **제 잘못을 남이
+    #   잡아 준 셈**이라, 여기서 스스로 보게 합니다.
+    #   로컬에서 18번만 돌려도 바로 압니다.
+    print('[6] 나도 본 트리를 건드리지 않았는가')
+    알았나, 지금본트리 = isolate.본트리가깨끗한가()
+    if not 알았나:
+        못잼.append('본 트리를 못 물어봤습니다 (git)')
+        print('  ~ git 을 못 물어봤습니다 — 깨끗하다고 세지 않습니다')
+    else:
+        샌것 = sorted(set(지금본트리) - set(처음본트리))
+        if 샌것:
+            실패.append('본 트리를 건드렸습니다: %s' % ' · '.join(샌것[:4]))
+            print('  ✗ 시험 때문에 바뀐 파일 %d개' % len(샌것))
+            for x in 샌것[:5]:
+                print('      %s' % x)
+            print('      → 이관 도구가 진짜 자리에 썼습니다.')
+            print('        BADAGAJA_DATA 뿐 아니라 BADAGAJA_ASSETS 도')
+            print('        사본으로 넘겨야 합니다.')
+        else:
+            print('  · 본 트리를 한 글자도 안 건드렸습니다')
+    print('')
+
     if 실패:
         print('%d가지 통과 · %d가지 실패%s'
               % (통과, len(실패),
