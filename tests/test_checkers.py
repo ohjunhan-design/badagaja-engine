@@ -76,13 +76,69 @@ def 돌리기(도구, 사이트=None, 자료=None, 인자=(), 뿌리=None):
     return (r.stdout or '') + (r.stderr or '')
 
 
+def _쪽지문(뿌리):
+    """사본 **전체의 내용 지문** — 정말 망가졌는지 재는 데 씁니다.
+
+    ★ 크기만 재면 안 됩니다 (2026-09-29 — 제가 한 번 틀렸습니다)
+
+      처음에는 html 크기 합만 보았습니다. 그랬더니
+        · 「2026년 9월」 → 「1999년 1월」  (글자 수가 같음)
+        · favicon.svg 지우기            (html 이 아님)
+      같은 뮤테이션을 「안 바꿨다」고 잘못 일렀습니다.
+
+      **내용까지 봐야 압니다.** 파일 이름과 내용을 모두 섞습니다.
+    """
+    import hashlib
+    h = hashlib.sha256()
+    for 터, 폴더들, 것들 in os.walk(뿌리):
+        폴더들.sort()
+        for 이름 in sorted(것들):
+            길 = os.path.join(터, 이름)
+            h.update(os.path.relpath(길, 뿌리).replace(os.sep, '/')
+                     .encode('utf-8'))
+            try:
+                with open(길, 'rb') as f:
+                    h.update(f.read())
+            except OSError:
+                pass
+    return h.hexdigest()
+
+
 def 사이트사본(고치기=None):
-    """site/ 를 임시로 베껴, 고치기 함수로 망가뜨립니다"""
+    """site/ 를 임시로 베껴, 고치기 함수로 망가뜨립니다
+
+    ★ **정말 망가졌는지 잽니다** (2026-09-29 — 이것에 당했습니다)
+
+      「안전 안내를 지우면 잡는다」 시험이 실패했습니다. 그런데
+      검사기도 옳고 시험도 옳았습니다 —
+      **뮤테이션이 아무것도 안 지웠던 것**입니다.
+
+      시험이 `class="firsttime"` 으로 닫는 따옴표까지 찾았는데,
+      「처음이신가요?」를 단추 꼴로 바꾸며 클래스를
+      `firsttime firsttime--btn` 으로 늘렸기 때문입니다.
+
+      그러면 검사기는 **멀쩡한 쪽**을 보고 「잘못 없음」이라 하고,
+      시험은 「검사기가 못 잡았다」고 합니다.
+      **뮤테이션 시험이 겉모양에 매이면 조용히 헛돕니다.**
+
+      그래서 고치기 전후로 크기를 재어, **안 바뀌었으면 바로
+      알립니다.** 망가뜨리지 못한 시험은 아무것도 재지 못합니다.
+    """
     t = tempfile.mkdtemp(prefix='checker-test-')
     사본 = os.path.join(t, 'site')
     shutil.copytree(os.path.join(ROOT, 'site'), 사본)
     if 고치기:
+        앞 = _쪽지문(사본)
         고치기(사본)
+        뒤 = _쪽지문(사본)
+        if 앞 == 뒤:
+            print('  ✗ **뮤테이션이 아무것도 안 바꿨습니다** — '
+                  '이 시험은 헛돕니다')
+            print('      고치는 함수: %s'
+                  % getattr(고치기, '__name__', '(이름 없음)'))
+            print('      쪽이 바뀌었는데 찾는 글이 옛 모양일 수 있습니다.')
+            실패.append('뮤테이션이 아무것도 안 바꿨습니다 (%s)'
+                        % getattr(고치기, '__name__', '?'))
     return t, 사본
 
 
@@ -1142,8 +1198,19 @@ def 시험_옛쪽대비():
             if not os.path.isfile(a):
                 continue
             s2 = io.read(a)
-            io.write(a, _re.sub(r'(?is)<details class="firsttime".*?</details>',
-                                '', s2))
+            # ★ 클래스가 **하나뿐이라고 보지 않습니다** (2026-09-29)
+            #
+            #   전에는 `class="firsttime"` 으로 닫는 따옴표까지 찾았습니다.
+            #   그런데 「처음이신가요?」를 단추 꼴로 바꾸며 클래스를
+            #   `firsttime firsttime--btn` 으로 늘리자 **아무것도 안
+            #   지워졌습니다.** 그러면 검사기는 멀쩡한 쪽을 보고
+            #   「잘못이 없다」고 하고, 시험은 「검사기가 못 잡았다」고
+            #   합니다. **둘 다 옳은데 결론만 틀립니다.**
+            #
+            #   뮤테이션 시험이 **겉모양에 매여 있으면 조용히 헛돕니다.**
+            io.write(a, _re.sub(
+                r'(?is)<details class="firsttime[^"]*".*?</details>',
+                '', s2))
 
     t, 사본 = 사이트사본(안전지우기)
     try:
