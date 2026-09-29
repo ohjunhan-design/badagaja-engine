@@ -111,12 +111,27 @@ jobs:
           python engine/summary.py || true
           FINAL=$(python -c "import json,io;print(json.load(io.open('tests/out/gate.json',encoding='utf-8')).get('FINAL',''))")
           echo "판정: $FINAL"
+          # ★ 「검증 배포 필요」도 올릴 수 있습니다 — 다만 조건이 있습니다
+          #   (2026-09-29 바깥 검수 12차 · 계약-35)
+          #
+          #   20번은 올려야만 잽니다. 그것 하나 때문에 영원히 GO 가
+          #   안 되면 **배포 자체가 막힙니다.** 그래서 「올리기 전에
+          #   잴 수 있는 것은 모두 쟀다」는 상태를 따로 둡니다.
+          #
+          #   ★ 무르게 하는 것이 아닙니다.
+          #     FAIL·ERROR·INFRA_FAIL 이 하나라도 있거나 20번 아닌
+          #     항목을 못 쟀으면 판정이 NO-GO 이고, 여기서 막힙니다.
+          #     올려야만 재는 항목은 gate.py 의 올려야재는것 하나뿐입니다.
           case "$FINAL" in
-            "GO 후보") echo "· 판정이 통과했습니다" ;;
+            "GO 후보")
+              echo "· 판정이 통과했습니다 (20번까지 다 쟀습니다)" ;;
+            "검증 배포 필요")
+              echo "· 올리기 전에 잴 수 있는 것은 **모두 쟀습니다.**"
+              echo "  남은 것은 올려야만 잴 수 있는 항목뿐입니다."
+              echo "  올린 뒤 20번을 다시 재어 확인합니다." ;;
             *)
               echo "::error::판정이 $FINAL 입니다 — 올리지 않습니다"
-              echo "  20번(실제 서버)은 올려야만 잽니다. 그것만 남았다면"
-              echo "  먼저 검증 배포(stage.yml)로 확인하세요."
+              echo "  요약 칸에서 무엇이 막는지 보실 수 있습니다."
               exit 1 ;;
           esac
 
