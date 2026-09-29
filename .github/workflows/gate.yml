@@ -234,19 +234,28 @@ jobs:
           # ★ 우분투는 setup-chrome, 윈도우는 찾은 자리 (2026-09-30)
           BADAGAJA_CHROME: ${{ steps.chrome.outputs.chrome-path || steps.chromewin.outputs.chrome-path }}
         run: |
-          echo "setup-chrome 이 알려 준 자리: [$BADAGAJA_CHROME]"
+          echo "크롬 자리: [$BADAGAJA_CHROME]"
           if [ -z "$BADAGAJA_CHROME" ]; then
-            echo "::error::크롬 자리가 비었습니다 — outputs.chrome-path 가 없습니다"
+            echo "::error::크롬 자리가 비었습니다"
             exit 1
           fi
-          "$BADAGAJA_CHROME" --version || {
-            echo "::error::크롬이 실행되지 않습니다"; exit 1; }
+          # ★ **--version 으로 재지 않습니다** (2026-09-30)
+          #   윈도우 크롬은 --version 을 콘솔에 안 찍고 조용히 끝납니다.
+          #   「도는가」는 **쪽을 그려 보는 것**으로만 잽니다.
           echo '<!doctype html><title>t</title><p>바다</p>' > /tmp/t.html
+          # ★ 윈도우 크롬은 깃 배시의 /tmp 를 **모릅니다**.
+          #   cygpath 로 윈도우 꼴 주소로 바꿔 줍니다.
+          if command -v cygpath >/dev/null 2>&1; then
+            TFILE=$(cygpath -m /tmp/t.html)
+          else
+            TFILE=/tmp/t.html
+          fi
+          echo "시험 쪽: file:///$TFILE"
           "$BADAGAJA_CHROME" --headless=new --disable-gpu --no-sandbox \
-            --virtual-time-budget=4000 --dump-dom file:///tmp/t.html \
+            --virtual-time-budget=4000 --dump-dom "file:///$TFILE" \
             > /tmp/t.out 2>/tmp/t.err || true
           if grep -q '바다' /tmp/t.out; then
-            echo "· 크롬이 쪽을 그려 냅니다"
+            echo "· 크롬이 쪽을 그려 냅니다 (한글도 제대로)"
           else
             echo "::error::크롬이 쪽을 못 그립니다"
             head -20 /tmp/t.err
