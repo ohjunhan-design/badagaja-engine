@@ -1436,29 +1436,9 @@ def 권역쪽(d, 권역, 언어='ko'):
            ''.join('<li>%s</li>' % esc(s) for s in (x.get('차례') or [])))
         for x in v['코스'])
 
-    달표 = {}
-    for x in v['축제']:
-        달표.setdefault(x.get('달') or 0, []).append(x)
-    축제칸 = ''
-    for 달 in range(1, 13):
-        것들 = 달표.get(달) or []
-        축제칸 += ('<div class="month%s"><div class="month-num">%d월</div>%s</div>'
-                   % (' month--on' if 것들 else '', 달,
-                      ''.join('<div class="month-name">%s</div>%s'
-                              % (esc(x['이름'].get(언어) or x['이름']['ko']),
-                                 '<div class="month-desc">%s</div>'
-                                 % esc((x['설명'] or {}).get(언어)
-                                       or (x['설명'] or {}).get('ko'))
-                                 if x.get('설명') else '')
-                              for x in 것들)))
-    # 달을 모르는 축제도 빠뜨리지 않습니다
-    남은축제 = 달표.get(0) or []
-    if 남은축제:
-        축제칸 += ('<div class="month month--on"><div class="month-num">그 밖</div>%s</div>'
-                   % ''.join('<div class="month-name">%s</div>'
-                             % esc(x['이름'].get(언어) or x['이름']['ko'])
-                             for x in 남은축제))
-
+    # ★ **한 곳에서 만듭니다** (2026-09-29 · 규칙 26)
+    #   전에는 권역 쪽과 묶음 쪽이 같은 코드를 따로 들고 있었습니다.
+    축제칸, 축제목록 = 달력칸(v['축제'], 쪽길, 언어)
     마을칸 = ''
     if v['마을']:
         줄 = ''.join(
@@ -1558,6 +1538,8 @@ def 권역쪽(d, 권역, 언어='ko'):
                        % url.asset('assets/js/tide.js', 쪽길,
                                    판번호(os.path.join(ASSETS, 'js', 'tide.js')))
                        + 물높이그래프(쪽길, 권역)
+                       # ★ 축제 팝업 (2026-09-29 주인 지적)
+                       + 축제팝업(축제목록, 쪽길)
                        + 광고움직임(쪽길, '권역')),
     }
     return 쪽길, template.그리기('region.html', 값)
@@ -1757,6 +1739,71 @@ def 권역구조화(d, 권역, 쪽길, 포인트수):
     return json.dumps({'@context': 'https://schema.org', '@graph': 그래프},
                       ensure_ascii=False, separators=(',', ':'))
 
+
+
+def 달력칸(축제들, 쪽길, 언어='ko'):
+    """★ **달마다 한 칸 · 누르면 팝업** (2026-09-29 주인 지적)
+
+    「달마다 다른 얼굴의 행사에 전에 있던 팝업 설명창이 사라졌어」
+
+    ★ 옛 쪽에는 `.ip-overlay` 팝업이 있었습니다. 새 쪽은 설명을
+      카드에 **그대로 펼쳐** 놓아 칸이 길어지고, 일정·가는 길처럼
+      더 적을 것을 넣을 자리가 없었습니다.
+
+    ★ **한 곳에서 만듭니다** (규칙 26). 전에는 권역 쪽과 묶음 쪽이
+      각각 같은 코드를 들고 있었습니다. 한쪽만 고치면 갈라집니다.
+
+    돌려주는 것: (칸 HTML, 팝업이 읽을 목록)
+    """
+    달표 = {}
+    for x in 축제들:
+        달표.setdefault(x.get('달') or 0, []).append(x)
+
+    목록 = []
+
+    def 한개(x):
+        이름 = x['이름'].get(언어) or x['이름']['ko']
+        설명 = ((x.get('설명') or {}).get(언어)
+                or (x.get('설명') or {}).get('ko') or '')
+        번호 = len(목록)
+        목록.append({
+            '이름': 이름, '설명': 설명,
+            '곳': x.get('곳') or '',
+            '때': ('%d월' % x['달']) if x.get('달') else '',
+            '누구와': x.get('누구와') or '',
+            '주소': url.rel(쪽길, url.festival(x['id'], 언어)),
+        })
+        return ('<button type="button" class="month-item" data-fest="%d">'
+                '<span class="month-name">%s</span>%s</button>'
+                % (번호, esc(이름),
+                   '<span class="month-desc">%s</span>' % esc(설명)
+                   if 설명 else ''))
+
+    나옴 = ''
+    for 달 in range(1, 13):
+        것들 = 달표.get(달) or []
+        나옴 += ('<div class="month%s"><div class="month-num">%d월</div>%s</div>'
+                 % (' month--on' if 것들 else '', 달,
+                    ''.join(한개(x) for x in 것들)))
+    남은 = 달표.get(0) or []
+    if 남은:
+        나옴 += ('<div class="month month--on">'
+                 '<div class="month-num">그 밖</div>%s</div>'
+                 % ''.join(한개(x) for x in 남은))
+    return 나옴, 목록
+
+
+def 축제팝업(목록, 쪽길):
+    """팝업이 읽을 자료와 스크립트를 함께 냅니다."""
+    if not 목록:
+        return ''
+    길 = os.path.join(ASSETS, 'js', 'fest-pop.js')
+    if not os.path.isfile(길):
+        return ''
+    return ('<script>window.BADAGAJA_FEST=%s;</script>'
+            '<script src="%s" defer></script>'
+            % (json.dumps(목록, ensure_ascii=False),
+               esc(url.asset('assets/js/fest-pop.js', 쪽길, 판번호(길)))))
 
 def 달표만들기(축제들, 언어='ko'):
     """달마다 한 칸. 축제가 있는 달만 밝게 보입니다"""
@@ -2043,6 +2090,8 @@ def 묶음쪽(d, 묶음, 언어='ko'):
     축제들 = []
     for r in 권역들:
         축제들 += d.여행(r['id'])['축제']
+    # ★ 팔업이 뛰도록 권역 쪽과 **같은 함수**를 씁니다
+    묶음축제칸, 묶음축제목록 = 달력칸(축제들, 쪽길, 언어)
 
     # ── 여행 코스 — **이 묶음 안 권역들의 코스를 모읍니다**
     #
@@ -2129,7 +2178,8 @@ def 묶음쪽(d, 묶음, 언어='ko'):
         '코스수': len(코스칸),
         '로고': 로고(뿌리, d.사이트['이름'].get(언어) or d.사이트['이름']['ko']),
         '꼬리로고': 꼬리로고(뿌리, d.사이트['이름'].get(언어) or d.사이트['이름']['ko']),
-        '축제칸': 달표만들기(축제들, 언어),
+        # ★ 팔업이 뛰도록 같은 함수를 씁니다 (2026-09-29)
+        '축제칸': 묶음축제칸,
         '기준일안내': '이 자료는 %s 기준입니다. 현장 사정은 바뀔 수 있으니 '
                       '출발 전에 다시 확인해 주세요.' % 자료기준일(),
         '사이트한줄': d.사이트['한줄'].get(언어) or d.사이트['한줄']['ko'],
@@ -2144,6 +2194,8 @@ def 묶음쪽(d, 묶음, 언어='ko'):
                                    판번호(os.path.join(ASSETS, 'js',
                                                        'tide.js')))
                        + (물높이그래프(쪽길, 첫['id']) if 첫 else '')
+                       # ★ 축제 팝업 — 권역 쪽과 같은 것을 씁니다
+                       + 축제팝업(묶음축제목록, 쪽길)
                        # ★ 검색 자료는 **쪽에 심습니다** — 바깥에 안 물어봅니다.
                        #   인터넷이 느려도 검색은 바로 됩니다.
                        + ('<script>window.BADAGAJA_GROUP_SEARCH=%s;</script>'

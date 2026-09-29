@@ -261,6 +261,14 @@ def 검사5_차림표겹침():
             고르개 = ' '.join(m.group(1).split())
             if not 고르개 or 고르개.startswith(('@', '%')):
                 continue
+            # ★ **from · to · 25%** 는 고르개가 아닙니다 (2026-09-29)
+            #   @keyframes 안의 **자리 표시**입니다. 움직임을 두 파일에
+            #   각각 넣으면 「같은 고르개가 다른 값」으로 잘못 잡혔습니다.
+            #   겪은 일: home.css 의 gbIn 과 site.css 의 fpIn 이
+            #   둘 다 from 을 써서 배포가 막혔습니다.
+            if 고르개 in ('from', 'to') or 고르개.rstrip('%').replace(
+                    '.', '', 1).isdigit():
+                continue
             속성 = {}
             for 줄 in m.group(2).split(';'):
                 if ':' in 줄:
