@@ -240,6 +240,19 @@
       "파일": [
         "data/raw/photo-distance.json"
       ]
+    },
+    {
+      "key": "spot-photos-new",
+      "이름": "명소 사진 (한국관광공사)",
+      "출처": "한국관광공사 국문 관광정보 — api/tour.php?kind=spot",
+      "주기": "분기",
+      "방법": "자동",
+      "도구": "engine/fetch_spot_photos.py --write → download_spot_photos.py --write",
+      "메모": "2026-09-29 주인 지시 — 「지역 광관안내 잘 살펴보면 사진 많을꺼야」. 명소 393곳 중 사진이 125곳(32%)뿐이라 격자에 빈자리가 났습니다. 받을 때 두 가지를 거릅니다 — ① 이용허락을 안 주면 버림(규칙 5) ② 명소 좌표에서 1km 밖이면 버림(주인 제안). 서버 api/tour.php 가 `lic` 을 함께 내주도록 2026-09-29 에 고쳤습니다. 그 전에는 유형을 몰라 쓸 수 없었습니다. 받은 뒤에는 **눈으로 한 번 훑어** 간판·글자 조형을 뺍니다(규칙 4)",
+      "파일": [
+        "data/raw/spot-photos-new.json",
+        "assets/photo/img/coast/"
+      ]
     }
   ]
 }

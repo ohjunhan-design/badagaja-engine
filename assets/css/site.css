@@ -1480,9 +1480,21 @@ details.area-group .area-list{margin-bottom:12px}
 
 /* ── 사진 출처를 **사진 안에** 겹칩니다 (공간을 덜 먹습니다) */
 .card-figure{position:relative;margin:0}
+/*  ★ 흐린 사진 위에서도 **읽혀야** 합니다 (2026-09-29)
+       주인이 「출처는 최대한 작게」 하셨지만, 규칙 6 은 촬영자를
+       **밝히라**는 것입니다. 안 읽히면 밝힌 것이 아닙니다.
+       화면을 찍어 보니 밝은 하늘 사진에서 흰 글씨가 묻혔습니다. */
+/*  ★ 밝은 사진에서도 **읽혀야** 합니다 (2026-09-29)
+       그림자만으로는 모래·풀밭 위에서 묻혔습니다.
+       화면을 두 번 찍어 보고서야 알았습니다 (규칙 6-2).
+       바닥에 **또렷한 띠**를 깔고 글자를 그 위에 얹습니다.
+       주인 뜻(「최대한 작게」)대로 10px 로 작게 두되,
+       규칙 6 이 요구하는 **촬영자 밝히기**는 지킵니다. */
 .card-figure figcaption{position:absolute;left:0;right:0;bottom:0;
-  font-size:10.5px;line-height:1.35;padding:10px 10px 5px;color:#fff;
-  background:linear-gradient(to top,rgba(0,0,0,.78) 0%,rgba(0,0,0,.45) 55%,rgba(0,0,0,0) 100%);text-shadow:0 1px 2px rgba(0,0,0,.5);
+  font-size:10px;line-height:1.5;padding:4px 10px 5px;
+  color:rgba(255,255,255,.94);background:rgba(20,26,30,.62);
+  backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+  letter-spacing:-.1px;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* ── 명소 격자 — 칸이 **제 높이만** 쓰게 합니다

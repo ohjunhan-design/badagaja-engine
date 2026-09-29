@@ -236,6 +236,31 @@ def write_json(path, obj):
                                   sort_keys=True) + '\n')
 
 
+def write_binary(path, 내용, *, mkdir=True):
+    """인터넷에서 받아 온 그림처럼 **바이트를 그대로** 씁니다.
+
+    ★ 2026-09-29 — 계약-13 이 제 실수를 잡았습니다.
+      명소 사진을 받는 도구에서 `open(갈곳,'wb')` 를 직접 썼습니다.
+      **파일 쓰기는 이 파일만 한다**는 계약을 제가 어긴 것입니다.
+
+      copy_binary() 는 있는 파일을 옮기는 것이고, 이것은
+      메모리에 있는 바이트를 쓰는 것이라 따로 둡니다.
+
+    같은 내용이면 손대지 않습니다 (계약-07 — 다시 만들어도 같아야).
+    """
+    if os.path.exists(path):
+        with _io.open(path, 'rb') as f:
+            if f.read() == 내용:
+                return False
+    if mkdir:
+        d = os.path.dirname(path)
+        if d and not os.path.isdir(d):
+            os.makedirs(d, exist_ok=True)
+    with _io.open(path, 'wb') as f:
+        f.write(내용)
+    return True
+
+
 def copy_binary(src, dst, *, mkdir=True):
     """그림·아이콘처럼 글이 아닌 파일을 **그대로** 옮깁니다.
 

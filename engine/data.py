@@ -67,6 +67,7 @@ class 자료:
         self._히어로 = None
         self._명소사진 = None
         self._거른사진 = None
+        self._새사진 = None
         self._포인트 = None
         self._권역 = None
         self._여행 = None
@@ -107,7 +108,35 @@ class 자료:
             거를것 = _읽기('photo-reject.json', default={}) or {}
             self._거른사진 = set(x.get('파일') for x in 거를것.get('거를것', [])
                                  if x.get('파일'))
-        return [x for x in (self._사진자료.get('사진') or [])
+        # ★ **관광공사에서 새로 받은 명소 사진을 함께 봅니다** (2026-09-29)
+        #
+        #   주인 지시 — 「사진검수해 실제 사진으로 지역 광관안내 잘
+        #   살펴보면 사진 많을꺼야」
+        #
+        #   명소 393곳 가운데 사진이 있는 곳이 125곳(32%)뿐이라
+        #   명소 격자에 빈자리가 크게 났습니다.
+        #   engine/fetch_spot_photos.py 가 찾고 download_spot_photos.py 가
+        #   받아 둔 것을 여기서 합칩니다.
+        #
+        #   ★ 받을 때 이미 두 가지를 걸렀습니다.
+        #     · **이용허락을 안 주면 버립니다** (주인 규칙 5)
+        #     · **명소 좌표에서 1km 밖이면 버립니다** (주인 제안)
+        if self._새사진 is None:
+            새 = _읽기('spot-photos-new.json', default={}) or {}
+            self._새사진 = []
+            for x in (새.get('사진') or []):
+                if not (x.get('파일') and x.get('이용허락')):
+                    continue
+                self._새사진.append({
+                    '파일': x['파일'], '권역': x['권역'], '명소': x['명소'],
+                    '제목': x.get('제목') or x['명소'],
+                    '촬영자': x.get('촬영자') or '한국관광공사',
+                    '이용허락': x['이용허락'], '쓰임': 'spot',
+                    '출처주소': x.get('사진주소') or '',
+                    '찍은곳': x.get('주소') or '',
+                    '거리km': x.get('거리km'),
+                })
+        return [x for x in ((self._사진자료.get('사진') or []) + self._새사진)
                 if x.get('파일') not in self._거른사진]
 
     @property
