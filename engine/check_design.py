@@ -35,6 +35,8 @@
 import os
 import re
 import sys
+import glob
+import collections
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -451,6 +453,55 @@ def main():
         print('  · 어종 쪽 %d개에 모두 삽화가 있습니다 (모두 %d개 · 쪽마다 %.1f개)'
               % (len(셈), sum(셈), sum(셈) / len(셈)))
     print('')
+    # ── [6] 권역 쪽의 칸 차례가 모든 권역에서 같은가 (계약-36)
+    #
+    #   ★ 2026-09-29 바깥 검수 12차
+    #     「권역마다 카드 위치·메뉴 순서·정보량이 크게 달라지면
+    #       57개 페이지가 각각 다른 사이트처럼 보입니다.」
+    #
+    #   재 보니 58쪽에 3가지 차례가 있었습니다. 제주 7쪽만
+    #   풍경칸이 더 있었고, 그것은 **자료를 따른 것**이라 옳았습니다.
+    #   다만 계약이 없어 옳은지 그른지 가릴 길이 없었습니다.
+    #
+    #   그래서 **자료로 설명되는 차이만** 봐줍니다.
+    print('[6] 권역 쪽의 칸 차례가 모든 권역에서 같은가 (계약-36)')
+    자료가정하는칸 = {'scenery'}
+    차례표 = {}
+    for 길 in sorted(glob.glob(os.path.join(NEW, '*.html'))):
+        이름 = os.path.basename(길)[:-5]
+        if 이름 == 'index':
+            continue                       # 전국 첫 화면 — 권역 쪽이 아닙니다
+        글 = io.read(길, default='')
+        칸들 = re.findall(r'<section[^>]*id="([^"]+)"', 글)
+        if len(칸들) < 4:
+            continue                       # 권역 쪽이 아닙니다
+        차례표[이름] = 칸들
+    if not 차례표:
+        print('  ~ 권역 쪽이 없습니다 — 잴 것이 없습니다.')
+    else:
+        # 자료가 정하는 칸을 빼고 견줍니다
+        뼈대 = {}
+        for 이름, 칸들 in 차례표.items():
+            뼈대[이름] = tuple(x for x in 칸들 if x not in 자료가정하는칸)
+        셈 = collections.Counter(뼈대.values())
+        흔한것 = 셈.most_common(1)[0][0]
+        어긋난것 = [이름 for 이름, 차 in 뼈대.items() if 차 != 흔한것]
+        if 어긋난것:
+            막음.append('칸 차례가 다른 권역 쪽 %d개' % len(어긋난것))
+            print('  ✗ 칸 차례가 다른 쪽 %d개' % len(어긋난것))
+            print('      기준: %s' % ' → '.join(흔한것))
+            for 이름 in 어긋난것[:5]:
+                print('      %-14s %s' % (이름, ' → '.join(뼈대[이름])))
+            print('      → 손님이 권역을 옮길 때마다 다른 사이트로 느낍니다.')
+        else:
+            더한칸 = sum(1 for 칸들 in 차례표.values()
+                         if set(칸들) & 자료가정하는칸)
+            print('  · 권역 쪽 %d개의 칸 차례가 모두 같습니다' % len(차례표))
+            print('      기준: %s' % ' → '.join(흔한것))
+            print('      자료가 있어 풍경칸이 더 붙은 쪽 %d개 (계약대로)'
+                  % 더한칸)
+    print('')
+
     # ── [5] 그림 안 글자가 그림 밖으로 나가지 않는가
     #
     #   ★ 2026-09-29 — 삽화를 되살리자 375px 에서 글자가 잘렸습니다.
