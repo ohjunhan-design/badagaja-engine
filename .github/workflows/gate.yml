@@ -71,7 +71,13 @@ permissions:
 jobs:
   gate:
     name: 판정
-    runs-on: ubuntu-latest
+    # ★ 어느 컴퓨터에서 돌지 **한 곳에서 정합니다** (2026-09-30)
+    #   저장소 변수 RUNNER_LABEL 이 있으면 그것을 씁니다.
+    #   없으면 예전처럼 깃허브 우분투입니다.
+    #   셀프 호스티드 러너를 붙이면 RUNNER_LABEL 에
+    #   self-hosted 를 넣기만 하면 됩니다 — 일꾼 파일은
+    #   다시 안 고칩니다.
+    runs-on: ${{ vars.RUNNER_LABEL || 'ubuntu-latest' }}
     # ★ **일꾼 한도는 검사기 한도보다 넉넉해야 합니다** (2026-09-28)
     #
     #   60분이었는데, 검사기 하나에 120분(시간=7200)을 주고
@@ -125,6 +131,10 @@ jobs:
       #   클라우드에서만 「손볼 곳 4건」이라 했습니다.
       #   **쪽이 잘못된 것이 아니라 재는 자리가 달랐던 것**입니다.
       - name: 한글 글꼴 깔기
+      # ★ **우분투일 때만** 깝니다 (2026-09-30)
+      #   셀프 호스티드 러너(윈도우)에는 한글 글꼴이 이미 있습니다.
+      #   apt-get 은 윈도우에 없으므로 건너뜁니다.
+        if: runner.os == 'Linux'
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq fonts-noto-cjk fonts-nanum locales
