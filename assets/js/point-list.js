@@ -152,6 +152,13 @@
     지도.addControl(new kakao.maps.ZoomControl(),
                     kakao.maps.ControlPosition.RIGHT);
 
+    // ★ 일반·위성 단추 (2026-09-29 주인 지시)
+    //   갯바위·갯벌은 길 이름이 없어 일반 지도에서는 빈 바다로
+    //   보입니다. 위성으로 봐야 어디로 걸어 들어가는지 압니다.
+    if (window.BADAGAJA_MAPTYPE) {
+      window.BADAGAJA_MAPTYPE.달기(지도, 지도칸);
+    }
+
     풍선 = new kakao.maps.CustomOverlay({ yAnchor: 1.25, zIndex: 20 });
     어림원 = new kakao.maps.Circle({
       strokeWeight: 2, strokeColor: '#C07B22', strokeOpacity: .9,

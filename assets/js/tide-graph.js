@@ -22,10 +22,46 @@
     return out;
   }
 
+  // ── 잔떨림을 고릅니다 (2026-09-29 주인 지시 — 「좀더 부드럽게」)
+  //
+  //   10분 간격 예측값은 cm 단위로 반올림되어 **계단이 집니다.**
+  //   곡선으로 이어도 그 계단을 그대로 따라가 톱니처럼 보입니다.
+  //
+  //   재 보니 이랬습니다.
+  //       곡선 조각 143개 · 평균 꺾임 2.74도 · 가장 꺾인 곳 9.2도
+  //   조석은 본래 매끄러우니 이 꺾임은 **자료의 잡음**입니다.
+  //
+  //   두 가지를 합니다.
+  //     ① 이웃 평균으로 값을 고릅니다 (1-2-1 저울)
+  //     ② 20분 간격으로 솎습니다 — 조석은 느리게 변해 넉넉합니다
+  //
+  //   ★ 만조·간조 **시각과 높이는 따로 표시**하므로
+  //     (해양조사원 고·저조 예보) 정확도가 떨어지지 않습니다.
+  //     솎는 것은 **선을 그리는 점**뿐입니다.
+  function 고르게(점들) {
+    if (!점들 || 점들.length < 5) { return 점들 || []; }
+    // ① 이웃 평균 — 양 끝은 그대로 둡니다
+    var 고른것 = 점들.map(function (p, i) {
+      if (i === 0 || i === 점들.length - 1) { return [p[0], p[1]]; }
+      var a = 점들[i - 1][1], b = p[1], c = 점들[i + 1][1];
+      return [p[0], (a + 2 * b + c) / 4];
+    });
+    // ② 솎기 — 20분마다. 마지막 점은 반드시 남깁니다
+    var 사이 = 20;
+    var 난것 = [];
+    for (var i = 0; i < 고른것.length; i++) {
+      if (i === 0 || i === 고른것.length - 1
+          || 고른것[i][0] - 난것[난것.length - 1][0] >= 사이) {
+        난것.push(고른것[i]);
+      }
+    }
+    return 난것;
+  }
+
   function draw(box, d, opt) {
     box.querySelector('.tg-plot') && box.querySelector('.tg-plot').remove();
     var W = 720, H = 190, L = 34, R = 10, T = 26, B = 24;
-    var pts = d.points.map(function (p) { return [toMin(p[0]), p[1]]; });
+    var pts = 고르게(d.points.map(function (p) { return [toMin(p[0]), p[1]]; }));
     var vals = pts.map(function (p) { return p[1]; });
     var vmin = Math.min.apply(null, vals), vmax = Math.max.apply(null, vals), pad = Math.max(10, (vmax - vmin) * 0.12);
     vmin -= pad; vmax += pad;
@@ -120,6 +156,15 @@
 
   function mount(box, region, opt) {
     opt = opt || {};
+    // ★ **api 주소를 받습니다** (2026-09-29 주인 지적 「롬링 물때표가 안나와」)
+    //   전에는 'api/marine.php' 로 **고정**되어 있었습니다.
+    //   권역 쪽(/gochang.html)에서는 맞지만,
+    //   묶음 쪽은 주소가 **폴더**라(/chungnam/)
+    //   /chungnam/api/marine.php 로 가 **404** 였습니다.
+    //   그 404 가 「물높이 예보를 불러오지 못했어요」로 보였습니다.
+    //   이제 쪽을 만드는 쪽에서 상대 주소를 주고,
+    //   안 주면 예전처럼 'api/' 를 씁니다.
+    var API = opt.api || 'api/';
     box.innerHTML = '';
     box.classList.add('tide-graph'); if (opt.dark) box.classList.add('dark');
     var head = el('div', 'tg-head'); head.appendChild(el('b', null, '🌊 시간별 물높이'));
@@ -135,9 +180,9 @@
         draw(box, d, { dark: opt.dark, sun: sun, today: day === 0, events: ev });
       };
       if (cache[day]) return go(cache[day].d, cache[day].ev);
-      if (!tidePromise) tidePromise = fetch('api/tide-cache.php?region=' + region).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
+      if (!tidePromise) tidePromise = fetch(API + 'tide-cache.php?region=' + region).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
       Promise.all([
-        fetch('api/marine.php?kind=series&region=' + region + '&day=' + day).then(function (r) { if (!r.ok) throw 0; return r.json(); }),
+        fetch(API + 'marine.php?kind=series&region=' + region + '&day=' + day).then(function (r) { if (!r.ok) throw 0; return r.json(); }),
         tidePromise
       ]).then(function (a) {
         var ev = a[1] && a[1].days && a[1].days[day] ? a[1].days[day].events : null;

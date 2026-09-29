@@ -29,7 +29,10 @@
 .g-hero-shade{position:absolute;inset:0;background:
   linear-gradient(100deg,rgba(16,24,30,.9) 0%,rgba(16,24,30,.74) 34%,rgba(16,24,30,.36) 62%,rgba(16,24,30,.16) 88%),
   linear-gradient(180deg,rgba(16,24,30,.18) 0%,rgba(16,24,30,0) 42%,rgba(16,24,30,.38) 100%)}
-.g-hero-in{position:relative;z-index:2;width:100%;padding-top:44px;padding-bottom:44px}
+/* ★ 왼쪽 글 · 오른쪽 이름 (2026-09-29 주인 지시)
+   사진 오른쪽이 비어 있었습니다. 그 자리에 이름을 새깁니다. */
+.g-hero-in{position:relative;z-index:2;width:100%;padding-top:44px;padding-bottom:44px;
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:28px;align-items:center}
 .g-hero-txt{max-width:640px;color:#FFFBF3}
 .g-eyebrow{display:inline-block;font-size:.83rem;font-weight:700;color:#F3E3C4;background:rgba(0,0,0,.28);
   border:1px solid rgba(255,255,255,.2);padding:6px 14px;border-radius:999px;backdrop-filter:blur(6px);margin-bottom:16px}
@@ -379,4 +382,143 @@ footer.site-footer .footer-bottom{padding-bottom:calc(64px + env(safe-area-inset
   .nv-n svg{width:21px;height:21px}
   .nv-box b{font-size:.98rem}
   .nv-go{width:27px;height:27px}
+}
+
+/* ── 브랜드 각인 (2026-09-29 주인 지시) ─────────────────────
+   「이곳에 바다가자닷컴의 이름이 각인되도록 … 사람들이 이름을
+     잊어버리지 않도록」
+
+   ★ 광고가 아니라 **이름표**입니다. 누르지 않습니다.
+   ★ 크기 — PC 300×210px · 휴대폰은 보이지 않습니다
+     (휴대폰은 글이 밀립니다. 머리 로고가 그 일을 합니다) */
+.g-brand{
+  position:relative;overflow:hidden;
+  width:340px;padding:26px 22px 22px;border-radius:20px;
+  background:linear-gradient(165deg,rgba(16,32,40,.72),rgba(12,20,26,.62));
+  border:1.5px solid rgba(240,193,115,.55);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  text-align:center;color:#FFFBF3;
+  /* ① 들어올 때 아래에서 떠오릅니다 */
+  animation:gbIn .72s cubic-bezier(.22,1,.36,1) both,
+            gbGlow 3.2s ease-in-out 1s infinite;
+}
+@keyframes gbGlow{
+  0%,100%{box-shadow:0 12px 34px rgba(0,0,0,.34),
+                     0 0 0 0 rgba(240,193,115,.34),
+                     0 0 22px rgba(240,193,115,.20)}
+  50%    {box-shadow:0 12px 34px rgba(0,0,0,.34),
+                     0 0 0 9px rgba(240,193,115,0),
+                     0 0 40px rgba(240,193,115,.42)}
+}
+@keyframes gbIn{
+  from{opacity:0;transform:translateY(16px) scale(.97)}
+  to{opacity:1;transform:none}
+}
+
+/* ② 물방울이 천천히 떠다닙니다 — 바다 느낌 */
+.g-brand .logo{
+  position:relative;z-index:2;
+  width:66px;height:66px;margin:0 auto 12px;display:block;
+  filter:drop-shadow(0 6px 16px rgba(0,0,0,.45));
+  animation:gbFloat 3.6s ease-in-out .7s infinite;
+}
+/* 물방울 뒤에서 파문이 퍼집니다 */
+.g-brand::before{
+  content:"";position:absolute;top:30px;left:50%;
+  width:66px;height:66px;margin:-33px 0 0 -33px;border-radius:50%;
+  border:2px solid rgba(240,193,115,.7);
+  animation:gbRing 2.8s ease-out 1s infinite;pointer-events:none;
+}
+@keyframes gbRing{
+  0%  {transform:scale(.7);opacity:.75}
+  70% {transform:scale(2.1);opacity:0}
+  100%{transform:scale(2.1);opacity:0}
+}
+@keyframes gbFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-5px)}
+}
+
+/* ③ 이름 위로 빛이 한 번씩 지나갑니다 — 「각인」 */
+.gb-name{
+  position:relative;display:block;
+  font-size:1.85rem;font-weight:800;letter-spacing:-.025em;
+  text-shadow:0 2px 12px rgba(0,0,0,.35);
+  background:linear-gradient(100deg,
+    #FFFBF3 0%,#FFFBF3 38%,#FFE6B0 47%,#FFFFFF 52%,#FFE6B0 57%,
+    #FFFBF3 66%,#FFFBF3 100%);
+  background-size:280% 100%;background-position:100% 0;
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+  animation:gbShine 3.4s ease-in-out .9s infinite;
+}
+@keyframes gbShine{
+  0%,42%{background-position:100% 0}
+  78%,100%{background-position:0 0}
+}
+
+/* ④ 물결이 카드 아래를 훑고 지나갑니다 */
+.g-brand::after{
+  content:"";position:absolute;left:-40%;right:-40%;bottom:-54px;height:96px;
+  background:radial-gradient(ellipse at 50% 0%,
+    rgba(240,193,115,.22) 0%,rgba(240,193,115,0) 70%);
+  animation:gbWave 7s ease-in-out infinite;pointer-events:none;
+}
+@keyframes gbWave{
+  0%,100%{transform:translateX(-6%)}
+  50%{transform:translateX(6%)}
+}
+
+/* ★ 움직임을 줌이는 분께는 멈춥니다.
+   어지러운 화면이 머리가 아픈 분이 실제로 계십니다. */
+@media (prefers-reduced-motion:reduce){
+  .g-brand,.g-brand .logo,.gb-name,.g-brand::after{animation:none}
+  .gb-name{-webkit-text-fill-color:#FFFBF3;color:#FFFBF3}
+}
+.gb-url{
+  display:block;margin-top:7px;font-size:.95rem;font-weight:700;
+  color:#F5CE8A;letter-spacing:.08em;
+  text-shadow:0 0 14px rgba(240,193,115,.5);
+}
+.gb-line{
+  display:block;margin-top:12px;padding-top:12px;font-size:.82rem;
+  line-height:1.6;color:rgba(255,251,243,.86);
+  border-top:1px solid rgba(255,255,255,.18);word-break:keep-all;
+}
+/* 1100px 아래에서는 자리가 없습니다 — 글이 밀리느니 숨깁니다 */
+@media (max-width:1100px){
+  .g-hero-in{grid-template-columns:1fr}
+  .g-brand{display:none}
+}
+
+/* ── 각인 다듬기 (2026-09-29 주인 지시 「최대한 예쁘고 눈에 잘 띄게」) ──
+   힉스필드를 쓰지 않고 직접 그립니다.
+   숫자는 자료에서 셉니다 (주인 규칙 29). */
+.g-brand{isolation:isolate}
+.gb-in{position:relative;z-index:2;display:block}
+.gb-wave{
+  position:absolute;left:0;right:0;bottom:0;width:100%;height:90px;
+  z-index:1;pointer-events:none;
+}
+/* 숫자 두 개 — 「진짜 자료가 있는 곳」임을 한눈에 */
+.gb-nums{
+  display:flex;align-items:center;justify-content:center;gap:14px;
+  margin-top:14px;
+}
+.gb-n{display:flex;flex-direction:column;align-items:center;line-height:1.1}
+.gb-n b{
+  font-size:1.18rem;font-weight:800;color:#FFF6E8;
+  text-shadow:0 2px 10px rgba(0,0,0,.4);
+}
+.gb-n i{
+  font-style:normal;margin-top:3px;font-size:.7rem;font-weight:600;
+  color:rgba(255,246,232,.72);letter-spacing:.06em;
+}
+.gb-sep{
+  width:1px;height:26px;background:rgba(255,255,255,.26);flex:none;
+}
+.gb-line{
+  display:block;margin-top:13px;padding-top:12px;font-size:.8rem;
+  line-height:1.6;color:rgba(255,251,243,.84);
+  border-top:1px solid rgba(255,255,255,.18);word-break:keep-all;
 }
