@@ -115,11 +115,33 @@ jobs:
             exit 1
           fi
 
-      - name: 크롬 깔기
+      - name: 크롬 깔기 (우분투)
+        if: runner.os == 'Linux'
         uses: browser-actions/setup-chrome@v1
         id: chrome
         with:
           chrome-version: stable
+
+      # ★ 윈도우에서는 **이미 깔린 크롬을 찾습니다**
+      #   못 찾으면 거기서 멈춥니다 — 엣지로 슬쩍 넘어가지 않습니다
+      #   (주인 규칙 25 — 엣지는 쓰지 않습니다).
+      - name: 크롬 찾기 (윈도우)
+        if: runner.os == 'Windows'
+        id: chromewin
+        shell: pwsh
+        run: |
+          $후보 = @(
+            "$env:ProgramFiles\Google\Chrome\Application\chrome.exe",
+            "${env:ProgramFiles(x86)}\Google\Chrome\Application\chrome.exe",
+            "$env:LOCALAPPDATA\Google\Chrome\Application\chrome.exe"
+          )
+          $찾음 = $후보 | Where-Object { Test-Path $_ } | Select-Object -First 1
+          if (-not $찾음) {
+            Write-Output "::error::크롬을 못 찾았습니다 — 엣지는 쓰지 않습니다 (주인 규칙 25)"
+            exit 1
+          }
+          Write-Output "크롬 자리: $찾음"
+          "chrome-path=$찾음" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
 
       - name: 쪽 만들기
         run: python engine/build.py
@@ -128,7 +150,7 @@ jobs:
       - name: 배포해도 되는지 판정합니다
         if: ${{ github.event.inputs.skip_gate != 'yes' }}
         env:
-          BADAGAJA_CHROME: ${{ steps.chrome.outputs.chrome-path }}
+          BADAGAJA_CHROME: ${{ steps.chrome.outputs.chrome-path || steps.chromewin.outputs.chrome-path }}
           BADAGAJA_CHROMES: '3'
         run: |
           python engine/gate.py --full || true

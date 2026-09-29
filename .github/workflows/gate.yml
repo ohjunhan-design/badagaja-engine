@@ -150,11 +150,39 @@ jobs:
 
       # 크롬 — 러너에 미리 깔려 있지만 자리를 못 박습니다.
       # 엣지는 쓰지 않습니다 (주인 규칙 25)
-      - name: 크롬 깔기
+      #
+      # ★ **우분투일 때만 깝니다** (2026-09-30)
+      #   setup-chrome 은 윈도우에서 레지스트리를 건드리는데,
+      #   관리자가 아닌 셀프 호스티드 러너에서는 권한이 없어
+      #   「Requested registry access is not allowed」로 죽습니다.
+      #   내 컴퓨터에는 크롬이 이미 깔려 있으니 그것을 씁니다.
+      - name: 크롬 깔기 (우분투)
+        if: runner.os == 'Linux'
         uses: browser-actions/setup-chrome@v1
         id: chrome
         with:
           chrome-version: stable
+
+      # ★ 윈도우에서는 **이미 깔린 크롬을 찾습니다**
+      #   못 찾으면 거기서 멈춥니다 — 엣지로 슬쩍 넘어가지 않습니다
+      #   (주인 규칙 25 — 엣지는 쓰지 않습니다).
+      - name: 크롬 찾기 (윈도우)
+        if: runner.os == 'Windows'
+        id: chromewin
+        shell: pwsh
+        run: |
+          $후보 = @(
+            "$env:ProgramFiles\Google\Chrome\Application\chrome.exe",
+            "${env:ProgramFiles(x86)}\Google\Chrome\Application\chrome.exe",
+            "$env:LOCALAPPDATA\Google\Chrome\Application\chrome.exe"
+          )
+          $찾음 = $후보 | Where-Object { Test-Path $_ } | Select-Object -First 1
+          if (-not $찾음) {
+            Write-Output "::error::크롬을 못 찾았습니다 — 엣지는 쓰지 않습니다 (주인 규칙 25)"
+            exit 1
+          }
+          Write-Output "크롬 자리: $찾음"
+          "chrome-path=$찾음" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
 
       # ★ 크롬이 **정말 도는지 먼저 봅니다** (2026-09-28)
       #
@@ -168,7 +196,8 @@ jobs:
       #   시간도 잃고 무엇이 틀렸는지도 안 알려 줍니다.
       - name: 크롬이 정말 도는가
         env:
-          BADAGAJA_CHROME: ${{ steps.chrome.outputs.chrome-path }}
+          # ★ 우분투는 setup-chrome, 윈도우는 찾은 자리 (2026-09-30)
+          BADAGAJA_CHROME: ${{ steps.chrome.outputs.chrome-path || steps.chromewin.outputs.chrome-path }}
         run: |
           echo "setup-chrome 이 알려 준 자리: [$BADAGAJA_CHROME]"
           if [ -z "$BADAGAJA_CHROME" ]; then
@@ -193,12 +222,12 @@ jobs:
       - name: 어떤 컴퓨터에서 재는지 남기기
         run: python engine/machine.py
         env:
-          BADAGAJA_CHROME: ${{ steps.chrome.outputs.chrome-path }}
+          BADAGAJA_CHROME: ${{ steps.chrome.outputs.chrome-path || steps.chromewin.outputs.chrome-path }}
 
       - name: 쪽 만들기
         run: python engine/build.py
         env:
-          BADAGAJA_CHROME: ${{ steps.chrome.outputs.chrome-path }}
+          BADAGAJA_CHROME: ${{ steps.chrome.outputs.chrome-path || steps.chromewin.outputs.chrome-path }}
 
       # ★ 멱등성(두 번 만들어 같은가)은 계약-07 이 판정 안에서
       #   봅니다 — 딴 자리에 새로 만들어 바이트까지 견줍니다.
@@ -216,7 +245,7 @@ jobs:
         env:
           PYTHONIOENCODING: utf-8
           PYTHONUNBUFFERED: '1'      # 진행이 실시간으로 보이게
-          BADAGAJA_CHROME: ${{ steps.chrome.outputs.chrome-path }}
+          BADAGAJA_CHROME: ${{ steps.chrome.outputs.chrome-path || steps.chromewin.outputs.chrome-path }}
           BADAGAJA_CHROMES: '3'
           BADAGAJA_JOBS: '1,3'
 
