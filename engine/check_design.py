@@ -33,6 +33,7 @@
     python engine/check_design.py --자세히
 """
 import os
+import re as _re
 import re
 import sys
 import glob
@@ -715,6 +716,50 @@ def main():
         print('  · 그림 선 %d곳이 모두 fill 을 속성으로 가집니다' % _본것)
     else:
         print("      → s('path', { d: …, fill: 'none' }) 처럼 박으세요.")
+    print('')
+
+    # ── [11] 계산으로 나오는 것을 CSS 가 숨기지 않는가
+    #
+    #   ★ 2026-09-30 주인 지적 —
+    #     「물때정보에 작은 그래프도 없고 현재 어디를 보여주고
+    #       있는지도 안나오고 있어」
+    #
+    #   까닭: `.gt-graph:not(:has(.tg-plot)){display:none}`
+    #     물높이 곡선을 못 받으면 **칸을 통째로** 숨겼는데,
+    #     그 안에 **계산으로 늘 나오는 14일 카드**와
+    #     「기준 관측소 ○○」 안내가 함께 들어 있었습니다.
+    #     **하나의 규칙이 셋을 지웠습니다.**
+    #
+    #   ★ 계약-23 — 바깥 자료가 죽어도 사이트는 삽니다.
+    #     빈 자리를 감추려다 **멀쩡한 것까지 감추면 안 됩니다.**
+    print('[11] 계산으로 나오는 것을 CSS 가 숨기지 않는가')
+    _숨김탈 = []
+    for _이름 in ('home.css', 'tidegraph.css', 'site.css'):
+        _길 = os.path.join(ROOT, 'assets', 'css', _이름)
+        _글 = io.read(_길, default='')
+        # ★ **주석을 빼고 봅니다** (2026-09-30)
+        #   처음에는 줄 단위로 `/*` 앞만 잘랐는데, 여러 줄 주석
+        #   **안쪽**에 옛 규칙을 적어 둔 것을 규칙으로 읽었습니다.
+        #   「전에는 …이었습니다」라고 적은 설명을 잡은 것입니다.
+        #   주석을 통째로 걷어 내고 봅니다.
+        _민글 = _re.sub(r'/\*.*?\*/', '', _글, flags=_re.S)
+        for _n, _줄 in enumerate(_민글.split(chr(10)), 1):
+            _벗 = _줄
+            if 'display:none' not in _벗.replace(' ', ''):
+                continue
+            # 1층(계산)을 담은 바깥 칸을 통째로 숨기는가
+            for _겉 in ('.gt-graph', '.tide-strip', '#tideStrip'):
+                if _겉 in _벗 and ':not(' in _벗:
+                    _숨김탈.append('%s:%d — %s'
+                                   % (_이름, _n, _벗.strip()[:60]))
+    if _숨김탈:
+        막음.append('계산으로 나오는 칸을 통째로 숨기는 규칙 %d개'
+                    % len(_숨김탈))
+        for _x in _숨김탈[:4]:
+            print('  ✗ %s' % _x)
+        print('      → 곡선이 붙는 안쪽 칸(.tide-graph)만 숨기세요.')
+    else:
+        print('  · 바깥 칸을 통째로 숨기는 규칙이 없습니다')
     print('')
 
     if 알림:

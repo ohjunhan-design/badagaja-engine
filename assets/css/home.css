@@ -252,7 +252,21 @@ body.home-gate .navlinks{margin-left:auto;margin-right:auto}
 .g-today .tide-graph .tg-axis{font-size:15px}
 .g-today .tide-graph .tg-lbl{font-size:15px}
 /* 물높이 예보를 못 받으면 빈 칸만 남으므로 아예 접습니다 */
-.g-today .gt-graph:not(:has(.tg-plot)){display:none}
+/* ★ **곡선 칸만** 숨깁니다 (2026-09-30 주인 지적)
+
+   전에는 `.gt-graph:not(:has(.tg-plot)){display:none}` 이었습니다.
+   곡선을 못 받으면 **칸을 통째로** 숨겼는데, 그 안에는
+   **계산으로 늘 나오는 14일 카드**와 「기준 관측소 ○○」 안내가
+   함께 들어 있었습니다.
+
+   그래서 주인이 「작은 그래프도 없고 현재 어디를 보여주고
+   있는지도 안나온다」 하셨습니다. **하나의 규칙이 셋을 지웠습니다.**
+
+   ★ 계약-23 — 바깥 자료가 죽어도 사이트는 삽니다.
+     1층(계산)은 어떤 일이 있어도 보여야 합니다.
+     빈 자리를 감추려다 **멀쩡한 것까지 감추면 안 됩니다.** */
+.g-today .tide-graph:not(:has(.tg-plot)){display:none}
+
 .g-today .gt-ph img{transition:opacity .35s ease}
 /* 좁은 휴대폰(420px 이하) 머리글 — '바다가자 동호회 →' 단추 때문에 360px 화면에서 쪽이 47px 옆으로 밀리던 것 (2026-09-22)
    동호회 연결은 남기고(네이버 심사) 글자만 '동호회 →'로, 이미 점만 보이던 오늘 물때 배지는 숨김 */
@@ -522,3 +536,4 @@ footer.site-footer .footer-bottom{padding-bottom:calc(64px + env(safe-area-inset
   line-height:1.6;color:rgba(255,251,243,.84);
   border-top:1px solid rgba(255,255,255,.18);word-break:keep-all;
 }
+

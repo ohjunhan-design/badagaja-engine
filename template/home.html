@@ -58,6 +58,12 @@
       입질이 잦습니다.</p>
     <p id="tideStatus" class="gt-more">{{물때안내}}</p>
     <div id="tideStrip" class="gt-graph" data-days="7" data-region="{{물때기준권역}}"></div>
+    <!-- ★ 물높이 곡선이 붙을 자리 (2026-09-30 주인 지적)
+         「물때정보에 작은 그래프도 없고 현재 어디를 보여주고
+           있는지도 안나오고 있어」
+         첫 쪽에는 이 칸이 **아예 없어서** 곡선이 못 붙었습니다.
+         권역 쪽(group.html)에는 있었는데 첫 쪽만 빠져 있었습니다. -->
+    <div class="tide-graph" id="tideGraph"></div>
   </section>
 
   <section class="g-panel g-book" id="book">

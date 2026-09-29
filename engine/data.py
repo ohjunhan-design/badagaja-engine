@@ -67,6 +67,7 @@ class 자료:
         self._히어로 = None
         self._명소사진 = None
         self._거른사진 = None
+        self._채비 = None
         self._새사진 = None
         self._포인트 = None
         self._권역 = None
@@ -156,6 +157,17 @@ class 자료:
                     if 앞것 is None or x.get('파일', '') < 앞것.get('파일', ''):
                         self._히어로[x['권역']] = x
         return self._히어로.get(권역)
+
+    @property
+    def 채비자료(self):
+        """채비도가 읽는 자료 — data/raw/rigs.json
+
+        ★ 호수·간격을 **자료에서 읽습니다** (주인 규칙 29).
+          값이 바뀌면 자료만 고치면 모든 어종 쪽이 함께 바뀝니다.
+        """
+        if self._채비 is None:
+            self._채비 = _읽기('rigs.json', default={}) or {}
+        return self._채비
 
     def 명소사진(self, 권역):
         """그 권역의 명소 사진들. 차례를 못 박아 돌려줍니다."""
