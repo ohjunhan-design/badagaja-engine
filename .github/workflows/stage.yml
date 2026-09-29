@@ -55,9 +55,28 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # ★ **우분투일 때만 깝니다** (2026-09-30)
+      #   setup-python 도 윈도우에서 레지스트리를 건드려
+      #   관리자가 아닌 셀프 호스티드 러너에서는 죽습니다.
+      #   내 컴퓨터에는 파이썬 3.12 가 이미 있습니다.
       - uses: actions/setup-python@v5
+        if: runner.os == 'Linux'
         with:
           python-version: '3.12'
+
+      # ★ 윈도우에서는 **있는 파이썬이 쓸 만한지 봅니다**
+      #   3.12 가 아니면 거기서 멈춥니다 — 딴 판으로 재면
+      #   내 컴퓨터와 결과가 어긋납니다.
+      - name: 파이썬 보기 (윈도우)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $v = (python --version 2>&1) -replace 'Python ',''
+          Write-Output "파이썬 $v"
+          if (-not $v.StartsWith('3.12')) {
+            Write-Output "::error::파이썬 3.12 가 아닙니다 ($v) — 딴 판으로 재면 결과가 어긋납니다"
+            exit 1
+          }
 
       - name: 쪽 만들기
         run: python engine/build.py
