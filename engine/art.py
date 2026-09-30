@@ -334,48 +334,96 @@ def 단면그림(어종):
 
 # ── ③ 물때 곡선 — 간조 앞뒤가 왜 중요한가 ─────────────────
 def 물때그림(누구='해루질'):
-    """간조 앞뒤 1~2시간이 핵심임을 곡선으로 보입니다 (640×260)."""
+    """간조 앞뒤 1~2시간이 핵심임을 곡선으로 보입니다 (640×300).
+
+    ★ 2026-10-01 주인 지적 — 「배경 글씨크기 폰트등 …딱봐도 ai야」
+
+      전에는 연한 네모 바탕에 파란 선 하나였습니다. 물이 물처럼
+      안 보였고, 글씨가 다 비슷해 **무엇이 중요한지** 안 보였습니다.
+
+      이제
+        · 곡선 **아래를 물빛으로 채웁니다** — 바다 그림다워집니다
+        · 색을 사이트 것(청록·주황·모래)으로 맞춥니다
+        · 글씨에 **계층**을 둡니다 — 뜻 > 할 일 > 눈금
+        · 「좋은 시간」 띠를 주황으로 — 눈이 먼저 갑니다
+    """
+    # 곡선 — 만조(y=78)에서 간조(y=196)로 내렸다 다시 오릅니다
+    _곡 = ('M40 78 C120 78 150 100 200 140 '
+           'C250 180 285 196 320 196 '
+           'C355 196 390 180 440 140 '
+           'C490 100 520 78 600 78')
     return (
         '<figure class="cg-art photo--drawn">\n'
-        '<svg viewBox="0 0 640 290" role="img"'
+        '<svg viewBox="0 0 640 300" role="img"'
         ' aria-label="물때 곡선과 %s 하기 좋은 시간대 그림"'
         ' xmlns="http://www.w3.org/2000/svg">\n'
-        '  <rect width="640" height="290" fill="%s"/>\n'
-        '  <rect x="232" y="40" width="176" height="150" fill="%s"'
-        ' opacity=".14"/>\n'
-        '  <text x="320" y="62" text-anchor="middle" font-size="14"'
-        ' font-weight="700" fill="%s">여기가 좋은 시간</text>\n'
-        '  <path d="M40 70 Q140 70 190 130 T320 190 T450 130 T600 70"'
-        ' fill="none" stroke="#3a7ca5" stroke-width="4"/>\n'
-        '  <g stroke="#9fb6c0" stroke-width="1.2"><path d="M40 190 H600"/>'
-        '<path d="M40 70 H600"/></g>\n'
-        '  <text x="34" y="74" text-anchor="end" font-size="13" fill="%s">'
-        '만조</text>\n'
-        '  <text x="34" y="194" text-anchor="end" font-size="13" fill="%s">'
-        '간조</text>\n'
-        '  <circle cx="320" cy="190" r="7" fill="%s"/>\n'
-        '  <text x="320" y="216" text-anchor="middle" font-size="14"'
-        ' font-weight="700" fill="%s">간조(물이 가장 많이 빠진 때)</text>\n'
-        '  <g stroke="%s" stroke-width="2" fill="none">'
-        '<path d="M232 236 v14"/><path d="M408 236 v14"/>'
-        '<path d="M232 243 H408"/></g>\n'
-        '  <text x="232" y="270" text-anchor="middle" font-size="13"'
+        '  <defs>\n'
+        '    <linearGradient id="tgw" x1="0" y1="0" x2="0" y2="1">\n'
+        # ★ 위가 엷고 아래로 갈수록 진해야 **물처럼** 보입니다
+        #   (2026-10-01 — 처음엔 거꾸로 넣어 수면 위가 짙었습니다)
+        '      <stop offset="0%%" stop-color="%s" stop-opacity=".16"/>\n'
+        '      <stop offset="100%%" stop-color="%s" stop-opacity=".5"/>\n'
+        '    </linearGradient>\n'
+        '    <linearGradient id="tgb" x1="0" y1="0" x2="0" y2="1">\n'
+        '      <stop offset="0%%" stop-color="#FBFDFD"/>\n'
+        '      <stop offset="100%%" stop-color="#EDF4F3"/>\n'
+        '    </linearGradient>\n'
+        '  </defs>\n'
+        '  <rect width="640" height="300" fill="url(#tgb)"/>\n'
+        # ── 좋은 시간 띠 — 주황으로 눈이 먼저 가게
+        '  <rect x="232" y="44" width="176" height="164" fill="%s"'
+        ' opacity=".13" rx="6"/>\n'
+        '  <g stroke="%s" stroke-width="1.6" stroke-dasharray="5 4"'
+        ' opacity=".55"><path d="M232 44 V208"/><path d="M408 44 V208"/></g>\n'
+        '  <text x="320" y="36" text-anchor="middle" font-size="15"'
+        ' font-weight="800" fill="%s">여기가 좋은 시간</text>\n'
+        # ── 물 — 곡선 아래를 채웁니다
+        '  <path d="%s L600 232 L40 232 Z" fill="url(#tgw)"/>\n'
+        '  <path d="%s" fill="none" stroke="%s" stroke-width="4.5"'
+        ' stroke-linecap="round"/>\n'
+        # ── 만조·간조 눈금선
+        '  <g stroke="%s" stroke-width="1" stroke-dasharray="4 5"'
+        ' opacity=".5"><path d="M40 78 H600"/><path d="M40 196 H600"/></g>\n'
+        '  <text x="34" y="82" text-anchor="end" font-size="12.5"'
+        ' fill="%s">만조</text>\n'
+        '  <text x="34" y="200" text-anchor="end" font-size="12.5"'
+        ' fill="%s">간조</text>\n'
+        # ── 간조 점 — 이 그림의 뜻이 여기 있습니다
+        '  <circle cx="320" cy="196" r="9" fill="#fff"/>\n'
+        '  <circle cx="320" cy="196" r="6.5" fill="%s"/>\n'
+        '  <text x="320" y="228" text-anchor="middle" font-size="16"'
+        ' font-weight="800" fill="%s">간조 — 물이 가장 많이 빠진 때</text>\n'
+        # ── 앞뒤 시간 표시
+        '  <g stroke="%s" stroke-width="2" fill="none"'
+        ' stroke-linecap="round">'
+        '<path d="M232 250 v12"/><path d="M408 250 v12"/>'
+        '<path d="M232 256 H408"/></g>\n'
+        '  <text x="232" y="282" text-anchor="middle" font-size="12.5"'
         ' fill="%s">간조 2시간 전</text>\n'
-        '  <text x="408" y="270" text-anchor="middle" font-size="13"'
+        '  <text x="408" y="282" text-anchor="middle" font-size="12.5"'
         ' fill="%s">간조 1~2시간 후</text>\n'
-        '  <g stroke="%s" stroke-width="2.4" fill="none">'
-        '<path d="M470 150 l26 -22 M470 150 l26 22 M470 150 h64"/></g>\n'
-        '  <text x="546" y="146" font-size="13" fill="%s"'
-        ' font-weight="700">물이 들어옵니다</text>\n'
-        '  <text x="620" y="28" text-anchor="end" font-size="12" fill="%s"'
-        ' opacity=".85">바다가자닷컴 · badagaja.com</text>\n'
+        # ── 물이 들어옵니다 — 곡선 오르는 쪽에 붙입니다
+        '  <g stroke="%s" stroke-width="2.6" fill="none"'
+        ' stroke-linecap="round" stroke-linejoin="round">'
+        '<path d="M470 128 l22 -18 M470 128 l22 18 M470 128 h58"/></g>\n'
+        '  <text x="536" y="112" font-size="13" font-weight="700"'
+        ' fill="%s">물이 들어옵니다</text>\n'
+        '  <text x="620" y="28" text-anchor="end" font-size="11.5"'
+        ' fill="%s" opacity=".8">바다가자닷컴 · badagaja.com</text>\n'
         '</svg>\n'
         '<figcaption>그림 · 물때 곡선 — 간조 앞뒤 1~2시간이 핵심입니다. '
         '물이 들어오기 시작하면 바로 나오세요. 날짜별 간조 시각은 '
         '권역 쪽 물때표에서 볼 수 있습니다.</figcaption>\n'
         '</figure>'
-        % (글(누구), 물빛, 짚, 짙은짚, 물글씨, 물글씨, 붉음, 붉음,
-           풀빛, 풀빛, 풀빛, 붉음, 붉음, 물글씨))
+        % (글(누구),
+           풀빛, 풀빛,            # 물 그러데이션
+           붉음, 붉음, 붉음,       # 좋은 시간 띠·점선·글씨
+           _곡, _곡, 풀빛,        # 물 채움·곡선
+           돌, 물글씨, 물글씨,     # 눈금선·만조·간조
+           풀빛, 풀빛,            # 간조 점·뜻 글씨
+           돌, 물글씨, 물글씨,     # 앞뒤 표시·글씨
+           붉음, 붉음,            # 화살표·글씨
+           물글씨))
 
 
 def 잘잡히는자리(어디):
@@ -685,18 +733,45 @@ def _부품모양(이름, x, y, 크기=1.0):
                 % (x, y - 17 * k, y + 17 * k, 4.4 * k,
                    x - 3.4 * k, y - 17 * k, 6.8 * k,
                    x - 3.4 * k, y + 17 * k, 6.8 * k))
+    # ★ **낚싯바늘은 한 곳에서 그립니다** (2026-10-01 주인 지적)
+    #   「실제 바늘은 갈고리처럼 되어있잖아 … 이게 뭐야 꼬리처럼」
+    #   목줄 아래에 반원 하나만 그려 두었더니 바늘도 줄도 아닌
+    #   꼬리처럼 보였습니다. 실제 바늘은 다섯을 갖춥니다 —
+    #   귀 · 곧은 축 · J 굽이 · 위를 향한 뾰족한 끝 · 미늘.
+    def _바늘꼴(bx, by, bk=1.0, 색='#5A6670'):
+        """(bx, by) 를 **축의 위 끝**으로 삼아 아래로 바늘을 그립니다."""
+        _축 = 13 * bk          # 곧은 축 길이
+        _굽 = 6.5 * bk         # 굽이 반지름
+        _끝 = by + _축         # 굽이가 시작되는 높이
+        return (
+            # 귀 — 줄 매는 납작한 끝
+            "<path d='M%.1f %.1f h%.1f' stroke='%s' stroke-width='%.1f'"
+            " stroke-linecap='round'/>"
+            # 축 + J 굽이 — 끝이 **위를 향합니다**
+            "<path d='M%.1f %.1f V%.1f a%.1f %.1f 0 1 0 %.1f 0 l0 -%.1f'"
+            " fill='none' stroke='%s' stroke-width='%.1f'"
+            " stroke-linecap='round'/>"
+            # 미늘 — 끝 안쪽에 거꾸로 선 작은 가시
+            "<path d='M%.1f %.1f l%.1f %.1f' stroke='%s'"
+            " stroke-width='%.1f' stroke-linecap='round'/>"
+            % (bx - 2.2 * bk, by, 4.4 * bk, 색, 1.6 * bk,
+               bx, by, _끝, _굽, _굽, _굽 * 2, _축 * 0.62,
+               색, 1.9 * bk,
+               bx + _굽 * 2, _끝 - _축 * 0.62 + 1.5 * bk,
+               -2.6 * bk, 3.2 * bk, 색, 1.4 * bk))
+
     if '원줄' in 이름:
         return ("<path d='M%d %.0f V%.0f' stroke='#5C7A86' stroke-width='%.1f'"
                 " stroke-linecap='round'/>"
                 % (x, y - 27 * k, y + 27 * k, 3.0 * k))
     if '목줄' in 이름:
-        # 가늡니다. 아래 끝에 바늘이 옵니다 — 그 자리를 살짝 보입니다
+        # ★ 아래 끝에 **진짜 바늘**을 답니다 (2026-10-01 주인 지적)
+        #   전에는 반원 하나뿐이라 「이게 뭐야 꼬리처럼」 하셨습니다.
+        #   목줄은 **바늘로 끝나는 줄**입니다 — 그렇게 보여야 합니다.
         return ("<path d='M%d %.0f V%.0f' stroke='#7C949E' stroke-width='%.1f'"
-                " stroke-linecap='round'/>"
-                "<path d='M%d %.0f a %.1f %.1f 0 1 0 %.1f 0'"
-                " fill='none' stroke='#2F4A52' stroke-width='1.8'/>"
-                % (x, y - 27 * k, y + 16 * k, 1.7 * k,
-                   x, y + 16 * k, 3.2 * k, 3.2 * k, 6.4 * k))
+                " stroke-linecap='round'/>%s"
+                % (x, y - 27 * k, y + 11 * k, 1.7 * k,
+                   _바늘꼴(x, y + 11 * k, k, '#4A5A63')))
     # ★ **EVA 찌** (2026-09-30 · check_rigs.py 가 잡았습니다)
     #   카드 채비(사비키)의 「찌」가 **그림 없이 빈 자리**였습니다.
     #   검사기를 만들자마자 잡혔습니다 (주인 규칙 26).
@@ -1053,39 +1128,112 @@ def _부품모양(이름, x, y, 크기=1.0):
     #     · 끝 안쪽에 **미늘**(거꾸로 선 작은 가시)이 있습니다
     #     · 머리 바로 뒤에 **웜 고정 미늘(키퍼)** 이 달린 것이 많습니다
     #   봉돌과 바늘이 한 몸이라는 것이 이 부품의 핵심입니다.
-    if '지그헤드' in 이름:
-        _머리 = 5.2 * k
-        _축 = 13 * k
-        _굽 = 5.2 * k
+    def _웜꼴(wx, wy, wk):
+        """지그헤드 바늘에 **꿰인** 그럽웜. 낫꼴 꼬리가 떨립니다."""
+        _길 = 9 * wk
+        _굵 = 3.4 * wk
+        # ★ 웜은 **바늘축을 타고** 누워야 꼰인 것처럼 보입니다
+        #   (2026-10-01 — 옆으로만 뻗으니 따로 농 것 같았습니다)
+        _시 = wx + 1.2 * wk          # 바늘축 위에
+        마디 = ''.join(
+            "<path d='M%.1f %.1f v%.1f' stroke='#8F3A18'"
+            " stroke-width='%.1f' opacity='.45' stroke-linecap='round'/>"
+            % (_시 - _길 * 2 * (i / 5.0), wy + 5.5 * wk - _굵 * 0.5,
+               _굵, 1.0 * wk)
+            for i in range(1, 5))
         return (
-            # 줄 매는 고리 — 머리 위로 솟습니다
+            # 몸통 — 바늘축을 감싸며 왼쪽으로
+            "<path d='M%.1f %.1f q-%.1f -%.1f -%.1f 0 q-%.1f %.1f -%.1f 0 z'"
+            " fill='#C0522B' opacity='.92'/>"
+            "%s"
+            # 낫꼴 꼬리 — 물에서 이것이 떨려 고기를 부릅니다
+            "<path d='M%.1f %.1f q-%.1f -%.1f -%.1f -%.1f q%.1f %.1f %.1f %.1f'"
+            " fill='none' stroke='#C0522B' stroke-width='%.1f'"
+            " stroke-linecap='round'/>"
+            % (_시, wy + 5.5 * wk, _길, _굵 * 1.5, _길 * 2,
+               _길, _굵 * 1.5, _길 * 2,
+               마디,
+               _시 - _길 * 2, wy + 5.5 * wk,
+               _길 * 0.5, _길 * 0.7, _길 * 0.7, _길 * 0.2,
+               _길 * 0.3, _길 * 0.5, _길 * 0.1, _길 * 0.8,
+               1.8 * wk))
+
+    if '지그헤드' in 이름:
+        # ★ **가로로 눕습니다** (2026-10-01 주인 지적 「방향도 좀 신경써」)
+        #
+        #   전에는 머리 아래로 바늘이 곧게 내려가 U 자로 처졌습니다.
+        #   실제 지그헤드는 그렇게 안 생겼습니다 —
+        #     · 납 머리가 **앞**에 있고 고리가 머리 위에서 비스듬히 솟습니다
+        #     · 바늘축이 머리 뒤로 **거의 수평**으로 나갑니다
+        #       (물속에서 웜이 옆으로 누워 헤엄치듯 보이게)
+        #     · 축 끝에서 **위로** 굽어 바늘 끝이 **하늘을 봅니다**
+        #       그래야 바닥에 안 걸리고 입질할 때 위턱에 박힙니다
+        #     · 웜은 머리 뒤부터 축을 타고 꿰어집니다
+        _머리 = 5.4 * k
+        _축 = 15 * k          # 뒤로 뻗는 바늘축 (가로)
+        _굽 = 5.6 * k
+        _뒤 = x - _축         # 축이 끝나는 자리 (왼쪽)
+        _웜있나 = '웜' in 이름
+
+        _몸 = []
+        # 줄 매는 고리 — 머리 위에서 비스듬히
+        _몸.append(
             "<path d='M%.1f %.1f l%.1f -%.1f' stroke='#8FA3AD'"
             " stroke-width='%.1f' stroke-linecap='round'/>"
             "<circle cx='%.1f' cy='%.1f' r='%.1f' fill='none'"
             " stroke='#8FA3AD' stroke-width='%.1f'/>"
-            # 납 머리 — 둥글고 묵직합니다
-            "<circle cx='%.1f' cy='%.1f' r='%.1f' fill='#5A646A'/>"
-            # 머리에 비치는 빛
-            "<circle cx='%.1f' cy='%.1f' r='%.1f' fill='#9AA4AA' opacity='.5'/>"
-            # 웜을 잡아 두는 작은 미늘 (키퍼)
-            "<path d='M%.1f %.1f l%.1f %.1f' stroke='#8FA3AD'"
-            " stroke-width='%.1f' stroke-linecap='round'/>"
-            # 바늘 — 축에서 U 자로 굽어 끝이 위를 봅니다
-            "<path d='M%.1f %.1f v%.1f a %.1f %.1f 0 1 0 %.1f 0 v-%.1f'"
+            # ★ 고리를 **줄 바로 아래**에 둡니다 (2026-10-01)
+            #   비스듬히 두었더니 머리가 줄에서 떨어져 보였습니다.
+            % (x, y - _머리 * 0.6, 0.0, 3.4 * k, 1.5 * k,
+               x, y - _머리 * 0.6 - 3.4 * k, 1.7 * k, 1.3 * k))
+        # 바늘축 — 머리 뒤로 수평에 가깝게, 끝에서 **위로** 굽습니다
+        _몸.append(
+            "<path d='M%.1f %.1f H%.1f a%.1f %.1f 0 1 1 0 -%.1f'"
             " fill='none' stroke='#2F4A52' stroke-width='%.1f'"
             " stroke-linecap='round'/>"
-            # 미늘 — 끝에서 거꾸로 선 가시
-            "<path d='M%.1f %.1f l-%.1f %.1f' stroke='#2F4A52'"
+            % (x, y + _머리 * 0.25, _뒤 + _굽, _굽, _굽, _굽 * 1.7,
+               2.0 * k))
+        # 미늘 — 위를 향한 끝 안쪽에
+        _몸.append(
+            "<path d='M%.1f %.1f l%.1f %.1f' stroke='#2F4A52'"
             " stroke-width='%.1f' stroke-linecap='round'/>"
-            % (x, y - _머리 * 0.7, 2.4 * k, 3.4 * k, 1.5 * k,
-               x + 2.4 * k, y - _머리 * 0.7 - 3.4 * k, 1.6 * k, 1.2 * k,
-               x, y, _머리,
-               x - _머리 * 0.35, y - _머리 * 0.35, _머리 * 0.3,
-               x + _머리 * 0.6, y + _머리 * 0.5, 2.2 * k, 1.6 * k, 1.3 * k,
-               x, y + _머리 * 0.6, _축, _굽, _굽, _굽 * 2, _축 * 0.5,
-               2.0 * k,
-               x + _굽 * 2, y + _머리 * 0.6 + _축 - _축 * 0.5,
-               1.8 * k, 2.6 * k, 1.5 * k))
+            % (_뒤 + _굽, y + _머리 * 0.25 - _굽 * 1.7,
+               2.6 * k, 2.2 * k, 1.4 * k))
+        # 웜 — 머리 뒤부터 축을 타고 (있을 때만)
+        if _웜있나:
+            _길 = _축 * 0.86
+            _굵 = 3.6 * k
+            _wy = y + _머리 * 0.25
+            _마디 = ''.join(
+                "<path d='M%.1f %.1f v%.1f' stroke='#8F3A18'"
+                " stroke-width='%.1f' opacity='.45'"
+                " stroke-linecap='round'/>"
+                % (x - _머리 * 0.7 - _길 * (i / 4.0), _wy - _굵 * 0.5,
+                   _굵, 1.0 * k)
+                for i in range(1, 4))
+            _몸.append(
+                "<path d='M%.1f %.1f q-%.1f -%.1f -%.1f 0"
+                " q-%.1f %.1f -%.1f 0 z' fill='#C0522B' opacity='.9'/>%s"
+                % (x - _머리 * 0.5, _wy, _길 * 0.5, _굵 * 1.4, _길,
+                   _길 * 0.5, _굵 * 1.4, _길, _마디))
+            # 낫꼴 꼬리 — 물에서 이것이 떨려 고기를 부릅니다
+            _몸.append(
+                "<path d='M%.1f %.1f q-%.1f -%.1f -%.1f -%.1f"
+                " q%.1f %.1f %.1f %.1f' fill='none' stroke='#C0522B'"
+                " stroke-width='%.1f' stroke-linecap='round'/>"
+                % (x - _머리 * 0.5 - _길, _wy,
+                   _길 * 0.4, _길 * 0.5, _길 * 0.55, _길 * 0.14,
+                   _길 * 0.24, _길 * 0.4, _길 * 0.08, _길 * 0.62,
+                   1.8 * k))
+        # 납 머리 — **맨 나중에** 그려 웜·축 위에 올립니다
+        _몸.append(
+            "<circle cx='%.1f' cy='%.1f' r='%.1f' fill='#5A646A'/>"
+            "<circle cx='%.1f' cy='%.1f' r='%.1f' fill='#9AA4AA'"
+            " opacity='.5'/>"
+            % (x, y, _머리,
+               x - _머리 * 0.3, y - _머리 * 0.35, _머리 * 0.3))
+        return ''.join(_몸)
+
     # ★ **좁쌀봉돌은 고리봉돌이 아닙니다** (2026-09-30)
     #
     #   헛점이었습니다. 아래 `'봉돌' in 이름` 이 **좁쌀봉돌까지 가로채**
@@ -1238,20 +1386,17 @@ def _부품모양(이름, x, y, 크기=1.0):
                 # 짧은 목줄
                 "<path d='M%.1f %.1f v%.1f' stroke='%s' stroke-width='%.1f'"
                 " opacity='.85' stroke-linecap='round'/>"
-                # 바늘 — 축에서 굽어 끝이 위를 봅니다
-                "<path d='M%.1f %.1f v%.1f a%.1f %.1f 0 1 0 %.1f 0'"
-                " fill='none' stroke='#2F4A52' stroke-width='%.1f'"
-                " stroke-linecap='round'/>"
-                # 미늘
-                "<path d='M%.1f %.1f l-%.1f %.1f' stroke='#2F4A52'"
-                " stroke-width='%.1f' stroke-linecap='round'/>"
+                # ★ **바늘은 _바늘꼴 하나로** (2026-10-01 주인 지적)
+                #   「실제 바늘은 갈고리처럼 되어있잖아」
+                #   전에는 여기서 따로 그려 **귀가 없고 굽이가 작았습니다.**
+                #   목줄과 같은 함수를 쓰면 다음에도 안 어긋납니다.
+                "%s"
                 % (x, gy, _통,
                    x - _통 - _고 * 0.8, gy, _고, 1.5 * k,
                    x - _통 - _고 * 1.6, gy, 팔 - _통 - _고 * 1.6, 1.4 * k,
                    x - 팔, gy, 1.3 * k,
                    x - 팔, gy, 내림, 물글씨, 1.2 * k,
-                   x - 팔, gy + 내림, _축, _굽, _굽, _굽 * 2, 1.7 * k,
-                   x - 팔 + _굽 * 2, gy + 내림 + _축, 1.3 * k, 1.9 * k, 1.2 * k))
+                   _바늘꼴(x - 팔, gy + 내림, k * 0.82, '#2F4A52')))
         # 두 가지는 **서로 닿지 않게** 벌립니다.
         # 가지 하나가 차지하는 높이(목줄 + 바늘)보다 사이가 좁으면
         # 바늘이 아래 가지에 겹쳐 무엇인지 알 수 없게 됩니다.
