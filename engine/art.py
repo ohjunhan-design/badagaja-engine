@@ -37,6 +37,7 @@
 """
 import html
 import re
+from engine import _lesson_extra  # noqa: E402
 
 from engine.korean import 조사
 from engine._art_overflow import 밖으로나간도형
@@ -2072,9 +2073,17 @@ def 배우는차례(어종, 차례자료, 기초주소=None):
     그 어종 것이 없으면 빈 글을 냅니다 — 없는 것을 지어내지
     않습니다.
     """
-    단계들 = (차례자료 or {}).get(어종.get('id')) or []
+    단계들 = list((차례자료 or {}).get(어종.get('id')) or [])
     if not 단계들:
         return ''
+    # ★ **두 장을 덧붙입니다** (2026-10-01 주인 지시)
+    #   「4칸이라 배치에 어색함이 있어 …2카드를 늘려서 배치에 어울리게」
+    #   미끼 꿰는 법 · 언제 가나 — 자료(`미끼`·`언제`·`철`)에서 만듭니다.
+    #   자료가 얇으면 안 붙습니다.
+    try:
+        단계들 += _lesson_extra.더할카드(어종)
+    except Exception:
+        pass            # 덧카드가 실패해도 본 카드는 그대로 나갑니다
     이름 = 이름of(어종)
     갈래 = 어종.get('갈래')
     찾는말 = '찾습니다' if 갈래 == '해루질' else '잡습니다'
