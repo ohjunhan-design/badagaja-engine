@@ -141,6 +141,18 @@ def rig_list(언어='ko'):
     return _붙이기(언어, 'rig', 'index.html')
 
 
+def rig_parts(언어='ko'):
+    """부품별 이름과 쓰는 법 — rig/parts.html
+
+    ★ 2026-09-30 주인 지시 —
+      「각 부품별 크기 사용용도, 종류 이렇게 별도의 한 페이지를
+        만들면 어떨까?」
+      「낚시 채비법 페이지에 부품별 명칭 및 사용법 바로가기
+        이렇게 페이지하나만들면 더 좋을거 같아」
+    """
+    return _붙이기(언어, 'rig', 'parts.html')
+
+
 def species(어종, 언어='ko'):
     return _붙이기(언어, 'fish', '%s.html' % 어종)
 

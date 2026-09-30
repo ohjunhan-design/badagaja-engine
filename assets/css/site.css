@@ -1603,3 +1603,46 @@ details.area-group .area-list{margin-bottom:12px}
 
 /* 「왜 이렇게 매나」 본문 — 제목이 아니라 설명입니다 (2026-09-30) */
 .rig-why{margin:0;max-width:62ch;font-size:1.02rem;line-height:1.85}
+
+/* ── 부품별 이름과 쓰는 법 (2026-09-30 주인 지시)
+     「각 부품별 크기 사용용도, 종류 이렇게 별도의 한 페이지」
+   그림을 왼쪽에 두고 설명을 오른쪽에 둡니다.
+   그림 크기는 실제 크기 비율을 따르므로, 나란히 놓으면
+   막대찌가 크고 좁쌀봉돌이 작은 것이 한눈에 보입니다. */
+.pt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));
+         gap:14px}
+.pt{display:grid;grid-template-columns:118px minmax(0,1fr);gap:14px;
+    padding:14px;border:1px solid var(--line);border-radius:14px;
+    background:var(--paper)}
+.pt-art{align-self:start}
+.pt-art svg{display:block;width:118px;height:118px}
+.pt-body{min-width:0}
+.pt-name{margin:0 0 6px;font-size:1.06rem;font-weight:700;
+         display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.pt-mm{font-size:.74rem;font-weight:500;color:var(--foam-dim);
+       border:1px solid var(--line);border-radius:999px;padding:1px 8px}
+.pt-use{margin:0 0 10px;font-size:.9rem;line-height:1.7}
+.pt-h{margin:10px 0 3px;font-size:.73rem;font-weight:700;
+      letter-spacing:.02em;color:var(--teal)}
+.pt-pick{margin:0;font-size:.87rem;line-height:1.7;color:var(--foam-dim)}
+.pt-ul{margin:0;padding-left:17px;font-size:.85rem;line-height:1.75;
+       color:var(--foam-dim)}
+.pt-care{margin:10px 0 0;padding:8px 11px;border-left:3px solid var(--sun);
+         border-radius:0 8px 8px 0;background:var(--night);
+         font-size:.84rem;line-height:1.65}
+.pt-in{margin:10px 0 0;font-size:.78rem;color:var(--foam-dim)}
+.pt-in a{color:var(--teal);text-decoration:none;font-weight:700}
+.pt-in a:hover{text-decoration:underline}
+@media (max-width:560px){
+  .pt{grid-template-columns:86px minmax(0,1fr);gap:11px;padding:11px}
+  .pt-art svg{width:86px;height:86px}
+}
+
+/* 채비법 쪽 → 부품 쪽 바로가기 띠 */
+.pt-go{display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+       margin:0;padding:13px 16px;border:1px solid var(--line);
+       border-radius:14px;background:var(--night);font-size:.9rem}
+.pt-go-btn{margin-left:auto;display:inline-block;padding:8px 16px;
+           border-radius:999px;background:var(--teal);color:#fff;
+           font-size:.85rem;font-weight:700;text-decoration:none;
+           white-space:nowrap}
