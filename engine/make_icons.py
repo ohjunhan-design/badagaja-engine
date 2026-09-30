@@ -138,6 +138,16 @@ ASSETS = os.environ.get('BADAGAJA_ASSETS', os.path.join(ROOT, 'assets'))
         'stroke-linejoin="round"/>'
         % (잉크, 주황, 바다))),
 
+    # ★ 막대찌 (2026-09-30 주인 지시 — 「막대찌부터 모두 만들어」)
+    #   구멍찌 아이콘과 갈리게 **가늘고 긴 막대**로 그립니다.
+    #   윗머리가 주황이라 물 위에서 잘 보입니다.
+    'float_rod': ('막대찌 채비', (
+        '<path d="M24 4 V13" stroke="%s" stroke-width="2"/>'
+        '<rect x="21" y="13" width="6" height="12" rx="3" fill="%s"/>'
+        '<rect x="21" y="23" width="6" height="16" rx="3" fill="%s"/>'
+        '<path d="M24 39 V44" stroke="%s" stroke-width="2"/>'
+        % (잉크, 주황, 바다, 잉크))),
+
     'bottom': ('바닥 채비', (
         '<path d="M24 6 V26" stroke="%s" stroke-width="2"/>'
         '<path d="M18 26 H30 L27 34 H21Z" fill="%s"/>'
