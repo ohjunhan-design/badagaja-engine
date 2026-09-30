@@ -1266,7 +1266,7 @@ def 권역쪽(d, 권역, 언어='ko'):
             '<span class="pbn-mid"><b>%s · %s %s</b>'
             '<i>%s에서 %s 할 수 있는 자리를 지도와 목록으로 안내합니다.</i>'
             '</span>'
-            '<span class="pbn-go">포인트 보기 →</span></a>'
+            '<span class="pbn-go">포인트 보기 <i>→</i></span></a>'
             % (반, esc(url.rel(쪽길, url.point_list(권역, 갈래, 언어))),
                수, esc(갈래), esc(갈래), esc(이름), esc(뭐하는),
                esc(이름), esc(갈래)))
@@ -3739,6 +3739,10 @@ def 채비쪽(d, 갈래, 언어='ko'):
     #   「배우는 차례」 묶음이 아직 씁니다.
     꼴 = _채비어종꼴(갈래, 것)
     채비그림 = art.채비도(꼴, d.채비자료)
+    # ★ **부력과 수심 그림** (2026-09-30 주인 지시 — 「이런 시각적인 정보도 좋아」)
+    #   「얕으면 3B~5B · 깊으면 0.8~1.5호」처럼 값이 둘로 갈린 채비에만
+    #   붙습니다. 왜 호수를 나누는지 글보다 그림이 빠릅니다.
+    채비그림 += art.수심그림(갈래, d.채비자료)
 
     # ★ 이름표는 **무엇인지 밝혀서** 답니다 (2026-09-30)
     #   처음에 미끼 이름만 달았더니 「크릴·게·홍합·깐새우」가
@@ -3924,6 +3928,10 @@ def 부품쪽(d, 언어='ko'):
                         % ''.join('<li>%s</li>' % esc(x) for x in 것['종류']))
             조심 = ('<p class="pt-care">%s</p>' % _굵게(것['조심'])
                     if 것.get('조심') else '')
+            # ★ 2026-09-30 주인 지시 — 「찌가 어디에 걸리고 이런것들도」
+            걸림 = ('<p class="pt-h">어디에 걸리나</p>'
+                    '<p class="pt-pick">%s</p>' % _굵게(것['걸림'])
+                    if 것.get('걸림') else '')
             나오는곳 = ''
             갈래들 = 어디쓰나.get(이름) or []
             if 갈래들:
@@ -3939,10 +3947,10 @@ def 부품쪽(d, 언어='ko'):
                 '<h3 class="pt-name">%s%s</h3>'
                 '<p class="pt-use">%s</p>'
                 '<p class="pt-h">고르는 법</p><p class="pt-pick">%s</p>'
-                '%s%s%s</div></article>'
+                '%s%s%s%s</div></article>'
                 % (esc(_부품고리(이름)), 그림, esc(이름), 크기,
                    _굵게(것.get('쓰임') or ''), _굵게(것.get('고르기') or ''),
-                   종류, 조심, 나오는곳))
+                   걸림, 종류, 조심, 나오는곳))
         칸들.append(
             '<section class="section section--white"><div class="wrap">'
             '<div class="section-head"><p class="kicker">%s</p>'

@@ -47,10 +47,27 @@
       center: new kakao.maps.LatLng(있는것[0].위도, 있는것[0].경도),
       level: 10
     });
-    // 쪽을 넘기다 실수로 확대되지 않게 — 단추로만 키웁니다
+    // 쪽을 넘기다 실수로 확대되지 않게 — 처음에는 잠가 둡니다
     지도.setZoomable(false);
     지도.addControl(new kakao.maps.ZoomControl(),
                     kakao.maps.ControlPosition.RIGHT);
+
+    // ★ **눌러서 휠 확대를 켭니다** (2026-09-30 주인 지시)
+    //   「지도가 마우스 휠버튼으로 크기 조절되게 만들어」
+    //
+    //   처음부터 휠을 열어 두면 **쪽을 내리다 지도에 걸려**
+    //   화면이 멋대로 확대됩니다. 그래서 포인트 지도와 같은 방식으로,
+    //   한 번 누르면 그때부터 휠이 듣게 합니다
+    //   (assets/js/point-list.js 의 `map-lock` 과 같은 짜임).
+    var 잠금 = document.createElement('button');
+    잠금.type = 'button';
+    잠금.className = 'map-lock';
+    잠금.setAttribute('aria-label', '지도를 눌러 확대·이동을 켭니다');
+    칸.appendChild(잠금);
+    function 풀기() { 지도.setZoomable(true); 잠금.hidden = true; }
+    잠금.addEventListener('click', 풀기);
+    kakao.maps.event.addListener(지도, 'click', 풀기);
+    kakao.maps.event.addListener(지도, 'dragstart', 풀기);
 
     if (window.BADAGAJA_MAPTYPE) {
       window.BADAGAJA_MAPTYPE.달기(지도, 칸);

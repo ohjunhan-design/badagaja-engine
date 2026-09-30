@@ -177,12 +177,24 @@
     var API = opt.api || 'api/';
     box.innerHTML = '';
     box.classList.add('tide-graph'); if (opt.dark) box.classList.add('dark');
-    var head = el('div', 'tg-head'); head.appendChild(el('b', null, '🌊 시간별 물높이'));
-    var tabs = el('div', 'tg-tabs'); head.appendChild(tabs); box.appendChild(head);
+    // ★ **날짜 단추를 뺐습니다** (2026-09-30 주인 지시)
+    //   「날자별 버튼도 지워버려 이건 필요없어
+    //     오늘 시간별 물높이 이렇게 통일하자」
+    //
+    //   이 그래프가 있는 자리는 **오늘 나갈지 정하는 자리**입니다.
+    //   이레치를 넘기는 단추가 일곱 개나 붙어 눈이 먼저 그리로 갔습니다.
+    //   먼 날은 「물때표 2주 전체 보기」가 맡습니다 — 몫이 나뉩니다.
+    var head = el('div', 'tg-head');
+    head.appendChild(el('b', null, '🌊 오늘 시간별 물높이'));
+    box.appendChild(head);
+    var tabs = null;
     box.appendChild(el('p', 'tg-foot', '물높이 예보를 불러오는 중…'));
     var T = window.BADAGAJA_TIDE, cache = {}, tidePromise = null;
     function load(day) {
-      [].forEach.call(tabs.children, function (b, i) { b.classList.toggle('on', i === day); });
+      if (tabs) {
+        [].forEach.call(tabs.children, function (b, i) {
+          b.classList.toggle('on', i === day); });
+      }
       var dt = new Date(); dt.setDate(dt.getDate() + day);
       var sun = (T && opt.coords) ? T.sunTimes(dt, opt.coords[0], opt.coords[1]) : null;
       var go = function (d, ev) {
@@ -198,28 +210,6 @@
         var ev = a[1] && a[1].days && a[1].days[day] ? a[1].days[day].events : null;
         cache[day] = { d: a[0], ev: ev }; go(a[0], ev);
       }).catch(function () { go(null); });
-    }
-    // ★ **일주일치를 봅니다** (2026-09-28 주인 지시)
-    //   전에는 오늘·내일·모레 사흘뿐이었습니다. 물때를 보고
-    //   날을 잡는 분들은 주말까지 내다봅니다.
-    //   나흘째부터는 날짜(9/30)와 요일을 함께 적습니다.
-    var 요일들 = ['일', '월', '화', '수', '목', '금', '토'];
-    for (var 날 = 0; 날 < 7; 날++) {
-      (function (i) {
-        var 이름;
-        if (i === 0) { 이름 = '오늘'; }
-        else if (i === 1) { 이름 = '내일'; }
-        else if (i === 2) { 이름 = '모레'; }
-        else {
-          var t = new Date(); t.setDate(t.getDate() + i);
-          이름 = (t.getMonth() + 1) + '/' + t.getDate()
-                 + '(' + 요일들[t.getDay()] + ')';
-        }
-        var b = el('button', i === 0 ? 'on' : '', 이름);
-        b.type = 'button';
-        b.addEventListener('click', function () { load(i); });
-        tabs.appendChild(b);
-      })(날);
     }
     load(0);
     return { load: load };
