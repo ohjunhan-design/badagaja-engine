@@ -120,7 +120,7 @@
       {
         "제목": "미끼를 크게 답니다",
         "그림": "<rect width=\"320\" height=\"220\" fill=\"#EAF1F4\"/>\n<path d=\"M104 40 V96\" stroke=\"#41606b\" stroke-width=\"2\"/>\n<path d=\"M104 96 q-14 14 0 28 q14 -14 0 -28\" fill=\"none\" stroke=\"#41606b\" stroke-width=\"3\"/>\n<g stroke=\"#8a6f4a\" stroke-width=\"5\" stroke-linecap=\"round\" fill=\"none\"><path d=\"M96 112 q-14 10 -6 22\"/><path d=\"M104 114 q4 14 -4 24\"/><path d=\"M112 112 q14 10 6 22\"/></g>\n<text x=\"158\" y=\"120\" font-size=\"11\" font-weight=\"700\" fill=\"#2F5D57\" text-anchor=\"start\">갯지렁이를 여러 마리</text>\n<text x=\"16\" y=\"190\" font-size=\"11\" font-weight=\"700\" fill=\"#2F5D57\" text-anchor=\"start\">작은 미끼는 잡어가 먼저 가져갑니다</text>\n<text x=\"16\" y=\"26\" font-size=\"12\" font-weight=\"700\" fill=\"#41606b\">큰 입에 맞게 넉넉히 답니다</text>",
-        "설명": "참돔은 입이 커서 <b>미끼를 넉넉히</b> 달아야 합니다. 갯지렁이는 여러 마리를 한꺼번에 꿰어 뭉치게 하고, 오징어살은 손가락만 하게 썹니다. 작게 달면 잡어가 먼저 뜯어 갑니다. 찌낚시로 흘리기도 하고, 바닥 채비로 던져 두기도 합니다."
+        "설명": "참돔은 입이 커서 미끼를 넉넉히 달아야 합니다. 작게 달면 잡어가 먼저 뜯어 갑니다. 찌낚시로 흘리기도 하고, 바닥 채비로 던져 두기도 합니다. 어느 쪽이든 미끼 크기는 넉넉하게가 원칙입니다."
       },
       {
         "제목": "첫 힘을 버텨 냅니다",
@@ -362,7 +362,7 @@
       {
         "제목": "껍데기째 떼어 옵니다",
         "그림": "<rect width=\"320\" height=\"220\" fill=\"#EAF1F4\"/>\n<path d=\"M0 220 L0 110 L86 84 L150 124 L200 100 L240 220z\" fill=\"#8e9297\"/>\n<g transform=\"translate(106,112) scale(1.4)\"><path d=\"M-16 6 q-2 -18 8 -22 q12 -5 18 6 q6 12 -4 18 q-14 6 -22 -2z\" fill=\"#CFC8BA\" stroke=\"#9a9184\" stroke-width=\"1.6\"/><path d=\"M-10 0 q10 -8 18 2M-12 6 q12 -6 22 0\" fill=\"none\" stroke=\"#a8a094\" stroke-width=\"1.4\"/></g>\n<path d=\"M236 92 l-58 26\" stroke=\"#41606b\" stroke-width=\"4\" stroke-linecap=\"round\"/>\n<path d=\"M236 92 q14 -6 16 -18\" fill=\"none\" stroke=\"#41606b\" stroke-width=\"4\" stroke-linecap=\"round\"/>\n<text x=\"250\" y=\"132\" font-size=\"11\" font-weight=\"700\" fill=\"#2F5D57\" text-anchor=\"start\">갈고리</text>\n<text x=\"172\" y=\"202\" font-size=\"11\" font-weight=\"700\" fill=\"#F0D0C0\" text-anchor=\"middle\" textLength=\"280\" lengthAdjust=\"spacingAndGlyphs\">손&#183;호미&#183;집게&#183;갈고리까지만 쓸 수 있습니다</text>\n<text x=\"16\" y=\"26\" font-size=\"12\" font-weight=\"700\" fill=\"#41606b\">현장에서 까기보다 떼어 와서 깝니다</text>",
-        "설명": "굴은 바위에 단단히 붙어 있어 <b>껍데기째 떼어</b> 온 뒤 집에서 갈고리로 쪼아 엽니다. 현장에서 까려 들면 시간도 오래 걸리고 손을 다치기 쉽습니다. 비어업인이 쓸 수 있는 도구는 <b>손·호미·집게·갈고리</b>까지입니다. 그 밖의 기계나 잠수 장비는 쓸 수 없습니다."
+        "설명": "굴은 바위에 단단히 붙어 있어 <b>껍데기째 떼어</b> 온 뒤 집에서 갈고리로 쪼아 엽니다. 현장에서 까려 들면 시간도 오래 걸리고 손을 다치기 쉽습니다. 쓸 수 있는 도구는 <b>손으로 다루는 것까지</b>입니다 — 기계나 잠수 장비는 쓸 수 없습니다."
       },
       {
         "제목": "미끄러짐이 가장 위험합니다",
@@ -482,7 +482,7 @@
       {
         "제목": "체험장과 직판장이 확실합니다",
         "그림": "<rect width=\"320\" height=\"220\" fill=\"#EAF1F4\"/>\n<rect x=\"30\" y=\"60\" width=\"118\" height=\"96\" rx=\"10\" fill=\"#E8F0E6\" stroke=\"#2F5D57\" stroke-width=\"2\"/>\n<text x=\"89\" y=\"100\" font-size=\"11\" font-weight=\"700\" fill=\"#2F5D57\" text-anchor=\"middle\">체험 프로그램</text>\n<text x=\"89\" y=\"126\" font-size=\"11\" font-weight=\"700\" fill=\"#2F5D57\" text-anchor=\"middle\">마을이 여는 구역</text>\n<rect x=\"172\" y=\"60\" width=\"118\" height=\"96\" rx=\"10\" fill=\"#E8F0E6\" stroke=\"#2F5D57\" stroke-width=\"2\"/>\n<text x=\"231\" y=\"100\" font-size=\"11\" font-weight=\"700\" fill=\"#2F5D57\" text-anchor=\"middle\">직판장</text>\n<text x=\"231\" y=\"126\" font-size=\"11\" font-weight=\"700\" fill=\"#2F5D57\" text-anchor=\"middle\">산지에서 바로</text>\n<text x=\"160\" y=\"194\" font-size=\"11\" font-weight=\"700\" fill=\"#41606b\" text-anchor=\"middle\">완도에서는 이 두 가지가 가장 확실합니다</text>\n<text x=\"16\" y=\"26\" font-size=\"12\" font-weight=\"700\" fill=\"#41606b\">따지 말고 사는 편이 빠릅니다</text>",
-        "설명": "완도에서는 <b>체험 프로그램</b>이나 <b>직판장</b>을 이용하는 편이 확실합니다. 마을이 여는 체험에서는 정해진 구역에서 직접 따 볼 수 있고, 직판장에서는 그날 나온 것을 삽니다. 규정을 어기는 위험을 지지 않고도 전복을 만나는 방법입니다."
+        "설명": "마을이 여는 체험에서는 정해진 구역에서 직접 따 볼 수 있고, 직판장에서는 그날 나온 것을 삽니다. <b>규정을 어기는 위험을 지지 않고도</b> 전복을 만나는 길입니다. 완도 일대에 특히 많습니다."
       }
     ],
     "jeoneo": [
@@ -658,7 +658,7 @@
       {
         "제목": "뚜껑 있는 통과 금어기",
         "그림": "<rect width=\"320\" height=\"220\" fill=\"#EAF1F4\"/>\n<g transform=\"translate(86,100) scale(1.2,1.2)\"><circle r=\"18\" fill=\"#B4896E\"/><path d=\"M-14 12 q-8 18 -18 22M-6 17 q-4 20 -10 26M6 17 q4 20 10 26M14 12 q8 18 18 22\" fill=\"none\" stroke=\"#a97f66\" stroke-width=\"3.6\" stroke-linecap=\"round\"/><path d=\"M-2 18 q0 20 -2 28M2 18 q0 20 2 28\" fill=\"none\" stroke=\"#a97f66\" stroke-width=\"3.2\" stroke-linecap=\"round\"/><circle cx=\"-7\" cy=\"-4\" r=\"3\" fill=\"#3a2f28\"/><circle cx=\"7\" cy=\"-4\" r=\"3\" fill=\"#3a2f28\"/></g>\n<rect x=\"168\" y=\"76\" width=\"118\" height=\"66\" rx=\"10\" fill=\"#CFE3EA\" stroke=\"#41606b\" stroke-width=\"2\"/>\n<path d=\"M168 92 h118\" stroke=\"#41606b\" stroke-width=\"2\"/>\n<text x=\"227\" y=\"120\" font-size=\"11\" font-weight=\"700\" fill=\"#41606b\" text-anchor=\"middle\">뚜껑 있는 통</text>\n<text x=\"168\" y=\"170\" font-size=\"11\" font-weight=\"700\" fill=\"#C0522B\" text-anchor=\"start\">그물망은 빠져나갑니다</text>\n<text x=\"16\" y=\"200\" font-size=\"11\" font-weight=\"700\" fill=\"#C0522B\" text-anchor=\"start\">금어기는 시&#183;도마다 달라 출발 전에 확인</text>\n<text x=\"16\" y=\"26\" font-size=\"12\" font-weight=\"700\" fill=\"#41606b\">낙지는 좁은 틈으로도 빠져나갑니다</text>",
-        "설명": "잡은 낙지는 <b>뚜껑 있는 통</b>에 넣으세요. 그물망은 좁은 틈으로 빠져나갑니다. 낙지는 금어기가 있고 시·도지사가 지역별로 따로 정하기도 해서, 출발 전에 그 지역 기준을 확인해야 합니다. 무른 뻘에서는 장화보다 갯벌용 신발이 안전하고, 반드시 둘 이상이 함께 들어가세요."
+        "설명": "잡은 낙지는 <b>뚜껑 있는 통</b>에 넣으세요. 그물망은 좁은 틈으로 빠져나갑니다. 금어기 기준은 지역마다 다르니 <b>금어기 칸에서 그날 기준</b>을 확인하세요. 무른 뻘에서는 장화보다 갯벌용 신발이 안전합니다."
       }
     ],
     "nongeo": [

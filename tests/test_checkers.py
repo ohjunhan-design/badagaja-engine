@@ -1221,6 +1221,87 @@ def 시험_옛쪽대비():
         shutil.rmtree(t, ignore_errors=True)
 
 
+# ── check_design [5-5] — 그림 설명이 본문을 베끼면 잡는가 ──
+def 시험_베낀설명():
+    print('[24-2] check_design [5-5] — 그림 설명이 본문을 베끼면 잡는가')
+
+    글 = 돌리기('check_design.py')
+    봄('지금은 그림 설명이 본문과 다르다',
+       '그림 설명이 본문과 다릅니다' in 글, 글[-600:])
+
+    # ★ **정말 베끼게 만듭니다** — 본문 한 토막을 그대로 figcaption 에
+    #   넣습니다. 겉만 건드리면 시험이 조용히 헛돕니다.
+    def 베끼기(사본):
+        import re as _re
+        for 이름 in ('fish/bollak.html', 'catch/bajirak.html'):
+            a = os.path.join(사본, *이름.split('/'))
+            if not os.path.isfile(a):
+                continue
+            s2 = io.read(a)
+            # figcaption 을 뺀 본문에서 긴 글월 하나를 고릅니다
+            본 = _re.sub(r'(?s)<figcaption[^>]*>.*?</figcaption>', ' ', s2)
+            본 = _re.sub(r'(?s)<script.*?</script>', ' ', 본)
+            # ★ **<title> 을 집지 않습니다** (2026-09-30)
+            #   처음에는 쪽 제목을 베껴 넣었는데, 그것은 줄표가 든
+            #   짧은 글이라 검사기가 건너뛰었습니다. 시험이 헛돌았습니다.
+            본 = 본.split('<body', 1)[-1]
+            본 = _re.sub(r'<[^>]+>', ' ', 본)
+            글월 = [x.strip() for x in _re.split(r'[.!?]', 본)
+                    if len(_re.findall(r'[가-힣]', x)) >= 30
+                    and '—' not in x]
+            if not 글월:
+                continue
+            베낀것 = 글월[0][:60]
+            s3 = _re.sub(r'(?s)(<figcaption[^>]*>)(.*?)(</figcaption>)',
+                         lambda m: m.group(1) + m.group(2) + ' ' + 베낀것
+                                   + m.group(3),
+                         s2, count=1)
+            io.write(a, s3)
+
+    t, 사본 = 사이트사본(베끼기)
+    try:
+        글 = 돌리기('check_design.py', 사이트=사본)
+        봄('그림 설명이 본문을 베끼면 잡는다',
+           '그림 설명이 본문과 겹치는 곳' in 글 and '✗' in 글,
+           글[-700:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
+# ── check_design [5-6] — PC 보기가 빠지면 잡는가 ──
+def 시험_피시보기():
+    print('[24-3] check_design [5-6] — PC 화면으로 보기가 빠지면 잡는가')
+
+    글 = 돌리기('check_design.py')
+    봄('지금은 모든 쪽에 PC 보기가 있다',
+       'PC 화면으로 보기를 갖습니다' in 글, 글[-600:])
+
+    # ★ **정말 지웁니다** — 단추와 스크립트를 통째로 뺍니다.
+    #   2026-09-30 주인이 「푸터에 피씨화면보기 기능이 사라졌어」
+    #   하셨을 때, 실제로 이렇게 통째로 빠져 있었습니다.
+    def 지우기(사본):
+        import re as _re
+        for 이름 in ('index.html', 'taean.html'):
+            a = os.path.join(사본, 이름)
+            if not os.path.isfile(a):
+                continue
+            s2 = io.read(a)
+            s3 = _re.sub(r'(?is)<p class="pcview">.*?</p>', '', s2)
+            s3 = _re.sub(r'(?is)<script>\(function\(\)\{var a='
+                         r'document\.getElementById\("pcView"\).*?</script>',
+                         '', s3)
+            io.write(a, s3)
+
+    t, 사본 = 사이트사본(지우기)
+    try:
+        글 = 돌리기('check_design.py', 사이트=사본)
+        봄('PC 보기를 지우면 잡는다',
+           'PC 화면으로 보기가 성치 않은 쪽' in 글 and '\u2717' in 글,
+           글[-700:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
 # ── check_tide_old — 옛 쪽과 새 쪽의 음력이 갈리면 잡는가 ──
 def 시험_옛물때():
     print('[25] check_tide_old — 옛·새 음력이 갈리면 잡는가')
@@ -1450,6 +1531,8 @@ def main():
     시험_있던것()
     시험_짜임()
     시험_옛쪽대비()
+    시험_베낀설명()
+    시험_피시보기()
     시험_옛물때()
     시험_카나리()
     시험_닿았나()

@@ -3740,7 +3740,9 @@ def 챙길것칸(것):
             줄.append('<dt>%s</dt><dd>%s%s</dd>'
                       % (esc(한개.get('이름') or ''),
                          esc(값) if 값 else '<span class="rig-none">—</span>',
-                         '<span class="rig-tip">%s</span>' % esc(귀띔)
+                         # ★ **부품 귀띔도 굵게** (2026-09-30)
+                         #   esc() 면 별표가 글자로 보입니다.
+                         '<span class="rig-tip">%s</span>' % _굵게(귀띔)
                          if 귀띔 else ''))
         줄.append('</dl>')
     return ''.join(줄)

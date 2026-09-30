@@ -171,6 +171,18 @@ ASSETS = os.environ.get('BADAGAJA_ASSETS', os.path.join(ROOT, 'assets'))
         '<circle cx="28" cy="18" r="2" fill="#fff"/>'
         % (주황, 주황))),
 
+    # ★ 주꾸미·갑오징어용 — **봉돌이 아래**에 달립니다 (2026-09-30)
+    #   무늬오징어 에깅(egi)과 채비가 달라 아이콘도 갈랐습니다.
+    'egi_sinker': ('에기 채비 (봉돌)', (
+        '<path d="M24 4 V20" stroke="%s" stroke-width="2"/>'
+        '<path d="M12 26 L26 14 C29 17 30 23 26 27 L16 32Z" fill="%s"/>'
+        '<path d="M12 26 L6 31 M16 32 L10 36" stroke="%s" '
+        'stroke-width="2" stroke-linecap="round"/>'
+        '<circle cx="24" cy="18" r="1.8" fill="#fff"/>'
+        '<path d="M24 20 V34" stroke="%s" stroke-width="2"/>'
+        '<path d="M21 34 h6 l-3 9Z" fill="%s"/>'
+        % (잉크, 주황, 주황, 잉크, 잉크))),
+
     'sabiki': ('카드 채비', (
         '<path d="M24 5 V43" stroke="%s" stroke-width="2"/>'
         '<path d="M24 13 C30 13 31 18 27 19 M24 23 C30 23 31 28 27 29 '

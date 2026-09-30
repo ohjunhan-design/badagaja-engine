@@ -186,7 +186,10 @@ def 볼쪽들(전부):
                        #   다른 쪽과 아주 다릅니다 — 꼭 봐야 합니다.
                        ('채비목록', 'rig/index.html'),
                        ('채비하나', 'rig/float_rod.html'),
-                       ('부품사전', 'rig/parts.html')):
+                       ('부품사전', 'rig/parts.html'),
+                       # ★ 2026-09-30 — 에기를 두 채비로 가르며 생긴 새 쪽.
+                       #   표본에 안 넣으면 영영 안 봅니다.
+                       ('에기봉돌', 'rig/egi_sinker.html')):
         p = os.path.join(NEW, 무늬.replace('/', os.sep))
         if os.path.exists(p):
             나옴.append(p)

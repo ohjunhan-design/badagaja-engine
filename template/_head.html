@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- PC 화면으로 보기 — 저장된 선택이면 폭을 1280 으로 (쪽이 그려지기 전에 해야 화면이 안 흔들립니다) -->
+<script>try{if(localStorage.getItem("bdg-pcview")==="1"){document.querySelector('meta[name=viewport]').setAttribute("content","width=1280");document.documentElement.setAttribute("data-pcview","1")}}catch(e){}</script>
 <title>{{제목}}</title>
 <meta name="description" content="{{설명}}">
 <link rel="canonical" href="{{정식주소}}">

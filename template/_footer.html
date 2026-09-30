@@ -5,8 +5,10 @@
     <p>운영책임자 <b>{{운영책임자}}</b><br><a href="mailto:{{메일}}">{{메일}}</a></p>
   </div>
   <nav class="footer-nav" aria-label="하단 메뉴">{{{꼬리메뉴}}}</nav>
+  <p class="pcview"><a href="#" id="pcView">PC 화면으로 보기</a></p>
   <p>{{알림글}}</p>
 </div></footer>
+<script>(function(){var a=document.getElementById("pcView");if(!a)return;var on=false;try{on=localStorage.getItem("bdg-pcview")==="1"}catch(e){}a.textContent=on?"휴대폰 화면으로 돌아가기":"PC 화면으로 보기";a.addEventListener("click",function(e){e.preventDefault();try{if(on)localStorage.removeItem("bdg-pcview");else localStorage.setItem("bdg-pcview","1")}catch(x){}location.reload()})})();</script>
 {{{쪽스크립트}}}
 </body>
 </html>
