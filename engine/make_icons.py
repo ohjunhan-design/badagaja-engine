@@ -125,6 +125,19 @@ ASSETS = os.environ.get('BADAGAJA_ASSETS', os.path.join(ROOT, 'assets'))
         '<path d="M24 35 V42" stroke="%s" stroke-width="2"/>'
         % (잉크, 주황, 잉크))),
 
+    # ★ 전유동 (2026-09-30 주인 지시 — 「유동채비도 만들어줘」)
+    #   반유동 아이콘과 한눈에 갈리게 그립니다.
+    #     · 찌가 **아래쪽**에 있습니다 — 원줄을 타고 내려가는 채비입니다
+    #     · 옆에 **내려가는 화살표**를 둡니다
+    #     · 면사매듭이 없으므로 윗줄에 매듭 표시를 넣지 않습니다
+    'float_free': ('전유동 채비', (
+        '<path d="M24 6 V26" stroke="%s" stroke-width="2"/>'
+        '<path d="M24 26 C29 30 29 37 24 41 C19 37 19 30 24 26Z" fill="%s"/>'
+        '<path d="M14 13 V21 M11 18 l3 3 l3 -3" stroke="%s" '
+        'stroke-width="1.8" fill="none" stroke-linecap="round" '
+        'stroke-linejoin="round"/>'
+        % (잉크, 주황, 바다))),
+
     'bottom': ('바닥 채비', (
         '<path d="M24 6 V26" stroke="%s" stroke-width="2"/>'
         '<path d="M18 26 H30 L27 34 H21Z" fill="%s"/>'
