@@ -46,6 +46,10 @@ sys.path.insert(0, ROOT)
 from engine import art                                    # noqa: E402
 from engine import io                                     # noqa: E402
 from engine import url                                    # noqa: E402
+# 그림 좌표를 재는 셈은 **한 곳에서만** 둡니다 (계약-01 의 뜻).
+# 여기서 따로 계산하면 검사기끼리 답이 갈립니다.
+from engine._art_overflow import (                        # noqa: E402
+    _그냥, _낱들, _곱, _도형점들, _먹이기, _변환읽기)
 
 # ★ 다른 검사기와 같은 방식으로 **딴 자리를 가리킬 수 있게** 둡니다.
 #   시험(tests/test_checkers.py)이 사본을 망가뜨려 「정말 잡는가」를
@@ -319,6 +323,107 @@ def main():
             print('  ! %s' % x)
     else:
         print('  · 모음 1쪽 + 갈래 %d쪽이 모두 있습니다' % len(채비))
+    print('')
+
+    # ── [6] 어종이 **있는 채비**를 가리키는가
+    #
+    #   ★ 2026-09-30 주인 지적 — 「참돔은 채비도 없고 그림도 엉망이고」
+    #
+    #     참돔의 `그림` 이 **boat**, 농어가 **lure** 였습니다.
+    #     둘 다 우리 채비 갈래에 **없는 이름**이라 채비도가
+    #     **아예 안 그려졌습니다.** 쪽에 있어야 할 그림이 통째로 빠진 채
+    #     배포되어 있었고, 아무 검사도 걸리지 않았습니다.
+    #     게다가 boat(선상)는 **주인 규칙 10** 에도 어긋납니다 —
+    #     갯바위·항구에서 직접 하는 낚시만 싣습니다.
+    #
+    #   어종 안내가 가리키는 채비 이름이 rigs.json 에 실제로 있어야 합니다.
+    print('[6] 어종이 가리키는 채비가 실제로 있는가 ★')
+    안내길 = os.path.join(ROOT, 'data', 'raw', 'guide.json')
+    안내 = io.read_json(안내길, default={}).get('어종') or []
+    엉뚱 = []
+    본것 = 0
+    for 것 in 안내:
+        # ★ **낚시 어종만 봅니다.** 해루질 대상의 `그림` 은 채비가 아니라
+        #   생물 갈래(shell·crab·octopus…)를 가리킵니다 —
+        #   맨손으로 잡는 데 채비가 있을 리 없습니다.
+        if 것.get('갈래') != '낚시':
+            continue
+        갈 = 것.get('그림')
+        if not 갈:
+            continue
+        본것 += 1
+        if 갈 not in 채비:
+            엉뚱.append('%s → %s' % ((것.get('이름') or {}).get('ko') or '?', 갈))
+    if not 안내:
+        print('  ~ 어종 안내 자료가 없습니다 — 잴 것이 없습니다')
+    elif 엉뚱:
+        막음.append('없는 채비를 가리키는 어종 %d가지' % len(엉뚱))
+        print('  ✗ 없는 채비를 가리키는 어종 %d가지' % len(엉뚱))
+        for x in 엉뚱:
+            print('      %s' % x)
+        print('      → 그 쪽에는 **채비도가 아예 안 나옵니다.**')
+        print('        쓸 수 있는 이름: %s' % ' · '.join(sorted(채비)))
+    else:
+        print('  · 어종 %d가지가 모두 있는 채비를 가리킵니다' % 본것)
+    print('')
+
+    # ── [7] 그림이 **글씨 자리**를 덮지 않는가
+    #
+    #   ★ 2026-09-30 — 같은 잘못을 **네 번** 되풀이했습니다
+    #     편대 · 웜 · 가지바늘 · 막대찌가 차례로 오른쪽으로 뻗어
+    #     바로 옆의 이름과 호수를 덮었습니다.
+    #     「목줄」이 반쯤 가려지고, 「웜  그럽웜 2~4인치」 위로
+    #     꼬리가 올라앉았습니다.
+    #
+    #   채비도는 **왼쪽이 그림, 오른쪽이 글씨**입니다.
+    #   글씨는 x=242 부터 적으므로, 그림이 그 앞(235)을 넘으면
+    #   읽는 데 방해가 됩니다. 배경 사각형은 폭 전체라 뺍니다.
+    print('[7] 그림이 글씨 자리를 덮지 않는가 ★')
+    글씨왼쪽 = 235
+    덮은것 = []
+    본그림 = 0
+    for 갈 in sorted(채비):
+        쪽 = os.path.join(나온곳, url.rig(갈).replace('/', os.sep))
+        if not os.path.isfile(쪽):
+            continue
+        글 = io.read(쪽, default='')
+        m = re.search(r'<svg viewBox="0 0 \d+ \d+" role="img"'
+                      r'[^>]*aria-label="[^"]*채비도".*?</svg>', 글, re.S)
+        if not m:
+            continue
+        본그림 += 1
+        쌓임 = [_그냥]
+        for mm in re.finditer(_낱들, m.group(0)):
+            조각 = mm.group(0)
+            if 조각.startswith('<g'):
+                g = re.search(r"transform=['\"]([^'\"]*)", 조각)
+                바뀜 = _변환읽기(g.group(1)) if g else _그냥
+                쌓임.append(_곱(쌓임[-1], 바뀜) if 바뀜 else 쌓임[-1])
+                continue
+            if 조각 == '</g>':
+                if len(쌓임) > 1:
+                    쌓임.pop()
+                continue
+            점 = _도형점들(조각)
+            if not 점:
+                continue
+            점 = [_먹이기(쌓임[-1], a, b) for a, b in 점]
+            좌 = min(q[0] for q in 점)
+            우 = max(q[0] for q in 점)
+            if 좌 < 10:
+                continue                     # 배경 사각형
+            if 우 > 글씨왼쪽 + 8:             # 8px 은 봐줍니다
+                덮은것.append('%s — x=%d 까지 뻗음' % (갈, round(우)))
+                break
+    if 덮은것:
+        막음.append('그림이 글씨를 덮는 채비 %d갈래' % len(덮은것))
+        print('  ✗ 그림이 글씨 자리를 덮는 채비 %d갈래' % len(덮은것))
+        for x in 덮은것:
+            print('      %s' % x)
+        print('      → 채비도는 **왼쪽이 그림, 오른쪽이 글씨**입니다.')
+        print('        부품을 왼쪽으로 뻗게 하거나 크기를 줄이세요.')
+    else:
+        print('  · 채비도 %d장이 글씨 자리를 비워 둡니다' % 본그림)
     print('')
 
     if 알림:

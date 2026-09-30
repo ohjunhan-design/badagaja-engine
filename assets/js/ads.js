@@ -81,6 +81,39 @@
     속.style.height = Math.round(세로 * 비율) + 'px';
   }
 
+  /* ★ **광고가 안 오면 바깥 띠까지 감춥니다** (2026-09-30 주인 지적)
+   *
+   *   주인 말씀 — 「이 부분에 쿠팡 광고 사라짐」
+   *              「한번보면 안보이는기능은 삭제해버려 사이트에서」
+   *
+   *   광고 자리 자체는 이미 접혀 있었습니다(높이 1px). 그런데 그것을
+   *   감싼 `.g-ad` 가 **안쪽 여백 18px** 을 그대로 차지해
+   *   첫 쪽 한가운데에 까닭 없는 **빈 띠**가 남아 있었습니다.
+   *   손님에게는 「뭔가 안 뜬 자리」로 보입니다.
+   *
+   *   그 띠 안의 자리가 **하나도 안 떴으면** 띠를 통째로 감춥니다.
+   *   광고가 살아나면 저절로 다시 보입니다 —
+   *   지우는 것이 아니라 **못 뜰 때만 숨기는** 것입니다.
+   */
+  function 띠살피기(칸) {
+    var 띠 = 칸.parentNode;
+    while (띠 && !(띠.className &&
+                   String(띠.className).indexOf('g-ad') >= 0)) {
+      띠 = 띠.parentNode;
+    }
+    if (!띠 || !띠.querySelectorAll) return;
+    if (띠.querySelector('.ad-slot[data-ad-state="떴음"]')) {
+      띠.style.display = '';
+      return;
+    }
+    // 아직 결과를 기다리는 자리가 있으면 그대로 둡니다
+    var 기다림 = [].some.call(띠.querySelectorAll('.ad-slot'), function (e) {
+      if (window.getComputedStyle(e).display === 'none') return false;
+      return !e.getAttribute('data-ad-state');
+    });
+    if (!기다림) 띠.style.display = 'none';
+  }
+
   /* 광고가 실제로 들어왔는지 보고, 들어왔을 때만 폅니다 */
   function 들어왔나(칸, 배너, 편다) {
     var 속 = 칸.querySelector('.ad-box');
@@ -94,11 +127,13 @@
         clearInterval(재기);
         편다();
         맞추기(칸, 배너.가로, 배너.세로);
+        띠살피기(칸);
         return;
       }
       if (잰횟수 >= 20) {          // 10초를 기다렸는데 안 오면
         clearInterval(재기);
         칸.setAttribute('data-ad-state', '안옴');   // 접힌 채로 둡니다
+        띠살피기(칸);
       }
     }, 500);
   }
@@ -130,6 +165,7 @@
         });
       } catch (e) {
         칸.setAttribute('data-ad-state', '탈남');
+        띠살피기(칸);
         return;                    // 접힌 채로 둡니다
       }
       들어왔나(칸, 배너, function () {
