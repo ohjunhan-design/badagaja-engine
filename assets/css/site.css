@@ -1561,3 +1561,45 @@ details.area-group .area-list{margin-bottom:12px}
   .area-group>summary{padding:11px 12px}
   .area-more{padding:5px 11px;font-size:12px}
 }
+
+/* ── 채비법 쪽 (2026-09-30 주인 지시)
+     「낚시 채비법에 관한 별도 페이지가 있었으면 좋겠어」
+
+   왼쪽에 채비도, 오른쪽에 챙길 것 표를 나란히 둡니다.
+   채비도는 세로로 긴 그림이라 옆에 표를 두면 **빈자리가 덜 생깁니다**
+   (주인 지시 — 「비어있는 공간을 잘 활용해」).
+   휴대폰에서는 한 줄로 내려옵니다 — 그림이 먼저, 표가 다음. */
+.rig-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+          gap:22px;align-items:start}
+.rig-art{background:var(--night);border:1px solid var(--line);
+         border-radius:14px;padding:14px 10px;text-align:center}
+.rig-art svg{max-width:100%;height:auto}
+.rig-side{min-width:0}
+.rig-th{margin:0 0 8px;font-size:.78rem;font-weight:700;letter-spacing:.02em;
+        color:var(--teal)}
+.rig-th:not(:first-child){margin-top:18px}
+.rig-dl{display:grid;grid-template-columns:auto minmax(0,1fr);
+        gap:0;margin:0;border:1px solid var(--line);border-radius:12px;
+        overflow:hidden}
+.rig-dl dt{padding:9px 13px;font-size:.87rem;font-weight:700;
+           background:var(--night);border-bottom:1px solid var(--line);
+           white-space:nowrap}
+.rig-dl dd{margin:0;padding:9px 13px;font-size:.87rem;
+           border-bottom:1px solid var(--line);border-left:1px solid var(--line)}
+.rig-dl dt:last-of-type,.rig-dl dd:last-of-type{border-bottom:0}
+.rig-none{color:var(--foam-dim)}
+.rig-tip{display:block;margin-top:3px;font-size:.76rem;color:var(--foam-dim)}
+@media (max-width:760px){
+  .rig-wrap{grid-template-columns:1fr;gap:16px}
+  .rig-dl dt,.rig-dl dd{padding:8px 11px;font-size:.84rem}
+}
+
+/* 어종 쪽 → 채비법 쪽으로 가는 단추 (2026-09-30) */
+.rig-go{margin:12px 0 0;text-align:center}
+.rig-go-btn{display:inline-block;padding:9px 18px;border-radius:999px;
+            border:1px solid var(--teal);color:var(--teal);
+            font-size:.86rem;font-weight:700;text-decoration:none}
+.rig-go-btn:hover{background:var(--teal);color:#fff}
+
+/* 「왜 이렇게 매나」 본문 — 제목이 아니라 설명입니다 (2026-09-30) */
+.rig-why{margin:0;max-width:62ch;font-size:1.02rem;line-height:1.85}

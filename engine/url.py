@@ -123,6 +123,24 @@ def guide_list(갈래, 언어='ko'):
     return _붙이기(언어, 칸, 'index.html')
 
 
+def rig(갈래, 언어='ko'):
+    """채비법 쪽 — rig/float.html · rig/bottom.html …
+
+    ★ 2026-09-30 주인 지시 —
+      「낚시 채비법에 관한 별도 페이지가 있었으면 좋겠어
+        원투법 찌낙시법 등 채비에 관한 별도 페이지가 있으면 좋겠어」
+
+    갈래 이름은 `data/raw/rigs.json` 의 열쇠를 그대로 씁니다
+    (bottom · float · sabiki · egi · jighead). 자료가 주소를 정합니다.
+    """
+    return _붙이기(언어, 'rig', '%s.html' % 갈래)
+
+
+def rig_list(언어='ko'):
+    """채비법 모음 — rig/"""
+    return _붙이기(언어, 'rig', 'index.html')
+
+
 def species(어종, 언어='ko'):
     return _붙이기(언어, 'fish', '%s.html' % 어종)
 

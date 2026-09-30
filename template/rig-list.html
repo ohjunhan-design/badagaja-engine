@@ -1,0 +1,37 @@
+{{#_head.html}}
+<body>
+{{#_header.html}}
+
+<!-- ★ **채비법 모음** (2026-09-30 주인 지시)
+       「낚시 채비법에 관한 별도 페이지가 있었으면 좋겠어
+         원투법 찌낙시법 등 채비에 관한 별도 페이지가 있으면 좋겠어
+         그 자료를 홈에서도 활용하게」
+
+     전에는 채비도가 **어종 쪽 안에만** 있었습니다. 그래서
+     「찌낚시가 뭔지」 알고 싶은 사람이 먼저 어종을 골라야 했습니다.
+     순서가 거꾸로였습니다 — 처음 오신 분은 **방법부터** 궁금합니다.
+
+     짜임은 어종 목록 쪽(guide-list.html)을 따릅니다.
+     작은 머리말 · 큰 제목 · 긴 설명 · 카드. -->
+<section class="section hero hero--text section--soft"><div class="wrap">
+  <p class="kicker">{{한줄}}</p>
+  <h1 class="serif">{{큰제목}}</h1>
+  <p class="hero-lead">{{소개글}}</p>
+  {{{안내띠}}}
+</div></section>
+
+<section class="section section--white" id="bada"><div class="wrap">
+  <div class="section-head">
+    <p class="kicker">하나씩 보기</p>
+    <h2 class="serif">어떻게 낚으시나요</h2>
+    <p class="lead">{{묶음안내}}</p>
+  </div>
+  <div class="grid">{{{묶음칸}}}</div>
+</div></section>
+
+<section class="section section--tail"><div class="wrap">
+  <p class="notice">{{기준일안내}}</p>
+</div></section>
+
+<button class="to-top" id="toTop" aria-label="맨 위로">↑</button>
+{{#_footer.html}}
