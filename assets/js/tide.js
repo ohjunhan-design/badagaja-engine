@@ -324,11 +324,97 @@
     });
   }
 
+  // ── 오늘 한눈에 ────────────────────────────────────────
+  //
+  //   ★ 2026-09-30 주인 지시 — 「물때 시각적 디자인이 첫번째도전이
+  //     더 좋을거 같기도 해」 「합치자」
+  //
+  //   첫번째 도전에 있던 것 셋을 가져옵니다.
+  //     · **「12물」을 크게** — 카드 속 작은 글씨로는 안 보입니다
+  //     · **다음 간조까지 남은 시간** — 지금 나갈지 말지를 이 한 줄이 정합니다
+  //     · **진행 막대** — 물이 지금 어디쯤인지 색으로
+  //   그 아래에 두번째 도전의 14일치 카드를 그대로 둡니다.
+  //     위 — 「지금 어떤가」 · 아래 — 「언제 갈까」
+  var 남은시간재기 = null;
+
+  function 오늘한눈에(오늘치) {
+    if (!오늘치) { return null; }
+    var 한눈 = 만들기('div', 'tnow');
+
+    var 위 = 만들기('div', 'tnow-head');
+    var 물 = 만들기('div', 'tnow-num');
+    물.appendChild(만들기('b', null, 오늘치.번호 + '물'));
+    물.appendChild(만들기('span', 'tnow-word', 오늘치.풀이.글));
+    위.appendChild(물);
+    한눈.appendChild(위);
+
+    // 진행 막대 — 세기(0~100)를 그대로 씁니다
+    var 막대 = 만들기('div', 'tnow-bar');
+    var 안 = 만들기('i', 'tnow-bar-in tnow-' + 오늘치.풀이.반);
+    안.style.width = Math.max(6, Math.min(100, 오늘치.세기)) + '%';
+    막대.appendChild(안);
+    한눈.appendChild(막대);
+
+    // 다음 간조까지 — 1분마다 다시 셉니다
+    var 다음 = 만들기('div', 'tnow-next');
+    다음.hidden = true;
+    var 왼 = 만들기('div', 'tnow-next-l');
+    왼.appendChild(만들기('span', 'tnow-k', '다음 간조'));
+    var 때글 = 만들기('b', 'tnow-t', '');
+    왼.appendChild(때글);
+    var 오른 = 만들기('div', 'tnow-next-r');
+    var 앞말 = 만들기('span', 'tnow-k', '지금부터');
+    오른.appendChild(앞말);
+    var 남은글 = 만들기('b', 'tnow-in', '');
+    오른.appendChild(남은글);
+    다음.appendChild(왼); 다음.appendChild(오른);
+    한눈.appendChild(다음);
+
+    function 분으로(hhmm) {
+      var a = (hhmm || '').split(':');
+      return (parseInt(a[0], 10) || 0) * 60 + (parseInt(a[1], 10) || 0);
+    }
+    function 칠하기() {
+      var 이제 = new Date();
+      var 지금분 = 이제.getHours() * 60 + 이제.getMinutes();
+      var 찾음 = null;
+      for (var i = 0; i < Math.min(2, 날들.length) && !찾음; i++) {
+        var 것들 = 날들[i].사건 || [];
+        for (var j = 0; j < 것들.length; j++) {
+          if (것들[j].type !== '간조') { continue; }
+          var t = 분으로(것들[j].time) + i * 1440;
+          if (t >= 지금분 - 40) {
+            찾음 = { time: 것들[j].time, 차: t - 지금분, 내일: i === 1 };
+            break;
+          }
+        }
+      }
+      if (!찾음) { 다음.hidden = true; return; }
+      때글.textContent = (찾음.내일 ? '내일 ' : '') + 찾음.time;
+      if (찾음.차 <= 30) {
+        앞말.textContent = '지금은';
+        남은글.textContent = 찾음.차 < -10 ? '간조가 막 지났어요' : '간조 무렵이에요';
+      } else {
+        var h = Math.floor(찾음.차 / 60), m = 찾음.차 % 60;
+        앞말.textContent = '지금부터';
+        남은글.textContent = (h ? h + '시간 ' : '') + (m ? m + '분' : '') + ' 뒤';
+      }
+      다음.hidden = false;
+    }
+    칠하기();
+    clearInterval(남은시간재기);
+    남은시간재기 = setInterval(칠하기, 60000);
+    return 한눈;
+  }
+
   function 그리기() {
     칸.textContent = '';
     // ★ 요약 차림(첫 쪽)은 「오늘 물때 · 물살」만 채웁니다
     //   — 계산 결과는 그대로 나옵니다. 숨기는 것이 아니라 **안 그립니다**.
     if (차림 === 'mini') { 요약채우기(날들[0]); return; }
+    // ★ 카드 위에 **오늘 한눈에** 를 먼저 얹습니다 (2026-09-30)
+    var 한눈 = 오늘한눈에(날들[0]);
+    if (한눈) { 칸.appendChild(한눈); }
     var 줄 = 만들기('div', 'tide-days');
     날들.forEach(function (x, i) {
       var 하루 = 만들기('div', 'tide-day' + (i === 0 ? ' tide-day--today' : ''));
@@ -356,7 +442,7 @@
 
       var 때 = 만들기('div', 'td-times');
       if (x.사건 && x.사건.length) {
-        x.사건.forEach(function (e) {
+        x.사건.forEach(function (e, ei) {
           var 한줄 = 만들기('div', 'td-t' + (e.type === '간조' ? ' td-t--low' : ''));
           한줄.appendChild(만들기('span', 'tt-k', e.type === '간조' ? '저' : '고'));
           한줄.appendChild(만들기('span', 'tt-v', e.time));
@@ -365,6 +451,26 @@
           //   없었습니다. 물높이는 해루질에서 가장 중요한
           //   값입니다 — 얼마나 빠지는지가 그것으로 정해집니다.
           한줄.appendChild(만들기('span', 'tt-cm', e.level + 'cm'));
+          // ★ **얼마나 오르내렸는지** 함께 적습니다 (2026-09-30 주인 지시)
+          //   「이런 표시도 나오면 좋겠어」 (바다타임의 ▲+123 · ▼-218)
+          //
+          //   물높이 자체보다 **얼마나 움직이는가**가 해루질·낚시에서
+          //   더 쓸모 있습니다. 앞 물때와의 차를 냅니다.
+          //   하루 첫 물때는 **전날 마지막**과 견줍니다 — 그래야
+          //   자정을 넘는 움직임도 이어집니다.
+          var 앞 = null;
+          if (ei > 0) { 앞 = x.사건[ei - 1]; }
+          else if (i > 0 && 날들[i - 1].사건 && 날들[i - 1].사건.length) {
+            var 전날 = 날들[i - 1].사건;
+            앞 = 전날[전날.length - 1];
+          }
+          if (앞 && typeof 앞.level === 'number'
+              && typeof e.level === 'number') {
+            var 폭 = e.level - 앞.level;
+            한줄.appendChild(만들기(
+              'span', 'tt-d' + (폭 < 0 ? ' tt-d--down' : ''),
+              (폭 < 0 ? '▼' : '▲') + (폭 > 0 ? '+' : '') + 폭));
+          }
           때.appendChild(한줄);
         });
       }

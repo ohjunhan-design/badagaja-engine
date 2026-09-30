@@ -1682,3 +1682,43 @@ details.area-group .area-list{margin-bottom:12px}
            border-radius:999px;background:var(--teal);color:#fff;
            font-size:.85rem;font-weight:700;text-decoration:none;
            white-space:nowrap}
+
+/* 오르내린 폭 (2026-09-30 주인 지시 — 바다타임의 ▲+123 · ▼-218)
+   물높이보다 **얼마나 움직이는가**가 더 쓸모 있습니다.
+   오름은 붉게, 내림은 푸르게 — 색만 봐도 갈립니다. */
+.tt-d{margin-left:5px;font-size:11px;font-weight:700;color:#C0522B;
+      white-space:nowrap}
+.tt-d--down{color:#2E6F9E}
+
+/* ── 오늘 한눈에 (2026-09-30 주인 지시 — 「합치자」)
+     첫번째 도전의 좋았던 셋을 가져왔습니다.
+       · 「12물」을 크게   · 진행 막대   · 다음 간조까지 남은 시간
+     아래 14일치 카드는 두번째 도전 것을 그대로 둡니다.
+       위 — 「지금 어떤가」 · 아래 — 「언제 갈까」 */
+.tnow{border:1px solid var(--line);border-radius:16px;
+      background:var(--paper);padding:16px 18px;margin:0 0 14px}
+.tnow-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.tnow-num b{font-size:40px;font-weight:800;line-height:1.05;
+            letter-spacing:-.02em;color:var(--ink)}
+.tnow-word{margin-left:8px;font-size:15px;font-weight:700;
+           color:var(--foam-dim)}
+.tnow-bar{margin:12px 0 0;height:8px;border-radius:99px;
+          background:var(--night);overflow:hidden}
+.tnow-bar-in{display:block;height:100%;border-radius:99px;
+             transition:width .4s ease}
+.tnow-spring{background:linear-gradient(90deg,#2E7A70,#1E5B53)}
+.tnow-mid{background:linear-gradient(90deg,#7FB3AC,#4E8A82)}
+.tnow-neap{background:linear-gradient(90deg,#CFE0DC,#9CBDB7)}
+.tnow-next{display:flex;align-items:flex-end;justify-content:space-between;
+           gap:14px;margin-top:14px;padding:11px 14px;border-radius:12px;
+           background:var(--night)}
+.tnow-k{display:block;font-size:12px;color:var(--foam-dim);margin-bottom:2px}
+.tnow-t{font-size:21px;font-weight:800;letter-spacing:-.01em}
+.tnow-next-r{text-align:right}
+.tnow-in{font-size:17px;font-weight:800;color:var(--sun)}
+@media (max-width:560px){
+  .tnow{padding:13px 14px}
+  .tnow-num b{font-size:33px}
+  .tnow-t{font-size:18px}
+  .tnow-in{font-size:15px}
+}
