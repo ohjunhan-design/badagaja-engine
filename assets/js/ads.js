@@ -138,12 +138,48 @@
     }, 500);
   }
 
+  /* ★ **링크 배너** — 우리가 직접 그립니다 (2026-09-30)
+   *
+   *   쿠팡은 바깥 스크립트가 그리지만, 제휴 링크는 그냥 링크입니다.
+   *   직접 그리니 **언제나 뜨고** 쪽도 안 느려집니다.
+   *
+   *   ★ 제휴 광고는 **대가를 받는다는 것을 밝혀야** 합니다.
+   *     (공정거래위원회 「추천·보증 등에 관한 표시·광고 심사지침」)
+   */
+  function 링크그리기(칸, 배너) {
+    var a = document.createElement('a');
+    a.className = 'ad-link';
+    a.href = 배너['주소'];
+    a.target = '_blank';
+    a.rel = 'nofollow sponsored noopener';
+    a.style.maxWidth = 배너['가로'] + 'px';
+    a.innerHTML =
+      '<span class="ad-link-name">' + 글자(배너['이름']) + '</span>' +
+      '<span class="ad-link-one">' + 글자(배너['한줄']) + '</span>' +
+      (배너['풀이']
+        ? '<span class="ad-link-sub">' + 글자(배너['풀이']) + '</span>' : '') +
+      '<span class="ad-link-go">' + 글자(배너['단추'] || '보러 가기') +
+      ' \u2192</span>';
+
+    칸.innerHTML =
+      '<p class="ad-label"><span class="ad-badge">' + 글자(말('배지')) +
+      '</span>' + 글자(배너['이름']) + '</p>' +
+      '<div class="ad-box"></div>' +
+      (배너['제휴']
+        ? '<p class="ad-note">' + 글자(말('제휴문구')) + '</p>' : '');
+    칸.querySelector('.ad-box').appendChild(a);
+    칸.setAttribute('data-ad-state', '떴음');   // 늘 뜹니다
+  }
+
   function 그리기(칸) {
     var 이름 = 칸.getAttribute('data-ad-slot');
     var 자리 = (A.자리 || {})[이름];
     if (!자리 || !자리.켬) return;
     var 배너 = (A.배너 || {})[자리.배너];
     if (!배너) return;
+
+    // ★ 링크 배너는 바깥 스크립트 없이 바로 그립니다
+    if (배너['제공'] === 'link') { 링크그리기(칸, 배너); return; }
 
     var 아이디 = 'ad-' + 이름.replace(/[^a-z0-9-]/gi, '') + '-' +
                  Math.random().toString(36).slice(2, 8);

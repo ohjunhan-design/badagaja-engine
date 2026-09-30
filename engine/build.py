@@ -997,8 +997,13 @@ def _광고자료():
     return io.read_json(os.path.join(DATA, 'raw', 'ads.json'), default={})
 
 
-def 광고칸(쪽갈래):
+def 광고칸(쪽갈래, 권역=None):
     """그 갈래 쪽에 들어갈 광고 자리.
+
+    ★ **권역별 광고** (2026-09-30 주인 지시 — 제주패스)
+      자리에 `권역` 목록이 있으면 **그 권역에서만** 넣습니다.
+      같은 쪽갈래·기기에 여럿이 맞으면 **권역을 집은 것이 이깁니다** —
+      제주에서는 제주패스, 나머지는 쿠팡. 둘 다 넣으면 어지럽습니다.
 
     ★ 자리만 만들고 **내용은 안 넣습니다.** 실제 광고는 assets/js/ads.js
       가 화면에서 그립니다. 쪽 안에 광고 코드를 박으면, 광고를 끄거나
@@ -1014,13 +1019,30 @@ def 광고칸(쪽갈래):
     a = _광고자료()
     if not a.get('켬'):
         return ''
-    나옴 = []
+    # ★ **권역을 집은 자리가 있으면 그것만** 씁니다 (2026-09-30)
+    #   기기마다 따로 봅니다 — PC 는 제주패스인데 휴대폰은 쿠팡,
+    #   같은 일이 생기면 안 됩니다.
+    쓸것 = {}
     for 이름 in sorted((a.get('자리') or {})):
         if 이름.startswith('_'):
             continue
         자리 = a['자리'][이름]
         if not 자리.get('켬') or 자리.get('쪽갈래') != 쪽갈래:
             continue
+        집은것 = 자리.get('권역')
+        if 집은것 and 권역 not in 집은것:
+            continue                      # 이 권역 것이 아닙니다
+        기기 = 자리.get('기기') or 'all'
+        앞 = 쓸것.get(기기)
+        if 앞 and not 집은것:
+            continue                      # 이미 딱 집은 것이 있습니다
+        if 앞 and 집은것 and 앞[1].get('권역'):
+            continue                      # 집은 것끼리는 먼저 온 것
+        쓸것[기기] = (이름, 자리)
+
+    나옴 = []
+    for 기기 in sorted(쓸것):
+        이름, 자리 = 쓸것[기기]
         # ★ hidden 을 쓰지 않습니다 (2026-09-26 check_ads.py 가 잡음)
         #   hidden 은 display:none 이라 IntersectionObserver 가
         #   **영영 못 봅니다.** 광고가 한 번도 안 떴습니다.
@@ -1046,7 +1068,10 @@ def 광고자료쓰기():
     a = _광고자료()
     낼것 = {'켬': bool(a.get('켬')), '표시': {}, '배너': {}, '자리': {}}
     표시 = a.get('표시') or {}
-    for k in ('배지', '배지_zh', '글', '글_zh'):
+    # ★ 제휴문구는 **반드시** 나가야 합니다 (2026-09-30 주인 지시)
+    #   안 나가면 대가를 받고도 밝히지 않은 것이 됩니다.
+    for k in ('배지', '배지_zh', '글', '글_zh',
+              '제휴문구', '제휴문구_zh'):
         if 표시.get(k):
             낼것['표시'][k] = 표시[k]
     for 이름, b in sorted((a.get('배너') or {}).items()):
@@ -1056,6 +1081,11 @@ def 광고자료쓰기():
             '제공': b.get('제공'), 'id': b.get('id'), '틀': b.get('틀'),
             '추적': b.get('추적'), '가로': b.get('가로'), '세로': b.get('세로'),
         }
+        # ★ 링크 배너에 필요한 것 (2026-09-30)
+        #   메모·근거는 그대로 안 냅니다 (주인 규칙 11)
+        for k in ('주소', '제휴', '이름', '한줄', '풀이', '단추'):
+            if b.get(k) is not None:
+                낼것['배너'][이름][k] = b[k]
     for 이름, s in sorted((a.get('자리') or {}).items()):
         if 이름.startswith('_'):
             continue
@@ -1209,11 +1239,16 @@ def 포인트쪽(d, 권역, 갈래, 언어='ko'):
             #   point-list.js 가 window.BADAGAJA_MAPTYPE 를 찾습니다.
             '<script src="%s" defer></script>'
             '<script src="%s" defer></script>'
+            # ★ **카카오내비 길안내** (2026-09-30 — 옛 사이트에서 되살림)
+            #   포인트 카드에서 곧장 출발합니다. 휴대폰에서만 보입니다.
+            '<script src="%s" defer></script>'
             % (쪽자료.replace('</', '<\\/'),
                url.asset('assets/js/map-type.js', 쪽길,
                          판번호(os.path.join(ASSETS, 'js', 'map-type.js'))),
                url.asset('assets/js/point-list.js', 쪽길,
-                         판번호(os.path.join(ASSETS, 'js', 'point-list.js'))))
+                         판번호(os.path.join(ASSETS, 'js', 'point-list.js'))),
+               url.asset('assets/js/navi.js', 쪽길,
+                         판번호(os.path.join(ASSETS, 'js', 'navi.js'))))
             + 광고움직임(쪽길, '포인트목록')),
     }
     return 쪽길, template.그리기('point-list.html', 값)
@@ -1556,7 +1591,8 @@ def 권역쪽(d, 권역, 언어='ko'):
         '축제칸': 축제칸,
         '코스칸': 코스칸,
         '마을칸': 마을칸,
-        '광고칸': 광고칸('권역'),
+        # ★ 권역을 넘깁니다 — 제주에서는 제주패스가 뜹니다
+        '광고칸': 광고칸('권역', 권역),
         '기준일안내': '이 자료는 %s 기준입니다. 현장 사정은 바뀔 수 있으니 '
                       '출발 전에 다시 확인해 주세요.' % 자료기준일(),
         '사이트한줄': d.사이트['한줄'].get(언어) or d.사이트['한줄']['ko'],
@@ -2122,13 +2158,14 @@ def 묶음쪽(d, 묶음, 언어='ko'):
         권역칸.append(
             '<a class="card card--go card--photo" href="%s">%s'
             '<div class="card-head"><h3 class="card-name">%s</h3>%s</div>'
-            '<p class="card-body">%s</p>'
-            '<span class="maplink">%s 보기 →</span></a>'
+            # ★ 카드 자체가 링크입니다 — 안에 또 단추를
+            #   두면 「그것만 눌러야 하나」 싶어집니다
+            #   (2026-09-30 주인 지시)
+            '<p class="card-body">%s</p></a>'
             % (esc(url.rel(쪽길, url.region(r['id'], 언어))), 그림,
                esc(r['이름'].get(언어) or r['이름']['ko']),
                이름표('포인트 %d곳' % r수) if r수 else '',
-               esc(r.get('한줄') or r.get('소개') or ''),
-               esc(r['이름'].get(언어) or r['이름']['ko'])))
+               esc(r.get('한줄') or r.get('소개') or '')))
 
     # ★ 권역 고르기 — **누르면 그 권역 쪽으로 갑니다** (2026-09-28)
     #
@@ -2312,6 +2349,13 @@ def 묶음쪽(d, 묶음, 언어='ko'):
                                    판번호(os.path.join(ASSETS, 'js',
                                                        'tide.js')))
                        + (물높이그래프(쪽길, 첫['id']) if 첫 else '')
+                       # ★ **긴 목록을 접습니다** — more.js (2026-09-30)
+                       #   주인 지시 「하루코스 너무많아 더보기버튼으로
+                       #   축소해」. 전남은 코스가 45개였습니다.
+                       + ('<script src="%s" defer></script>'
+                          % url.asset('assets/js/more.js', 쪽길,
+                                      판번호(os.path.join(
+                                          ASSETS, 'js', 'more.js'))))
                        # ★ 축제 팝업 — 권역 쪽과 같은 것을 씁니다
                        + 축제팝업(묶음축제목록, 쪽길)
                        # ★ 검색 자료는 **쪽에 심습니다** — 바깥에 안 물어봅니다.
@@ -2829,18 +2873,16 @@ def 축제쪽(d, 축제, 언어='ko'):
         '<a class="card card--go" href="%s">'
         '<h3 class="card-name">%s 바다 안내</h3>'
         '<p class="card-body">오늘 물때와 제철 어종, 먹거리와 명소를 '
-        '한곳에 모았습니다.</p>'
-        '<span class="maplink">%s 보기 →</span></a>'
+        '한곳에 모았습니다.</p></a>'
         % (esc(url.rel(쪽길, url.region(축제['권역'], 언어))),
-           esc(권역이름), esc(권역이름)))
+           esc(권역이름)))
     for 갈래, 수 in (('낚시', 낚시수), ('해루질', 해루질수)):
         if not 수:
             continue
         권역칸.append(
             '<a class="card card--go" href="%s">'
             '<h3 class="card-name">%s %s 포인트</h3>'
-            '<p class="card-body">%s에서 %s 할 수 있는 자리 <b>%d곳</b>.</p>'
-            '<span class="maplink">포인트 보기 →</span></a>'
+            '<p class="card-body">%s에서 %s 할 수 있는 자리 <b>%d곳</b>.</p></a>'
             % (esc(url.rel(쪽길, url.point_list(축제['권역'], 갈래, 언어))),
                esc(권역이름), esc(갈래), esc(권역이름), esc(갈래), 수))
 

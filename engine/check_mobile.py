@@ -53,11 +53,23 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, ROOT)
 from engine import io        # noqa: E402
 from engine import machine   # noqa: E402
+from engine import _fake_tide  # noqa: E402
 
 NEW = os.environ.get('BADAGAJA_SITE', os.path.join(ROOT, 'site'))
 
 # 주인 규칙 23 — 휴대폰은 360·375
-재볼폭들 = (360, 375)
+#
+# ★ **중간 폭을 빠뜨리고 있었습니다** (2026-09-30 주인 지적 「화면넘침」)
+#
+#   360·375 만 보고 「넘치는 것이 없습니다」 하고 넘어갔습니다.
+#   그런데 주인 화면에서 물때 카드가 **가로로 넘쳐** 있었습니다.
+#   폭이 **약 800px** 이었습니다 — 요즘 큰 휴대폰 가로,
+#   태블릿, 폴드 펼침이 모두 이 구간입니다.
+#
+#   좁은 화면 규칙은 640px 이하에서만 걸렸고, 그 위는
+#   PC 규칙(7열)이 그대로 걸려 칸이 좁아지다 못해 넘쳤습니다.
+#   **아무도 안 보는 구간이 있으면 거기서 깨집니다.**
+재볼폭들 = (360, 375, 480, 640, 768, 820, 1024)
 
 # 검사 등급 (계약-21)
 #   막음 — 고쳐야 하는 것. 배포를 막습니다
@@ -121,15 +133,47 @@ document.getElementById('F').addEventListener('load', function () {
       몸폭: d.body.scrollWidth,
       넘침: 넘친것.slice(0, 10)
     });
-  }, 900);
+  // ★ 900ms 는 짧습니다 — 물높이 그래프가 그려질 시간을 줍니다
+  }, 2200);
 });
 </script></body></html>"""
+
+
+def _가짜심은쪽(쪽길, 임시):
+    """쪽을 베껴 **가짜 물때**를 심습니다.
+
+    ★ 2026-10-01 — 이것이 없어서 주인이 먼저 찾으셨습니다.
+      물높이 그래프가 1490px 로 커져 문서를 넓히고 있었는데,
+      검사는 인터넷을 막고 재느라 **그래프가 없는 쪽**을 봤습니다.
+      「넘치는 것이 없습니다」 하고 통과시켰습니다.
+
+    ★ 인터넷을 여는 것이 아니라 **가짜를 심습니다.**
+      바깥이 느린 날 검사가 흔들리면 그것은 시험이 아닙니다.
+
+    ★ 같은 폴더에 둡니다 — 차림표·그림이 상대 경로라
+      딴 데 두면 **차림표 없는 쪽**을 재게 됩니다.
+    """
+    글 = io.read(쪽길, default='')
+    if not 글:
+        return 쪽길
+    심을것 = _fake_tide.심을글()
+    if '</head>' in 글:
+        글 = 글.replace('</head>', 심을것 + '</head>', 1)
+    else:
+        글 = 심을것 + 글
+    새길 = os.path.join(os.path.dirname(쪽길), '__재기임시.html')
+    io.write(새길, 글)
+    임시.append(새길)
+    return 새길
 
 
 def 재기(쪽길, 폭):
     """iframe 안에 넣어 **진짜 그 폭으로** 그려 봅니다."""
     t = tempfile.mkdtemp(prefix='mobile-')
+    임시 = []
     try:
+        # ★ 가짜 물때를 심어 **그래프가 그려진 채로** 잽니다 (2026-10-01)
+        쪽길 = _가짜심은쪽(쪽길, 임시)
         안길 = 'file:///' + os.path.abspath(쪽길).replace(os.sep, '/')
         겉 = 겉틀 % (안길, 폭)
         p = os.path.join(t, 'z.html')
@@ -159,6 +203,11 @@ def 재기(쪽길, 폭):
             return None
     finally:
         shutil.rmtree(t, ignore_errors=True)
+        for x in 임시:
+            try:
+                os.remove(x)
+            except OSError:
+                pass
 
 
 def 볼쪽들(전부):

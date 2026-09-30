@@ -221,16 +221,20 @@
     kakao.maps.event.addListener(지도, 'click', 풀기);
     kakao.maps.event.addListener(지도, 'dragstart', 풀기);
 
-    // 카드마다 '지도에서 자리 보기'
+    /* 카드마다 **「위치 확인하기」** (2026-09-30 주인 지시)
+       전에는 이름이 「지도에서 자리 보기 ↑」였고, 그 위에 카카오맵으로
+       나가는 「지도에서 보기 →」가 또 있었습니다. 둘을 하나로 합쳤습니다. */
     좌표있는것.forEach(function (p) {
       if (!p.el) return;
-      var a = 만들기('button', 'maplink maplink--map', '지도에서 자리 보기 ↑');
+      var a = 만들기('button', 'maplink maplink--map', '📍 위치 확인하기');
       a.type = 'button';
       a.addEventListener('click', function () {
         지도칸.scrollIntoView({ behavior: 'smooth', block: 'center' });
         setTimeout(function () { 열기(p); }, 400);
       });
-      p.el.appendChild(a);
+      // 길안내와 나란히 놓습니다 — 자리를 보는 것과 나가는 것
+      var 줄 = p.el.querySelector('.card-go') || p.el;
+      줄.appendChild(a);
     });
 
     알림줄();

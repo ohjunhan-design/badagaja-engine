@@ -6,5 +6,10 @@
       <div class="card-tags">{{{이름표들}}}</div>
       <div class="card-body">{{{항목들}}}</div>
       {{{메모}}}
-      <a class="maplink" href="{{지도주소}}" target="_blank" rel="noopener">지도에서 보기 →</a>
+      <!-- ★ 2026-09-30 주인 지시 — 「이거 두개 의미없어 버튼을
+           위치확인하기 이렇게 만들고 선택시 상단 우리 지도로 이동하게」
+           카카오맵으로 **나가는** 링크를 뺐습니다.
+           좌표가 있는 카드에는 point-list.js 가 「위치 확인하기」를,
+           navi.js 가 「🚗 길안내」를 넣습니다. -->
+      <div class="card-go"></div>
     </article>

@@ -293,6 +293,28 @@ a.badge{min-height:44px}
   font-size:12px;font-weight:700;color:var(--green);text-decoration:none;
 }
 .maplink:hover{text-decoration:underline}
+/* 카카오내비 길안내 — 휴대폰에서만 붙습니다 (2026-09-30)
+   ★ 지도를 보는 것과 **차에 타고 출발하는 것**은 다릅니다.
+     그래서 「지도에서 보기」 옆에 나란히 둡니다. */
+.navi{display:none}
+/* 두 단추를 나란히 — 왼쪽은 자리를 보는 것, 오른쪽은 출발하는 것.
+   ★ **길안내가 더 강해야 합니다** — 이 사이트의 마지막 걸음입니다. */
+.card-go{display:flex;gap:8px;align-items:stretch;margin-top:10px}
+/* ★ **차례를 정합니다** (2026-09-30)
+   두 단추를 넣는 스크립트가 달라 붙는 순서가 일정하지
+   않았습니다(지도가 늦게 뜨면 길안내가 먼저 들어갑니다).
+   왼쪽은 **자리를 보는 것**, 오른쪽은 **실제로 나가는 것**. */
+.card-go .maplink{order:1}
+.card-go .navi{order:2}
+.card-go .maplink{flex:1;margin-top:0;justify-content:center}
+html.has-navi .navi{
+  flex:1;display:inline-flex;align-items:center;justify-content:center;
+  gap:4px;padding:0 14px;border-radius:10px;
+  background:var(--orange);border:1px solid var(--orange);
+  color:#fff;font-size:12px;font-weight:800;text-decoration:none;
+  min-height:44px;
+}
+html.has-navi .navi:hover{filter:brightness(.94)}
 
 /* ── 걸러내기 단추 ────────────────────────────────────── */
 .filter{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}
@@ -434,7 +456,7 @@ html[data-pcview] .pcview{display:block}
    ★ 누름자리 44px — 휴대폰에서 누르기 좋게 (2026-09-27 재어 보니
      세로 21~40px 단추가 여럿이었습니다) */
 .quicknav{
-  display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-top:24px;
+  display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;margin-top:24px;
 }
 .quicknav a,.quicknav .qn-item{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -449,10 +471,10 @@ html[data-pcview] .pcview{display:block}
   border-color:var(--orange);color:var(--orange);transform:translateY(-1px);
 }
 @media (max-width:900px){
-  .quicknav{grid-template-columns:repeat(4,1fr)}
+  .quicknav{grid-template-columns:repeat(4,minmax(0,1fr))}
 }
 @media (max-width:480px){
-  .quicknav{grid-template-columns:repeat(3,1fr);gap:8px}
+  .quicknav{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
   .quicknav a,.quicknav .qn-item{min-height:74px;padding:12px 4px;font-size:11.5px}
   .quicknav svg{width:23px;height:23px}
 }
@@ -461,8 +483,29 @@ html[data-pcview] .pcview{display:block}
 .grid--tight{grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
 
 /* 눌러서 넘어가는 카드 */
-.card--go{display:block;text-decoration:none;color:inherit}
-.card--go .maplink{margin-top:12px}
+/* ★ **카드 자체가 링크입니다** (2026-09-30 주인 지시)
+   안에 따로 단추를 두면 「그것만 눌러야 하나」 싶어집니다.
+   대신 **오른쪽 위 화살표**로 어디로 가는지 알립니다. */
+.card--go{display:block;text-decoration:none;color:inherit;
+          position:relative;
+          transition:transform .18s ease,box-shadow .18s ease}
+.card--go::after{content:'→';position:absolute;top:12px;right:14px;
+                 width:26px;height:26px;border-radius:999px;
+                 display:flex;align-items:center;justify-content:center;
+                 background:var(--green);color:#fff;
+                 font-size:13px;font-weight:800;line-height:1;
+                 opacity:.9;pointer-events:none}
+/* 사진 카드는 사진 위에 올라서 보이게 합니다 */
+.card--photo::after{box-shadow:0 2px 8px rgba(0,0,0,.28)}
+.card--go:active{transform:scale(.988)}
+@media (hover:hover){
+  .card--go:hover{transform:translateY(-3px);
+                  box-shadow:0 10px 22px rgba(0,0,0,.10)}
+  .card--go:hover::after{opacity:1}
+}
+@media (prefers-reduced-motion:reduce){
+  .card--go,.card--go:active,.card--go:hover{transition:none;transform:none}
+}
 
 /* 조심할 것 · 안내 상자 */
 .warn-box,.note-box{
@@ -510,7 +553,12 @@ html[data-pcview] .pcview{display:block}
 .tide-strip{min-height:0}
 .tide-strip:empty{display:none}
 .tide-days{
-  display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:4px;
+  /* ★ **minmax(0,1fr)** 이라야 합니다 (2026-09-30 주인 지적 「화면넘침」)
+     그냥 `1fr` 은 **최소 폭이 내용 크기**입니다. 카드 안
+     「04:54 654cm ▲+660」 같은 줄이 칸을 밀어내 격자가 통째로
+     화면 밖으로 나갔습니다. 가로 스크롤이 생겨 쪽이 어그나 보입니다. */
+  display:grid;grid-template-columns:repeat(7,minmax(0,1fr));
+  gap:8px;margin-top:4px;
 }
 .tide-day{
   border:1px solid var(--line);border-radius:var(--r-sm);
@@ -560,10 +608,10 @@ html[data-pcview] .pcview{display:block}
    않으니 고르는 흐름이 끊기지 않습니다.
    광고가 없으면 .ad-slot 높이가 0 이라 그냥 9개만 보입니다. */
 .groups{
-  display:grid;grid-template-columns:repeat(5,1fr);
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
   gap:14px;
 }
-@media (max-width:1100px){.groups{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:1100px){.groups{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .groups .ad-slot{margin:0;align-self:stretch}
 .group-card{
   display:block;position:relative;overflow:hidden;
@@ -777,6 +825,14 @@ html[data-pcview] .pcview{display:block}
 
 /* ── 좁은 화면 ────────────────────────────────────────── */
 /* 덧대지 않고 여기 한 곳에서만 줄입니다 */
+/* ★ **641~1000px 이 비어 있었습니다** (2026-09-30 주인 지적)
+   요즘 큰 휴대폰 가로, 태블릿, 폴드 펼침이 모두 이 구간입니다.
+   7열은 칸이 너무 좁아 글자가 밀리고, 3열은 허전합니다 — 4열입니다. */
+@media (min-width:641px) and (max-width:1000px){
+  .tide-days{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+  .tide-day{padding:11px 7px}
+}
+
 @media (max-width:640px){
   .topbar{display:none}
   :root{--gutter:16px}
@@ -818,7 +874,7 @@ html[data-pcview] .pcview{display:block}
      — 밀어야 한다는 것을 배우지 않아도 됩니다
      (주인 규칙 23 — 확인은 휴대폰과 PC 둘 다) */
   .tide-days{
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:repeat(3,minmax(0,1fr));
     gap:6px;
   }
   .tide-day{padding:10px 6px}
@@ -1332,10 +1388,18 @@ body.fp-open{overflow:hidden}
 .fp-overlay[hidden]{display:none}
 .fp-box{
   position:relative;width:100%;max-width:480px;max-height:min(84vh,700px);
-  overflow-y:auto;background:var(--white,#fff);border-radius:18px;
+  /* ★ **가로를 막습니다** (2026-09-30 주인 지적 「팝업도 넘침」)
+     `overflow-y:auto` 만 주면 브라우저가 **가로도 auto**로
+     만듭니다. 그러면 안쪽이 조금만 넓어도 가로 스크롤이
+     생겨 꿀말이 잘려 보입니다. */
+  overflow-y:auto;overflow-x:hidden;box-sizing:border-box;
+  background:var(--white,#fff);border-radius:18px;
   box-shadow:0 24px 60px rgba(28,22,14,.36);
   animation:fpIn .18s ease-out;
 }
+/* 긴 낱말·주소가 있어도 줄이 바뀝니다 */
+.fp-box *{min-width:0}
+.fp-title,.fp-line,.fp-desc,.fp-note{overflow-wrap:anywhere}
 @keyframes fpIn{from{transform:translateY(12px);opacity:.6}to{transform:none;opacity:1}}
 @media (prefers-reduced-motion:reduce){.fp-box{animation:none}}
 .fp-close{
@@ -1373,7 +1437,8 @@ body.fp-open{overflow:hidden}
 }
 @media (max-width:600px){
   .fp-overlay{align-items:flex-end;padding:0}
-  .fp-box{max-width:none;max-height:88vh;border-radius:18px 18px 0 0}
+  .fp-box{max-width:none;width:100%;max-height:88vh;
+         border-radius:18px 18px 0 0}
   .fp-btn{flex:1 1 auto;justify-content:center}
 }
 
@@ -1549,12 +1614,54 @@ details.area-group .area-list{margin-bottom:12px}
   .pbn:hover::after{transform:none}
   .pbn:hover .pbn-go,.pbn:hover .pbn-go i{transform:none}
 }
+/* ★ **저절로 움직이는 효과** (2026-09-30 주인 지적으로 되살림)
+     「전에 있던 배너효과가 사라졌어」
+
+   ★ 까닭 — 새 사이트의 효과가 **전부 `:hover`** 에만 있었습니다.
+     휴대폰에는 마우스가 없어 hover 가 **아예 안 일어납니다.**
+     손님 대부분이 휴대폰인데 효과를 하나도 못 봤습니다.
+     저는 PC 에서만 보고 「움직인다」고 여겼습니다.
+
+   옛 사이트에 있던 넷을 그대로 가져옵니다. 색만 새 사이트 것입니다. */
+@keyframes pbnShine{0%{left:-60%}55%,100%{left:130%}}
+@keyframes pbnPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+@keyframes pbnNudge{0%,100%{transform:translateX(0)}
+                    50%{transform:translateX(4px)}}
+@keyframes pbnRing{0%{box-shadow:0 0 0 0 rgba(255,255,255,.7)}
+                   70%,100%{box-shadow:0 0 0 12px rgba(255,255,255,0)}}
+
+/* 빛이 배너 위를 비스듬히 지나갑니다 */
+.pbn::before{content:'';position:absolute;top:0;left:-60%;
+             width:40%;height:100%;pointer-events:none;z-index:1;
+             background:linear-gradient(100deg,
+                        rgba(255,255,255,0) 0%,
+                        rgba(255,255,255,.34) 50%,
+                        rgba(255,255,255,0) 100%);
+             transform:skewX(-20deg);
+             animation:pbnShine 3.2s ease-in-out infinite}
+/* 숫자 상자가 천천히 숨 쉽니다 */
+.pbn-n{animation:pbnPulse 1.6s ease-in-out infinite}
+/* 단추가 살짝 흔들리고 빛 고리가 퍼집니다 — 「눌러 보라」는 몸짓 */
+.pbn-go{animation:pbnNudge 1.4s ease-in-out infinite,
+                  pbnRing 1.8s ease-out infinite}
+
+/* 손가락으로 누를 때 — 휴대폰에는 hover 가 없으니 이것이 반응입니다 */
+.pbn:active{transform:translateY(-1px) scale(.995)}
+
+@media (prefers-reduced-motion:reduce){
+  .pbn::before,.pbn::after,.pbn-n,.pbn-go{animation:none}
+}
+
 .pbn--fish{background:linear-gradient(120deg,#163F3B 0%,#2E7A70 100%)}
 .pbn--gleaning{background:linear-gradient(120deg,#A9621F 0%,#E0922F 100%)}
 /* 물결 무늬 — 바다 사이트임을 색만으로 말합니다 */
 .pbn::after{content:'';position:absolute;inset:0;pointer-events:none;
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60'%3E%3Cg fill='none' stroke='white' stroke-opacity='.18' stroke-width='2'%3E%3Cpath d='M0 40c30-16 55-16 80 0s55 16 80 0 40-10 40-10'/%3E%3Cpath d='M0 54c30-16 55-16 80 0s55 16 80 0 40-10 40-10'/%3E%3C/g%3E%3C/svg%3E")
-             no-repeat right center/auto 100%}
+             no-repeat right center/auto 100%;
+  /* ★ 물결도 **저절로** 흘립니다 (2026-09-30) — 전에는 hover 때만 움직였습니다 */
+  animation:pbnWave 7s ease-in-out infinite}
+@keyframes pbnWave{0%,100%{transform:translateX(0) scale(1)}
+                   50%{transform:translateX(-10px) scale(1.04)}}
 .pbn-n{display:flex;flex-direction:column;align-items:center;
        background:rgba(255,255,255,.16);border:2px solid rgba(255,255,255,.34);
        border-radius:14px;padding:8px 12px;min-width:84px;position:relative;z-index:1}
@@ -1808,4 +1915,100 @@ details.area-group .area-list{margin-bottom:12px}
   .tnow-num b{font-size:33px}
   .tnow-t{font-size:18px}
   .tnow-in{font-size:15px}
+}
+
+/* ── 링크 배너 (제휴 광고) ─────────────────────────────
+   2026-09-30 — 제주 권역의 제주패스.
+   쿠팡처럼 바깥 스크립트가 그리는 것이 아니라 우리가 직접 그립니다.
+   ★ 사이트 색을 그대로 써서 **쪽 디자인을 해치지 않습니다** (규칙 23).
+   ★ 제휴 문구는 작아도 **반드시 보여야** 합니다. */
+.ad-link{
+  display:flex;flex-direction:column;gap:2px;
+  width:100%;padding:14px 18px;box-sizing:border-box;
+  border:1px solid var(--line);border-radius:14px;
+  background:linear-gradient(135deg,#FFFBF3 0%,#F4EFE2 100%);
+  text-decoration:none;text-align:left;
+}
+.ad-link:hover{border-color:var(--orange)}
+.ad-link-name{font-size:14px;font-weight:800;color:var(--green)}
+.ad-link-one{font-size:13px;font-weight:700;color:var(--ink)}
+.ad-link-sub{font-size:12px;color:var(--muted)}
+.ad-link-go{
+  margin-top:6px;align-self:flex-start;
+  font-size:12px;font-weight:800;color:var(--orange);
+}
+.ad-note{
+  margin:6px 0 0;font-size:11px;line-height:1.5;color:var(--muted);
+}
+@media (max-width:767px){
+  .ad-link{padding:12px 14px;border-radius:12px}
+  .ad-link-name{font-size:13px}
+  .ad-link-one{font-size:12px}
+  .ad-link-sub{display:none}   /* 290x100 안에 들어가게 */
+}
+
+/* ── 「더 보기」 단추 (2026-09-30 주인 지시) ──────────────
+   긴 목록을 접습니다. 끝까지 내리는 데 한참 걸리면
+   아래에 있는 칸은 아예 못 봅니다. */
+.more-row{display:flex;justify-content:center;margin-top:16px}
+.more-btn{
+  min-height:48px;padding:12px 26px;border-radius:999px;
+  border:1px solid var(--line);background:#FFFBF3;
+  color:var(--green);font-size:.92rem;font-weight:800;
+  font-family:inherit;cursor:pointer;
+}
+.more-btn:hover{border-color:var(--orange);color:var(--orange)}
+
+/* ── 시간별 물높이 그래프 (2026-10-01 되살림) ──────────────
+   ★ 주인 지적 「화면넘침」의 진짜 원인이었습니다.
+     `tide-graph.js` 가 쓰는 `.tg-*` 클래스에 차림표가 **하나도**
+     없었습니다. 특히 `svg{width:100%}` 가 없어 그래프가 제멋대로
+     **1490px** 로 커져 문서를 통째로 넓혔습니다.
+     옛 사이트에는 있던 규칙입니다 — 옮겨 오며 빠졌습니다. */
+.tide-graph{
+  position:relative;margin-top:18px;padding:14px 16px 10px;
+  border:1px solid var(--line);border-radius:18px;background:var(--white,#fff);
+}
+.tide-graph .tg-head{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:10px;flex-wrap:wrap;
+}
+.tide-graph .tg-head b{font-size:.98rem}
+.tide-graph .tg-tabs{display:flex;gap:4px}
+.tide-graph .tg-tabs button{
+  border:1px solid var(--line);background:transparent;border-radius:999px;
+  padding:6px 12px;min-height:34px;font:inherit;font-size:.8rem;
+  cursor:pointer;color:inherit;
+}
+.tide-graph .tg-tabs button.on{
+  background:var(--green);border-color:var(--green);color:#fff;font-weight:700;
+}
+.tide-graph .tg-plot{position:relative;margin-top:6px;max-width:100%}
+
+/* ★ **이 한 줄이 빠져 넘쳤습니다** — 크기를 안 주면 SVG 가 제멋대로 큽니다 */
+/* 시험: svg 크기 규칙을 일부러 뺐습니다 */
+
+.tide-graph .tg-grid{stroke:rgba(38,51,46,.08);stroke-width:1}
+.tide-graph .tg-axis{font-size:11px;fill:var(--muted)}
+.tide-graph .tg-line{
+  fill:none;stroke:var(--green);stroke-width:2.4;stroke-linejoin:round;
+}
+.tide-graph .tg-dot.high{fill:var(--orange);stroke:#fff;stroke-width:2}
+.tide-graph .tg-dot.low{fill:var(--green);stroke:#fff;stroke-width:2}
+.tide-graph .tg-lbl{font-size:11.5px;font-weight:700}
+.tide-graph .tg-lbl.high{fill:#9A6A1A}
+.tide-graph .tg-lbl.low{fill:var(--green)}
+.tide-graph .tg-now{stroke:#D9642E;stroke-width:1.5;stroke-dasharray:4 3}
+.tide-graph .tg-nowlbl{font-size:11px;fill:#D9642E;font-weight:700}
+.tide-graph .tg-hline{stroke:rgba(38,51,46,.35);stroke-width:1}
+.tide-graph .tg-hdot{fill:#fff;stroke:var(--green);stroke-width:2.5}
+.tide-graph .tg-tip{
+  position:absolute;top:0;transform:translateX(-50%);
+  background:var(--ink);color:#fff;font-size:.75rem;font-weight:700;
+  padding:3px 8px;border-radius:8px;white-space:nowrap;pointer-events:none;
+}
+.tide-graph .tg-foot{font-size:.72rem;color:var(--muted);margin-top:4px}
+@media (max-width:480px){
+  .tide-graph{padding:12px 12px 8px}
+  .tide-graph .tg-axis{font-size:10.5px}
 }
