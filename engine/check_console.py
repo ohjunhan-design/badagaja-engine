@@ -44,6 +44,7 @@ import html as _h
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, ROOT)
+from engine._fake_coupang import 가짜쿠팡   # noqa: E402  가짜 쿠팡은 한 곳에만
 from engine import io    # noqa: E402
 from engine import machine   # noqa: E402  크롬 자리·메모리는 machine.py 한 곳에서만
 from engine import net   # noqa: E402  주소 가르기는 net.py 한 곳에서만
@@ -177,18 +178,7 @@ window.__탈 = [];
 })();
 """
 
-가짜쿠팡 = r"""
-window.PartnersCoupang = {
-  G: function (o) {
-    var b = document.getElementById(o.container);
-    if (!b) return;
-    var f = document.createElement('iframe');
-    f.width = o.width; f.height = o.height; f.style.border = '0';
-    f.style.display = 'block';
-    b.appendChild(f);
-  }
-};
-"""
+# 가짜 쿠팡은 engine/_fake_coupang.py 한 곳에만 둡니다 (계약-01)
 
 
 def 재기(쪽길, 폭=1280, 스크롤할까=True, 가짜광고=True):

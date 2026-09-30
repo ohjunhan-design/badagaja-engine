@@ -45,6 +45,7 @@ import subprocess
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, ROOT)
+from engine._fake_coupang import 가짜쿠팡   # noqa: E402  가짜 쿠팡은 한 곳에만
 from engine import io   # noqa: E402
 from engine import machine   # noqa: E402  크롬 자리·메모리는 machine.py 한 곳에서만
 
@@ -144,21 +145,7 @@ def 광고자료():
 })();
 """
 
-# 가짜 쿠팡 — 정해진 크기의 네모를 그립니다. 바깥에 안 나갑니다.
-가짜쿠팡 = r"""
-window.PartnersCoupang = {
-  G: function (o) {
-    var 상자 = document.getElementById(o.container);
-    if (!상자) return;
-    var f = document.createElement('iframe');
-    f.width = o.width; f.height = o.height;
-    f.style.border = '0'; f.style.display = 'block';
-    f.setAttribute('title', '시험용 가짜 광고');
-    f.src = 'data:text/html,<body style="margin:0;background:#DDD"></body>';
-    상자.appendChild(f);
-  }
-};
-"""
+# 가짜 쿠팡은 engine/_fake_coupang.py 한 곳에만 둡니다 (계약-01)
 
 
 def 재기(쪽길, 폭, 광고올까):
@@ -318,6 +305,51 @@ def main():
     if not 볼것:
         print('볼 쪽이 없습니다. 먼저 build.py 로 만드세요.')
         return 1
+
+    # ── 0-2. 쿠팡을 **부르는 꼴**이 맞는가
+    #
+    #   ★ 2026-09-30 주인 지적 — 「이 부분에 쿠팡 광고 사라짐」
+    #
+    #     배너 번호는 첫번째도전과 **똑같았는데도**(PC 1032048 ·
+    #     휴대폰 1032049) 이쪽에서만 광고가 한 장도 안 떴습니다.
+    #     옛 js/ads.js 와 견주니 **부르는 꼴**이 달랐습니다.
+    #
+    #       옛것 : width: String(W)         container: slot(요소)
+    #       내것 : width: 배너['가로'](수)    container: 아이디(글자)
+    #
+    #     쿠팡 g.js 는 앞의 꼴을 기대합니다. 뒤의 꼴로 부르면
+    #     **예외를 던지고 조용히 아무것도 안 그립니다.**
+    #     오류 화면도 없고 쪽도 멀쩡해 보여, 사람이 「광고가
+    #     사라졌네」 하고 알아차릴 때까지 아무도 모릅니다.
+    #
+    #   아래 시험들은 **가짜 배너**로 그려 보므로 이것을 못 잡습니다 —
+    #   진짜 쿠팡을 안 부르니까요. 그래서 **코드를 글자로** 봅니다.
+    print('[0-2] 쿠팡을 부르는 꼴이 맞는가 ★')
+    광고js = io.read(os.path.join(NEW, 'assets', 'js', 'ads.js'), default='')
+    꼴탈 = []
+    if 'PartnersCoupang' in 광고js:
+        m = re.search(r'new\s+window\.PartnersCoupang\.G\s*\(\s*\{(.*?)\}\s*\)',
+                      광고js, re.S)
+        if not m:
+            꼴탈.append('PartnersCoupang.G 를 부르는 곳을 못 찾았습니다')
+        else:
+            속 = m.group(1)
+            if not re.search(r'width\s*:\s*String\(', 속):
+                꼴탈.append('width 를 String() 으로 안 감쌌습니다')
+            if not re.search(r'height\s*:\s*String\(', 속):
+                꼴탈.append('height 를 String() 으로 안 감쌌습니다')
+            if not re.search(r'container\s*:\s*[^,}]*querySelector', 속):
+                꼴탈.append('container 에 **요소**를 안 넘겼습니다 '
+                            '(아이디 글자를 주면 안 그려집니다)')
+    if 꼴탈:
+        막음.append('쿠팡을 부르는 꼴 %d가지' % len(꼴탈))
+        print('  ✗ 부르는 꼴이 틀렸습니다 — 광고가 한 장도 안 뜹니다')
+        for x in 꼴탈:
+            print('      %s' % x)
+        print('      → 첫번째도전 js/ads.js 와 같은 꼴로 부릅니다.')
+    else:
+        print('  · width·height 는 글자로, container 는 요소로 넘깁니다')
+    print('')
 
     # ── 1. ★ 광고가 안 올 때 — 가장 흔한 경우입니다
     print('[1] 광고가 **안 올 때** — 빈 자리가 남는가')

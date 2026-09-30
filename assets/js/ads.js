@@ -155,13 +155,24 @@
 
     쿠팡준비(function () {
       try {
+        // ★ **첫번째도전과 똑같이 부릅니다** (2026-09-30 주인 지시)
+        //   「메인화면 광고부터 넣어줘 첫번째 도전 참고해서」
+        //
+        //   배너 번호는 첫번째도전과 **같았는데도**(PC 1032048 ·
+        //   휴대폰 1032049) 이쪽에서만 안 떴습니다.
+        //   옛 js/ads.js 와 견주니 부르는 **꼴**이 달랐습니다 —
+        //     · 크기를 **글자**로 줍니다  width: String(W)
+        //     · container 에 **요소 자체**를 넘깁니다 (아이디 글자가 아니라)
+        //   쿠팡 g.js 는 이 꼴을 기대합니다. 숫자와 아이디 문자열을
+        //   주면 예외를 던지고(우리 자리가 「탈남」이었습니다) 조용히
+        //   아무것도 안 그립니다.
         new window.PartnersCoupang.G({
           id: 배너.id,
           template: 배너['틀'],
           trackingCode: 배너['추적'],
-          width: 배너['가로'],
-          height: 배너['세로'],
-          container: 아이디
+          width: String(배너['가로']),
+          height: String(배너['세로']),
+          container: 칸.querySelector('.ad-box')
         });
       } catch (e) {
         칸.setAttribute('data-ad-state', '탈남');

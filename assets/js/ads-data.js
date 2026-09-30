@@ -3,7 +3,7 @@
 window.바다가자광고 = {
   "배너": {
     "coupang-carousel-290x100-fish": {
-      "id": 1032399,
+      "id": 1034533,
       "가로": 290,
       "세로": 100,
       "제공": "coupang",
@@ -11,7 +11,7 @@ window.바다가자광고 = {
       "틀": "carousel"
     },
     "coupang-carousel-290x100-gleaning": {
-      "id": 1032406,
+      "id": 1034533,
       "가로": 290,
       "세로": 100,
       "제공": "coupang",
@@ -19,7 +19,7 @@ window.바다가자광고 = {
       "틀": "carousel"
     },
     "coupang-carousel-290x100-index": {
-      "id": 1032049,
+      "id": 1034533,
       "가로": 290,
       "세로": 100,
       "제공": "coupang",
@@ -27,7 +27,7 @@ window.바다가자광고 = {
       "틀": "carousel"
     },
     "coupang-carousel-290x100-spot": {
-      "id": 1032947,
+      "id": 1034533,
       "가로": 290,
       "세로": 100,
       "제공": "coupang",
@@ -35,7 +35,7 @@ window.바다가자광고 = {
       "틀": "carousel"
     },
     "coupang-carousel-680x140-spot": {
-      "id": 1032947,
+      "id": 1034533,
       "가로": 680,
       "세로": 140,
       "제공": "coupang",
@@ -43,7 +43,7 @@ window.바다가자광고 = {
       "틀": "carousel"
     },
     "coupang-carousel-760x140-fish": {
-      "id": 1032399,
+      "id": 1034533,
       "가로": 760,
       "세로": 140,
       "제공": "coupang",
@@ -51,7 +51,7 @@ window.바다가자광고 = {
       "틀": "carousel"
     },
     "coupang-carousel-760x140-gleaning": {
-      "id": 1032406,
+      "id": 1034533,
       "가로": 760,
       "세로": 140,
       "제공": "coupang",
@@ -59,7 +59,7 @@ window.바다가자광고 = {
       "틀": "carousel"
     },
     "coupang-carousel-760x140-index": {
-      "id": 1032048,
+      "id": 1034533,
       "가로": 760,
       "세로": 140,
       "제공": "coupang",
