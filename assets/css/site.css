@@ -254,7 +254,10 @@ a.badge{min-height:44px}
   margin-top:16px;letter-spacing:-0.01em;max-width:20ch;
 }
 .hero h1 .accent{color:var(--orange)}
-.hero-lead{color:var(--muted);font-size:16px;line-height:1.7;margin-top:14px;max-width:58ch}
+/* ★ 2026-10-01 주인 지시 「설명쪽은 줄바꿈 하지 말고」
+   58ch 는 너무 일찍 꿉어 한 줄이면 될 글이 두 줄로 접혔습니다.
+   ★ 아예 없애지는 않습니다 — 글줄이 너무 길면 눈이 다음 줄을 놓칩니다. */
+.hero-lead{color:var(--muted);font-size:16px;line-height:1.7;margin-top:14px;max-width:80ch}
 
 /* ── 바다 안내 상자 ───────────────────────────────────── */
 .sea-note{padding:0 0 30px}
@@ -561,38 +564,47 @@ html[data-pcview] .pcview{display:block}
   gap:8px;margin-top:4px;
 }
 .tide-day{
+  /* ★ 글씨와 여백을 줄였습니다 (2026-10-01 주인 지시)
+     「글씨 폰트 및 크기를 좀더 줄여」
+     14일치가 한눈에 들어와야 고르기 쉽습니다. */
   border:1px solid var(--line);border-radius:var(--r-sm);
-  background:var(--white);padding:12px 8px;text-align:center;
+  background:var(--white);padding:9px 6px;text-align:center;
 }
 .tide-day--today{border-color:var(--orange);background:#FFFBF3}
-.td-date{font-size:11.5px;font-weight:700;color:var(--muted)}
+/* ★ 2026-10-01 주인 지시 「글씨 폰트 및 크기를 좀더 줄여」
+     ★ **읽히는 선은 지킵니다** — 물때표는 밖에서 햇빛 아래
+       한 손으로 봅니다. 시각·물높이는 11px 아래로 안 내리고,
+       덜 중요한 것(날짜·이름표·여백)을 줄입니다. */
+.td-date{font-size:10.5px;font-weight:700;color:var(--muted)}
 .tide-day--today .td-date{color:var(--orange)}
 .td-bar{
-  height:70px;display:flex;align-items:flex-end;justify-content:center;
-  margin:8px 0 6px;
+  height:52px;display:flex;align-items:flex-end;justify-content:center;
+  margin:6px 0 4px;
 }
-.td-bar-in{width:18px;border-radius:5px 5px 0 0;min-height:10px}
+.td-bar-in{width:15px;border-radius:4px 4px 0 0;min-height:8px}
 .td-spring{background:var(--green)}
 .td-mid{background:#9FB8A8}
 .td-neap{background:#D9D0C2}
-.td-num{font-size:14px;font-weight:700;line-height:1.3}
-.td-name{font-size:11px;color:var(--orange);font-weight:700;margin-top:3px}
-.td-gap{font-size:10.5px;color:var(--muted);margin-top:2px}
-.td-times{margin-top:8px;border-top:1px solid var(--line);padding-top:7px}
+.td-num{font-size:12.5px;font-weight:700;line-height:1.3}
+.td-name{font-size:10px;color:var(--orange);font-weight:700;margin-top:2px}
+.td-gap{font-size:9.5px;color:var(--muted);margin-top:1px}
+.td-times{margin-top:6px;border-top:1px solid var(--line);padding-top:5px}
 .td-times:empty{display:none}
-.td-t{display:flex;align-items:center;justify-content:center;gap:4px;
-      font-size:11px;line-height:1.9;color:var(--muted)}
+/* ★ 줄 사이를 좁힙니다 — **글씨는 그대로** (2026-10-01)
+     1.9 → 1.55 만 해도 네 줄이 14px 줄어듭니다. */
+.td-t{display:flex;align-items:center;justify-content:center;gap:3px;
+      font-size:11px;line-height:1.55;color:var(--muted)}
 .tt-k{
   display:inline-flex;align-items:center;justify-content:center;
-  width:15px;height:15px;border-radius:4px;
-  background:#E7EFEA;color:var(--green);font-size:9px;font-weight:700;
+  width:13px;height:13px;border-radius:3px;
+  background:#E7EFEA;color:var(--green);font-size:8.5px;font-weight:700;
 }
 .td-t--low .tt-k{background:#FFF0D6;color:var(--orange)}
 .tt-v{font-weight:700;color:var(--ink)}
 /* 물높이 — 해루질에서 가장 중요한 값입니다 (2026-09-28 주인 지시)
-   10px 은 너무 작아 보이지 않았습니다. 12px 로 키우고
-   색도 조금 진하게 합니다. */
-.tt-cm{color:#7A6F60;font-size:12px;font-variant-numeric:tabular-nums}
+   ★ 2026-10-01 — `cm` 을 빼서 글자가 짧아졌으니
+     11.5px 로 줄여도 읽힙니다. 단위는 칸 머리에 한 번만. */
+.tt-cm{color:#5F564A;font-size:11.5px;font-weight:600;font-variant-numeric:tabular-nums}
 
 /* ── 첫 화면 · 묶음 쪽 ────────────────────────────────── */
 /* ── 사진이 든 카드 ───────────────────────────────────────
@@ -678,7 +690,7 @@ html[data-pcview] .pcview{display:block}
 .f-v{display:block;margin-top:4px;font-size:14px;font-weight:700}
 
 /* 긴 글 — 읽기 좋은 폭으로 */
-.long{font-size:15px;line-height:1.9;color:#4A3F33;max-width:62ch}
+.long{font-size:15px;line-height:1.9;color:#4A3F33;max-width:76ch}
 .long + .long{margin-top:14px}
 .sub-head{margin:26px 0 10px;font-size:16px;font-weight:700}
 .dots{margin:0;padding-left:20px;max-width:62ch}
@@ -1880,7 +1892,7 @@ details.area-group .area-list{margin-bottom:12px}
 /* 오르내린 폭 (2026-09-30 주인 지시 — 바다타임의 ▲+123 · ▼-218)
    물높이보다 **얼마나 움직이는가**가 더 쓸모 있습니다.
    오름은 붉게, 내림은 푸르게 — 색만 봐도 갈립니다. */
-.tt-d{margin-left:5px;font-size:11px;font-weight:700;color:#C0522B;
+.tt-d{margin-left:3px;font-size:10px;font-weight:700;color:#C0522B;
       white-space:nowrap}
 .tt-d--down{color:#2E6F9E}
 
@@ -1965,9 +1977,12 @@ details.area-group .area-list{margin-bottom:12px}
      없었습니다. 특히 `svg{width:100%}` 가 없어 그래프가 제멋대로
      **1490px** 로 커져 문서를 통째로 넓혔습니다.
      옛 사이트에는 있던 규칙입니다 — 옮겨 오며 빠졌습니다. */
+/* ★ 배경을 바다처럼 — 위는 하늘빛, 아래는 물빛 (2026-10-01)
+   「디자인 및 배경을 좀 수정했으면 좋겠어」 */
 .tide-graph{
   position:relative;margin-top:18px;padding:14px 16px 10px;
-  border:1px solid var(--line);border-radius:18px;background:var(--white,#fff);
+  border:1px solid var(--line);border-radius:18px;
+  background:linear-gradient(180deg,#FBFDFD 0%,#F2F8F7 100%);
 }
 .tide-graph .tg-head{
   display:flex;justify-content:space-between;align-items:center;
@@ -1986,20 +2001,29 @@ details.area-group .area-list{margin-bottom:12px}
 .tide-graph .tg-plot{position:relative;margin-top:6px;max-width:100%}
 
 /* ★ **이 한 줄이 빠져 넘쳤습니다** — 크기를 안 주면 SVG 가 제멋대로 큽니다 */
-/* 시험: svg 크기 규칙을 일부러 뺐습니다 */
+.tide-graph svg{
+  display:block;width:100%;max-width:100%;height:auto;
+  touch-action:pan-y;cursor:crosshair;
+}
 
-.tide-graph .tg-grid{stroke:rgba(38,51,46,.08);stroke-width:1}
-.tide-graph .tg-axis{font-size:11px;fill:var(--muted)}
+.tide-graph .tg-grid{stroke:rgba(38,51,46,.10);stroke-width:1}
+/* 가로 눈금선 — 높이를 눈으로 가늘합니다 */
+.tide-graph .tg-grid--h{stroke:rgba(38,51,46,.06);stroke-dasharray:3 5}
+.tide-graph .tg-axis{font-size:10.5px;fill:var(--muted);font-weight:600}
+/* ★ 2026-10-01 주인 지시 「가시성을 높일 디자인」
+   밖에서 햇빛 아래 봅니다 — 선이 가늘면 안 보입니다. */
 .tide-graph .tg-line{
-  fill:none;stroke:var(--green);stroke-width:2.4;stroke-linejoin:round;
+  fill:none;stroke:var(--green);stroke-width:3;
+  stroke-linejoin:round;stroke-linecap:round;
 }
 .tide-graph .tg-dot.high{fill:var(--orange);stroke:#fff;stroke-width:2}
 .tide-graph .tg-dot.low{fill:var(--green);stroke:#fff;stroke-width:2}
-.tide-graph .tg-lbl{font-size:11.5px;font-weight:700}
+.tide-graph .tg-lbl{font-size:11px;font-weight:700;paint-order:stroke;stroke:var(--white,#fff);stroke-width:3px}
 .tide-graph .tg-lbl.high{fill:#9A6A1A}
 .tide-graph .tg-lbl.low{fill:var(--green)}
 .tide-graph .tg-now{stroke:#D9642E;stroke-width:1.5;stroke-dasharray:4 3}
-.tide-graph .tg-nowlbl{font-size:11px;fill:#D9642E;font-weight:700}
+/* 「지금」 — 아래 눈금 줄에 서서 시각과 나란히 보입니다 */
+.tide-graph .tg-nowlbl{font-size:10.5px;fill:#D9642E;font-weight:800}
 .tide-graph .tg-hline{stroke:rgba(38,51,46,.35);stroke-width:1}
 .tide-graph .tg-hdot{fill:#fff;stroke:var(--green);stroke-width:2.5}
 .tide-graph .tg-tip{
@@ -2008,7 +2032,68 @@ details.area-group .area-list{margin-bottom:12px}
   padding:3px 8px;border-radius:8px;white-space:nowrap;pointer-events:none;
 }
 .tide-graph .tg-foot{font-size:.72rem;color:var(--muted);margin-top:4px}
+/* ★ **좁은 화면에서는 글씨를 키웁니다** (2026-10-01)
+   SVG 가 줄어들면 안의 글씨도 **함께 줄어듭니다.**
+   720px 기준으로 그린 것이 360px 에서 절반이 되어
+   10.5px 가 **5px** 처럼 보였습니다 — 밖에서 못 읽습니다.
+   viewBox 안 값을 키워 줄어든 뒤에도 읽힐 만하게 합니다. */
+@media (max-width:760px){
+  .tide-graph .tg-axis{font-size:17px}
+  .tide-graph .tg-lbl{font-size:18px;stroke-width:4px}
+  .tide-graph .tg-nowlbl{font-size:17px}
+  .tide-graph .tg-dot{r:7}
+  .tide-graph .tg-line{stroke-width:4.5}
+}
 @media (max-width:480px){
   .tide-graph{padding:12px 12px 8px}
-  .tide-graph .tg-axis{font-size:10.5px}
+  .tide-graph .tg-axis{font-size:20px}
+  .tide-graph .tg-lbl{font-size:21px;stroke-width:5px}
+  .tide-graph .tg-nowlbl{font-size:20px}
+  .tide-graph .tg-line{stroke-width:5.5}
+}
+
+/* ── 머리의 기준일 조각 (2026-10-01 주인 지시) ─────────────
+   「이 말도 위치 바꾸고 기준일 26년 9월 이렇게만 적어」
+   전에는 쪽 **맨 아래**에 긴 문장이었습니다. 거기까지 내려간
+   사람만 보았고, 언제 것인지는 **읽기 전에** 알아야 값이 있습니다. */
+.header-asof{
+  font-size:11px;color:var(--muted);white-space:nowrap;
+  padding:2px 8px;border:1px solid var(--line);border-radius:999px;
+  background:#FFFBF3;
+}
+.header-asof:empty{display:none}
+@media (max-width:560px){ .header-asof{font-size:10px;padding:1px 7px} }
+
+/* ── 축제 쪽 — 옆 상자의 **위를 맞춥니다** (2026-10-01 주인 지적)
+     「주변과 높이 안맞아」
+     「주요 프로그램」 상자가 본문 첫 줄보다 한참 아래에서 시작해
+     둘이 따로 노는 것처럼 보였습니다. 위를 맞추면 한 덩이로 읽힙니다. */
+.two-col{align-items:start}
+.two-col-a > :first-child,
+.two-col-b > :first-child{margin-top:0}
+.two-col-b{align-self:start}
+
+/* ── 카드 — 조금 줄이고 윗 글과 사이를 벌립니다 (2026-10-01 주인 지시)
+     「카드크기는 약간 줄이고 설명과 카드사이에 공간을 약간 더 늘려」
+     설명 바로 밑에 카드가 붙어 **같은 덩이처럼** 보였습니다.
+     사이를 벌리면 「읽는 것」과 「누르는 것」이 갈립니다. */
+.section-head + .grid,
+.section-head + .two-up,
+.section-head + .grid--photo{margin-top:22px}
+.grid .card{padding:15px 16px}
+.grid .card .card-name{font-size:1rem}
+.grid .card .card-body{margin-top:7px;font-size:12.5px;line-height:1.65}
+/* ── 설명 글이 **좁게 꺾이지 않게** (2026-10-01 주인 지시)
+     「그리고 설명쪽은 줄바꿈 하지 말고」
+     `max-width:62ch` 가 넓은 화면에서도 글을 일찍 꺾어
+     네 줄로 접히고 오른쪽이 비었습니다. 78ch 로 넓힙니다.
+     ★ 완전히 없애지는 않습니다 — 글줄이 너무 길면 눈이 다음 줄을
+       놓칩니다. 읽기 좋은 한계(75~80자)까지만 넓힙니다. */
+.section-head .lead{max-width:78ch}
+
+@media (max-width:640px){
+  .section-head + .grid,
+  .section-head + .two-up,
+  .section-head + .grid--photo{margin-top:18px}
+  .grid .card{padding:13px 14px}
 }

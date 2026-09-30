@@ -22,25 +22,34 @@
 ★ 가짜는 진짜를 **넉넉히** 흉내 내야 합니다
     좁게 만들면 고칠수록 검사가 시끄러워집니다
     (`_fake_coupang.py` 에서 겪은 일입니다).
-    그래서 물차가 **큰 쪽**(서해 군산 · 6.6m)으로 만듭니다 —
+    그래서 **서해 군산**(물차 6.6m)으로 만듭니다 —
     숫자가 길어 칸을 가장 많이 밀어내는 경우입니다.
+
+★ 응답 꼴은 **진짜를 받아 보고** 맞췄습니다 (2026-10-01)
+    `api/marine.php?kind=series&region=gunsan&day=0` 이 주는 것 —
+      ok · region · date · station · code · interval · unit ·
+      points(["00:00", 120] 꼴 144개) · source
+    처음에는 `series`·`events` 라는 이름으로 지어냈다가
+    **그래프가 한 번도 안 그려졌습니다.** 짐작하면 헛돕니다.
 """
 
-# 진짜 api/marine.php?kind=series 가 주는 꼴을 그대로 흉내 냅니다.
-# 서해 군산 기준 — 물차가 커서 숫자가 깁니다(654cm · ▲+660).
 가짜물때 = r'''
 (function () {
   'use strict';
   var 원래fetch = window.fetch;
 
-  function 시계열() {
-    var pts = [];
-    for (var m = 0; m <= 1440; m += 10) {
-      // 반나절 두 번 — 실제 조석과 같은 꼴
+  function 점들() {
+    // 10분 간격 144개 — 진짜와 같은 개수·꼴 ["HH:MM", cm]
+    var out = [];
+    for (var i = 0; i < 144; i++) {
+      var m = i * 10;
+      var hh = String(Math.floor(m / 60)).padStart(2, '0');
+      var mm = String(m % 60).padStart(2, '0');
+      // 서해 군산 — 물차가 큽니다 (45~705cm)
       var v = 375 + 330 * Math.cos((m - 294) / 745 * Math.PI * 2);
-      pts.push([m, Math.round(v)]);
+      out.push([hh + ':' + mm, Math.round(v)]);
     }
-    return pts;
+    return out;
   }
 
   window.fetch = function (주소) {
@@ -51,15 +60,14 @@
         json: function () {
           return Promise.resolve({
             ok: true,
+            region: 'gunsan',
+            date: '2026-10-01',
             station: '군산',
-            source: '국립해양조사원 조석예보(시계열)',
-            sunrise: 386, sunset: 1088,
-            series: 시계열(),
-            events: [
-              { type: 'high', min: 294, level: 654 },
-              { type: 'low', min: 698, level: 45 },
-              { type: 'high', min: 1046, level: 705 }
-            ]
+            code: 'DT_0018',
+            interval: 10,
+            unit: 'cm',
+            points: 점들(),
+            source: '국립해양조사원 조석예보(시계열)'
           });
         }
       });
@@ -67,7 +75,22 @@
     if (u.indexOf('tide-cache.php') >= 0) {
       return Promise.resolve({
         ok: true,
-        json: function () { return Promise.resolve({ ok: true, days: [] }); }
+        json: function () {
+          return Promise.resolve({
+            ok: true,
+            days: [{
+              // ★ type 은 **한글**입니다 (2026-10-01 화면에서 잡음)
+              //   tide-graph.js 가 `ev.type === '만조'` 로 봅니다.
+              //   영어 'high' 를 주었더니 꿉대기까지 「간조」로
+              //   나왔습니다. **가짜가 진짜를 제대로 훌내야** 합니다.
+              events: [
+                { type: '만조', time: '04:54', level: 654 },
+                { type: '간조', time: '11:38', level: 45 },
+                { type: '만조', time: '17:26', level: 705 }
+              ]
+            }]
+          });
+        }
       });
     }
     return 원래fetch ? 원래fetch.apply(window, arguments)

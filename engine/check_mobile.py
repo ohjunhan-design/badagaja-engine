@@ -127,10 +127,18 @@ document.getElementById('F').addEventListener('load', function () {
         });
       }
     }
+    // ★ **가짜가 먹었는지 함께 봅니다** (2026-10-01)
+    //   가짜 물때가 죽으면 그래프가 안 그려지고, 그러면 검사는
+    //   **그래프 없는 쪽**을 재게 됩니다. 조용히 헛도는 것을 막습니다.
+    var 그래프칸 = d.querySelector('.tide-graph');
+    var 그래프 = 그래프칸 ? 그래프칸.querySelector('svg') : null;
     var out = document.getElementById('R');
     out.textContent = JSON.stringify({
       화면폭: W,
       몸폭: d.body.scrollWidth,
+      그래프칸: !!그래프칸,
+      그래프: !!그래프,
+      그래프폭: 그래프 ? Math.round(그래프.getBoundingClientRect().width) : 0,
       넘침: 넘친것.slice(0, 10)
     });
   // ★ 900ms 는 짧습니다 — 물높이 그래프가 그려질 시간을 줍니다
@@ -283,7 +291,19 @@ def main():
                 print('  ~ %-40s 몸 %dpx · 옆으로 미는 것 %d (일부러 그런 것)'
                       % (이름, 것['몸폭'], len(민것)))
             else:
-                print('  · %-40s 몸 %dpx' % (이름, 것['몸폭']))
+                # ★ **가짜가 눈이 멀었는지** 함께 보입니다 (2026-10-01)
+                #   그래프 칸이 있는데 안 그려졌으면, 검사는
+                #   **그래프 없는 쪽**을 잰 것입니다 — 헛돕니다.
+                꼬리 = ''
+                if 것.get('그래프칸'):
+                    꼬리 = ('  · 그래프 %dpx' % 것.get('그래프폭', 0)
+                            if 것.get('그래프')
+                            else '  ★ 그래프가 안 그려졌습니다')
+                    if not 것.get('그래프'):
+                        알림.append('%s (%dpx) — 그래프를 못 그려 '
+                                    '덜 재었습니다' % (이름, 폭))
+                print('  · %-40s 몸 %dpx%s'
+                      % (이름, 것['몸폭'], 꼬리))
         print('')
 
     if 못잼:

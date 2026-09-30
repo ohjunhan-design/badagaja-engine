@@ -60,7 +60,10 @@
 
   function draw(box, d, opt) {
     box.querySelector('.tg-plot') && box.querySelector('.tg-plot').remove();
-    var W = 720, H = 190, L = 34, R = 10, T = 26, B = 24;
+    // ★ 2026-10-01 — 아래 여백(B)을 늘렸습니다.
+    //   시각 눈금과 「지금」을 **같은 줄**에 두면 서로 안 부딪칩니다.
+    //   왼쪽(L)은 `cm` 글자를 뺀 만큼 줄였습니다.
+    var W = 720, H = 196, L = 16, R = 12, T = 22, B = 34;
     var pts = 고르게(d.points.map(function (p) { return [toMin(p[0]), p[1]]; }));
     var vals = pts.map(function (p) { return p[1]; });
     var vmin = Math.min.apply(null, vals), vmax = Math.max.apply(null, vals), pad = Math.max(10, (vmax - vmin) * 0.12);
@@ -81,17 +84,27 @@
     defs.appendChild(grad); svg.appendChild(defs);
     // 밤 시간 음영
     if (opt.sun) {
-      var rise = toMin(opt.sun.rise), set = toMin(opt.sun.set), night = opt.dark ? 'rgba(0,0,0,.22)' : 'rgba(38,51,46,.06)';
+      var rise = toMin(opt.sun.rise), set = toMin(opt.sun.set), night = opt.dark ? 'rgba(0,0,0,.26)' : 'rgba(47,93,87,.09)';
       svg.appendChild(s('rect', { x: X(0), y: T, width: X(rise) - X(0), height: H - T - B, fill: night }));
       svg.appendChild(s('rect', { x: X(set), y: T, width: X(1440) - X(set), height: H - T - B, fill: night }));
     }
+    // ★ **가로 눈금선** — 높이를 눈으로 가늘하게 합니다 (2026-10-01)
+    //   전에는 세로선만 있어 곱선이 허공에 떠 있는 듯했습니다.
+    [0.25, 0.5, 0.75].forEach(function (r) {
+      var yy = T + r * (H - T - B);
+      svg.appendChild(s('line', { x1: L, y1: yy, x2: W - R, y2: yy,
+                                  class: 'tg-grid tg-grid--h' }));
+    });
     // 격자
     [0, 6, 12, 18, 24].forEach(function (h) {
       var x = X(h * 60);
       svg.appendChild(s('line', { x1: x, y1: T, x2: x, y2: H - B, class: 'tg-grid' }));
-      var tx = s('text', { x: x, y: H - 6, 'text-anchor': h === 0 ? 'start' : h === 24 ? 'end' : 'middle', class: 'tg-axis' }); tx.textContent = h + '시'; svg.appendChild(tx);
+      // ★ 눈금 글씨를 **맨 아래로** 내립니다 — 간조 라벨과 안 부딪치게
+      var tx = s('text', { x: x, y: H - 8, 'text-anchor': h === 0 ? 'start' : h === 24 ? 'end' : 'middle', class: 'tg-axis' }); tx.textContent = h + '시'; svg.appendChild(tx);
     });
-    var ty = s('text', { x: 2, y: T - 10, class: 'tg-axis' }); ty.textContent = 'cm'; svg.appendChild(ty);
+    // ★ 왼쪽 위 `cm` 을 **비웠습니다** (2026-10-01 주인 지시)
+    //   「모든 물때에서 cm 지워」. 무엇을 재는지는 라벨과
+    //   꼬리글에서 이미 압니다. 글자 하나가 덬그러니 떠 있었습니다.
     // 곡선
     // 점을 직선으로 이으면 10분마다 꺾여 톱니처럼 보입니다. 조석은 본래 매끄러운 곡선이라 부드럽게 잇습니다
     var line = (function () {
@@ -132,16 +145,21 @@
     marks.forEach(function (e) {
       e.v = e.vy;
       var x = X(toMin(e.t)), y = Y(e.v);
-      svg.appendChild(s('circle', { cx: x, cy: y, r: 4, class: 'tg-dot ' + e.type }));
-      var lb = s('text', { x: Math.min(W - 40, Math.max(L + 20, x)), y: e.type === 'high' ? y - 9 : y + 17, 'text-anchor': 'middle', class: 'tg-lbl ' + e.type });
+      svg.appendChild(s('circle', { cx: x, cy: y, r: 4.5, class: 'tg-dot ' + e.type }));
+      // ★ 간조 라벨을 점에 **더 가깝게** 붙입니다 (17 → 14)
+      //   아래 눈금(「12시」)과 부딪혀 갑니다.
+      var lb = s('text', { x: Math.min(W - 42, Math.max(L + 24, x)), y: e.type === 'high' ? y - 10 : y + 14, 'text-anchor': 'middle', class: 'tg-lbl ' + e.type });
       lb.textContent = (e.type === 'high' ? '만조 ' : '간조 ') + e.t;
       svg.appendChild(lb);
     });
     // 지금
     if (opt.today) {
       var nm = new Date(Date.now() + (new Date().getTimezoneOffset() + 540) * 60000), m = nm.getHours() * 60 + nm.getMinutes();
-      var xn = X(m); svg.appendChild(s('line', { x1: xn, y1: T - 4, x2: xn, y2: H - B, class: 'tg-now' }));
-      var tn = s('text', { x: Math.min(W - 20, xn + 4), y: T - 8, class: 'tg-nowlbl' }); tn.textContent = '지금'; svg.appendChild(tn);
+      // ★ 「지금」을 **아래 눈금 줄로** 내렸습니다 (2026-10-01)
+      //   전에는 위 끝에 있어 「만조 13:45」 라벨과 **겹쳤습니다.**
+      //   시각 눈금과 같은 줄에 두면 서로 안 부딪칩니다.
+      var xn = X(m); svg.appendChild(s('line', { x1: xn, y1: T, x2: xn, y2: H - B, class: 'tg-now' }));
+      var tn = s('text', { x: Math.min(W - 24, Math.max(L + 18, xn)), y: H - 8, 'text-anchor': 'middle', class: 'tg-nowlbl' }); tn.textContent = '지금'; svg.appendChild(tn);
     }
     // 눌러서 보기
     var hv = s('g', { class: 'tg-hover', style: 'display:none' }), hl = s('line', { y1: T, y2: H - B, class: 'tg-hline' }), hc = s('circle', { r: 5, class: 'tg-hdot' });
