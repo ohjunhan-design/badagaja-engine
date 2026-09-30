@@ -176,7 +176,17 @@ def 볼쪽들(전부):
                        ('해루질대상', 'catch/index.html'),
                        ('해루질하나', 'catch/bajirak.html'),
                        ('낚시하나', 'fish/gamseongdom.html'),
-                       ('축제', 'festival/index.html')):
+                       ('축제', 'festival/index.html'),
+                       # ★ 2026-09-30 — **새 쪽을 표본에 안 넣었습니다**
+                       #   채비 쪽 3갈래를 새로 짓고도 여기에 안 더해,
+                       #   휴대폰 검사가 **한 번도 본 적 없이** 배포됐습니다.
+                       #   바로 위 주석에 「표본에 없는 짜임은 앞으로도
+                       #   못 잽니다」라고 적어 두고 같은 일을 했습니다.
+                       #   채비 쪽은 **표·채비도·부품 카드**라 짜임이
+                       #   다른 쪽과 아주 다릅니다 — 꼭 봐야 합니다.
+                       ('채비목록', 'rig/index.html'),
+                       ('채비하나', 'rig/float_rod.html'),
+                       ('부품사전', 'rig/parts.html')):
         p = os.path.join(NEW, 무늬.replace('/', os.sep))
         if os.path.exists(p):
             나옴.append(p)

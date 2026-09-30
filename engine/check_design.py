@@ -42,7 +42,7 @@ import collections
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, ROOT)
-from engine._art_overflow import 밖으로나간글자
+from engine._art_overflow import 밖으로나간글자, 밖으로나간도형
 from engine import io   # noqa: E402
 from engine import machine   # noqa: E402  옛 사이트 자리는 한 곳에서만
 
@@ -530,6 +530,47 @@ def main():
         단계수 = sum(len(v) for v in 차례.values())
         print('  · 배우는 차례 %d갈래 %d단계의 글자가 모두 그림 안에 있습니다'
               % (len(차례), 단계수))
+    print('')
+
+    # ── [5-2] 그림 안 **도형**이 그림 밖으로 나가지 않는가
+    #
+    #   ★ 2026-09-30 — **위 [5] 로는 모자랐습니다.**
+    #
+    #     막대찌(200mm)가 채비도 **왼쪽 밖으로 86px 잘려** 주황 톱이
+    #     통째로 사라졌습니다. 「가늘고 긴 찌입니다」라고 적어 놓고
+    #     그림에는 회색 토막만 보였습니다. 부품 쪽 카드도 같았습니다.
+    #     그런데 [5] 는 통과했습니다 — **글자는 안 났으니까요.**
+    #
+    #     주인이 세 번이나 바로잡아 주신 그 막대찌입니다.
+    #     눈으로 보기 전에는 아무도 몰랐습니다.
+    #
+    #   ★ **22px 까지는 봐줍니다.** 바위·물결처럼 가장자리까지
+    #     일부러 채우는 그림이 있습니다 — 우럭 쪽 돌무더기가 아래로
+    #     19px 걸치는데, 흙바닥에 묻혀 보이지도 않습니다.
+    #     그것까지 막으면 멀쩡한 그림을 못 쓰게 됩니다.
+    #     정말 잘린 것은 훨씬 크게 납니다 — 막대찌는 86px 였습니다.
+    print('[5-2] 그림 안 도형이 그림 밖으로 나가지 않는가 ★')
+    난도형 = []
+    쪽들 = sorted(glob.glob(os.path.join(NEW, '**', '*.html'), recursive=True))
+    본그림 = 0
+    for p in 쪽들:
+        글 = io.read(p, default='')
+        여기 = os.path.relpath(p, NEW).replace(os.sep, '/')
+        for m in re.finditer(r'<svg viewBox="0 0 \d+ \d+" role="img"'
+                             r'[^>]*aria-label="([^"]*)".*?</svg>', 글, re.S):
+            본그림 += 1
+            for 낱, 어디, 얼마 in 밖으로나간도형(m.group(0), 여유=22.0):
+                난도형.append('%s — 「%s」 %s 로 %.0fpx'
+                              % (여기, m.group(1)[:24], 어디, 얼마))
+    if 난도형:
+        막음.append('그림 밖으로 나간 도형 %d개' % len(난도형))
+        print('  ✗ 그림 밖으로 나간 도형 %d개' % len(난도형))
+        for x in 난도형[:8]:
+            print('      %s' % x)
+        print('      → 부품이 칸보다 크면 **잘려서 딴것으로 보입니다.**')
+        print('        art.py 의 _크기배수() 상한이나 _칸에맞게() 를 보세요.')
+    else:
+        print('  · 그림 %d장의 도형이 모두 그림 안에 있습니다' % 본그림)
     print('')
 
 

@@ -28,6 +28,26 @@
   --orange:#C07B22; --green:#2F5D57; --white:#fff;
   --wrap:1120px; --gutter:20px;
   --r-sm:12px; --r-md:16px; --r-lg:18px; --r-full:999px;
+
+  /* ★ **같은 색의 다른 이름들** (2026-09-30 — 배포된 화면에서 잡았습니다)
+       채비·물때 칸을 지으면서 `--teal`·`--night` 처럼 **없는 이름**을
+       기본값도 없이 불렀습니다. CSS 는 없는 이름을 만나면
+       그 줄을 **조용히 버립니다.** 그래서 부품 쪽으로 가는 단추가
+       배경 없이 흰 글씨만 남아 **아예 안 보였습니다** —
+       주인이 시키신 「부품별 명칭 바로가기」가 죽어 있었습니다.
+
+       바로 위 주석에 `--serif` 로 같은 일을 겪었다고 적어 두고도
+       **검사를 안 만들어 아홉 번 되풀이**했습니다.
+       이제 check_design.py 가 없는 이름을 잡습니다. */
+  --dim:#6B5E4F;        /* = --muted · 흐린 글씨 */
+  --foam-dim:#6B5E4F;   /* = --muted · 흐린 글씨 */
+  --teal:#2F5D57;       /* = --green · 짙은 청록 */
+  --accent:#2F5D57;     /* = --green · 눈에 띄게 */
+  --sun:#C07B22;        /* = --orange · 강조 */
+  --soft:#FAF6EE;       /* 연한 바탕 */
+  --paper:#FAF6EE;      /* 연한 바탕 */
+  --card:#fff;          /* 카드 바탕 */
+  --night:#F5EFE2;      /* 띠·막대 바탕 — 본바탕보다 한 단 짙게 */
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -169,6 +189,59 @@ a.badge{min-height:44px}
 .btn--dark{background:var(--ink);color:#fff}
 .btn--white{background:var(--white);border:1px solid var(--line);color:var(--ink)}
 .btn-row{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
+
+/* ── 단추가 살아 있게 ─────────────────────────────────── */
+/* ★ 2026-09-30 주인 지시
+     「이거 버튼도 전에 플래쉬 효과있던데 좀더 동적인 효과가 있었으면」
+
+   옛 사이트(css/style.css 1205줄)에 **퍼지는 고리**가 있었습니다.
+       @keyframes sbRingW{0%{box-shadow:0 0 0 0 …} 70%,100%{… 12px …}}
+   새 사이트에는 움직임이 **하나뿐**이었고, 누르는 순간의 느낌
+   (`:active`)은 **한 곳도 없었습니다.** 눌러도 반응이 없으니
+   손님은 눌린 것인지 모릅니다.
+
+   세 가지를 넣습니다.
+     · 얹으면 **살짝 떠오릅니다** — 누를 수 있는 것임을 알립니다
+     · 누르면 **들어갑니다** — 눌렸다는 대답입니다
+     · 가장 중요한 한 단추에만 **퍼지는 고리** — 여럿에 주면
+       어지럽습니다. 옛 사이트도 배너 단추 하나에만 주었습니다
+
+   ★ 움직임을 줄여 달라고 하신 분께는 **멈춥니다**
+     (어지럼·멀미를 느끼는 분이 있습니다). */
+.btn,.more,.pt-go-btn,.rig-go-btn,.badge,.gp-btn,.gcp-btn{
+  transition:transform .16s ease, box-shadow .16s ease,
+             background .16s ease, color .16s ease;
+}
+.btn:hover,.more:hover,.pt-go-btn:hover,.rig-go-btn:hover,
+.gp-btn:hover,.gcp-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 18px rgba(43,33,22,.14);
+}
+.btn:active,.more:active,.pt-go-btn:active,.rig-go-btn:active,
+.badge:active,.gp-btn:active,.gcp-btn:active{
+  transform:translateY(1px) scale(.985);
+  box-shadow:0 2px 6px rgba(43,33,22,.12);
+}
+
+/* 퍼지는 고리 — 옛 사이트 sbRingW 를 가져왔습니다.
+   부품 쪽으로 가는 길 하나에만 줍니다 (주인이 만들라 하신 길). */
+@keyframes ringOut{
+  0%{box-shadow:0 0 0 0 rgba(47,93,87,.55)}
+  70%,100%{box-shadow:0 0 0 11px rgba(47,93,87,0)}
+}
+.pt-go-btn{animation:ringOut 2.2s ease-out infinite}
+.pt-go-btn:hover{animation-play-state:paused}
+
+@media (prefers-reduced-motion:reduce){
+  .btn,.more,.pt-go-btn,.rig-go-btn,.badge,.gp-btn,.gcp-btn{
+    transition:none;
+  }
+  .btn:hover,.more:hover,.pt-go-btn:hover,.rig-go-btn:hover,
+  .gp-btn:hover,.gcp-btn:hover,
+  .btn:active,.more:active,.pt-go-btn:active,.rig-go-btn:active,
+  .badge:active,.gp-btn:active,.gcp-btn:active{transform:none}
+  .pt-go-btn{animation:none}
+}
 
 /* ── 첫 화면 ──────────────────────────────────────────── */
 /* ★ 위 여백을 줍니다 (2026-09-29 「공간활용」)
@@ -1645,7 +1718,13 @@ details.area-group .area-list{margin-bottom:12px}
    그림을 왼쪽에 두고 설명을 오른쪽에 둡니다.
    그림 크기는 실제 크기 비율을 따르므로, 나란히 놓으면
    막대찌가 크고 좁쌀봉돌이 작은 것이 한눈에 보입니다. */
-.pt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));
+/* ★ **`minmax(360px,…)` 는 좁은 화면을 밀어냅니다** (2026-09-30)
+     360px 짜리 휴대폰에서 쓸 수 있는 폭은 **345px** 인데
+     칸마다 360px 를 우겨 **16px 이 화면 밖으로** 나갔습니다.
+     손님은 옆으로 밀 수 있다는 것을 모릅니다.
+     `min(360px,100%)` 으로 두면 넓을 때만 360px 를 지킵니다. */
+.pt-grid{display:grid;
+         grid-template-columns:repeat(auto-fill,minmax(min(360px,100%),1fr));
          gap:14px}
 .pt{display:grid;grid-template-columns:118px minmax(0,1fr);gap:14px;
     padding:14px;border:1px solid var(--line);border-radius:14px;
