@@ -190,6 +190,137 @@ ASSETS = os.environ.get('BADAGAJA_ASSETS', os.path.join(ROOT, 'assets'))
         'fill="none" stroke-linecap="round"/>'
         % (잉크, 주황))),
 
+    # ★ **민장대** — 릴이 없는 긴 대 (2026-10-01 주인 안내도)
+    #   릴을 안 그리는 것이 핵심입니다. 다른 채비는 모두
+    #   릴이 있어야 하는데 이것만 없습니다.
+    'minjangdae': ('민장대 채비', (
+        # 대 — 비스듬히, 손잡이 쪽이 굵습니다
+        '<path d="M7 41 L33 12" stroke="%s" stroke-width="4" '
+        'stroke-linecap="round"/>'
+        '<path d="M22 25 L33 12" stroke="%s" stroke-width="2.4" '
+        'stroke-linecap="round"/>'
+        # 줄 — 대 끝에서 아래로
+        '<path d="M33 12 V38" stroke="%s" stroke-width="1.4" '
+        'stroke-linecap="round"/>'
+        # 찌 — 주황 머리
+        '<rect x="31" y="20" width="4.4" height="9" rx="2.2" '
+        'fill="%s"/>'
+        % (잉크, 바다, 잉크, 주황))),
+
+    # ★ **처넣기(맥낚시)** — 방파제 구멍으로 내립니다
+    #   (2026-10-01 주인 안내도). 던지지 않고 **발밑으로
+    #   곧게 내리는** 것이 이 채비의 특징입니다.
+    'maknak': ('처넣기 채비', (
+        # 방파제 블록 둘 — 그 사이가 구멍입니다
+        '<path d="M6 20 h13 v22 h-13 z" fill="%s" opacity=".3"/>'
+        '<path d="M29 20 h13 v22 h-13 z" fill="%s" opacity=".3"/>'
+        # 줄 — 구멍 사이로 곧게
+        '<path d="M24 6 V33" stroke="%s" stroke-width="1.6"/>'
+        # 봉돌
+        '<circle cx="24" cy="29" r="3" fill="%s"/>'
+        # 바늘 — 아래 끝
+        '<path d="M24 33 v4 a3 3 0 1 0 6 0 v-2" fill="none" '
+        'stroke="%s" stroke-width="2" stroke-linecap="round"/>'
+        % (잉크, 잉크, 바다, 잉크, 주황))),
+
+    # ★ **갈치 채비** — 케미가 표시입니다 (2026-10-01 주인 안내도)
+    #   갈치는 **밤에만** 잡습니다. 빛을 내는 케미가 다른
+    #   채비에는 없는 이 채비만의 부품입니다.
+    'galchi': ('갈치 채비', (
+        # 케미 — 초록 발광 막대
+        '<rect x="21" y="7" width="6" height="13" rx="3" '
+        'fill="#7BD34A"/>'
+        '<rect x="22.4" y="9" width="1.6" height="8" rx=".8" '
+        'fill="#FFFFFF" opacity=".6"/>'
+        # 줄
+        '<path d="M24 20 V34" stroke="%s" stroke-width="1.6"/>'
+        # 와이어 — 굵은 구간 (갈치 이빨을 막습니다)
+        '<path d="M24 24 V30" stroke="%s" stroke-width="3" '
+        'stroke-linecap="round"/>'
+        # 갈치바늘
+        '<path d="M24 34 v3 a3.2 3.2 0 1 0 6.4 0 v-2" fill="none" '
+        'stroke="%s" stroke-width="2" stroke-linecap="round"/>'
+        # 봉돌
+        '<path d="M18 38 q3 -5 6 0 q-3 6 -6 0 z" fill="%s"/>'
+        % (바다, 잉크, 주황, 잉크))),
+
+    # ★ **메탈지그** — 물고기꼴 쇳덩이 (2026-10-01 주인 안내도)
+    #   「멀리 던져야 하는 상황에서 가장 효과적인 채비」
+    'metal': ('메탈지그 채비', (
+        '<path d="M14 24 q10 -11 20 0 q-10 11 -20 0 z" fill="%s"/>'
+        '<path d="M14 24 q10 -11 20 0" fill="none" stroke="%s" '
+        'stroke-width="1.6" opacity=".5"/>'
+        '<circle cx="29" cy="21" r="1.8" fill="#fff"/>'
+        # 줄 — 위로
+        '<path d="M34 24 L40 14" stroke="%s" stroke-width="1.5"/>'
+        # 삼중 바늘 — 아래
+        '<path d="M18 28 v5 M22 29 v5 M14 29 v5" stroke="%s" '
+        'stroke-width="2" stroke-linecap="round"/>'
+        % (바다, 주황, 잉크, 주황))),
+
+    # ★ **다운샷** — 봉돌이 맨 아래, 바늘이 그 위
+    #   (2026-10-01 주인 안내도). 보통 채비와 **거꾸로**인 것이
+    #   이 채비의 핵심입니다 — 그래서 바닥 걸림이 적습니다.
+    'downshot': ('다운샷 채비', (
+        # 줄
+        '<path d="M24 6 V38" stroke="%s" stroke-width="1.6"/>'
+        # 바늘 — **봉돌보다 위**
+        '<path d="M24 20 h5 a3.4 3.4 0 1 1 0 6 h-1" fill="none" '
+        'stroke="%s" stroke-width="2" stroke-linecap="round"/>'
+        # 웜 — 바늘에 꿰임
+        '<path d="M30 26 q5 2 3 6 q-2 4 3 5" fill="none" '
+        'stroke="#C0522B" stroke-width="3" stroke-linecap="round"/>'
+        # 봉돌 — **맨 아래**
+        '<path d="M20 38 q4 -7 8 0 q-4 7 -8 0 z" fill="%s"/>'
+        % (바다, 주황, 잉크))),
+
+    # ★ **문어 에기** — 문어 전용 에기 (2026-10-01 주인 안내도)
+    #   「일반 에기보다 크고 튼튼한 바늘이 달려 있으며,
+    #    문어가 잘 붙잡을 수 있는 발판(갈고리)이 있습니다」
+    'octopus': ('문어 에기 채비', (
+        # 문어 머리
+        '<path d="M14 16 q10 -9 20 0 q0 9 -10 11 q-10 -2 -10 -11 z" '
+        'fill="%s"/>'
+        '<circle cx="19" cy="16" r="1.8" fill="#fff"/>'
+        '<circle cx="29" cy="16" r="1.8" fill="#fff"/>'
+        # 다리 넷
+        '<path d="M18 27 q-3 7 1 12 M23 28 q-1 8 1 12 '
+        'M27 28 q2 8 0 12 M31 26 q4 7 1 12" fill="none" '
+        'stroke="%s" stroke-width="2.2" stroke-linecap="round"/>'
+        % (주황, 주황))),
+
+    # ★ **플로팅 미노우** — **수면에 뜨는** 루어
+    #   (2026-10-01 주인 안내도). 물결 위에 떠 있는 것이
+    #   이 채비의 핵심입니다.
+    'minnow': ('플로팅 미노우 채비', (
+        # 물결 — 수면
+        '<path d="M4 28 q6 -4 12 0 t12 0 t12 0" fill="none" '
+        'stroke="%s" stroke-width="2" opacity=".5"/>'
+        # 미노우 — 물결 위
+        '<path d="M13 20 q11 -8 22 0 q-11 8 -22 0 z" fill="%s"/>'
+        '<circle cx="30" cy="18" r="1.7" fill="#fff"/>'
+        # 립 — 앞쪽 아래
+        '<path d="M35 20 l5 4" stroke="%s" stroke-width="2" '
+        'stroke-linecap="round"/>'
+        # 트레블 훅 둘
+        '<path d="M18 24 v5 M27 24 v5" stroke="%s" '
+        'stroke-width="2" stroke-linecap="round"/>'
+        % (바다, 바다, 잉크, 주황))),
+
+    # ★ **뜰채·가프** — 잡은 고기를 올리는 장비
+    #   (2026-10-01 주인 안내도). 매는 채비가 아닙니다.
+    'landing': ('뜰채·가프', (
+        # 그물 테두리
+        '<ellipse cx="18" cy="17" rx="11" ry="9" fill="none" '
+        'stroke="%s" stroke-width="2.4"/>'
+        # 그물코
+        '<path d="M11 15 q7 10 14 0 M18 8 v18" fill="none" '
+        'stroke="%s" stroke-width="1.2" opacity=".55"/>'
+        # 손잡이
+        '<path d="M26 24 L40 40" stroke="%s" stroke-width="3.4" '
+        'stroke-linecap="round"/>'
+        % (바다, 잉크, 잉크))),
+
     'lure': ('루어', (
         '<ellipse cx="22" cy="22" rx="12" ry="7" '
         'transform="rotate(-25 22 22)" fill="%s"/>'

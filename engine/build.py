@@ -3850,6 +3850,106 @@ def 챙길것칸(것):
     return ''.join(줄)
 
 
+def 요령칸(것):
+    """안내도의 **요령과 준비물**을 쪽에 냅니다 (2026-10-01).
+
+    ★ 주인 지시 — 「내가 제시한 자료를 사용해」
+      주인이 주신 안내도의 「초보자를 위한 TIP」과
+      「추천 준비물」입니다.
+
+    ★ 왜 글로도 두나
+      휴대폰에서 안내도 글씨는 작습니다. 글로 두면 확대 없이
+      읽힙니다. 준비물은 **낚시점에서 그대로 보여 주고 살 수
+      있는 목록**이라 더욱 그렇습니다.
+
+    자료가 없으면 칸도 안 만듭니다 — 빈 제목만 남기느니
+    없는 편이 낫습니다 (㉕ 에서 배운 것).
+    """
+    요령 = [x for x in (것.get('요령') or []) if str(x).strip()]
+    준비물 = [x for x in (것.get('준비물') or []) if str(x).strip()]
+    if not 요령 and not 준비물:
+        return ''
+    덩이 = []
+    if 요령:
+        덩이.append(
+            '<div class="rig-tip">'
+            '<h3 class="rig-tip-h">이렇게 하면 더 잘 잡힙니다</h3>'
+            '<ul class="rig-tip-list">%s</ul></div>'
+            % ''.join('<li>%s</li>' % _굵게(str(x)) for x in 요령))
+    if 준비물:
+        덩이.append(
+            '<div class="rig-kit">'
+            '<h3 class="rig-tip-h">이것만 챙기면 됩니다</h3>'
+            '<ul class="rig-kit-list">%s</ul>'
+            '<p class="rig-kit-note">낚시점에서 이 목록을 '
+            '그대로 보여 주셔도 됩니다.</p></div>'
+            % ''.join('<li>%s</li>' % esc(str(x)) for x in 준비물))
+    return ('<section class="section"><div class="wrap">'
+            '<div class="section-head">'
+            '<p class="kicker">나가기 전에</p>'
+            '<h2 class="serif">이것만 알고 가세요</h2></div>'
+            '<div class="rig-tips">%s</div></div></section>'
+            % ''.join(덩이))
+
+
+def 채비안내도(d, 갈래, 쪽길, 이름):
+    """주인이 주신 채비 안내도 그림. 없으면 빈 글.
+
+    ★ 2026-10-01 주인 지시 — 「그림은 그대로 사용해」
+      `data/img/rig/<갈래>.webp` 를 찾습니다.
+
+    ★ 크기를 적어 둡니다 — 안 적으면 쪽이 **덜컹** 합니다
+      그림이 늦게 오면 자리가 0 이었다가 갑자기 벌어집니다.
+      width·height 를 적으면 브라우저가 미리 자리를 잡습니다.
+    """
+    import shutil
+    원본 = os.path.join(DATA, 'img', 'rig', 갈래 + '.webp')
+    if not os.path.isfile(원본):
+        return ''
+    쪽아래 = 'img/rig/%s.webp' % 갈래
+    낼곳 = os.path.join(나갈곳, 'img', 'rig')
+    os.makedirs(낼곳, exist_ok=True)
+    목적 = os.path.join(낼곳, 갈래 + '.webp')
+    if (not os.path.isfile(목적)
+            or os.path.getmtime(원본) > os.path.getmtime(목적)):
+        shutil.copy2(원본, 목적)
+    가로, 세로 = 1479, 1063
+    try:
+        from PIL import Image
+        with Image.open(원본) as im:
+            가로, 세로 = im.size
+    except Exception:
+        pass
+    # ★ **눌러서 크게 보기** (2026-10-01)
+    #   재 보니 휴대폰에서 안내도 글씨가 4px 쯤이라 못 읽습니다
+    #   (1480px → 321px, 4.6배 축소). 누르면 화면 가득 펼쳐집니다.
+    #   자바스크립트 없이 `:target` 만 씁니다 — 스크립트가 못
+    #   돌아도 그림은 그대로 보입니다 (계약-23).
+    자리 = 'guide-' + 갈래
+    주소 = esc(url.rel(쪽길, 쪽아래))
+    return ('<figure class="rig-guide">'
+            '<a class="rig-guide-open" href="#%s"'
+            ' aria-label="%s 안내도 크게 보기">'
+            '<img src="%s" alt="%s 안내도" width="%d"'
+            ' height="%d" loading="lazy" decoding="async">'
+            '<span class="rig-guide-hint">눌러서 크게 보기</span>'
+            '</a>'
+            # ★ 설명을 답니다 (주인 규칙 5·6 · check_photos [3])
+            #   **우리가 만든 안내도**라는 것을 밝힙니다.
+            #   남의 사진이 아니므로 촬영자 대신 만든 곳을 적습니다.
+            '<figcaption>그림 · %s 안내도 · 바다가자닷컴</figcaption>'
+            '</figure>'
+            # 크게 보는 칸 — 누르기 전에는 안 보입니다
+            '<div class="rig-zoom" id="%s">'
+            '<a class="rig-zoom-bg" href="#" aria-label="닫기">'
+            '</a>'
+            '<img src="%s" alt="%s 안내도" width="%d" height="%d">'
+            '<a class="rig-zoom-x" href="#">닫기</a></div>'
+            % (esc(자리), esc(이름), 주소, esc(이름), 가로, 세로,
+               esc(이름),
+               esc(자리), 주소, esc(이름), 가로, 세로))
+
+
 def 채비쪽(d, 갈래, 언어='ko'):
     """채비법 한 갈래 — rig/float.html 등"""
     것 = (((d.채비자료 or {}).get('채비') or {}).get(갈래)) or {}
@@ -3866,12 +3966,24 @@ def 채비쪽(d, 갈래, 언어='ko'):
     #   찌·봉돌·바늘만 있는 간단 그림은 같은 것을 두 번 말하면서
     #   자리만 차지했습니다. 함수(art.채비그림)는 남겨 둡니다 —
     #   「배우는 차례」 묶음이 아직 씁니다.
-    꼴 = _채비어종꼴(갈래, 것)
-    채비그림 = art.채비도(꼴, d.채비자료)
+    # ★ **주인이 주신 안내도가 있으면 그것을 씁니다** (2026-10-01)
+    #   주인 지시 — 「그림은 그대로 사용해」
+    #
+    #   안내도에는 제가 SVG 로 못 담는 것이 들어 있습니다 —
+    #   실제 제품 사진, 바다 배경, 어종 사진, 초보자 TIP.
+    #   **제가 그린 것보다 손님에게 훨씬 잘 읽힙니다.**
+    #   없는 채비는 그대로 SVG 채비도를 그립니다.
+    안내도 = 채비안내도(d, 갈래, 쪽길, 이름)
+    if 안내도:
+        채비그림 = 안내도
+    else:
+        꼴 = _채비어종꼴(갈래, 것)
+        채비그림 = art.채비도(꼴, d.채비자료)
     # ★ **부력과 수심 그림** (2026-09-30 주인 지시 — 「이런 시각적인 정보도 좋아」)
     #   「얕으면 3B~5B · 깊으면 0.8~1.5호」처럼 값이 둘로 갈린 채비에만
     #   붙습니다. 왜 호수를 나누는지 글보다 그림이 빠릅니다.
-    채비그림 += art.수심그림(갈래, d.채비자료)
+    if not 안내도:
+        채비그림 += art.수심그림(갈래, d.채비자료)
 
     # ★ 이름표는 **무엇인지 밝혀서** 답니다 (2026-09-30)
     #   처음에 미끼 이름만 달았더니 「크릴·게·홍합·깐새우」가
@@ -3961,6 +4073,7 @@ def 채비쪽(d, 갈래, 언어='ko'):
         '이름표줄': (이름표줄 + 부품바로가기(d, 쪽길, 언어)),
         '채비그림': 채비그림,
         '챙길것': 챙길것칸(것),
+        '요령칸': 요령칸(것),
         '왜이렇게': 왜이렇게,
         '어종칸': 어종칸,
         '광고칸': 광고칸('안내'),

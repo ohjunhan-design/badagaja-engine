@@ -3,7 +3,19 @@
 {{#_header.html}}
 
 <section class="section hero section--soft"><div class="wrap">
-  <div class="badge badge--orange">🌊 {{한줄}}</div>
+  <!-- ★ **되풀이 배지를 「오늘 물때」로 바꿨습니다** (2026-10-01)
+       전에는 `{{한줄}}` 이 여기와 아래 부제목에 **두 번** 나왔습니다
+       (57권역 중 42곳). 같은 말이 두 번이면 공간만 쓰고 검색에도
+       불리합니다 (주인 규칙 28).
+
+       그 자리에 **손님이 가장 알고 싶은 것**을 놓습니다 —
+       휴대폰에서 물때가 1,087px 아래라 1.3화면을 내려야 보였습니다.
+
+       ★ 자바스크립트가 못 돌아도 「오늘 물때」는 보입니다 (계약-23).
+         아이디는 첫 쪽과 **같은 것**을 씁니다 — tide.js 를 안 고쳐도
+         채워집니다 (계약-01 한 곳에서). -->
+  <a class="badge badge--orange hero-tide" href="#tide">🌊 오늘
+    <b id="tsMuldae">물때</b> <span id="tsMuldaeName"></span></a>
   <h1 class="serif">{{큰제목}}<br><span class="accent">{{큰제목뒷줄}}</span></h1>
   <p class="hero-lead">{{소개글}}</p>
   <div class="btn-row">

@@ -942,6 +942,59 @@ def 검사16_남의상표를쓰지않았나():
               % 본수)
     print('')
 
+def 검사17_줄바꿈이깨지지않았나():
+    """캐리지리턴이 둘 붙지 않았는가 (2026-10-01).
+
+    ★ 겪은 일 — `site.css` 에서 **2,147곳**이 깨져 있었습니다.
+      파이썬으로 고칠 때 `newline=''` 로 읽고 새 글은 한 글자
+      줄바꿈으로 쓰면, CRLF 파일에서 둘이 겹칩니다.
+
+      차림표는 그래도 돌아가 눈에 안 띄지만, **찾기·바꾸기가
+      조용히 실패**합니다. 같은 고치기를 네 번 되풀이했습니다.
+
+    ★ **손으로 고치는 폴더만** 봅니다
+      `data/` 까지 읽으면 검사가 10분을 넘깁니다.
+      검사는 빨라야 자주 돕니다. 깨진 줄바꿈은 내가 고칠 때
+      생기는 것이지 자료가 스스로 깨지지는 않습니다.
+    """
+    print('[17] 줄바꿈이 깨지지 않았나')
+    깨진것 = (chr(13) + chr(13) + chr(10)).encode()
+    볼것 = ('.css', '.js', '.py', '.html', '.md', '.yml')
+    볼폴더 = ('engine', 'assets', 'template', 'docs', 'tests',
+              '.github')
+    길들 = []
+    for 이름 in os.listdir(ROOT):
+        한길 = os.path.join(ROOT, 이름)
+        if os.path.isfile(한길) and 이름.endswith(볼것):
+            길들.append(한길)
+    for 폴더 in 볼폴더:
+        자리 = os.path.join(ROOT, 폴더)
+        if not os.path.isdir(자리):
+            continue
+        for 뿌리, 폴더들, 파일들 in os.walk(자리):
+            폴더들[:] = [x for x in 폴더들 if x != '__pycache__']
+            for 이름 in 파일들:
+                if 이름.endswith(볼것):
+                    길들.append(os.path.join(뿌리, 이름))
+    나쁜것 = []
+    for 한길 in 길들:
+        try:
+            바이트 = open(한길, 'rb').read()
+        except OSError:
+            continue
+        n = 바이트.count(깨진것)
+        if n:
+            나쁜것.append((os.path.relpath(한길, ROOT), n))
+    if 나쁜것:
+        나쁜것.sort(key=lambda x: -x[1])
+        말('막음', '줄바꿈이 깨진 파일이 있습니다 %d개' % len(나쁜것),
+          chr(10).join('      %s — %d곳' % (a, b)
+                       for a, b in 나쁜것[:6]))
+    else:
+        됨('줄바꿈이 깨진 파일이 없습니다 (파일 %d개를 봤습니다)'
+          % len(길들))
+
+
 def main():
     global 자세히
     자세히 = '--자세히' in sys.argv
@@ -973,6 +1026,7 @@ def main():
     검사14_크롬소켓길이가넉넉한가()
     검사15_로케일을적어만두지않았나()
     검사16_남의상표를쓰지않았나()
+    검사17_줄바꿈이깨지지않았나()
     print('')
 
     if 알림:

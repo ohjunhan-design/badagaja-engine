@@ -111,10 +111,24 @@ def 갈래(이름):
 
 
 def 쪽들():
+    """잴 쪽 목록.
+
+    ★ `__` 로 시작하는 것은 **검사기의 살림살이**입니다
+      (2026-10-01). `check_mobile.py` 가 잴 때 만들었다 지우는
+      `__재기임시.html` 을 골든이 그 순간 잡아 「새 갈래가
+      생겼다」고 알렸습니다.
+
+      즉 **검사 차례에 따라 결과가 흔들립니다.** 자료를 안
+      고쳤는데 결과가 달라지면 골든은 못 믿을 것이 됩니다
+      (주인 규칙 26). 사이트 쪽은 `__` 로 시작하지 않습니다.
+    """
     것 = []
     for p in sorted(glob.glob(os.path.join(NEW, '**', '*.html'),
                               recursive=True)):
-        것.append((os.path.relpath(p, NEW).replace(os.sep, '/'), p))
+        상대 = os.path.relpath(p, NEW).replace(os.sep, '/')
+        if any(조각.startswith('__') for 조각 in 상대.split('/')):
+            continue
+        것.append((상대, p))
     return 것
 
 
