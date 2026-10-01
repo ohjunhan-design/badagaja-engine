@@ -49,7 +49,7 @@ def 물때쪽(d, 언어='ko'):
                 '<li><a href="%s"><b>%s</b>%s</a></li>'
                 % (esc(url.rel(쪽길, url.region(r['id'], 언어))),
                    esc(_권역이름(r, 언어)),
-                   ('<span>%s 관측소</span>' % esc(관)) if 관 else ''))
+                   ('<span>%s 관측소 기준</span>' % esc(관)) if 관 else ''))
         칸들.append(칸(
             str(묶이름), '%d곳' % len(것들),
             '<ul class="hub-list hub-list--grid">%s</ul>' % ''.join(줄),

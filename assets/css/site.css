@@ -433,7 +433,7 @@ html.has-navi .navi:hover{filter:brightness(.94)}
    글을 길게 쓰지 않고 **누를 자리를 크게** 둡니다.
 */
 .hub-lead{margin:0 0 14px;line-height:1.7;
-  color:var(--muted,#6b7684)}
+  color:var(--muted)}
 .hub-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 .hub-list--grid{
   grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
@@ -441,12 +441,12 @@ html.has-navi .navi:hover{filter:brightness(.94)}
 .hub-list a{
   display:flex;flex-direction:column;gap:2px;justify-content:center;
   min-height:52px;padding:10px 14px;text-decoration:none;
-  border:1px solid var(--line,#e3e6ea);border-radius:12px;
-  background:var(--card,#fff);color:inherit;
+  border:1px solid var(--line);border-radius:12px;
+  background:var(--white);color:inherit;
 }
-.hub-list a:hover{border-color:var(--brand,#0b4f7a)}
-.hub-list a b{font-size:15.5px;font-weight:700}
-.hub-list a span{font-size:12px;color:var(--muted,#6b7684)}
+.hub-list a:hover{border-color:var(--green)}
+.hub-list a b{font-size:16px;font-weight:700}
+.hub-list a span{font-size:13px;color:var(--muted)}
 
 
 @media (max-width:600px){
@@ -465,9 +465,9 @@ html.has-navi .navi:hover{filter:brightness(.94)}
 .rl-grid{display:grid;gap:12px;
   grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
 .rl-card{
-  border:1px solid var(--line,#e3e6ea);border-radius:14px;
-  padding:14px 16px;background:var(--card,#fff);
-  border-left:5px solid #d14343;
+  border:1px solid var(--line);border-radius:14px;
+  padding:14px 16px;background:var(--white);
+  border-left:3px solid #c0392b;
 }
 .rl-card.rl-always{border-left-color:#8b95a1}
 .rl-tag{
@@ -477,36 +477,36 @@ html.has-navi .navi:hover{filter:brightness(.94)}
 .rl-always .rl-tag{color:#6b7684}
 .rl-name{margin:0 0 4px;font-size:19px;font-weight:800}
 .rl-when{margin:0;font-size:15px;font-weight:600}
-.rl-size{margin:6px 0 0;font-size:14px;color:var(--muted,#6b7684)}
-.rl-memo{margin:8px 0 0;font-size:13px;line-height:1.5;
-  color:var(--muted,#6b7684)}
+.rl-size{margin:6px 0 0;font-size:14px;color:var(--muted)}
+.rl-memo{margin:8px 0 0;font-size:13.5px;line-height:1.6;
+  color:var(--muted)}
 
 /* 찾기 칸 — 51종을 눈으로 훑지 않게 */
 .rl-find{margin:0 0 14px}
 .rl-find input{
   width:100%;box-sizing:border-box;min-height:48px;
   padding:0 16px;font-size:16px;
-  border:1px solid var(--line,#e3e6ea);border-radius:12px;
-  background:var(--card,#fff);color:inherit;
+  border:1px solid var(--line);border-radius:12px;
+  background:var(--white);color:inherit;
 }
-.rl-none{margin:10px 0 0;font-size:14px;color:var(--muted,#6b7684)}
+.rl-none{margin:10px 0 0;font-size:14px;color:var(--muted)}
 
 /* 전체 표 */
 .rl-tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.rl-table{width:100%;border-collapse:collapse;font-size:14px}
+.rl-table{width:100%;border-collapse:collapse;font-size:15px}
 .rl-table th,.rl-table td{
   padding:11px 12px;text-align:left;vertical-align:top;
   border-bottom:1px solid var(--line,#eef1f4);
 }
 .rl-table thead th{
-  font-size:12px;font-weight:700;color:var(--muted,#6b7684);
+  font-size:12px;font-weight:700;color:var(--muted);
   white-space:nowrap;border-bottom-width:2px;
 }
 .rl-table tbody th{font-weight:800;white-space:nowrap}
 .rl-alias{font-weight:500;font-size:12px;
-  color:var(--muted,#6b7684)}
-.rl-note{font-size:12.5px;line-height:1.5;
-  color:var(--muted,#6b7684);min-width:180px}
+  color:var(--muted)}
+.rl-note{font-size:13.5px;line-height:1.6;
+  color:var(--muted);min-width:180px}
 
 /* 상태 알갱이 — **색만으로 알리지 않습니다.**
    색을 못 가리는 분도 글자로 압니다 */
@@ -521,8 +521,8 @@ html.has-navi .navi:hover{filter:brightness(.94)}
 .rl-chip--na{background:#f1f3f5;color:#6b7684}
 
 .rl-always{margin:0;padding-left:20px;line-height:1.9}
-.rl-src{margin:0 0 10px;padding-left:20px;line-height:1.8;
-  font-size:14px}
+.rl-src{margin:0 0 10px;padding-left:20px;line-height:1.9;
+  font-size:14.5px}
 
 @media (max-width:600px){
   .rl-grid{grid-template-columns:1fr}
@@ -543,8 +543,8 @@ html.has-navi .navi:hover{filter:brightness(.94)}
 @media (max-width:767px){
   .tabbar{
     display:flex;position:fixed;left:0;right:0;bottom:0;z-index:70;
-    background:var(--card,#fff);
-    border-top:1px solid var(--line,#e3e6ea);
+    background:var(--white);
+    border-top:1px solid var(--line);
     box-shadow:0 -2px 12px rgba(0,0,0,.06);
     padding-bottom:env(safe-area-inset-bottom,0);
   }
@@ -552,7 +552,7 @@ html.has-navi .navi:hover{filter:brightness(.94)}
     flex:1;display:flex;flex-direction:column;align-items:center;
     justify-content:center;gap:2px;min-height:56px;
     padding:6px 2px;text-decoration:none;
-    color:var(--muted,#6b7684);font-size:12px;font-weight:600;
+    color:var(--muted);font-size:12px;font-weight:600;
     line-height:1.1;
   }
   .tabbar .tabbar-i{
@@ -560,13 +560,13 @@ html.has-navi .navi:hover{filter:brightness(.94)}
     fill:none;stroke:currentColor;stroke-width:1.7;
     stroke-linecap:round;stroke-linejoin:round;
   }
-  .tabbar a.on{color:var(--brand,#0b4f7a)}
+  .tabbar a.on{color:var(--green)}
   .tabbar a.on .tabbar-i{transform:translateY(-1px)}
   /* 지금 있는 자리를 **선으로도** 알립니다 — 색만으로는
      색을 못 가리는 분이 모릅니다 */
   .tabbar a.on::before{
     content:"";position:absolute;top:0;width:28px;height:3px;
-    border-radius:0 0 3px 3px;background:var(--brand,#0b4f7a);
+    border-radius:0 0 3px 3px;background:var(--green);
   }
   .tabbar a{position:relative}
   /* 꼬리가 차림표에 가리지 않게 */
@@ -2355,6 +2355,39 @@ details.area-group .area-list{margin-bottom:12px}
   .grid .card{padding:13px 14px}
 }
 
+
+/* ★ 바깥 검수 지적 반영 (2026-10-01) ──────────────
+
+   ③ 「보러 가기」 단추를 카드마다 넣으면 세로를 잡아먹고
+      화면이 쇼핑몰처럼 됩니다. 카드 전체를 누르게 두고
+      **오른쪽에 작은 › 하나**만 둡니다.
+
+   ⑥ 설명 12px 는 작습니다. 휴대폰 본문은 14px 전후가
+      실제로 읽힙니다. 글이 길어지면 **글자를 줄이지 말고
+      문장을 줄입니다.**
+*/
+.hub-list a,.rl-card{position:relative}
+.hub-list a::after{
+  content:"›";position:absolute;right:12px;top:50%;
+  transform:translateY(-52%);
+  font-size:19px;line-height:1;color:var(--line);
+}
+.hub-list a{padding-right:30px}
+.hub-list a:hover::after{color:var(--green)}
+
+/* 물때 관측소 — 군더더기가 아니라 **믿을 근거**입니다.
+   다만 2차 정보라 작게 둡니다 (바깥 검수 ⑦) */
+.hub-list a span{line-height:1.45}
+
+/* 장비 카드 — 글이 길어 「설명서」처럼 보였습니다.
+   줄 간격을 넓히고 글자를 키웁니다 */
+/* ★ 그림 없는 카드는 **한 칸**입니다 (2026-10-01)
+   `.pt` 는 왼쪽 118px 를 **부품 그림 자리**로 비워 둡니다.
+   갈림길 쪽 카드에는 그림이 없는데 그 자리가 그대로 남아
+   글이 좁은 칸에 갇혀 한 줄에 네댓 자만 들어갔습니다. */
+.pt-grid--wide .pt{grid-template-columns:1fr}
+.pt-grid--wide .pt-use{font-size:14.5px;line-height:1.7;margin:0}
+.pt-grid--wide .pt-name{font-size:17px}
 /* ★ 갈림길 쪽의 넓은 카드 (2026-10-01)
    부품 격자(.pt-grid)는 작은 부품 그림에 맞춘 좁은 칸입니다.
    장비 설명처럼 **글이 있는 카드**를 그 칸에 넣으면 한 줄에
