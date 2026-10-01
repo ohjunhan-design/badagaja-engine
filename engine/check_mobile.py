@@ -250,6 +250,47 @@ def 볼쪽들(전부):
         p = os.path.join(NEW, 무늬.replace('/', os.sep))
         if os.path.exists(p):
             나옴.append(p)
+
+    # ★ **맨 위 쪽은 모두 봅니다** (2026-10-01 — 세 번째 같은 일)
+    #
+    #   2026-09-28 「표본에 없는 짜임은 앞으로도 못 잽니다」
+    #   2026-09-30 채비 쪽을 새로 짓고 표본에 안 넣었습니다
+    #   2026-10-01 rule·gear 를 새로 짓고 **또** 안 넣었습니다
+    #
+    #   손으로 적는 한 같은 일이 되풀이됩니다. 맨 위 쪽은 한 장
+    #   짜리 특별한 쪽들이라 **다 보는 것이 맞습니다.** 폴더 안
+    #   쪽들은 서로 짜임이 같으니 갈래마다 하나면 됩니다.
+    #
+    #   (56개 권역 쪽은 taean.html 하나로 갈음합니다 — 같은 틀)
+    권역들 = set()
+    try:
+        import json
+        판 = os.path.join(NEW, 'build.json')
+        if os.path.isfile(판):
+            with open(판, encoding='utf-8') as f:
+                권역들 = {k for k in (json.load(f).get('파일') or {})
+                           if k.endswith('.html') and '/' not in k}
+    except Exception:
+        pass
+    맨위틀 = {'index.html', 'taean.html'}        # 이미 넣은 것
+    # 권역 쪽은 모두 같은 틀이라 하나면 됩니다
+    권역틀 = {x for x in 권역들
+              if x not in ('index.html', 'rule.html', 'gear.html')}
+    import re as _re
+    for 이름 in sorted(권역들):
+        if 이름 in 맨위틀:
+            continue
+        # 권역 쪽인지 — 자료에 그 권역이 있으면 권역 쪽입니다
+        if 이름 in ('rule.html', 'gear.html', 'about.html',
+                    'privacy.html', 'sources.html', 'photos.html',
+                    'gear.html', 'copyright.html', 'muldae.html'):
+            p = os.path.join(NEW, 이름)
+            if os.path.exists(p) and p not in 나옴:
+                나옴.append(p)
+    for 무늬 in ('tide/index.html', 'guide/index.html'):
+        p = os.path.join(NEW, 무늬.replace('/', os.sep))
+        if os.path.exists(p) and p not in 나옴:
+            나옴.append(p)
     return 나옴
 
 
