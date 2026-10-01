@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>바다가자 권역 포인트 지도+사진카드 프로토타입</title>
+<style>
+:root{
+  --brand:#2F5D57;
+  --orange:#C07B22;
+  --cream:#FAF6EE;
+  --line:#E5DCCB;
+  --muted:#8A8277;
+  --ink:#201a16;
+  --fish:#2F5D57;
+  --glean:#C07B22;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px}
+.head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:12px}
+.head h2{margin:0;font-size:28px}
+.head p{margin:4px 0 0;color:var(--muted)}
+.head a{color:var(--brand);font-weight:800;text-decoration:none;font-size:14px}
+
+.points-module{display:grid;grid-template-columns:minmax(0,1.22fr) minmax(300px,.78fr);gap:14px}
+.map-shell{position:relative;min-height:410px;border-radius:20px;overflow:hidden;border:1px solid var(--line);background:#d9ecef}
+.fake-map{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(30deg,transparent 45%,rgba(255,255,255,.9) 46% 48%,transparent 49%),
+    linear-gradient(150deg,transparent 47%,rgba(255,255,255,.85) 48% 50%,transparent 51%),
+    linear-gradient(120deg,#9fd3dc 0 36%,#d9ead7 36% 56%,#efe6c9 56% 100%);
+}
+.map-tools{position:absolute;left:14px;top:14px;z-index:4;display:flex;gap:7px}
+.tool{background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:999px;padding:8px 11px;font-size:12px;font-weight:800}
+.tool.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.legend{position:absolute;left:14px;bottom:14px;z-index:4;display:flex;gap:7px;background:rgba(255,255,255,.94);border:1px solid var(--line);border-radius:999px;padding:7px 9px}
+.legend span{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700}
+.dot{width:9px;height:9px;border-radius:50%}.dot.f{background:var(--fish)}.dot.g{background:var(--glean)}
+
+.marker{
+  position:absolute;z-index:3;width:34px;height:34px;border-radius:50%;
+  display:grid;place-items:center;color:#fff;font-size:11px;font-weight:900;
+  border:3px solid #fff;box-shadow:0 3px 10px rgba(0,0,0,.2);cursor:pointer
+}
+.marker.f{background:var(--fish)} .marker.g{background:var(--glean)}
+.m1{left:19%;top:40%}.m2{left:35%;top:25%}.m3{left:50%;top:51%}.m4{left:62%;top:32%}.m5{left:70%;top:67%}.m6{left:43%;top:73%}
+
+.focus-card{position:relative;min-height:410px;border-radius:20px;overflow:hidden;background:#cfd9dc;border:1px solid var(--line)}
+.focus-card img{width:100%;height:100%;object-fit:cover;display:block}
+.focus-card:after{content:"";position:absolute;inset:38% 0 0;background:linear-gradient(transparent,rgba(15,24,23,.84))}
+.arrow{position:absolute;right:12px;top:12px;z-index:3;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(47,93,87,.94);color:#fff;text-decoration:none;font-size:18px}
+.focus-copy{position:absolute;left:18px;right:18px;bottom:18px;z-index:2;color:#fff}
+.focus-title{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.focus-title h3{margin:0;font-size:26px}
+.count-pill{background:rgba(255,255,255,.95);color:var(--ink);padding:7px 10px;border-radius:999px;font-size:12px;font-weight:800}
+.focus-copy p{margin:5px 0 0;font-size:13px;opacity:.92}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.btn{display:flex;align-items:center;justify-content:center;min-height:42px;border-radius:12px;text-decoration:none;font-size:13px;font-weight:900;border:1px solid rgba(255,255,255,.5);background:rgba(255,255,255,.92);color:var(--ink)}
+.btn.primary{background:var(--brand);color:#fff;border-color:var(--brand)}
+
+.mobile-picker{display:none}
+
+@media(max-width:760px){
+  .wrap{padding:14px}
+  .head{align-items:flex-start}
+  .head h2{font-size:22px}
+  .head p{font-size:13px}
+  .points-module{grid-template-columns:1fr}
+  .map-shell{min-height:285px}
+  .focus-card{min-height:220px}
+  .focus-card img{height:220px}
+  .focus-title h3{font-size:21px}
+  .mobile-picker{
+    display:flex;gap:8px;overflow:auto;margin-top:10px;padding-bottom:4px;
+    scrollbar-width:none
+  }
+  .mobile-picker::-webkit-scrollbar{display:none}
+  .mobile-picker button{
+    flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:999px;
+    padding:9px 12px;font-weight:800
+  }
+  .mobile-picker button.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="head">
+    <div>
+      <h2>어디로 갈까요?</h2>
+      <p>낚시와 해루질 포인트 21곳을 지도에서 먼저 고르세요.</p>
+    </div>
+    <a href="#">전체 목록 보기 →</a>
+  </div>
+
+  <section class="points-module">
+    <div class="map-shell" aria-label="실제 카카오 포인트 지도 자리">
+      <div class="fake-map"></div>
+      <div class="map-tools">
+        <span class="tool active">전체 21</span>
+        <span class="tool">낚시 14</span>
+        <span class="tool">해루질 7</span>
+      </div>
+      <button class="marker f m1">낚시</button>
+      <button class="marker f m2">낚시</button>
+      <button class="marker g m3">해</button>
+      <button class="marker f m4">낚시</button>
+      <button class="marker g m5">해</button>
+      <button class="marker f m6">낚시</button>
+      <div class="legend"><span><i class="dot f"></i>낚시</span><span><i class="dot g"></i>해루질</span></div>
+    </div>
+
+    <article class="focus-card">
+      <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80" alt="">
+      <a class="arrow" href="#">→</a>
+      <div class="focus-copy">
+        <div class="focus-title">
+          <h3>용담 해안</h3>
+          <span class="count-pill">포인트 12곳</span>
+        </div>
+        <p>바다를 보며 바로 고를 수 있는 제주시내 해안</p>
+        <div class="actions">
+          <a class="btn primary" href="#">낚시 포인트</a>
+          <a class="btn" href="#">해루질 포인트</a>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <div class="mobile-picker">
+    <button class="active">용담</button><button>이호</button><button>삼양</button><button>화북</button><button>도두</button>
+  </div>
+</main>
+</body>
+</html>

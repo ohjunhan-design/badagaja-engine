@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>바다가자 권역 포인트 지도 UI v2</title>
+<style>
+:root{
+  --brand:#2F5D57;
+  --orange:#C07B22;
+  --cream:#FAF6EE;
+  --card:#FFFFFF;
+  --line:#E5DCCB;
+  --muted:#8A8277;
+  --ink:#201A16;
+  --fish:#2F5D57;
+  --glean:#C07B22;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px}
+
+/* ----- section header ----- */
+.sec-head{display:flex;align-items:end;justify-content:space-between;gap:14px;margin-bottom:12px}
+.sec-head h2{margin:0;font-size:28px;line-height:1.15}
+.sec-head p{margin:5px 0 0;color:var(--muted);font-size:14px}
+.sec-head a{color:var(--brand);text-decoration:none;font-weight:800;font-size:14px;white-space:nowrap}
+
+/* ----- category filters: OUTSIDE map to protect map space ----- */
+.map-filterbar{
+  display:flex;gap:8px;align-items:center;overflow-x:auto;
+  padding:0 0 10px;scrollbar-width:none
+}
+.map-filterbar::-webkit-scrollbar{display:none}
+.filter-btn{
+  flex:0 0 auto;border:1px solid var(--line);background:#fff;color:var(--ink);
+  border-radius:999px;padding:9px 13px;font-weight:800;font-size:13px;cursor:pointer
+}
+.filter-btn.is-active{background:var(--brand);border-color:var(--brand);color:#fff}
+
+/* ----- map + visual card ----- */
+.points-ui{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:14px}
+.map-shell{
+  position:relative;min-height:410px;border:1px solid var(--line);border-radius:20px;
+  overflow:hidden;background:#dcecef
+}
+/* demo only; replace with Kakao map */
+.demo-map{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(28deg,transparent 44%,rgba(255,255,255,.84) 45% 47%,transparent 48%),
+    linear-gradient(145deg,transparent 46%,rgba(255,255,255,.76) 47% 49%,transparent 50%),
+    linear-gradient(115deg,#A7D7E1 0 38%,#DDEAD6 38% 62%,#F1E7CB 62% 100%);
+}
+
+/* ① map type: top-left */
+.map-type-ui{
+  position:absolute;left:12px;top:12px;z-index:20;
+  display:flex;padding:3px;background:rgba(255,255,255,.94);
+  border:1px solid var(--line);border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,.08)
+}
+.mt-btn{
+  border:0;background:transparent;border-radius:9px;padding:7px 11px;
+  font-size:12px;font-weight:800;color:var(--muted);cursor:pointer
+}
+.mt-btn.is-active{background:var(--brand);color:#fff}
+
+/* ② zoom: top-right */
+.map-zoom-ui{
+  position:absolute;right:12px;top:12px;z-index:20;
+  display:grid;overflow:hidden;background:rgba(255,255,255,.96);
+  border:1px solid var(--line);border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,.08)
+}
+.zoom-btn{
+  width:38px;height:38px;border:0;background:transparent;color:var(--ink);
+  font-size:22px;line-height:1;cursor:pointer
+}
+.zoom-btn + .zoom-btn{border-top:1px solid var(--line)}
+
+/* ④ legend: bottom-left */
+.map-legend{
+  position:absolute;left:12px;bottom:12px;z-index:20;
+  display:flex;gap:9px;align-items:center;padding:7px 10px;
+  border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.94);
+  box-shadow:0 3px 12px rgba(0,0,0,.06)
+}
+.map-legend span{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:800}
+.dot{width:9px;height:9px;border-radius:50%}
+.dot.f{background:var(--fish)} .dot.g{background:var(--glean)}
+
+/* ③ interaction toggle: bottom-center, MOBILE ONLY.
+   Not a full overlay: markers & type buttons can still be clicked while locked. */
+.map-interaction-toggle{
+  display:none;position:absolute;left:50%;bottom:12px;z-index:21;transform:translateX(-50%);
+  border:0;border-radius:999px;background:rgba(32,26,22,.86);color:white;
+  padding:8px 12px;font-size:11px;font-weight:800;white-space:nowrap;
+  box-shadow:0 3px 12px rgba(0,0,0,.15)
+}
+
+/* demo markers */
+.marker{
+  position:absolute;z-index:10;width:34px;height:34px;border-radius:50%;
+  display:grid;place-items:center;border:3px solid #fff;color:#fff;font-size:10px;font-weight:900;
+  box-shadow:0 3px 10px rgba(0,0,0,.18);cursor:pointer
+}
+.marker.f{background:var(--fish)} .marker.g{background:var(--glean)}
+.m1{left:21%;top:42%}.m2{left:38%;top:27%}.m3{left:53%;top:55%}.m4{left:67%;top:34%}.m5{left:72%;top:69%}.m6{left:46%;top:74%}
+
+/* visual card: text inside image to save vertical space */
+.focus-card{
+  position:relative;min-height:410px;border-radius:20px;overflow:hidden;
+  border:1px solid var(--line);background:#c8d4d8
+}
+.focus-card img{display:block;width:100%;height:100%;object-fit:cover}
+.focus-card:after{
+  content:"";position:absolute;inset:38% 0 0;
+  background:linear-gradient(transparent,rgba(13,22,21,.84))
+}
+.focus-arrow{
+  position:absolute;right:12px;top:12px;z-index:3;width:34px;height:34px;
+  border-radius:50%;display:grid;place-items:center;background:rgba(47,93,87,.95);
+  color:white;text-decoration:none;font-size:18px
+}
+.focus-copy{position:absolute;left:18px;right:18px;bottom:17px;z-index:3;color:#fff}
+.focus-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.focus-copy h3{margin:0;font-size:25px}
+.focus-copy p{margin:5px 0 0;font-size:13px;opacity:.92}
+.count-pill{
+  flex:0 0 auto;border-radius:999px;padding:7px 10px;
+  background:rgba(255,255,255,.95);color:var(--ink);font-size:12px;font-weight:900
+}
+.focus-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.focus-actions a{
+  min-height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  text-decoration:none;font-size:13px;font-weight:900;border:1px solid rgba(255,255,255,.55);
+  background:rgba(255,255,255,.94);color:var(--ink)
+}
+.focus-actions a.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+
+@media(max-width:760px){
+  .wrap{padding:14px}
+  .sec-head{align-items:flex-start}
+  .sec-head h2{font-size:23px}
+  .sec-head p{font-size:13px}
+  .points-ui{grid-template-columns:1fr}
+  .map-shell{min-height:290px}
+  .map-type-ui{left:10px;top:10px}
+  .map-zoom-ui{right:10px;top:10px}
+  .map-legend{left:10px;bottom:10px}
+  .map-interaction-toggle{display:block}
+  .focus-card{min-height:220px;height:220px}
+  .focus-copy{left:14px;right:14px;bottom:14px}
+  .focus-copy h3{font-size:21px}
+  .focus-copy p{font-size:12px}
+  .count-pill{font-size:11px;padding:6px 9px}
+  .focus-actions{margin-top:9px}
+  .focus-actions a{min-height:38px}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="sec-head">
+    <div>
+      <h2>어디로 갈까요?</h2>
+      <p>낚시·해루질 포인트를 지도에서 먼저 고르세요.</p>
+    </div>
+    <a href="#">전체 목록 보기 →</a>
+  </div>
+
+  <!-- Filters live OUTSIDE the map. This keeps all four map corners usable. -->
+  <nav class="map-filterbar" aria-label="포인트 종류">
+    <button class="filter-btn is-active" data-kind="all">전체 21</button>
+    <button class="filter-btn" data-kind="fishing">낚시 14</button>
+    <button class="filter-btn" data-kind="gleaning">해루질 7</button>
+  </nav>
+
+  <section class="points-ui">
+    <div class="map-shell" id="regionPointMap">
+      <div class="demo-map"></div>
+
+      <!-- ① Existing assets/js/map-type.js should render/reuse this position -->
+      <div class="map-type-ui" aria-label="지도 종류">
+        <button class="mt-btn is-active">일반</button>
+        <button class="mt-btn">위성</button>
+      </div>
+
+      <!-- ② Replace these with Kakao ZoomControl if desired, but keep this corner -->
+      <div class="map-zoom-ui" aria-label="지도 확대 축소">
+        <button class="zoom-btn" aria-label="확대">+</button>
+        <button class="zoom-btn" aria-label="축소">−</button>
+      </div>
+
+      <!-- demo markers only -->
+      <button class="marker f m1">낚시</button>
+      <button class="marker f m2">낚시</button>
+      <button class="marker g m3">해</button>
+      <button class="marker f m4">낚시</button>
+      <button class="marker g m5">해</button>
+      <button class="marker f m6">낚시</button>
+
+      <!-- ④ Legend bottom-left -->
+      <div class="map-legend">
+        <span><i class="dot f"></i>낚시</span>
+        <span><i class="dot g"></i>해루질</span>
+      </div>
+
+      <!-- ③ Mobile only. Do NOT cover the whole map.
+           Locked state disables drag/pinch/scroll zoom, but markers remain clickable. -->
+      <button class="map-interaction-toggle" id="mapInteractionToggle"
+              aria-pressed="false">지도 이동 켜기</button>
+    </div>
+
+    <article class="focus-card">
+      <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80" alt="">
+      <a href="#" class="focus-arrow" aria-label="선택 지역 보기">→</a>
+      <div class="focus-copy">
+        <div class="focus-row">
+          <h3>용담 해안</h3>
+          <span class="count-pill">포인트 12곳</span>
+        </div>
+        <p>제주시내에서 바로 갈 수 있는 바다 포인트</p>
+        <div class="focus-actions">
+          <a href="#" class="primary">낚시 포인트</a>
+          <a href="#">해루질 포인트</a>
+        </div>
+      </div>
+    </article>
+  </section>
+</main>
+
+<script>
+/* UI behavior prototype only.
+   Claude: replace map calls with existing Kakao map instance methods. */
+(() => {
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      // TODO: existing marker filter, not HTML text scraping.
+    });
+  });
+
+  const toggle = document.getElementById('mapInteractionToggle');
+  let interactive = false;
+  toggle?.addEventListener('click', () => {
+    interactive = !interactive;
+    toggle.setAttribute('aria-pressed', String(interactive));
+    toggle.textContent = interactive ? '지도 이동 끄기' : '지도 이동 켜기';
+
+    // Kakao map integration:
+    // map.setDraggable(interactive);
+    // map.setZoomable(interactive);
+    // IMPORTANT: marker click remains available in both states.
+  });
+
+  document.querySelectorAll('.mt-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.mt-btn').forEach(x=>x.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      // Existing window.BADAGAJA_MAPTYPE.달기(...) remains source of truth.
+    });
+  });
+})();
+</script>
+</body>
+</html>

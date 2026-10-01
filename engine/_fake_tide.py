@@ -78,7 +78,17 @@
         json: function () {
           return Promise.resolve({
             ok: true,
+            // ★ **date 가 있어야 합니다** (2026-10-02 겪음)
+            //   tide.js 는 `표[x.키]` 로 날짜를 맞춥니다.
+            //   키는 「10/2」 꼴입니다. date 를 안 주면 매칭이
+            //   조용히 실패해 **간·만조가 통째로 빕니다.**
+            //   화면에는 「12물 중간」만 남아 멀쩡해 보입니다 —
+            //   그래서 못 보고 지나칠 뻔했습니다.
             days: [{
+              date: (function () {
+                var d = new Date();
+                return (d.getMonth() + 1) + '/' + d.getDate();
+              })(),
               // ★ type 은 **한글**입니다 (2026-10-01 화면에서 잡음)
               //   tide-graph.js 가 `ev.type === '만조'` 로 봅니다.
               //   영어 'high' 를 주었더니 꿉대기까지 「간조」로

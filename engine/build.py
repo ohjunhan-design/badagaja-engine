@@ -2033,10 +2033,33 @@ def 권역쪽(d, 권역, 언어='ko'):
         #
         #   그리는 것은 assets/js/tide-graph.js 가 합니다.
         #   자료는 서버의 api/marine.php (국립해양조사원 조석예보).
-        '물때자리': ('<div class="tide-strip" id="tideStrip" '
-                     'data-region="%s" data-station="%s" data-days="14"></div>'
+        #
+        # ★ 2026-10-02 — **10일 달력을 권역 쪽에서 뺐습니다** (지피티 검수)
+        #
+        #   재 보니 권역 쪽이 모바일 390px 에서 **9,971px · 화면 14.6개**
+        #   였고, 그중 물때 둘이 2,557px 로 **26%** 를 먹었습니다.
+        #   그 탓에 이 사이트의 핵심인 **낚시 포인트가 6.2번째 화면**
+        #   에서야 나왔습니다.
+        #
+        #   지피티 — 「권역 페이지에서 10일 물때 달력을 통째로 보여주지
+        #     마세요. 권역 페이지는 오늘 물때 + 오늘 그래프만 보여주고,
+        #     10일 전체 물때표는 전용 tide 페이지로 이동시킵니다」
+        #
+        #   ★ **달력을 지우는 것이 아닙니다.** 자료도 코드도 그대로고
+        #     `/tide/` 에서 14일을 다 봅니다. 권역 쪽에서 **안 그릴** 뿐입니다.
+        #     쪽에 「14일 물때표 보기」 단추를 두어 길을 잇습니다.
+        #
+        #   왼쪽 요약 + 오른쪽 그래프를 **한 줄에** 둡니다 (`.tide-compact`).
+        '물때자리': ('<div class="tide-compact">'
+                     '<div class="tide-strip" id="tideStrip" '
+                     'data-region="%s" data-station="%s" data-days="14" '
+                     'data-view="today" data-tide-url="%s" '
+                     'data-muldae-url="%s"></div>'
                      '<div class="tide-graph" id="tideGraph"></div>'
-                     % (esc(권역), esc(물때.get('이름') or ''))),
+                     '</div>'
+                     % (esc(권역), esc(물때.get('이름') or ''),
+                        esc(url.rel(쪽길, 'tide/index.html')),
+                        esc(url.rel(쪽길, 'muldae.html')))),
         '포인트안내': (r.get('포인트안내') or
                        '자리마다 어촌계·지자체 규정이 다릅니다. '
                        '가기 전에 반드시 확인하세요.'),

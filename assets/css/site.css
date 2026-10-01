@@ -2771,3 +2771,64 @@ details.area-group .area-list{margin-bottom:12px}
 @media (max-width:600px){
   .pt-grid.pt-grid--wide{grid-template-columns:1fr}
 }
+
+/* ══════════════════════════════════════════════════════════
+   권역 쪽 — 오늘 물때 차림 (.tide-today)
+   2026-10-02 지피티 검수 · region-compact-layout-prototype.html
+
+   ★ 왜 바꿨나
+     권역 쪽에서 10일 달력이 2,102px 로 쪽의 21% 를 먹고 있었습니다.
+     그 탓에 이 사이트의 핵심인 **낚시 포인트가 6.2번째 화면**
+     에서야 나왔습니다. 지피티 — 「권역 페이지는 오늘 물때 +
+     오늘 그래프만 보여주고, 10일 전체는 전용 tide 페이지로」
+
+   ★ 자료는 그대로입니다. **안 그릴 뿐**이고 /tide/ 에서 다 봅니다.
+
+   ★ 치수·색은 지피티가 준 코드 그대로입니다. 다시 해석하지
+     않았습니다 (주인 지시 — 「디자인은 지피티」).
+   ══════════════════════════════════════════════════════════ */
+
+/* 왼쪽 요약 + 오른쪽 그래프를 **한 줄에** 둡니다 */
+.tide-compact{
+  display:grid;grid-template-columns:320px minmax(0,1fr);gap:14px;
+  align-items:start;
+}
+.tide-today{
+  background:#fff;border:1px solid #E5DCCB;border-radius:18px;padding:16px;
+}
+.tide-today .tt-kicker{font-size:12px;color:#C07B22;font-weight:800}
+.tide-today .tt-main{
+  font-size:34px;font-weight:900;margin:5px 0 10px;
+  display:flex;align-items:baseline;gap:8px;line-height:1.1;
+}
+.tide-today .tt-main small{font-size:15px;color:#8A8277;font-weight:700}
+
+/* 간·만조 — 그래프의 알약과 **같은 색**입니다.
+   그래야 범례를 따로 보지 않아도 눈이 둘을 잇습니다. */
+.tide-today .tt-events{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.tide-today .tt-ev{
+  border-radius:10px;padding:8px 9px;font-size:13px;font-weight:700;
+  display:flex;align-items:baseline;gap:6px;
+}
+.tide-today .tt-ev-k{font-style:normal;white-space:nowrap}
+.tide-today .tt-ev-t{font-variant-numeric:tabular-nums}
+.tide-today .tt-ev.low{background:#E3EFE9;color:#2F5D57}
+.tide-today .tt-ev.high{background:#FBEFDC;color:#B8761C}
+
+.tide-today .tt-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.tide-today .tt-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:42px;padding:0 13px;border-radius:12px;
+  border:1px solid #E5DCCB;background:#fff;text-decoration:none;
+  color:#201a16;font-weight:800;font-size:13px;flex:1 1 auto;
+}
+.tide-today .tt-btn--on{background:#2F5D57;color:#fff;border-color:#2F5D57}
+
+/* 오늘 차림에서는 그래프가 **옆 칸**이라 위 여백이 필요 없습니다 */
+.tide-compact .tide-graph{margin-top:0}
+
+@media (max-width:760px){
+  .tide-compact{grid-template-columns:1fr;gap:10px}
+  .tide-today{padding:14px 12px}
+  .tide-today .tt-main{font-size:30px}
+}
