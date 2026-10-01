@@ -261,24 +261,18 @@ body.home-gate .navlinks{margin-left:auto;margin-right:auto}
 .gt-graph{padding:11px 16px 0}
 .gt-graph:empty{display:none}
 .g-today .tide-graph{margin:0;background:var(--night);border:1px solid var(--line);border-radius:11px;padding:8px 10px 6px}
+/* 칸이 좁아 머리·꼬리·범례는 접습니다 — 「오늘 물때·물살」 칸이
+   이미 무엇을 보는 자리인지 말해 줍니다. 간·만조 시각은 남깁니다. */
 .g-today .tide-graph .tg-head,
+.g-today .tide-graph .tg-note,
 .g-today .tide-graph .tg-foot{display:none}
-.g-today .tide-graph .tg-plot{margin:0}
-/* 그래프 글자는 칸 폭에 맞춰 줄어드니, 옆 글자와 비슷해 보이도록 키워 둡니다 */
-.g-today .tide-graph .tg-axis{font-size:15px}
-.g-today .tide-graph .tg-lbl{font-size:15px}
-/* ★ **작은 그래프도 좁은 화면에서는 키웁니다** (2026-10-01)
-   SVG 가 칸 폭에 맞춰 줄면 **안의 글씨도 함께 줍니다.**
-   720px 기준으로 그린 15px 가 360px 에서 7px 쯤으로 보입니다 —
-   밖에서 햇빛 아래 못 읽습니다. viewBox 안 값을 키웁니다. */
-@media (max-width:760px){
-  .g-today .tide-graph .tg-axis{font-size:19px}
-  .g-today .tide-graph .tg-lbl{font-size:20px}
-}
-@media (max-width:480px){
-  .g-today .tide-graph .tg-axis{font-size:22px}
-  .g-today .tide-graph .tg-lbl{font-size:23px}
-}
+.g-today .tide-graph .tg-plot{margin:0;background:transparent;border:0;padding:0}
+.g-today .tide-graph .tg-when{margin:0 0 8px}
+/* ★ 글자 크기는 **여기서 손대지 않습니다** (2026-10-02)
+   전에는 칸 폭에 맞춰 줄어든 글자를 차림표에서 15~23px 로 키웠는데,
+   그러면 점·선과 비례가 깨졌습니다. 이제 `tide-graph.js` 가
+   **치수 전체에 같은 배율**을 곱해, 어느 폭에서든 화면에 보이는
+   크기가 같습니다. 여기서 또 키우면 그 비례를 되깨뜨립니다. */
 /* 물높이 예보를 못 받으면 빈 칸만 남으므로 아예 접습니다 */
 /* ★ **곡선 칸만** 숨깁니다 (2026-09-30 주인 지적)
 
