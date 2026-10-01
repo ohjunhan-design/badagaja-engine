@@ -3927,11 +3927,30 @@ def 채비안내도(d, 갈래, 쪽길, 이름):
     #   돌아도 그림은 그대로 보입니다 (계약-23).
     자리 = 'guide-' + 갈래
     주소 = esc(url.rel(쪽길, 쪽아래))
+    # ★ **휴대폰용 세로판** (2026-10-01 주인이 만들어 주심)
+    #   재 보니 가로판은 휴대폰에서 4.6배 축소라 글씨가
+    #   4.3px 이 되어 못 읽습니다. 세로판은 3.2배라 11px —
+    #   줄여서 눈으로 견주니 부품 이름과 TIP 이 다 읽힙니다.
+    #   `<picture>` 로 **브라우저가 고릅니다** — 맞는 것
+    #   하나만 받으므로 쪽이 안 무거워집니다.
+    세로원본 = os.path.join(DATA, 'img', 'rig', 갈래 + '-m.webp')
+    세로조각 = ''
+    if os.path.isfile(세로원본):
+        세로아래 = 'img/rig/%s-m.webp' % 갈래
+        세로목적 = os.path.join(낼곳, 갈래 + '-m.webp')
+        if (not os.path.isfile(세로목적)
+                or os.path.getmtime(세로원본) >
+                os.path.getmtime(세로목적)):
+            shutil.copy2(세로원본, 세로목적)
+        세로조각 = ('<source media="(max-width:767px)" srcset="%s">'
+                     % esc(url.rel(쪽길, 세로아래)))
     return ('<figure class="rig-guide">'
             '<a class="rig-guide-open" href="#%s"'
             ' aria-label="%s 안내도 크게 보기">'
+            '<picture>%s'
             '<img src="%s" alt="%s 안내도" width="%d"'
             ' height="%d" loading="lazy" decoding="async">'
+            '</picture>'
             '<span class="rig-guide-hint">눌러서 크게 보기</span>'
             '</a>'
             # ★ 설명을 답니다 (주인 규칙 5·6 · check_photos [3])
@@ -3943,11 +3962,14 @@ def 채비안내도(d, 갈래, 쪽길, 이름):
             '<div class="rig-zoom" id="%s">'
             '<a class="rig-zoom-bg" href="#" aria-label="닫기">'
             '</a>'
+            '<picture>%s'
             '<img src="%s" alt="%s 안내도" width="%d" height="%d">'
+            '</picture>'
             '<a class="rig-zoom-x" href="#">닫기</a></div>'
-            % (esc(자리), esc(이름), 주소, esc(이름), 가로, 세로,
+            % (esc(자리), esc(이름), 세로조각, 주소, esc(이름),
+               가로, 세로,
                esc(이름),
-               esc(자리), 주소, esc(이름), 가로, 세로))
+               esc(자리), 세로조각, 주소, esc(이름), 가로, 세로))
 
 
 def 채비쪽(d, 갈래, 언어='ko'):
