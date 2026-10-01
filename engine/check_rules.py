@@ -143,8 +143,14 @@ def 검사_쪽이름(아이디):
             continue
         for f in glob.glob(os.path.join(밑, '*.html')):
             이 = os.path.basename(f)[:-5]
-            if 이 != 'index':
-                쪽.add(이)
+            # ★ 어종 쪽이 **아닌 것**은 셈에서 뺍니다 (2026-10-01)
+            #   fish/ 와 catch/ 에는 어종 쪽만 있는 줄 알았는데,
+            #   왕초보 강의 `basics.html` 을 새로 지으면서 그것이
+            #   「자료에 없는 어종」으로 잡혀 배포가 막혔습니다.
+            #   `basics` 는 어종이 아니라 **길잡이**입니다.
+            if 이 in ('index', 'basics'):
+                continue
+            쪽.add(이)
     if not 쪽:
         말('  site/ 가 아직 없습니다 — 건너뜁니다')
         return

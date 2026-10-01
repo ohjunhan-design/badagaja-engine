@@ -198,6 +198,17 @@ def main():
         for m in re.finditer(r'<figure[^>]*class="([^"]*)"[^>]*>(.*?)</figure>',
                              s, re.S):
             반, 안 = m.group(1), m.group(2)
+            # ★ **설명을 묻기 전에 사진인지부터 봅니다** (2026-10-01)
+            #   아래에 사진·그림을 가리는 줄이 이미 있는데, 그보다
+            #   **먼저** 설명을 물어서 **우리가 직접 그린 그림**까지
+            #   「설명이 없습니다」로 막았습니다.
+            #
+            #   물때 쪽(muldae.html)의 선그림 일곱 장이 그렇게 잡혀
+            #   배포가 멈췄습니다. 그림에는 `aria-label` 로 뜻을
+            #   적어 두었고, 그것이 올바른 방법입니다. 사진이 아니면
+            #   촬영자도 설명도 요구하지 않습니다 (규칙 5).
+            if '<img' not in 안:
+                continue
             설명 = re.search(r'<figcaption[^>]*>(.*?)</figcaption>', 안, re.S)
             글 = re.sub(r'<[^>]+>', '', 설명.group(1)).strip() if 설명 else ''
             if not 글:

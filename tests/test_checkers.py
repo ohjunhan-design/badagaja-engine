@@ -456,6 +456,117 @@ def 시험_남길것():
         shutil.rmtree(t, ignore_errors=True)
 
 
+# ── check_numbers — 틀린 숫자를 잡는가 ────────────────────
+def 시험_숫자():
+    """★ 실제로 나간 잘못과 **같은 모양**으로 망가뜨립니다
+
+    2026-10-01 — 소개 쪽에 「낚시 자리 **0곳**」이 나갔습니다.
+    자료에서 센다고 했지만 세는 방법이 틀려 합이 0 이었습니다.
+    검사 34가지가 모두 통과했습니다.
+    """
+    print('[18] check_numbers — 쪽에 적힌 틀린 숫자를 잡는가')
+
+    글 = 돌리기('check_numbers.py')
+    봄('지금 쪽의 숫자는 자료와 맞는다',
+       '자료와 맞습니다' in 글, 글[-400:])
+
+    # (가) 큰 숫자 칸에 0 을 심으면 잡아야 합니다
+    def 영심기(사본):
+        a = os.path.join(사본, 'about.html')
+        if not os.path.exists(a):
+            return
+        s2 = io.read(a)
+        s2 = re.sub(r'<b>[\d,]+</b><span>낚시 자리</span>',
+                    '<b>0</b><span>낚시 자리</span>', s2, count=1)
+        io.write(a, s2)
+
+    t, 사본 = 사이트사본(영심기)
+    try:
+        글 = 돌리기('check_numbers.py', 사이트=사본)
+        봄('「0」이 적히면 잡는다', '「0」이 적힌 쪽' in 글, 글[-600:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
+# ── check_private — 저희 메모가 샌 것을 잡는가 ────────────
+def 시험_내부메모():
+    """★ **정말 망가뜨려야** 합니다 (2026-10-01)
+
+    2026-10-01 에 실제로 샌 것과 같은 글을 쪽에 심어 봅니다.
+    갱신 대장에서 sources.html 을 지었더니 저희 메모가 그대로
+    나왔습니다 — 「사람이 눈으로 확인 (클로드)」.
+    """
+    print('[16] check_private — 저희끼리 쓰는 말이 샌 것을 잡는가')
+
+    글 = 돌리기('check_private.py')
+    봄('지금 쪽에는 저희 메모가 없다',
+       '저희끼리 쓰는 말이 없습니다' in 글, 글[-400:])
+
+    # (가) 만드는 쪽 파일 경로를 쪽에 심으면 잡아야 합니다
+    def 경로심기(사본):
+        a = os.path.join(사본, 'index.html')
+        s2 = io.read(a)
+        io.write(a, s2.replace('</main>',
+                               '<p>직접 그림 (옛 저장소 '
+                               'tools/lesson-steps.ps1)</p></main>', 1))
+
+    t, 사본 = 사이트사본(경로심기)
+    try:
+        글 = 돌리기('check_private.py', 사이트=사본, 인자=['--strict'])
+        봄('만드는 쪽 경로가 새면 잡는다',
+           '공개 쪽에 나갔습니다' in 글, 글[-500:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # (나) 주소·스크립트 안의 같은 글자는 **잡으면 안 됩니다**
+    #     거짓 경보가 나면 사람이 검사기를 믿지 않게 됩니다.
+    def 주소에만(사본):
+        a = os.path.join(사본, 'index.html')
+        s2 = io.read(a)
+        io.write(a, s2.replace('</main>',
+                               '<a href="tools/x.html">보기</a></main>', 1))
+
+    t, 사본 = 사이트사본(주소에만)
+    try:
+        글 = 돌리기('check_private.py', 사이트=사본, 인자=['--strict'])
+        봄('주소 안 글자는 잡지 않는다',
+           '저희끼리 쓰는 말이 없습니다' in 글, 글[-400:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
+# ── check_css_names — 없는 차림 이름을 찾는가 ──────────────
+def 시험_없는차림이름():
+    """★ 없는 이름은 **오류 없이 조용히 버려집니다** (2026-10-01)
+
+    하루에 세 번 당했습니다 — `--brand` · `.tbl` · `.ls-basic`.
+    그래서 물때 막대 꾸밈이 빠진 것도 모르고 있었습니다.
+    """
+    print('[17] check_css_names — 차림표에 없는 이름을 찾는가')
+
+    def 없는이름넣기(사본):
+        a = os.path.join(사본, 'index.html')
+        s2 = io.read(a)
+        io.write(a, s2.replace(
+            '</main>',
+            '<div class="아무도없는이름입니다xyz">글</div></main>', 1))
+
+    t, 사본 = 사이트사본(없는이름넣기)
+    try:
+        글 = 돌리기('check_css_names.py', 사이트=사본)
+        봄('차림표에 없는 이름을 찾는다',
+           '아무도없는이름입니다xyz' in 글, 글[-600:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # 변형 이름(`--`)의 바탕은 **잡으면 안 됩니다**
+    #   `.firsttime--btn` 만 있어도 `class="firsttime firsttime--btn"`
+    #   은 올바른 쓰임입니다. 처음에 이것을 잘못 잡았습니다.
+    글 = 돌리기('check_css_names.py')
+    봄('변형 이름의 바탕은 잡지 않는다',
+       '.firsttime ' not in 글, 글[-600:])
+
+
 # ── check_seo — 검색 기준 탈을 잡는가 ──────────────────────
 def 시험_검색():
     print('[9] check_seo — 검색 기준 탈을 잡는가')
@@ -1602,6 +1713,9 @@ def main():
     시험_채비()
     시험_잃은말()
     시험_규정()
+    시험_내부메모()
+    시험_없는차림이름()
+    시험_숫자()
     print('')
     if 실패:
         print('%d가지 통과 · %d가지 실패' % (통과, len(실패)))

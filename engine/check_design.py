@@ -467,11 +467,31 @@ def main():
     #   그래서 **자료로 설명되는 차이만** 봐줍니다.
     print('[6] 권역 쪽의 칸 차례가 모든 권역에서 같은가 (계약-36)')
     자료가정하는칸 = {'scenery'}
+    # ★ **자료의 권역 목록으로 가립니다** (2026-10-01)
+    #   전에는 「맨 위 .html 가운데 칸이 4개 넘으면 권역 쪽」으로
+    #   보았습니다. 그래서 새로 지은 `muldae.html`(물때표 보는 법)이
+    #   아홉 절을 가졌다는 이유로 **권역 쪽으로 잡혀**
+    #   「칸 차례가 다릅니다」라고 막았습니다.
+    #
+    #   설명 쪽의 절 차례가 권역 쪽과 같을 까닭이 없습니다.
+    #   **무엇이 권역인지는 자료가 압니다** (계약-11).
+    권역들 = set()
+    _색인 = io.read_json(os.path.join(ROOT, 'data', 'raw', 'index.json'),
+                         default={})
+    for _k in ('권역', 'regions'):
+        것 = _색인.get(_k)
+        if isinstance(것, dict):
+            권역들 |= set(것)
+        elif isinstance(것, list):
+            권역들 |= {(x.get('id') if isinstance(x, dict) else x)
+                       for x in 것}
     차례표 = {}
     for 길 in sorted(glob.glob(os.path.join(NEW, '*.html'))):
         이름 = os.path.basename(길)[:-5]
         if 이름 == 'index':
             continue                       # 전국 첫 화면 — 권역 쪽이 아닙니다
+        if 권역들 and 이름 not in 권역들:
+            continue                       # 자료에 없는 이름 = 권역 쪽이 아닙니다
         글 = io.read(길, default='')
         칸들 = re.findall(r'<section[^>]*id="([^"]+)"', 글)
         if len(칸들) < 4:

@@ -1,241 +1,241 @@
 {
-  "_고칠때": "중국어판을 새 틀로 옮기면 여기서 뺍니다. 그 전에는 한 줄도 지우지 마세요",
-  "_설명": "새 사이트로 바꿀 때 **지우면 안 되는 옛 파일**. 새 틀이 안 만들지만 서버에는 남아 있어야 합니다",
-  "_어떻게찾았나": "옛 zh-cn/**/*.html 190쪽이 거는 링크 179갈래를 새 사이트와 대조했습니다. engine/check_keep.py 가 같은 일을 다시 합니다",
-  "_왜": "2026-09-27 — 중국어판 190쪽은 그대로 두기로 했습니다(주인 결정). 그런데 중국어 쪽 182곳이 옛 css/style.css 를 씁니다. 한국어 쪽을 새것으로 바꾸면서 그 파일을 지우면 중국어판 디자인이 통째로 깨집니다. 「그대로 둔다」는 쪽만이 아니라 **그 쪽이 쓰는 것까지** 둔다는 뜻입니다 / 2026-09-27 — 새 틀 꼬리 메뉴가 아직 안 만든 쪽 8개를 416쪽 전부에서 가리킵니다. 옛 쪽이 서버에 남아 404 는 안 나지만, 그것은 **우연히 안전한 것**입니다. 일부러 남기는 것으로 적어 둡니다",
-  "남길것": {
-    ".htaccess": "서버 설정. 한 번에 한 가지만 고칩니다 (주인 규칙 27)",
-    "about.html": "사이트 소개. 위와 같습니다",
-    "api/": "물때 자료를 받는 곳. 새 틀도 씁니다",
-    "catch/basics.html": "왕초보 해루질 기초. 권역 57쪽의 「처음이신가요」 칸이 가리킵니다. 새 틀은 아직 안 만듭니다",
-    "css/festival.css": "중국어 제주 쪽이 씁니다",
-    "css/home.css": "중국어 첫 화면이 씁니다",
-    "css/style.css": "중국어 쪽 182곳이 씁니다. 새 틀의 assets/css/site.css 와 다른 파일입니다",
-    "fish/basics.html": "왕초보 바다낚시 기초. 권역 57쪽의 「처음이신가요」 칸이 가리킵니다. 새 틀은 아직 안 만듭니다",
-    "gear.html": "채비 안내. 위와 같습니다",
-    "guide/index.html": "참고서 첫 쪽. 위와 같습니다",
-    "img/": "사진. 새 틀도 같은 자리를 가리킵니다",
-    "js/": "중국어 쪽이 쓰는 움직임. 새 틀은 assets/js/ 를 씁니다",
-    "muldae.html": "중국어 zh-cn/chaoxi.html 이 가리킵니다. 새 틀이 아직 안 만든 쪽입니다(url-map.json 의 「아직_안_만듦」). 만들면 여기서 빼세요",
-    "naver1ce5a07a1c7b45c6c8ccaf8b1fc16dc5.html": "네이버 소유 확인 파일",
-    "naverc19eda34e92a0dd255fe1df49d72fcfe.html": "네이버 소유 확인 파일",
-    "photos.html": "사진 출처·이용허락. 위와 같습니다",
-    "privacy.html": "개인정보 안내. 위와 같습니다",
-    "robots.txt": "검색 로봇 안내",
-    "rule.html": "중국어 zh-cn/jinyuqi.html 이 가리킵니다. 위와 같습니다",
-    "sitemap-zh.xml": "중국어판 사이트맵. 새 틀이 zh-cn/ 을 아직 안 만들어 옛 것이 그대로 살아 있습니다. robots.txt 가 이 한 줄을 보고 Sitemap 줄을 적습니다 (engine/make_sitemap.py)",
-    "sources.html": "자료 출처. 위와 같습니다",
-    "tide/index.html": "물때 쪽. 새 틀이 아직 안 만들었고, 416쪽의 꼬리 메뉴가 가리킵니다. 만들면 여기서 빼세요",
-    "travel/index.html": "관광·맛집·숙소 쪽. 첫 화면 06 칸이 가리킵니다. 새 틀이 아직 안 만들었습니다 (2026-09-27)",
-    "zh-cn/": "중국어판 190쪽. 새 틀로 옮길 때까지 그대로 둡니다"
-  },
-  "잰것": {
-    "_검색노출의도": "배포 뒤에 채웁니다 (4차 검수 판단). 먼저 서버에서 실제로 어떻게 잡히는지 보고 정합니다",
-    "_설명": "남기는 옛 쪽마다 최종 주소·canonical·내부 링크 수. engine/keep_detail.py --write 가 재서 적습니다 — 손으로 고치지 마세요 (주인 규칙 29)",
-    "_왜": "바깥 검수 3차·4차 — 옛 쪽을 남기면 나중에 같은 주제의 새 쪽이 생겼을 때 둘이 함께 검색에 잡힙니다. 그때 어느 쪽이 대표인지 미리 정해 둡니다",
-    "쪽": {
-      ".htaccess": {
-        "canonical": "(쪽이 아닙니다)",
-        "가리키는_새쪽": 0,
-        "가리키는_옛중국어쪽": 0,
-        "최종주소": "https://badagaja.com/.htaccess"
-      },
-      "about.html": {
-        "canonical": "https://badagaja.com/about.html",
-        "가리키는_새쪽": 416,
-        "가리키는_옛중국어쪽": 0,
-        "최종주소": "https://badagaja.com/about.html"
-      },
-      "api/": {
-        "canonical": "(쪽이 아닙니다)",
-        "가리키는_새쪽": 416,
-        "가리키는_옛중국어쪽": 0,
-        "최종주소": "https://badagaja.com/api/"
-      },
-      "catch/basics.html": {
-        "canonical": "https://badagaja.com/catch/basics.html",
-        "가리키는_새쪽": 0,
-        "가리키는_옛중국어쪽": 0,
-        "최종주소": "https://badagaja.com/catch/basics.html"
-      },
-      "club.html": {
-        "canonical": "https://badagaja.com/club.html",
-        "가리키는_새쪽": 0,
-        "가리키는_옛중국어쪽": 0,
-        "최종주소": "https://badagaja.com/club.html"
-      },
-      "copyright.html": {
-        "canonical": "https://badagaja.com/copyright.html",
-        "가리키는_새쪽": 0,
-        "가리키는_옛중국어쪽": 0,
-        "최종주소": "https://badagaja.com/copyright.html"
-      },
-      "css/festival.css": {
-        "canonical": "(쪽이 아닙니다)",
-        "가리키는_새쪽": 0,
-        "가리키는_옛중국어쪽": 1,
-        "최종주소": "https://badagaja.com/css/festival.css"
-      },
-      "css/home.css": {
-        "canonical": "(쪽이 아닙니다)",
-        "가리키는_새쪽": 0,
-        "가리키는_옛중국어쪽": 10,
-        "최종주소": "https://badagaja.com/css/home.css"
-      },
-      "css/style.css": {
-        "canonical": "(쪽이 아닙니다)",
-        "가리키는_새쪽": 0,
-        "가리키는_옛중국어쪽": 190,
-        "최종주소": "https://badagaja.com/css/style.css"
-      },
-      "data.html": {
-        "canonical": "https://badagaja.com/data.html",
-        "가리키는_새쪽": 0,
-        "가리키는_옛중국어쪽": 0,
-        "최종주소": "https://badagaja.com/data.html"
-      },
-      "fish/basics.html": {
-        "canonical": "https://badagaja.com/fish/basics.html",
-        "가리키는_새쪽": 0,
-        "가리키는_옛중국어쪽": 0,
-        "최종주소": "https://badagaja.com/fish/basics.html"
-      },
-      "gear.html": {
-        "canonical": "https://badagaja.com/gear.html",
-        "가리키는_새쪽": 416,
-        "가리키는_옛중국어쪽": 0,
-        "최종주소": "https://badagaja.com/gear.html"
-      },
-      "guide/index.html": {
-        "canonical": "https://badagaja.com/guide/",
-        "가리키는_새쪽": 0,
-        "가리키는_옛중국어쪽": 0,
-        "최종주소": "https://badagaja.com/guide/"
-      },
-      "img/": {
-        "canonical": "(쪽이 아닙니다)",
-        "가리키는_새쪽": 0,
-        "가리키는_옛중국어쪽": 49,
-        "최종주소": "https://badagaja.com/img/"
-      },
-      "jeju/festival.html": {
-        "canonical": "https://badagaja.com/jeju/festival.html",
-        "가리키는_새쪽": 0,
-        "가리키는_옛중국어쪽": 0,
-        "최종주소": "https://badagaja.com/jeju/festival.html"
-      },
-      "js/": {
-        "canonical": "(쪽이 아닙니다)",
-        "가리키는_새쪽": 208,
-        "가리키는_옛중국어쪽": 190,
-        "최종주소": "https://badagaja.com/js/"
-      },
-      "muldae.html": {
-        "canonical": "https://badagaja.com/muldae.html",
-        "가리키는_새쪽": 0,
-        "가리키는_옛중국어쪽": 1,
-        "최종주소": "https://badagaja.com/muldae.html"
-      },
-      "naver1ce5a07a1c7b45c6c8ccaf8b1fc16dc5.html": {
-        "canonical": "(쪽에 안 적혀 있습니다)",
-        "가리키는_새쪽": 0,
-        "가리키는_옛중국어쪽": 0,
-        "최종주소": "https://badagaja.com/naver1ce5a07a1c7b45c6c8ccaf8b1fc16dc5.html"
-      },
-      "naverc19eda34e92a0dd255fe1df49d72fcfe.html": {
-        "canonical": "(쪽에 안 적혀 있습니다)",
-        "가리키는_새쪽": 0,
-        "가리키는_옛중국어쪽": 0,
-        "최종주소": "https://badagaja.com/naverc19eda34e92a0dd255fe1df49d72fcfe.html"
-      },
-      "photos.html": {
-        "canonical": "https://badagaja.com/photos.html",
-        "가리키는_새쪽": 416,
-        "가리키는_옛중국어쪽": 0,
-        "최종주소": "https://badagaja.com/photos.html"
-      },
-      "point/busan.html": {
-        "canonical": "https://badagaja.com/point/busan.html",
-        "가리키는_새쪽": 0,
-        "가리키는_옛중국어쪽": 0,
-        "최종주소": "https://badagaja.com/point/busan.html"
-      },
-      "point/gunsan.html": {
-        "canonical": "https://badagaja.com/point/gunsan.html",
-        "가리키는_새쪽": 0,
-        "가리키는_옛중국어쪽": 0,
-        "최종주소": "https://badagaja.com/point/gunsan.html"
-      },
-      "point/incheon.html": {
-        "canonical": "https://badagaja.com/point/incheon.html",
-        "가리키는_새쪽": 0,
-        "가리키는_옛중국어쪽": 0,
-        "최종주소": "https://badagaja.com/point/incheon.html"
-      },
-      "point/jeju.html": {
-        "canonical": "https://badagaja.com/point/jeju.html",
-        "가리키는_새쪽": 0,
-        "가리키는_옛중국어쪽": 0,
-        "최종주소": "https://badagaja.com/point/jeju.html"
-      },
-      "privacy.html": {
-        "canonical": "https://badagaja.com/privacy.html",
-        "가리키는_새쪽": 416,
-        "가리키는_옛중국어쪽": 0,
-        "최종주소": "https://badagaja.com/privacy.html"
-      },
-      "robots.txt": {
-        "canonical": "(쪽이 아닙니다)",
-        "가리키는_새쪽": 0,
-        "가리키는_옛중국어쪽": 0,
-        "최종주소": "https://badagaja.com/robots.txt"
-      },
-      "rule.html": {
-        "canonical": "https://badagaja.com/rule.html",
-        "가리키는_새쪽": 416,
-        "가리키는_옛중국어쪽": 1,
-        "최종주소": "https://badagaja.com/rule.html"
-      },
-      "sources.html": {
-        "canonical": "https://badagaja.com/sources.html",
-        "가리키는_새쪽": 416,
-        "가리키는_옛중국어쪽": 0,
-        "최종주소": "https://badagaja.com/sources.html"
-      },
-      "stats.html": {
-        "canonical": "(쪽에 안 적혀 있습니다)",
-        "가리키는_새쪽": 0,
-        "가리키는_옛중국어쪽": 0,
-        "최종주소": "https://badagaja.com/stats.html"
-      },
-      "tide/index.html": {
-        "canonical": "https://badagaja.com/tide/",
-        "가리키는_새쪽": 0,
-        "가리키는_옛중국어쪽": 0,
-        "최종주소": "https://badagaja.com/tide/"
-      },
-      "travel/index.html": {
-        "canonical": "https://badagaja.com/travel/",
-        "가리키는_새쪽": 0,
-        "가리키는_옛중국어쪽": 0,
-        "최종주소": "https://badagaja.com/travel/"
-      },
-      "zh-cn/": {
-        "canonical": "(쪽이 아닙니다)",
-        "가리키는_새쪽": 0,
-        "가리키는_옛중국어쪽": 190,
-        "최종주소": "https://badagaja.com/zh-cn/"
-      }
-    }
-  },
-  "중국어가쓰는것": {
-    "_설명": "옛 중국어 쪽이 한국어 자리의 파일을 가리키는 것. 잰 값입니다 — 손으로 적지 않았습니다",
-    "_잰날": "2026-09-27",
-    "css/festival.css": 1,
-    "css/home.css": 2,
-    "css/style.css": 182,
-    "img/boseong/hero.jpg": 1,
-    "muldae.html": 1,
-    "rule.html": 1
+ "_고칠때": "중국어판을 새 틀로 옮기면 여기서 뺍니다. 그 전에는 한 줄도 지우지 마세요 · 2026-10-01 — 새 틀이 만들기 시작한 것은 설명만 고치고 목록에는 남깁니다. 주소가 사라지면 안 되기 때문입니다",
+ "_설명": "새 사이트로 바꿀 때 **지우면 안 되는 옛 파일**. 새 틀이 안 만들지만 서버에는 남아 있어야 합니다",
+ "_어떻게찾았나": "옛 zh-cn/**/*.html 190쪽이 거는 링크 179갈래를 새 사이트와 대조했습니다. engine/check_keep.py 가 같은 일을 다시 합니다",
+ "_왜": "2026-09-27 — 중국어판 190쪽은 그대로 두기로 했습니다(주인 결정). 그런데 중국어 쪽 182곳이 옛 css/style.css 를 씁니다. 한국어 쪽을 새것으로 바꾸면서 그 파일을 지우면 중국어판 디자인이 통째로 깨집니다. 「그대로 둔다」는 쪽만이 아니라 **그 쪽이 쓰는 것까지** 둔다는 뜻입니다 / 2026-09-27 — 새 틀 꼬리 메뉴가 아직 안 만든 쪽 8개를 416쪽 전부에서 가리킵니다. 옛 쪽이 서버에 남아 404 는 안 나지만, 그것은 **우연히 안전한 것**입니다. 일부러 남기는 것으로 적어 둡니다",
+ "남길것": {
+  ".htaccess": "서버 설정. 한 번에 한 가지만 고칩니다 (주인 규칙 27)",
+  "about.html": "2026-10-01 새 틀이 다시 지었습니다 — 올리면 옛 파일을 덮습니다. engine/check_keep.py 가 「중국어판이 멀쩡한가」를 확인했습니다. 지우지는 않습니다(중국어 쪽이 거는 주소라 자리는 그대로여야 합니다)",
+  "api/": "물때 자료를 받는 곳. 새 틀도 씁니다",
+  "catch/basics.html": "2026-10-01 새 틀이 다시 지었습니다 — 올리면 옛 파일을 덮습니다. engine/check_keep.py 가 「중국어판이 멀쩡한가」를 확인했습니다. 지우지는 않습니다(중국어 쪽이 거는 주소라 자리는 그대로여야 합니다)",
+  "css/festival.css": "중국어 제주 쪽이 씁니다",
+  "css/home.css": "중국어 첫 화면이 씁니다",
+  "css/style.css": "중국어 쪽 182곳이 씁니다. 새 틀의 assets/css/site.css 와 다른 파일입니다",
+  "fish/basics.html": "2026-10-01 새 틀이 다시 지었습니다 — 올리면 옛 파일을 덮습니다. engine/check_keep.py 가 「중국어판이 멀쩡한가」를 확인했습니다. 지우지는 않습니다(중국어 쪽이 거는 주소라 자리는 그대로여야 합니다)",
+  "gear.html": "2026-10-01 새 틀이 다시 지었습니다 — 올리면 옛 파일을 덮습니다. engine/check_keep.py 가 「중국어판이 멀쩡한가」를 확인했습니다. 지우지는 않습니다(중국어 쪽이 거는 주소라 자리는 그대로여야 합니다)",
+  "guide/index.html": "참고서 첫 쪽. 위와 같습니다",
+  "img/": "사진. 새 틀도 같은 자리를 가리킵니다",
+  "js/": "중국어 쪽이 쓰는 움직임. 새 틀은 assets/js/ 를 씁니다",
+  "muldae.html": "중국어 zh-cn/chaoxi.html 이 가리킵니다. 새 틀이 아직 안 만든 쪽입니다(url-map.json 의 「아직_안_만듦」). 만들면 여기서 빼세요",
+  "naver1ce5a07a1c7b45c6c8ccaf8b1fc16dc5.html": "네이버 소유 확인 파일",
+  "naverc19eda34e92a0dd255fe1df49d72fcfe.html": "네이버 소유 확인 파일",
+  "photos.html": "2026-10-01 새 틀이 다시 지었습니다 — 올리면 옛 파일을 덮습니다. engine/check_keep.py 가 「중국어판이 멀쩡한가」를 확인했습니다. 지우지는 않습니다(중국어 쪽이 거는 주소라 자리는 그대로여야 합니다)",
+  "privacy.html": "2026-10-01 새 틀이 다시 지었습니다 — 올리면 옛 파일을 덮습니다. engine/check_keep.py 가 「중국어판이 멀쩡한가」를 확인했습니다. 지우지는 않습니다(중국어 쪽이 거는 주소라 자리는 그대로여야 합니다)",
+  "robots.txt": "검색 로봇 안내",
+  "rule.html": "2026-10-01 새 틀이 다시 지었습니다 — 올리면 옛 파일을 덮습니다. engine/check_keep.py 가 「중국어판이 멀쩡한가」를 확인했습니다. 지우지는 않습니다(중국어 쪽이 거는 주소라 자리는 그대로여야 합니다)",
+  "sitemap-zh.xml": "중국어판 사이트맵. 새 틀이 zh-cn/ 을 아직 안 만들어 옛 것이 그대로 살아 있습니다. robots.txt 가 이 한 줄을 보고 Sitemap 줄을 적습니다 (engine/make_sitemap.py)",
+  "sources.html": "2026-10-01 새 틀이 다시 지었습니다 — 올리면 옛 파일을 덮습니다. engine/check_keep.py 가 「중국어판이 멀쩡한가」를 확인했습니다. 지우지는 않습니다(중국어 쪽이 거는 주소라 자리는 그대로여야 합니다)",
+  "tide/index.html": "물때 쪽. 새 틀이 아직 안 만들었고, 416쪽의 꼬리 메뉴가 가리킵니다. 만들면 여기서 빼세요",
+  "travel/index.html": "관광·맛집·숙소 쪽. 첫 화면 06 칸이 가리킵니다. 새 틀이 아직 안 만들었습니다 (2026-09-27)",
+  "zh-cn/": "중국어판 190쪽. 새 틀로 옮길 때까지 그대로 둡니다"
+ },
+ "잰것": {
+  "_검색노출의도": "배포 뒤에 채웁니다 (4차 검수 판단). 먼저 서버에서 실제로 어떻게 잡히는지 보고 정합니다",
+  "_설명": "남기는 옛 쪽마다 최종 주소·canonical·내부 링크 수. engine/keep_detail.py --write 가 재서 적습니다 — 손으로 고치지 마세요 (주인 규칙 29)",
+  "_왜": "바깥 검수 3차·4차 — 옛 쪽을 남기면 나중에 같은 주제의 새 쪽이 생겼을 때 둘이 함께 검색에 잡힙니다. 그때 어느 쪽이 대표인지 미리 정해 둡니다",
+  "쪽": {
+   ".htaccess": {
+    "canonical": "(쪽이 아닙니다)",
+    "가리키는_새쪽": 0,
+    "가리키는_옛중국어쪽": 0,
+    "최종주소": "https://badagaja.com/.htaccess"
+   },
+   "about.html": {
+    "canonical": "https://badagaja.com/about.html",
+    "가리키는_새쪽": 416,
+    "가리키는_옛중국어쪽": 0,
+    "최종주소": "https://badagaja.com/about.html"
+   },
+   "api/": {
+    "canonical": "(쪽이 아닙니다)",
+    "가리키는_새쪽": 416,
+    "가리키는_옛중국어쪽": 0,
+    "최종주소": "https://badagaja.com/api/"
+   },
+   "catch/basics.html": {
+    "canonical": "https://badagaja.com/catch/basics.html",
+    "가리키는_새쪽": 0,
+    "가리키는_옛중국어쪽": 0,
+    "최종주소": "https://badagaja.com/catch/basics.html"
+   },
+   "club.html": {
+    "canonical": "https://badagaja.com/club.html",
+    "가리키는_새쪽": 0,
+    "가리키는_옛중국어쪽": 0,
+    "최종주소": "https://badagaja.com/club.html"
+   },
+   "copyright.html": {
+    "canonical": "https://badagaja.com/copyright.html",
+    "가리키는_새쪽": 0,
+    "가리키는_옛중국어쪽": 0,
+    "최종주소": "https://badagaja.com/copyright.html"
+   },
+   "css/festival.css": {
+    "canonical": "(쪽이 아닙니다)",
+    "가리키는_새쪽": 0,
+    "가리키는_옛중국어쪽": 1,
+    "최종주소": "https://badagaja.com/css/festival.css"
+   },
+   "css/home.css": {
+    "canonical": "(쪽이 아닙니다)",
+    "가리키는_새쪽": 0,
+    "가리키는_옛중국어쪽": 10,
+    "최종주소": "https://badagaja.com/css/home.css"
+   },
+   "css/style.css": {
+    "canonical": "(쪽이 아닙니다)",
+    "가리키는_새쪽": 0,
+    "가리키는_옛중국어쪽": 190,
+    "최종주소": "https://badagaja.com/css/style.css"
+   },
+   "data.html": {
+    "canonical": "https://badagaja.com/data.html",
+    "가리키는_새쪽": 0,
+    "가리키는_옛중국어쪽": 0,
+    "최종주소": "https://badagaja.com/data.html"
+   },
+   "fish/basics.html": {
+    "canonical": "https://badagaja.com/fish/basics.html",
+    "가리키는_새쪽": 0,
+    "가리키는_옛중국어쪽": 0,
+    "최종주소": "https://badagaja.com/fish/basics.html"
+   },
+   "gear.html": {
+    "canonical": "https://badagaja.com/gear.html",
+    "가리키는_새쪽": 416,
+    "가리키는_옛중국어쪽": 0,
+    "최종주소": "https://badagaja.com/gear.html"
+   },
+   "guide/index.html": {
+    "canonical": "https://badagaja.com/guide/",
+    "가리키는_새쪽": 0,
+    "가리키는_옛중국어쪽": 0,
+    "최종주소": "https://badagaja.com/guide/"
+   },
+   "img/": {
+    "canonical": "(쪽이 아닙니다)",
+    "가리키는_새쪽": 0,
+    "가리키는_옛중국어쪽": 49,
+    "최종주소": "https://badagaja.com/img/"
+   },
+   "jeju/festival.html": {
+    "canonical": "https://badagaja.com/jeju/festival.html",
+    "가리키는_새쪽": 0,
+    "가리키는_옛중국어쪽": 0,
+    "최종주소": "https://badagaja.com/jeju/festival.html"
+   },
+   "js/": {
+    "canonical": "(쪽이 아닙니다)",
+    "가리키는_새쪽": 208,
+    "가리키는_옛중국어쪽": 190,
+    "최종주소": "https://badagaja.com/js/"
+   },
+   "muldae.html": {
+    "canonical": "https://badagaja.com/muldae.html",
+    "가리키는_새쪽": 0,
+    "가리키는_옛중국어쪽": 1,
+    "최종주소": "https://badagaja.com/muldae.html"
+   },
+   "naver1ce5a07a1c7b45c6c8ccaf8b1fc16dc5.html": {
+    "canonical": "(쪽에 안 적혀 있습니다)",
+    "가리키는_새쪽": 0,
+    "가리키는_옛중국어쪽": 0,
+    "최종주소": "https://badagaja.com/naver1ce5a07a1c7b45c6c8ccaf8b1fc16dc5.html"
+   },
+   "naverc19eda34e92a0dd255fe1df49d72fcfe.html": {
+    "canonical": "(쪽에 안 적혀 있습니다)",
+    "가리키는_새쪽": 0,
+    "가리키는_옛중국어쪽": 0,
+    "최종주소": "https://badagaja.com/naverc19eda34e92a0dd255fe1df49d72fcfe.html"
+   },
+   "photos.html": {
+    "canonical": "https://badagaja.com/photos.html",
+    "가리키는_새쪽": 416,
+    "가리키는_옛중국어쪽": 0,
+    "최종주소": "https://badagaja.com/photos.html"
+   },
+   "point/busan.html": {
+    "canonical": "https://badagaja.com/point/busan.html",
+    "가리키는_새쪽": 0,
+    "가리키는_옛중국어쪽": 0,
+    "최종주소": "https://badagaja.com/point/busan.html"
+   },
+   "point/gunsan.html": {
+    "canonical": "https://badagaja.com/point/gunsan.html",
+    "가리키는_새쪽": 0,
+    "가리키는_옛중국어쪽": 0,
+    "최종주소": "https://badagaja.com/point/gunsan.html"
+   },
+   "point/incheon.html": {
+    "canonical": "https://badagaja.com/point/incheon.html",
+    "가리키는_새쪽": 0,
+    "가리키는_옛중국어쪽": 0,
+    "최종주소": "https://badagaja.com/point/incheon.html"
+   },
+   "point/jeju.html": {
+    "canonical": "https://badagaja.com/point/jeju.html",
+    "가리키는_새쪽": 0,
+    "가리키는_옛중국어쪽": 0,
+    "최종주소": "https://badagaja.com/point/jeju.html"
+   },
+   "privacy.html": {
+    "canonical": "https://badagaja.com/privacy.html",
+    "가리키는_새쪽": 416,
+    "가리키는_옛중국어쪽": 0,
+    "최종주소": "https://badagaja.com/privacy.html"
+   },
+   "robots.txt": {
+    "canonical": "(쪽이 아닙니다)",
+    "가리키는_새쪽": 0,
+    "가리키는_옛중국어쪽": 0,
+    "최종주소": "https://badagaja.com/robots.txt"
+   },
+   "rule.html": {
+    "canonical": "https://badagaja.com/rule.html",
+    "가리키는_새쪽": 416,
+    "가리키는_옛중국어쪽": 1,
+    "최종주소": "https://badagaja.com/rule.html"
+   },
+   "sources.html": {
+    "canonical": "https://badagaja.com/sources.html",
+    "가리키는_새쪽": 416,
+    "가리키는_옛중국어쪽": 0,
+    "최종주소": "https://badagaja.com/sources.html"
+   },
+   "stats.html": {
+    "canonical": "(쪽에 안 적혀 있습니다)",
+    "가리키는_새쪽": 0,
+    "가리키는_옛중국어쪽": 0,
+    "최종주소": "https://badagaja.com/stats.html"
+   },
+   "tide/index.html": {
+    "canonical": "https://badagaja.com/tide/",
+    "가리키는_새쪽": 0,
+    "가리키는_옛중국어쪽": 0,
+    "최종주소": "https://badagaja.com/tide/"
+   },
+   "travel/index.html": {
+    "canonical": "https://badagaja.com/travel/",
+    "가리키는_새쪽": 0,
+    "가리키는_옛중국어쪽": 0,
+    "최종주소": "https://badagaja.com/travel/"
+   },
+   "zh-cn/": {
+    "canonical": "(쪽이 아닙니다)",
+    "가리키는_새쪽": 0,
+    "가리키는_옛중국어쪽": 190,
+    "최종주소": "https://badagaja.com/zh-cn/"
+   }
   }
+ },
+ "중국어가쓰는것": {
+  "_설명": "옛 중국어 쪽이 한국어 자리의 파일을 가리키는 것. 잰 값입니다 — 손으로 적지 않았습니다",
+  "_잰날": "2026-09-27",
+  "css/festival.css": 1,
+  "css/home.css": 2,
+  "css/style.css": 182,
+  "img/boseong/hero.jpg": 1,
+  "muldae.html": 1,
+  "rule.html": 1
+ }
 }

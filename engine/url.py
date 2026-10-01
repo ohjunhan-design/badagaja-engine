@@ -250,6 +250,57 @@ def gear(언어='ko'):
     return _붙이기(언어, 'gear.html')
 
 
+def muldae(언어='ko'):
+    """물때표 보는 법 — muldae.html
+
+    ★ `tide/` 와 다릅니다. tide 는 「오늘 몇 시인가」,
+      이 쪽은 「어떻게 읽는가」입니다 (2026-10-01).
+      옛 사이트에 아홉 절·그림 7장으로 이미 좋은 글이 있었는데
+      새 틀이 안 만들어 끊겨 있었습니다.
+    """
+    return _붙이기(언어, 'muldae.html')
+
+
+def basics(갈래, 언어='ko'):
+    """왕초보 그림 강의 — fish/basics.html · catch/basics.html
+
+    ★ **권역 57쪽이 각각 겁니다.** 「처음이신가요」 칸이 여기로
+      보냅니다. 새 사이트에 쪽이 없어 옛 디자인으로 떨어지고
+      있었습니다 (2026-10-01).
+    """
+    집 = 'fish' if 갈래 == '낚시' else 'catch'
+    return _붙이기(언어, 집, 'basics.html')
+
+
+# ── 사이트를 밝히는 네 쪽 ────────────────────────────
+#  ★ 2026-10-01 — **438쪽 모두가 꼬리에서 이 넷을 겁니다.**
+#    그런데 새 사이트에 파일이 없어, 서버에 남은 **옛 사이트 파일**이
+#    응답하고 있었습니다. 손님이 「개인정보처리방침」을 누르면
+#    디자인이 통째로 다른 쪽으로 떨어집니다.
+#    rule.html·gear.html 때와 **똑같은 구멍**입니다.
+#
+#    이 넷은 광고 심사에서 **반드시 보는 쪽**이기도 합니다.
+#    누가 만드는가 · 자료는 어디서 오는가 · 개인정보를 어떻게 다루는가.
+def about(언어='ko'):
+    """누가 어떻게 만드나 — about.html"""
+    return _붙이기(언어, 'about.html')
+
+
+def privacy(언어='ko'):
+    """개인정보처리방침 — privacy.html"""
+    return _붙이기(언어, 'privacy.html')
+
+
+def sources(언어='ko'):
+    """자료 출처 — sources.html"""
+    return _붙이기(언어, 'sources.html')
+
+
+def photos(언어='ko'):
+    """사진 출처 — photos.html"""
+    return _붙이기(언어, 'photos.html')
+
+
 def tide_list(언어='ko'):
     """전국 물때 — tide/index.html"""
     return _붙이기(언어, 'tide', 'index.html')
