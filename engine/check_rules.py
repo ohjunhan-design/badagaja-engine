@@ -238,8 +238,8 @@ def 검사_권역금어기():
     from engine import url as _url
     for r in d.권역들:
         # ★ 주소는 **url.py 가 만듭니다** (계약-03)
-        #   검사기라고 예외가 아닙니다. 여기서 '%s.html' 로 지어
-        #   쓰면 나중에 주소 꼴이 바뀔 때 검사기만 옛 자리를
+        #   검사기라고 예외가 아닙니다. 여기서 주소를 손으로 이어
+        #   붙이면 나중에 주소 꼴이 바뀔 때 검사기만 옛 자리를
         #   보게 됩니다.
         길 = os.path.join(뿌리, 'site',
                           _url.region(r['id']).replace('/', os.sep))
