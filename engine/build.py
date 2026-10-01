@@ -26,6 +26,7 @@ import html
 import hashlib
 import datetime
 import subprocess
+import posixpath
 import collections
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -4417,16 +4418,52 @@ def 쪽주소(갈, 권역, 갈래, 언어='ko'):
     if 갈 == '채비부품':
         return url.rig_parts(언어)
     if 갈 == '금어기':
-        return 'rule.html' if 언어 == 'ko' else '%s/rule.html' % 언어
+        return url.rule(언어)
     if 갈 == '물때허브':
-        return ('tide/index.html' if 언어 == 'ko'
-                else '%s/tide/index.html' % 언어)
+        return url.tide_list(언어)
     if 갈 == '안내허브':
-        return ('guide/index.html' if 언어 == 'ko'
-                else '%s/guide/index.html' % 언어)
+        return url.guide_hub(언어)
     if 갈 == '장비':
-        return 'gear.html' if 언어 == 'ko' else '%s/gear.html' % 언어
+        return url.gear(언어)
     return url.point_list(권역, 갈래, 언어)
+
+
+def _자기링크없애기(글, 쪽길):
+    """**지금 보는 쪽을 가리키는 링크**를 눌리지 않게 합니다.
+
+    ★ 2026-10-01 — 아래 차림표를 달면서 드러났습니다.
+      catch/index.html 에서 차림표의 「해루질」이 자기
+      자신을 가리켰습니다. 누르면 같은 쪽이 다시 떠
+      손님이 「눌렀는데 안 바뀐다」고 느낍니다.
+
+      차림표만의 일이 아닙니다 — index.html 의 로고가
+      ./index.html 을 가리키는 것도 전부터 있었습니다.
+      **쪽을 쓰기 직전에 한 번 훑어 모두** 없앱니다.
+
+    ★ 링크를 지우지 않고 **href 만 뗍니다.**
+      글자와 모양은 그대로 두어야 차림표 칸이 안 무너집니다.
+      aria-current 를 붙여 읽어 주는 기계도 알게 합니다.
+    """
+    여기 = posixpath.basename(쪽길)
+    후보 = {'./' + 여기, 여기}
+    if 여기 == 'index.html':
+        후보 |= {'./', '.', ''}
+        밑 = posixpath.dirname(쪽길)
+        if 밑:
+            후보 |= {'../' + posixpath.basename(밑) + '/',
+                     posixpath.basename(밑) + '/'}
+
+    def 바꾸기(m):
+        주소 = m.group(2)
+        if 주소 not in 후보:
+            return m.group(0)
+        앞 = m.group(1).replace(' href=', ' data-here=')
+        뒤 = m.group(3)
+        if 'aria-current' not in 앞 + 뒤:
+            뒤 = ' aria-current="page"' + 뒤
+        return 앞 + '"' + 주소 + '"' + 뒤
+
+    return re.sub(r'(<a[^>]*?\shref=)"([^"]*)"([^>]*>)', 바꾸기, 글)
 
 
 def 만들목록(d, 만=None):
@@ -4564,6 +4601,7 @@ def main():
         else:
             쪽길, 글 = 포인트쪽(d, 권역, 갈래, 언어)
             수 = d.셈(권역, 갈래)
+        글 = _자기링크없애기(글, 쪽길)
         io.write(os.path.join(나갈곳, 쪽길), 글)
         쓴것.append((쪽길, len(글), 수))
 

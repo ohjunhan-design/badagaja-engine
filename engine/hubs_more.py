@@ -33,7 +33,7 @@ def 물때쪽(d, 언어='ko'):
     여기는 「어느 바다 물때를 볼까」를 고르는 갈림길입니다.
     같은 표를 두 곳에서 그리면 한 곳을 고치고 다른 곳을 잊습니다.
     """
-    쪽길 = 'tide/index.html' if 언어 == 'ko' else '%s/tide/index.html' % 언어
+    쪽길 = url.tide_list(언어)
     묶음표 = d.색인['묶음이름']
 
     칸들 = []
@@ -80,10 +80,9 @@ def 물때쪽(d, 언어='ko'):
 # ══════════════════════════════════════════════════════
 def 안내쪽(d, 언어='ko'):
     """fish/ 와 catch/ 로 가는 갈림길입니다."""
-    쪽길 = ('guide/index.html' if 언어 == 'ko'
-            else '%s/guide/index.html' % 언어)
-    rule = 'rule.html' if 언어 == 'ko' else '%s/rule.html' % 언어
-    gear = 'gear.html' if 언어 == 'ko' else '%s/gear.html' % 언어
+    쪽길 = url.guide_hub(언어)
+    rule = url.rule(언어)
+    gear = url.gear(언어)
 
     칸들 = []
     for 갈래, 제목, 꼬리, 설명 in (
@@ -158,10 +157,9 @@ def 안내쪽(d, 언어='ko'):
 
 def 장비쪽(d, 언어='ko'):
     """492곳이 거는 쪽입니다. **채비 쪽으로 돌리지 않습니다.**"""
-    쪽길 = 'gear.html' if 언어 == 'ko' else '%s/gear.html' % 언어
+    쪽길 = url.gear(언어)
     부품 = (d.채비자료 or {}).get('부품') or {}
-    tide = ('tide/index.html' if 언어 == 'ko'
-            else '%s/tide/index.html' % 언어)
+    tide = url.tide_list(언어)
 
     묶 = {}
     for 이름, 것 in 부품.items():

@@ -228,3 +228,33 @@ def asset(길, 여기, 판=None):
     """
     주소 = rel(여기, 길)
     return '%s?v=%s' % (주소, 판) if 판 else 주소
+
+
+def rule(언어='ko'):
+    """금어기와 잡아도 되는 크기 — rule.html
+
+    ★ 2026-10-01 — 434쪽이 이리로 링크를 거는데 쪽이
+      없었습니다. 서버가 200 을 낸 것은 옛 사이트 파일이
+      남아 있어서였습니다.
+    """
+    return _붙이기(언어, 'rule.html')
+
+
+def gear(언어='ko'):
+    """무엇을 챙겨 가나 — gear.html
+
+    ★ **채비(rig)와 다릅니다.** gear 는 「무엇을 준비하나」,
+      rig 는 「어떻게 묶나」입니다. 492곳이 거는 뜻을
+      한꺼번에 바꾸면 404 는 없어져도 짜임이 틀어집니다.
+    """
+    return _붙이기(언어, 'gear.html')
+
+
+def tide_list(언어='ko'):
+    """전국 물때 — tide/index.html"""
+    return _붙이기(언어, 'tide', 'index.html')
+
+
+def guide_hub(언어='ko'):
+    """무엇을 잡나 — guide/index.html"""
+    return _붙이기(언어, 'guide', 'index.html')

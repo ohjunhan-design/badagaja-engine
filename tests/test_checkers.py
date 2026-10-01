@@ -1464,6 +1464,68 @@ def 시험_채비():
            '없는 채비를 가리키는' in 글 and '없는채비이름' in 글, 글[-600:])
 
 
+def 시험_규정():
+    """check_rules — 어종 아이디가 어긋나면 잡는가 (2026-10-01)
+
+    ★ 이 검사기를 만든 까닭 — **아이디가 두 벌**입니다.
+
+          id        쪽 파일 이름    site/fish/byeongedom.html
+          어종아이디  포인트가 부름   "대상": ["bengedom", ...]
+
+      셋이 어긋납니다(벵에돔·갑오징어·무늬오징어). 모르고 id 로
+      맞추면 **포인트 1,169곳이 조용히 빠집니다.** 오류도 안 나고
+      쪽도 만들어져 아무도 모릅니다.
+
+      그러니 이 시험은 **검사기가 정말 눈을 뜨고 있는지**를 봅니다.
+      통과만 하고 아무것도 안 보는 검사는 없는 것보다 나쁩니다.
+    """
+    print('[31] check_rules — 어종 아이디가 어긋나면 잡는가')
+
+    글 = 돌리기('check_rules.py', 인자=['--strict'])
+    봄('지금은 아이디가 어긋나지 않는다',
+       '어김 없습니다' in 글, 글[-400:])
+
+    # (가) 어종아이디를 겹치게 만들면 잡아야 합니다
+    with isolate.일터() as 뿌리:
+        p = os.path.join(뿌리, 'data', 'raw', 'guide.json')
+        원 = io.read(p)
+        d = json.loads(원)
+        것들 = d['어종']
+        것들[1]['어종아이디'] = (것들[0].get('어종아이디')
+                                or 것들[0]['id'])
+        상한것 = json.dumps(d, ensure_ascii=False, indent=2)
+        봄('자료를 정말 망가뜨렸다', 상한것 != 원)
+        io.write(p, 상한것)
+        글 = 돌리기('check_rules.py', 인자=['--strict'], 뿌리=뿌리)
+        봄('겹친 어종아이디를 잡는다',
+           '어종아이디가 겹칩니다' in 글, 글[-600:])
+
+    # (나) 포인트가 **쪽 아이디**를 쓰게 바꾸면 잡아야 합니다
+    #     — 이것이 포인트 1,169곳을 조용히 빠뜨리던 그 잘못입니다
+    with isolate.일터() as 뿌리:
+        g = os.path.join(뿌리, 'data', 'raw', 'guide.json')
+        d = json.loads(io.read(g))
+        두벌 = None
+        for 것 in d['어종']:
+            포 = 것.get('어종아이디')
+            if 포 and 포 != 것['id']:
+                두벌 = (것['id'], 포)
+                break
+        봄('두 벌인 어종이 자료에 있다', bool(두벌), str(두벌))
+        if 두벌:
+            쪽, 포 = 두벌
+            p = os.path.join(뿌리, 
+                             'data', 'raw', 'points', 'jeonnam.json')
+            원 = io.read(p)
+            상한것 = 원.replace(json.dumps(포, ensure_ascii=False),
+                                json.dumps(쪽, ensure_ascii=False))
+            봄('포인트 자료를 정말 망가뜨렸다', 상한것 != 원)
+            io.write(p, 상한것)
+            글 = 돌리기('check_rules.py', 인자=['--strict'],
+                       뿌리=뿌리)
+            봄('포인트가 쪽 아이디를 쓰면 잡는다',
+               '쪽 아이디(id)를 쓴 곳' in 글, 글[-700:])
+
 def 시험_잃은말():
     """check_guide_loss — 어종 안내를 늘리다 **지운 것**을 잡는가 (2026-09-30)
 
@@ -1539,6 +1601,7 @@ def main():
     시험_판단되나()
     시험_채비()
     시험_잃은말()
+    시험_규정()
     print('')
     if 실패:
         print('%d가지 통과 · %d가지 실패' % (통과, len(실패)))

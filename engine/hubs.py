@@ -131,7 +131,7 @@ def 금어기쪽(d, 언어='ko'):
     """
     import datetime
     자료 = rules.자료()
-    쪽길 = 'rule.html' if 언어 == 'ko' else '%s/rule.html' % 언어
+    쪽길 = url.rule(언어)
     오늘 = datetime.date.today()
 
     if not 자료:
