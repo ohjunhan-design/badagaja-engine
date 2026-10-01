@@ -424,6 +424,156 @@ html.has-navi .navi:hover{filter:brightness(.94)}
 }
 .to-top.show{opacity:1;pointer-events:auto}
 
+
+
+
+/* ── 갈림길 쪽 (tide/ · guide/ · gear.html) ───────
+   ★ 2026-10-01 — 434쪽이 거는데 없던 쪽들입니다.
+   여기서 할 일은 **고르게 하는 것** 하나입니다.
+   글을 길게 쓰지 않고 **누를 자리를 크게** 둡니다.
+*/
+.hub-lead{margin:0 0 14px;line-height:1.7;
+  color:var(--muted,#6b7684)}
+.hub-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.hub-list--grid{
+  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+}
+.hub-list a{
+  display:flex;flex-direction:column;gap:2px;justify-content:center;
+  min-height:52px;padding:10px 14px;text-decoration:none;
+  border:1px solid var(--line,#e3e6ea);border-radius:12px;
+  background:var(--card,#fff);color:inherit;
+}
+.hub-list a:hover{border-color:var(--brand,#0b4f7a)}
+.hub-list a b{font-size:15.5px;font-weight:700}
+.hub-list a span{font-size:12px;color:var(--muted,#6b7684)}
+
+
+@media (max-width:600px){
+  .hub-list--grid{grid-template-columns:repeat(2,1fr)}
+}
+/* ── 금어기 쪽 (rule.html) ────────────────────────
+   ★ 2026-10-01 — 434쪽이 거는데 없던 쪽입니다.
+   손님은 법을 공부하러 오지 않습니다. 「오늘 이거 잡아도
+   되나」를 보러 옵니다. 그래서 **오늘 걸린 것이 맨 위**이고,
+   가장 크게 보입니다.
+
+   · 지금 금어기 — 빨강 띠. 「하지 마세요」가 한눈에
+   · 연중 금지 — 회색. 철과 상관없다는 뜻이라 **따로 둡니다**
+     (명태가 계절 금어기와 섞이면 「10월이라 금지」로 읽힙니다)
+*/
+.rl-grid{display:grid;gap:12px;
+  grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.rl-card{
+  border:1px solid var(--line,#e3e6ea);border-radius:14px;
+  padding:14px 16px;background:var(--card,#fff);
+  border-left:5px solid #d14343;
+}
+.rl-card.rl-always{border-left-color:#8b95a1}
+.rl-tag{
+  margin:0 0 6px;font-size:12px;font-weight:700;color:#d14343;
+  letter-spacing:-.01em;
+}
+.rl-always .rl-tag{color:#6b7684}
+.rl-name{margin:0 0 4px;font-size:19px;font-weight:800}
+.rl-when{margin:0;font-size:15px;font-weight:600}
+.rl-size{margin:6px 0 0;font-size:14px;color:var(--muted,#6b7684)}
+.rl-memo{margin:8px 0 0;font-size:13px;line-height:1.5;
+  color:var(--muted,#6b7684)}
+
+/* 찾기 칸 — 51종을 눈으로 훑지 않게 */
+.rl-find{margin:0 0 14px}
+.rl-find input{
+  width:100%;box-sizing:border-box;min-height:48px;
+  padding:0 16px;font-size:16px;
+  border:1px solid var(--line,#e3e6ea);border-radius:12px;
+  background:var(--card,#fff);color:inherit;
+}
+.rl-none{margin:10px 0 0;font-size:14px;color:var(--muted,#6b7684)}
+
+/* 전체 표 */
+.rl-tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.rl-table{width:100%;border-collapse:collapse;font-size:14px}
+.rl-table th,.rl-table td{
+  padding:11px 12px;text-align:left;vertical-align:top;
+  border-bottom:1px solid var(--line,#eef1f4);
+}
+.rl-table thead th{
+  font-size:12px;font-weight:700;color:var(--muted,#6b7684);
+  white-space:nowrap;border-bottom-width:2px;
+}
+.rl-table tbody th{font-weight:800;white-space:nowrap}
+.rl-alias{font-weight:500;font-size:12px;
+  color:var(--muted,#6b7684)}
+.rl-note{font-size:12.5px;line-height:1.5;
+  color:var(--muted,#6b7684);min-width:180px}
+
+/* 상태 알갱이 — **색만으로 알리지 않습니다.**
+   색을 못 가리는 분도 글자로 압니다 */
+.rl-chip{
+  display:inline-block;padding:3px 9px;border-radius:999px;
+  font-size:12px;font-weight:700;white-space:nowrap;
+  background:#f1f3f5;color:#495057;
+}
+.rl-chip--bad{background:#fdecec;color:#c0392b}
+.rl-chip--warn{background:#fff6e5;color:#9a6700}
+.rl-chip--ok{background:#eef6ef;color:#2f6b3a}
+.rl-chip--na{background:#f1f3f5;color:#6b7684}
+
+.rl-always{margin:0;padding-left:20px;line-height:1.9}
+.rl-src{margin:0 0 10px;padding-left:20px;line-height:1.8;
+  font-size:14px}
+
+@media (max-width:600px){
+  .rl-grid{grid-template-columns:1fr}
+  .rl-table{font-size:13px}
+  .rl-table th,.rl-table td{padding:9px 8px}
+}
+/* ── 휴대폰 아래 고정 차림표 ──────────────────────
+   ★ 2026-10-01 합의 D-005
+   손님이 쪽을 보다가 다른 데로 가려면 맨 위까지 올려야
+   했습니다. 엄지가 닿는 자리에 늘 두어 한 손으로 쓰게 합니다.
+
+   · PC 에서는 안 보입니다 (768px 위)
+   · 누름자리 **56px** — 주인 규칙 6-2 의 「엄지가 닿는가」
+   · 아이폰 아래 띠(safe-area)만큼 더 띄웁니다
+   · 꼬리가 차림표에 가리지 않게 본문 아래를 비웁니다
+*/
+.tabbar{display:none}
+@media (max-width:767px){
+  .tabbar{
+    display:flex;position:fixed;left:0;right:0;bottom:0;z-index:70;
+    background:var(--card,#fff);
+    border-top:1px solid var(--line,#e3e6ea);
+    box-shadow:0 -2px 12px rgba(0,0,0,.06);
+    padding-bottom:env(safe-area-inset-bottom,0);
+  }
+  .tabbar a{
+    flex:1;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;gap:2px;min-height:56px;
+    padding:6px 2px;text-decoration:none;
+    color:var(--muted,#6b7684);font-size:12px;font-weight:600;
+    line-height:1.1;
+  }
+  .tabbar .tabbar-i{
+    width:23px;height:23px;display:block;
+    fill:none;stroke:currentColor;stroke-width:1.7;
+    stroke-linecap:round;stroke-linejoin:round;
+  }
+  .tabbar a.on{color:var(--brand,#0b4f7a)}
+  .tabbar a.on .tabbar-i{transform:translateY(-1px)}
+  /* 지금 있는 자리를 **선으로도** 알립니다 — 색만으로는
+     색을 못 가리는 분이 모릅니다 */
+  .tabbar a.on::before{
+    content:"";position:absolute;top:0;width:28px;height:3px;
+    border-radius:0 0 3px 3px;background:var(--brand,#0b4f7a);
+  }
+  .tabbar a{position:relative}
+  /* 꼬리가 차림표에 가리지 않게 */
+  .site-footer{padding-bottom:72px}
+  /* 맨 위로 단추가 차림표에 겹치지 않게 */
+  .totop,.to-top,#toTop{bottom:72px}
+}
 /* ── 꼬리 ─────────────────────────────────────────────── */
 .site-footer{border-top:1px solid var(--line);margin-top:40px;padding:28px 0 60px;font-size:12px;color:var(--muted);line-height:1.8}
 .footer-nav{display:flex;gap:28px;flex-wrap:wrap;margin-bottom:20px}
@@ -2203,4 +2353,16 @@ details.area-group .area-list{margin-bottom:12px}
   .section-head + .two-up,
   .section-head + .grid--photo{margin-top:18px}
   .grid .card{padding:13px 14px}
+}
+
+/* ★ 갈림길 쪽의 넓은 카드 (2026-10-01)
+   부품 격자(.pt-grid)는 작은 부품 그림에 맞춘 좁은 칸입니다.
+   장비 설명처럼 **글이 있는 카드**를 그 칸에 넣으면 한 줄에
+   네댓 자만 들어가 토막납니다. 그래서 넓은 칸을 따로 둡니다.
+   **맨 뒤에 둡니다** — 명시도가 같으면 뒤가 이깁니다. */
+.pt-grid.pt-grid--wide{
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+}
+@media (max-width:600px){
+  .pt-grid.pt-grid--wide{grid-template-columns:1fr}
 }

@@ -31,7 +31,8 @@ import collections
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, ROOT)
-from engine import io, url, template, art   # noqa: E402
+from engine import io, url, template, art, hubs   # noqa: E402
+from engine import hubs_more   # noqa: E402
 from engine.korean import 조사      # noqa: E402
 from engine.data import 자료            # noqa: E402
 
@@ -4415,6 +4416,16 @@ def 쪽주소(갈, 권역, 갈래, 언어='ko'):
         return url.rig_list(언어)
     if 갈 == '채비부품':
         return url.rig_parts(언어)
+    if 갈 == '금어기':
+        return 'rule.html' if 언어 == 'ko' else '%s/rule.html' % 언어
+    if 갈 == '물때허브':
+        return ('tide/index.html' if 언어 == 'ko'
+                else '%s/tide/index.html' % 언어)
+    if 갈 == '안내허브':
+        return ('guide/index.html' if 언어 == 'ko'
+                else '%s/guide/index.html' % 언어)
+    if 갈 == '장비':
+        return 'gear.html' if 언어 == 'ko' else '%s/gear.html' % 언어
     return url.point_list(권역, 갈래, 언어)
 
 
@@ -4438,6 +4449,15 @@ def 만들목록(d, 만=None):
                 할것.append(('채비부품', None, None))
             for 갈, _것 in 채비갈래들(d):
                 할것.append(('채비', 갈, None))
+        # ★ 금어기 쪽 (2026-10-01) — 434쪽이 rule.html 로 링크를 거는데
+        #   새 사이트에 쪽이 없었습니다. 서버가 200 을 내는 것은
+        #   **옛 사이트 파일이 남아 있어서**였습니다.
+        if os.path.isfile(os.path.join(
+                ROOT, 'data', 'raw', 'rules', '금어기.json')):
+            할것.append(('금어기', None, None))
+        할것.append(('물때허브', None, None))
+        할것.append(('안내허브', None, None))
+        할것.append(('장비', None, None))
         for 묶음 in d.색인['묶음차례']:
             if any(r['묶음'] == 묶음 for r in d.권역들):
                 할것.append(('묶음', 묶음, None))
@@ -4513,6 +4533,21 @@ def main():
         elif 갈 == '채비목록':
             쪽길, 글 = 채비목록(d, 언어)
             수 = len(채비갈래들(d))
+        elif 갈 == '금어기':
+            것 = hubs.금어기쪽(d, 언어)
+            if not 것:
+                continue
+            쪽길, 글 = 것
+            수 = 0
+        elif 갈 == '물때허브':
+            쪽길, 글 = hubs_more.물때쪽(d, 언어)
+            수 = 0
+        elif 갈 == '안내허브':
+            쪽길, 글 = hubs_more.안내쪽(d, 언어)
+            수 = 0
+        elif 갈 == '장비':
+            쪽길, 글 = hubs_more.장비쪽(d, 언어)
+            수 = 0
         elif 갈 == '채비부품':
             쪽길, 글 = 부품쪽(d, 언어)
             수 = len(부품사전(d))

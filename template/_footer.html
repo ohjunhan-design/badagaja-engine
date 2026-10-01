@@ -10,5 +10,34 @@
 </div></footer>
 <script>(function(){var a=document.getElementById("pcView");if(!a)return;var on=false;try{on=localStorage.getItem("bdg-pcview")==="1"}catch(e){}a.textContent=on?"휴대폰 화면으로 돌아가기":"PC 화면으로 보기";a.addEventListener("click",function(e){e.preventDefault();try{if(on)localStorage.removeItem("bdg-pcview");else localStorage.setItem("bdg-pcview","1")}catch(x){}location.reload()})})();</script>
 {{{쪽스크립트}}}
+
+<!-- ★ 휴대폰 아래 고정 차림표 (2026-10-01 합의 D-005)
+     손님이 쪽을 보다가 다른 데로 가려면 맨 위까지 올려야 했습니다.
+     엄지가 닿는 자리에 늘 있게 둡니다. PC 에서는 안 보입니다.
+     안 A — 홈·물때·포인트·낚시·전체. 포인트가 이 사이트의
+     차별되는 자산이라 가운데 큰 자리를 줍니다. -->
+<!-- 아이콘은 **단색 선그림**입니다. 이모지는 색이 제각각이라
+     다섯이 나란히 서면 산만합니다. 단색이면 글자 색과 함께
+     변해 「지금 어디인지」가 분명해집니다.
+     (2026-10-01 주인 명령 — 현란하지 않게, 정보전달력 좋게) -->
+<nav class="tabbar" aria-label="아래 메뉴">
+  <a href="{{뿌리}}index.html" data-tab="home"><svg class="tabbar-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5M5.5 10v9h13v-9"/></svg><span>홈</span></a>
+  <a href="{{뿌리}}tide/" data-tab="tide"><svg class="tabbar-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9c2.5 0 2.5 2.4 5 2.4S9.5 9 12 9s2.5 2.4 5 2.4S19.5 9 22 9M2 15.6c2.5 0 2.5 2.4 5 2.4s2.5-2.4 5-2.4 2.5 2.4 5 2.4 2.5-2.4 5-2.4"/></svg><span>물때</span></a>
+  <a href="{{뿌리}}fish/" data-tab="fish"><svg class="tabbar-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12c3.5-4.5 8-6 12-6 3 0 5 1.5 6 3-1 2.5-3 6-6 7.5-4 2-8.5.5-12-4.5Z"/><path d="M3 12 1.5 8.5M3 12l-1.5 3.5"/><circle cx="16.5" cy="10" r=".9" fill="currentColor" stroke="none"/></svg><span>낚시</span></a>
+  <a href="{{뿌리}}catch/" data-tab="catch"><svg class="tabbar-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20c-4.4 0-8-3.1-8-7 0-3.3 3.6-6 8-6s8 2.7 8 6c0 3.9-3.6 7-8 7Z"/><path d="M12 20V9M12 13l-4.5-3M12 13l4.5-3"/></svg><span>해루질</span></a>
+  <a href="{{뿌리}}rig/" data-tab="rig"><svg class="tabbar-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3v9.5a4.5 4.5 0 0 1-9 0V11"/><path d="M12.5 5.5 15 3l2.5 2.5"/></svg><span>채비</span></a>
+</nav>
+<script>(function(){
+  /* 지금 보는 쪽에 표시합니다 — 어디 있는지 알게 */
+  var p = location.pathname, n = document.querySelector('.tabbar');
+  if (!n) return;
+  var 어디 = 'home';
+  if (/\/tide/.test(p)) 어디 = 'tide';
+  else if (/\/rig\b/.test(p)) 어디 = 'rig';
+  else if (/\/catch\b/.test(p)) 어디 = 'catch';
+  else if (/\/fish\b|_fishing\b/.test(p)) 어디 = 'fish';
+  var a = n.querySelector('[data-tab="' + 어디 + '"]');
+  if (a) { a.className += ' on'; a.setAttribute('aria-current', 'page'); }
+})();</script>
 </body>
 </html>
