@@ -100,7 +100,13 @@
   .tide-graph .tg-head{align-items:center}
   .tide-graph .tg-title{font-size:20px}
   .tide-graph .tg-station{font-size:11px}
-  .tide-graph .tg-when{gap:6px;margin-top:16px}
+  /* ★ **2×2 로 고정합니다** (2026-10-02 지피티 검수)
+     「모바일 간·만조 알약은 390/360에서 3+1로 어색하게 떨어지므로
+       2×2 고정이 더 안정적입니다. PC에서는 4개 한 줄을 유지하세요」
+     flex-wrap 에 맡기면 폭에 따라 3+1 · 2+2 가 들쭉날쭉합니다. */
+  .tide-graph .tg-when{
+    display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:16px;
+  }
   .tide-graph .tg-w{padding:7px 9px;gap:6px;font-size:12px}
   .tide-graph .tg-w-t{font-size:14px}
   .tide-graph .tg-plot{padding:8px 4px 2px}

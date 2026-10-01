@@ -151,14 +151,10 @@
     grad.appendChild(s('stop', { offset: '100%', 'stop-color': opt.dark ? '#6FA8A0' : '#7CB4AD', 'stop-opacity': '.025' }));
     defs.appendChild(grad); svg.appendChild(defs);
 
-    // 밤 시간 음영 — 시안에는 없지만 **자료입니다**(해뜸·해짐).
-    // 시안의 깨끗한 면을 해치지 않도록 아주 옅게만 깔았습니다.
-    if (opt.sun) {
-      var rise = toMin(opt.sun.rise), set = toMin(opt.sun.set);
-      var night = opt.dark ? 'rgba(0,0,0,.26)' : 'rgba(47,93,87,.055)';
-      svg.appendChild(s('rect', { x: X(0), y: T, width: X(rise) - X(0), height: H - T - B, fill: night }));
-      svg.appendChild(s('rect', { x: X(set), y: T, width: X(1440) - X(set), height: H - T - B, fill: night }));
-    }
+    // ★ **밤 시간 음영은 두지 않습니다** (2026-10-02 지피티 검수)
+    //   「야간 음영은 제거하십시오. 첫 화면에서 꼭 필요한 정보가
+    //     아니고 지금의 깨끗한 그래프를 흐립니다」
+    //   해뜸·해짐은 쪽의 다른 자리에서 숫자로 밝힙니다.
 
     // 곡선 — 점을 직선으로 이으면 10분마다 꺾여 톱니처럼 보입니다.
     // 조석은 본래 매끄러운 곡선이라 부드럽게 잇습니다

@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>바다가자 권역 페이지 압축형 레이아웃 프로토타입</title>
+<style>
+:root{
+  --brand:#2F5D57;
+  --orange:#C07B22;
+  --cream:#FAF6EE;
+  --card:#fff;
+  --line:#E5DCCB;
+  --muted:#8A8277;
+  --low-bg:#E3EFE9;
+  --high-bg:#FBEFDC;
+  --ink:#1f1a16;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px}
+.region-hero{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(320px,.75fr);gap:18px;align-items:stretch}
+.photo-card{position:relative;min-height:330px;border-radius:22px;overflow:hidden;background:#ddd}
+.photo-card img{width:100%;height:100%;object-fit:cover;display:block}
+.photo-card:after{content:"";position:absolute;inset:35% 0 0;background:linear-gradient(transparent,rgba(20,25,24,.78))}
+.hero-copy{position:absolute;left:24px;right:24px;bottom:22px;color:white;z-index:1}
+.hero-copy h1{margin:0 0 8px;font-size:36px;line-height:1.05}
+.hero-copy p{margin:0;opacity:.92}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat{background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:18px;padding:18px;min-height:120px}
+.stat b{display:block;font-size:28px;color:var(--brand);margin-bottom:4px}
+.stat span{font-size:13px;color:var(--muted)}
+.quickbar{display:flex;gap:8px;overflow:auto;padding:16px 0 4px;scrollbar-width:none}
+.quickbar::-webkit-scrollbar{display:none}
+.quickbar a{flex:0 0 auto;text-decoration:none;color:var(--ink);background:white;border:1px solid var(--line);border-radius:999px;padding:10px 14px;font-weight:700;font-size:14px}
+.quickbar a.primary{background:var(--brand);color:#fff;border-color:var(--brand)}
+
+.block{margin-top:22px}
+.block-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:10px}
+.block-head h2{margin:0;font-size:26px}
+.block-head a{color:var(--brand);font-weight:700;text-decoration:none;font-size:14px}
+
+/* region page: compact tide, not the full 10-day calendar */
+.tide-compact{display:grid;grid-template-columns:320px minmax(0,1fr);gap:14px}
+.tide-summary,.tide-chart{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px}
+.tide-summary .kicker{font-size:12px;color:var(--orange);font-weight:800}
+.tide-summary .main{font-size:34px;font-weight:900;margin:5px 0 10px}
+.events{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.event{border-radius:10px;padding:8px 9px;font-size:13px;font-weight:700}
+.event.low{background:var(--low-bg);color:var(--brand)}
+.event.high{background:var(--high-bg);color:#B8761C}
+.tide-actions{display:flex;gap:8px;margin-top:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 13px;border-radius:12px;border:1px solid var(--line);background:#fff;text-decoration:none;color:var(--ink);font-weight:800;font-size:13px}
+.btn.primary{background:var(--brand);color:#fff;border-color:var(--brand)}
+
+.chart-shell{height:190px;background:var(--cream);border-radius:14px;padding:10px}
+.chart-shell svg{display:block;width:100%;height:100%}
+.chart-foot{display:flex;justify-content:space-between;gap:12px;margin-top:8px;color:var(--muted);font-size:11px}
+
+/* points: map is the visual anchor */
+.points-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:14px}
+.mapbox{min-height:390px;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:
+linear-gradient(135deg,#bfe3ed,#e7f3ec 52%,#f4e4c6);position:relative}
+.mapbox:before{content:"지도 영역";position:absolute;left:16px;top:16px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 12px;font-weight:800}
+.map-marker{position:absolute;width:36px;height:36px;border-radius:50%;background:var(--orange);color:white;display:grid;place-items:center;font-weight:900;border:4px solid #fff;box-shadow:0 3px 12px rgba(0,0,0,.18)}
+.m1{left:18%;top:38%}.m2{left:48%;top:22%}.m3{left:65%;top:57%}.m4{left:35%;top:70%}
+.pick-card{height:390px;position:relative;border-radius:18px;overflow:hidden;background:#c8d7dc}
+.pick-card img{width:100%;height:100%;object-fit:cover}
+.pick-card:after{content:"";position:absolute;inset:45% 0 0;background:linear-gradient(transparent,rgba(16,25,24,.82))}
+.pick-info{position:absolute;z-index:1;left:18px;right:18px;bottom:18px;color:white}
+.pick-info .row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.pick-info h3{font-size:24px;margin:0}
+.pick-info p{margin:5px 0 0;font-size:13px;opacity:.9}
+.pill{background:rgba(255,255,255,.95);color:var(--ink);border-radius:999px;padding:7px 10px;font-size:12px;font-weight:800}
+
+/* secondary content: cards are horizontally browsable instead of an endless vertical stack */
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(220px,30%);gap:12px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory;scrollbar-width:thin}
+.rail-card{scroll-snap-align:start;background:white;border:1px solid var(--line);border-radius:16px;overflow:hidden;min-height:210px}
+.rail-card .thumb{height:120px;background:linear-gradient(135deg,#aad7e4,#f7cb97)}
+.rail-card .txt{padding:12px}
+.rail-card h3{margin:0 0 5px;font-size:17px}
+.rail-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+
+/* mobile: show only what matters first */
+@media(max-width:760px){
+  .wrap{padding:14px}
+  .region-hero{grid-template-columns:1fr}
+  .photo-card{min-height:280px}
+  .hero-copy{left:16px;right:16px;bottom:16px}
+  .hero-copy h1{font-size:30px}
+  .stats{grid-template-columns:1fr 1fr}
+  .stat{min-height:92px;padding:13px}
+  .stat b{font-size:24px}
+  .quickbar{position:sticky;top:0;z-index:20;background:linear-gradient(var(--cream) 78%,transparent)}
+  .tide-compact{grid-template-columns:1fr}
+  .tide-chart{padding:12px}
+  .chart-shell{height:165px}
+  .points-grid{grid-template-columns:1fr}
+  .mapbox{min-height:300px}
+  .pick-card{height:240px}
+  .rail{grid-auto-columns:82%}
+  .block{margin-top:18px}
+  .block-head h2{font-size:22px}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+<section class="region-hero">
+  <article class="photo-card">
+    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80" alt="">
+    <div class="hero-copy">
+      <h1>제주시내 바다</h1>
+      <p>오늘 물때부터 포인트·먹거리·명소까지 한 화면에서 고르세요.</p>
+    </div>
+  </article>
+  <div class="stats">
+    <div class="stat"><b>21</b><span>낚시·해루질 포인트</span></div>
+    <div class="stat"><b>7</b><span>주요 바닷가 명소</span></div>
+    <div class="stat"><b>5</b><span>먹거리·코스</span></div>
+    <div class="stat"><b>4</b><span>지역 축제</span></div>
+  </div>
+</section>
+
+<nav class="quickbar">
+  <a class="primary" href="#tide">오늘 물때</a>
+  <a href="#points">포인트 지도</a>
+  <a href="#catch">지금 잡히는 것</a>
+  <a href="#travel">먹거리·명소</a>
+  <a href="#festival">축제</a>
+</nav>
+
+<section class="block" id="tide">
+  <div class="block-head">
+    <h2>오늘 바다는 어때요?</h2>
+    <a href="/tide/">10일 물때표 전체 보기 →</a>
+  </div>
+  <div class="tide-compact">
+    <div class="tide-summary">
+      <div class="kicker">제주 관측소 기준</div>
+      <div class="main">12물 <small style="font-size:15px;color:var(--muted)">중간 물살</small></div>
+      <div class="events">
+        <div class="event high">만조 04:54</div><div class="event low">간조 11:38</div>
+        <div class="event high">만조 17:26</div><div class="event low">간조 23:52</div>
+      </div>
+      <div class="tide-actions">
+        <a class="btn primary" href="/tide/">10일 보기</a>
+        <a class="btn" href="/muldae.html">물때 보는 법</a>
+      </div>
+    </div>
+    <div class="tide-chart">
+      <div class="chart-shell">
+        <svg viewBox="0 0 720 168" aria-label="시간별 물높이 예시">
+          <defs>
+            <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#7CB4AD" stop-opacity=".44"/>
+              <stop offset="1" stop-color="#7CB4AD" stop-opacity=".025"/>
+            </linearGradient>
+          </defs>
+          <path d="M16,110 C100,25 165,20 240,108 S390,155 465,55 S610,28 704,115 L704,145 L16,145Z" fill="url(#sea)"/>
+          <path d="M16,110 C100,25 165,20 240,108 S390,155 465,55 S610,28 704,115" fill="none" stroke="#2F5D57" stroke-width="3" stroke-linecap="round"/>
+          <line x1="330" y1="18" x2="330" y2="145" stroke="#C07B22" stroke-width="1.5" stroke-dasharray="5 5"/>
+          <rect x="307" y="3" width="46" height="24" rx="12" fill="#C07B22"/>
+          <text x="330" y="19" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">지금</text>
+          <circle cx="150" cy="42" r="5.5" fill="#C07B22" stroke="#fff" stroke-width="2"/>
+          <circle cx="335" cy="137" r="5.5" fill="#2F5D57" stroke="#fff" stroke-width="2"/>
+          <circle cx="505" cy="50" r="5.5" fill="#C07B22" stroke="#fff" stroke-width="2"/>
+          <text x="16" y="163" font-size="11" fill="#8A8277">0시</text>
+          <text x="360" y="163" text-anchor="middle" font-size="11" fill="#8A8277">12시</text>
+          <text x="704" y="163" text-anchor="end" font-size="11" fill="#8A8277">24시</text>
+        </svg>
+      </div>
+      <div class="chart-foot"><span>국립해양조사원 조석예보 · 10분 간격</span><span>현장과 차이가 날 수 있습니다.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="points">
+  <div class="block-head">
+    <h2>어디로 갈까요?</h2>
+    <a href="#">전체 포인트 보기 →</a>
+  </div>
+  <div class="points-grid">
+    <div class="mapbox" aria-label="실제 지도 컴포넌트가 들어갈 자리">
+      <span class="map-marker m1">1</span><span class="map-marker m2">2</span>
+      <span class="map-marker m3">3</span><span class="map-marker m4">4</span>
+    </div>
+    <article class="pick-card">
+      <img src="https://images.unsplash.com/photo-1473116763249-2faaef81ccda?auto=format&fit=crop&w=900&q=80" alt="">
+      <div class="pick-info">
+        <div class="row"><h3>용담 해안</h3><span class="pill">포인트 12곳</span></div>
+        <p>바다를 보며 바로 고를 수 있는 가까운 포인트</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="block" id="catch">
+  <div class="block-head"><h2>지금 잡히는 것</h2><a href="#">전체 보기 →</a></div>
+  <div class="rail">
+    <article class="rail-card"><div class="thumb"></div><div class="txt"><h3>우럭</h3><p>갯바위·방파제에서 확인하기</p></div></article>
+    <article class="rail-card"><div class="thumb"></div><div class="txt"><h3>감성돔</h3><p>오늘 포인트와 채비 확인</p></div></article>
+    <article class="rail-card"><div class="thumb"></div><div class="txt"><h3>소라</h3><p>크기·지역 제한 먼저 확인</p></div></article>
+  </div>
+</section>
+
+<section class="block" id="travel">
+  <div class="block-head"><h2>바다에서 더 즐기기</h2><a href="/travel/">여행 전체 보기 →</a></div>
+  <div class="rail">
+    <article class="rail-card"><div class="thumb"></div><div class="txt"><h3>먹거리</h3><p>이 지역에서 무엇을 먹을까요?</p></div></article>
+    <article class="rail-card"><div class="thumb"></div><div class="txt"><h3>명소</h3><p>바다 보고 어디를 더 둘러볼까요?</p></div></article>
+    <article class="rail-card"><div class="thumb"></div><div class="txt"><h3>코스</h3><p>하루를 어떻게 돌까요?</p></div></article>
+  </div>
+</section>
+
+</main>
+</body>
+</html>
