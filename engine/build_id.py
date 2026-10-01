@@ -92,20 +92,55 @@ def 통지문(것들):
     return h.hexdigest()
 
 
+def 커밋날짜():
+    """지금 커밋의 날짜 (YYYY-MM-DD).
+
+    ★ **만든 시각 대신 커밋 날짜**를 씁니다 (2026-10-01).
+      시각을 넣으면 돌릴 때마다 달라져 멱등성 검사가 깨집니다
+      (계약-07). 커밋 날짜는 git 이 아는 값이라 다시 만들어도
+      같고, 「언제 것인가」도 알 수 있습니다.
+    """
+    try:
+        r = subprocess.run(
+            ['git', 'log', '-1', '--format=%cs'],
+            cwd=ROOT, capture_output=True, text=True,
+            encoding='utf-8', errors='replace', timeout=20)
+        return (r.stdout or "").strip() or None
+    except Exception:
+        return None
+
+
+배포판 = 1          # 판 지문의 꼴이 바뀌면 올립니다
+
+
 def 만들기(뿌리=None):
     뿌리 = 뿌리 or SITE
     것들 = 지문들(뿌리)
     커밋 = 지금커밋()
+    날짜 = 커밋날짜()
+    쪽수 = sum(1 for k in 것들 if k.endswith('.html'))
+    통 = 통지문(것들)
+    # ★ **한 줄 요약** (2026-10-01 지피티 제안)
+    #   바깥에서 검수할 때 이 한 줄만 보면 같은 판인지 압니다.
+    #   오늘 지피티가 옛 사본을 보고 「239MB·_stage 80MB」라
+    #   했는데 실제 배포본은 107.6MB·_stage 없음이었습니다.
+    #   둘 다 틀리지 않았습니다 — **본 것이 달랐을 뿐**입니다.
+    한줄 = ('바다가자 판 %s · %s · %d쪽 · %d파일 · %s'
+            % (커밋[:7] if 커밋 else '(모름)', 날짜 or '(모름)',
+               쪽수, len(것들), 통[:8]))
     판 = {
+        '_한줄': 한줄,
         '_무엇인가': '이 판이 무엇인지 증명하는 지문입니다. '
                      'engine/build_id.py 가 만듭니다. 손으로 고치지 마세요.',
         '_왜있나': '올린 것이 내가 만든 바로 그것인지 서버에서 확인하려고. '
                    'engine/check_deployed.py --net 이 견줍니다.',
         '커밋': 커밋 or '(모름)',
         '커밋짧게': (커밋[:7] if 커밋 else '(모름)'),
-        '쪽수': sum(1 for k in 것들 if k.endswith('.html')),
+        '커밋날짜': 날짜 or '(모름)',
+        '배포판': 배포판,
+        '쪽수': 쪽수,
         '파일수': len(것들),
-        '통지문': 통지문(것들),
+        '통지문': 통,
         '파일': 것들,
     }
     io.write_json(os.path.join(뿌리, 판이름), 판)

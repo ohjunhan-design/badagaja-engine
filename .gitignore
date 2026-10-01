@@ -25,3 +25,9 @@ data-private/뽑은채비.json
 # 화면 확인용 캡처 — 볼 때만 쓰고 저장소에 두지 않습니다
 data-private/샷/
 .shot/
+
+# 바깥 검수와 주고받은 대화 원문 — G 드라이브와 로컬에만 둡니다
+data-private/gpt-log/
+
+# 검수용 꾸러미 — 돌릴 때마다 다시 만듭니다
+tests/out/*.zip
