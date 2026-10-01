@@ -453,6 +453,31 @@ html.has-navi .navi:hover{filter:brightness(.94)}
   .hub-list--grid{grid-template-columns:repeat(2,1fr)}
 }
 
+
+
+/* ── 이름표 안 작은 아이콘 (2026-10-01) ───────────
+   이모지를 쓰다 바꿨습니다. 이모지는 기계마다 색이
+   달라 사이트 색과 따로 놉니다. 단색 선그림은 글자 색을
+   따라가 **이름표가 한 덩이로 읽힙니다.** */
+.bi{
+  width:1em;height:1em;display:inline-block;vertical-align:-.12em;
+  margin-right:4px;fill:none;stroke:currentColor;stroke-width:1.8;
+  stroke-linecap:round;stroke-linejoin:round;
+}
+/* ── 확인 상태 점 (2026-10-01) ────────────────────
+   🟢🟡⚪ 이모지를 쓰다 바꿨습니다. 이모지는 기계마다
+   모양도 색도 다릅니다 — 안드로이드와 아이폰이 다르게
+   그리고 어떤 기계는 네모로 보입니다.
+   **사이트가 쓰는 색으로 직접 그리면 어디서나 같습니다.**
+
+   색만으로 알리지 않습니다 — 점 옆에 늘 글자가 있습니다. */
+.badge .dot{
+  display:inline-block;width:7px;height:7px;border-radius:50%;
+  margin-right:5px;vertical-align:1px;background:currentColor;
+}
+.grade-A .dot{background:#2f6b3a}
+.grade-B .dot{background:#b9820c}
+.grade-C .dot{background:#9aa5b1}
 /* ── 어종으로 거르기 (2026-10-01 주인 확정 104종) ──
    손님은 「갯바위냐 방파제냐」보다 **「우럭이 나오느냐」**를
    먼저 묻습니다. 다만 104종을 같은 무게로 늘어놓으면
