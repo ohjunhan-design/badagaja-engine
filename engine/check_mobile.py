@@ -97,6 +97,16 @@ document.getElementById('F').addEventListener('load', function () {
     var 모두 = d.querySelectorAll('body *');
     for (var i = 0; i < 모두.length; i++) {
       var e = 모두[i];
+      // ★ **SVG 안쪽은 세지 않습니다** (2026-10-01)
+      //
+      //   제주 묶음 쪽이 「넘침 3곳」으로 걸렸는데, 보니 로고 안의
+      //   <rect>·<path> 였습니다. SVG 는 viewBox 로 **제 안에서
+      //   잘립니다** — 안쪽 모양이 아무리 커도 화면 밖으로 안
+      //   나갑니다. 겉의 <svg> 만 보면 됩니다.
+      //
+      //   재는 자리가 틀리면 **없는 잘못을 잡고** 진짜 잘못은
+      //   그 소리에 묻힙니다.
+      if (e.ownerSVGElement) continue;
       var r = e.getBoundingClientRect();
       if (r.width === 0 || r.height === 0) continue;
       if (r.right > W + 1 || r.left < -1) {
@@ -218,81 +228,82 @@ def 재기(쪽길, 폭):
                 pass
 
 
+def 쪽갈래(상대):
+    """쪽 하나가 **어느 갈래**인가 — 주소 꼴로 가릅니다.
+
+    ★ 2026-10-01 — 바깥 검수 지적
+      「13→17 로 표본을 손으로 더한 것만으로는 근본 해결이
+        아닙니다. 다음에 18번째 쪽 갈래를 만들면 또 빠집니다.
+        검사 대상도 지금 build 에서 **자동으로 파생**하도록
+        만드십시오. 새 쪽 갈래가 생기면 검사 코드를 고치지
+        않아도 저절로 최소 한 장이 검사를 받아야 합니다」
+
+      맞습니다. 저는 같은 잘못을 **세 번** 했습니다.
+      주석에 「표본에 없는 짜임은 앞으로도 못 잽니다」라고
+      적어 두고도 두 번 더 빠뜨렸습니다.
+    """
+    칸 = 상대.split('/')
+    if len(칸) == 1:
+        # 맨 위 쪽 — 권역 쪽은 서로 같은 틀이라 하나로 묶습니다
+        return '맨위:' + 칸[0]
+    if len(칸) == 2:
+        return 칸[0]
+    return '/'.join(칸[:2])        # point/jeonbuk/... → point/jeonbuk
+
+
 def 볼쪽들(전부):
+    """**지금 지은 것에서 갈래마다 한 장씩** 뽑습니다.
+
+    손으로 적지 않습니다. build.json 이 아는 쪽을 갈래로 묶어
+    각 갈래의 첫 쪽을 봅니다. 새 갈래가 생기면 저절로 듭니다.
+
+    ★ 권역 쪽 57개는 **틀이 같아** 하나로 갈음합니다.
+      다만 풍경칸이 있는 쪽은 짜임이 달라 따로 넣습니다.
+    """
     if 전부:
         return sorted(glob.glob(os.path.join(NEW, '**', '*.html'),
                                 recursive=True))
-    나옴 = []
-    for 이름, 무늬 in (('첫화면', 'index.html'),
-                       ('묶음', 'chungnam/index.html'),
-                       ('권역', 'taean.html'),
-                       # ★ 2026-09-28 — 풍경칸(.shots)이 있는 쪽입니다.
-                       #   표본에 없는 짜임은 **앞으로도 못 잽니다.**
-                       ('권역·풍경칸', 'seongsan.html'),
-                       ('포인트목록', 'point/chungnam/taean_gleaning.html'),
-                       ('해루질대상', 'catch/index.html'),
-                       ('해루질하나', 'catch/bajirak.html'),
-                       ('낚시하나', 'fish/gamseongdom.html'),
-                       ('축제', 'festival/index.html'),
-                       # ★ 2026-09-30 — **새 쪽을 표본에 안 넣었습니다**
-                       #   채비 쪽 3갈래를 새로 짓고도 여기에 안 더해,
-                       #   휴대폰 검사가 **한 번도 본 적 없이** 배포됐습니다.
-                       #   바로 위 주석에 「표본에 없는 짜임은 앞으로도
-                       #   못 잽니다」라고 적어 두고 같은 일을 했습니다.
-                       #   채비 쪽은 **표·채비도·부품 카드**라 짜임이
-                       #   다른 쪽과 아주 다릅니다 — 꼭 봐야 합니다.
-                       ('채비목록', 'rig/index.html'),
-                       ('채비하나', 'rig/float_rod.html'),
-                       ('부품사전', 'rig/parts.html'),
-                       # ★ 2026-09-30 — 에기를 두 채비로 가르며 생긴 새 쪽.
-                       #   표본에 안 넣으면 영영 안 봅니다.
-                       ('에기봉돌', 'rig/egi_sinker.html')):
-        p = os.path.join(NEW, 무늬.replace('/', os.sep))
-        if os.path.exists(p):
-            나옴.append(p)
+    import json
+    모든쪽 = []
+    판 = os.path.join(NEW, 'build.json')
+    if os.path.isfile(판):
+        try:
+            with open(판, encoding='utf-8') as f:
+                모든쪽 = [k for k in (json.load(f).get('파일') or {})
+                          if k.endswith('.html')]
+        except Exception:
+            모든쪽 = []
+    if not 모든쪽:
+        모든쪽 = [os.path.relpath(p, NEW).replace(os.sep, '/')
+                  for p in glob.glob(os.path.join(NEW, '**', '*.html'),
+                                     recursive=True)]
 
-    # ★ **맨 위 쪽은 모두 봅니다** (2026-10-01 — 세 번째 같은 일)
-    #
-    #   2026-09-28 「표본에 없는 짜임은 앞으로도 못 잽니다」
-    #   2026-09-30 채비 쪽을 새로 짓고 표본에 안 넣었습니다
-    #   2026-10-01 rule·gear 를 새로 짓고 **또** 안 넣었습니다
-    #
-    #   손으로 적는 한 같은 일이 되풀이됩니다. 맨 위 쪽은 한 장
-    #   짜리 특별한 쪽들이라 **다 보는 것이 맞습니다.** 폴더 안
-    #   쪽들은 서로 짜임이 같으니 갈래마다 하나면 됩니다.
-    #
-    #   (56개 권역 쪽은 taean.html 하나로 갈음합니다 — 같은 틀)
+    # 권역 쪽을 가려냅니다 — 자료가 아는 권역 이름입니다
     권역들 = set()
     try:
-        import json
-        판 = os.path.join(NEW, 'build.json')
-        if os.path.isfile(판):
-            with open(판, encoding='utf-8') as f:
-                권역들 = {k for k in (json.load(f).get('파일') or {})
-                           if k.endswith('.html') and '/' not in k}
+        from engine.data import 자료
+        권역들 = {r['id'] + '.html' for r in 자료().권역들}
     except Exception:
         pass
-    맨위틀 = {'index.html', 'taean.html'}        # 이미 넣은 것
-    # 권역 쪽은 모두 같은 틀이라 하나면 됩니다
-    권역틀 = {x for x in 권역들
-              if x not in ('index.html', 'rule.html', 'gear.html')}
-    import re as _re
-    for 이름 in sorted(권역들):
-        if 이름 in 맨위틀:
+
+    나옴, 본갈래 = [], set()
+    꼭볼것 = ('seongsan.html',)        # 풍경칸이 있는 권역 쪽
+    for 상대 in sorted(모든쪽):
+        if 상대 in 권역들 and 상대 not in 꼭볼것:
+            갈 = '권역'              # 57개를 하나로 묶습니다
+        else:
+            갈 = 쪽갈래(상대)
+        if 갈 in 본갈래:
             continue
-        # 권역 쪽인지 — 자료에 그 권역이 있으면 권역 쪽입니다
-        if 이름 in ('rule.html', 'gear.html', 'about.html',
-                    'privacy.html', 'sources.html', 'photos.html',
-                    'gear.html', 'copyright.html', 'muldae.html'):
-            p = os.path.join(NEW, 이름)
-            if os.path.exists(p) and p not in 나옴:
-                나옴.append(p)
-    for 무늬 in ('tide/index.html', 'guide/index.html'):
-        p = os.path.join(NEW, 무늬.replace('/', os.sep))
+        본갈래.add(갈)
+        p = os.path.join(NEW, 상대.replace('/', os.sep))
+        if os.path.exists(p):
+            나옴.append(p)
+    for 이름 in 꼭볼것:
+        p = os.path.join(NEW, 이름)
         if os.path.exists(p) and p not in 나옴:
             나옴.append(p)
     return 나옴
-
 
 def main():
     전부 = '--all' in sys.argv

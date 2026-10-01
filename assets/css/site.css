@@ -186,7 +186,17 @@ a.badge{min-height:44px}
   font-size:14px;font-weight:700;text-decoration:none;transition:.2s;
   min-height:44px;
 }
-.btn--dark{background:var(--ink);color:#fff}
+/* ★ 주요 행동 단추는 **브랜드 녹색** (2026-10-01 · D-015 확정)
+
+   전에는 글자색(--ink, 짙은 갈색)을 썼습니다. 그러니 로고는
+   녹색, 아래 차림표 활성도 녹색인데 **가장 중요한 단추만
+   갈색**이라 색 언어가 셋이었습니다.
+
+   바깥 검수가 두 화면을 나란히 보고 정했습니다 —
+     녹색 = 주요 행동   주황 = 보조 강조   빨강 = 위험·출입제한
+*/
+.btn--dark{background:var(--green);color:#fff;
+           border-color:var(--green)}
 .btn--white{background:var(--white);border:1px solid var(--line);color:var(--ink)}
 .btn-row{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
 

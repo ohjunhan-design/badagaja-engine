@@ -235,8 +235,14 @@ def 검사_권역금어기():
         return
     d = _자료()
     본것, 어긴것 = 0, []
+    from engine import url as _url
     for r in d.권역들:
-        길 = os.path.join(뿌리, 'site', '%s.html' % r['id'])
+        # ★ 주소는 **url.py 가 만듭니다** (계약-03)
+        #   검사기라고 예외가 아닙니다. 여기서 '%s.html' 로 지어
+        #   쓰면 나중에 주소 꼴이 바뀔 때 검사기만 옛 자리를
+        #   보게 됩니다.
+        길 = os.path.join(뿌리, 'site',
+                          _url.region(r['id']).replace('/', os.sep))
         if not os.path.isfile(길):
             continue
         글 = io.open(길, encoding='utf-8').read()
