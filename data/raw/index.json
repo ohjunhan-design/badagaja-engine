@@ -1,2360 +1,2420 @@
 {
-  "_설명": "57권역 목록. **모든 숫자는 여기서 셉니다.** 포인트 수는 적지 않습니다 — 엔진이 points/ 를 읽어 셉니다 (계약-04)",
-  "_옛주소": {
-    "_설명": "옛 사이트의 포인트 쪽 주소. **주소를 바꾸지 않기 위해** 그대로 씁니다. 옛 사이트는 전남만 point/01_sinan_fishing.html 꼴이고 나머지는 point/gangwon/sokcho_fishing.html 꼴입니다. 보기 좋지는 않지만, 주소가 바뀌면 검색에 쌓인 것이 끊깁니다. 코드는 engine/url.py 한 곳에서만 이 표를 읽습니다 (계약-03)",
-    "포인트쪽": {
-      "aewol": {
-        "낚시": "point/jeju/aewol_fishing.html",
-        "해루질": "point/jeju/aewol_gleaning.html"
-      },
-      "boryeong": {
-        "낚시": "point/chungnam/boryeong_fishing.html",
-        "해루질": "point/chungnam/boryeong_gleaning.html"
-      },
-      "boseong": {
-        "낚시": "point/11_boseong_fishing.html",
-        "해루질": "point/11_boseong_gleaning.html"
-      },
-      "buan": {
-        "낚시": "point/jeonbuk/buan_fishing.html",
-        "해루질": "point/jeonbuk/buan_gleaning.html"
-      },
-      "busaneast": {
-        "낚시": "point/busanulsan/busaneast_fishing.html",
-        "해루질": "point/busanulsan/busaneast_gleaning.html"
-      },
-      "busanwest": {
-        "낚시": "point/busanulsan/busanwest_fishing.html",
-        "해루질": "point/busanulsan/busanwest_gleaning.html"
-      },
-      "changwon": {
-        "낚시": "point/gyeongnam/changwon_fishing.html",
-        "해루질": "point/gyeongnam/changwon_gleaning.html"
-      },
-      "chuja": {
-        "낚시": "point/jeju/chuja_fishing.html",
-        "해루질": "point/jeju/chuja_gleaning.html"
-      },
-      "daebu": {
-        "낚시": "point/sudogwon/daebu_fishing.html",
-        "해루질": "point/sudogwon/daebu_gleaning.html"
-      },
-      "daejeong": {
-        "낚시": "point/jeju/daejeong_fishing.html",
-        "해루질": "point/jeju/daejeong_gleaning.html"
-      },
-      "dangjin": {
-        "낚시": "point/chungnam/dangjin_fishing.html",
-        "해루질": "point/chungnam/dangjin_gleaning.html"
-      },
-      "donghae": {
-        "낚시": "point/gangwon/donghae_fishing.html",
-        "해루질": "point/gangwon/donghae_gleaning.html"
-      },
-      "ganghwa": {
-        "낚시": "point/sudogwon/ganghwa_fishing.html",
-        "해루질": "point/sudogwon/ganghwa_gleaning.html"
-      },
-      "gangjin": {
-        "낚시": "point/09_gangjin_fishing.html",
-        "해루질": "point/09_gangjin_gleaning.html"
-      },
-      "gangneung": {
-        "낚시": "point/gangwon/gangneung_fishing.html",
-        "해루질": "point/gangwon/gangneung_gleaning.html"
-      },
-      "geoje": {
-        "낚시": "point/gyeongnam/geoje_fishing.html",
-        "해루질": "point/gyeongnam/geoje_gleaning.html"
-      },
-      "gochang": {
-        "낚시": "point/jeonbuk/gochang_fishing.html",
-        "해루질": "point/jeonbuk/gochang_gleaning.html"
-      },
-      "gogunsan": {
-        "낚시": "point/jeonbuk/gogunsan_fishing.html",
-        "해루질": "point/jeonbuk/gogunsan_gleaning.html"
-      },
-      "goheung": {
-        "낚시": "point/12_goheung_fishing.html",
-        "해루질": "point/12_goheung_gleaning.html"
-      },
-      "goseong": {
-        "낚시": "point/gyeongnam/goseong_fishing.html",
-        "해루질": "point/gyeongnam/goseong_gleaning.html"
-      },
-      "gunsan": {
-        "낚시": "point/jeonbuk/gunsan_fishing.html",
-        "해루질": "point/jeonbuk/gunsan_gleaning.html"
-      },
-      "gwangyang": {
-        "낚시": "point/15_gwangyang_fishing.html",
-        "해루질": "point/15_gwangyang_gleaning.html"
-      },
-      "gwgoseong": {
-        "낚시": "point/gangwon/gwgoseong_fishing.html",
-        "해루질": "point/gangwon/gwgoseong_gleaning.html"
-      },
-      "gyeongju": {
-        "낚시": "point/gyeongbuk/gyeongju_fishing.html",
-        "해루질": "point/gyeongbuk/gyeongju_gleaning.html"
-      },
-      "haenam": {
-        "낚시": "point/07_haenam_fishing.html",
-        "해루질": "point/07_haenam_gleaning.html"
-      },
-      "hampyeong": {
-        "낚시": "point/05_hampyeong_fishing.html",
-        "해루질": "point/05_hampyeong_gleaning.html"
-      },
-      "hongseong": {
-        "낚시": "point/chungnam/hongseong_fishing.html",
-        "해루질": "point/chungnam/hongseong_gleaning.html"
-      },
-      "hwaseong": {
-        "낚시": "point/sudogwon/hwaseong_fishing.html",
-        "해루질": "point/sudogwon/hwaseong_gleaning.html"
-      },
-      "jangheung": {
-        "낚시": "point/10_jangheung_fishing.html",
-        "해루질": "point/10_jangheung_gleaning.html"
-      },
-      "jejusi": {
-        "낚시": "point/jeju/jejusi_fishing.html",
-        "해루질": "point/jeju/jejusi_gleaning.html"
-      },
-      "jindo": {
-        "낚시": "point/06_jindo_fishing.html",
-        "해루질": "point/06_jindo_gleaning.html"
-      },
-      "jocheon": {
-        "낚시": "point/jeju/jocheon_fishing.html",
-        "해루질": "point/jeju/jocheon_gleaning.html"
-      },
-      "mokpo": {
-        "낚시": "point/03_mokpo_fishing.html",
-        "해루질": "point/03_mokpo_gleaning.html"
-      },
-      "muan": {
-        "낚시": "point/02_muan_fishing.html",
-        "해루질": "point/02_muan_gleaning.html"
-      },
-      "namhae": {
-        "낚시": "point/gyeongnam/namhae_fishing.html",
-        "해루질": "point/gyeongnam/namhae_gleaning.html"
-      },
-      "ongjin": {
-        "낚시": "point/sudogwon/ongjin_fishing.html",
-        "해루질": "point/sudogwon/ongjin_gleaning.html"
-      },
-      "pohang": {
-        "낚시": "point/gyeongbuk/pohang_fishing.html",
-        "해루질": "point/gyeongbuk/pohang_gleaning.html"
-      },
-      "sacheon": {
-        "낚시": "point/gyeongnam/sacheon_fishing.html",
-        "해루질": "point/gyeongnam/sacheon_gleaning.html"
-      },
-      "samcheok": {
-        "낚시": "point/gangwon/samcheok_fishing.html",
-        "해루질": "point/gangwon/samcheok_gleaning.html"
-      },
-      "seocheon": {
-        "낚시": "point/chungnam/seocheon_fishing.html",
-        "해루질": "point/chungnam/seocheon_gleaning.html"
-      },
-      "seogwipo": {
-        "낚시": "point/jeju/seogwipo_fishing.html",
-        "해루질": "point/jeju/seogwipo_gleaning.html"
-      },
-      "seongsan": {
-        "낚시": "point/jeju/seongsan_fishing.html",
-        "해루질": "point/jeju/seongsan_gleaning.html"
-      },
-      "seosan": {
-        "낚시": "point/chungnam/seosan_fishing.html",
-        "해루질": "point/chungnam/seosan_gleaning.html"
-      },
-      "sinan": {
-        "낚시": "point/01_sinan_fishing.html",
-        "해루질": "point/01_sinan_gleaning.html"
-      },
-      "sokcho": {
-        "낚시": "point/gangwon/sokcho_fishing.html",
-        "해루질": "point/gangwon/sokcho_gleaning.html"
-      },
-      "suncheon": {
-        "낚시": "point/14_suncheon_fishing.html",
-        "해루질": "point/14_suncheon_gleaning.html"
-      },
-      "taean": {
-        "낚시": "point/chungnam/taean_fishing.html",
-        "해루질": "point/chungnam/taean_gleaning.html"
-      },
-      "tongyeong": {
-        "낚시": "point/gyeongnam/tongyeong_fishing.html",
-        "해루질": "point/gyeongnam/tongyeong_gleaning.html"
-      },
-      "uljin": {
-        "낚시": "point/gyeongbuk/uljin_fishing.html",
-        "해루질": "point/gyeongbuk/uljin_gleaning.html"
-      },
-      "ulleung": {
-        "낚시": "point/gyeongbuk/ulleung_fishing.html",
-        "해루질": "point/gyeongbuk/ulleung_gleaning.html"
-      },
-      "ulsan": {
-        "낚시": "point/busanulsan/ulsan_fishing.html",
-        "해루질": "point/busanulsan/ulsan_gleaning.html"
-      },
-      "wando": {
-        "낚시": "point/08_wando_fishing.html",
-        "해루질": "point/08_wando_gleaning.html"
-      },
-      "yangyang": {
-        "낚시": "point/gangwon/yangyang_fishing.html",
-        "해루질": "point/gangwon/yangyang_gleaning.html"
-      },
-      "yeongdeok": {
-        "낚시": "point/gyeongbuk/yeongdeok_fishing.html",
-        "해루질": "point/gyeongbuk/yeongdeok_gleaning.html"
-      },
-      "yeonggwang": {
-        "낚시": "point/04_yeonggwang_fishing.html",
-        "해루질": "point/04_yeonggwang_gleaning.html"
-      },
-      "yeongjong": {
-        "낚시": "point/sudogwon/yeongjong_fishing.html",
-        "해루질": "point/sudogwon/yeongjong_gleaning.html"
-      },
-      "yeosu": {
-        "낚시": "point/13_yeosu_fishing.html",
-        "해루질": "point/13_yeosu_gleaning.html"
-      }
-    }
+ "_설명": "57권역 목록. **모든 숫자는 여기서 셉니다.** 포인트 수는 적지 않습니다 — 엔진이 points/ 를 읽어 셉니다 (계약-04)",
+ "_옛주소": {
+  "_설명": "옛 사이트의 포인트 쪽 주소. **주소를 바꾸지 않기 위해** 그대로 씁니다. 옛 사이트는 전남만 point/01_sinan_fishing.html 꼴이고 나머지는 point/gangwon/sokcho_fishing.html 꼴입니다. 보기 좋지는 않지만, 주소가 바뀌면 검색에 쌓인 것이 끊깁니다. 코드는 engine/url.py 한 곳에서만 이 표를 읽습니다 (계약-03)",
+  "포인트쪽": {
+   "aewol": {
+    "낚시": "point/jeju/aewol_fishing.html",
+    "해루질": "point/jeju/aewol_gleaning.html"
+   },
+   "boryeong": {
+    "낚시": "point/chungnam/boryeong_fishing.html",
+    "해루질": "point/chungnam/boryeong_gleaning.html"
+   },
+   "boseong": {
+    "낚시": "point/11_boseong_fishing.html",
+    "해루질": "point/11_boseong_gleaning.html"
+   },
+   "buan": {
+    "낚시": "point/jeonbuk/buan_fishing.html",
+    "해루질": "point/jeonbuk/buan_gleaning.html"
+   },
+   "busaneast": {
+    "낚시": "point/busanulsan/busaneast_fishing.html",
+    "해루질": "point/busanulsan/busaneast_gleaning.html"
+   },
+   "busanwest": {
+    "낚시": "point/busanulsan/busanwest_fishing.html",
+    "해루질": "point/busanulsan/busanwest_gleaning.html"
+   },
+   "changwon": {
+    "낚시": "point/gyeongnam/changwon_fishing.html",
+    "해루질": "point/gyeongnam/changwon_gleaning.html"
+   },
+   "chuja": {
+    "낚시": "point/jeju/chuja_fishing.html",
+    "해루질": "point/jeju/chuja_gleaning.html"
+   },
+   "daebu": {
+    "낚시": "point/sudogwon/daebu_fishing.html",
+    "해루질": "point/sudogwon/daebu_gleaning.html"
+   },
+   "daejeong": {
+    "낚시": "point/jeju/daejeong_fishing.html",
+    "해루질": "point/jeju/daejeong_gleaning.html"
+   },
+   "dangjin": {
+    "낚시": "point/chungnam/dangjin_fishing.html",
+    "해루질": "point/chungnam/dangjin_gleaning.html"
+   },
+   "donghae": {
+    "낚시": "point/gangwon/donghae_fishing.html",
+    "해루질": "point/gangwon/donghae_gleaning.html"
+   },
+   "ganghwa": {
+    "낚시": "point/sudogwon/ganghwa_fishing.html",
+    "해루질": "point/sudogwon/ganghwa_gleaning.html"
+   },
+   "gangjin": {
+    "낚시": "point/09_gangjin_fishing.html",
+    "해루질": "point/09_gangjin_gleaning.html"
+   },
+   "gangneung": {
+    "낚시": "point/gangwon/gangneung_fishing.html",
+    "해루질": "point/gangwon/gangneung_gleaning.html"
+   },
+   "geoje": {
+    "낚시": "point/gyeongnam/geoje_fishing.html",
+    "해루질": "point/gyeongnam/geoje_gleaning.html"
+   },
+   "gochang": {
+    "낚시": "point/jeonbuk/gochang_fishing.html",
+    "해루질": "point/jeonbuk/gochang_gleaning.html"
+   },
+   "gogunsan": {
+    "낚시": "point/jeonbuk/gogunsan_fishing.html",
+    "해루질": "point/jeonbuk/gogunsan_gleaning.html"
+   },
+   "goheung": {
+    "낚시": "point/12_goheung_fishing.html",
+    "해루질": "point/12_goheung_gleaning.html"
+   },
+   "goseong": {
+    "낚시": "point/gyeongnam/goseong_fishing.html",
+    "해루질": "point/gyeongnam/goseong_gleaning.html"
+   },
+   "gunsan": {
+    "낚시": "point/jeonbuk/gunsan_fishing.html",
+    "해루질": "point/jeonbuk/gunsan_gleaning.html"
+   },
+   "gwangyang": {
+    "낚시": "point/15_gwangyang_fishing.html",
+    "해루질": "point/15_gwangyang_gleaning.html"
+   },
+   "gwgoseong": {
+    "낚시": "point/gangwon/gwgoseong_fishing.html",
+    "해루질": "point/gangwon/gwgoseong_gleaning.html"
+   },
+   "gyeongju": {
+    "낚시": "point/gyeongbuk/gyeongju_fishing.html",
+    "해루질": "point/gyeongbuk/gyeongju_gleaning.html"
+   },
+   "haenam": {
+    "낚시": "point/07_haenam_fishing.html",
+    "해루질": "point/07_haenam_gleaning.html"
+   },
+   "hampyeong": {
+    "낚시": "point/05_hampyeong_fishing.html",
+    "해루질": "point/05_hampyeong_gleaning.html"
+   },
+   "hongseong": {
+    "낚시": "point/chungnam/hongseong_fishing.html",
+    "해루질": "point/chungnam/hongseong_gleaning.html"
+   },
+   "hwaseong": {
+    "낚시": "point/sudogwon/hwaseong_fishing.html",
+    "해루질": "point/sudogwon/hwaseong_gleaning.html"
+   },
+   "jangheung": {
+    "낚시": "point/10_jangheung_fishing.html",
+    "해루질": "point/10_jangheung_gleaning.html"
+   },
+   "jejusi": {
+    "낚시": "point/jeju/jejusi_fishing.html",
+    "해루질": "point/jeju/jejusi_gleaning.html"
+   },
+   "jindo": {
+    "낚시": "point/06_jindo_fishing.html",
+    "해루질": "point/06_jindo_gleaning.html"
+   },
+   "jocheon": {
+    "낚시": "point/jeju/jocheon_fishing.html",
+    "해루질": "point/jeju/jocheon_gleaning.html"
+   },
+   "mokpo": {
+    "낚시": "point/03_mokpo_fishing.html",
+    "해루질": "point/03_mokpo_gleaning.html"
+   },
+   "muan": {
+    "낚시": "point/02_muan_fishing.html",
+    "해루질": "point/02_muan_gleaning.html"
+   },
+   "namhae": {
+    "낚시": "point/gyeongnam/namhae_fishing.html",
+    "해루질": "point/gyeongnam/namhae_gleaning.html"
+   },
+   "ongjin": {
+    "낚시": "point/sudogwon/ongjin_fishing.html",
+    "해루질": "point/sudogwon/ongjin_gleaning.html"
+   },
+   "pohang": {
+    "낚시": "point/gyeongbuk/pohang_fishing.html",
+    "해루질": "point/gyeongbuk/pohang_gleaning.html"
+   },
+   "sacheon": {
+    "낚시": "point/gyeongnam/sacheon_fishing.html",
+    "해루질": "point/gyeongnam/sacheon_gleaning.html"
+   },
+   "samcheok": {
+    "낚시": "point/gangwon/samcheok_fishing.html",
+    "해루질": "point/gangwon/samcheok_gleaning.html"
+   },
+   "seocheon": {
+    "낚시": "point/chungnam/seocheon_fishing.html",
+    "해루질": "point/chungnam/seocheon_gleaning.html"
+   },
+   "seogwipo": {
+    "낚시": "point/jeju/seogwipo_fishing.html",
+    "해루질": "point/jeju/seogwipo_gleaning.html"
+   },
+   "seongsan": {
+    "낚시": "point/jeju/seongsan_fishing.html",
+    "해루질": "point/jeju/seongsan_gleaning.html"
+   },
+   "seosan": {
+    "낚시": "point/chungnam/seosan_fishing.html",
+    "해루질": "point/chungnam/seosan_gleaning.html"
+   },
+   "sinan": {
+    "낚시": "point/01_sinan_fishing.html",
+    "해루질": "point/01_sinan_gleaning.html"
+   },
+   "sokcho": {
+    "낚시": "point/gangwon/sokcho_fishing.html",
+    "해루질": "point/gangwon/sokcho_gleaning.html"
+   },
+   "suncheon": {
+    "낚시": "point/14_suncheon_fishing.html",
+    "해루질": "point/14_suncheon_gleaning.html"
+   },
+   "taean": {
+    "낚시": "point/chungnam/taean_fishing.html",
+    "해루질": "point/chungnam/taean_gleaning.html"
+   },
+   "tongyeong": {
+    "낚시": "point/gyeongnam/tongyeong_fishing.html",
+    "해루질": "point/gyeongnam/tongyeong_gleaning.html"
+   },
+   "uljin": {
+    "낚시": "point/gyeongbuk/uljin_fishing.html",
+    "해루질": "point/gyeongbuk/uljin_gleaning.html"
+   },
+   "ulleung": {
+    "낚시": "point/gyeongbuk/ulleung_fishing.html",
+    "해루질": "point/gyeongbuk/ulleung_gleaning.html"
+   },
+   "ulsan": {
+    "낚시": "point/busanulsan/ulsan_fishing.html",
+    "해루질": "point/busanulsan/ulsan_gleaning.html"
+   },
+   "wando": {
+    "낚시": "point/08_wando_fishing.html",
+    "해루질": "point/08_wando_gleaning.html"
+   },
+   "yangyang": {
+    "낚시": "point/gangwon/yangyang_fishing.html",
+    "해루질": "point/gangwon/yangyang_gleaning.html"
+   },
+   "yeongdeok": {
+    "낚시": "point/gyeongbuk/yeongdeok_fishing.html",
+    "해루질": "point/gyeongbuk/yeongdeok_gleaning.html"
+   },
+   "yeonggwang": {
+    "낚시": "point/04_yeonggwang_fishing.html",
+    "해루질": "point/04_yeonggwang_gleaning.html"
+   },
+   "yeongjong": {
+    "낚시": "point/sudogwon/yeongjong_fishing.html",
+    "해루질": "point/sudogwon/yeongjong_gleaning.html"
+   },
+   "yeosu": {
+    "낚시": "point/13_yeosu_fishing.html",
+    "해루질": "point/13_yeosu_gleaning.html"
+   }
+  }
+ },
+ "권역": [
+  {
+   "id": "ganghwa",
+   "관광안내": "https://www.ganghwa.go.kr/open_content/tour/",
+   "대표사진": null,
+   "묶음": "sudogwon",
+   "물때관측소": {
+    "메모": "물때표는 강화대교 조위관측소 기준입니다. 염하 물길 쪽(초지진·광성보)이 가장 가깝고, 석모도·교동도 서쪽 바다는 물 들고 나는 시각이 조금 다를 수 있습니다.",
+    "이름": "강화대교",
+    "코드": "DT_0032"
+   },
+   "바다": "서해",
+   "법정동코드": "28",
+   "색": "#4A5A3A",
+   "설명": "강화 바다여행. 초지진·광성보 돈대, 동막 갯벌, 석모도 보문사, 교동 대룡시장과 외포항 새우젓 정리.",
+   "소개": "옛 돈대와 넓은 남단 갯벌이 있는 바다",
+   "시군구": [
+    "강화군"
+   ],
+   "안내": "염하 물길을 따라 초지진과 광성보 같은 옛 방어 유적이 늘어서 있고, 남쪽 동막 앞에는 썰물 때 끝이 보이지 않는 갯벌이 드러납니다. 다리로 이어진 석모도와 교동도에서는 절집, 피란민 시장, 새우젓 포구를 차로 둘러볼 수 있습니다.",
+   "엶": true,
+   "이름": {
+    "ko": "강화",
+    "zh": "江华"
+   },
+   "좌표": {
+    "경도": 126.4016,
+    "위도": 37.6652
+   },
+   "지역코드": "2",
+   "짧은이름": "강화",
+   "차례": 401,
+   "포인트안내": "강화 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 채취 체험은 체험장이 운영하는 날에만 하세요.",
+   "한줄": "돈대와 갯벌",
+   "항구": [
+    "외포항",
+    "후포항(선수포구)",
+    "황산도항"
+   ]
   },
-  "권역": [
-    {
-      "id": "ganghwa",
-      "관광안내": "https://www.ganghwa.go.kr/open_content/tour/",
-      "대표사진": null,
-      "묶음": "sudogwon",
-      "물때관측소": {
-        "메모": "물때표는 강화대교 조위관측소 기준입니다. 염하 물길 쪽(초지진·광성보)이 가장 가깝고, 석모도·교동도 서쪽 바다는 물 들고 나는 시각이 조금 다를 수 있습니다.",
-        "이름": "강화대교",
-        "코드": "DT_0032"
-      },
-      "바다": "서해",
-      "법정동코드": "28",
-      "색": "#4A5A3A",
-      "설명": "강화 바다여행. 초지진·광성보 돈대, 동막 갯벌, 석모도 보문사, 교동 대룡시장과 외포항 새우젓 정리.",
-      "소개": "옛 돈대와 넓은 남단 갯벌이 있는 바다",
-      "시군구": [
-        "강화군"
-      ],
-      "안내": "염하 물길을 따라 초지진과 광성보 같은 옛 방어 유적이 늘어서 있고, 남쪽 동막 앞에는 썰물 때 끝이 보이지 않는 갯벌이 드러납니다. 다리로 이어진 석모도와 교동도에서는 절집, 피란민 시장, 새우젓 포구를 차로 둘러볼 수 있습니다.",
-      "엶": true,
-      "이름": {
-        "ko": "강화",
-        "zh": "江华"
-      },
-      "좌표": {
-        "경도": 126.4016,
-        "위도": 37.6652
-      },
-      "지역코드": "2",
-      "짧은이름": "강화",
-      "차례": 401,
-      "포인트안내": "강화 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 채취 체험은 체험장이 운영하는 날에만 하세요.",
-      "한줄": "돈대와 갯벌",
-      "항구": [
-        "외포항",
-        "후포항(선수포구)",
-        "황산도항"
-      ]
-    },
-    {
-      "id": "yeongjong",
-      "관광안내": "https://itour.incheon.go.kr",
-      "대표사진": null,
-      "묶음": "sudogwon",
-      "물때관측소": {
-        "메모": "물때표는 소무의도 조위관측소 기준입니다. 무의도·을왕리 쪽이 가깝고, 삼목선착장·신도 쪽은 영종대교 관측소(DT_0044) 시각이 더 가깝습니다.",
-        "이름": "소무의도",
-        "코드": "DT_0093"
-      },
-      "바다": "서해",
-      "법정동코드": "28",
-      "색": "#2E5573",
-      "설명": "영종 바다여행. 을왕리·왕산 해변, 무의도 하나개, 소무의도, 신도평화대교와 장봉도 배편, 물때 정리.",
-      "소개": "공항 옆 해변과 다리로 이어진 섬들",
-      "시군구": [
-        "영종구",
-        "옹진군 북도면"
-      ],
-      "안내": "을왕리와 왕산, 선녀바위가 이어진 서쪽 해안은 공항에서 차로 금방 닿는 해변입니다. 남쪽으로 무의대교를 건너면 하나개해변과 소무의도 인도교가, 북쪽 신도평화대교를 건너면 신도·시도·모도가 차례로 나옵니다.",
-      "엶": true,
-      "이름": {
-        "ko": "영종",
-        "zh": "永宗"
-      },
-      "좌표": {
-        "경도": 126.4075,
-        "위도": 37.437
-      },
-      "지역코드": "2",
-      "짧은이름": "영종",
-      "차례": 402,
-      "포인트안내": "영종 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 큰무리마을·포내마을·마시안마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
-      "한줄": "공항 옆 섬",
-      "항구": [
-        "삼목선착장",
-        "거잠포 선착장",
-        "구읍뱃터"
-      ]
-    },
-    {
-      "id": "ongjin",
-      "관광안내": "https://www.ongjin.go.kr/open_content/tour/",
-      "대표사진": null,
-      "묶음": "sudogwon",
-      "물때관측소": {
-        "메모": "물때표는 영흥도 조위관측소 기준입니다. 선재도·영흥도가 가깝고, 덕적도·소야도는 덕적도 관측소(DT_0065) 시각을 따로 보세요.",
-        "이름": "영흥도",
-        "코드": "DT_0043"
-      },
-      "바다": "서해",
-      "법정동코드": "28",
-      "색": "#1E5F5F",
-      "설명": "옹진 섬 바다여행. 선재도 목섬, 영흥도 십리포, 덕적·자월·승봉·대이작도 해변과 배편, 물때 정리.",
-      "소개": "다리로 닿는 영흥도와 배로 가는 섬들",
-      "시군구": [
-        "옹진군"
-      ],
-      "안내": "선재대교와 영흥대교를 건너면 목섬 모랫길과 십리포·장경리 해변이 차로 이어집니다. 덕적도·자월도·승봉도·대이작도는 인천항이나 대부도 방아머리에서 배를 타고 들어가며, 섬마다 조용한 해변과 산길이 있습니다.",
-      "엶": true,
-      "이름": {
-        "ko": "옹진 섬",
-        "zh": "瓮津"
-      },
-      "좌표": {
-        "경도": 126.4896,
-        "위도": 37.2609
-      },
-      "지역코드": "2",
-      "짧은이름": "옹진",
-      "차례": 403,
-      "포인트안내": "옹진 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 선재도마을·영암마을·이작마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
-      "한줄": "배 타는 섬",
-      "항구": [
-        "진두항",
-        "덕적도 진리선착장",
-        "자월도 달바위선착장"
-      ]
-    },
-    {
-      "id": "daebu",
-      "관광안내": "https://ggtour.or.kr",
-      "대표사진": null,
-      "묶음": "sudogwon",
-      "물때관측소": {
-        "메모": "물때표는 안산 조위관측소 기준입니다. 대부도 탄도항·누에섬 쪽이 가깝고, 오이도는 인천송도 관측소(DT_0052), 풍도는 영흥도 관측소(DT_0043)도 함께 참고하세요.",
-        "이름": "안산",
-        "코드": "DT_0008"
-      },
-      "바다": "서해",
-      "법정동코드": "41",
-      "색": "#5E4660",
-      "설명": "대부·오이도 바다여행. 오이도 빨간등대, 시화나래 달전망대, 구봉도 낙조, 탄도항 누에섬 물때 정리.",
-      "소개": "방조제로 이어진 오이도와 대부도 갯벌",
-      "시군구": [
-        "안산시",
-        "시흥시"
-      ],
-      "안내": "시흥 오이도의 빨간등대에서 출발해 시화방조제를 건너면 달전망대가 있는 휴게소를 지나 대부도에 닿습니다. 대부도에서는 구봉도 낙조와 해솔길, 썰물에 걸어 들어가는 탄도항 누에섬을 둘러보고 칼국수와 포도를 맛볼 수 있습니다.",
-      "엶": true,
-      "이름": {
-        "ko": "대부·오이도",
-        "zh": "大阜·乌耳"
-      },
-      "좌표": {
-        "경도": 126.6276,
-        "위도": 37.2827
-      },
-      "지역코드": "31",
-      "짧은이름": "대부",
-      "차례": 404,
-      "포인트안내": "대부 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 종현마을·선감마을·흘곶마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
-      "한줄": "방조제 길",
-      "항구": [
-        "방아머리선착장",
-        "탄도항",
-        "오이도 선착장"
-      ]
-    },
-    {
-      "id": "hwaseong",
-      "관광안내": "https://tour.hscity.go.kr",
-      "대표사진": null,
-      "묶음": "sudogwon",
-      "물때관측소": {
-        "메모": "화성 해안에는 따로 조위관측소가 없어 가장 가까운 안산 관측소(대부도 탄도 쪽) 기준입니다. 매향리·국화도 쪽은 평택 관측소(DT_0002) 시각도 함께 참고하세요. 제부도 바닷길 통행 시간은 화성시가 따로 공지합니다.",
-        "이름": "안산",
-        "코드": "DT_0008"
-      },
-      "바다": "서해",
-      "법정동코드": "41",
-      "색": "#6E4A2A",
-      "설명": "화성 바다여행. 제부도 바닷길·매바위, 전곡항 케이블카, 궁평항 솔밭, 매향리와 국화도 배편 정리.",
-      "소개": "물때에 열리는 제부도 바닷길의 바다",
-      "시군구": [
-        "화성시"
-      ],
-      "안내": "제부도는 썰물 때 드러나는 바닷길과 전곡항에서 건너가는 해상케이블카 두 가지로 들어갈 수 있습니다. 남쪽으로 궁평항 솔밭 해변과 백미리 갯벌, 옛 사격장 자리에 만든 매향리 평화생태공원이 해안을 따라 이어집니다.",
-      "엶": true,
-      "이름": {
-        "ko": "화성",
-        "zh": "华城"
-      },
-      "좌표": {
-        "경도": 126.6662,
-        "위도": 37.1407
-      },
-      "지역코드": "31",
-      "짧은이름": "화성",
-      "차례": 405,
-      "포인트안내": "화성 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 제부마을·전곡리마을·백미리마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
-      "한줄": "바닷길 섬",
-      "항구": [
-        "전곡항",
-        "궁평항",
-        "제부항",
-        "고온항"
-      ]
-    },
-    {
-      "id": "taean",
-      "관광안내": "https://www.taean.go.kr/tour.do",
-      "대표사진": null,
-      "묶음": "chungnam",
-      "물때관측소": {
-        "메모": "물때표는 반도 북쪽 태안 관측소(학암포·만대 쪽) 기준입니다. 신진도·안흥항은 안흥 관측소, 안면도 남쪽(영목·대야도)은 보령 관측소 시각이 더 가깝습니다.",
-        "이름": "태안",
-        "코드": "DT_0050"
-      },
-      "바다": "서해",
-      "법정동코드": "44",
-      "색": "#3E7C8C",
-      "설명": "태안 바다여행. 신두리사구·만리포·꽃지 해변, 가의도 배편, 물때와 우럭·주꾸미 낚시 정리.",
-      "소개": "모래언덕과 해수욕장이 줄지은 태안반도",
-      "시군구": [
-        "태안군"
-      ],
-      "안내": "신두리 모래언덕에서 안면도 꽃지까지 해수욕장이 줄지어 있고, 신진도 안흥외항에서는 가의도 가는 배가 드나듭니다.",
-      "엶": true,
-      "이름": {
-        "ko": "태안",
-        "zh": "泰安"
-      },
-      "좌표": {
-        "경도": 126.207,
-        "위도": 36.7397
-      },
-      "지역코드": "34",
-      "짧은이름": "태안",
-      "차례": 101,
-      "포인트안내": "태안 갯벌은 대부분 어촌계가 가꾸는 마을어장입니다. 해루질은 만대마을·용신마을·병술만마을처럼 체험을 운영하는 곳에서 정해진 구역·도구로 즐기세요.",
-      "한줄": "사구와 해변",
-      "항구": [
-        "신진항(안흥외항)",
-        "백사장항",
-        "모항항"
-      ]
-    },
-    {
-      "id": "seosan",
-      "관광안내": "https://www.seosan.go.kr/tour/index.do",
-      "대표사진": null,
-      "묶음": "chungnam",
-      "물때관측소": {
-        "메모": null,
-        "이름": "대산",
-        "코드": "DT_0017"
-      },
-      "바다": "서해",
-      "법정동코드": "44",
-      "색": "#7A6A4F",
-      "설명": "서산 바다 안내. 간월암 물때, 웅도·중리 갯벌체험, 삼길포 우럭과 간월도 어리굴젓 이야기.",
-      "소개": "간월암 물길과 가로림만 갯벌의 고장",
-      "시군구": [
-        "서산시"
-      ],
-      "안내": "천수만의 간월암·버드랜드와 가로림만의 웅도·중리 갯벌을 둘러보는 권역이며, 삼길포항은 우럭 좌대낚시로 알려져 있습니다.",
-      "엶": true,
-      "이름": {
-        "ko": "서산",
-        "zh": "瑞山"
-      },
-      "좌표": {
-        "경도": 126.4011,
-        "위도": 36.8305
-      },
-      "지역코드": "34",
-      "짧은이름": "서산",
-      "차례": 102,
-      "포인트안내": "서산 갯벌은 대부분 어촌계가 가꾸는 마을어장입니다. 해루질은 중리마을·왕산마을·웅도마을처럼 체험을 운영하는 곳에서 정해진 구역·도구로 즐기세요.",
-      "한줄": "가로림만 갯벌",
-      "항구": [
-        "삼길포항",
-        "창리포구"
-      ]
-    },
-    {
-      "id": "dangjin",
-      "관광안내": "https://www.dangjin.go.kr/tour.do",
-      "대표사진": null,
-      "묶음": "chungnam",
-      "물때관측소": {
-        "메모": "물때표는 대산 관측소 기준이라 왜목·석문·장고항 쪽에 맞습니다. 한진포구·안섬·삽교호 등 아산만 쪽은 평택 관측소 시각이 더 가깝습니다.",
-        "이름": "대산",
-        "코드": "DT_0017"
-      },
-      "바다": "서해",
-      "법정동코드": "44",
-      "색": "#5E6FA3",
-      "설명": "당진 바다 나들이. 왜목마을 일출·일몰, 장고항 실치, 난지섬 배편과 갯벌체험 마을 정리.",
-      "소개": "서해에서 해가 뜨는 왜목과 석문 포구들",
-      "시군구": [
-        "당진시"
-      ],
-      "안내": "북쪽으로 튀어나온 석문면 덕분에 왜목마을에서 해돋이와 해넘이를 모두 보고, 봄이면 장고항에 실치를 맛보러 사람이 모입니다.",
-      "엶": true,
-      "이름": {
-        "ko": "당진",
-        "zh": "唐津"
-      },
-      "좌표": {
-        "경도": 126.6165,
-        "위도": 36.9812
-      },
-      "지역코드": "34",
-      "짧은이름": "당진",
-      "차례": 103,
-      "포인트안내": "당진 갯벌은 대부분 어촌계가 가꾸는 마을어장입니다. 해루질은 교로 왜목농어촌체험휴양마을·장고항·마섬포구처럼 체험을 운영하는 곳에서 정해진 구역·도구로 즐기세요.",
-      "한줄": "해뜨는 서해",
-      "항구": [
-        "장고항",
-        "도비도항",
-        "한진포구"
-      ]
-    },
-    {
-      "id": "boryeong",
-      "관광안내": "https://www.brcn.go.kr/tour.do",
-      "대표사진": null,
-      "묶음": "chungnam",
-      "물때관측소": {
-        "메모": null,
-        "이름": "보령",
-        "코드": "DT_0025"
-      },
-      "바다": "서해",
-      "법정동코드": "44",
-      "색": "#3E6E8E",
-      "설명": "보령 바다여행 안내. 대천·무창포 해변, 삽시도·외연도 배편, 오천항 주꾸미 낚시와 물때.",
-      "소개": "머드 해변과 섬 뱃길이 모이는 바다",
-      "시군구": [
-        "보령시"
-      ],
-      "안내": "대천해수욕장과 대천항을 중심으로 남쪽 무창포 바닷길부터 북쪽 오천항, 해저터널로 이어진 원산도까지 품은 충남 서해안입니다.",
-      "엶": true,
-      "이름": {
-        "ko": "보령",
-        "zh": "保宁"
-      },
-      "좌표": {
-        "경도": 126.5078,
-        "위도": 36.3269
-      },
-      "지역코드": "34",
-      "짧은이름": "보령",
-      "차례": 104,
-      "포인트안내": "보령 갯벌은 대부분 어촌계가 가꾸는 마을어장입니다. 해루질은 무창포마을·군헌마을(군헌어촌계 갯벌체험장)·삽시도마을처럼 체험을 운영하는 곳에서 정해진 구역·도구로 즐기세요.",
-      "한줄": "머드와 섬 뱃길",
-      "항구": [
-        "대천항",
-        "오천항",
-        "무창포항"
-      ]
-    },
-    {
-      "id": "seocheon",
-      "관광안내": "https://www.seocheon.go.kr/tour.do",
-      "대표사진": null,
-      "묶음": "chungnam",
-      "물때관측소": {
-        "메모": null,
-        "이름": "서천마량",
-        "코드": "DT_0051"
-      },
-      "바다": "서해",
-      "법정동코드": "44",
-      "색": "#5F8A5B",
-      "설명": "서천 바다여행 정보. 춘장대·마량 동백숲·홍원항, 월하성·선도리 갯벌체험.",
-      "소개": "동백숲 언덕과 세계유산 갯벌의 고장",
-      "시군구": [
-        "서천군"
-      ],
-      "안내": "마량리 동백나무숲과 춘장대에서 홍원항을 지나 금강하구의 장항 송림, 유부도 갯벌까지 내려가는 충남 최남단 해안입니다.",
-      "엶": true,
-      "이름": {
-        "ko": "서천",
-        "zh": "舒川"
-      },
-      "좌표": {
-        "경도": 126.6149,
-        "위도": 36.0996
-      },
-      "지역코드": "34",
-      "짧은이름": "서천",
-      "차례": 105,
-      "포인트안내": "서천 갯벌은 대부분 어촌계가 가꾸는 마을어장입니다. 해루질은 월하성마을·선도리갯벌체험마을·서천송림갯벌체험장처럼 체험을 운영하는 곳에서 정해진 구역·도구로 즐기세요.",
-      "한줄": "동백숲과 갯벌",
-      "항구": [
-        "홍원항",
-        "마량진항",
-        "장항항"
-      ]
-    },
-    {
-      "id": "hongseong",
-      "관광안내": "https://www.hongseong.go.kr/tour.do",
-      "대표사진": null,
-      "묶음": "chungnam",
-      "물때관측소": {
-        "메모": null,
-        "이름": "보령",
-        "코드": "DT_0025"
-      },
-      "바다": "서해",
-      "법정동코드": "44",
-      "색": "#9A6A4F",
-      "설명": "홍성 바다여행. 남당항 새조개·대하, 속동갯벌 바지락 체험, 죽도 배편과 천수만 노을 명소.",
-      "소개": "천수만 안쪽, 새조개와 노을의 포구",
-      "시군구": [
-        "홍성군"
-      ],
-      "안내": "천수만 안쪽 남당항과 궁리포구를 해안도로가 잇고, 겨울 새조개와 가을 대하 철이면 포구가 붐비는 홍성 서부 해안입니다.",
-      "엶": true,
-      "이름": {
-        "ko": "홍성",
-        "zh": "洪城"
-      },
-      "좌표": {
-        "경도": 126.5259,
-        "위도": 36.5616
-      },
-      "지역코드": "34",
-      "짧은이름": "홍성",
-      "차례": 106,
-      "포인트안내": "홍성 갯벌은 대부분 어촌계가 가꾸는 마을어장입니다. 해루질은 속동갯벌마을처럼 체험을 운영하는 곳에서 정해진 구역·도구로 즐기세요.",
-      "한줄": "천수만 노을길",
-      "항구": [
-        "남당항",
-        "궁리포구"
-      ]
-    },
-    {
-      "id": "gunsan",
-      "관광안내": "https://www.gunsan.go.kr/tour",
-      "대표사진": null,
-      "묶음": "jeonbuk",
-      "물때관측소": {
-        "메모": "물때표는 군산외항 조위관측소 기준입니다. 비응항과 새만금 북쪽이 가장 가깝고, 금강 건너 서천 쪽은 장항 관측소(DT_0024)가 따로 있습니다.",
-        "이름": "군산",
-        "코드": "DT_0018"
-      },
-      "바다": "서해",
-      "법정동코드": "52",
-      "색": "#34566E",
-      "설명": "군산 바다여행. 비응항, 내항 뜬다리부두와 근대 선창, 금강 철새, 어청도 가는 배와 물때.",
-      "소개": "근대 항구 골목과 방조제가 시작되는 군산 바다",
-      "시군구": [
-        "군산시"
-      ],
-      "안내": "금강이 바다로 빠져나가는 내항에는 뜬다리부두와 옛 세관, 박물관이 줄지어 근대 무역항의 흔적을 보여 줍니다. 서쪽 끝 비응항은 새만금 방조제가 출발하는 곳으로, 유람선이 이곳에서 바다로 나갑니다.",
-      "엶": true,
-      "이름": {
-        "ko": "군산",
-        "zh": "群山"
-      },
-      "좌표": {
-        "경도": 126.6663,
-        "위도": 35.9797
-      },
-      "지역코드": "37",
-      "짧은이름": "군산",
-      "차례": 201,
-      "포인트안내": "군산 갯벌은 대부분 어촌계가 가꾸는 마을어장입니다. 해루질은 체험장이 운영하는 날에 정해진 구역에서만 즐기세요.",
-      "한줄": "근대 항구",
-      "항구": [
-        "비응항"
-      ]
-    },
-    {
-      "id": "gogunsan",
-      "관광안내": "https://www.gunsan.go.kr/tour",
-      "대표사진": null,
-      "묶음": "jeonbuk",
-      "물때관측소": {
-        "메모": "신시도·선유도는 군산 관측소와 위도 관측소(DT_0068) 사이에 있어 두 곳 시각을 함께 보면 좋고, 말도 같은 서쪽 섬은 위도 쪽이 더 가깝습니다. 어청도는 섬 안의 어청도 관측소(DT_0037) 기준입니다.",
-        "이름": "군산",
-        "코드": "DT_0018"
-      },
-      "바다": "서해",
-      "법정동코드": "52",
-      "색": "#2C6A66",
-      "설명": "고군산군도 여행. 신시도 대각산, 선유도 명사십리, 장자도·대장봉, 말도·어청도 배편과 물때.",
-      "소개": "다리로 잇는 섬과 배로 가는 섬이 모인 고군산군도",
-      "시군구": [
-        "군산시"
-      ],
-      "안내": "새만금 방조제와 고군산대교를 따라 신시도·무녀도·선유도·장자도까지 차로 들어갈 수 있고, 섬마다 봉우리 전망대와 모래 해변이 있습니다. 말도·방축도 같은 바깥 섬과 먼바다의 어청도는 지금도 배를 타야 닿습니다.",
-      "엶": true,
-      "이름": {
-        "ko": "고군산군도",
-        "zh": "古群山"
-      },
-      "좌표": {
-        "경도": 126.4185,
-        "위도": 35.8145
-      },
-      "지역코드": "37",
-      "짧은이름": "고군산",
-      "차례": 202,
-      "포인트안내": "고군산 갯벌은 대부분 어촌계가 가꾸는 마을어장입니다. 해루질은 신시도마을·선유도마을·무녀도마을처럼 체험을 운영하는 곳에서 정해진 구역·도구로 즐기세요.",
-      "한줄": "섬 잇기",
-      "항구": [
-        "야미도항",
-        "신시도항",
-        "무녀도항",
-        "선유도항"
-      ]
-    },
-    {
-      "id": "buan",
-      "관광안내": "https://www.buan.go.kr/tour/",
-      "대표사진": null,
-      "묶음": "jeonbuk",
-      "물때관측소": {
-        "메모": "변산반도에서 가장 가까운 조위관측소는 섬 안의 위도 관측소입니다. 격포·채석강은 바다 건너 약 15km 떨어져 있고, 곰소만 안쪽은 물이 드나드는 시각이 조금 다를 수 있으니 현장 안내판도 함께 보세요.",
-        "이름": "위도",
-        "코드": "DT_0068"
-      },
-      "바다": "서해",
-      "법정동코드": "52",
-      "색": "#6E4F36",
-      "설명": "부안 바다여행. 채석강·적벽강 해안, 격포항 위도 배편, 모항 갯벌체험, 곰소 젓갈과 물때 정리.",
-      "소개": "층층 바위 절벽과 소금밭이 있는 변산반도 바다",
-      "시군구": [
-        "부안군"
-      ],
-      "안내": "변산반도 서쪽 끝 격포에는 퇴적층이 켜켜이 드러난 채석강과 붉은 적벽강이 이어지고, 격포항에서 위도로 가는 배가 떠납니다. 반도를 돌아 남쪽 곰소만으로 가면 천일염 소금밭과 젓갈 가게가 모인 곰소항이 나옵니다.",
-      "엶": true,
-      "이름": {
-        "ko": "부안",
-        "zh": "扶安"
-      },
-      "좌표": {
-        "경도": 126.5066,
-        "위도": 35.6187
-      },
-      "지역코드": "37",
-      "짧은이름": "부안",
-      "차례": 203,
-      "포인트안내": "부안 갯벌은 대부분 어촌계가 가꾸는 마을어장입니다. 해루질은 모항갯벌체험장처럼 체험을 운영하는 곳에서 정해진 구역·도구로 즐기세요.",
-      "한줄": "절벽과 염전",
-      "항구": [
-        "격포항",
-        "곰소항",
-        "위도 파장금항"
-      ]
-    },
-    {
-      "id": "gochang",
-      "관광안내": "https://www.gochang.go.kr/culture/index.gochang",
-      "대표사진": null,
-      "묶음": "jeonbuk",
-      "물때관측소": {
-        "메모": "구시포에서 남쪽으로 가까운 영광 조위관측소 기준입니다. 북쪽 곰소만 안쪽의 하전·만돌 갯벌로 갈 때는 위도 관측소(DT_0068) 시각도 함께 확인하세요.",
-        "이름": "영광",
-        "코드": "DT_0003"
-      },
-      "바다": "서해",
-      "법정동코드": "52",
-      "색": "#55603A",
-      "설명": "고창 바다여행. 구시포·동호 해변, 하전·만돌 갯벌체험, 선운산 풍천장어와 영광 관측소 물때.",
-      "소개": "세계유산 갯벌과 긴 모래 해안이 펼쳐진 고창",
-      "시군구": [
-        "고창군"
-      ],
-      "안내": "고창 바다는 물이 빠지면 끝없이 드러나는 갯벌이 주인공으로, 2021년 유네스코 세계자연유산 '한국의 갯벌'에 이름을 올렸습니다. 남쪽 구시포와 북쪽 동호 사이에는 차가 달려도 될 만큼 단단한 모래 해안이 길게 이어집니다.",
-      "엶": true,
-      "이름": {
-        "ko": "고창",
-        "zh": "高敞"
-      },
-      "좌표": {
-        "경도": 126.5013,
-        "위도": 35.4922
-      },
-      "지역코드": "37",
-      "짧은이름": "고창",
-      "차례": 204,
-      "포인트안내": "고창 갯벌은 대부분 어촌계가 가꾸는 마을어장입니다. 해루질은 하전마을·만돌마을·장호마을처럼 체험을 운영하는 곳에서 정해진 구역·도구로 즐기세요.",
-      "한줄": "세계유산갯벌",
-      "항구": [
-        "구시포항",
-        "동호항"
-      ]
-    },
-    {
-      "id": "sinan",
-      "관광안내": null,
-      "대표사진": null,
-      "묶음": "jeonnam",
-      "물때관측소": null,
-      "바다": "서해",
-      "법정동코드": null,
-      "색": null,
-      "설명": "신안 포인트 110곳과 오늘 물때, 세발낙지·백합 제철, 퍼플섬·증도 여행 코스 안내.",
-      "소개": null,
-      "시군구": [],
-      "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 아름다운 섬과 천일염, 갯벌의 고장 신안을 여러분께 소개합니다.",
-      "엶": true,
-      "이름": {
-        "ko": "신안",
-        "zh": "新安郡"
-      },
-      "좌표": {
-        "경도": 126.15,
-        "위도": 34.99
-      },
-      "지역코드": null,
-      "짧은이름": "신안",
-      "차례": 401,
-      "포인트안내": null,
-      "한줄": null,
-      "항구": []
-    },
-    {
-      "id": "muan",
-      "관광안내": null,
-      "대표사진": null,
-      "묶음": "jeonnam",
-      "물때관측소": null,
-      "바다": "서해",
-      "법정동코드": null,
-      "색": null,
-      "설명": "무안 갯벌 포인트 23곳과 물때, 세발낙지·감태 제철, 황토갯벌 여행 코스 안내.",
-      "소개": null,
-      "시군구": [],
-      "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 람사르습지로 지정된 청정 갯벌, 세발낙지와 감태의 고장 무안을 여러분께 소개합니다.",
-      "엶": true,
-      "이름": {
-        "ko": "무안",
-        "zh": "务安郡"
-      },
-      "좌표": {
-        "경도": 126.31,
-        "위도": 35.05
-      },
-      "지역코드": null,
-      "짧은이름": "무안",
-      "차례": 402,
-      "포인트안내": null,
-      "한줄": null,
-      "항구": []
-    },
-    {
-      "id": "mokpo",
-      "관광안내": null,
-      "대표사진": null,
-      "묶음": "jeonnam",
-      "물때관측소": null,
-      "바다": "서해",
-      "법정동코드": null,
-      "색": null,
-      "설명": "목포 포인트 46곳과 물때, 목포 9미 맛집, 유달산·해상케이블카 여행 코스 안내.",
-      "소개": null,
-      "시군구": [],
-      "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 영산강이 서해와 만나는 항구도시, 민어·홍어·낙지의 고장 목포를 여러분께 소개합니다.",
-      "엶": true,
-      "이름": {
-        "ko": "목포",
-        "zh": "木浦市"
-      },
-      "좌표": {
-        "경도": 126.38,
-        "위도": 34.78
-      },
-      "지역코드": null,
-      "짧은이름": "목포",
-      "차례": 403,
-      "포인트안내": null,
-      "한줄": null,
-      "항구": []
-    },
-    {
-      "id": "yeonggwang",
-      "관광안내": null,
-      "대표사진": null,
-      "묶음": "jeonnam",
-      "물때관측소": null,
-      "바다": "서해",
-      "법정동코드": null,
-      "색": null,
-      "설명": "영광 포인트 51곳과 물때, 백합·동죽 제철, 백수해안도로 노을 여행 코스 안내.",
-      "소개": null,
-      "시군구": [],
-      "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 법성포 굴비와 서해 갯벌의 고장 영광을 여러분께 소개합니다.",
-      "엶": true,
-      "이름": {
-        "ko": "영광",
-        "zh": "灵光郡"
-      },
-      "좌표": {
-        "경도": 126.42,
-        "위도": 35.32
-      },
-      "지역코드": null,
-      "짧은이름": "영광",
-      "차례": 404,
-      "포인트안내": null,
-      "한줄": null,
-      "항구": []
-    },
-    {
-      "id": "hampyeong",
-      "관광안내": null,
-      "대표사진": null,
-      "묶음": "jeonnam",
-      "물때관측소": null,
-      "바다": "서해",
-      "법정동코드": null,
-      "색": null,
-      "설명": "함평 포인트 48곳과 물때, 낙지·굴 제철, 돌머리해변과 나비의 고장 여행 안내.",
-      "소개": null,
-      "시군구": [],
-      "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 게르마늄 갯벌과 함평천지한우의 고장 함평을 여러분께 소개합니다.",
-      "엶": true,
-      "이름": {
-        "ko": "함평",
-        "zh": "咸平郡"
-      },
-      "좌표": {
-        "경도": 126.44,
-        "위도": 35.1
-      },
-      "지역코드": null,
-      "짧은이름": "함평",
-      "차례": 405,
-      "포인트안내": null,
-      "한줄": null,
-      "항구": []
-    },
-    {
-      "id": "jindo",
-      "관광안내": null,
-      "대표사진": null,
-      "묶음": "jeonnam",
-      "물때관측소": null,
-      "바다": "서해",
-      "법정동코드": null,
-      "색": null,
-      "설명": "진도 포인트 100곳과 물때, 신비의 바닷길 시기, 울돌목·세방낙조 여행 코스 안내.",
-      "소개": null,
-      "시군구": [],
-      "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 230여 개 섬을 품은 다도해의 관문, 민속과 예술의 고장 진도를 여러분께 소개합니다.",
-      "엶": true,
-      "이름": {
-        "ko": "진도",
-        "zh": "珍岛郡"
-      },
-      "좌표": {
-        "경도": 126.35,
-        "위도": 34.42
-      },
-      "지역코드": null,
-      "짧은이름": "진도",
-      "차례": 406,
-      "포인트안내": null,
-      "한줄": null,
-      "항구": []
-    },
-    {
-      "id": "haenam",
-      "관광안내": null,
-      "대표사진": null,
-      "묶음": "jeonnam",
-      "물때관측소": null,
-      "바다": "남해",
-      "법정동코드": null,
-      "색": null,
-      "설명": "해남 포인트 71곳과 물때, 꼬막·가무락 제철, 땅끝마을·대흥사 여행 코스 안내.",
-      "소개": null,
-      "시군구": [],
-      "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 땅끝마을과 두륜산 대흥사, 바다와 들녘이 함께 풍성한 고장 해남을 여러분께 소개합니다.",
-      "엶": true,
-      "이름": {
-        "ko": "해남",
-        "zh": "海南郡"
-      },
-      "좌표": {
-        "경도": 126.52,
-        "위도": 34.3
-      },
-      "지역코드": null,
-      "짧은이름": "해남",
-      "차례": 407,
-      "포인트안내": null,
-      "한줄": null,
-      "항구": []
-    },
-    {
-      "id": "wando",
-      "관광안내": null,
-      "대표사진": null,
-      "묶음": "jeonnam",
-      "물때관측소": null,
-      "바다": "남해",
-      "법정동코드": null,
-      "색": null,
-      "설명": "완도 포인트 121곳과 물때, 전복·미역 제철, 청해진·완도수목원 여행 코스 안내.",
-      "소개": null,
-      "시군구": [],
-      "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 장보고 청해진의 바다, 해양치유 1번지 완도를 여러분께 소개합니다.",
-      "엶": true,
-      "이름": {
-        "ko": "완도",
-        "zh": "莞岛郡"
-      },
-      "좌표": {
-        "경도": 126.75,
-        "위도": 34.31
-      },
-      "지역코드": null,
-      "짧은이름": "완도",
-      "차례": 408,
-      "포인트안내": null,
-      "한줄": null,
-      "항구": []
-    },
-    {
-      "id": "gangjin",
-      "관광안내": null,
-      "대표사진": null,
-      "묶음": "jeonnam",
-      "물때관측소": null,
-      "바다": "남해",
-      "법정동코드": null,
-      "색": null,
-      "설명": "강진 포인트 58곳과 물때, 동죽·개불 제철, 강진만 갯벌·다산초당 여행 안내.",
-      "소개": null,
-      "시군구": [],
-      "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 다산 정약용의 유배지이자 가우도 출렁다리의 고장 강진을 여러분께 소개합니다.",
-      "엶": true,
-      "이름": {
-        "ko": "강진",
-        "zh": "康津郡"
-      },
-      "좌표": {
-        "경도": 126.72,
-        "위도": 34.55
-      },
-      "지역코드": null,
-      "짧은이름": "강진",
-      "차례": 409,
-      "포인트안내": null,
-      "한줄": null,
-      "항구": []
-    },
-    {
-      "id": "jangheung",
-      "관광안내": null,
-      "대표사진": null,
-      "묶음": "jeonnam",
-      "물때관측소": null,
-      "바다": "남해",
-      "법정동코드": null,
-      "색": null,
-      "설명": "장흥 포인트 52곳과 물때, 키조개·매생이 제철, 정남진 바닷가 여행 코스 안내.",
-      "소개": null,
-      "시군구": [],
-      "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 키조개와 매생이, 장흥삼합의 고장 장흥을 여러분께 소개합니다.",
-      "엶": true,
-      "이름": {
-        "ko": "장흥",
-        "zh": "长兴郡"
-      },
-      "좌표": {
-        "경도": 126.94,
-        "위도": 34.55
-      },
-      "지역코드": null,
-      "짧은이름": "장흥",
-      "차례": 410,
-      "포인트안내": null,
-      "한줄": null,
-      "항구": []
-    },
-    {
-      "id": "boseong",
-      "관광안내": null,
-      "대표사진": null,
-      "묶음": "jeonnam",
-      "물때관측소": null,
-      "바다": "남해",
-      "법정동코드": null,
-      "색": null,
-      "설명": "보성 포인트 54곳과 물때, 벌교 참꼬막 제철, 녹차밭·율포해변 여행 코스 안내.",
-      "소개": null,
-      "시군구": [],
-      "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 참꼬막과 뻘낙지, 녹차의 고장 보성을 여러분께 소개합니다.",
-      "엶": true,
-      "이름": {
-        "ko": "보성",
-        "zh": "宝城郡"
-      },
-      "좌표": {
-        "경도": 127.13,
-        "위도": 34.72
-      },
-      "지역코드": null,
-      "짧은이름": "보성",
-      "차례": 411,
-      "포인트안내": null,
-      "한줄": null,
-      "항구": []
-    },
-    {
-      "id": "goheung",
-      "관광안내": null,
-      "대표사진": null,
-      "묶음": "jeonnam",
-      "물때관측소": null,
-      "바다": "남해",
-      "법정동코드": null,
-      "색": null,
-      "설명": "고흥 포인트 109곳과 물때, 굴·소라 제철, 나로우주센터·다도해 여행 코스 안내.",
-      "소개": null,
-      "시군구": [],
-      "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 소록도·거금도가 흩어진 남해 바다, 우주항공의 고장 고흥을 여러분께 소개합니다.",
-      "엶": true,
-      "이름": {
-        "ko": "고흥",
-        "zh": "高兴郡"
-      },
-      "좌표": {
-        "경도": 127.28,
-        "위도": 34.51
-      },
-      "지역코드": null,
-      "짧은이름": "고흥",
-      "차례": 412,
-      "포인트안내": null,
-      "한줄": null,
-      "항구": []
-    },
-    {
-      "id": "yeosu",
-      "관광안내": null,
-      "대표사진": null,
-      "묶음": "jeonnam",
-      "물때관측소": null,
-      "바다": "남해",
-      "법정동코드": null,
-      "색": null,
-      "설명": "여수 포인트 114곳과 물때, 갯장어·맛조개 제철, 밤바다·향일암 여행 코스 안내.",
-      "소개": null,
-      "시군구": [],
-      "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 갯바위 낚시와 갯장어로 이름난 항구도시 여수를 여러분께 소개합니다.",
-      "엶": true,
-      "이름": {
-        "ko": "여수",
-        "zh": "丽水市"
-      },
-      "좌표": {
-        "경도": 127.75,
-        "위도": 34.74
-      },
-      "지역코드": null,
-      "짧은이름": "여수",
-      "차례": 413,
-      "포인트안내": null,
-      "한줄": null,
-      "항구": []
-    },
-    {
-      "id": "suncheon",
-      "관광안내": null,
-      "대표사진": null,
-      "묶음": "jeonnam",
-      "물때관측소": null,
-      "바다": "남해",
-      "법정동코드": null,
-      "색": null,
-      "설명": "순천 포인트 44곳과 물때, 참꼬막·짱뚱어 제철, 순천만 습지 여행 코스 안내.",
-      "소개": null,
-      "시군구": [],
-      "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 순천만국가정원과 순천만습지, 뻘배 체험이 있는 생태수도 순천을 여러분께 소개합니다.",
-      "엶": true,
-      "이름": {
-        "ko": "순천",
-        "zh": "顺天市"
-      },
-      "좌표": {
-        "경도": 127.49,
-        "위도": 34.86
-      },
-      "지역코드": null,
-      "짧은이름": "순천",
-      "차례": 414,
-      "포인트안내": null,
-      "한줄": null,
-      "항구": []
-    },
-    {
-      "id": "gwangyang",
-      "관광안내": null,
-      "대표사진": null,
-      "묶음": "jeonnam",
-      "물때관측소": null,
-      "바다": "남해",
-      "법정동코드": null,
-      "색": null,
-      "설명": "광양 포인트 46곳과 물때, 재첩·벚굴 제철, 섬진강·매화마을 여행 코스 안내.",
-      "소개": null,
-      "시군구": [],
-      "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 망덕포구의 재첩·벚굴과 광양불고기의 고장 광양을 여러분께 소개합니다.",
-      "엶": true,
-      "이름": {
-        "ko": "광양",
-        "zh": "光阳市"
-      },
-      "좌표": {
-        "경도": 127.76,
-        "위도": 34.95
-      },
-      "지역코드": null,
-      "짧은이름": "광양",
-      "차례": 415,
-      "포인트안내": null,
-      "한줄": null,
-      "항구": []
-    },
-    {
-      "id": "jejusi",
-      "관광안내": null,
-      "대표사진": null,
-      "묶음": "jeju",
-      "물때관측소": {
-        "메모": null,
-        "이름": "제주",
-        "코드": "DT_0004"
-      },
-      "바다": "제주",
-      "법정동코드": null,
-      "색": "#3F7F93",
-      "설명": "제주시내 바다여행. 용두암·이호테우해변, 오늘 물때와 한치·갈치 낚시, 동문시장 먹거리 안내.",
-      "소개": "공항에서 가까운 도심 바로 앞 바다",
-      "시군구": [],
-      "안내": "제주국제공항과 제주항이 모인 섬의 관문입니다. 용두암·이호테우해변처럼 시내에서 가까운 바다와 동문시장이 이어져, 도착한 날이나 떠나는 날 들르기 좋습니다.",
-      "엶": true,
-      "이름": {
-        "ko": "제주시내",
-        "zh": "济州市区"
-      },
-      "좌표": {
-        "경도": 126.53,
-        "위도": 33.52
-      },
-      "지역코드": null,
-      "짧은이름": "제주시내",
-      "차례": 1,
-      "포인트안내": null,
-      "한줄": "공항 가까운 도심 바다, 해변과 오름·시장",
-      "항구": [
-        "도두항",
-        "제주항(2부두)"
-      ]
-    },
-    {
-      "id": "aewol",
-      "관광안내": null,
-      "대표사진": null,
-      "묶음": "jeju",
-      "물때관측소": {
-        "메모": null,
-        "이름": "제주",
-        "코드": "DT_0004"
-      },
-      "바다": "제주",
-      "법정동코드": null,
-      "색": "#2F8C8C",
-      "설명": "애월·한림 바다여행. 협재·금능해변과 노을 해안도로, 한림항 낚시, 물때와 보말칼국수 안내.",
-      "소개": "에메랄드빛 해변과 노을이 이어지는 서북 해안",
-      "시군구": [],
-      "안내": "애월 해안도로에서 협재·금능해변을 지나 수월봉까지, 노을이 아름다운 서북부 해안입니다. 한림항·애월항 방파제는 여름밤 한치 낚시 자리로 알려져 있습니다.",
-      "엶": true,
-      "이름": {
-        "ko": "애월·한림",
-        "zh": "涯月·翰林"
-      },
-      "좌표": {
-        "경도": 126.31,
-        "위도": 33.46
-      },
-      "지역코드": null,
-      "짧은이름": "애월·한림",
-      "차례": 2,
-      "포인트안내": null,
-      "한줄": "에메랄드빛 해변과 노을 해안이 이어진 서북부",
-      "항구": [
-        "한림항",
-        "애월항",
-        "신창항",
-        "하귀1항",
-        "고산 자구내포구"
-      ]
-    },
-    {
-      "id": "jocheon",
-      "관광안내": null,
-      "대표사진": null,
-      "묶음": "jeju",
-      "물때관측소": {
-        "메모": null,
-        "이름": "성산포",
-        "코드": "DT_0022"
-      },
-      "바다": "제주",
-      "법정동코드": null,
-      "색": "#3E8FB0",
-      "설명": "조천·구좌 바다여행. 함덕·월정리·세화 해변, 해녀박물관, 물때와 한치·무늬오징어 낚시 안내.",
-      "소개": "옥빛 해변과 해녀 마을이 이어지는 동북 해안",
-      "시군구": [],
-      "안내": "함덕·김녕·월정리·세화로 이어지는 옥빛 해변 해안입니다. 제주해녀박물관이 있는 해녀 문화의 고장이라 마을어장이 많으니 허가 없이 채취하지 마세요.",
-      "엶": true,
-      "이름": {
-        "ko": "조천·구좌",
-        "zh": "朝天·旧左"
-      },
-      "좌표": {
-        "경도": 126.67,
-        "위도": 33.54
-      },
-      "지역코드": null,
-      "짧은이름": "조천·구좌",
-      "차례": 3,
-      "포인트안내": null,
-      "한줄": "옥빛 해변과 해녀 마을이 이어진 동북 해안",
-      "항구": [
-        "확인필요"
-      ]
-    },
-    {
-      "id": "seongsan",
-      "관광안내": null,
-      "대표사진": null,
-      "묶음": "jeju",
-      "물때관측소": {
-        "메모": null,
-        "이름": "성산포",
-        "코드": "DT_0022"
-      },
-      "바다": "제주",
-      "법정동코드": null,
-      "색": "#C0712E",
-      "설명": "성산·표선 바다여행. 성산일출봉·섭지코지·표선해변, 우도 가는 배, 물때와 벵에돔 낚시 안내.",
-      "소개": "일출봉과 섭지코지, 우도로 가는 동남 해안",
-      "시군구": [],
-      "안내": "성산일출봉과 섭지코지, 표선해비치해변까지 이어지는 동남부 해안입니다. 성산포항에서 우도행 배가 뜨고, 성산포항 방파제 바깥쪽(외항)은 가을 부시리·돌돔 낚시로 알려져 있습니다.",
-      "엶": true,
-      "이름": {
-        "ko": "성산·표선",
-        "zh": "城山·表善"
-      },
-      "좌표": {
-        "경도": 126.93,
-        "위도": 33.46
-      },
-      "지역코드": null,
-      "짧은이름": "성산·표선",
-      "차례": 4,
-      "포인트안내": null,
-      "한줄": "일출봉과 동남부 해안 절경, 우도 가는 길",
-      "항구": [
-        "성산포항",
-        "위미항"
-      ]
-    },
-    {
-      "id": "seogwipo",
-      "관광안내": null,
-      "대표사진": null,
-      "묶음": "jeju",
-      "물때관측소": {
-        "메모": null,
-        "이름": "서귀포",
-        "코드": "DT_0010"
-      },
-      "바다": "제주",
-      "법정동코드": null,
-      "색": "#2F7D5B",
-      "설명": "서귀포·중문 바다여행. 정방폭포·주상절리대, 오늘 물때와 은갈치 낚시, 올레시장 먹거리 안내.",
-      "소개": "폭포와 해안 절벽, 올레길이 이어지는 남쪽 바다",
-      "시군구": [],
-      "안내": "정방폭포·쇠소깍·외돌개와 중문 주상절리대까지, 바다로 떨어지는 폭포와 절벽이 이어지는 남쪽 해안입니다. 서귀포항은 은갈치 낚시로 유명합니다.",
-      "엶": true,
-      "이름": {
-        "ko": "서귀포·중문",
-        "zh": "西归浦·中文"
-      },
-      "좌표": {
-        "경도": 126.56,
-        "위도": 33.24
-      },
-      "지역코드": null,
-      "짧은이름": "서귀포·중문",
-      "차례": 5,
-      "포인트안내": null,
-      "한줄": "폭포와 해안절벽, 올레길이 이어지는 남쪽 바다",
-      "항구": [
-        "서귀포항"
-      ]
-    },
-    {
-      "id": "daejeong",
-      "관광안내": null,
-      "대표사진": null,
-      "묶음": "jeju",
-      "물때관측소": {
-        "메모": null,
-        "이름": "모슬포",
-        "코드": "DT_0023"
-      },
-      "바다": "제주",
-      "법정동코드": null,
-      "색": "#6B6FB0",
-      "설명": "대정·안덕 바다여행. 산방산·송악산, 모슬포 겨울 방어 낚시, 가파도·마라도 배와 물때 안내.",
-      "소개": "산방산과 송악산, 국토 최남단 섬으로 가는 길목",
-      "시군구": [],
-      "안내": "산방산·용머리해안·송악산이 모인 남서부 해안입니다. 모슬포는 겨울 방어로 이름난 곳이고, 운진항(모슬포 남항)에서 가파도·마라도행 배가 뜹니다.",
-      "엶": true,
-      "이름": {
-        "ko": "대정·안덕",
-        "zh": "大静·安德"
-      },
-      "좌표": {
-        "경도": 126.25,
-        "위도": 33.21
-      },
-      "지역코드": null,
-      "짧은이름": "대정·안덕",
-      "차례": 6,
-      "포인트안내": null,
-      "한줄": "산방산과 송악산, 국토 최남단 섬으로 가는 길목",
-      "항구": [
-        "모슬포항"
-      ]
-    },
-    {
-      "id": "chuja",
-      "관광안내": null,
-      "대표사진": null,
-      "묶음": "jeju",
-      "물때관측소": {
-        "메모": null,
-        "이름": "추자도",
-        "코드": "DT_0021"
-      },
-      "바다": "제주",
-      "법정동코드": null,
-      "색": "#8A6A3A",
-      "설명": "추자도 바다여행. 갯바위 낚시 명소, 돌돔·감성돔·참돔 시기, 가는 배와 물때, 참굴비 안내.",
-      "소개": "제주와 전남 사이, 낚시인들이 찾는 섬",
-      "시군구": [],
-      "안내": "제주항에서 배로 가는 42개 섬 무리로, 섬 전체가 갯바위 낚시터로 알려져 있습니다. 전남 진도·완도에서도 배가 닿고, 올레 18-1코스가 섬을 한 바퀴 돕니다.",
-      "엶": true,
-      "이름": {
-        "ko": "추자도",
-        "zh": "楸子岛"
-      },
-      "좌표": {
-        "경도": 126.3,
-        "위도": 33.96
-      },
-      "지역코드": null,
-      "짧은이름": "추자도",
-      "차례": 7,
-      "포인트안내": null,
-      "한줄": "제주와 전남 사이, 낚시꾼이 찾는 섬 무리",
-      "항구": [
-        "추자항(상추자)",
-        "신양항(하추자)"
-      ]
-    },
-    {
-      "id": "namhae",
-      "관광안내": "https://www.namhae.go.kr/tour/",
-      "대표사진": null,
-      "묶음": "gyeongnam",
-      "물때관측소": {
-        "메모": "물때표는 남해도 서남쪽(상주·다랭이마을·서면)과 가까운 여수 관측소 기준입니다. 창선도·지족·물건 등 동쪽 해안은 삼천포 관측소(DT_0061) 시각이 더 가깝습니다.",
-        "이름": "여수",
-        "코드": "DT_0016"
-      },
-      "바다": "남해",
-      "법정동코드": "48",
-      "색": "#2F6B5E",
-      "설명": "남해 바다여행. 상주·송정 해변과 다랭이마을, 지족 죽방렴, 노도 배편, 물때와 감성돔·볼락 낚시 정리.",
-      "소개": "죽방렴과 다랑논, 은빛 모래의 섬",
-      "시군구": [
-        "남해군"
-      ],
-      "안내": "지족해협 죽방렴과 물건리 방조어부림에서 옛 어업의 흔적을 보고, 가천 다랭이마을과 상주·송정 해변에서 남쪽 바다를 만납니다. 벽련항에서는 노도로 가는 작은 배가 뜹니다.",
-      "엶": true,
-      "이름": {
-        "ko": "남해",
-        "zh": "南海"
-      },
-      "좌표": {
-        "경도": 127.998,
-        "위도": 34.7513
-      },
-      "지역코드": "36",
-      "짧은이름": "남해",
-      "차례": 301,
-      "포인트안내": "남해 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 해루질·바다 체험은 문항마을·지족마을·유포마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
-      "한줄": "보물섬 해안",
-      "항구": [
-        "미조항",
-        "물건항",
-        "지족항",
-        "벽련항(노도 도선)"
-      ]
-    },
-    {
-      "id": "sacheon",
-      "관광안내": "https://www.sacheon.go.kr/tour/main.web",
-      "대표사진": null,
-      "묶음": "gyeongnam",
-      "물때관측소": {
-        "메모": "물때표는 삼천포항 관측소 기준입니다. 하동 노량·대도 쪽은 광양 관측소(DT_0049) 시각이 더 가깝습니다.",
-        "이름": "삼천포",
-        "코드": "DT_0061"
-      },
-      "바다": "남해",
-      "법정동코드": "48",
-      "색": "#34557A",
-      "설명": "사천·하동 바다여행. 삼천포 어시장과 바다케이블카, 실안 노을, 신수도·대도 배편과 물때 정리.",
-      "소개": "삼천포항과 실안 노을이 있는 바다",
-      "시군구": [
-        "사천시",
-        "하동군"
-      ],
-      "안내": "삼천포항 어시장과 바다케이블카, 죽방렴 너머 해가 지는 실안 해안도로가 사천 바다의 중심입니다. 서쪽으로는 비토섬 갯벌과 하동 노량·대도가 이어지고, 섬진강 하구에서는 재첩과 벚굴이 납니다.",
-      "엶": true,
-      "이름": {
-        "ko": "사천·하동",
-        "zh": "泗川·河东"
-      },
-      "좌표": {
-        "경도": 128.0069,
-        "위도": 34.9604
-      },
-      "지역코드": "36",
-      "짧은이름": "사천",
-      "차례": 302,
-      "포인트안내": "사천 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 해루질·바다 체험은 다맥마을·저도마을·대도마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
-      "한줄": "노을과 섬",
-      "항구": [
-        "삼천포항",
-        "삼천포신항(제주 여객선)",
-        "대포항",
-        "노량항(하동)"
-      ]
-    },
-    {
-      "id": "goseong",
-      "관광안내": "https://www.goseong.go.kr/tour/",
-      "대표사진": null,
-      "묶음": "gyeongnam",
-      "물때관측소": {
-        "메모": "물때표는 통영 관측소 기준입니다. 상족암·맥전포 등 하이·하일면은 삼천포 관측소(DT_0061), 당항포·동해면은 마산 관측소(DT_0062)가 더 가까우니 함께 참고하세요.",
-        "이름": "통영",
-        "코드": "DT_0014"
-      },
-      "바다": "남해",
-      "법정동코드": "48",
-      "색": "#6A4A36",
-      "설명": "경남 고성 바다여행. 상족암 공룡발자국, 당항포, 자란만 가리비, 해지개다리 야경과 물때 정리.",
-      "소개": "공룡 발자국이 남은 가리비 바다",
-      "시군구": [
-        "고성군"
-      ],
-      "안내": "하이면 상족암 해안의 너른 바위에는 공룡 발자국이 찍혀 있고, 그 곁 맥전포·용암포에서는 사량도행 배가 오갑니다. 동쪽 당항포는 이순신 장군의 해전터이자 공룡엑스포가 열리는 곳입니다.",
-      "엶": true,
-      "이름": {
-        "ko": "고성",
-        "zh": "固城"
-      },
-      "좌표": {
-        "경도": 128.2639,
-        "위도": 34.9569
-      },
-      "지역코드": "36",
-      "짧은이름": "경남 고성",
-      "차례": 303,
-      "포인트안내": "고성 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 해루질·바다 체험은 동화마을·룡대미마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
-      "한줄": "공룡 발자국",
-      "항구": [
-        "맥전포항",
-        "용암포항(사량도 카페리)",
-        "임포항"
-      ]
-    },
-    {
-      "id": "tongyeong",
-      "관광안내": "https://www.utour.go.kr",
-      "대표사진": null,
-      "묶음": "gyeongnam",
-      "물때관측소": {
-        "메모": "물때표는 국립해양조사원 통영 관측소 기준입니다. 서쪽 사량도는 삼천포 관측소(DT_0061), 먼바다의 욕지도·매물도는 시각이 조금 다를 수 있어 현지 물때를 함께 확인하세요.",
-        "이름": "통영",
-        "코드": "DT_0014"
-      },
-      "바다": "남해",
-      "법정동코드": "48",
-      "색": "#2B5D7A",
-      "설명": "통영 바다여행. 동피랑·케이블카·달아공원, 한산도·욕지도·소매물도 배편과 물때·볼락 낚시 정리.",
-      "소개": "언덕 벽화 마을과 섬들이 이어진 바다",
-      "시군구": [
-        "통영시"
-      ],
-      "안내": "강구안을 둘러싼 동피랑 언덕과 미륵산 케이블카에서 한려수도의 섬들이 한눈에 내려다보입니다. 통영항·달아항·가오치항·삼덕항에서 한산도, 연대도, 사량도, 욕지도로 가는 배가 뜹니다.",
-      "엶": true,
-      "이름": {
-        "ko": "통영",
-        "zh": "统营"
-      },
-      "좌표": {
-        "경도": 128.4174,
-        "위도": 34.8138
-      },
-      "지역코드": "36",
-      "짧은이름": "통영",
-      "차례": 304,
-      "포인트안내": "통영 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 해루질·바다 체험은 연명마을·궁항마을·유동마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
-      "한줄": "섬과 항구",
-      "항구": [
-        "통영항(여객선터미널)",
-        "달아항",
-        "가오치항",
-        "삼덕항(당포항)"
-      ]
-    },
-    {
-      "id": "geoje",
-      "관광안내": "https://tour.geoje.go.kr",
-      "대표사진": null,
-      "묶음": "gyeongnam",
-      "물때관측소": {
-        "메모": "물때표는 국립해양조사원 거제도 관측소 기준입니다. 섬 서쪽 가조도·칠천도 쪽은 시각이 다를 수 있으니 체험 전 마을 안내를 함께 확인하세요.",
-        "이름": "거제도",
-        "코드": "DT_0029"
-      },
-      "바다": "남해",
-      "법정동코드": "48",
-      "색": "#1F5E57",
-      "설명": "거제 바다여행. 학동 몽돌·구조라 해변, 외도 유람선, 바람의언덕·매미성과 물때·벵에돔 낚시 안내.",
-      "소개": "몽돌 해변과 유람선 항구가 있는 섬",
-      "시군구": [
-        "거제시"
-      ],
-      "안내": "동쪽 해안의 구조라·와현·학동 쪽에서 외도와 해금강으로 가는 유람선이 출발합니다. 북쪽 장목의 매미성과 다리로 이어진 칠천도·가조도는 차로 돌아볼 수 있습니다.",
-      "엶": true,
-      "이름": {
-        "ko": "거제",
-        "zh": "巨济"
-      },
-      "좌표": {
-        "경도": 128.6513,
-        "위도": 34.8628
-      },
-      "지역코드": "36",
-      "짧은이름": "거제",
-      "차례": 305,
-      "포인트안내": "거제 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 해루질·바다 체험은 다대마을·도장포마을·계도마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
-      "한줄": "몽돌 해안",
-      "항구": [
-        "구조라항",
-        "지세포항",
-        "장승포항",
-        "저구항"
-      ]
-    },
-    {
-      "id": "changwon",
-      "관광안내": "https://www.changwon.go.kr/tour/",
-      "대표사진": null,
-      "묶음": "gyeongnam",
-      "물때관측소": {
-        "메모": "물때표는 국립해양조사원 마산 관측소 기준입니다. 진해 명동·웅동 쪽은 가덕도 관측소(DT_0063) 시각이 더 가까울 수 있습니다.",
-        "이름": "마산",
-        "코드": "DT_0062"
-      },
-      "바다": "남해",
-      "법정동코드": "48",
-      "색": "#43477A",
-      "설명": "창원 바다여행. 마산어시장·돝섬, 저도 연륙교, 진해해양공원·우도와 물때·도다리 낚시 안내.",
-      "소개": "마산만·진해만에 섬과 어항이 모인 바다",
-      "시군구": [
-        "창원시"
-      ],
-      "안내": "마산 쪽은 어시장과 돝섬이 도심 가까이 있고, 구산반도에는 저도 연륙교와 원전항, 진동에는 광암해수욕장이 있습니다. 진해 명동에서는 해양공원과 우도를 걸어서 돌아보고 소쿠리섬 가는 배를 탈 수 있습니다.",
-      "엶": true,
-      "이름": {
-        "ko": "창원",
-        "zh": "昌原"
-      },
-      "좌표": {
-        "경도": 128.6187,
-        "위도": 35.1028
-      },
-      "지역코드": "36",
-      "짧은이름": "창원",
-      "차례": 306,
-      "포인트안내": "창원 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 해루질·바다 체험은 고현마을·거북이행복마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
-      "한줄": "두 만의 바다",
-      "항구": [
-        "마산항(돝섬 선착장)",
-        "광암항",
-        "원전항",
-        "명동항"
-      ]
-    },
-    {
-      "id": "busanwest",
-      "관광안내": "https://www.visitbusan.net",
-      "대표사진": null,
-      "묶음": "busanulsan",
-      "물때관측소": {
-        "메모": "물때표는 부산 조위관측소 기준입니다. 다대포는 약 8km 떨어져 있고, 가덕도는 가덕도 관측소(DT_0063)가 따로 있어 대항항은 그쪽 시각이 더 가깝습니다.",
-        "이름": "부산",
-        "코드": "DT_0005"
-      },
-      "바다": "남해",
-      "법정동코드": "26",
-      "색": "#34506E",
-      "설명": "부산 서부 바다여행. 다대포 낙조·송도·흰여울·태종대, 가덕도 대항항과 방파제 출입통제 정리.",
-      "소개": "다대포 낙조와 태종대 절벽의 바다",
-      "시군구": [
-        "강서구",
-        "사하구",
-        "서구",
-        "영도구"
-      ],
-      "안내": "낙동강 하구 모래톱이 펼쳐진 다대포와 몰운대에서 해가 지고, 송도와 흰여울 마을은 바닷가 절벽 위로 산책길이 나 있습니다. 다리로 건너는 가덕도 대항항은 봄 숭어들이와 갯바위 낚시로 알려진 포구입니다.",
-      "엶": true,
-      "이름": {
-        "ko": "부산 서부",
-        "zh": "釜山西部"
-      },
-      "좌표": {
-        "경도": 128.9913,
-        "위도": 35.0572
-      },
-      "지역코드": "6",
-      "짧은이름": "부산 서부",
-      "차례": 501,
-      "포인트안내": "부산 서부 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 대항마을·동삼마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
-      "한줄": "낙조와 절벽",
-      "항구": [
-        "다대포항",
-        "대항항(가덕도)",
-        "하리항(영도)"
-      ]
-    },
-    {
-      "id": "busaneast",
-      "관광안내": "https://www.visitbusan.net",
-      "대표사진": null,
-      "묶음": "busanulsan",
-      "물때관측소": {
-        "메모": "물때표는 부산 조위관측소 기준입니다. 해운대는 약 15km, 기장 대변항은 약 22km 떨어져 있어 시각이 조금 다를 수 있습니다. 대변항에서 울산 관측소(DT_0020)는 약 34km입니다.",
-        "이름": "부산",
-        "코드": "DT_0005"
-      },
-      "바다": "남해",
-      "법정동코드": "26",
-      "색": "#1E4A6B",
-      "설명": "부산 동부 바다여행. 오륙도·광안리·해운대·기장 대변항, 멸치축제와 테트라포드 낚시통제 정리.",
-      "소개": "광안리에서 기장 멸치 포구까지",
-      "시군구": [
-        "남구",
-        "수영구",
-        "해운대구",
-        "기장군"
-      ],
-      "안내": "오륙도와 이기대의 바위 해안을 지나면 광안리와 해운대 두 도심 해수욕장이 이어집니다. 북쪽 기장으로 올라가면 대변항 멸치잡이 배와 일광·임랑의 잔잔한 해변을 만납니다.",
-      "엶": true,
-      "이름": {
-        "ko": "부산 동부",
-        "zh": "釜山东部"
-      },
-      "좌표": {
-        "경도": 129.1843,
-        "위도": 35.1901
-      },
-      "지역코드": "6",
-      "짧은이름": "부산 동부",
-      "차례": 502,
-      "포인트안내": "부산 동부 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 공수마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
-      "한줄": "해변과 포구",
-      "항구": [
-        "대변항",
-        "민락항",
-        "칠암항",
-        "청사포항"
-      ]
-    },
-    {
-      "id": "ulsan",
-      "관광안내": "https://tour.ulsan.go.kr",
-      "대표사진": null,
-      "묶음": "busanulsan",
-      "물때관측소": {
-        "메모": "물때표는 울산 조위관측소 기준입니다. 온산은 약 5km, 북구 정자항은 약 13km 떨어져 있습니다. 진하·간절곶 쪽은 시각이 조금 다를 수 있습니다.",
-        "이름": "울산",
-        "코드": "DT_0020"
-      },
-      "바다": "남해",
-      "법정동코드": "31",
-      "색": "#2C5F55",
-      "설명": "울산 바다여행. 진하·간절곶·대왕암공원·주전 몽돌해변, 해녀 체험마을과 갯바위 출입통제 정리.",
-      "소개": "간절곶 해돋이와 대왕암이 있는 바다",
-      "시군구": [
-        "울주군",
-        "동구",
-        "북구"
-      ],
-      "안내": "울주 진하해변과 간절곶은 새해 첫 해를 보러 사람이 몰리는 곳이고, 동구 대왕암공원과 슬도는 바다로 뻗은 바위 해안이 볼거리입니다. 북구 주전·강동에는 검은 몽돌 해변과 해녀 마을이 이어집니다.",
-      "엶": true,
-      "이름": {
-        "ko": "울산",
-        "zh": "蔚山"
-      },
-      "좌표": {
-        "경도": 129.4062,
-        "위도": 35.4737
-      },
-      "지역코드": "7",
-      "짧은이름": "울산",
-      "차례": 503,
-      "포인트안내": "울산 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 주전마을·우가마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
-      "한줄": "해돋이 해안",
-      "항구": [
-        "방어진항",
-        "정자항",
-        "당사항"
-      ]
-    },
-    {
-      "id": "gyeongju",
-      "관광안내": "https://www.gyeongju.go.kr/tour/",
-      "대표사진": null,
-      "묶음": "gyeongbuk",
-      "물때관측소": {
-        "메모": "경주 바다에는 국립해양조사원 조위관측소가 없어 가장 가까운 포항 관측소 기준으로 봅니다. 양남 쪽은 울산 관측소(DT_0020)도 가깝고, 동해는 밀물·썰물 높이 차가 작습니다.",
-        "이름": "포항",
-        "코드": "DT_0091"
-      },
-      "바다": "동해",
-      "법정동코드": "47",
-      "색": "#4A4F7A",
-      "설명": "경주 바다여행. 양남 주상절리, 문무대왕릉과 감은사지, 감포항 가자미, 나정·전촌 해변 정리.",
-      "소개": "문무왕 이야기가 남은 감포·양남 바닷가",
-      "시군구": [
-        "경주시"
-      ],
-      "안내": "양남 읍천항 옆 해안에는 돌기둥이 누운 주상절리가 이어지고, 봉길 앞바다에는 문무대왕릉 바위섬이 떠 있습니다. 북쪽 감포항과 전촌·나정 해변은 가자미와 활어회를 먹으러 들르기 좋습니다.",
-      "엶": true,
-      "이름": {
-        "ko": "경주 바다",
-        "zh": "庆州"
-      },
-      "좌표": {
-        "경도": 129.4868,
-        "위도": 35.7492
-      },
-      "지역코드": "35",
-      "짧은이름": "경주",
-      "차례": 601,
-      "포인트안내": "경주 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 연동마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
-      "한줄": "바다 왕릉",
-      "항구": [
-        "감포항",
-        "전촌항",
-        "읍천항"
-      ]
-    },
-    {
-      "id": "pohang",
-      "관광안내": "https://www.pohang.go.kr/phtour/",
-      "대표사진": null,
-      "묶음": "gyeongbuk",
-      "물때관측소": {
-        "메모": "물때표는 포항 조위관측소 기준입니다. 영일만 안쪽과 구룡포·월포 모두 이 관측소가 가장 가깝고, 동해라 밀물·썰물 높이 차가 작습니다.",
-        "이름": "포항",
-        "코드": "DT_0091"
-      },
-      "바다": "동해",
-      "법정동코드": "47",
-      "색": "#2F5873",
-      "설명": "포항 바다여행. 영일대·스페이스워크, 호미곶 일출, 구룡포 골목과 과메기, 칠포·이가리 정리.",
-      "소개": "호미곶 일출과 구룡포 골목이 있는 바다",
-      "시군구": [
-        "포항시"
-      ],
-      "안내": "영일대 해변과 환호공원 스페이스워크는 시내에서 바로 닿고, 호미반도를 돌면 호미곶 해맞이광장과 구룡포항이 나옵니다. 북쪽 칠포·이가리 해안에는 바다 위로 뻗은 전망대가 있습니다.",
-      "엶": true,
-      "이름": {
-        "ko": "포항 바다",
-        "zh": "浦项"
-      },
-      "좌표": {
-        "경도": 129.4629,
-        "위도": 36.0635
-      },
-      "지역코드": "35",
-      "짧은이름": "포항",
-      "차례": 602,
-      "포인트안내": "포항 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 창바우마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
-      "한줄": "호미곶 일출",
-      "항구": [
-        "구룡포항",
-        "양포항",
-        "포항여객선터미널(울릉행)"
-      ]
-    },
-    {
-      "id": "yeongdeok",
-      "관광안내": "https://tour.yd.go.kr",
-      "대표사진": null,
-      "묶음": "gyeongbuk",
-      "물때관측소": {
-        "메모": "물때표는 울진 후포 관측소 기준입니다. 축산항·고래불 쪽이 가깝고, 강구·장사 등 남쪽은 포항 관측소(DT_0091)가 더 가깝습니다.",
-        "이름": "후포",
-        "코드": "DT_0011"
-      },
-      "바다": "동해",
-      "법정동코드": "47",
-      "색": "#7A3A34",
-      "설명": "영덕 바다여행. 강구항 대게, 창포말등대·풍력단지, 축산항과 블루로드, 고래불 해변 정리.",
-      "소개": "대게 항구와 블루로드가 이어진 바다",
-      "시군구": [
-        "영덕군"
-      ],
-      "안내": "강구항 대게거리에서 시작한 해안길이 창포말등대와 풍력발전단지를 지나 축산항까지 이어집니다. 북쪽 영해면에는 옛 기와집 마을이 있고, 고래불 해변이 영덕 바다의 끝을 맺습니다.",
-      "엶": true,
-      "이름": {
-        "ko": "영덕 바다",
-        "zh": "盈德"
-      },
-      "좌표": {
-        "경도": 129.4103,
-        "위도": 36.4358
-      },
-      "지역코드": "35",
-      "짧은이름": "영덕",
-      "차례": 603,
-      "포인트안내": "영덕 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 채취 체험은 체험장이 운영하는 날에만 하세요.",
-      "한줄": "대게 항구",
-      "항구": [
-        "강구항",
-        "축산항",
-        "대진항"
-      ]
-    },
-    {
-      "id": "uljin",
-      "관광안내": "https://www.uljin.go.kr/tour/",
-      "대표사진": null,
-      "묶음": "gyeongbuk",
-      "물때관측소": {
-        "메모": "물때표는 후포 조위관측소 기준입니다. 후포·구산·기성이 가깝고, 죽변 쪽도 같은 관측소를 가장 가깝게 씁니다. 동해라 밀물·썰물 높이 차가 작습니다.",
-        "이름": "후포",
-        "코드": "DT_0011"
-      },
-      "바다": "동해",
-      "법정동코드": "47",
-      "색": "#2C5E55",
-      "설명": "울진 바다여행. 후포항 대게와 등기산 스카이워크, 월송정·망양정, 죽변 스카이레일 정리.",
-      "소개": "관동팔경 정자와 대게 항구가 있는 바다",
-      "시군구": [
-        "울진군"
-      ],
-      "안내": "남쪽 후포항은 대게와 붉은대게 축제가 열리는 곳이고, 바로 옆 등기산에는 바다 위로 뻗은 스카이워크가 있습니다. 해안도로를 따라 월송정과 망양정을 지나면 북쪽 죽변항과 해안 모노레일에 닿습니다.",
-      "엶": true,
-      "이름": {
-        "ko": "울진 바다",
-        "zh": "蔚珍"
-      },
-      "좌표": {
-        "경도": 129.4389,
-        "위도": 36.836
-      },
-      "지역코드": "35",
-      "짧은이름": "울진",
-      "차례": 604,
-      "포인트안내": "울진 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 기성마을·구산마을·거일1리마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
-      "한줄": "대게와 정자",
-      "항구": [
-        "후포항",
-        "구산항",
-        "죽변항"
-      ]
-    },
-    {
-      "id": "ulleung",
-      "관광안내": "https://www.ulleung.go.kr/tour/",
-      "대표사진": null,
-      "묶음": "gyeongbuk",
-      "물때관측소": {
-        "메모": "물때표는 울릉도 조위관측소 기준입니다. 섬 둘레 항구는 모두 이 관측소가 가장 가깝고, 독도는 거리가 멀어 참고용으로만 보세요.",
-        "이름": "울릉도",
-        "코드": "DT_0013"
-      },
-      "바다": "동해",
-      "법정동코드": "47",
-      "색": "#1E4A66",
-      "설명": "울릉도·독도 여행. 도동·저동 해안산책로, 관음도·나리분지, 오징어축제와 독도 배편 정리.",
-      "소개": "배로 건너가는 화산섬과 동쪽 끝 독도",
-      "시군구": [
-        "울릉군"
-      ],
-      "안내": "도동항과 저동항 사이에는 바위 절벽을 따라 걷는 해안산책로가 있고, 북면에는 관음도와 코끼리바위, 분화구 속 나리분지가 있습니다. 독도는 울릉도에서 다시 배를 타야 하며 날씨에 따라 뜨지 못하는 날도 많습니다.",
-      "엶": true,
-      "이름": {
-        "ko": "울릉도·독도",
-        "zh": "郁陵岛"
-      },
-      "좌표": {
-        "경도": 130.8788,
-        "위도": 37.5113
-      },
-      "지역코드": "35",
-      "짧은이름": "울릉",
-      "차례": 605,
-      "포인트안내": "울릉 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 채취 체험은 체험장이 운영하는 날에만 하세요.",
-      "한줄": "화산섬",
-      "항구": [
-        "도동항",
-        "저동항",
-        "사동항"
-      ]
-    },
-    {
-      "id": "samcheok",
-      "관광안내": "https://www.samcheok.go.kr/tour.web",
-      "대표사진": null,
-      "묶음": "gangwon",
-      "물때관측소": {
-        "메모": "물때표는 삼척항에서 약 7km 떨어진 동해항 관측소 기준입니다. 장호·임원 등 남쪽 포구는 30km 넘게 떨어져 있어 시각이 조금 다를 수 있습니다. 동해안은 조수 간만의 차가 작아 서해처럼 갯벌이 크게 드러나지 않습니다.",
-        "이름": "동해항",
-        "코드": "DT_0057"
-      },
-      "바다": "동해",
-      "법정동코드": "51",
-      "색": "#2E5E4E",
-      "설명": "삼척 바다여행. 새천년해안도로·장호항·초곡 용굴촛대바위길, 물때와 곰치국·대게, 어촌체험 정리.",
-      "소개": "절벽 사이 포구가 이어지는 강원 남쪽 바다",
-      "시군구": [
-        "삼척시"
-      ],
-      "안내": "새천년해안도로와 맹방 백사장을 지나 남쪽으로 내려가면 초곡·장호·임원 같은 작은 포구가 차례로 나옵니다. 장호항 주변은 물이 맑아 투명카누와 스노클링 체험이 열립니다.",
-      "엶": true,
-      "이름": {
-        "ko": "삼척",
-        "zh": "三陟"
-      },
-      "좌표": {
-        "경도": 129.2552,
-        "위도": 37.3581
-      },
-      "지역코드": "32",
-      "짧은이름": "삼척",
-      "차례": 701,
-      "포인트안내": "삼척 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 장호마을·갈남마을·궁촌마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
-      "한줄": "기암과 포구",
-      "항구": [
-        "삼척항(정라진)",
-        "장호항",
-        "임원항",
-        "궁촌항"
-      ]
-    },
-    {
-      "id": "donghae",
-      "관광안내": "https://www.dh.go.kr/tour/",
-      "대표사진": null,
-      "묶음": "gangwon",
-      "물때관측소": {
-        "메모": "물때표는 묵호항 안의 묵호 관측소 기준입니다. 남쪽 추암·한섬 쪽은 동해항 관측소(DT_0057)가 더 가깝습니다.",
-        "이름": "묵호",
-        "코드": "DT_0006"
-      },
-      "바다": "동해",
-      "법정동코드": "51",
-      "색": "#1D4E6E",
-      "설명": "동해 바다여행. 묵호항·논골담길·도째비골, 망상해변과 추암 촛대바위, 물때와 물회·막회 정리.",
-      "소개": "골목과 등대가 내려다보는 항구 도시",
-      "시군구": [
-        "동해시"
-      ],
-      "안내": "묵호항 뒤 언덕에는 벽화 골목과 등대, 유리 전망대가 모여 있어 걸어서 둘러보기 좋습니다. 북쪽 망상해변부터 남쪽 추암 촛대바위까지 해변이 이어집니다.",
-      "엶": true,
-      "이름": {
-        "ko": "동해",
-        "zh": "东海"
-      },
-      "좌표": {
-        "경도": 129.1192,
-        "위도": 37.5502
-      },
-      "지역코드": "32",
-      "짧은이름": "동해",
-      "차례": 702,
-      "포인트안내": "동해 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 채취 체험은 체험장이 운영하는 날에만 하세요.",
-      "한줄": "묵호 언덕",
-      "항구": [
-        "묵호항",
-        "어달항",
-        "대진항(동해)",
-        "천곡항"
-      ]
-    },
-    {
-      "id": "gangneung",
-      "관광안내": "https://www.gn.go.kr/tour/",
-      "대표사진": null,
-      "묶음": "gangwon",
-      "물때관측소": {
-        "메모": "강릉 시내에는 국립해양조사원 조위관측소가 없어 가장 가까운 묵호 관측소 기준입니다. 주문진 쪽은 속초 관측소(DT_0012)가 더 가깝습니다.",
-        "이름": "묵호",
-        "코드": "DT_0006"
-      },
-      "바다": "동해",
-      "법정동코드": "51",
-      "색": "#4A3F6B",
-      "설명": "강릉 바다여행. 주문진항·경포해변·안목 커피거리·정동진, 바다부채길, 물때와 초당순두부 정리.",
-      "소개": "경포 해변과 정동진 해돋이의 긴 해안",
-      "시군구": [
-        "강릉시"
-      ],
-      "안내": "북쪽 주문진항부터 경포·안목을 지나 정동진과 금진까지 해변이 길게 이어집니다. 정동진 남쪽에는 해안단구 절벽 아래를 걷는 바다부채길이 있습니다.",
-      "엶": true,
-      "이름": {
-        "ko": "강릉",
-        "zh": "江陵"
-      },
-      "좌표": {
-        "경도": 128.9405,
-        "위도": 37.7759
-      },
-      "지역코드": "32",
-      "짧은이름": "강릉",
-      "차례": 703,
-      "포인트안내": "강릉 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 소돌마을·사천마을·심곡마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
-      "한줄": "호수와 해변",
-      "항구": [
-        "주문진항",
-        "사천진항",
-        "강릉항(안목)",
-        "금진항"
-      ]
-    },
-    {
-      "id": "yangyang",
-      "관광안내": "https://tour.yangyang.go.kr",
-      "대표사진": null,
-      "묶음": "gangwon",
-      "물때관측소": {
-        "메모": "양양에는 국립해양조사원 조위관측소가 없어 속초 관측소 기준입니다. 남쪽 남애·죽도는 속초에서 30km 가까이 떨어져 있어 시각이 조금 다를 수 있습니다.",
-        "이름": "속초",
-        "코드": "DT_0012"
-      },
-      "바다": "동해",
-      "법정동코드": "51",
-      "색": "#2F6B6B",
-      "설명": "양양 바다여행. 남애항·죽도·하조대·서피비치와 낙산사, 물때와 섭국·송이, 어촌체험 정리.",
-      "소개": "서핑 해변과 바닷가 절이 이어지는 곳",
-      "시군구": [
-        "양양군"
-      ],
-      "안내": "남애항에서 죽도·하조대를 거쳐 낙산까지 크고 작은 해변마다 서핑숍이 자리합니다. 바다 절벽 위에는 낙산사와 휴휴암, 하조대 정자가 있습니다.",
-      "엶": true,
-      "이름": {
-        "ko": "양양",
-        "zh": "襄阳"
-      },
-      "좌표": {
-        "경도": 128.7127,
-        "위도": 38.0313
-      },
-      "지역코드": "32",
-      "짧은이름": "양양",
-      "차례": 704,
-      "포인트안내": "양양 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 남애마을·수산마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
-      "한줄": "서핑과 사찰",
-      "항구": [
-        "남애항",
-        "기사문항",
-        "수산항",
-        "물치항"
-      ]
-    },
-    {
-      "id": "sokcho",
-      "관광안내": null,
-      "대표사진": null,
-      "묶음": "gangwon",
-      "물때관측소": {
-        "메모": "물때표는 속초항의 속초 관측소 기준으로, 권역 안에서 가장 가깝습니다.",
-        "이름": "속초",
-        "코드": "DT_0012"
-      },
-      "바다": "동해",
-      "법정동코드": "51",
-      "색": "#24476B",
-      "설명": "속초 바다여행. 대포항·속초해변·아바이마을 갯배·영금정, 물때와 오징어순대·닭강정 정리.",
-      "소개": "항구 시장과 호수, 해변이 모인 도시",
-      "시군구": [
-        "속초시"
-      ],
-      "안내": "대포항과 속초해변, 아바이마을, 동명항이 시내 가까이 모여 있어 걸어서 다니기 좋습니다. 바다와 이어진 석호인 청초호와 영랑호가 도시 양쪽에 있습니다.",
-      "엶": true,
-      "이름": {
-        "ko": "속초",
-        "zh": "束草"
-      },
-      "좌표": {
-        "경도": 128.5968,
-        "위도": 38.2007
-      },
-      "지역코드": "32",
-      "짧은이름": "속초",
-      "차례": 705,
-      "포인트안내": "속초 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 장사마을·대포마을·청호마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
-      "한줄": "항구와 석호",
-      "항구": [
-        "대포항",
-        "동명항(속초항)",
-        "장사항",
-        "외옹치항"
-      ]
-    },
-    {
-      "id": "gwgoseong",
-      "관광안내": "https://www.gwgs.go.kr/tour/",
-      "대표사진": null,
-      "묶음": "gangwon",
-      "물때관측소": {
-        "메모": "고성에는 국립해양조사원 조위관측소가 없어 속초 관측소 기준입니다. 거진·대진 등 북쪽 포구는 30km 가까이 떨어져 있어 시각이 조금 다를 수 있습니다.",
-        "이름": "속초",
-        "코드": "DT_0012"
-      },
-      "바다": "동해",
-      "법정동코드": "51",
-      "색": "#3D5A40",
-      "설명": "강원 고성 바다여행. 통일전망대·화진포·거진항·청간정·능파대, 물때와 문어·도치알탕 정리.",
-      "소개": "호수와 포구가 이어지는 최북단 바다",
-      "시군구": [
-        "고성군"
-      ],
-      "안내": "휴전선과 맞닿은 북쪽에는 통일전망대와 대진항, 화진포가 있고 남쪽으로 거진·송지호·아야진이 이어집니다. 능파대와 청간정 같은 바위·정자 명소가 해안 곳곳에 있습니다.",
-      "엶": true,
-      "이름": {
-        "ko": "강원 고성",
-        "zh": "江原高城"
-      },
-      "좌표": {
-        "경도": 128.4903,
-        "위도": 38.3905
-      },
-      "지역코드": "32",
-      "짧은이름": "강원 고성",
-      "차례": 706,
-      "포인트안내": "고성 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 오호마을·거진마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
-      "한줄": "최북단 바다",
-      "항구": [
-        "거진항",
-        "대진항",
-        "아야진항",
-        "공현진항"
-      ]
-    }
-  ],
-  "묶음이름": {
-    "busanulsan": {
-      "ko": "부산·울산",
-      "zh": "釜山·蔚山"
-    },
-    "chungnam": {
-      "ko": "충남",
-      "zh": "忠南"
-    },
-    "gangwon": {
-      "ko": "강원",
-      "zh": "江原"
-    },
-    "gyeongbuk": {
-      "ko": "경북",
-      "zh": "庆北"
-    },
-    "gyeongnam": {
-      "ko": "경남",
-      "zh": "庆南"
-    },
-    "jeju": {
-      "ko": "제주",
-      "zh": "济州"
-    },
-    "jeonbuk": {
-      "ko": "전북",
-      "zh": "全北"
-    },
-    "jeonnam": {
-      "ko": "전남",
-      "zh": "全南"
-    },
-    "sudogwon": {
-      "ko": "인천·경기",
-      "zh": "仁川·京畿"
-    }
+  {
+   "id": "yeongjong",
+   "관광안내": "https://itour.incheon.go.kr",
+   "대표사진": null,
+   "묶음": "sudogwon",
+   "물때관측소": {
+    "메모": "물때표는 소무의도 조위관측소 기준입니다. 무의도·을왕리 쪽이 가깝고, 삼목선착장·신도 쪽은 영종대교 관측소(DT_0044) 시각이 더 가깝습니다.",
+    "이름": "소무의도",
+    "코드": "DT_0093"
+   },
+   "바다": "서해",
+   "법정동코드": "28",
+   "색": "#2E5573",
+   "설명": "영종 바다여행. 을왕리·왕산 해변, 무의도 하나개, 소무의도, 신도평화대교와 장봉도 배편, 물때 정리.",
+   "소개": "공항 옆 해변과 다리로 이어진 섬들",
+   "시군구": [
+    "영종구",
+    "옹진군 북도면"
+   ],
+   "안내": "을왕리와 왕산, 선녀바위가 이어진 서쪽 해안은 공항에서 차로 금방 닿는 해변입니다. 남쪽으로 무의대교를 건너면 하나개해변과 소무의도 인도교가, 북쪽 신도평화대교를 건너면 신도·시도·모도가 차례로 나옵니다.",
+   "엶": true,
+   "이름": {
+    "ko": "영종",
+    "zh": "永宗"
+   },
+   "좌표": {
+    "경도": 126.4075,
+    "위도": 37.437
+   },
+   "지역코드": "2",
+   "짧은이름": "영종",
+   "차례": 402,
+   "포인트안내": "영종 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 큰무리마을·포내마을·마시안마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
+   "한줄": "공항 옆 섬",
+   "항구": [
+    "삼목선착장",
+    "거잠포 선착장",
+    "구읍뱃터"
+   ]
   },
-  "묶음차례": [
-    "jeju",
-    "sudogwon",
-    "chungnam",
-    "jeonbuk",
-    "jeonnam",
-    "gyeongnam",
-    "busanulsan",
-    "gyeongbuk",
-    "gangwon"
-  ],
-  "_묶음차례까닭": "2026-09-30 주인 지시 — 「권역 배치중 제주를 첫번째로 배치하자」. 제주는 바다 여행지로 가장 많이 찾는 곳이고, 제주패스 광고도 그곳에 있습니다."
+  {
+   "id": "ongjin",
+   "관광안내": "https://www.ongjin.go.kr/open_content/tour/",
+   "대표사진": null,
+   "묶음": "sudogwon",
+   "물때관측소": {
+    "메모": "물때표는 영흥도 조위관측소 기준입니다. 선재도·영흥도가 가깝고, 덕적도·소야도는 덕적도 관측소(DT_0065) 시각을 따로 보세요.",
+    "이름": "영흥도",
+    "코드": "DT_0043"
+   },
+   "바다": "서해",
+   "법정동코드": "28",
+   "색": "#1E5F5F",
+   "설명": "옹진 섬 바다여행. 선재도 목섬, 영흥도 십리포, 덕적·자월·승봉·대이작도 해변과 배편, 물때 정리.",
+   "소개": "다리로 닿는 영흥도와 배로 가는 섬들",
+   "시군구": [
+    "옹진군"
+   ],
+   "안내": "선재대교와 영흥대교를 건너면 목섬 모랫길과 십리포·장경리 해변이 차로 이어집니다. 덕적도·자월도·승봉도·대이작도는 인천항이나 대부도 방아머리에서 배를 타고 들어가며, 섬마다 조용한 해변과 산길이 있습니다.",
+   "엶": true,
+   "이름": {
+    "ko": "옹진 섬",
+    "zh": "瓮津"
+   },
+   "좌표": {
+    "경도": 126.4896,
+    "위도": 37.2609
+   },
+   "지역코드": "2",
+   "짧은이름": "옹진",
+   "차례": 403,
+   "포인트안내": "옹진 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 선재도마을·영암마을·이작마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
+   "한줄": "배 타는 섬",
+   "항구": [
+    "진두항",
+    "덕적도 진리선착장",
+    "자월도 달바위선착장"
+   ]
+  },
+  {
+   "id": "daebu",
+   "관광안내": "https://ggtour.or.kr",
+   "대표사진": null,
+   "묶음": "sudogwon",
+   "물때관측소": {
+    "메모": "물때표는 안산 조위관측소 기준입니다. 대부도 탄도항·누에섬 쪽이 가깝고, 오이도는 인천송도 관측소(DT_0052), 풍도는 영흥도 관측소(DT_0043)도 함께 참고하세요.",
+    "이름": "안산",
+    "코드": "DT_0008"
+   },
+   "바다": "서해",
+   "법정동코드": "41",
+   "색": "#5E4660",
+   "설명": "대부·오이도 바다여행. 오이도 빨간등대, 시화나래 달전망대, 구봉도 낙조, 탄도항 누에섬 물때 정리.",
+   "소개": "방조제로 이어진 오이도와 대부도 갯벌",
+   "시군구": [
+    "안산시",
+    "시흥시"
+   ],
+   "안내": "시흥 오이도의 빨간등대에서 출발해 시화방조제를 건너면 달전망대가 있는 휴게소를 지나 대부도에 닿습니다. 대부도에서는 구봉도 낙조와 해솔길, 썰물에 걸어 들어가는 탄도항 누에섬을 둘러보고 칼국수와 포도를 맛볼 수 있습니다.",
+   "엶": true,
+   "이름": {
+    "ko": "대부·오이도",
+    "zh": "大阜·乌耳"
+   },
+   "좌표": {
+    "경도": 126.6276,
+    "위도": 37.2827
+   },
+   "지역코드": "31",
+   "짧은이름": "대부",
+   "차례": 404,
+   "포인트안내": "대부 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 종현마을·선감마을·흘곶마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
+   "한줄": "방조제 길",
+   "항구": [
+    "방아머리선착장",
+    "탄도항",
+    "오이도 선착장"
+   ]
+  },
+  {
+   "id": "hwaseong",
+   "관광안내": "https://tour.hscity.go.kr",
+   "대표사진": null,
+   "묶음": "sudogwon",
+   "물때관측소": {
+    "메모": "화성 해안에는 따로 조위관측소가 없어 가장 가까운 안산 관측소(대부도 탄도 쪽) 기준입니다. 매향리·국화도 쪽은 평택 관측소(DT_0002) 시각도 함께 참고하세요. 제부도 바닷길 통행 시간은 화성시가 따로 공지합니다.",
+    "이름": "안산",
+    "코드": "DT_0008"
+   },
+   "바다": "서해",
+   "법정동코드": "41",
+   "색": "#6E4A2A",
+   "설명": "화성 바다여행. 제부도 바닷길·매바위, 전곡항 케이블카, 궁평항 솔밭, 매향리와 국화도 배편 정리.",
+   "소개": "물때에 열리는 제부도 바닷길의 바다",
+   "시군구": [
+    "화성시"
+   ],
+   "안내": "제부도는 썰물 때 드러나는 바닷길과 전곡항에서 건너가는 해상케이블카 두 가지로 들어갈 수 있습니다. 남쪽으로 궁평항 솔밭 해변과 백미리 갯벌, 옛 사격장 자리에 만든 매향리 평화생태공원이 해안을 따라 이어집니다.",
+   "엶": true,
+   "이름": {
+    "ko": "화성",
+    "zh": "华城"
+   },
+   "좌표": {
+    "경도": 126.6662,
+    "위도": 37.1407
+   },
+   "지역코드": "31",
+   "짧은이름": "화성",
+   "차례": 405,
+   "포인트안내": "화성 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 제부마을·전곡리마을·백미리마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
+   "한줄": "바닷길 섬",
+   "항구": [
+    "전곡항",
+    "궁평항",
+    "제부항",
+    "고온항"
+   ]
+  },
+  {
+   "id": "taean",
+   "관광안내": "https://www.taean.go.kr/tour.do",
+   "대표사진": null,
+   "묶음": "chungnam",
+   "물때관측소": {
+    "메모": "물때표는 반도 북쪽 태안 관측소(학암포·만대 쪽) 기준입니다. 신진도·안흥항은 안흥 관측소, 안면도 남쪽(영목·대야도)은 보령 관측소 시각이 더 가깝습니다.",
+    "이름": "태안",
+    "코드": "DT_0050"
+   },
+   "바다": "서해",
+   "법정동코드": "44",
+   "색": "#3E7C8C",
+   "설명": "태안 바다여행. 신두리사구·만리포·꽃지 해변, 가의도 배편, 물때와 우럭·주꾸미 낚시 정리.",
+   "소개": "모래언덕과 해수욕장이 줄지은 태안반도",
+   "시군구": [
+    "태안군"
+   ],
+   "안내": "신두리 모래언덕에서 안면도 꽃지까지 해수욕장이 줄지어 있고, 신진도 안흥외항에서는 가의도 가는 배가 드나듭니다.",
+   "엶": true,
+   "이름": {
+    "ko": "태안",
+    "zh": "泰安"
+   },
+   "좌표": {
+    "경도": 126.207,
+    "위도": 36.7397
+   },
+   "지역코드": "34",
+   "짧은이름": "태안",
+   "차례": 101,
+   "포인트안내": "태안 갯벌은 대부분 어촌계가 가꾸는 마을어장입니다. 해루질은 만대마을·용신마을·병술만마을처럼 체험을 운영하는 곳에서 정해진 구역·도구로 즐기세요.",
+   "한줄": "사구와 해변",
+   "항구": [
+    "신진항(안흥외항)",
+    "백사장항",
+    "모항항"
+   ]
+  },
+  {
+   "id": "seosan",
+   "관광안내": "https://www.seosan.go.kr/tour/index.do",
+   "대표사진": null,
+   "묶음": "chungnam",
+   "물때관측소": {
+    "메모": null,
+    "이름": "대산",
+    "코드": "DT_0017"
+   },
+   "바다": "서해",
+   "법정동코드": "44",
+   "색": "#7A6A4F",
+   "설명": "서산 바다 안내. 간월암 물때, 웅도·중리 갯벌체험, 삼길포 우럭과 간월도 어리굴젓 이야기.",
+   "소개": "간월암 물길과 가로림만 갯벌의 고장",
+   "시군구": [
+    "서산시"
+   ],
+   "안내": "천수만의 간월암·버드랜드와 가로림만의 웅도·중리 갯벌을 둘러보는 권역이며, 삼길포항은 우럭 좌대낚시로 알려져 있습니다.",
+   "엶": true,
+   "이름": {
+    "ko": "서산",
+    "zh": "瑞山"
+   },
+   "좌표": {
+    "경도": 126.4011,
+    "위도": 36.8305
+   },
+   "지역코드": "34",
+   "짧은이름": "서산",
+   "차례": 102,
+   "포인트안내": "서산 갯벌은 대부분 어촌계가 가꾸는 마을어장입니다. 해루질은 중리마을·왕산마을·웅도마을처럼 체험을 운영하는 곳에서 정해진 구역·도구로 즐기세요.",
+   "한줄": "가로림만 갯벌",
+   "항구": [
+    "삼길포항",
+    "창리포구"
+   ]
+  },
+  {
+   "id": "dangjin",
+   "관광안내": "https://www.dangjin.go.kr/tour.do",
+   "대표사진": null,
+   "묶음": "chungnam",
+   "물때관측소": {
+    "메모": "물때표는 대산 관측소 기준이라 왜목·석문·장고항 쪽에 맞습니다. 한진포구·안섬·삽교호 등 아산만 쪽은 평택 관측소 시각이 더 가깝습니다.",
+    "이름": "대산",
+    "코드": "DT_0017"
+   },
+   "바다": "서해",
+   "법정동코드": "44",
+   "색": "#5E6FA3",
+   "설명": "당진 바다 나들이. 왜목마을 일출·일몰, 장고항 실치, 난지섬 배편과 갯벌체험 마을 정리.",
+   "소개": "서해에서 해가 뜨는 왜목과 석문 포구들",
+   "시군구": [
+    "당진시"
+   ],
+   "안내": "북쪽으로 튀어나온 석문면 덕분에 왜목마을에서 해돋이와 해넘이를 모두 보고, 봄이면 장고항에 실치를 맛보러 사람이 모입니다.",
+   "엶": true,
+   "이름": {
+    "ko": "당진",
+    "zh": "唐津"
+   },
+   "좌표": {
+    "경도": 126.6165,
+    "위도": 36.9812
+   },
+   "지역코드": "34",
+   "짧은이름": "당진",
+   "차례": 103,
+   "포인트안내": "당진 갯벌은 대부분 어촌계가 가꾸는 마을어장입니다. 해루질은 교로 왜목농어촌체험휴양마을·장고항·마섬포구처럼 체험을 운영하는 곳에서 정해진 구역·도구로 즐기세요.",
+   "한줄": "해뜨는 서해",
+   "항구": [
+    "장고항",
+    "도비도항",
+    "한진포구"
+   ]
+  },
+  {
+   "id": "boryeong",
+   "관광안내": "https://www.brcn.go.kr/tour.do",
+   "대표사진": null,
+   "묶음": "chungnam",
+   "물때관측소": {
+    "메모": null,
+    "이름": "보령",
+    "코드": "DT_0025"
+   },
+   "바다": "서해",
+   "법정동코드": "44",
+   "색": "#3E6E8E",
+   "설명": "보령 바다여행 안내. 대천·무창포 해변, 삽시도·외연도 배편, 오천항 주꾸미 낚시와 물때.",
+   "소개": "머드 해변과 섬 뱃길이 모이는 바다",
+   "시군구": [
+    "보령시"
+   ],
+   "안내": "대천해수욕장과 대천항을 중심으로 남쪽 무창포 바닷길부터 북쪽 오천항, 해저터널로 이어진 원산도까지 품은 충남 서해안입니다.",
+   "엶": true,
+   "이름": {
+    "ko": "보령",
+    "zh": "保宁"
+   },
+   "좌표": {
+    "경도": 126.5078,
+    "위도": 36.3269
+   },
+   "지역코드": "34",
+   "짧은이름": "보령",
+   "차례": 104,
+   "포인트안내": "보령 갯벌은 대부분 어촌계가 가꾸는 마을어장입니다. 해루질은 무창포마을·군헌마을(군헌어촌계 갯벌체험장)·삽시도마을처럼 체험을 운영하는 곳에서 정해진 구역·도구로 즐기세요.",
+   "한줄": "머드와 섬 뱃길",
+   "항구": [
+    "대천항",
+    "오천항",
+    "무창포항"
+   ]
+  },
+  {
+   "id": "seocheon",
+   "관광안내": "https://www.seocheon.go.kr/tour.do",
+   "대표사진": null,
+   "묶음": "chungnam",
+   "물때관측소": {
+    "메모": null,
+    "이름": "서천마량",
+    "코드": "DT_0051"
+   },
+   "바다": "서해",
+   "법정동코드": "44",
+   "색": "#5F8A5B",
+   "설명": "서천 바다여행 정보. 춘장대·마량 동백숲·홍원항, 월하성·선도리 갯벌체험.",
+   "소개": "동백숲 언덕과 세계유산 갯벌의 고장",
+   "시군구": [
+    "서천군"
+   ],
+   "안내": "마량리 동백나무숲과 춘장대에서 홍원항을 지나 금강하구의 장항 송림, 유부도 갯벌까지 내려가는 충남 최남단 해안입니다.",
+   "엶": true,
+   "이름": {
+    "ko": "서천",
+    "zh": "舒川"
+   },
+   "좌표": {
+    "경도": 126.6149,
+    "위도": 36.0996
+   },
+   "지역코드": "34",
+   "짧은이름": "서천",
+   "차례": 105,
+   "포인트안내": "서천 갯벌은 대부분 어촌계가 가꾸는 마을어장입니다. 해루질은 월하성마을·선도리갯벌체험마을·서천송림갯벌체험장처럼 체험을 운영하는 곳에서 정해진 구역·도구로 즐기세요.",
+   "한줄": "동백숲과 갯벌",
+   "항구": [
+    "홍원항",
+    "마량진항",
+    "장항항"
+   ]
+  },
+  {
+   "id": "hongseong",
+   "관광안내": "https://www.hongseong.go.kr/tour.do",
+   "대표사진": null,
+   "묶음": "chungnam",
+   "물때관측소": {
+    "메모": null,
+    "이름": "보령",
+    "코드": "DT_0025"
+   },
+   "바다": "서해",
+   "법정동코드": "44",
+   "색": "#9A6A4F",
+   "설명": "홍성 바다여행. 남당항 새조개·대하, 속동갯벌 바지락 체험, 죽도 배편과 천수만 노을 명소.",
+   "소개": "천수만 안쪽, 새조개와 노을의 포구",
+   "시군구": [
+    "홍성군"
+   ],
+   "안내": "천수만 안쪽 남당항과 궁리포구를 해안도로가 잇고, 겨울 새조개와 가을 대하 철이면 포구가 붐비는 홍성 서부 해안입니다.",
+   "엶": true,
+   "이름": {
+    "ko": "홍성",
+    "zh": "洪城"
+   },
+   "좌표": {
+    "경도": 126.5259,
+    "위도": 36.5616
+   },
+   "지역코드": "34",
+   "짧은이름": "홍성",
+   "차례": 106,
+   "포인트안내": "홍성 갯벌은 대부분 어촌계가 가꾸는 마을어장입니다. 해루질은 속동갯벌마을처럼 체험을 운영하는 곳에서 정해진 구역·도구로 즐기세요.",
+   "한줄": "천수만 노을길",
+   "항구": [
+    "남당항",
+    "궁리포구"
+   ]
+  },
+  {
+   "id": "gunsan",
+   "관광안내": "https://www.gunsan.go.kr/tour",
+   "대표사진": null,
+   "묶음": "jeonbuk",
+   "물때관측소": {
+    "메모": "물때표는 군산외항 조위관측소 기준입니다. 비응항과 새만금 북쪽이 가장 가깝고, 금강 건너 서천 쪽은 장항 관측소(DT_0024)가 따로 있습니다.",
+    "이름": "군산",
+    "코드": "DT_0018"
+   },
+   "바다": "서해",
+   "법정동코드": "52",
+   "색": "#34566E",
+   "설명": "군산 바다여행. 비응항, 내항 뜬다리부두와 근대 선창, 금강 철새, 어청도 가는 배와 물때.",
+   "소개": "근대 항구 골목과 방조제가 시작되는 군산 바다",
+   "시군구": [
+    "군산시"
+   ],
+   "안내": "금강이 바다로 빠져나가는 내항에는 뜬다리부두와 옛 세관, 박물관이 줄지어 근대 무역항의 흔적을 보여 줍니다. 서쪽 끝 비응항은 새만금 방조제가 출발하는 곳으로, 유람선이 이곳에서 바다로 나갑니다.",
+   "엶": true,
+   "이름": {
+    "ko": "군산",
+    "zh": "群山"
+   },
+   "좌표": {
+    "경도": 126.6663,
+    "위도": 35.9797
+   },
+   "지역코드": "37",
+   "짧은이름": "군산",
+   "차례": 201,
+   "포인트안내": "군산 갯벌은 대부분 어촌계가 가꾸는 마을어장입니다. 해루질은 체험장이 운영하는 날에 정해진 구역에서만 즐기세요.",
+   "한줄": "근대 항구",
+   "항구": [
+    "비응항"
+   ]
+  },
+  {
+   "id": "gogunsan",
+   "관광안내": "https://www.gunsan.go.kr/tour",
+   "대표사진": null,
+   "묶음": "jeonbuk",
+   "물때관측소": {
+    "메모": "신시도·선유도는 군산 관측소와 위도 관측소(DT_0068) 사이에 있어 두 곳 시각을 함께 보면 좋고, 말도 같은 서쪽 섬은 위도 쪽이 더 가깝습니다. 어청도는 섬 안의 어청도 관측소(DT_0037) 기준입니다.",
+    "이름": "군산",
+    "코드": "DT_0018"
+   },
+   "바다": "서해",
+   "법정동코드": "52",
+   "색": "#2C6A66",
+   "설명": "고군산군도 여행. 신시도 대각산, 선유도 명사십리, 장자도·대장봉, 말도·어청도 배편과 물때.",
+   "소개": "다리로 잇는 섬과 배로 가는 섬이 모인 고군산군도",
+   "시군구": [
+    "군산시"
+   ],
+   "안내": "새만금 방조제와 고군산대교를 따라 신시도·무녀도·선유도·장자도까지 차로 들어갈 수 있고, 섬마다 봉우리 전망대와 모래 해변이 있습니다. 말도·방축도 같은 바깥 섬과 먼바다의 어청도는 지금도 배를 타야 닿습니다.",
+   "엶": true,
+   "이름": {
+    "ko": "고군산군도",
+    "zh": "古群山"
+   },
+   "좌표": {
+    "경도": 126.4185,
+    "위도": 35.8145
+   },
+   "지역코드": "37",
+   "짧은이름": "고군산",
+   "차례": 202,
+   "포인트안내": "고군산 갯벌은 대부분 어촌계가 가꾸는 마을어장입니다. 해루질은 신시도마을·선유도마을·무녀도마을처럼 체험을 운영하는 곳에서 정해진 구역·도구로 즐기세요.",
+   "한줄": "섬 잇기",
+   "항구": [
+    "야미도항",
+    "신시도항",
+    "무녀도항",
+    "선유도항"
+   ]
+  },
+  {
+   "id": "buan",
+   "관광안내": "https://www.buan.go.kr/tour/",
+   "대표사진": null,
+   "묶음": "jeonbuk",
+   "물때관측소": {
+    "메모": "변산반도에서 가장 가까운 조위관측소는 섬 안의 위도 관측소입니다. 격포·채석강은 바다 건너 약 15km 떨어져 있고, 곰소만 안쪽은 물이 드나드는 시각이 조금 다를 수 있으니 현장 안내판도 함께 보세요.",
+    "이름": "위도",
+    "코드": "DT_0068"
+   },
+   "바다": "서해",
+   "법정동코드": "52",
+   "색": "#6E4F36",
+   "설명": "부안 바다여행. 채석강·적벽강 해안, 격포항 위도 배편, 모항 갯벌체험, 곰소 젓갈과 물때 정리.",
+   "소개": "층층 바위 절벽과 소금밭이 있는 변산반도 바다",
+   "시군구": [
+    "부안군"
+   ],
+   "안내": "변산반도 서쪽 끝 격포에는 퇴적층이 켜켜이 드러난 채석강과 붉은 적벽강이 이어지고, 격포항에서 위도로 가는 배가 떠납니다. 반도를 돌아 남쪽 곰소만으로 가면 천일염 소금밭과 젓갈 가게가 모인 곰소항이 나옵니다.",
+   "엶": true,
+   "이름": {
+    "ko": "부안",
+    "zh": "扶安"
+   },
+   "좌표": {
+    "경도": 126.5066,
+    "위도": 35.6187
+   },
+   "지역코드": "37",
+   "짧은이름": "부안",
+   "차례": 203,
+   "포인트안내": "부안 갯벌은 대부분 어촌계가 가꾸는 마을어장입니다. 해루질은 모항갯벌체험장처럼 체험을 운영하는 곳에서 정해진 구역·도구로 즐기세요.",
+   "한줄": "절벽과 염전",
+   "항구": [
+    "격포항",
+    "곰소항",
+    "위도 파장금항"
+   ]
+  },
+  {
+   "id": "gochang",
+   "관광안내": "https://www.gochang.go.kr/culture/index.gochang",
+   "대표사진": null,
+   "묶음": "jeonbuk",
+   "물때관측소": {
+    "메모": "구시포에서 남쪽으로 가까운 영광 조위관측소 기준입니다. 북쪽 곰소만 안쪽의 하전·만돌 갯벌로 갈 때는 위도 관측소(DT_0068) 시각도 함께 확인하세요.",
+    "이름": "영광",
+    "코드": "DT_0003"
+   },
+   "바다": "서해",
+   "법정동코드": "52",
+   "색": "#55603A",
+   "설명": "고창 바다여행. 구시포·동호 해변, 하전·만돌 갯벌체험, 선운산 풍천장어와 영광 관측소 물때.",
+   "소개": "세계유산 갯벌과 긴 모래 해안이 펼쳐진 고창",
+   "시군구": [
+    "고창군"
+   ],
+   "안내": "고창 바다는 물이 빠지면 끝없이 드러나는 갯벌이 주인공으로, 2021년 유네스코 세계자연유산 '한국의 갯벌'에 이름을 올렸습니다. 남쪽 구시포와 북쪽 동호 사이에는 차가 달려도 될 만큼 단단한 모래 해안이 길게 이어집니다.",
+   "엶": true,
+   "이름": {
+    "ko": "고창",
+    "zh": "高敞"
+   },
+   "좌표": {
+    "경도": 126.5013,
+    "위도": 35.4922
+   },
+   "지역코드": "37",
+   "짧은이름": "고창",
+   "차례": 204,
+   "포인트안내": "고창 갯벌은 대부분 어촌계가 가꾸는 마을어장입니다. 해루질은 하전마을·만돌마을·장호마을처럼 체험을 운영하는 곳에서 정해진 구역·도구로 즐기세요.",
+   "한줄": "세계유산갯벌",
+   "항구": [
+    "구시포항",
+    "동호항"
+   ]
+  },
+  {
+   "id": "sinan",
+   "관광안내": null,
+   "대표사진": null,
+   "묶음": "jeonnam",
+   "물때관측소": {
+    "이름": "송공항",
+    "코드": null,
+    "메모": "물때표는 송공항 조위관측소 기준입니다. 서버가 국립해양조사원에서 받아 쓰는 값을 그대로 적었습니다 (2026-10-02 확인)."
+   },
+   "바다": "서해",
+   "법정동코드": null,
+   "색": null,
+   "설명": "신안 포인트 110곳과 오늘 물때, 세발낙지·백합 제철, 퍼플섬·증도 여행 코스 안내.",
+   "소개": null,
+   "시군구": [],
+   "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 아름다운 섬과 천일염, 갯벌의 고장 신안을 여러분께 소개합니다.",
+   "엶": true,
+   "이름": {
+    "ko": "신안",
+    "zh": "新安郡"
+   },
+   "좌표": {
+    "경도": 126.15,
+    "위도": 34.99
+   },
+   "지역코드": null,
+   "짧은이름": "신안",
+   "차례": 401,
+   "포인트안내": null,
+   "한줄": null,
+   "항구": []
+  },
+  {
+   "id": "muan",
+   "관광안내": null,
+   "대표사진": null,
+   "묶음": "jeonnam",
+   "물때관측소": {
+    "이름": "향화도항",
+    "코드": null,
+    "메모": "물때표는 향화도항 조위관측소 기준입니다. 서버가 국립해양조사원에서 받아 쓰는 값을 그대로 적었습니다 (2026-10-02 확인)."
+   },
+   "바다": "서해",
+   "법정동코드": null,
+   "색": null,
+   "설명": "무안 갯벌 포인트 23곳과 물때, 세발낙지·감태 제철, 황토갯벌 여행 코스 안내.",
+   "소개": null,
+   "시군구": [],
+   "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 람사르습지로 지정된 청정 갯벌, 세발낙지와 감태의 고장 무안을 여러분께 소개합니다.",
+   "엶": true,
+   "이름": {
+    "ko": "무안",
+    "zh": "务安郡"
+   },
+   "좌표": {
+    "경도": 126.31,
+    "위도": 35.05
+   },
+   "지역코드": null,
+   "짧은이름": "무안",
+   "차례": 402,
+   "포인트안내": null,
+   "한줄": null,
+   "항구": []
+  },
+  {
+   "id": "mokpo",
+   "관광안내": null,
+   "대표사진": null,
+   "묶음": "jeonnam",
+   "물때관측소": {
+    "이름": "목포",
+    "코드": null,
+    "메모": "물때표는 목포 조위관측소 기준입니다. 서버가 국립해양조사원에서 받아 쓰는 값을 그대로 적었습니다 (2026-10-02 확인)."
+   },
+   "바다": "서해",
+   "법정동코드": null,
+   "색": null,
+   "설명": "목포 포인트 46곳과 물때, 목포 9미 맛집, 유달산·해상케이블카 여행 코스 안내.",
+   "소개": null,
+   "시군구": [],
+   "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 영산강이 서해와 만나는 항구도시, 민어·홍어·낙지의 고장 목포를 여러분께 소개합니다.",
+   "엶": true,
+   "이름": {
+    "ko": "목포",
+    "zh": "木浦市"
+   },
+   "좌표": {
+    "경도": 126.38,
+    "위도": 34.78
+   },
+   "지역코드": null,
+   "짧은이름": "목포",
+   "차례": 403,
+   "포인트안내": null,
+   "한줄": null,
+   "항구": []
+  },
+  {
+   "id": "yeonggwang",
+   "관광안내": null,
+   "대표사진": null,
+   "묶음": "jeonnam",
+   "물때관측소": {
+    "이름": "영광",
+    "코드": null,
+    "메모": "물때표는 영광 조위관측소 기준입니다. 서버가 국립해양조사원에서 받아 쓰는 값을 그대로 적었습니다 (2026-10-02 확인)."
+   },
+   "바다": "서해",
+   "법정동코드": null,
+   "색": null,
+   "설명": "영광 포인트 51곳과 물때, 백합·동죽 제철, 백수해안도로 노을 여행 코스 안내.",
+   "소개": null,
+   "시군구": [],
+   "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 법성포 굴비와 서해 갯벌의 고장 영광을 여러분께 소개합니다.",
+   "엶": true,
+   "이름": {
+    "ko": "영광",
+    "zh": "灵光郡"
+   },
+   "좌표": {
+    "경도": 126.42,
+    "위도": 35.32
+   },
+   "지역코드": null,
+   "짧은이름": "영광",
+   "차례": 404,
+   "포인트안내": null,
+   "한줄": null,
+   "항구": []
+  },
+  {
+   "id": "hampyeong",
+   "관광안내": null,
+   "대표사진": null,
+   "묶음": "jeonnam",
+   "물때관측소": {
+    "이름": "향화도항",
+    "코드": null,
+    "메모": "물때표는 향화도항 조위관측소 기준입니다. 서버가 국립해양조사원에서 받아 쓰는 값을 그대로 적었습니다 (2026-10-02 확인)."
+   },
+   "바다": "서해",
+   "법정동코드": null,
+   "색": null,
+   "설명": "함평 포인트 48곳과 물때, 낙지·굴 제철, 돌머리해변과 나비의 고장 여행 안내.",
+   "소개": null,
+   "시군구": [],
+   "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 게르마늄 갯벌과 함평천지한우의 고장 함평을 여러분께 소개합니다.",
+   "엶": true,
+   "이름": {
+    "ko": "함평",
+    "zh": "咸平郡"
+   },
+   "좌표": {
+    "경도": 126.44,
+    "위도": 35.1
+   },
+   "지역코드": null,
+   "짧은이름": "함평",
+   "차례": 405,
+   "포인트안내": null,
+   "한줄": null,
+   "항구": []
+  },
+  {
+   "id": "jindo",
+   "관광안내": null,
+   "대표사진": null,
+   "묶음": "jeonnam",
+   "물때관측소": {
+    "이름": "진도",
+    "코드": null,
+    "메모": "물때표는 진도 조위관측소 기준입니다. 서버가 국립해양조사원에서 받아 쓰는 값을 그대로 적었습니다 (2026-10-02 확인)."
+   },
+   "바다": "서해",
+   "법정동코드": null,
+   "색": null,
+   "설명": "진도 포인트 100곳과 물때, 신비의 바닷길 시기, 울돌목·세방낙조 여행 코스 안내.",
+   "소개": null,
+   "시군구": [],
+   "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 230여 개 섬을 품은 다도해의 관문, 민속과 예술의 고장 진도를 여러분께 소개합니다.",
+   "엶": true,
+   "이름": {
+    "ko": "진도",
+    "zh": "珍岛郡"
+   },
+   "좌표": {
+    "경도": 126.35,
+    "위도": 34.42
+   },
+   "지역코드": null,
+   "짧은이름": "진도",
+   "차례": 406,
+   "포인트안내": null,
+   "한줄": null,
+   "항구": []
+  },
+  {
+   "id": "haenam",
+   "관광안내": null,
+   "대표사진": null,
+   "묶음": "jeonnam",
+   "물때관측소": {
+    "이름": "땅끝항",
+    "코드": null,
+    "메모": "물때표는 땅끝항 조위관측소 기준입니다. 서버가 국립해양조사원에서 받아 쓰는 값을 그대로 적었습니다 (2026-10-02 확인)."
+   },
+   "바다": "남해",
+   "법정동코드": null,
+   "색": null,
+   "설명": "해남 포인트 71곳과 물때, 꼬막·가무락 제철, 땅끝마을·대흥사 여행 코스 안내.",
+   "소개": null,
+   "시군구": [],
+   "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 땅끝마을과 두륜산 대흥사, 바다와 들녘이 함께 풍성한 고장 해남을 여러분께 소개합니다.",
+   "엶": true,
+   "이름": {
+    "ko": "해남",
+    "zh": "海南郡"
+   },
+   "좌표": {
+    "경도": 126.52,
+    "위도": 34.3
+   },
+   "지역코드": null,
+   "짧은이름": "해남",
+   "차례": 407,
+   "포인트안내": null,
+   "한줄": null,
+   "항구": []
+  },
+  {
+   "id": "wando",
+   "관광안내": null,
+   "대표사진": null,
+   "묶음": "jeonnam",
+   "물때관측소": {
+    "이름": "완도",
+    "코드": null,
+    "메모": "물때표는 완도 조위관측소 기준입니다. 서버가 국립해양조사원에서 받아 쓰는 값을 그대로 적었습니다 (2026-10-02 확인)."
+   },
+   "바다": "남해",
+   "법정동코드": null,
+   "색": null,
+   "설명": "완도 포인트 121곳과 물때, 전복·미역 제철, 청해진·완도수목원 여행 코스 안내.",
+   "소개": null,
+   "시군구": [],
+   "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 장보고 청해진의 바다, 해양치유 1번지 완도를 여러분께 소개합니다.",
+   "엶": true,
+   "이름": {
+    "ko": "완도",
+    "zh": "莞岛郡"
+   },
+   "좌표": {
+    "경도": 126.75,
+    "위도": 34.31
+   },
+   "지역코드": null,
+   "짧은이름": "완도",
+   "차례": 408,
+   "포인트안내": null,
+   "한줄": null,
+   "항구": []
+  },
+  {
+   "id": "gangjin",
+   "관광안내": null,
+   "대표사진": null,
+   "묶음": "jeonnam",
+   "물때관측소": {
+    "이름": "마량항",
+    "코드": null,
+    "메모": "물때표는 마량항 조위관측소 기준입니다. 서버가 국립해양조사원에서 받아 쓰는 값을 그대로 적었습니다 (2026-10-02 확인)."
+   },
+   "바다": "남해",
+   "법정동코드": null,
+   "색": null,
+   "설명": "강진 포인트 58곳과 물때, 동죽·개불 제철, 강진만 갯벌·다산초당 여행 안내.",
+   "소개": null,
+   "시군구": [],
+   "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 다산 정약용의 유배지이자 가우도 출렁다리의 고장 강진을 여러분께 소개합니다.",
+   "엶": true,
+   "이름": {
+    "ko": "강진",
+    "zh": "康津郡"
+   },
+   "좌표": {
+    "경도": 126.72,
+    "위도": 34.55
+   },
+   "지역코드": null,
+   "짧은이름": "강진",
+   "차례": 409,
+   "포인트안내": null,
+   "한줄": null,
+   "항구": []
+  },
+  {
+   "id": "jangheung",
+   "관광안내": null,
+   "대표사진": null,
+   "묶음": "jeonnam",
+   "물때관측소": {
+    "이름": "마량항",
+    "코드": null,
+    "메모": "물때표는 마량항 조위관측소 기준입니다. 서버가 국립해양조사원에서 받아 쓰는 값을 그대로 적었습니다 (2026-10-02 확인)."
+   },
+   "바다": "남해",
+   "법정동코드": null,
+   "색": null,
+   "설명": "장흥 포인트 52곳과 물때, 키조개·매생이 제철, 정남진 바닷가 여행 코스 안내.",
+   "소개": null,
+   "시군구": [],
+   "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 키조개와 매생이, 장흥삼합의 고장 장흥을 여러분께 소개합니다.",
+   "엶": true,
+   "이름": {
+    "ko": "장흥",
+    "zh": "长兴郡"
+   },
+   "좌표": {
+    "경도": 126.94,
+    "위도": 34.55
+   },
+   "지역코드": null,
+   "짧은이름": "장흥",
+   "차례": 410,
+   "포인트안내": null,
+   "한줄": null,
+   "항구": []
+  },
+  {
+   "id": "boseong",
+   "관광안내": null,
+   "대표사진": null,
+   "묶음": "jeonnam",
+   "물때관측소": {
+    "이름": "고흥발포",
+    "코드": null,
+    "메모": "물때표는 고흥발포 조위관측소 기준입니다. 서버가 국립해양조사원에서 받아 쓰는 값을 그대로 적었습니다 (2026-10-02 확인)."
+   },
+   "바다": "남해",
+   "법정동코드": null,
+   "색": null,
+   "설명": "보성 포인트 54곳과 물때, 벌교 참꼬막 제철, 녹차밭·율포해변 여행 코스 안내.",
+   "소개": null,
+   "시군구": [],
+   "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 참꼬막과 뻘낙지, 녹차의 고장 보성을 여러분께 소개합니다.",
+   "엶": true,
+   "이름": {
+    "ko": "보성",
+    "zh": "宝城郡"
+   },
+   "좌표": {
+    "경도": 127.13,
+    "위도": 34.72
+   },
+   "지역코드": null,
+   "짧은이름": "보성",
+   "차례": 411,
+   "포인트안내": null,
+   "한줄": null,
+   "항구": []
+  },
+  {
+   "id": "goheung",
+   "관광안내": null,
+   "대표사진": null,
+   "묶음": "jeonnam",
+   "물때관측소": {
+    "이름": "녹동항",
+    "코드": null,
+    "메모": "물때표는 녹동항 조위관측소 기준입니다. 서버가 국립해양조사원에서 받아 쓰는 값을 그대로 적었습니다 (2026-10-02 확인)."
+   },
+   "바다": "남해",
+   "법정동코드": null,
+   "색": null,
+   "설명": "고흥 포인트 109곳과 물때, 굴·소라 제철, 나로우주센터·다도해 여행 코스 안내.",
+   "소개": null,
+   "시군구": [],
+   "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 소록도·거금도가 흩어진 남해 바다, 우주항공의 고장 고흥을 여러분께 소개합니다.",
+   "엶": true,
+   "이름": {
+    "ko": "고흥",
+    "zh": "高兴郡"
+   },
+   "좌표": {
+    "경도": 127.28,
+    "위도": 34.51
+   },
+   "지역코드": null,
+   "짧은이름": "고흥",
+   "차례": 412,
+   "포인트안내": null,
+   "한줄": null,
+   "항구": []
+  },
+  {
+   "id": "yeosu",
+   "관광안내": null,
+   "대표사진": null,
+   "묶음": "jeonnam",
+   "물때관측소": {
+    "이름": "여수",
+    "코드": null,
+    "메모": "물때표는 여수 조위관측소 기준입니다. 서버가 국립해양조사원에서 받아 쓰는 값을 그대로 적었습니다 (2026-10-02 확인)."
+   },
+   "바다": "남해",
+   "법정동코드": null,
+   "색": null,
+   "설명": "여수 포인트 114곳과 물때, 갯장어·맛조개 제철, 밤바다·향일암 여행 코스 안내.",
+   "소개": null,
+   "시군구": [],
+   "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 갯바위 낚시와 갯장어로 이름난 항구도시 여수를 여러분께 소개합니다.",
+   "엶": true,
+   "이름": {
+    "ko": "여수",
+    "zh": "丽水市"
+   },
+   "좌표": {
+    "경도": 127.75,
+    "위도": 34.74
+   },
+   "지역코드": null,
+   "짧은이름": "여수",
+   "차례": 413,
+   "포인트안내": null,
+   "한줄": null,
+   "항구": []
+  },
+  {
+   "id": "suncheon",
+   "관광안내": null,
+   "대표사진": null,
+   "묶음": "jeonnam",
+   "물때관측소": {
+    "이름": "여호항",
+    "코드": null,
+    "메모": "물때표는 여호항 조위관측소 기준입니다. 서버가 국립해양조사원에서 받아 쓰는 값을 그대로 적었습니다 (2026-10-02 확인)."
+   },
+   "바다": "남해",
+   "법정동코드": null,
+   "색": null,
+   "설명": "순천 포인트 44곳과 물때, 참꼬막·짱뚱어 제철, 순천만 습지 여행 코스 안내.",
+   "소개": null,
+   "시군구": [],
+   "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 순천만국가정원과 순천만습지, 뻘배 체험이 있는 생태수도 순천을 여러분께 소개합니다.",
+   "엶": true,
+   "이름": {
+    "ko": "순천",
+    "zh": "顺天市"
+   },
+   "좌표": {
+    "경도": 127.49,
+    "위도": 34.86
+   },
+   "지역코드": null,
+   "짧은이름": "순천",
+   "차례": 414,
+   "포인트안내": null,
+   "한줄": null,
+   "항구": []
+  },
+  {
+   "id": "gwangyang",
+   "관광안내": null,
+   "대표사진": null,
+   "묶음": "jeonnam",
+   "물때관측소": {
+    "이름": "광양",
+    "코드": null,
+    "메모": "물때표는 광양 조위관측소 기준입니다. 서버가 국립해양조사원에서 받아 쓰는 값을 그대로 적었습니다 (2026-10-02 확인)."
+   },
+   "바다": "남해",
+   "법정동코드": null,
+   "색": null,
+   "설명": "광양 포인트 46곳과 물때, 재첩·벚굴 제철, 섬진강·매화마을 여행 코스 안내.",
+   "소개": null,
+   "시군구": [],
+   "안내": "포인트 안내, 제철 어종, 근처 숙소와 향토 먹거리까지 — 망덕포구의 재첩·벚굴과 광양불고기의 고장 광양을 여러분께 소개합니다.",
+   "엶": true,
+   "이름": {
+    "ko": "광양",
+    "zh": "光阳市"
+   },
+   "좌표": {
+    "경도": 127.76,
+    "위도": 34.95
+   },
+   "지역코드": null,
+   "짧은이름": "광양",
+   "차례": 415,
+   "포인트안내": null,
+   "한줄": null,
+   "항구": []
+  },
+  {
+   "id": "jejusi",
+   "관광안내": null,
+   "대표사진": null,
+   "묶음": "jeju",
+   "물때관측소": {
+    "메모": null,
+    "이름": "제주",
+    "코드": "DT_0004"
+   },
+   "바다": "제주",
+   "법정동코드": null,
+   "색": "#3F7F93",
+   "설명": "제주시내 바다여행. 용두암·이호테우해변, 오늘 물때와 한치·갈치 낚시, 동문시장 먹거리 안내.",
+   "소개": "공항에서 가까운 도심 바로 앞 바다",
+   "시군구": [],
+   "안내": "제주국제공항과 제주항이 모인 섬의 관문입니다. 용두암·이호테우해변처럼 시내에서 가까운 바다와 동문시장이 이어져, 도착한 날이나 떠나는 날 들르기 좋습니다.",
+   "엶": true,
+   "이름": {
+    "ko": "제주시내",
+    "zh": "济州市区"
+   },
+   "좌표": {
+    "경도": 126.53,
+    "위도": 33.52
+   },
+   "지역코드": null,
+   "짧은이름": "제주시내",
+   "차례": 1,
+   "포인트안내": null,
+   "한줄": "공항 가까운 도심 바다, 해변과 오름·시장",
+   "항구": [
+    "도두항",
+    "제주항(2부두)"
+   ]
+  },
+  {
+   "id": "aewol",
+   "관광안내": null,
+   "대표사진": null,
+   "묶음": "jeju",
+   "물때관측소": {
+    "메모": null,
+    "이름": "제주",
+    "코드": "DT_0004"
+   },
+   "바다": "제주",
+   "법정동코드": null,
+   "색": "#2F8C8C",
+   "설명": "애월·한림 바다여행. 협재·금능해변과 노을 해안도로, 한림항 낚시, 물때와 보말칼국수 안내.",
+   "소개": "에메랄드빛 해변과 노을이 이어지는 서북 해안",
+   "시군구": [],
+   "안내": "애월 해안도로에서 협재·금능해변을 지나 수월봉까지, 노을이 아름다운 서북부 해안입니다. 한림항·애월항 방파제는 여름밤 한치 낚시 자리로 알려져 있습니다.",
+   "엶": true,
+   "이름": {
+    "ko": "애월·한림",
+    "zh": "涯月·翰林"
+   },
+   "좌표": {
+    "경도": 126.31,
+    "위도": 33.46
+   },
+   "지역코드": null,
+   "짧은이름": "애월·한림",
+   "차례": 2,
+   "포인트안내": null,
+   "한줄": "에메랄드빛 해변과 노을 해안이 이어진 서북부",
+   "항구": [
+    "한림항",
+    "애월항",
+    "신창항",
+    "하귀1항",
+    "고산 자구내포구"
+   ]
+  },
+  {
+   "id": "jocheon",
+   "관광안내": null,
+   "대표사진": null,
+   "묶음": "jeju",
+   "물때관측소": {
+    "메모": null,
+    "이름": "성산포",
+    "코드": "DT_0022"
+   },
+   "바다": "제주",
+   "법정동코드": null,
+   "색": "#3E8FB0",
+   "설명": "조천·구좌 바다여행. 함덕·월정리·세화 해변, 해녀박물관, 물때와 한치·무늬오징어 낚시 안내.",
+   "소개": "옥빛 해변과 해녀 마을이 이어지는 동북 해안",
+   "시군구": [],
+   "안내": "함덕·김녕·월정리·세화로 이어지는 옥빛 해변 해안입니다. 제주해녀박물관이 있는 해녀 문화의 고장이라 마을어장이 많으니 허가 없이 채취하지 마세요.",
+   "엶": true,
+   "이름": {
+    "ko": "조천·구좌",
+    "zh": "朝天·旧左"
+   },
+   "좌표": {
+    "경도": 126.67,
+    "위도": 33.54
+   },
+   "지역코드": null,
+   "짧은이름": "조천·구좌",
+   "차례": 3,
+   "포인트안내": null,
+   "한줄": "옥빛 해변과 해녀 마을이 이어진 동북 해안",
+   "항구": [
+    "확인필요"
+   ]
+  },
+  {
+   "id": "seongsan",
+   "관광안내": null,
+   "대표사진": null,
+   "묶음": "jeju",
+   "물때관측소": {
+    "메모": null,
+    "이름": "성산포",
+    "코드": "DT_0022"
+   },
+   "바다": "제주",
+   "법정동코드": null,
+   "색": "#C0712E",
+   "설명": "성산·표선 바다여행. 성산일출봉·섭지코지·표선해변, 우도 가는 배, 물때와 벵에돔 낚시 안내.",
+   "소개": "일출봉과 섭지코지, 우도로 가는 동남 해안",
+   "시군구": [],
+   "안내": "성산일출봉과 섭지코지, 표선해비치해변까지 이어지는 동남부 해안입니다. 성산포항에서 우도행 배가 뜨고, 성산포항 방파제 바깥쪽(외항)은 가을 부시리·돌돔 낚시로 알려져 있습니다.",
+   "엶": true,
+   "이름": {
+    "ko": "성산·표선",
+    "zh": "城山·表善"
+   },
+   "좌표": {
+    "경도": 126.93,
+    "위도": 33.46
+   },
+   "지역코드": null,
+   "짧은이름": "성산·표선",
+   "차례": 4,
+   "포인트안내": null,
+   "한줄": "일출봉과 동남부 해안 절경, 우도 가는 길",
+   "항구": [
+    "성산포항",
+    "위미항"
+   ]
+  },
+  {
+   "id": "seogwipo",
+   "관광안내": null,
+   "대표사진": null,
+   "묶음": "jeju",
+   "물때관측소": {
+    "메모": null,
+    "이름": "서귀포",
+    "코드": "DT_0010"
+   },
+   "바다": "제주",
+   "법정동코드": null,
+   "색": "#2F7D5B",
+   "설명": "서귀포·중문 바다여행. 정방폭포·주상절리대, 오늘 물때와 은갈치 낚시, 올레시장 먹거리 안내.",
+   "소개": "폭포와 해안 절벽, 올레길이 이어지는 남쪽 바다",
+   "시군구": [],
+   "안내": "정방폭포·쇠소깍·외돌개와 중문 주상절리대까지, 바다로 떨어지는 폭포와 절벽이 이어지는 남쪽 해안입니다. 서귀포항은 은갈치 낚시로 유명합니다.",
+   "엶": true,
+   "이름": {
+    "ko": "서귀포·중문",
+    "zh": "西归浦·中文"
+   },
+   "좌표": {
+    "경도": 126.56,
+    "위도": 33.24
+   },
+   "지역코드": null,
+   "짧은이름": "서귀포·중문",
+   "차례": 5,
+   "포인트안내": null,
+   "한줄": "폭포와 해안절벽, 올레길이 이어지는 남쪽 바다",
+   "항구": [
+    "서귀포항"
+   ]
+  },
+  {
+   "id": "daejeong",
+   "관광안내": null,
+   "대표사진": null,
+   "묶음": "jeju",
+   "물때관측소": {
+    "메모": null,
+    "이름": "모슬포",
+    "코드": "DT_0023"
+   },
+   "바다": "제주",
+   "법정동코드": null,
+   "색": "#6B6FB0",
+   "설명": "대정·안덕 바다여행. 산방산·송악산, 모슬포 겨울 방어 낚시, 가파도·마라도 배와 물때 안내.",
+   "소개": "산방산과 송악산, 국토 최남단 섬으로 가는 길목",
+   "시군구": [],
+   "안내": "산방산·용머리해안·송악산이 모인 남서부 해안입니다. 모슬포는 겨울 방어로 이름난 곳이고, 운진항(모슬포 남항)에서 가파도·마라도행 배가 뜹니다.",
+   "엶": true,
+   "이름": {
+    "ko": "대정·안덕",
+    "zh": "大静·安德"
+   },
+   "좌표": {
+    "경도": 126.25,
+    "위도": 33.21
+   },
+   "지역코드": null,
+   "짧은이름": "대정·안덕",
+   "차례": 6,
+   "포인트안내": null,
+   "한줄": "산방산과 송악산, 국토 최남단 섬으로 가는 길목",
+   "항구": [
+    "모슬포항"
+   ]
+  },
+  {
+   "id": "chuja",
+   "관광안내": null,
+   "대표사진": null,
+   "묶음": "jeju",
+   "물때관측소": {
+    "메모": null,
+    "이름": "추자도",
+    "코드": "DT_0021"
+   },
+   "바다": "제주",
+   "법정동코드": null,
+   "색": "#8A6A3A",
+   "설명": "추자도 바다여행. 갯바위 낚시 명소, 돌돔·감성돔·참돔 시기, 가는 배와 물때, 참굴비 안내.",
+   "소개": "제주와 전남 사이, 낚시인들이 찾는 섬",
+   "시군구": [],
+   "안내": "제주항에서 배로 가는 42개 섬 무리로, 섬 전체가 갯바위 낚시터로 알려져 있습니다. 전남 진도·완도에서도 배가 닿고, 올레 18-1코스가 섬을 한 바퀴 돕니다.",
+   "엶": true,
+   "이름": {
+    "ko": "추자도",
+    "zh": "楸子岛"
+   },
+   "좌표": {
+    "경도": 126.3,
+    "위도": 33.96
+   },
+   "지역코드": null,
+   "짧은이름": "추자도",
+   "차례": 7,
+   "포인트안내": null,
+   "한줄": "제주와 전남 사이, 낚시꾼이 찾는 섬 무리",
+   "항구": [
+    "추자항(상추자)",
+    "신양항(하추자)"
+   ]
+  },
+  {
+   "id": "namhae",
+   "관광안내": "https://www.namhae.go.kr/tour/",
+   "대표사진": null,
+   "묶음": "gyeongnam",
+   "물때관측소": {
+    "메모": "물때표는 남해도 서남쪽(상주·다랭이마을·서면)과 가까운 여수 관측소 기준입니다. 창선도·지족·물건 등 동쪽 해안은 삼천포 관측소(DT_0061) 시각이 더 가깝습니다.",
+    "이름": "여수",
+    "코드": "DT_0016"
+   },
+   "바다": "남해",
+   "법정동코드": "48",
+   "색": "#2F6B5E",
+   "설명": "남해 바다여행. 상주·송정 해변과 다랭이마을, 지족 죽방렴, 노도 배편, 물때와 감성돔·볼락 낚시 정리.",
+   "소개": "죽방렴과 다랑논, 은빛 모래의 섬",
+   "시군구": [
+    "남해군"
+   ],
+   "안내": "지족해협 죽방렴과 물건리 방조어부림에서 옛 어업의 흔적을 보고, 가천 다랭이마을과 상주·송정 해변에서 남쪽 바다를 만납니다. 벽련항에서는 노도로 가는 작은 배가 뜹니다.",
+   "엶": true,
+   "이름": {
+    "ko": "남해",
+    "zh": "南海"
+   },
+   "좌표": {
+    "경도": 127.998,
+    "위도": 34.7513
+   },
+   "지역코드": "36",
+   "짧은이름": "남해",
+   "차례": 301,
+   "포인트안내": "남해 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 해루질·바다 체험은 문항마을·지족마을·유포마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
+   "한줄": "보물섬 해안",
+   "항구": [
+    "미조항",
+    "물건항",
+    "지족항",
+    "벽련항(노도 도선)"
+   ]
+  },
+  {
+   "id": "sacheon",
+   "관광안내": "https://www.sacheon.go.kr/tour/main.web",
+   "대표사진": null,
+   "묶음": "gyeongnam",
+   "물때관측소": {
+    "메모": "물때표는 삼천포항 관측소 기준입니다. 하동 노량·대도 쪽은 광양 관측소(DT_0049) 시각이 더 가깝습니다.",
+    "이름": "삼천포",
+    "코드": "DT_0061"
+   },
+   "바다": "남해",
+   "법정동코드": "48",
+   "색": "#34557A",
+   "설명": "사천·하동 바다여행. 삼천포 어시장과 바다케이블카, 실안 노을, 신수도·대도 배편과 물때 정리.",
+   "소개": "삼천포항과 실안 노을이 있는 바다",
+   "시군구": [
+    "사천시",
+    "하동군"
+   ],
+   "안내": "삼천포항 어시장과 바다케이블카, 죽방렴 너머 해가 지는 실안 해안도로가 사천 바다의 중심입니다. 서쪽으로는 비토섬 갯벌과 하동 노량·대도가 이어지고, 섬진강 하구에서는 재첩과 벚굴이 납니다.",
+   "엶": true,
+   "이름": {
+    "ko": "사천·하동",
+    "zh": "泗川·河东"
+   },
+   "좌표": {
+    "경도": 128.0069,
+    "위도": 34.9604
+   },
+   "지역코드": "36",
+   "짧은이름": "사천",
+   "차례": 302,
+   "포인트안내": "사천 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 해루질·바다 체험은 다맥마을·저도마을·대도마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
+   "한줄": "노을과 섬",
+   "항구": [
+    "삼천포항",
+    "삼천포신항(제주 여객선)",
+    "대포항",
+    "노량항(하동)"
+   ]
+  },
+  {
+   "id": "goseong",
+   "관광안내": "https://www.goseong.go.kr/tour/",
+   "대표사진": null,
+   "묶음": "gyeongnam",
+   "물때관측소": {
+    "메모": "물때표는 통영 관측소 기준입니다. 상족암·맥전포 등 하이·하일면은 삼천포 관측소(DT_0061), 당항포·동해면은 마산 관측소(DT_0062)가 더 가까우니 함께 참고하세요.",
+    "이름": "통영",
+    "코드": "DT_0014"
+   },
+   "바다": "남해",
+   "법정동코드": "48",
+   "색": "#6A4A36",
+   "설명": "경남 고성 바다여행. 상족암 공룡발자국, 당항포, 자란만 가리비, 해지개다리 야경과 물때 정리.",
+   "소개": "공룡 발자국이 남은 가리비 바다",
+   "시군구": [
+    "고성군"
+   ],
+   "안내": "하이면 상족암 해안의 너른 바위에는 공룡 발자국이 찍혀 있고, 그 곁 맥전포·용암포에서는 사량도행 배가 오갑니다. 동쪽 당항포는 이순신 장군의 해전터이자 공룡엑스포가 열리는 곳입니다.",
+   "엶": true,
+   "이름": {
+    "ko": "고성",
+    "zh": "固城"
+   },
+   "좌표": {
+    "경도": 128.2639,
+    "위도": 34.9569
+   },
+   "지역코드": "36",
+   "짧은이름": "경남 고성",
+   "차례": 303,
+   "포인트안내": "고성 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 해루질·바다 체험은 동화마을·룡대미마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
+   "한줄": "공룡 발자국",
+   "항구": [
+    "맥전포항",
+    "용암포항(사량도 카페리)",
+    "임포항"
+   ]
+  },
+  {
+   "id": "tongyeong",
+   "관광안내": "https://www.utour.go.kr",
+   "대표사진": null,
+   "묶음": "gyeongnam",
+   "물때관측소": {
+    "메모": "물때표는 국립해양조사원 통영 관측소 기준입니다. 서쪽 사량도는 삼천포 관측소(DT_0061), 먼바다의 욕지도·매물도는 시각이 조금 다를 수 있어 현지 물때를 함께 확인하세요.",
+    "이름": "통영",
+    "코드": "DT_0014"
+   },
+   "바다": "남해",
+   "법정동코드": "48",
+   "색": "#2B5D7A",
+   "설명": "통영 바다여행. 동피랑·케이블카·달아공원, 한산도·욕지도·소매물도 배편과 물때·볼락 낚시 정리.",
+   "소개": "언덕 벽화 마을과 섬들이 이어진 바다",
+   "시군구": [
+    "통영시"
+   ],
+   "안내": "강구안을 둘러싼 동피랑 언덕과 미륵산 케이블카에서 한려수도의 섬들이 한눈에 내려다보입니다. 통영항·달아항·가오치항·삼덕항에서 한산도, 연대도, 사량도, 욕지도로 가는 배가 뜹니다.",
+   "엶": true,
+   "이름": {
+    "ko": "통영",
+    "zh": "统营"
+   },
+   "좌표": {
+    "경도": 128.4174,
+    "위도": 34.8138
+   },
+   "지역코드": "36",
+   "짧은이름": "통영",
+   "차례": 304,
+   "포인트안내": "통영 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 해루질·바다 체험은 연명마을·궁항마을·유동마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
+   "한줄": "섬과 항구",
+   "항구": [
+    "통영항(여객선터미널)",
+    "달아항",
+    "가오치항",
+    "삼덕항(당포항)"
+   ]
+  },
+  {
+   "id": "geoje",
+   "관광안내": "https://tour.geoje.go.kr",
+   "대표사진": null,
+   "묶음": "gyeongnam",
+   "물때관측소": {
+    "메모": "물때표는 국립해양조사원 거제도 관측소 기준입니다. 섬 서쪽 가조도·칠천도 쪽은 시각이 다를 수 있으니 체험 전 마을 안내를 함께 확인하세요.",
+    "이름": "거제도",
+    "코드": "DT_0029"
+   },
+   "바다": "남해",
+   "법정동코드": "48",
+   "색": "#1F5E57",
+   "설명": "거제 바다여행. 학동 몽돌·구조라 해변, 외도 유람선, 바람의언덕·매미성과 물때·벵에돔 낚시 안내.",
+   "소개": "몽돌 해변과 유람선 항구가 있는 섬",
+   "시군구": [
+    "거제시"
+   ],
+   "안내": "동쪽 해안의 구조라·와현·학동 쪽에서 외도와 해금강으로 가는 유람선이 출발합니다. 북쪽 장목의 매미성과 다리로 이어진 칠천도·가조도는 차로 돌아볼 수 있습니다.",
+   "엶": true,
+   "이름": {
+    "ko": "거제",
+    "zh": "巨济"
+   },
+   "좌표": {
+    "경도": 128.6513,
+    "위도": 34.8628
+   },
+   "지역코드": "36",
+   "짧은이름": "거제",
+   "차례": 305,
+   "포인트안내": "거제 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 해루질·바다 체험은 다대마을·도장포마을·계도마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
+   "한줄": "몽돌 해안",
+   "항구": [
+    "구조라항",
+    "지세포항",
+    "장승포항",
+    "저구항"
+   ]
+  },
+  {
+   "id": "changwon",
+   "관광안내": "https://www.changwon.go.kr/tour/",
+   "대표사진": null,
+   "묶음": "gyeongnam",
+   "물때관측소": {
+    "메모": "물때표는 국립해양조사원 마산 관측소 기준입니다. 진해 명동·웅동 쪽은 가덕도 관측소(DT_0063) 시각이 더 가까울 수 있습니다.",
+    "이름": "마산",
+    "코드": "DT_0062"
+   },
+   "바다": "남해",
+   "법정동코드": "48",
+   "색": "#43477A",
+   "설명": "창원 바다여행. 마산어시장·돝섬, 저도 연륙교, 진해해양공원·우도와 물때·도다리 낚시 안내.",
+   "소개": "마산만·진해만에 섬과 어항이 모인 바다",
+   "시군구": [
+    "창원시"
+   ],
+   "안내": "마산 쪽은 어시장과 돝섬이 도심 가까이 있고, 구산반도에는 저도 연륙교와 원전항, 진동에는 광암해수욕장이 있습니다. 진해 명동에서는 해양공원과 우도를 걸어서 돌아보고 소쿠리섬 가는 배를 탈 수 있습니다.",
+   "엶": true,
+   "이름": {
+    "ko": "창원",
+    "zh": "昌原"
+   },
+   "좌표": {
+    "경도": 128.6187,
+    "위도": 35.1028
+   },
+   "지역코드": "36",
+   "짧은이름": "창원",
+   "차례": 306,
+   "포인트안내": "창원 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 해루질·바다 체험은 고현마을·거북이행복마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
+   "한줄": "두 만의 바다",
+   "항구": [
+    "마산항(돝섬 선착장)",
+    "광암항",
+    "원전항",
+    "명동항"
+   ]
+  },
+  {
+   "id": "busanwest",
+   "관광안내": "https://www.visitbusan.net",
+   "대표사진": null,
+   "묶음": "busanulsan",
+   "물때관측소": {
+    "메모": "물때표는 부산 조위관측소 기준입니다. 다대포는 약 8km 떨어져 있고, 가덕도는 가덕도 관측소(DT_0063)가 따로 있어 대항항은 그쪽 시각이 더 가깝습니다.",
+    "이름": "부산",
+    "코드": "DT_0005"
+   },
+   "바다": "남해",
+   "법정동코드": "26",
+   "색": "#34506E",
+   "설명": "부산 서부 바다여행. 다대포 낙조·송도·흰여울·태종대, 가덕도 대항항과 방파제 출입통제 정리.",
+   "소개": "다대포 낙조와 태종대 절벽의 바다",
+   "시군구": [
+    "강서구",
+    "사하구",
+    "서구",
+    "영도구"
+   ],
+   "안내": "낙동강 하구 모래톱이 펼쳐진 다대포와 몰운대에서 해가 지고, 송도와 흰여울 마을은 바닷가 절벽 위로 산책길이 나 있습니다. 다리로 건너는 가덕도 대항항은 봄 숭어들이와 갯바위 낚시로 알려진 포구입니다.",
+   "엶": true,
+   "이름": {
+    "ko": "부산 서부",
+    "zh": "釜山西部"
+   },
+   "좌표": {
+    "경도": 128.9913,
+    "위도": 35.0572
+   },
+   "지역코드": "6",
+   "짧은이름": "부산 서부",
+   "차례": 501,
+   "포인트안내": "부산 서부 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 대항마을·동삼마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
+   "한줄": "낙조와 절벽",
+   "항구": [
+    "다대포항",
+    "대항항(가덕도)",
+    "하리항(영도)"
+   ]
+  },
+  {
+   "id": "busaneast",
+   "관광안내": "https://www.visitbusan.net",
+   "대표사진": null,
+   "묶음": "busanulsan",
+   "물때관측소": {
+    "메모": "물때표는 부산 조위관측소 기준입니다. 해운대는 약 15km, 기장 대변항은 약 22km 떨어져 있어 시각이 조금 다를 수 있습니다. 대변항에서 울산 관측소(DT_0020)는 약 34km입니다.",
+    "이름": "부산",
+    "코드": "DT_0005"
+   },
+   "바다": "남해",
+   "법정동코드": "26",
+   "색": "#1E4A6B",
+   "설명": "부산 동부 바다여행. 오륙도·광안리·해운대·기장 대변항, 멸치축제와 테트라포드 낚시통제 정리.",
+   "소개": "광안리에서 기장 멸치 포구까지",
+   "시군구": [
+    "남구",
+    "수영구",
+    "해운대구",
+    "기장군"
+   ],
+   "안내": "오륙도와 이기대의 바위 해안을 지나면 광안리와 해운대 두 도심 해수욕장이 이어집니다. 북쪽 기장으로 올라가면 대변항 멸치잡이 배와 일광·임랑의 잔잔한 해변을 만납니다.",
+   "엶": true,
+   "이름": {
+    "ko": "부산 동부",
+    "zh": "釜山东部"
+   },
+   "좌표": {
+    "경도": 129.1843,
+    "위도": 35.1901
+   },
+   "지역코드": "6",
+   "짧은이름": "부산 동부",
+   "차례": 502,
+   "포인트안내": "부산 동부 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 공수마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
+   "한줄": "해변과 포구",
+   "항구": [
+    "대변항",
+    "민락항",
+    "칠암항",
+    "청사포항"
+   ]
+  },
+  {
+   "id": "ulsan",
+   "관광안내": "https://tour.ulsan.go.kr",
+   "대표사진": null,
+   "묶음": "busanulsan",
+   "물때관측소": {
+    "메모": "물때표는 울산 조위관측소 기준입니다. 온산은 약 5km, 북구 정자항은 약 13km 떨어져 있습니다. 진하·간절곶 쪽은 시각이 조금 다를 수 있습니다.",
+    "이름": "울산",
+    "코드": "DT_0020"
+   },
+   "바다": "남해",
+   "법정동코드": "31",
+   "색": "#2C5F55",
+   "설명": "울산 바다여행. 진하·간절곶·대왕암공원·주전 몽돌해변, 해녀 체험마을과 갯바위 출입통제 정리.",
+   "소개": "간절곶 해돋이와 대왕암이 있는 바다",
+   "시군구": [
+    "울주군",
+    "동구",
+    "북구"
+   ],
+   "안내": "울주 진하해변과 간절곶은 새해 첫 해를 보러 사람이 몰리는 곳이고, 동구 대왕암공원과 슬도는 바다로 뻗은 바위 해안이 볼거리입니다. 북구 주전·강동에는 검은 몽돌 해변과 해녀 마을이 이어집니다.",
+   "엶": true,
+   "이름": {
+    "ko": "울산",
+    "zh": "蔚山"
+   },
+   "좌표": {
+    "경도": 129.4062,
+    "위도": 35.4737
+   },
+   "지역코드": "7",
+   "짧은이름": "울산",
+   "차례": 503,
+   "포인트안내": "울산 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 주전마을·우가마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
+   "한줄": "해돋이 해안",
+   "항구": [
+    "방어진항",
+    "정자항",
+    "당사항"
+   ]
+  },
+  {
+   "id": "gyeongju",
+   "관광안내": "https://www.gyeongju.go.kr/tour/",
+   "대표사진": null,
+   "묶음": "gyeongbuk",
+   "물때관측소": {
+    "메모": "경주 바다에는 국립해양조사원 조위관측소가 없어 가장 가까운 포항 관측소 기준으로 봅니다. 양남 쪽은 울산 관측소(DT_0020)도 가깝고, 동해는 밀물·썰물 높이 차가 작습니다.",
+    "이름": "포항",
+    "코드": "DT_0091"
+   },
+   "바다": "동해",
+   "법정동코드": "47",
+   "색": "#4A4F7A",
+   "설명": "경주 바다여행. 양남 주상절리, 문무대왕릉과 감은사지, 감포항 가자미, 나정·전촌 해변 정리.",
+   "소개": "문무왕 이야기가 남은 감포·양남 바닷가",
+   "시군구": [
+    "경주시"
+   ],
+   "안내": "양남 읍천항 옆 해안에는 돌기둥이 누운 주상절리가 이어지고, 봉길 앞바다에는 문무대왕릉 바위섬이 떠 있습니다. 북쪽 감포항과 전촌·나정 해변은 가자미와 활어회를 먹으러 들르기 좋습니다.",
+   "엶": true,
+   "이름": {
+    "ko": "경주 바다",
+    "zh": "庆州"
+   },
+   "좌표": {
+    "경도": 129.4868,
+    "위도": 35.7492
+   },
+   "지역코드": "35",
+   "짧은이름": "경주",
+   "차례": 601,
+   "포인트안내": "경주 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 연동마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
+   "한줄": "바다 왕릉",
+   "항구": [
+    "감포항",
+    "전촌항",
+    "읍천항"
+   ]
+  },
+  {
+   "id": "pohang",
+   "관광안내": "https://www.pohang.go.kr/phtour/",
+   "대표사진": null,
+   "묶음": "gyeongbuk",
+   "물때관측소": {
+    "메모": "물때표는 포항 조위관측소 기준입니다. 영일만 안쪽과 구룡포·월포 모두 이 관측소가 가장 가깝고, 동해라 밀물·썰물 높이 차가 작습니다.",
+    "이름": "포항",
+    "코드": "DT_0091"
+   },
+   "바다": "동해",
+   "법정동코드": "47",
+   "색": "#2F5873",
+   "설명": "포항 바다여행. 영일대·스페이스워크, 호미곶 일출, 구룡포 골목과 과메기, 칠포·이가리 정리.",
+   "소개": "호미곶 일출과 구룡포 골목이 있는 바다",
+   "시군구": [
+    "포항시"
+   ],
+   "안내": "영일대 해변과 환호공원 스페이스워크는 시내에서 바로 닿고, 호미반도를 돌면 호미곶 해맞이광장과 구룡포항이 나옵니다. 북쪽 칠포·이가리 해안에는 바다 위로 뻗은 전망대가 있습니다.",
+   "엶": true,
+   "이름": {
+    "ko": "포항 바다",
+    "zh": "浦项"
+   },
+   "좌표": {
+    "경도": 129.4629,
+    "위도": 36.0635
+   },
+   "지역코드": "35",
+   "짧은이름": "포항",
+   "차례": 602,
+   "포인트안내": "포항 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 창바우마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
+   "한줄": "호미곶 일출",
+   "항구": [
+    "구룡포항",
+    "양포항",
+    "포항여객선터미널(울릉행)"
+   ]
+  },
+  {
+   "id": "yeongdeok",
+   "관광안내": "https://tour.yd.go.kr",
+   "대표사진": null,
+   "묶음": "gyeongbuk",
+   "물때관측소": {
+    "메모": "물때표는 울진 후포 관측소 기준입니다. 축산항·고래불 쪽이 가깝고, 강구·장사 등 남쪽은 포항 관측소(DT_0091)가 더 가깝습니다.",
+    "이름": "후포",
+    "코드": "DT_0011"
+   },
+   "바다": "동해",
+   "법정동코드": "47",
+   "색": "#7A3A34",
+   "설명": "영덕 바다여행. 강구항 대게, 창포말등대·풍력단지, 축산항과 블루로드, 고래불 해변 정리.",
+   "소개": "대게 항구와 블루로드가 이어진 바다",
+   "시군구": [
+    "영덕군"
+   ],
+   "안내": "강구항 대게거리에서 시작한 해안길이 창포말등대와 풍력발전단지를 지나 축산항까지 이어집니다. 북쪽 영해면에는 옛 기와집 마을이 있고, 고래불 해변이 영덕 바다의 끝을 맺습니다.",
+   "엶": true,
+   "이름": {
+    "ko": "영덕 바다",
+    "zh": "盈德"
+   },
+   "좌표": {
+    "경도": 129.4103,
+    "위도": 36.4358
+   },
+   "지역코드": "35",
+   "짧은이름": "영덕",
+   "차례": 603,
+   "포인트안내": "영덕 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 채취 체험은 체험장이 운영하는 날에만 하세요.",
+   "한줄": "대게 항구",
+   "항구": [
+    "강구항",
+    "축산항",
+    "대진항"
+   ]
+  },
+  {
+   "id": "uljin",
+   "관광안내": "https://www.uljin.go.kr/tour/",
+   "대표사진": null,
+   "묶음": "gyeongbuk",
+   "물때관측소": {
+    "메모": "물때표는 후포 조위관측소 기준입니다. 후포·구산·기성이 가깝고, 죽변 쪽도 같은 관측소를 가장 가깝게 씁니다. 동해라 밀물·썰물 높이 차가 작습니다.",
+    "이름": "후포",
+    "코드": "DT_0011"
+   },
+   "바다": "동해",
+   "법정동코드": "47",
+   "색": "#2C5E55",
+   "설명": "울진 바다여행. 후포항 대게와 등기산 스카이워크, 월송정·망양정, 죽변 스카이레일 정리.",
+   "소개": "관동팔경 정자와 대게 항구가 있는 바다",
+   "시군구": [
+    "울진군"
+   ],
+   "안내": "남쪽 후포항은 대게와 붉은대게 축제가 열리는 곳이고, 바로 옆 등기산에는 바다 위로 뻗은 스카이워크가 있습니다. 해안도로를 따라 월송정과 망양정을 지나면 북쪽 죽변항과 해안 모노레일에 닿습니다.",
+   "엶": true,
+   "이름": {
+    "ko": "울진 바다",
+    "zh": "蔚珍"
+   },
+   "좌표": {
+    "경도": 129.4389,
+    "위도": 36.836
+   },
+   "지역코드": "35",
+   "짧은이름": "울진",
+   "차례": 604,
+   "포인트안내": "울진 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 기성마을·구산마을·거일1리마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
+   "한줄": "대게와 정자",
+   "항구": [
+    "후포항",
+    "구산항",
+    "죽변항"
+   ]
+  },
+  {
+   "id": "ulleung",
+   "관광안내": "https://www.ulleung.go.kr/tour/",
+   "대표사진": null,
+   "묶음": "gyeongbuk",
+   "물때관측소": {
+    "메모": "물때표는 울릉도 조위관측소 기준입니다. 섬 둘레 항구는 모두 이 관측소가 가장 가깝고, 독도는 거리가 멀어 참고용으로만 보세요.",
+    "이름": "울릉도",
+    "코드": "DT_0013"
+   },
+   "바다": "동해",
+   "법정동코드": "47",
+   "색": "#1E4A66",
+   "설명": "울릉도·독도 여행. 도동·저동 해안산책로, 관음도·나리분지, 오징어축제와 독도 배편 정리.",
+   "소개": "배로 건너가는 화산섬과 동쪽 끝 독도",
+   "시군구": [
+    "울릉군"
+   ],
+   "안내": "도동항과 저동항 사이에는 바위 절벽을 따라 걷는 해안산책로가 있고, 북면에는 관음도와 코끼리바위, 분화구 속 나리분지가 있습니다. 독도는 울릉도에서 다시 배를 타야 하며 날씨에 따라 뜨지 못하는 날도 많습니다.",
+   "엶": true,
+   "이름": {
+    "ko": "울릉도·독도",
+    "zh": "郁陵岛"
+   },
+   "좌표": {
+    "경도": 130.8788,
+    "위도": 37.5113
+   },
+   "지역코드": "35",
+   "짧은이름": "울릉",
+   "차례": 605,
+   "포인트안내": "울릉 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 채취 체험은 체험장이 운영하는 날에만 하세요.",
+   "한줄": "화산섬",
+   "항구": [
+    "도동항",
+    "저동항",
+    "사동항"
+   ]
+  },
+  {
+   "id": "samcheok",
+   "관광안내": "https://www.samcheok.go.kr/tour.web",
+   "대표사진": null,
+   "묶음": "gangwon",
+   "물때관측소": {
+    "메모": "물때표는 삼척항에서 약 7km 떨어진 동해항 관측소 기준입니다. 장호·임원 등 남쪽 포구는 30km 넘게 떨어져 있어 시각이 조금 다를 수 있습니다. 동해안은 조수 간만의 차가 작아 서해처럼 갯벌이 크게 드러나지 않습니다.",
+    "이름": "동해항",
+    "코드": "DT_0057"
+   },
+   "바다": "동해",
+   "법정동코드": "51",
+   "색": "#2E5E4E",
+   "설명": "삼척 바다여행. 새천년해안도로·장호항·초곡 용굴촛대바위길, 물때와 곰치국·대게, 어촌체험 정리.",
+   "소개": "절벽 사이 포구가 이어지는 강원 남쪽 바다",
+   "시군구": [
+    "삼척시"
+   ],
+   "안내": "새천년해안도로와 맹방 백사장을 지나 남쪽으로 내려가면 초곡·장호·임원 같은 작은 포구가 차례로 나옵니다. 장호항 주변은 물이 맑아 투명카누와 스노클링 체험이 열립니다.",
+   "엶": true,
+   "이름": {
+    "ko": "삼척",
+    "zh": "三陟"
+   },
+   "좌표": {
+    "경도": 129.2552,
+    "위도": 37.3581
+   },
+   "지역코드": "32",
+   "짧은이름": "삼척",
+   "차례": 701,
+   "포인트안내": "삼척 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 장호마을·갈남마을·궁촌마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
+   "한줄": "기암과 포구",
+   "항구": [
+    "삼척항(정라진)",
+    "장호항",
+    "임원항",
+    "궁촌항"
+   ]
+  },
+  {
+   "id": "donghae",
+   "관광안내": "https://www.dh.go.kr/tour/",
+   "대표사진": null,
+   "묶음": "gangwon",
+   "물때관측소": {
+    "메모": "물때표는 묵호항 안의 묵호 관측소 기준입니다. 남쪽 추암·한섬 쪽은 동해항 관측소(DT_0057)가 더 가깝습니다.",
+    "이름": "묵호",
+    "코드": "DT_0006"
+   },
+   "바다": "동해",
+   "법정동코드": "51",
+   "색": "#1D4E6E",
+   "설명": "동해 바다여행. 묵호항·논골담길·도째비골, 망상해변과 추암 촛대바위, 물때와 물회·막회 정리.",
+   "소개": "골목과 등대가 내려다보는 항구 도시",
+   "시군구": [
+    "동해시"
+   ],
+   "안내": "묵호항 뒤 언덕에는 벽화 골목과 등대, 유리 전망대가 모여 있어 걸어서 둘러보기 좋습니다. 북쪽 망상해변부터 남쪽 추암 촛대바위까지 해변이 이어집니다.",
+   "엶": true,
+   "이름": {
+    "ko": "동해",
+    "zh": "东海"
+   },
+   "좌표": {
+    "경도": 129.1192,
+    "위도": 37.5502
+   },
+   "지역코드": "32",
+   "짧은이름": "동해",
+   "차례": 702,
+   "포인트안내": "동해 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 채취 체험은 체험장이 운영하는 날에만 하세요.",
+   "한줄": "묵호 언덕",
+   "항구": [
+    "묵호항",
+    "어달항",
+    "대진항(동해)",
+    "천곡항"
+   ]
+  },
+  {
+   "id": "gangneung",
+   "관광안내": "https://www.gn.go.kr/tour/",
+   "대표사진": null,
+   "묶음": "gangwon",
+   "물때관측소": {
+    "메모": "강릉 시내에는 국립해양조사원 조위관측소가 없어 가장 가까운 묵호 관측소 기준입니다. 주문진 쪽은 속초 관측소(DT_0012)가 더 가깝습니다.",
+    "이름": "묵호",
+    "코드": "DT_0006"
+   },
+   "바다": "동해",
+   "법정동코드": "51",
+   "색": "#4A3F6B",
+   "설명": "강릉 바다여행. 주문진항·경포해변·안목 커피거리·정동진, 바다부채길, 물때와 초당순두부 정리.",
+   "소개": "경포 해변과 정동진 해돋이의 긴 해안",
+   "시군구": [
+    "강릉시"
+   ],
+   "안내": "북쪽 주문진항부터 경포·안목을 지나 정동진과 금진까지 해변이 길게 이어집니다. 정동진 남쪽에는 해안단구 절벽 아래를 걷는 바다부채길이 있습니다.",
+   "엶": true,
+   "이름": {
+    "ko": "강릉",
+    "zh": "江陵"
+   },
+   "좌표": {
+    "경도": 128.9405,
+    "위도": 37.7759
+   },
+   "지역코드": "32",
+   "짧은이름": "강릉",
+   "차례": 703,
+   "포인트안내": "강릉 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 소돌마을·사천마을·심곡마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
+   "한줄": "호수와 해변",
+   "항구": [
+    "주문진항",
+    "사천진항",
+    "강릉항(안목)",
+    "금진항"
+   ]
+  },
+  {
+   "id": "yangyang",
+   "관광안내": "https://tour.yangyang.go.kr",
+   "대표사진": null,
+   "묶음": "gangwon",
+   "물때관측소": {
+    "메모": "양양에는 국립해양조사원 조위관측소가 없어 속초 관측소 기준입니다. 남쪽 남애·죽도는 속초에서 30km 가까이 떨어져 있어 시각이 조금 다를 수 있습니다.",
+    "이름": "속초",
+    "코드": "DT_0012"
+   },
+   "바다": "동해",
+   "법정동코드": "51",
+   "색": "#2F6B6B",
+   "설명": "양양 바다여행. 남애항·죽도·하조대·서피비치와 낙산사, 물때와 섭국·송이, 어촌체험 정리.",
+   "소개": "서핑 해변과 바닷가 절이 이어지는 곳",
+   "시군구": [
+    "양양군"
+   ],
+   "안내": "남애항에서 죽도·하조대를 거쳐 낙산까지 크고 작은 해변마다 서핑숍이 자리합니다. 바다 절벽 위에는 낙산사와 휴휴암, 하조대 정자가 있습니다.",
+   "엶": true,
+   "이름": {
+    "ko": "양양",
+    "zh": "襄阳"
+   },
+   "좌표": {
+    "경도": 128.7127,
+    "위도": 38.0313
+   },
+   "지역코드": "32",
+   "짧은이름": "양양",
+   "차례": 704,
+   "포인트안내": "양양 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 남애마을·수산마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
+   "한줄": "서핑과 사찰",
+   "항구": [
+    "남애항",
+    "기사문항",
+    "수산항",
+    "물치항"
+   ]
+  },
+  {
+   "id": "sokcho",
+   "관광안내": null,
+   "대표사진": null,
+   "묶음": "gangwon",
+   "물때관측소": {
+    "메모": "물때표는 속초항의 속초 관측소 기준으로, 권역 안에서 가장 가깝습니다.",
+    "이름": "속초",
+    "코드": "DT_0012"
+   },
+   "바다": "동해",
+   "법정동코드": "51",
+   "색": "#24476B",
+   "설명": "속초 바다여행. 대포항·속초해변·아바이마을 갯배·영금정, 물때와 오징어순대·닭강정 정리.",
+   "소개": "항구 시장과 호수, 해변이 모인 도시",
+   "시군구": [
+    "속초시"
+   ],
+   "안내": "대포항과 속초해변, 아바이마을, 동명항이 시내 가까이 모여 있어 걸어서 다니기 좋습니다. 바다와 이어진 석호인 청초호와 영랑호가 도시 양쪽에 있습니다.",
+   "엶": true,
+   "이름": {
+    "ko": "속초",
+    "zh": "束草"
+   },
+   "좌표": {
+    "경도": 128.5968,
+    "위도": 38.2007
+   },
+   "지역코드": "32",
+   "짧은이름": "속초",
+   "차례": 705,
+   "포인트안내": "속초 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 장사마을·대포마을·청호마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
+   "한줄": "항구와 석호",
+   "항구": [
+    "대포항",
+    "동명항(속초항)",
+    "장사항",
+    "외옹치항"
+   ]
+  },
+  {
+   "id": "gwgoseong",
+   "관광안내": "https://www.gwgs.go.kr/tour/",
+   "대표사진": null,
+   "묶음": "gangwon",
+   "물때관측소": {
+    "메모": "고성에는 국립해양조사원 조위관측소가 없어 속초 관측소 기준입니다. 거진·대진 등 북쪽 포구는 30km 가까이 떨어져 있어 시각이 조금 다를 수 있습니다.",
+    "이름": "속초",
+    "코드": "DT_0012"
+   },
+   "바다": "동해",
+   "법정동코드": "51",
+   "색": "#3D5A40",
+   "설명": "강원 고성 바다여행. 통일전망대·화진포·거진항·청간정·능파대, 물때와 문어·도치알탕 정리.",
+   "소개": "호수와 포구가 이어지는 최북단 바다",
+   "시군구": [
+    "고성군"
+   ],
+   "안내": "휴전선과 맞닿은 북쪽에는 통일전망대와 대진항, 화진포가 있고 남쪽으로 거진·송지호·아야진이 이어집니다. 능파대와 청간정 같은 바위·정자 명소가 해안 곳곳에 있습니다.",
+   "엶": true,
+   "이름": {
+    "ko": "강원 고성",
+    "zh": "江原高城"
+   },
+   "좌표": {
+    "경도": 128.4903,
+    "위도": 38.3905
+   },
+   "지역코드": "32",
+   "짧은이름": "강원 고성",
+   "차례": 706,
+   "포인트안내": "고성 바다는 대부분 어촌계가 가꾸는 마을어장입니다. 바다 체험은 오호마을·거진마을처럼 체험을 운영하는 곳에서 정해진 구역으로 즐기세요.",
+   "한줄": "최북단 바다",
+   "항구": [
+    "거진항",
+    "대진항",
+    "아야진항",
+    "공현진항"
+   ]
+  }
+ ],
+ "묶음이름": {
+  "busanulsan": {
+   "ko": "부산·울산",
+   "zh": "釜山·蔚山"
+  },
+  "chungnam": {
+   "ko": "충남",
+   "zh": "忠南"
+  },
+  "gangwon": {
+   "ko": "강원",
+   "zh": "江原"
+  },
+  "gyeongbuk": {
+   "ko": "경북",
+   "zh": "庆北"
+  },
+  "gyeongnam": {
+   "ko": "경남",
+   "zh": "庆南"
+  },
+  "jeju": {
+   "ko": "제주",
+   "zh": "济州"
+  },
+  "jeonbuk": {
+   "ko": "전북",
+   "zh": "全北"
+  },
+  "jeonnam": {
+   "ko": "전남",
+   "zh": "全南"
+  },
+  "sudogwon": {
+   "ko": "인천·경기",
+   "zh": "仁川·京畿"
+  }
+ },
+ "묶음차례": [
+  "jeju",
+  "sudogwon",
+  "chungnam",
+  "jeonbuk",
+  "jeonnam",
+  "gyeongnam",
+  "busanulsan",
+  "gyeongbuk",
+  "gangwon"
+ ],
+ "_묶음차례까닭": "2026-09-30 주인 지시 — 「권역 배치중 제주를 첫번째로 배치하자」. 제주는 바다 여행지로 가장 많이 찾는 곳이고, 제주패스 광고도 그곳에 있습니다."
 }

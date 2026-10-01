@@ -918,57 +918,118 @@ html[data-pcview] .pcview{display:block}
   .tide-two{grid-template-columns:1fr;gap:10px}
 }
 
+/* ══ 물때 달력 — **바깥 검수 시안 그대로** (2026-10-02) ═══════
+   주인 지시 — 「디자인부분은 너가 항상 의뢰를 해서 지피티의
+     사진이 오면 그걸 사용하면 됨」
+
+   그림이 정해 준 것 —
+     · PC **5열 × 2행**(10일). 나머지는 「더 보기」로 폅니다
+     · 물때 번호(12물)를 **가장 크게** — 눈이 먼저 닿는 곳
+     · 물살은 **둥근 알약**, 네 줄은 **세로로** 쌓기
+     · 만조 **주황** · 간조 **녹색** 배지
+     · 오늘은 **녹색 테두리 + 「오늘」 배지 + 연한 바탕**
+
+   전에는 14장을 7열에 욱여넣어 카드가 **147px** 였습니다.
+   5열이면 **205px** 라 58px 가 더 생깁니다. 그만큼 시각을
+   키우고 숨 쉴 자리를 둡니다. 「정보를 너무 많이 넣어서 중요한
+   간조·만조 시각조차 읽기 어렵다」는 지적이 맞았습니다. */
 .tide-days{
   /* ★ **minmax(0,1fr)** 이라야 합니다 (2026-09-30 주인 지적 「화면넘침」)
-     그냥 `1fr` 은 **최소 폭이 내용 크기**입니다. 카드 안
-     「04:54 654cm ▲+660」 같은 줄이 칸을 밀어내 격자가 통째로
-     화면 밖으로 나갔습니다. 가로 스크롤이 생겨 쪽이 어그나 보입니다. */
-  display:grid;grid-template-columns:repeat(7,minmax(0,1fr));
-  gap:8px;margin-top:4px;
+     그냥 `1fr` 은 최소 폭이 내용 크기라 칸이 밀려 화면 밖으로 나갑니다. */
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:12px;margin-top:6px;
 }
+/* 11~14일째는 **자료는 두고 감춥니다** — 「더 보기」로 폅니다 */
+.tide-day--more{display:none}
+.tide-days--all .tide-day--more{display:block}
+
 .tide-day{
-  /* ★ 글씨와 여백을 줄였습니다 (2026-10-01 주인 지시)
-     「글씨 폰트 및 크기를 좀더 줄여」
-     14일치가 한눈에 들어와야 고르기 쉽습니다. */
-  border:1px solid var(--line);border-radius:var(--r-sm);
-  background:var(--white);padding:9px 6px;text-align:center;
+  border:1px solid var(--line);border-radius:14px;
+  background:var(--white);padding:13px 12px 12px;
 }
-.tide-day--today{border-color:var(--orange);background:#FFFBF3}
-/* ★ 2026-10-01 주인 지시 「글씨 폰트 및 크기를 좀더 줄여」
-     ★ **읽히는 선은 지킵니다** — 물때표는 밖에서 햇빛 아래
-       한 손으로 봅니다. 시각·물높이는 11px 아래로 안 내리고,
-       덜 중요한 것(날짜·이름표·여백)을 줄입니다. */
-.td-date{font-size:10.5px;font-weight:700;color:var(--muted)}
-.tide-day--today .td-date{color:var(--orange)}
-.td-bar{
-  height:52px;display:flex;align-items:flex-end;justify-content:center;
-  margin:6px 0 4px;
+.tide-day--today{
+  border:2px solid var(--green);background:#F3F8F6;
+  padding:12px 11px 11px;          /* 테두리가 1px 두꺼워진 만큼 */
 }
-.td-bar-in{width:15px;border-radius:4px 4px 0 0;min-height:8px}
-.td-spring{background:var(--green)}
-.td-mid{background:#9FB8A8}
-.td-neap{background:#D9D0C2}
-.td-num{font-size:12.5px;font-weight:700;line-height:1.3}
-.td-name{font-size:10px;color:var(--orange);font-weight:700;margin-top:2px}
-.td-gap{font-size:9.5px;color:var(--muted);margin-top:1px}
-.td-times{margin-top:6px;border-top:1px solid var(--line);padding-top:5px}
+
+/* 날짜 줄 — 날짜와 「오늘」 배지 */
+.td-head{display:flex;align-items:center;gap:6px;margin-bottom:2px}
+.td-date{font-size:12px;font-weight:700;color:var(--muted)}
+.tide-day--today .td-date{color:var(--green)}
+.td-today{
+  font-size:10.5px;font-weight:800;color:#fff;background:var(--green);
+  padding:2px 7px;border-radius:999px;line-height:1.5;
+}
+
+/* 물때 번호 — **가장 큰 글자** */
+.td-mul{
+  font-size:26px;font-weight:800;line-height:1.15;color:var(--ink);
+  letter-spacing:-.02em;margin:2px 0 8px;
+}
+
+/* 물살 — 둥근 알약 */
+.td-flow{
+  /* ★ 시안은 알약이 **글자 폭만큼**입니다 — 칸을 가로로 꽉 채우지
+     않습니다. 꽉 채우면 띠처럼 보여 「상태」가 아니라 「구분선」이
+     됩니다. inline-flex 로 내용만큼만 차지하게 합니다. */
+  display:inline-flex;align-items:center;gap:5px;
+  padding:5px 11px;border-radius:999px;
+  font-size:11.5px;font-weight:700;white-space:nowrap;
+}
+.td-flow-ic{
+  width:13px;height:9px;flex:none;
+  background:currentColor;opacity:.75;
+  -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'><path d='M1 5c3 0 3-3 6-3s3 3 6 3 3-3 6-3 2 1.6 2 1.6M1 12c3 0 3-3 6-3s3 3 6 3 3-3 6-3 2 1.6 2 1.6' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'/></svg>") center/contain no-repeat;
+          mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'><path d='M1 5c3 0 3-3 6-3s3 3 6 3 3-3 6-3 2 1.6 2 1.6M1 12c3 0 3-3 6-3s3 3 6 3 3-3 6-3 2 1.6 2 1.6' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'/></svg>") center/contain no-repeat;
+}
+/* 많이 빠짐(사리) · 중간 · 적게 빠짐(조금) — **색만으로 알리지 않습니다** */
+.td-flow--spring{background:#E8F1EC;color:#2F5D57}
+.td-flow--mid{background:#EFF3F1;color:#5C6B64}
+.td-flow--neap{background:#F4F1EA;color:#8A7F6B}
+
+/* 물때 네 줄 — 세로로 */
+.td-times{margin-top:10px;border-top:1px solid var(--line);padding-top:8px}
 .td-times:empty{display:none}
-/* ★ 줄 사이를 좁힙니다 — **글씨는 그대로** (2026-10-01)
-     1.9 → 1.55 만 해도 네 줄이 14px 줄어듭니다. */
-.td-t{display:flex;align-items:center;justify-content:center;gap:3px;
-      font-size:11px;line-height:1.55;color:var(--muted)}
+.td-t{
+  /* ★ 시각은 **왼쪽**, 물높이·증감은 **오른쪽 끝**에 붙입니다
+     (시안 그대로). 시각 바로 옆에 숫자가 붙으면 어느 것이 시각인지
+     한눈에 안 갈립니다. */
+  display:grid;grid-template-columns:20px auto 1fr auto;
+  align-items:baseline;gap:7px;padding:3.5px 0;
+}
+.td-t .tt-cm{justify-self:end}
+.td-t--empty{opacity:.35}
 .tt-k{
   display:inline-flex;align-items:center;justify-content:center;
-  width:13px;height:13px;border-radius:3px;
-  background:#E7EFEA;color:var(--green);font-size:8.5px;font-weight:700;
+  width:20px;height:18px;border-radius:5px;
+  font-size:10px;font-weight:800;align-self:center;
 }
-.td-t--low .tt-k{background:#FFF0D6;color:var(--orange)}
-.tt-v{font-weight:700;color:var(--ink)}
-/* 물높이 — 해루질에서 가장 중요한 값입니다 (2026-09-28 주인 지시)
-   ★ 2026-10-01 — `cm` 을 빼서 글자가 짧아졌으니
-     11.5px 로 줄여도 읽힙니다. 단위는 칸 머리에 한 번만. */
-.tt-cm{color:#5F564A;font-size:11.5px;font-weight:600;font-variant-numeric:tabular-nums}
+/* 만조 **주황** · 간조 **녹색** — 시안 그대로 */
+.td-t--high .tt-k{background:#FBEFDC;color:#B8761C}
+.td-t--low  .tt-k{background:#E3EFE9;color:#2F5D57}
+/* 시각이 **가장 큽니다** — 손님이 찾는 것은 이것입니다 */
+.tt-v{
+  font-size:15px;font-weight:800;color:var(--ink);
+  font-variant-numeric:tabular-nums;letter-spacing:-.01em;
+}
+/* 물높이·증감은 **보조** */
+.tt-cm{font-size:11px;font-weight:600;color:#8A8277;
+  font-variant-numeric:tabular-nums}
+.tt-d{font-size:10.5px;font-weight:700;color:#C07B22;
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.tt-d--down{color:#3E7D73}
 
+/* 「이후 날짜 더 보기」 — 가로로 긴 띠 */
+.td-more{
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  width:100%;margin-top:12px;padding:13px 16px;
+  border:1px solid var(--line);border-radius:12px;
+  background:var(--white);cursor:pointer;
+  font-size:13.5px;font-weight:700;color:#4A3F33;
+  min-height:46px;            /* 엄지로 누르는 자리 */
+}
+.td-more:hover{border-color:var(--green);color:var(--green)}
+.td-more-s{font-size:12px;font-weight:600;color:var(--muted)}
 /* ── 첫 화면 · 묶음 쪽 ────────────────────────────────── */
 /* ── 사진이 든 카드 ───────────────────────────────────────
    2026-09-27 주인 지적 「사람들은 문자 정보보다는 시각 정보를
@@ -1371,8 +1432,41 @@ html[data-pcview] .pcview{display:block}
    요즘 큰 휴대폰 가로, 태블릿, 폴드 펼침이 모두 이 구간입니다.
    7열은 칸이 너무 좁아 글자가 밀리고, 3열은 허전합니다 — 4열입니다. */
 @media (min-width:641px) and (max-width:1000px){
-  .tide-days{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
-  .tide-day{padding:11px 7px}
+  /* ★ 5열은 이 폭에서 카드가 120px 밖에 안 됩니다 — **3열**로 */
+  .tide-days{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+}
+
+/* ★ 휴대폰은 **한 줄에 하나** (2026-10-02 바깥 검수 시안)
+   「모바일에서는 한 줄에 하나씩 보여 주는 방식을 권합니다」
+   해루질은 「이번 주 어느 날이 가장 많이 빠지나」를 **견주는**
+   일이라, 한 날만 보이는 상세 방식보다 쭉 훑는 쪽이 맞습니다.
+   한 칸이 328px 라 시각을 더 키울 수 있습니다. */
+@media (max-width:640px){
+  .tide-days{grid-template-columns:1fr;gap:10px}
+  .tide-day{padding:14px 16px}
+  .tide-day--today{padding:13px 15px}
+  /* 휴대폰에서는 물때 번호와 물살을 **한 줄에 나란히** 둡니다 —
+     세로로 쌓으면 카드가 쓸데없이 길어집니다 (시안 오른쪽 그림) */
+  .td-mul{display:inline-block;margin:2px 10px 6px 0;vertical-align:middle}
+  .td-flow{display:inline-flex;vertical-align:middle;margin-bottom:6px}
+  .tt-v{font-size:16.5px}
+  .tt-cm{font-size:12px}
+  .tt-d{font-size:11.5px}
+  /* ★ **빈 줄을 숨깁니다** (2026-10-02 바깥 검수 지시)
+     「모바일에서는 불필요한 빈 줄이 되지 않도록 해당 줄을 숨겨도
+       됩니다. **PC 의 동일 높이 정렬은 유지합니다**」
+     PC 는 5열이 나란히 서므로 높이를 맞춰야 하지만, 휴대폰은
+     한 줄에 하나라 맞출 짝이 없습니다. */
+  .td-t--empty{display:none}
+  /* ★ 위 요약 두 칸의 **세로를 줄입니다** (같은 지시)
+     「상단 요약 카드 두 개가 세로로 배치되어 실제 달력에 도달하기
+       까지 스크롤이 길어지는 점은 개선할 필요가 있습니다」 */
+  .tide-two{gap:8px}
+  .tide-two > *{padding:13px 14px}
+  .tnow-when{margin-top:8px}
+  /* ★ 아래 고정 차림표가 **마지막 카드와 단추를 가리지 않게** */
+  .tide-wrap, .tide-days{scroll-margin-bottom:84px}
+  .td-more{margin-bottom:12px}
 }
 
 @media (max-width:640px){
@@ -1415,12 +1509,14 @@ html[data-pcview] .pcview{display:block}
      — 한눈에 「이번 주 언제 갈까」가 보입니다
      — 밀어야 한다는 것을 배우지 않아도 됩니다
      (주인 규칙 23 — 확인은 휴대폰과 PC 둘 다) */
-  .tide-days{
-    grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:6px;
-  }
-  .tide-day{padding:10px 6px}
-  .td-name{font-size:14px}
+  /* ★ **한 줄에 하나로 바꿨습니다** (2026-10-02 바깥 검수 시안)
+     위 3×2 격자는 14장을 좁게 밀어 넣던 때의 것입니다. 그때는
+     「밀지 않고 한눈에」가 맞았지만, 지금은 **10장을 크게** 보이는
+     쪽으로 바뀌었습니다. 3열이면 한 칸이 100px 라 증감(▲+123)이
+     잘립니다 — 실제로 찍어 보고 확인했습니다.
+     한 줄 하나면 328px 를 다 써서 시각을 키울 수 있습니다. */
+  .tide-days{grid-template-columns:1fr;gap:10px}
+  .tide-day{padding:14px 16px}
   .td-times{font-size:11px}
   .site-footer{padding:20px var(--gutter) 80px}
 }

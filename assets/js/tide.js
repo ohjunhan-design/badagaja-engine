@@ -426,67 +426,68 @@
     if (한눈) { 두칸.appendChild(한눈); }
     var 줄 = 만들기('div', 'tide-days');
     날들.forEach(function (x, i) {
+      // ★ **시안 그대로 짰습니다** (2026-10-02 바깥 검수 그림)
+      //   주인 지시 — 「디자인부분은 너가 항상 의뢰를 해서
+      //     지피티의 사진이 오면 그걸 사용하면 됨」
+      //   그림이 정해 준 것 —
+      //     · 네 줄을 **세로로** 쌓는다 (2×2 아님)
+      //     · 한 줄 = [만/간 배지] [시각 크게] [물높이 작게] [증감]
+      //     · 만조 **주황** · 간조 **녹색** 배지
+      //     · 물때 번호(12물)를 **가장 크게** — 눈이 먼저 닿는 곳
+      //     · 물살은 **둥근 알약**에 물결
+      //     · 오늘은 녹색 테두리 + 「오늘」 배지
+      //     · 세 번만 나는 날은 네 줄째를 **`— — —` 로 비워** 둔다
+      //       (빈 줄을 지우면 카드 높이가 들쭉날쭉합니다)
       var 하루 = 만들기('div', 'tide-day' + (i === 0 ? ' tide-day--today' : ''));
-      하루.appendChild(만들기('div', 'td-date',
-        x.키 + ' (' + x.요일 + ')' + (i === 0 ? ' 오늘' : '')));
 
-      var 막대칸 = 만들기('div', 'td-bar');
-      var 막대 = 만들기('div', 'td-bar-in td-' + x.풀이.반);
-      막대.style.height = Math.max(12, x.세기) + '%';
-      막대칸.appendChild(막대);
-      하루.appendChild(막대칸);
+      var 머리 = 만들기('div', 'td-head');
+      머리.appendChild(만들기('span', 'td-date',
+        x.키 + ' (' + x.요일 + ')'));
+      if (i === 0) { 머리.appendChild(만들기('span', 'td-today', '오늘')); }
+      하루.appendChild(머리);
 
-      // ★ **어려운 물때 이름을 뻐습니다** (2026-09-29 주인 지시)
-      //   「어깨사리 · 허리사리 · 한꺽기 · 열매」는
-      //   **일반인에게 아무 뜻이 없는 말**입니다.
-      //   바다에 가려는 분이 알고 싶은 것은 하나입니다 —
-      //   **「오늘 물이 많이 빠지나」.** 그것만 적습니다.
-      //   (물때 이름 자체는 tide.js 안에 남겨 둡니다 —
-      //    달 나이 셌에 쓰고, 나중에 필요하면 다시 씨니다)
-      하루.appendChild(만들기('div', 'td-num', x.풀이.글));
-      if (x.조차) {
-        하루.appendChild(만들기('div', 'td-gap',
-          '물차 ' + Math.round(x.조차 / 10) / 10 + 'm'));
-      }
+      // 물때 번호 — **가장 크게**
+      하루.appendChild(만들기('div', 'td-mul', x.번호 + '물'));
+
+      // 물살 — 둥근 알약. 막대는 알약 안에 **색 띠**로 녹입니다
+      var 알약 = 만들기('div', 'td-flow td-flow--' + x.풀이.반);
+      알약.appendChild(만들기('i', 'td-flow-ic'));
+      알약.appendChild(만들기('span', 'td-flow-t', x.풀이.글));
+      하루.appendChild(알약);
 
       var 때 = 만들기('div', 'td-times');
-      if (x.사건 && x.사건.length) {
-        x.사건.forEach(function (e, ei) {
-          var 한줄 = 만들기('div', 'td-t' + (e.type === '간조' ? ' td-t--low' : ''));
-          한줄.appendChild(만들기('span', 'tt-k', e.type === '간조' ? '저' : '고'));
-          한줄.appendChild(만들기('span', 'tt-v', e.time));
-          // ★ **단위는 칸 머리에 한 번만** (2026-10-01 주인 지시)
-          //   「물때표에서 cm 이건 지워도 될거같아」
-          //   「그래야 페이지가 공간이 좀더 생기지」
-          //
-          //   2026-09-28 에는 「725」가 무엇인지 알 수 없다 하여
-          //   줄마다 `cm` 을 붙였습니다. 그런데 하루 네 줄 ×
-          //   14일 = **56번**이 되풀이되어 좁은 화면을 잡아먹습니다.
-          //   단위는 칸 머리(`.td-unit`)에 한 번만 밝히고,
-          //   여기서는 **숫자만** 찍습니다.
-          한줄.appendChild(만들기('span', 'tt-cm', String(e.level)));
-          // ★ **얼마나 오르내렸는지** 함께 적습니다 (2026-09-30 주인 지시)
-          //   「이런 표시도 나오면 좋겠어」 (바다타임의 ▲+123 · ▼-218)
-          //
-          //   물높이 자체보다 **얼마나 움직이는가**가 해루질·낚시에서
-          //   더 쓸모 있습니다. 앞 물때와의 차를 냅니다.
-          //   하루 첫 물때는 **전날 마지막**과 견줍니다 — 그래야
-          //   자정을 넘는 움직임도 이어집니다.
-          var 앞 = null;
-          if (ei > 0) { 앞 = x.사건[ei - 1]; }
-          else if (i > 0 && 날들[i - 1].사건 && 날들[i - 1].사건.length) {
-            var 전날 = 날들[i - 1].사건;
-            앞 = 전날[전날.length - 1];
-          }
-          if (앞 && typeof 앞.level === 'number'
-              && typeof e.level === 'number') {
-            var 폭 = e.level - 앞.level;
-            한줄.appendChild(만들기(
-              'span', 'tt-d' + (폭 < 0 ? ' tt-d--down' : ''),
-              (폭 < 0 ? '▼' : '▲') + (폭 > 0 ? '+' : '') + 폭));
-          }
-          때.appendChild(한줄);
-        });
+      var 사건 = (x.사건 && x.사건.length) ? x.사건 : [];
+      // ★ **네 줄을 늘 채웁니다.** 세 번뿐인 날은 마지막을 비웁니다
+      for (var ei = 0; ei < 4; ei++) {
+        var e = 사건[ei];
+        if (!e) {
+          if (사건.length === 0) { break; }   // 아예 없으면 안 그립니다
+          var 빈줄 = 만들기('div', 'td-t td-t--empty');
+          빈줄.appendChild(만들기('span', 'tt-k', ''));
+          빈줄.appendChild(만들기('span', 'tt-v', '—'));
+          때.appendChild(빈줄);
+          continue;
+        }
+        var 간 = (e.type === '간조');
+        var 한줄 = 만들기('div', 'td-t' + (간 ? ' td-t--low' : ' td-t--high'));
+        한줄.appendChild(만들기('span', 'tt-k', 간 ? '간' : '만'));
+        한줄.appendChild(만들기('span', 'tt-v', e.time));
+        한줄.appendChild(만들기('span', 'tt-cm', String(e.level)));
+        // 얼마나 오르내렸는지 — 앞 물때와의 차. 하루 첫 줄은 전날 마지막과
+        var 앞 = null;
+        if (ei > 0 && 사건[ei - 1]) { 앞 = 사건[ei - 1]; }
+        else if (i > 0 && 날들[i - 1].사건 && 날들[i - 1].사건.length) {
+          var 전날 = 날들[i - 1].사건;
+          앞 = 전날[전날.length - 1];
+        }
+        if (앞 && typeof 앞.level === 'number'
+            && typeof e.level === 'number') {
+          var 폭 = e.level - 앞.level;
+          한줄.appendChild(만들기(
+            'span', 'tt-d' + (폭 < 0 ? ' tt-d--down' : ''),
+            (폭 < 0 ? '▼' : '▲') + (폭 > 0 ? '+' : '') + 폭));
+        }
+        때.appendChild(한줄);
       }
       하루.appendChild(때);
       줄.appendChild(하루);
@@ -501,6 +502,36 @@
     두칸.appendChild(언제갈까(날들));
     칸.appendChild(두칸);
     칸.appendChild(줄);
+
+    // ★ **처음에는 10일만 보입니다** (2026-10-02 바깥 검수 지시)
+    //   「14일치가 한 화면에 너무 촘촘하게 들어가 있어 간조·만조
+    //     시각, 물높이, 증감량을 읽기 어렵다」
+    //   「**기존 14일 데이터는 삭제하지 않는다.** 처음 10일을
+    //     표시하고 나머지는 **이후 날짜 더 보기**로 제공한다」
+    //
+    //   그래서 자료는 14일 그대로 두고 **CSS 로 뒤 4장만 감춥니다.**
+    //   자바스크립트가 꺼져 있어도 14장이 다 보일 뿐 깨지지 않습니다.
+    var 카드들 = 줄.children;
+    if (카드들.length > 10) {
+      for (var k = 10; k < 카드들.length; k++) {
+        카드들[k].classList.add('tide-day--more');
+      }
+      // ★ 글을 **짧게** 합니다 (2026-10-02 바깥 검수 지시)
+      //   「나머지 4일 보기 ↓ · 펴면 접기 ↑ 로 바뀌도록」
+      //   「세 개의 단추를 더하면 선택지가 많아지고 그래프가 별도
+      //     쪽인 것처럼 오해할 수 있습니다」 — 단추 하나로 둡니다.
+      var 남은수 = 카드들.length - 10;
+      var 더 = 만들기('button', 'td-more');
+      더.type = 'button';
+      더.appendChild(만들기('span', 'td-more-t',
+        '나머지 ' + 남은수 + '일 보기 ↓'));
+      더.addEventListener('click', function () {
+        var 폄 = 줄.classList.toggle('tide-days--all');
+        더.querySelector('.td-more-t').textContent =
+          폄 ? '접기 ↑' : '나머지 ' + 남은수 + '일 보기 ↓';
+      });
+      칸.appendChild(더);
+    }
     요약채우기(날들[0]);
   }
 
