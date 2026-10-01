@@ -452,6 +452,37 @@ html.has-navi .navi:hover{filter:brightness(.94)}
 @media (max-width:600px){
   .hub-list--grid{grid-template-columns:repeat(2,1fr)}
 }
+
+/* ── 어종으로 거르기 (2026-10-01 주인 확정 104종) ──
+   손님은 「갯바위냐 방파제냐」보다 **「우럭이 나오느냐」**를
+   먼저 묻습니다. 다만 104종을 같은 무게로 늘어놓으면
+   전화번호부가 됩니다 — **많이 나오는 여섯**만 펴 둡니다. */
+.filters--fish{
+  display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0;
+}
+/* ★ hidden 을 **먼저** 둡니다 — 아래 display 가 이기면
+   접어 둔 단추가 그대로 펴집니다. 실제로 그랬습니다. */
+.filters--fish button[hidden]{display:none}
+.filters--fish button:not([hidden]){
+  display:inline-flex;align-items:center;gap:5px;
+  min-height:36px;padding:0 12px;
+  border:1px solid var(--line);border-radius:999px;
+  background:var(--white);color:var(--muted);
+  font-size:13.5px;font-weight:600;cursor:pointer;
+}
+.filters--fish button i{
+  font-style:normal;font-size:11.5px;font-weight:700;
+  color:var(--line);
+}
+.filters--fish button[aria-pressed="true"]{
+  background:var(--green);border-color:var(--green);color:#fff;
+}
+.filters--fish button[aria-pressed="true"] i{
+  color:rgba(255,255,255,.7);
+}
+.filters--fish .fish-more{
+  border-style:dashed;color:var(--green);
+}
 /* ── 금어기 쪽 (rule.html) ────────────────────────
    ★ 2026-10-01 — 434쪽이 거는데 없던 쪽입니다.
    손님은 법을 공부하러 오지 않습니다. 「오늘 이거 잡아도

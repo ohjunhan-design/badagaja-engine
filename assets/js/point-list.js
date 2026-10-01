@@ -38,6 +38,9 @@
 
   // ── 걸러내기 · 찾기 ────────────────────────────────────
   var 지금걸름 = '전체';
+  // ★ **어종으로 거르기** (2026-10-01 주인 확정 — 104종)
+  //   지형과 **따로** 걸립니다. 둘 다 걸면 둘 다 맞아야 보입니다.
+  var 지금어종 = '전체';
   var 지금찾기 = '';
 
   function 다시그리기() {
@@ -45,6 +48,8 @@
     포인트.forEach(function (p) {
       if (!p.el) return;
       var 맞나 = (지금걸름 === '전체' || p.지형 === 지금걸름)
+              && (지금어종 === '전체'
+                  || (p.대상 || []).indexOf(지금어종) >= 0)
               && (!지금찾기 || p.찾을글.indexOf(지금찾기) >= 0);
       p.el.hidden = !맞나;
       p.보임 = 맞나;
@@ -75,6 +80,29 @@
       [].forEach.call(걸름.querySelectorAll('button'), function (x) {
         x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
       });
+      다시그리기();
+    });
+  }
+
+  // ── 어종 거르개 ───────────────────────────────────────
+  var 어종칸 = document.getElementById('fishFilter');
+  if (어종칸) {
+    어종칸.addEventListener('click', function (e) {
+      var 더 = e.target.closest('button[data-more]');
+      if (더) {
+        // 접어 둔 어종을 폅니다. 한 번 펴면 그대로 둡니다.
+        [].forEach.call(어종칸.querySelectorAll('button[hidden]'),
+          function (x) { x.hidden = false; });
+        더.remove();
+        return;
+      }
+      var b = e.target.closest('button[data-fish]');
+      if (!b) return;
+      지금어종 = b.getAttribute('data-fish');
+      [].forEach.call(어종칸.querySelectorAll('button[data-fish]'),
+        function (x) {
+          x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
+        });
       다시그리기();
     });
   }
@@ -288,6 +316,7 @@
     // 걸러내기에 가려져 있으면 먼저 풀어 줍니다
     if (p.el.hidden) {
       지금걸름 = '전체';
+      지금어종 = '전체';
       지금찾기 = '';
       if (찾기칸) 찾기칸.value = '';
       if (걸름) {
