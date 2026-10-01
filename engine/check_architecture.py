@@ -266,8 +266,18 @@ def 검사5_차림표겹침():
             #   각각 넣으면 「같은 고르개가 다른 값」으로 잘못 잡혔습니다.
             #   겪은 일: home.css 의 gbIn 과 site.css 의 fpIn 이
             #   둘 다 from 을 써서 배포가 막혔습니다.
-            if 고르개 in ('from', 'to') or 고르개.rstrip('%').replace(
-                    '.', '', 1).isdigit():
+            #   ★ 2026-10-01 — `0%,100%` 처럼 **쉼표로 묶인 것**도
+            #     자리 표시입니다. 전에는 쉼표가 있으면 안 걸러져
+            #     home.css 의 gbFloat 와 site.css 의 pbnPulse 가
+            #     부딪힌 것으로 잡혀 배포가 막혔습니다.
+            def _자리표시(한조각):
+                한조각 = 한조각.strip()
+                return (한조각 in ('from', 'to')
+                        or (한조각.endswith('%')
+                            and 한조각[:-1].replace('.', '', 1).isdigit()))
+
+            if 고르개 and all(_자리표시(조각)
+                              for 조각 in 고르개.split(',')):
                 continue
             속성 = {}
             for 줄 in m.group(2).split(';'):

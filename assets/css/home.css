@@ -267,6 +267,18 @@ body.home-gate .navlinks{margin-left:auto;margin-right:auto}
 /* 그래프 글자는 칸 폭에 맞춰 줄어드니, 옆 글자와 비슷해 보이도록 키워 둡니다 */
 .g-today .tide-graph .tg-axis{font-size:15px}
 .g-today .tide-graph .tg-lbl{font-size:15px}
+/* ★ **작은 그래프도 좁은 화면에서는 키웁니다** (2026-10-01)
+   SVG 가 칸 폭에 맞춰 줄면 **안의 글씨도 함께 줍니다.**
+   720px 기준으로 그린 15px 가 360px 에서 7px 쯤으로 보입니다 —
+   밖에서 햇빛 아래 못 읽습니다. viewBox 안 값을 키웁니다. */
+@media (max-width:760px){
+  .g-today .tide-graph .tg-axis{font-size:19px}
+  .g-today .tide-graph .tg-lbl{font-size:20px}
+}
+@media (max-width:480px){
+  .g-today .tide-graph .tg-axis{font-size:22px}
+  .g-today .tide-graph .tg-lbl{font-size:23px}
+}
 /* 물높이 예보를 못 받으면 빈 칸만 남으므로 아예 접습니다 */
 /* ★ **곡선 칸만** 숨깁니다 (2026-09-30 주인 지적)
 

@@ -213,7 +213,7 @@ def 재기(쪽길, 폭):
         shutil.rmtree(t, ignore_errors=True)
         for x in 임시:
             try:
-                os.remove(x)
+                os.remove(x)  # 계약-17 예외 — **방금 내가 만든** 임시 쪽만 지웁니다
             except OSError:
                 pass
 

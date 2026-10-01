@@ -146,6 +146,97 @@
    *   ★ 제휴 광고는 **대가를 받는다는 것을 밝혀야** 합니다.
    *     (공정거래위원회 「추천·보증 등에 관한 표시·광고 심사지침」)
    */
+  /* ★ **카드꼴 링크 배너** (2026-10-01 주인 지시)
+   *
+   *   「여기에 제주패스 광고 올릴꺼야 예쁘게 만들어서 넣어줘」
+   *
+   *   묶음 쪽 권역 카드 격자의 **빈 칸**에 들어갑니다. 띠 배너를
+   *   그대로 넣으면 세로로 선 칸에서 위아래가 텅 빕니다.
+   *   옆 권역 카드와 **같은 모서리·같은 그림 높이(170px)** 로
+   *   그려야 격자가 들쭉날쭉해 보이지 않습니다.
+   *
+   *   그림은 사진이 아니라 **직접 그립니다** — 제주 바다와
+   *   렌터카. 남의 사진을 쓰면 출처·이용허락이 걸리고
+   *   (주인 규칙 5), 바깥에서 받아 오면 느려집니다.
+   */
+  function 카드그림() {
+    /* ★ **주인이 주신 초록 배너 꼴** (2026-10-01)
+     *   「이런식으로만들되 이미지는 마음것 사용해도 상관없어」
+     *
+     *   위 작은 글 · 말풍선 · 큰 글 — 받은 배너의 짜임 그대로입니다.
+     *   그림 파일은 771x550 이라 이 칸(335x136)에서 글자가 잘립니다.
+     *   SVG 로 그리면 어느 폭에서나 또렷하고 쪽도 안 무거워집니다.
+     */
+    return '<svg class="adc-art" viewBox="0 0 335 136" ' +
+      'preserveAspectRatio="xMidYMid slice" aria-hidden="true">' +
+      '<defs><linearGradient id="adcG" x1="0" y1="0" x2="1" y2="1">' +
+      '<stop offset="0" stop-color="#2FCB90"/>' +
+      '<stop offset="1" stop-color="#17A878"/></linearGradient>' +
+      '</defs>' +
+      '<rect width="335" height="136" fill="url(#adcG)"/>' +
+      /* 옅은 물결 — 바다 사이트라는 것을 잊지 않게 */
+      '<path d="M0 112 q28 -9 56 0 t56 0 t56 0 t56 0 t56 0 t56 0" ' +
+      'fill="none" stroke="#FFFFFF" stroke-opacity=".16" ' +
+      'stroke-width="3"/>' +
+      '<path d="M0 126 q28 -9 56 0 t56 0 t56 0 t56 0 t56 0 t56 0" ' +
+      'fill="none" stroke="#FFFFFF" stroke-opacity=".11" ' +
+      'stroke-width="3"/>' +
+      /* 위 작은 글 — ★ x=66 부터입니다 (2026-10-01)
+         왼쪽 위에 「광고」 배지가 얹히므로 그 **오른쪽**에서
+         시작해야 합니다. 20 에서 시작했더니 「림 없는 제주
+         여행」으로 잘려 읽혔습니다. 배지는 못 지웁니다 —
+         대가를 받는 광고는 반드시 밝혀야 합니다. */
+      '<text x="66" y="30" fill="#FFFFFF" fill-opacity=".92" ' +
+      'font-size="14" font-weight="700" ' +
+      'font-family="inherit">기다림 없는 제주 여행</text>' +
+      /* 말풍선 — 제주렌터카 */
+      '<rect x="20" y="42" width="84" height="22" rx="11" ' +
+      'fill="#FFFFFF" fill-opacity=".95"/>' +
+      '<path d="M32 63 l7 8 l1 -8 z" fill="#FFFFFF" ' +
+      'fill-opacity=".95"/>' +
+      '<text x="62" y="57" fill="#17A878" font-size="12.5" ' +
+      'font-weight="800" text-anchor="middle" ' +
+      'font-family="inherit">제주렌터카</text>' +
+      /* 큰 글 — 멀리서도 읽혀야 합니다 */
+      '<text x="20" y="104" fill="#FFFFFF" font-size="34" ' +
+      'font-weight="900" letter-spacing="-.5" ' +
+      'font-family="inherit">차량배송 서비스</text>' +
+      /* 자동차 — 오른쪽 위 빈 자리에 작게 */
+      '<g transform="translate(236 28) scale(.74)">' +
+      '<path d="M4 18 L10 6 q2 -4 7 -4 h30 q5 0 8 4 l9 12 z" ' +
+      'fill="#FFFFFF" fill-opacity=".95"/>' +
+      '<rect x="0" y="17" width="72" height="12" rx="5" ' +
+      'fill="#FFFFFF" fill-opacity=".88"/>' +
+      '<path d="M13 16 L18 7 h14 v9 z" fill="#17A878" ' +
+      'fill-opacity=".55"/>' +
+      '<path d="M36 16 V7 h11 q3 0 5 3 l5 6 z" fill="#17A878" ' +
+      'fill-opacity=".55"/>' +
+      '<circle cx="17" cy="30" r="6" fill="#0E6B4D"/>' +
+      '<circle cx="56" cy="30" r="6" fill="#0E6B4D"/>' +
+      '</g></svg>';
+  }
+
+  function 카드그리기(칸, 배너) {
+    var 주소 = 배너['주소'];
+    칸.innerHTML =
+      '<a class="ad-card" href="' + 주소 + '" target="_blank" ' +
+      'rel="nofollow sponsored noopener">' +
+      카드그림() +
+      '<span class="adc-badge">' + 글자(말('배지')) + '</span>' +
+      '<span class="adc-body">' +
+      '<span class="adc-name">' + 글자(배너['이름']) + '</span>' +
+      '<span class="adc-one">' + 글자(배너['한줄']) + '</span>' +
+      (배너['풀이']
+        ? '<span class="adc-sub">' + 글자(배너['풀이']) + '</span>' : '') +
+      '<span class="adc-go">' + 글자(배너['단추'] || '보러 가기') +
+      ' \u2192</span>' +
+      (배너['제휴']
+        ? '<span class="adc-note">' + 글자(말('제휴문구')) + '</span>'
+        : '') +
+      '</span></a>';
+    칸.setAttribute('data-ad-state', '떴음');
+  }
+
   function 링크그리기(칸, 배너) {
     var a = document.createElement('a');
     a.className = 'ad-link';
@@ -179,7 +270,11 @@
     if (!배너) return;
 
     // ★ 링크 배너는 바깥 스크립트 없이 바로 그립니다
-    if (배너['제공'] === 'link') { 링크그리기(칸, 배너); return; }
+    if (배너['제공'] === 'link') {
+      // ★ 카드꼴은 따로 그립니다 — 격자 칸에 들어갑니다
+      if (배너['틀'] === '카드') { 카드그리기(칸, 배너); return; }
+      링크그리기(칸, 배너); return;
+    }
 
     var 아이디 = 'ad-' + 이름.replace(/[^a-z0-9-]/gi, '') + '-' +
                  Math.random().toString(36).slice(2, 8);

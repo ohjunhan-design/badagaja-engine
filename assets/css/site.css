@@ -555,6 +555,25 @@ html[data-pcview] .pcview{display:block}
    간조·만조 시각은 공공데이터가 오면 채워집니다 (계약-23) */
 .tide-strip{min-height:0}
 .tide-strip:empty{display:none}
+/* ── 물때 두 칸 나란히 (2026-10-01 주인 지시) ──────────────
+   「두칸으로 옆으로 배치해 공간이 비효율적이야」
+
+   「오늘 한눈에」와 「이번 주 언제 갈까」는 둘 다 가로로 길고
+   안이 비어 있었습니다. 세로로 쌓으니 화면을 두 배로 쓰면서
+   담은 것은 적었습니다.
+
+   PC 는 두 칸, 휴대폰은 위아래 그대로 — 좁은 화면에서 나란히
+   두면 「11물」 같은 큰 글씨와 날짜가 서로 짓눌립니다.
+   ─────────────────────────────────────────────────────── */
+.tide-two{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:12px;align-items:stretch;
+}
+.tide-two > *{margin-top:0;height:100%}
+@media (max-width:860px){
+  .tide-two{grid-template-columns:1fr;gap:10px}
+}
+
 .tide-days{
   /* ★ **minmax(0,1fr)** 이라야 합니다 (2026-09-30 주인 지적 「화면넘침」)
      그냥 `1fr` 은 **최소 폭이 내용 크기**입니다. 카드 안
@@ -1949,6 +1968,79 @@ details.area-group .area-list{margin-bottom:12px}
   margin-top:6px;align-self:flex-start;
   font-size:12px;font-weight:800;color:var(--orange);
 }
+/* ── 카드꼴 광고 (2026-10-01 주인 지시) ────────────────────
+   「여기에 제주패스 광고 올릴꺼야 예쁘게 만들어서 넣어줘」
+
+   묶음 쪽 권역 카드 격자의 **빈 칸**에 들어갑니다.
+   옆 카드와 **모서리·테두리·그림 높이 170px** 를 똑같이 맞춥니다 —
+   한 칸만 다르면 격자가 들쭉날쭉해 보입니다.
+
+   크기 (주인 규칙 23 — PC·휴대폰 둘 다)
+     PC 1280px   335 × 300   휴대폰 360px   328 × 300
+   ─────────────────────────────────────────────────────── */
+.ad-slot--card,
+.ad-slot--card[data-ad-state="떴음"]{
+  /* ★ 격자 칸 안에서는 띠 배너용 규칙을 **모두** 되돌립니다
+     (2026-10-01 — 찍어 보니 글이 가운데로 쏠리고 아래로 밀렸습니다)
+       · text-align:center  → 옆 카드는 왼쪽 정렬입니다
+       · margin:24px auto   → 격자 칸이 아래로 밀립니다
+       · max-width:800px    → 칸 폭을 따라야 합니다 */
+  height:auto;overflow:visible;margin:0;max-width:none;
+  text-align:left;display:flex;flex-direction:column;
+}
+.ad-card{
+  position:relative;display:flex;flex-direction:column;
+  height:100%;
+  border:1px solid var(--line);border-radius:16px;overflow:hidden;
+  background:#fff;text-decoration:none;color:inherit;
+  box-shadow:0 1px 2px rgba(38,51,46,.05);
+  transition:border-color .18s ease,box-shadow .18s ease,
+             transform .18s ease;
+}
+.ad-card:hover{
+  border-color:var(--orange);transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(38,51,46,.10);
+}
+.adc-art{display:block;width:100%;height:136px}
+/* 「광고」 배지 — 그림 위에 얹습니다. 대가를 받는 것은
+   반드시 밝혀야 합니다 (공정거래위원회 표시·광고 심사지침) */
+.adc-badge{
+  position:absolute;top:10px;left:10px;
+  background:rgba(38,51,46,.78);color:#fff;
+  font-size:11px;font-weight:800;letter-spacing:.02em;
+  padding:3px 9px;border-radius:999px;
+}
+.adc-body{
+  display:flex;flex-direction:column;gap:2px;
+  padding:12px 16px 13px;flex:1;
+}
+.adc-name{font-size:16px;font-weight:800;color:var(--ink)}
+.adc-one{font-size:13.5px;font-weight:700;color:var(--green)}
+/* ★ 풀이를 **되살렸습니다** (2026-10-01 주인 제안 「차량배송」)
+   「짐 들고 셔틀 탈 일 없이, 내리는 순간 출발」 —
+   우리 손님은 아이스박스·낚싯대를 듭니다. 이 한 줄이
+   이 광고가 우리 쪽에 어울리는 까닭입니다.
+   높이는 그림을 136px 로 줄여 맞췄습니다. */
+.adc-sub{font-size:12px;color:var(--muted);line-height:1.45}
+.adc-go{
+  margin-top:auto;padding-top:8px;
+  font-size:13.5px;font-weight:800;color:var(--orange);
+}
+.ad-card:hover .adc-go{text-decoration:underline}
+/* 제휴문구는 카드 **안** 맨 아래입니다 (2026-10-01)
+   밖에 붙이면 광고 칸만 높아져 격자가 들쭉날쭉해 보입니다.
+   대가를 받는 것은 반드시 밝혀야 하니 지우지는 않습니다 —
+   자리를 옮길 뿐입니다 (공정거래위원회 표시·광고 심사지침) */
+.adc-note{
+  margin:7px 0 0;padding-top:7px;
+  border-top:1px solid var(--line);
+  font-size:10px;line-height:1.35;color:var(--muted);
+}
+@media (max-width:640px){
+  .adc-art{height:128px}
+  .adc-name{font-size:15px}
+}
+
 .ad-note{
   margin:6px 0 0;font-size:11px;line-height:1.5;color:var(--muted);
 }
@@ -1970,87 +2062,6 @@ details.area-group .area-list{margin-bottom:12px}
   font-family:inherit;cursor:pointer;
 }
 .more-btn:hover{border-color:var(--orange);color:var(--orange)}
-
-/* ── 시간별 물높이 그래프 (2026-10-01 되살림) ──────────────
-   ★ 주인 지적 「화면넘침」의 진짜 원인이었습니다.
-     `tide-graph.js` 가 쓰는 `.tg-*` 클래스에 차림표가 **하나도**
-     없었습니다. 특히 `svg{width:100%}` 가 없어 그래프가 제멋대로
-     **1490px** 로 커져 문서를 통째로 넓혔습니다.
-     옛 사이트에는 있던 규칙입니다 — 옮겨 오며 빠졌습니다. */
-/* ★ 배경을 바다처럼 — 위는 하늘빛, 아래는 물빛 (2026-10-01)
-   「디자인 및 배경을 좀 수정했으면 좋겠어」 */
-.tide-graph{
-  position:relative;margin-top:18px;padding:14px 16px 10px;
-  border:1px solid var(--line);border-radius:18px;
-  background:linear-gradient(180deg,#FBFDFD 0%,#F2F8F7 100%);
-}
-.tide-graph .tg-head{
-  display:flex;justify-content:space-between;align-items:center;
-  gap:10px;flex-wrap:wrap;
-}
-.tide-graph .tg-head b{font-size:.98rem}
-.tide-graph .tg-tabs{display:flex;gap:4px}
-.tide-graph .tg-tabs button{
-  border:1px solid var(--line);background:transparent;border-radius:999px;
-  padding:6px 12px;min-height:34px;font:inherit;font-size:.8rem;
-  cursor:pointer;color:inherit;
-}
-.tide-graph .tg-tabs button.on{
-  background:var(--green);border-color:var(--green);color:#fff;font-weight:700;
-}
-.tide-graph .tg-plot{position:relative;margin-top:6px;max-width:100%}
-
-/* ★ **이 한 줄이 빠져 넘쳤습니다** — 크기를 안 주면 SVG 가 제멋대로 큽니다 */
-.tide-graph svg{
-  display:block;width:100%;max-width:100%;height:auto;
-  touch-action:pan-y;cursor:crosshair;
-}
-
-.tide-graph .tg-grid{stroke:rgba(38,51,46,.10);stroke-width:1}
-/* 가로 눈금선 — 높이를 눈으로 가늘합니다 */
-.tide-graph .tg-grid--h{stroke:rgba(38,51,46,.06);stroke-dasharray:3 5}
-.tide-graph .tg-axis{font-size:10.5px;fill:var(--muted);font-weight:600}
-/* ★ 2026-10-01 주인 지시 「가시성을 높일 디자인」
-   밖에서 햇빛 아래 봅니다 — 선이 가늘면 안 보입니다. */
-.tide-graph .tg-line{
-  fill:none;stroke:var(--green);stroke-width:3;
-  stroke-linejoin:round;stroke-linecap:round;
-}
-.tide-graph .tg-dot.high{fill:var(--orange);stroke:#fff;stroke-width:2}
-.tide-graph .tg-dot.low{fill:var(--green);stroke:#fff;stroke-width:2}
-.tide-graph .tg-lbl{font-size:11px;font-weight:700;paint-order:stroke;stroke:var(--white,#fff);stroke-width:3px}
-.tide-graph .tg-lbl.high{fill:#9A6A1A}
-.tide-graph .tg-lbl.low{fill:var(--green)}
-.tide-graph .tg-now{stroke:#D9642E;stroke-width:1.5;stroke-dasharray:4 3}
-/* 「지금」 — 아래 눈금 줄에 서서 시각과 나란히 보입니다 */
-.tide-graph .tg-nowlbl{font-size:10.5px;fill:#D9642E;font-weight:800}
-.tide-graph .tg-hline{stroke:rgba(38,51,46,.35);stroke-width:1}
-.tide-graph .tg-hdot{fill:#fff;stroke:var(--green);stroke-width:2.5}
-.tide-graph .tg-tip{
-  position:absolute;top:0;transform:translateX(-50%);
-  background:var(--ink);color:#fff;font-size:.75rem;font-weight:700;
-  padding:3px 8px;border-radius:8px;white-space:nowrap;pointer-events:none;
-}
-.tide-graph .tg-foot{font-size:.72rem;color:var(--muted);margin-top:4px}
-/* ★ **좁은 화면에서는 글씨를 키웁니다** (2026-10-01)
-   SVG 가 줄어들면 안의 글씨도 **함께 줄어듭니다.**
-   720px 기준으로 그린 것이 360px 에서 절반이 되어
-   10.5px 가 **5px** 처럼 보였습니다 — 밖에서 못 읽습니다.
-   viewBox 안 값을 키워 줄어든 뒤에도 읽힐 만하게 합니다. */
-@media (max-width:760px){
-  .tide-graph .tg-axis{font-size:17px}
-  .tide-graph .tg-lbl{font-size:18px;stroke-width:4px}
-  .tide-graph .tg-nowlbl{font-size:17px}
-  .tide-graph .tg-dot{r:7}
-  .tide-graph .tg-line{stroke-width:4.5}
-}
-@media (max-width:480px){
-  .tide-graph{padding:12px 12px 8px}
-  .tide-graph .tg-axis{font-size:20px}
-  .tide-graph .tg-lbl{font-size:21px;stroke-width:5px}
-  .tide-graph .tg-nowlbl{font-size:20px}
-  .tide-graph .tg-line{stroke-width:5.5}
-}
 
 /* ── 머리의 기준일 조각 (2026-10-01 주인 지시) ─────────────
    「이 말도 위치 바꾸고 기준일 26년 9월 이렇게만 적어」

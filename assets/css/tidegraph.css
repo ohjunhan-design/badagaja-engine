@@ -1,39 +1,94 @@
-/* 시간별 물높이 그래프 — 옛 사이트에서 옮겨 온 모양입니다.
+/* 시간별 물높이 그래프 — `.tide-graph .tg-*`
  *
- * ★ engine/migrate_tidegraph.py 가 만듭니다. 손으로 고치지 마세요.
- *   고치려면 그 도구를 고치고 다시 돌리세요 (주인 규칙 26).
+ * ★ **이 파일이 그래프 차림표의 한 곳입니다** (2026-10-01, 계약-01)
+ *   전에는 `engine/migrate_tidegraph.py` 가 옛 사이트에서 만들었습니다.
+ *   그 일은 끝났고, 이제 **손으로 관리합니다** — 다시 돌리면
+ *   오늘 고친 것이 옛 값으로 되돌아갑니다.
  *
- * 옛 css/style.css · tide.css · gate.css 에서 `.tg-*` 규칙만 골라 왔습니다.
+ *   2026-10-01 에 제가 이 파일이 있는 줄 모르고 `site.css` 에
+ *   같은 규칙을 또 써서 14건이 부딪혔습니다. 그 뒤 여기로 모았습니다.
  */
-.tide-graph .tg-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.tide-graph .tg-head b{font-size:.98rem}
-/* ★ **일곱 개가 한 줄에 안 들어갑니다** (2026-09-28)
-   사흘에서 일주일로 늘리자 휴대폰 345px 에서 444px 까지
-   뻗어 화면 밖으로 나갔습니다. check_mobile 이 잡았습니다.
-   줄바꿈해서 두 줄로 받습니다 — 옆으로 밀게 하면
-   손님은 밀 수 있다는 것을 모릅니다. */
-.tide-graph .tg-tabs{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
-.tide-graph .tg-tabs button{border:1px solid var(--line);background:transparent;border-radius:999px;padding:4px 12px;font:inherit;font-size:.8rem;cursor:pointer;color:inherit}
-.tide-graph .tg-tabs button.on{background:#2E8A8A;border-color:#2E8A8A;color:#fff;font-weight:700}
-@media (max-width:480px){
-  /* 휴대폰에서는 조금 좁혀 두 줄 안에 들어오게 합니다 */
-  .tide-graph .tg-tabs button{padding:3px 8px;font-size:.72rem}
+/* ── 시간별 물높이 그래프 (2026-10-01 되살림) ──────────────
+   ★ 주인 지적 「화면넘침」의 진짜 원인이었습니다.
+     `tide-graph.js` 가 쓰는 `.tg-*` 클래스에 차림표가 **하나도**
+     없었습니다. 특히 `svg{width:100%}` 가 없어 그래프가 제멋대로
+     **1490px** 로 커져 문서를 통째로 넓혔습니다.
+     옛 사이트에는 있던 규칙입니다 — 옮겨 오며 빠졌습니다. */
+/* ★ 배경을 바다처럼 — 위는 하늘빛, 아래는 물빛 (2026-10-01)
+   「디자인 및 배경을 좀 수정했으면 좋겠어」 */
+.tide-graph{
+  position:relative;margin-top:18px;padding:14px 16px 10px;
+  border:1px solid var(--line);border-radius:18px;
+  background:linear-gradient(180deg,#FBFDFD 0%,#F2F8F7 100%);
 }
-.tide-graph .tg-plot{position:relative;margin-top:6px}
-.tide-graph .tg-grid{stroke:rgba(38,51,46,.08);stroke-width:1}
-.tide-graph .tg-axis{font-size:11px;fill:#8A7E6E}
-.tide-graph .tg-line{fill:none;stroke:#2E8A8A;stroke-width:2.4;stroke-linejoin:round}
-.tide-graph .tg-dot.high{fill:#C07B22;stroke:#fff;stroke-width:2}
-.tide-graph .tg-dot.low{fill:#2F5D57;stroke:#fff;stroke-width:2}
-.tide-graph .tg-lbl{font-size:11.5px;font-weight:700}
+.tide-graph .tg-head{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:10px;flex-wrap:wrap;
+}
+.tide-graph .tg-head b{font-size:.98rem}
+.tide-graph .tg-tabs{display:flex;gap:4px}
+.tide-graph .tg-tabs button{
+  border:1px solid var(--line);background:transparent;border-radius:999px;
+  padding:6px 12px;min-height:34px;font:inherit;font-size:.8rem;
+  cursor:pointer;color:inherit;
+}
+.tide-graph .tg-tabs button.on{
+  background:var(--green);border-color:var(--green);color:#fff;font-weight:700;
+}
+.tide-graph .tg-plot{position:relative;margin-top:6px;max-width:100%}
+
+/* ★ **이 한 줄이 빠져 넘쳤습니다** — 크기를 안 주면 SVG 가 제멋대로 큽니다 */
+.tide-graph svg{
+  display:block;width:100%;max-width:100%;height:auto;
+  touch-action:pan-y;cursor:crosshair;
+}
+
+.tide-graph .tg-grid{stroke:rgba(38,51,46,.10);stroke-width:1}
+/* 가로 눈금선 — 높이를 눈으로 가늘합니다 */
+.tide-graph .tg-grid--h{stroke:rgba(38,51,46,.06);stroke-dasharray:3 5}
+.tide-graph .tg-axis{font-size:10.5px;fill:var(--muted);font-weight:600}
+/* ★ 2026-10-01 주인 지시 「가시성을 높일 디자인」
+   밖에서 햇빛 아래 봅니다 — 선이 가늘면 안 보입니다. */
+.tide-graph .tg-line{
+  fill:none;stroke:var(--green);stroke-width:3;
+  stroke-linejoin:round;stroke-linecap:round;
+}
+.tide-graph .tg-dot.high{fill:var(--orange);stroke:#fff;stroke-width:2}
+.tide-graph .tg-dot.low{fill:var(--green);stroke:#fff;stroke-width:2}
+.tide-graph .tg-lbl{font-size:11px;font-weight:700;paint-order:stroke;stroke:var(--white,#fff);stroke-width:3px}
 .tide-graph .tg-lbl.high{fill:#9A6A1A}
-.tide-graph .tg-lbl.low{fill:#2F5D57}
+.tide-graph .tg-lbl.low{fill:var(--green)}
 .tide-graph .tg-now{stroke:#D9642E;stroke-width:1.5;stroke-dasharray:4 3}
-.tide-graph .tg-nowlbl{font-size:11px;fill:#D9642E;font-weight:700}
+/* 「지금」 — 아래 눈금 줄에 서서 시각과 나란히 보입니다 */
+.tide-graph .tg-nowlbl{font-size:10.5px;fill:#D9642E;font-weight:800}
 .tide-graph .tg-hline{stroke:rgba(38,51,46,.35);stroke-width:1}
-.tide-graph .tg-hdot{fill:#fff;stroke:#2E8A8A;stroke-width:2.5}
-.tide-graph .tg-tip{position:absolute;top:0;transform:translateX(-50%);background:#26332E;color:#fff;font-size:.75rem;font-weight:700;padding:3px 8px;border-radius:8px;white-space:nowrap;pointer-events:none}
-.tide-graph .tg-foot{font-size:.72rem;color:var(--foam-dim);margin-top:4px}
+.tide-graph .tg-hdot{fill:#fff;stroke:var(--green);stroke-width:2.5}
+.tide-graph .tg-tip{
+  position:absolute;top:0;transform:translateX(-50%);
+  background:var(--ink);color:#fff;font-size:.75rem;font-weight:700;
+  padding:3px 8px;border-radius:8px;white-space:nowrap;pointer-events:none;
+}
+.tide-graph .tg-foot{font-size:.72rem;color:var(--muted);margin-top:4px}
+/* ★ **좁은 화면에서는 글씨를 키웁니다** (2026-10-01)
+   SVG 가 줄어들면 안의 글씨도 **함께 줄어듭니다.**
+   720px 기준으로 그린 것이 360px 에서 절반이 되어
+   10.5px 가 **5px** 처럼 보였습니다 — 밖에서 못 읽습니다.
+   viewBox 안 값을 키워 줄어든 뒤에도 읽힐 만하게 합니다. */
+@media (max-width:760px){
+  .tide-graph .tg-axis{font-size:17px}
+  .tide-graph .tg-lbl{font-size:18px;stroke-width:4px}
+  .tide-graph .tg-nowlbl{font-size:17px}
+  .tide-graph .tg-dot{r:7}
+  .tide-graph .tg-line{stroke-width:4.5}
+}
+@media (max-width:480px){
+  .tide-graph{padding:12px 12px 8px}
+  .tide-graph .tg-axis{font-size:20px}
+  .tide-graph .tg-lbl{font-size:21px;stroke-width:5px}
+  .tide-graph .tg-nowlbl{font-size:20px}
+  .tide-graph .tg-line{stroke-width:5.5}
+}
+
 .tide-graph.dark .tg-grid{stroke:rgba(243,236,221,.08)}
 .tide-graph.dark .tg-axis{fill:rgba(243,236,221,.55)}
 .tide-graph.dark .tg-line{stroke:#8FD0C6}
@@ -45,28 +100,7 @@
 .tide-graph.dark .tg-hline{stroke:rgba(243,236,221,.4)}
 .tide-graph.dark .tg-tip{background:#F2B65C;color:#2A1B08}
 .tide-graph.dark .tg-foot{color:rgba(243,236,221,.55)}
-.tide-graph .tg-lbl{font-size:14px}
-.tide-graph .tg-axis{font-size:13px}
 .tide-page .h-today .tide-graph .tg-head b,.tide-page .h-today .tide-graph .tg-axis,.tide-page .h-today .tide-graph .tg-lbl{fill:#2B3942;color:#2B3942}
 .tide-page .h-today .tide-graph .tg-head,.tide-page .h-today .tide-graph .tg-foot{display:flex;color:#546069}
 .tide-page .h-today .tide-graph .tg-tabs button{border:1.5px solid #D6E2EC;color:#1F5F8B;background:#fff}
 .tide-page .h-today .tide-graph .tg-tabs button[aria-selected="true"]{background:#1F5F8B;border-color:#1F5F8B;color:#fff}
-.g-today .tide-graph .tg-head, .g-today .tide-graph .tg-foot{display:none}
-.g-today .tide-graph .tg-plot{margin:0}
-/* 그래프 글자는 칸 폭에 맞춰 줄어드니, 옆 글자와 비슷해 보이도록 키워 둡니다 */ .g-today .tide-graph .tg-axis{font-size:15px}
-.g-today .tide-graph .tg-lbl{font-size:15px}
-/* ★ **곡선 칸만** 숨깁니다 (2026-09-30 주인 지적)
-
-   전에는 `.gt-graph:not(:has(.tg-plot)){display:none}` 이었습니다.
-   곡선을 못 받으면 **칸을 통째로** 숨겼는데, 그 안에는
-   **계산으로 늘 나오는 14일 카드**와 「기준 관측소 ○○」 안내가
-   함께 들어 있었습니다.
-
-   그래서 주인이 「작은 그래프도 없고 현재 어디를 보여주고
-   있는지도 안나온다」 하셨습니다. **하나의 규칙이 셋을 지웠습니다.**
-
-   ★ 계약-23 — 바깥 자료가 죽어도 사이트는 삽니다.
-     1층(계산)은 어떤 일이 있어도 보여야 합니다.
-     빈 자리를 감추려다 **멀쩡한 것까지 감추면 안 됩니다.** */
-.g-today .tide-graph:not(:has(.tg-plot)){display:none}
-
