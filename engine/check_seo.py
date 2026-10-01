@@ -154,6 +154,46 @@ def 알림파일(쪽들):
             적기('robots 가 없는 사이트맵을 가리킴', 이름)
             print('  ✗ robots.txt 의 Sitemap: %s — 그런 파일이 없습니다'
                   % 이름)
+
+    # ── AI 가 우리를 읽고 인용할 수 있는가 (2026-10-01) ──
+    #
+    #   ★ 바깥 검수가 OpenAI 공식 문서를 확인해 알려 준 것
+    #
+    #     OAI-SearchBot  챗지피티 **검색 결과에 노출**시키는 크롤러
+    #     GPTBot         모델 **학습**용 크롤러
+    #
+    #   둘은 서로 **다릅니다.** 챗지피티 답에 인용되려면
+    #   OAI-SearchBot 을 막지 않아야 합니다. GPTBot 만 열어
+    #   두고 「AI 에 열어 두었다」고 여기면 안 됩니다.
+    #
+    #   주인 규칙 28 — 검색에 관한 일은 공식 가이드에 맞춥니다.
+    #   가이드에서 확인한 것은 **검사로 옮겨** 저절로 지켜지게 합니다.
+    AI봇 = [
+        ('OAI-SearchBot', '챗지피티 검색 결과 노출', True),
+        ('GPTBot', '챗지피티 학습', False),
+        ('ChatGPT-User', '사람이 챗지피티로 우리 쪽을 열 때', False),
+        ('ClaudeBot', '클로드', False),
+        ('PerplexityBot', '퍼플렉시티', False),
+        ('Google-Extended', '구글 AI', False),
+    ]
+    print('[5] AI 가 우리를 읽고 인용할 수 있는가')
+    for 이름, 무엇, 꼭 in AI봇:
+        m = re.search(r'(?im)^\s*User-agent:\s*%s\s*$\s*'
+                      r'(Allow|Disallow):\s*(\S*)' % re.escape(이름), 로봇)
+        if not m:
+            글 = '안 적혀 있습니다 (기본은 모든 쪽 허용)'
+            막나 = False
+        else:
+            막나 = (m.group(1).lower() == 'disallow'
+                    and m.group(2).strip() == '/')
+            글 = '%s: %s' % (m.group(1), m.group(2) or '/')
+        if 꼭 and 막나:
+            적기('%s 를 막고 있습니다' % 이름, 무엇)
+            print('  ✗ %-16s %s — **%s**' % (이름, 글, 무엇))
+            print('      → 막으면 챗지피티 답에 우리 쪽이 안 나옵니다.')
+        else:
+            print('  %s %-16s %s · %s'
+                  % ('·' if not 막나 else '~', 이름, 글, 무엇))
     print('')
 
 
