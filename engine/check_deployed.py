@@ -156,15 +156,41 @@ def 검증판표시벗기기(글):
 
 
 def 볼쪽들():
-    """갈래마다 하나씩 — 416쪽을 다 물어볼 수는 없습니다."""
-    나옴 = []
-    for 무늬 in ('index.html', 'taean.html', 'chungnam.html',
-                 'point/chungnam/taean_fishing.html',
-                 'festival/index.html', 'fish/*.html', 'catch/*.html'):
-        것 = sorted(glob.glob(os.path.join(NEW, 무늬)))
-        것 = [x for x in 것 if not x.endswith('index.html')] or 것
-        if 것:
-            나옴.append(os.path.relpath(것[0], NEW).replace(os.sep, '/'))
+    """갈래마다 하나씩 — 438쪽을 다 물어볼 수는 없습니다.
+
+    ★ 2026-10-01 — **이 검사가 거짓으로 통과했습니다**
+
+      새 쪽 넷(rule·gear·tide/·guide/)을 올렸는데 파일질라 목록이
+      낡아 **실제로는 안 올라갔습니다.** 그런데 이 검사는
+      「서버가 내 것과 같습니다」라고 했습니다.
+
+      까닭은 표본이 **손으로 적은 무늬**였기 때문입니다.
+      새로 만든 쪽이 무늬에 없으니 **보지도 않고 통과**시켰습니다.
+      저희 계약 「재 보지 않은 것은 지킨 것이 아니다」를 스스로
+      어긴 것입니다.
+
+    ★ 그래서 **이번에 지은 것에서 뽑습니다**
+      손으로 적은 무늬는 또 낡습니다. build.json 이 아는 쪽에서
+      맨 위 쪽은 모두, 폴더 쪽은 갈래마다 하나씩 고릅니다.
+      쪽을 새로 만들어도 **저절로 표본에 듭니다.**
+    """
+    판길 = os.path.join(NEW, 'build.json')
+    판 = io.꼭읽기json(판길) if os.path.isfile(판길) else {}
+    모든쪽 = [k for k in (판.get('파일') or {}) if k.endswith('.html')]
+    if not 모든쪽:
+        모든쪽 = [os.path.relpath(p, NEW).replace(os.sep, '/')
+                  for p in glob.glob(os.path.join(NEW, '**', '*.html'),
+                                     recursive=True)]
+    나옴, 본칸 = [], set()
+    for 길 in sorted(모든쪽):
+        칸 = 길.split('/')[0] if '/' in 길 else '(맨위)'
+        if 칸 == '(맨위)':
+            # ★ 맨 위 쪽은 **모두** 봅니다. rule.html·gear.html 처럼
+            #   한 장짜리 쪽이 여기 있고, 바로 그것이 빠졌습니다.
+            나옴.append(길)
+        elif 칸 not in 본칸:
+            본칸.add(칸)
+            나옴.append(길)
     return 나옴
 
 
