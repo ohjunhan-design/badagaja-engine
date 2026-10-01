@@ -250,6 +250,26 @@ def gear(언어='ko'):
     return _붙이기(언어, 'gear.html')
 
 
+def travel(언어='ko'):
+    """바다 여행 — travel/index.html
+
+    ★ **아홉 번째로 끊겨 있던 쪽**입니다 (2026-10-01).
+      첫 화면 「06 무엇을 즐길까?」가 가리키는데 build 가 안 만들어
+      서버의 옛 파일이 응답했습니다. check_manifest.py 가 찾았습니다.
+    """
+    return _붙이기(언어, 'travel', 'index.html')
+
+
+def data(언어='ko'):
+    """가진 자료 — data.html
+
+    ★ **여덟 번째로 끊겨 있던 쪽**입니다 (2026-10-01).
+      새 사이트에 없어 옛 파일이 응답했고, 거기 적힌 숫자가
+      낡아 있었습니다 (사진 264장 · 축제 190개).
+    """
+    return _붙이기(언어, 'data.html')
+
+
 def muldae(언어='ko'):
     """물때표 보는 법 — muldae.html
 

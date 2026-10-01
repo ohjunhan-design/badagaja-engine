@@ -63,7 +63,9 @@
     // ★ 2026-10-01 — 아래 여백(B)을 늘렸습니다.
     //   시각 눈금과 「지금」을 **같은 줄**에 두면 서로 안 부딪칩니다.
     //   왼쪽(L)은 `cm` 글자를 뺀 만큼 줄였습니다.
-    var W = 720, H = 196, L = 16, R = 12, T = 22, B = 34;
+    // ★ 바깥 검수 지시 (2026-10-01) — 높이를 15~20% 줄입니다.
+    //   간·만조 글자를 곡선 밖으로 뺀 만큼 그래프 자체는 작아도 됩니다.
+    var W = 720, H = 162, L = 16, R = 12, T = 18, B = 26;
     var pts = 고르게(d.points.map(function (p) { return [toMin(p[0]), p[1]]; }));
     var vals = pts.map(function (p) { return p[1]; });
     var vmin = Math.min.apply(null, vals), vmax = Math.max.apply(null, vals), pad = Math.max(10, (vmax - vmin) * 0.12);
@@ -96,7 +98,10 @@
                                   class: 'tg-grid tg-grid--h' }));
     });
     // 격자
-    [0, 6, 12, 18, 24].forEach(function (h) {
+    // ★ 눈금을 **0·12·24시 셋**만 남깁니다 (바깥 검수 지시)
+    //   6시·18시는 지웁니다. 손님이 알고 싶은 것은
+    //   「언제 물이 빠지나」이지 「6시가 어디쯤인가」가 아닙니다.
+    [0, 12, 24].forEach(function (h) {
       var x = X(h * 60);
       svg.appendChild(s('line', { x1: x, y1: T, x2: x, y2: H - B, class: 'tg-grid' }));
       // ★ 눈금 글씨를 **맨 아래로** 내립니다 — 간조 라벨과 안 부딪치게
@@ -146,11 +151,15 @@
       e.v = e.vy;
       var x = X(toMin(e.t)), y = Y(e.v);
       svg.appendChild(s('circle', { cx: x, cy: y, r: 4.5, class: 'tg-dot ' + e.type }));
+      // ★ **글자는 곡선에 쓰지 않습니다** (2026-10-01 바깥 검수 지시)
+      //   「간·만조 글자를 곡선에서 전부 빼세요. 그래프 위 별도
+      //     영역에 모아 적고, 그래프 안에는 곡선 + 작은 점 +
+      //     지금 세로선만 둡니다」
+      //   전에는 점에서 14px 떨어뜨렸는데, viewBox 720 을 390px 에
+      //   욱여넣으며 글자만 17~20px 로 키워 **점을 덮었습니다.**
+      //   간격을 넓히는 것으로는 다음 화면에서 또 겹칩니다.
       // ★ 간조 라벨을 점에 **더 가깝게** 붙입니다 (17 → 14)
       //   아래 눈금(「12시」)과 부딪혀 갑니다.
-      var lb = s('text', { x: Math.min(W - 42, Math.max(L + 24, x)), y: e.type === 'high' ? y - 10 : y + 14, 'text-anchor': 'middle', class: 'tg-lbl ' + e.type });
-      lb.textContent = (e.type === 'high' ? '만조 ' : '간조 ') + e.t;
-      svg.appendChild(lb);
     });
     // 지금
     if (opt.today) {
@@ -159,7 +168,10 @@
       //   전에는 위 끝에 있어 「만조 13:45」 라벨과 **겹쳤습니다.**
       //   시각 눈금과 같은 줄에 두면 서로 안 부딪칩니다.
       var xn = X(m); svg.appendChild(s('line', { x1: xn, y1: T, x2: xn, y2: H - B, class: 'tg-now' }));
-      var tn = s('text', { x: Math.min(W - 24, Math.max(L + 18, xn)), y: H - 8, 'text-anchor': 'middle', class: 'tg-nowlbl' }); tn.textContent = '지금'; svg.appendChild(tn);
+      // ★ 「지금」은 **세로선 위쪽**에 둡니다 (바깥 검수 지시)
+      //   아래 눈금 줄에 두었더니 「24시」와 겹쳌
+      //   「지24시」로 보였습니다. 위는 곡선뿐이라 비어 있습니다.
+      var tn = s('text', { x: Math.min(W - 20, Math.max(L + 16, xn)), y: T - 5, 'text-anchor': 'middle', class: 'tg-nowlbl' }); tn.textContent = '지금'; svg.appendChild(tn);
     }
     // 눌러서 보기
     var hv = s('g', { class: 'tg-hover', style: 'display:none' }), hl = s('line', { y1: T, y2: H - B, class: 'tg-hline' }), hc = s('circle', { r: 5, class: 'tg-hdot' });
@@ -177,6 +189,22 @@
     svg.addEventListener('pointermove', move); svg.addEventListener('pointerdown', move);
     svg.addEventListener('touchmove', function (e) { move(e); }, { passive: true });
     svg.addEventListener('pointerleave', function () { hv.style.display = 'none'; tip.hidden = true; });
+    // ★ 간·만조 시각을 **그래프 위 별도 줄**로 뽑습니다
+    //   (2026-10-01 바깥 검수 지시)
+    //   「간조 05:46 · 만조 12:18 · 간조 18:35」처럼 모아 적고,
+    //   그래프 안에는 곡선과 점만 둡니다. 그래야 화면이
+    //   좀아져도 글자가 점을 덮지 않습니다.
+    //   네 개면 2×2 로 접힙니다(CSS 격자가 합니다).
+    if (marks.length) {
+      var when = el('div', 'tg-when');
+      marks.forEach(function (e) {
+        var one = el('span', 'tg-w ' + e.type);
+        one.appendChild(el('i', 'tg-w-k', e.type === 'high' ? '만조' : '간조'));
+        one.appendChild(el('b', 'tg-w-t', e.t));
+        when.appendChild(one);
+      });
+      wrap.appendChild(when);
+    }
     wrap.appendChild(svg); wrap.appendChild(tip);
     box.insertBefore(wrap, box.querySelector('.tg-foot'));
     box.querySelector('.tg-foot').textContent = '관측소: ' + d.station + ' · 10분 간격 예측 물높이 · ' + d.source;

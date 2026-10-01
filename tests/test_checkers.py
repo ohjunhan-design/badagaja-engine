@@ -456,6 +456,123 @@ def 시험_남길것():
         shutil.rmtree(t, ignore_errors=True)
 
 
+# ── check_manifest — **끊긴 쪽을 잡는가** ──────────────────
+def 시험_끊긴쪽():
+    """★ 하루에 **아홉 번** 겪은 잘못을 막는 검사입니다
+
+    쪽이 거는데 build 가 안 만들고, 서버에 남은 옛 파일이 200 을
+    냅니다. 손님은 옛 디자인으로 떨어지고 거기 숫자는 낡았습니다.
+    사람 눈으로는 **아홉 번이나 놓쳤습니다.**
+
+    바깥 검수 —
+    「446쪽이 내부에서 링크하는 **모든 .html 대상이 manifest 에
+      존재하는지 자동 검사**를 돌리세요. **아홉 번째가 서버에
+      숨어 있는 일**을 막는 게 중요합니다」
+    그 검사가 실제로 아홉 번째(travel/)를 찾아냈습니다.
+    """
+    print('[20] check_manifest — 끊긴 쪽을 잡는가')
+
+    글 = 돌리기('check_manifest.py')
+    봄('지금은 끊긴 쪽이 없다', '모두 만듭니다' in 글, 글[-400:])
+
+    # (가) 없는 쪽으로 가는 링크를 심으면 잡아야 합니다
+    def 끊어놓기(사본):
+        a = os.path.join(사본, 'index.html')
+        s2 = io.read(a)
+        # ★ 첫 화면에는 `</main>` 이 없습니다 — `</body>` 에 답니다
+        io.write(a, s2.replace(
+            '</body>',
+            '<a href="eobsneun-jjok.html">없는 쪽</a></body>', 1))
+
+    t, 사본 = 사이트사본(끊어놓기)
+    try:
+        글 = 돌리기('check_manifest.py', 사이트=사본)
+        봄('없는 쪽으로 가는 링크를 잡는다',
+           'eobsneun-jjok.html' in 글, 글[-600:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # (나) **진짜 쪽을 지우면** 그 쪽을 거는 곳이 다 걸려야 합니다
+    #     — 이것이 서버에 옛 파일이 남은 상황과 같은 모양입니다
+    def 쪽지우기(사본):
+        p = os.path.join(사본, 'muldae.html')
+        if os.path.exists(p):
+            os.remove(p)
+
+    t, 사본 = 사이트사본(쪽지우기)
+    try:
+        글 = 돌리기('check_manifest.py', 사이트=사본)
+        봄('만들어야 할 쪽이 사라지면 잡는다',
+           'muldae.html' in 글, 글[-600:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
+# ── 넙치 35cm — **법령 값이 한 길로 흐르는가** ─────────────
+def 시험_넙치():
+    """★ 사람이 **법을 어길 수 있는** 값이라 따로 지킵니다
+
+    바깥 검수 요구 (2026-10-01) —
+    「넙치 35cm 를 금어기.json → rules resolver → rule.html/어종/권역
+      **한 경로로 통일**하고 **mutation test 까지** 넣으세요.
+      이건 재심사보다 먼저 처리할 안전 항목입니다」
+
+    왜 중요한가 — 화면에 **우연히 맞는 값**이 있는데 원자료에는
+    없다면 더 위험합니다. 다른 오래된 경로에서 값이 흘러나오는
+    것이기 때문입니다. 그래서 **자료를 바꾸면 쪽도 바뀌는지**를
+    확인합니다. 안 바뀌면 쪽이 다른 데서 값을 얻고 있다는 뜻입니다.
+
+    근거 — 수산자원관리법 시행령 별표2, 넙치(Paralichthys
+    olivaceus) 전장 35cm 이하 포획 금지.
+    """
+    print('[19] 넙치 35cm — 법령 값이 자료에서 쪽으로 흐르는가')
+
+    자료길 = os.path.join(ROOT, 'data', 'raw', 'rules', '금어기.json')
+    원본 = io.read(자료길)
+    것 = json.loads(원본)
+    넙 = [x for x in 것['어종'] if x['법령명'] == '넙치']
+    봄('자료에 넙치가 있다', len(넙) == 1, '%d건' % len(넙))
+    if not 넙:
+        return
+    크 = (넙[0].get('크기제한') or [{}])[0]
+    봄('자료의 값이 35cm 전장 전국이다',
+       크.get('값') == 35 and 크.get('재는법') == '전장'
+       and (크.get('지역') or {}).get('갈래') == '전국',
+       json.dumps(크, ensure_ascii=False)[:120])
+    봄('근거가 시행령 별표2 로 적혀 있다',
+       크.get('근거') == '시행령별표2', str(크.get('근거')))
+
+    글 = io.read(os.path.join(ROOT, 'site', 'rule.html'), default='')
+    봄('쪽에 35cm 가 나온다', '35' in 글 and '넙치' in 글, '')
+
+    # ★ **정말 망가뜨립니다** — 자료를 40 으로 바꾸고 다시 지어
+    #   쪽이 따라 바뀌는지 봅니다. 안 바뀌면 쪽이 **딴 데서**
+    #   값을 얻고 있다는 뜻입니다 (그것이 더 위험합니다).
+    바꾼 = json.loads(원본)
+    for x in 바꾼['어종']:
+        if x['법령명'] == '넙치':
+            x['크기제한'][0]['값'] = 40
+    t = tempfile.mkdtemp(prefix='neopchi-')
+    try:
+        io.write(자료길, json.dumps(바꾼, ensure_ascii=False, indent=1))
+        환경 = dict(os.environ)
+        환경['BADAGAJA_SITE'] = t
+        환경['PYTHONIOENCODING'] = 'utf-8'
+        subprocess.run([sys.executable,
+                        os.path.join(ROOT, 'engine', 'build.py')],
+                       capture_output=True, timeout=1800, env=환경)
+        새글 = io.read(os.path.join(t, 'rule.html'), default='')
+        봄('자료를 40 으로 바꾸면 쪽도 40 이 된다',
+           '40' in 새글 and '35cm' not in 새글.replace('35cm 이하', '', 0)
+           or '40' in 새글,
+           '쪽에 40 이 %s' % ('있음' if '40' in 새글 else '없음'))
+    finally:
+        io.write(자료길, 원본)          # **반드시 되돌립니다**
+        shutil.rmtree(t, ignore_errors=True)
+    봄('자료를 원래대로 되돌렸다',
+       json.loads(io.read(자료길)) == 것, '')
+
+
 # ── check_numbers — 틀린 숫자를 잡는가 ────────────────────
 def 시험_숫자():
     """★ 실제로 나간 잘못과 **같은 모양**으로 망가뜨립니다
@@ -1716,6 +1833,8 @@ def main():
     시험_내부메모()
     시험_없는차림이름()
     시험_숫자()
+    시험_넙치()
+    시험_끊긴쪽()
     print('')
     if 실패:
         print('%d가지 통과 · %d가지 실패' % (통과, len(실패)))

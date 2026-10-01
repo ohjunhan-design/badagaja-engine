@@ -104,3 +104,42 @@
 .tide-page .h-today .tide-graph .tg-head,.tide-page .h-today .tide-graph .tg-foot{display:flex;color:#546069}
 .tide-page .h-today .tide-graph .tg-tabs button{border:1.5px solid #D6E2EC;color:#1F5F8B;background:#fff}
 .tide-page .h-today .tide-graph .tg-tabs button[aria-selected="true"]{background:#1F5F8B;border-color:#1F5F8B;color:#fff}
+
+/* 간·만조 시각 — **곡선 밖 별도 줄** (2026-10-01 바깥 검수 지시)
+   「간·만조 글자를 곡선에서 전부 빼세요. 그래프 위 별도 영역에
+     모아 적고, 그래프 안에는 곡선 + 작은 점 + 지금 세로선만」
+   전에는 점에서 14px 떨어뜨렸는데, viewBox 720 을 390px 에 넣으며
+   글자만 17~20px 로 키워 **점을 덮었습니다.** 간격을 넓히는 것으로는
+   다음 화면에서 또 겹칩니다. 자리를 아예 가르는 것이 답입니다.
+   셋이면 한 줄, 넷이면 2×2 로 저절로 접힙니다. */
+.tide-graph .tg-when{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));
+  gap:6px 10px;margin:0 0 10px;
+}
+.tide-graph .tg-w{
+  display:flex;align-items:baseline;gap:7px;
+  padding:7px 11px;border-radius:10px;
+  background:#F4F1EA;border:1px solid #E5DCCB;
+}
+.tide-graph .tg-w-k{
+  font-style:normal;font-size:12px;font-weight:700;color:#6B7680;
+  white-space:nowrap;
+}
+.tide-graph .tg-w-t{font-size:15px;font-weight:800;color:#3B4A5A;
+  font-variant-numeric:tabular-nums}
+/* 간조는 물이 빠지는 때 — 해루질에 중요해 색으로 가릅니다 */
+/* ★ 위 줄의 색을 **곡선 위 점과 똑같이** 맞춥니다 (2026-10-01)
+   바깥 검수 — 「간조만 색으로 강조할 경우 사용자가 '점의 색 =
+     간조'라는 것을 **별도 범례 없이** 이해할 수 있는지 보겠습니다.
+     위에 간조 05:46 행과 색을 동일하게 맞추면 **범례를 따로
+     만들 필요가 없습니다**」
+   처음에는 위 줄만 주황으로 했는데, 곡선 점은 간조가 **녹색**이고
+   만조가 주황이라 **거꾸로**였습니다. 눈이 둘을 잇지 못합니다.
+   그리고 간조는 위험이 아니라 **물때 상태**이므로 경고색(빨강)을
+   쓰지 않습니다 — 사이트 녹색 그대로입니다. */
+.tide-graph .tg-w.low .tg-w-k,
+.tide-graph .tg-w.low .tg-w-t{color:var(--green,#2F5D57)}
+.tide-graph .tg-w.low{background:#EDF3F1;border-color:#D4E3DE}
+.tide-graph .tg-w.high .tg-w-k,
+.tide-graph .tg-w.high .tg-w-t{color:var(--orange,#C07B22)}
+.tide-graph .tg-w.high{background:#FBF4E8;border-color:#EFDFC2}
