@@ -484,7 +484,13 @@ html.has-navi .navi:hover{filter:brightness(.94)}
   color:var(--green);letter-spacing:-.01em;
 }
 .answer ul{margin:0;padding:0;list-style:none;display:grid;gap:7px}
-.answer li{font-size:14.5px;line-height:1.65}
+/* ★ 긴 줄은 **감깁니다** (2026-10-01 바깥 검수)
+   「자유 6곳 · 배로만 33곳 · 들어갈 수 없음 2곳 …」을 한 줄로
+   버티게 두면 휴대폰에서 오른쪽이 잘립니다. */
+.answer li{
+  font-size:14.5px;line-height:1.65;
+  overflow-wrap:anywhere;word-break:keep-all;
+}
 .answer li b{
   display:inline-block;min-width:92px;font-weight:700;
   color:var(--muted);
