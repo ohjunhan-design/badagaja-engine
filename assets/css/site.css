@@ -464,6 +464,44 @@ html.has-navi .navi:hover{filter:brightness(.94)}
   margin-right:4px;fill:none;stroke:currentColor;stroke-width:1.8;
   stroke-linecap:round;stroke-linejoin:round;
 }
+
+
+/* ── 장비 그림 카드 (2026-10-01) ──────────────────
+   바깥 검수 지적 — 「장비 페이지는 글보다 물건을 먼저
+   보여줘야 합니다. 지금은 안내문처럼 읽힙니다」
+
+   주인 규칙 6-1 과 같은 말입니다 — **사람은 눈으로 봅니다.**
+   휴대폰에서는 읽지 않고 넘깁니다. 그림이 있으면 멈춥니다. */
+.gc-grid{
+  display:grid;gap:12px;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+}
+.gc{
+  display:grid;grid-template-columns:76px minmax(0,1fr);gap:14px;
+  align-items:start;padding:14px;
+  border:1px solid var(--line);border-radius:14px;
+  background:var(--paper,#fff);
+}
+.gc:not(:has(.gc-art)){grid-template-columns:1fr}
+.gc-art svg{display:block;width:76px;height:76px}
+.gc-name{margin:0 0 6px;font-size:16.5px;font-weight:800}
+.gc-use{margin:0;font-size:14.5px;line-height:1.7}
+@media (max-width:600px){
+  .gc-grid{grid-template-columns:1fr}
+}
+/* ── 못 들어가는 자리 (2026-10-01) ────────────────
+   금지 63곳 · 허가필요 62곳이 「배로만」과 똑같은 이름표였습니다.
+   무게가 다릅니다 — **모르고 가면 돌아와야 하는 자리**입니다.
+
+   색만으로 알리지 않습니다. 글자도 바꿨습니다 —
+   「금지」가 아니라 **「들어갈 수 없음」**입니다. */
+.badge--stop{
+  background:#fdecec;color:#b02a1f;border-color:#f3c9c4;
+  font-weight:700;
+}
+.badge--warn{
+  background:#fff6e5;color:#8a5d00;border-color:#f0dcb0;
+}
 /* ── 확인 상태 점 (2026-10-01) ────────────────────
    🟢🟡⚪ 이모지를 쓰다 바꿨습니다. 이모지는 기계마다
    모양도 색도 다릅니다 — 안드로이드와 아이폰이 다르게
