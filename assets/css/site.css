@@ -527,6 +527,17 @@ html[data-pcview] .pcview{display:block}
                  background:var(--green);color:#fff;
                  font-size:13px;font-weight:800;line-height:1;
                  opacity:.9;pointer-events:none}
+/* ★ **화살표 자리를 비워 둡니다** (2026-10-01 주인 지적 「겹친다」)
+   화살표는 오른쪽 위 고정이라 그 자리에 이름표가 오면 덮입니다.
+   「군산시간여행축제」의 이름표가 가려져 「군」 한 글자만
+   보였습니다. 화살표를 옮기지 않고 **이름표가 피하게** 합니다 —
+   화살표는 어디로 가는지 알리는 표시라 자리가 일정해야 합니다. */
+.card--go .card-head{padding-right:34px}
+.card--go .card-head .badge{
+  max-width:100%;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
 /* 사진 카드는 사진 위에 올라서 보이게 합니다 */
 .card--photo::after{box-shadow:0 2px 8px rgba(0,0,0,.28)}
 .card--go:active{transform:scale(.988)}
