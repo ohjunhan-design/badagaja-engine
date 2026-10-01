@@ -479,8 +479,11 @@ html.has-navi .navi:hover{filter:brightness(.94)}
   border:1px solid var(--line);border-radius:14px;
   background:var(--white);
 }
+/* ★ 제목이 아래 줄들과 같은 무게로 보였습니다 (2026-10-01)
+   크기를 키우지 않고 **굵기와 아래 여백**으로만 세웁니다.
+   카드를 화려하게 만들지 않습니다. */
 .answer-h{
-  margin:0 0 10px;font-size:13px;font-weight:700;
+  margin:0 0 14px;font-size:13.5px;font-weight:800;
   color:var(--green);letter-spacing:-.01em;
 }
 .answer ul{margin:0;padding:0;list-style:none;display:grid;gap:7px}
