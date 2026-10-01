@@ -470,18 +470,27 @@ html.has-navi .navi:hover{filter:brightness(.94)}
   background:var(--white);color:var(--muted);
   font-size:13.5px;font-weight:600;cursor:pointer;
 }
+/* ★ 숫자를 **작은 알갱이**로 떼어 둡니다 (바깥 검수 지적)
+   「광어 16」이 한 낱말처럼 읽히면 안 됩니다. 어종 이름과
+   포인트 수는 다른 것입니다. */
 .filters--fish button i{
-  font-style:normal;font-size:11.5px;font-weight:700;
-  color:var(--line);
+  font-style:normal;font-size:11px;font-weight:700;
+  line-height:1;padding:3px 6px;border-radius:999px;
+  background:var(--line);color:var(--muted);
 }
 .filters--fish button[aria-pressed="true"]{
   background:var(--green);border-color:var(--green);color:#fff;
 }
 .filters--fish button[aria-pressed="true"] i{
-  color:rgba(255,255,255,.7);
+  background:rgba(255,255,255,.22);color:#fff;
 }
+/* ★ 「더 보기」는 **하는 일이 다른 단추**입니다.
+   어종 알갱이와 같은 모양이면 네 번째 어종처럼 보입니다.
+   테두리를 없애고 밑줄을 그어 가릅니다. */
 .filters--fish .fish-more{
-  border-style:dashed;color:var(--green);
+  border:0;background:none;color:var(--green);
+  text-decoration:underline;text-underline-offset:3px;
+  padding:0 8px;
 }
 /* ── 금어기 쪽 (rule.html) ────────────────────────
    ★ 2026-10-01 — 434쪽이 거는데 없던 쪽입니다.
