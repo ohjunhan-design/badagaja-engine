@@ -17,9 +17,23 @@
 (function () {
   'use strict';
 
+  function _주소권역() {
+    try {
+      var m = /[?&]region=([^&#]+)/.exec(window.location.search || '');
+      return m ? decodeURIComponent(m[1]) : '';
+    } catch (e) { return ''; }
+  }
+
   var 칸 = document.getElementById('tideStrip');
   if (!칸) return;
-  var 권역 = 칸.getAttribute('data-region');
+  /* ★ **주소에 적힌 권역이 이깁니다** (2026-10-02)
+       `/tide/?region=buan` 으로 들어온 분은 부안을 보러 온 것입니다.
+       전에는 쪽에 찍힌 첫 권역(강화)으로 먼저 받아 버려, 늦게 오는
+       갈아끼우기보다 앞서면 **엉뚱한 권역**이 남았습니다. 게다가
+       쓰지도 않을 자료를 한 번 더 받았습니다.
+       권역 쪽에는 `?region=` 이 없으니 거기는 그대로입니다. */
+  var 권역 = _주소권역() || 칸.getAttribute('data-region');
+  if (권역) { 칸.setAttribute('data-region', 권역); }
   var 관측소 = 칸.getAttribute('data-station') || '';
   var 보일날 = parseInt(칸.getAttribute('data-days') || '7', 10);
   // ★ **차림** — 'mini' 면 요약만 채우고 카드·판단칸은 안 그립니다
@@ -607,16 +621,38 @@
       //   「나머지 4일 보기 ↓ · 펴면 접기 ↑ 로 바뀌도록」
       //   「세 개의 단추를 더하면 선택지가 많아지고 그래프가 별도
       //     쪽인 것처럼 오해할 수 있습니다」 — 단추 하나로 둡니다.
-      var 남은수 = 카드들.length - 10;
+      /* ★ **글을 화면 폭에 맞춥니다** (2026-10-02 바깥 검수)
+           휴대폰은 7일 + 7일, 넓은 화면은 10일 + 나머지입니다.
+           차림표가 몇 장을 보일지 정하므로, 글도 그에 맞춰
+           적습니다. 안 그러면 「나머지 4일」이라 적어 놓고
+           7장이 펼쳐집니다. */
       var 더 = 만들기('button', 'td-more');
       더.type = 'button';
-      더.appendChild(만들기('span', 'td-more-t',
-        '나머지 ' + 남은수 + '일 보기 ↓'));
+      더.appendChild(만들기('span', 'td-more-t', ''));
+
+      function 더글(폄) {
+        if (폄) { return '접기 ↑'; }
+        var 좁나 = false;
+        try {
+          좁나 = window.matchMedia('(max-width:760px)').matches;
+        } catch (e) { /* 옛 브라우저 */ }
+        var 남 = 카드들.length - (좁나 ? 7 : 10);
+        return 좁나 ? ('다음 ' + 남 + '일 보기 ↓')
+                    : ('나머지 ' + 남 + '일 보기 ↓');
+      }
+
+      더.querySelector('.td-more-t').textContent = 더글(false);
       더.addEventListener('click', function () {
         var 폄 = 줄.classList.toggle('tide-days--all');
-        더.querySelector('.td-more-t').textContent =
-          폄 ? '접기 ↑' : '나머지 ' + 남은수 + '일 보기 ↓';
+        더.querySelector('.td-more-t').textContent = 더글(폄);
       });
+      try {
+        window.matchMedia('(max-width:760px)')
+          .addEventListener('change', function () {
+            더.querySelector('.td-more-t').textContent =
+              더글(줄.classList.contains('tide-days--all'));
+          });
+      } catch (e) { /* 옛 브라우저는 그대로 둡니다 */ }
       칸.appendChild(더);
     }
     요약채우기(날들[0]);
@@ -679,9 +715,80 @@
       : '국립해양조사원 자료';
   }
 
-  // ── 2층: 간조·만조 시각 (공공데이터) ───────────────────
-  // 못 받아 와도 위의 물때 번호는 그대로 보입니다 (계약-23)
-  if (!권역) return;
+  /* ── 2층: 간조·만조 시각 (공공데이터) ───────────────────
+       못 받아 와도 위의 물때 번호는 그대로 보입니다 (계약-23)
+
+     ★ **자료를 꽂는 일을 함수로 빼냈습니다** (2026-10-02)
+       `/tide/` 의 2주 상세가 권역을 갈아 끼우며 같은 일을 합니다.
+       두 벌로 짜면 14일 달력이 둘이 되어 계약-01 을 어깁니다. */
+  function 자료꽂기(나온것) {
+    var 표 = {};
+    (나온것.days || []).forEach(function (x) { 표[x.date] = x; });
+    날들.forEach(function (x) {
+      var 받은것 = 표[x.키];
+      x.사건 = null;
+      x.조차 = 0;
+      if (받은것) {
+        // 간조·만조 시각만 받아 씁니다.
+        // 물때 번호는 **서버 값을 쓰지 않습니다** — 서버 값이 바다타임과
+        // 8물이나 어긋나 있습니다. 셈은 여기 한 곳에서만 합니다 (계약-01).
+        x.사건 = 받은것.events || [];
+        var 높이 = (x.사건 || []).map(function (e) { return e.level; });
+        if (높이.length >= 2) {
+          x.조차 = Math.max.apply(null, 높이) - Math.min.apply(null, 높이);
+        }
+      }
+    });
+    // 실제 조차를 받았으면 막대를 그것으로 다시 그립니다
+    var 조차들 = 날들.filter(function (x) { return x.조차; })
+                     .map(function (x) { return x.조차; });
+    if (조차들.length >= 3) {
+      var 작은 = Math.min.apply(null, 조차들);
+      var 큰 = Math.max.apply(null, 조차들);
+      날들.forEach(function (x) {
+        if (!x.조차) { return; }
+        x.세기 = 조차세기(x.조차, 작은, 큰);
+        x.풀이 = 세기이름(x.세기);
+      });
+    }
+    그리기();
+    출처적기(나온것.point || 관측소);
+  }
+
+  /* ★ **바깥에서 권역을 갈아 끼우는 입구** (2026-10-02)
+
+       `/tide/` 의 전국 지도가 핀을 바꿀 때 부릅니다.
+       자료는 **밖에서 받아 넘겨 줍니다** — 지도가 이미 14일 응답을
+       받아 두고 있어, 여기서 또 부르면 같은 것을 두 번 받습니다
+       (지피티 원칙 — 「API 중복 호출 금지」).
+
+       1층(물때 번호·사리/조금)은 달 계산이라 권역과 무관합니다.
+       갈아 끼우는 것은 2층뿐입니다. */
+  /* ★ **이름을 빼앗지 않습니다** (2026-10-02 판정이 잡았습니다)
+       처음에 `window.BADAGAJA_TIDE` 를 썼는데, 그 이름은 **옛
+       사이트가 쓰던 것**입니다(oldsite/js/app.js). check_tide_old
+       가 옛 계산과 새 계산을 730일 견주는데, 제가 덮어써서
+       「옛.lunarDay is not a function」으로 **730일 전부** 어긋났습니다.
+       옛 쪽과 새 쪽이 한 브라우저에 같이 뜰 일은 없지만, 검사기가
+       둘을 나란히 불러 견줍니다. 이름을 갈라 둡니다. */
+  window.BADAGAJA_TIDE_NEW = {
+    갈아끼우기: function (새권역, 새관측소, 받은자료) {
+      권역 = 새권역 || 권역;
+      관측소 = 새관측소 || '';
+      칸.setAttribute('data-region', 권역);
+      if (새관측소) { 칸.setAttribute('data-station', 새관측소); }
+      if (받은자료 && 받은자료.days && 받은자료.days.length) {
+        자료꽂기(받은자료);
+        return true;
+      }
+      // 자료를 안 주면 1층만 다시 그립니다 — 빈 쪽이 되지 않습니다
+      날들.forEach(function (x) { x.사건 = null; x.조차 = 0; });
+      그리기();
+      return false;
+    }
+  };
+
+  if (!권역) { return; }
   var 주소 = 'https://badagaja.com/api/tide-cache.php?region='
            + encodeURIComponent(권역);
   var 꺼짐 = setTimeout(function () {
@@ -698,35 +805,7 @@
                + '간조·만조 시각은 지금 불러오지 못했습니다.');
         return;
       }
-      var 표 = {};
-      나온것.days.forEach(function (x) { 표[x.date] = x; });
-      날들.forEach(function (x) {
-        var 받은것 = 표[x.키];
-        if (받은것) {
-          // 간조·만조 시각만 받아 씁니다.
-          // 물때 번호는 **서버 값을 쓰지 않습니다** — 서버 값이 바다타임과
-          // 8물이나 어긋나 있습니다. 셈은 여기 한 곳에서만 합니다 (계약-01).
-          x.사건 = 받은것.events || [];
-          var 높이 = (x.사건 || []).map(function (e) { return e.level; });
-          if (높이.length >= 2) {
-            x.조차 = Math.max.apply(null, 높이) - Math.min.apply(null, 높이);
-          }
-        }
-      });
-      // 실제 조차를 받았으면 막대를 그것으로 다시 그립니다
-      var 조차들 = 날들.filter(function (x) { return x.조차; })
-                       .map(function (x) { return x.조차; });
-      if (조차들.length >= 3) {
-        var 작은 = Math.min.apply(null, 조차들);
-        var 큰 = Math.max.apply(null, 조차들);
-        날들.forEach(function (x) {
-          if (!x.조차) return;
-          x.세기 = 조차세기(x.조차, 작은, 큰);
-          x.풀이 = 세기이름(x.세기);
-        });
-      }
-      그리기();
-      출처적기(나온것.point || 관측소);
+      자료꽂기(나온것);
       알리기('간조·만조 시각은 국립해양조사원 자료입니다'
              + (나온것.point ? ' (기준 관측소 ' + 나온것.point + ')' : '')
              + '. 저 = 간조(물이 가장 많이 빠진 때) · 고 = 만조, '

@@ -44,6 +44,32 @@ def _그림(속):
             'stroke-linecap="round" stroke-linejoin="round">%s</svg>' % 속)
 
 
+def _칩글(것):
+    """머리 그림 밑에 붙는 **짧은 한마디**.
+
+    ★ 2026-10-02 바깥 감사 — 「망 **이동하면서 손을**」처럼
+      **문장 가운데서 끊겨** 있었습니다. 제가 「이럴때」를
+      8글자로 잘랐기 때문입니다. 작은 것이지만 사람 눈에는
+      바로 보이는 품질 문제입니다.
+
+    ★ 그래서 **자료에 짧은 글을 따로 적습니다**(`칩글`).
+      없으면 **낱말 경계에서** 자릅니다 — 다시는 글자 가운데서
+      끊기지 않습니다.
+    """
+    짧은것 = (것.get('칩글') or '').strip()
+    if 짧은것:
+        return 짧은것
+    글 = (것.get('이럴때') or '').split(',')[0].strip()
+    if len(글) <= 8:
+        return 글
+    모은것 = ''
+    for 낱말 in 글.split(' '):
+        if 모은것 and len(모은것) + 1 + len(낱말) > 8:
+            break
+        모은것 = (모은것 + ' ' + 낱말).strip() if 모은것 else 낱말
+    return 모은것 or 글[:8]
+
+
 def 준비물쪽(d, 언어='ko'):
     것 = _io.read_json(자료길, default=None)
     if not 것 or not (것.get('준비물') or []):
@@ -62,7 +88,7 @@ def 준비물쪽(d, 언어='ko'):
         작은것.append(
             '<div class="kit-mini">%s<b>%s</b><span>%s</span></div>'
             % (_그림(x.get('그림')), esc(x['이름']),
-               esc((x.get('이럴때') or '').split(',')[0].strip()[:8])))
+               esc(_칩글(x))))
 
     # ── 상황부터 고르기
     상황칸 = ''

@@ -1299,18 +1299,322 @@ html[data-pcview] .pcview{display:block}
 .dots li{font-size:14px;line-height:1.85;color:#4A3F33;margin-top:5px}
 
 /* ── 축제 달력 ────────────────────────────────────────── */
+/* ★ **시각형으로 다시 지었습니다** (2026-10-02 지피티 시안 v1)
+     docs/festival-index-visual-v1.html 그대로입니다.
+     바다 사이트인데 첫 화면에 바다가 한 장도 없었습니다 (규칙 6-1). */
 .filter button b{margin-left:5px;color:var(--orange);font-weight:700}
 .filter button[aria-pressed="true"] b{color:#F5D6A3}
 .filter button[disabled]{opacity:.4;cursor:default}
-.month-block{margin-top:28px}
-.month-block[hidden]{display:none}
-.month-head{
-  display:flex;align-items:baseline;gap:10px;margin-bottom:12px;
-  font-family:var(--serif);font-size:20px;font-weight:700;
-}
-.month-head span{font-family:inherit;font-size:12.5px;color:var(--muted);font-weight:400}
 .fest-item[hidden]{display:none}
-.fest-item .card-note{margin-top:6px;color:var(--muted)}
+
+.fest-top{padding-top:18px;padding-bottom:0}
+
+/* 머리 — 큰 바다 사진 위에 제목·소개·칩 */
+.fest-hero{
+  position:relative;min-height:360px;border-radius:22px;overflow:hidden;
+  border:1px solid var(--line);background:#C8D6D7;margin:0 0 14px;
+  display:block;
+}
+.fest-hero .photo{margin:0;position:absolute;inset:0}
+.fest-hero .photo img{
+  width:100%;height:100%;object-fit:cover;display:block;border-radius:0
+}
+/* 촬영자 — 사진 위 오른쪽 아래에 작게 (규칙 6)
+   ★ **한 줄로 끊습니다** — 두 줄이 되면 사진을 가립니다 */
+.fest-hero .photo figcaption{
+  position:absolute;right:12px;bottom:8px;z-index:3;margin:0;
+  font-size:10.5px;line-height:1.3;color:rgba(255,255,255,.72);
+  text-align:right;max-width:52%;text-shadow:0 1px 3px rgba(0,0,0,.6);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.fest-hero::after{
+  content:"";position:absolute;inset:0;z-index:1;
+  background:linear-gradient(90deg,rgba(17,25,23,.84) 0%,rgba(17,25,23,.52) 46%,rgba(17,25,23,.14) 78%)
+}
+.fest-hero__copy{
+  position:absolute;z-index:2;left:28px;bottom:26px;max-width:640px;color:#fff
+}
+.fest-kicker{
+  margin:0 0 6px;font-size:12px;font-weight:800;color:#F6C06A;letter-spacing:.01em
+}
+.fest-hero__copy h1{
+  margin:0;font-family:var(--serif);font-size:40px;line-height:1.08;
+  letter-spacing:-.03em;color:#fff;word-break:keep-all
+}
+.fest-lead{margin:10px 0 0;font-size:14.5px;line-height:1.6;max-width:600px;opacity:.95}
+.fest-hero__chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px}
+.hero-chip{
+  display:inline-flex;align-items:center;min-height:32px;padding:0 11px;
+  border-radius:var(--r-full);background:rgba(255,255,255,.94);
+  color:var(--ink);font-size:11.5px;font-weight:800
+}
+.hero-chip--on{background:var(--orange);color:#fff}
+
+/* 달 고르기 — 막대 길이가 그 달 축제 수입니다 (규칙 6-1) */
+.month-strip{
+  display:grid;grid-template-columns:repeat(12,1fr);gap:6px;margin:0 0 12px
+}
+.month-btn{
+  position:relative;min-height:76px;border:1px solid var(--line);
+  border-radius:14px;background:var(--white);padding:9px 8px;
+  text-align:left;overflow:hidden;cursor:pointer;color:var(--ink);
+  font-family:inherit
+}
+.month-btn b{display:block;font-size:15px;font-weight:700}
+.month-btn span{display:block;margin-top:3px;font-size:10.5px;color:var(--muted)}
+.month-btn i{
+  position:absolute;left:8px;right:8px;bottom:8px;height:5px;
+  border-radius:var(--r-full);background:#EFE8DC;overflow:hidden
+}
+.month-btn i::after{
+  content:"";display:block;height:100%;width:var(--w,40%);
+  background:linear-gradient(90deg,var(--green),#7BB1AA,var(--orange));
+  border-radius:inherit
+}
+.month-btn--now{border-color:var(--orange);background:#FBEFDC}
+.month-btn--now::before{
+  content:"이번 달";position:absolute;right:6px;top:6px;
+  border-radius:var(--r-full);background:var(--orange);color:#fff;
+  font-size:9px;font-weight:800;padding:3px 6px
+}
+.month-btn[disabled]{opacity:.45;cursor:default}
+/* 「한 해 전체」 — 12달 칸과 달리 막대가 없습니다 */
+.month-btn--all{background:#F4EFE4}
+.month-btn--all b{font-size:14px}
+.month-strip{grid-template-columns:repeat(13,1fr)}
+
+/* 지역 고르기 — 가로로 미는 칩 한 줄 */
+.fest-chips{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.fest-chips::-webkit-scrollbar{display:none}
+.fest-chips button{
+  flex:0 0 auto;border:1px solid var(--line);background:var(--white);
+  border-radius:var(--r-full);padding:9px 13px;font-size:12.5px;
+  font-weight:700;cursor:pointer;color:var(--ink);font-family:inherit;
+  min-height:38px
+}
+.fest-chips button[aria-pressed="true"]{
+  background:var(--green);border-color:var(--green);color:#fff
+}
+.fest-chips button b{margin-left:5px;color:var(--orange);font-weight:700}
+.fest-chips button[aria-pressed="true"] b{color:#F5D6A3}
+
+/* 칸 머리 한 줄 */
+.fest-head{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:16px;margin:0 0 12px
+}
+.fest-head h2{margin:2px 0 0;font-size:27px;line-height:1.18}
+.fest-head__note{margin:0;font-size:12px;color:var(--muted);text-align:right}
+
+/* 사진 카드 셋 */
+.fest-feature{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.f-card{
+  position:relative;min-height:258px;border-radius:var(--r-lg);
+  overflow:hidden;border:1px solid var(--line);background:#D8E2E2;
+  color:#fff;text-decoration:none;display:block
+}
+.f-card[hidden]{display:none}
+.f-card__photo{margin:0;position:absolute;inset:0}
+.f-card__photo img{width:100%;height:100%;object-fit:cover;display:block;border-radius:0}
+/* ★ 촬영자는 **한 줄로 작게** — 사진 카드의 주인공은 축제 이름입니다.
+     지우지는 않습니다. CC BY 사진은 저작자 표시가 조건입니다. */
+.f-card__photo figcaption{
+  position:absolute;right:9px;top:7px;left:9px;z-index:3;margin:0;
+  font-size:9px;line-height:1.3;color:rgba(255,255,255,.62);
+  text-align:right;text-shadow:0 1px 3px rgba(0,0,0,.55);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.f-card::after{
+  content:"";position:absolute;inset:0;z-index:1;
+  background:linear-gradient(0deg,rgba(12,22,20,.9) 0%,rgba(12,22,20,.4) 48%,rgba(12,22,20,.04) 78%)
+}
+.f-card__body{position:absolute;z-index:2;left:14px;right:14px;bottom:13px}
+.f-card__meta{
+  display:inline-block;padding:4px 8px;border-radius:var(--r-full);
+  background:rgba(255,255,255,.92);color:var(--ink);
+  font-size:9.5px;font-weight:800;margin-bottom:7px
+}
+.f-card h3{margin:0;font-family:var(--serif);font-size:20px;line-height:1.2;color:#fff}
+.f-card p{
+  margin:5px 0 0;font-size:11.5px;line-height:1.45;opacity:.95;
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden
+}
+
+/* 달 묶음 — 197개 링크를 **하나도 안 없앱니다**
+   ★ 고른 달은 테두리로 표시합니다. 다른 달은 **접힌 채로 남습니다** */
+.month-group--now{border-color:var(--orange)}
+.month-group--now > summary{background:#FDF6EA}
+/* ★ **고른 달을 맨 앞으로** (2026-10-02 눈으로 보고 고침)
+     흐름은 「사진 카드 셋 → **이번 달 목록**」이어야 합니다.
+     전에는 1월부터 9월까지 접힌 줄 아홉이 사이에 끼어
+     10월이 한참 아래로 밀렸습니다.
+     자바스크립트로 자리를 옮기지 않습니다 — 그것이 죽어도
+     차례만 제자리로 돌아갑니다 (계약-23). */
+#festList{margin-top:18px;display:flex;flex-direction:column}
+.month-group--now{order:-1}
+.month-group{
+  background:var(--white);border:1px solid var(--line);
+  border-radius:var(--r-md);margin-bottom:8px;overflow:hidden
+}
+.month-group[hidden]{display:none}
+.month-group summary{
+  list-style:none;cursor:pointer;min-height:48px;padding:0 15px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  font-weight:700
+}
+.month-group summary::-webkit-details-marker{display:none}
+.month-group summary::after{content:"＋";font-size:18px;color:var(--green)}
+.month-group[open] summary::after{content:"−"}
+.month-title{display:flex;align-items:baseline;gap:9px;margin:0;font-weight:700}
+.month-title strong{font-family:var(--serif);font-size:18px}
+.month-title span{font-size:11.5px;color:var(--muted);font-weight:400}
+.month-list{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 13px 13px
+}
+/* ★ **접힌 묶음은 정말 접혀야 합니다** (2026-10-02 check_months 가 잡음)
+     브라우저는 `details:not([open]) > *:not(summary){display:none}`
+     을 UA 차림표로 겁니다. 그런데 **우리가 쓴 `display:grid` 가
+     그것을 덮습니다.** 그래서 접힌 달 열하나의 링크 172개가
+     레이아웃에 **그대로 남아 있었습니다** (목록 하나가 2,896px).
+     `overflow:hidden` 덕에 눈에만 안 보였을 뿐입니다 —
+     키보드 차례와 읽기 보조에는 그대로 걸립니다. */
+.month-group:not([open]) .month-list{display:none}
+.month-link{
+  border:1px solid var(--line);border-radius:var(--r-sm);padding:11px 13px;
+  min-height:76px;background:var(--white);text-decoration:none;color:var(--ink)
+}
+.month-link b{display:block;font-size:13.5px;line-height:1.38;font-weight:700}
+.month-link span{display:block;margin-top:5px;color:var(--muted);font-size:10.5px;line-height:1.45}
+
+@media (max-width:760px){
+  .fest-hero{min-height:280px}
+  .fest-hero::after{
+    background:linear-gradient(0deg,rgba(12,22,20,.88),rgba(12,22,20,.26) 70%,rgba(12,22,20,.05))
+  }
+  .fest-hero__copy{left:15px;right:15px;bottom:15px;max-width:none}
+  .fest-hero__copy h1{font-size:28px}
+  .fest-lead{font-size:13px;line-height:1.5}
+  /* ★ 휴대폰에서는 촬영자를 **사진 위쪽**으로 (2026-10-02 눈으로 보고)
+       글 묶음이 아래에 꽉 차서, 아래에 두면 칩과 겹쳤습니다. */
+  .fest-hero .photo figcaption{
+    top:9px;bottom:auto;left:15px;right:15px;max-width:none;font-size:9.5px
+  }
+  .month-strip{display:flex;overflow-x:auto;gap:7px;scrollbar-width:none}
+  .month-strip::-webkit-scrollbar{display:none}
+  /* ★ 막대가 「14개」 글자에 붙었습니다 — 높이를 줍니다 */
+  .month-btn{flex:0 0 92px;min-height:80px;padding-bottom:16px}
+  /* ★ **「한 해」는 왼쪽에 붙여 둡니다** (2026-10-02)
+       휴대폰에서는 달 줄이 가로로 밀립니다. 쪽을 열면 이번 달이
+       가운데로 오는데, 그러면 맨 앞의 「한 해」가 **화면 밖**으로
+       나갑니다. 전체를 보는 길은 늘 손에 닿아야 합니다. */
+  .month-btn--all{
+    position:sticky;left:0;z-index:2;flex:0 0 72px;
+    box-shadow:6px 0 8px -6px rgba(43,33,22,.18)
+  }
+  .fest-head{flex-direction:column;align-items:flex-start;gap:4px}
+  .fest-head h2{font-size:22px}
+  .fest-head__note{text-align:left}
+  .fest-feature{display:flex;overflow-x:auto;gap:9px;scrollbar-width:none}
+  .fest-feature::-webkit-scrollbar{display:none}
+  .f-card{flex:0 0 78%;min-height:232px}
+  .month-list{grid-template-columns:1fr 1fr}
+}
+
+/* ── /tide/ 2주 상세 펼침 ──────────────────────────────
+   ★ 지피티 시안 docs/tide-fortnight-expand-v1.html 그대로 (2026-10-02)
+
+   주인 지시 — 「지도를 더 키우면 바로 상세로 나오고 그 나온 상세핀
+   에서 누르면 링크로 넘어가지 않고 추가적으로 하단에 펼침으로
+   2주 물때정보 및 그래프등 기존 자료들이 나왔으면 좋겠어」
+
+   14일 달력·그래프·「언제 갈까」는 tide.js 가 그립니다. 여기서는
+   **담는 그릇**만 꾸밉니다 (계약-01 한 곳에서). */
+.tide-detail{
+  margin-top:14px;border:1px solid var(--line);border-radius:var(--r-lg);
+  background:var(--white);overflow:hidden
+}
+.tide-detail summary{
+  list-style:none;cursor:pointer;min-height:56px;padding:0 16px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  font-weight:700
+}
+.tide-detail summary::-webkit-details-marker{display:none}
+.tide-detail summary::after{content:"＋";font-size:21px;color:var(--green)}
+.tide-detail[open] summary::after{content:"−"}
+.td-left{display:flex;align-items:center;gap:10px;min-width:0}
+.td-left strong{font-family:var(--serif);font-size:16px}
+.td-left span{font-size:11.5px;color:var(--muted);font-weight:400}
+.td-body{border-top:1px solid var(--line);padding:14px}
+/* ★ 접힌 상세는 **정말 접힙니다** — 안에 있는 grid·flex 가
+     브라우저의 숨김을 덮지 못하게 못박습니다.
+     (2026-10-02 축제 쪽에서 같은 일로 링크 172개가 살아 있었습니다) */
+.tide-detail:not([open]) .td-body{display:none}
+
+/* 오늘 그래프 — 14일 카드 **위**에 작게 (지피티 결정) */
+.td-graph{
+  border:1px solid var(--line);border-radius:14px;padding:12px;
+  background:var(--bg);margin-bottom:14px
+}
+.td-graph-head{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:5px
+}
+.td-graph-head b{font-size:13.5px}
+.td-graph-head span{font-size:10.5px;color:var(--muted)}
+
+/* ★ **14일을 7열×2행으로** (지피티 결정)
+     「PC 는 7열×2행으로 14일 전체를 한 번에 보여 주세요. 이건
+       사용자가 직접 펼친 상세 영역이라 약간 길어져도 괜찮습니다」
+     기본 차림표는 5열입니다 — 여기서만 바꿉니다. 권역 쪽 꼴은
+     건드리지 않습니다. */
+.td-body .tide-days{grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}
+.td-body .tide-day{padding:9px 8px 8px}
+/* 상세는 손님이 **직접 펼친** 곳이라 14일을 다 보입니다 */
+.td-body .tide-day--more{display:block}
+
+/* 「2주 물때 보기」는 눈에 띄게 */
+.tp-btn.tp-open{font-weight:700}
+
+/* ★ ① **제목이 「요」 한 글자로 꺾이지 않게** (바깥 검수 지시)
+     「어느 바다 물때를 보시겠어 / 요」처럼 한 글자가 다음 줄로
+     떨어지면 바로 눈에 띕니다. 줄을 고르게 나눕니다. */
+@media (min-width:761px){
+  .hero--text h1{max-width:760px;text-wrap:balance;word-break:keep-all}
+}
+
+/* ★ ② **지도를 못 받으면 한 줄로 접습니다** (바깥 검수 지시)
+     「기능은 살아 있어도 UI 는 깨진 상태입니다. 계약-23 은
+       「기능만 살아 있다」가 아니라 fallback 도 보기 좋아야 합니다」
+     전에는 PC 에서 왼쪽 카드만 남고 오른쪽 절반이 크게 비었습니다. */
+@media (min-width:761px){
+  body.tide-map-failed .tide-explorer{
+    grid-template-columns:minmax(0,760px);justify-content:start
+  }
+  body.tide-map-failed .tm-shell{display:none !important}
+  body.tide-map-failed .tm-pick{width:100%;max-width:760px}
+}
+
+/* ★ ④ 직접 진입(#tide-detail)에서 머리띠에 가리지 않게 */
+#tide-detail{scroll-margin-top:88px}
+
+@media (max-width:760px){
+  .tide-detail{margin-top:10px}
+  .tide-detail summary{padding:0 12px;min-height:54px}
+  .td-left{display:block}
+  .td-left strong{display:block;font-size:15px}
+  .td-left span{display:block;margin-top:2px}
+  .td-body{padding:10px}
+  /* ★ ③ 휴대폰은 **7일 + 7일** 입니다 (2026-10-02 바깥 검수)
+       「10장을 처음부터 보여주니 상세를 펼친 뒤 카드가 꽤 길게
+         이어집니다. **2주 물때**라는 개념도 7일+7일이 훨씬
+         자연스럽습니다」
+       PC 는 7열×2행으로 14장을 한 번에 봅니다 — 거기서는 안 숨깁니다.
+       자료는 그대로 두고 **보이는 것만** 가릅니다. */
+  .td-body .tide-days{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .td-body .tide-days .tide-day:nth-child(n+8){display:none}
+  .td-body .tide-days--all .tide-day:nth-child(n+8){display:block}
+  .td-graph{padding:10px;margin-bottom:10px}
+}
 
 /* ── 어종 안내 쪽 ─────────────────────────────────────── */
 .alias{margin-top:8px;font-size:13px;color:var(--muted)}

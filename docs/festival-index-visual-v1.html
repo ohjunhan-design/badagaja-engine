@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>전국 바다 축제 — 시각형 인덱스 v1</title>
+<style>
+:root{
+  --brand:#2F5D57; --orange:#C07B22; --cream:#FAF6EE; --card:#fff;
+  --line:#E5DCCB; --ink:#201A16; --muted:#6B7680;
+  --green-soft:#E3EFE9; --orange-soft:#FBEFDC;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--cream);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif}
+a{text-decoration:none;color:inherit}
+button{font:inherit}
+.wrap{width:min(1120px,calc(100% - 32px));margin:auto;padding:22px 0 40px}
+
+.fest-hero{
+  position:relative;min-height:360px;border-radius:22px;overflow:hidden;
+  border:1px solid var(--line);background:#c8d6d7;margin-bottom:14px;
+}
+.fest-hero:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(17,25,23,.82) 0%,rgba(17,25,23,.50) 45%,rgba(17,25,23,.12) 78%);
+}
+.fest-hero__visual{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 73% 24%, rgba(255,205,125,.95) 0 3%, transparent 3.2%),
+    linear-gradient(150deg,#5e7b80 0 35%,#c66f42 67%,#253b45 100%);
+}
+.fest-hero__copy{position:absolute;z-index:2;left:28px;bottom:26px;max-width:640px;color:#fff}
+.kicker{font-size:12px;font-weight:900;color:#F6C06A;margin-bottom:6px}
+.fest-hero h1{margin:0;font-size:42px;line-height:1.06;letter-spacing:-.035em}
+.fest-hero p{margin:10px 0 0;font-size:14px;line-height:1.55;max-width:600px;opacity:.95}
+.fest-hero__chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px}
+.hero-chip{
+  display:inline-flex;align-items:center;min-height:32px;padding:0 10px;border-radius:999px;
+  background:rgba(255,255,255,.94);color:var(--ink);font-size:11px;font-weight:900
+}
+.hero-chip.active{background:var(--orange);color:#fff}
+
+.month-strip{display:grid;grid-template-columns:repeat(12,1fr);gap:6px;margin:14px 0 18px}
+.month-btn{
+  position:relative;min-height:76px;border:1px solid var(--line);border-radius:14px;
+  background:#fff;padding:10px 8px;text-align:left;overflow:hidden
+}
+.month-btn b{display:block;font-size:15px}
+.month-btn span{display:block;margin-top:3px;font-size:10px;color:var(--muted)}
+.month-btn i{
+  position:absolute;left:8px;right:8px;bottom:8px;height:5px;border-radius:999px;
+  background:#EFE8DC;overflow:hidden
+}
+.month-btn i:after{
+  content:"";display:block;height:100%;width:var(--w,40%);
+  background:linear-gradient(90deg,var(--brand),#7BB1AA,var(--orange));border-radius:inherit
+}
+.month-btn.current{border-color:var(--orange);background:var(--orange-soft)}
+.month-btn.current:before{
+  content:"이번 달";position:absolute;right:7px;top:7px;border-radius:999px;
+  background:var(--orange);color:#fff;font-size:9px;font-weight:900;padding:3px 6px
+}
+
+.filter-row{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;margin-bottom:14px}
+.filter-row::-webkit-scrollbar{display:none}
+.filter{
+  flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:999px;
+  padding:8px 12px;font-size:12px;font-weight:900
+}
+.filter.active{background:var(--brand);border-color:var(--brand);color:#fff}
+
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:18px 0 10px}
+.section-head h2{margin:0;font-size:28px;line-height:1.15}
+.section-head p{margin:0;font-size:12px;color:var(--muted)}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.f-card{
+  position:relative;min-height:260px;border-radius:18px;overflow:hidden;border:1px solid var(--line);
+  background:#d8e2e2;color:#fff
+}
+.f-card:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(0deg,rgba(12,22,20,.88) 0%,rgba(12,22,20,.38) 48%,rgba(12,22,20,.05) 76%)
+}
+.f-card__visual{position:absolute;inset:0}
+.v1{background:linear-gradient(140deg,#375e63,#d07c3d)}
+.v2{background:linear-gradient(140deg,#326d77,#a15552)}
+.v3{background:linear-gradient(140deg,#405a4b,#c68e42)}
+.f-card__body{position:absolute;z-index:2;left:14px;right:14px;bottom:13px}
+.f-card__meta{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.small-pill{padding:4px 7px;border-radius:999px;background:rgba(255,255,255,.92);color:var(--ink);font-size:9px;font-weight:900}
+.f-card h3{margin:0;font-size:20px;line-height:1.18}
+.f-card p{margin:5px 0 0;font-size:11px;line-height:1.42;opacity:.95;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+
+.all-months{margin-top:18px}
+.month-group{background:#fff;border:1px solid var(--line);border-radius:16px;margin-bottom:8px;overflow:hidden}
+.month-group summary{
+  list-style:none;cursor:pointer;min-height:52px;padding:0 14px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;font-weight:900
+}
+.month-group summary::-webkit-details-marker{display:none}
+.month-group summary:after{content:"＋";font-size:18px;color:var(--brand)}
+.month-group[open] summary:after{content:"−"}
+.month-title{display:flex;align-items:center;gap:9px}
+.month-title strong{font-size:17px}
+.month-title span{font-size:11px;color:var(--muted)}
+.month-list{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 12px 12px}
+.month-link{border:1px solid var(--line);border-radius:12px;padding:11px 12px;min-height:78px;background:#fff}
+.month-link b{display:block;font-size:13px;line-height:1.35}
+.month-link span{display:block;margin-top:4px;color:var(--muted);font-size:10px;line-height:1.4}
+
+@media(max-width:760px){
+  .wrap{width:min(100% - 24px,420px);padding-top:12px}
+  .fest-hero{min-height:270px}
+  .fest-hero:after{background:linear-gradient(0deg,rgba(12,22,20,.86),rgba(12,22,20,.22) 70%,rgba(12,22,20,.04))}
+  .fest-hero__copy{left:15px;right:15px;bottom:14px;max-width:none}
+  .fest-hero h1{font-size:30px}
+  .fest-hero p{font-size:12.5px;line-height:1.45}
+  .month-strip{display:flex;overflow-x:auto;gap:7px;scrollbar-width:none;padding-bottom:2px}
+  .month-strip::-webkit-scrollbar{display:none}
+  .month-btn{flex:0 0 92px;min-height:70px}
+  .feature-grid{display:flex;overflow-x:auto;gap:9px;scrollbar-width:none}
+  .feature-grid::-webkit-scrollbar{display:none}
+  .f-card{flex:0 0 78%;min-height:235px}
+  .section-head h2{font-size:22px}
+  .section-head p{display:none}
+  .month-list{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+<section class="fest-hero">
+  <div class="fest-hero__visual"></div>
+  <div class="fest-hero__copy">
+    <div class="kicker">전국 바다 축제 197개</div>
+    <h1>이번 달, 바다에서 뭐가 열릴까요?</h1>
+    <p>달과 지역을 먼저 고르고, 마음에 드는 축제를 눌러 일정·가는 길·주변 바다까지 이어서 보세요.</p>
+    <div class="fest-hero__chips">
+      <span class="hero-chip active">10월 · 25개</span>
+      <span class="hero-chip">전남 · 81개</span>
+      <span class="hero-chip">57권역</span>
+    </div>
+  </div>
+</section>
+
+<nav class="month-strip" aria-label="달별 축제">
+  <a class="month-btn" style="--w:56%"><b>1월</b><span>14개</span><i></i></a>
+  <a class="month-btn" style="--w:24%"><b>2월</b><span>6개</span><i></i></a>
+  <a class="month-btn" style="--w:36%"><b>3월</b><span>9개</span><i></i></a>
+  <a class="month-btn" style="--w:92%"><b>4월</b><span>23개</span><i></i></a>
+  <a class="month-btn" style="--w:96%"><b>5월</b><span>24개</span><i></i></a>
+  <a class="month-btn" style="--w:60%"><b>6월</b><span>15개</span><i></i></a>
+  <a class="month-btn" style="--w:76%"><b>7월</b><span>19개</span><i></i></a>
+  <a class="month-btn" style="--w:68%"><b>8월</b><span>17개</span><i></i></a>
+  <a class="month-btn" style="--w:96%"><b>9월</b><span>24개</span><i></i></a>
+  <a class="month-btn current" style="--w:100%"><b>10월</b><span>25개</span><i></i></a>
+  <a class="month-btn" style="--w:52%"><b>11월</b><span>13개</span><i></i></a>
+  <a class="month-btn" style="--w:32%"><b>12월</b><span>8개</span><i></i></a>
+</nav>
+
+<div class="filter-row" aria-label="지역별 축제">
+  <button class="filter active">전체 197</button>
+  <button class="filter">제주 20</button>
+  <button class="filter">인천·경기 11</button>
+  <button class="filter">충남 19</button>
+  <button class="filter">전북 8</button>
+  <button class="filter">전남 81</button>
+  <button class="filter">경남 13</button>
+  <button class="filter">부산·울산 10</button>
+  <button class="filter">경북 17</button>
+  <button class="filter">강원 18</button>
+</div>
+
+<section>
+  <header class="section-head">
+    <div>
+      <div class="kicker">지금 보기 좋은 축제</div>
+      <h2>10월 축제 25개</h2>
+    </div>
+    <p>사진이 있는 축제를 먼저 보여주고, 아래에서 25개 모두 볼 수 있습니다.</p>
+  </header>
+
+  <div class="feature-grid">
+    <a class="f-card" href="#">
+      <div class="f-card__visual v1"></div>
+      <div class="f-card__body">
+        <div class="f-card__meta"><span class="small-pill">전남</span><span class="small-pill">10월</span></div>
+        <h3>가을 바다 축제</h3>
+        <p>해 질 녘 바닷가에서 공연과 체험을 함께 즐기는 가을 축제</p>
+      </div>
+    </a>
+
+    <a class="f-card" href="#">
+      <div class="f-card__visual v2"></div>
+      <div class="f-card__body">
+        <div class="f-card__meta"><span class="small-pill">경남</span><span class="small-pill">10월</span></div>
+        <h3>항구 수산물 축제</h3>
+        <p>제철 수산물과 포구 체험을 한자리에서 보는 행사</p>
+      </div>
+    </a>
+
+    <a class="f-card" href="#">
+      <div class="f-card__visual v3"></div>
+      <div class="f-card__body">
+        <div class="f-card__meta"><span class="small-pill">강원</span><span class="small-pill">10월</span></div>
+        <h3>동해안 가을 행사</h3>
+        <p>바다와 지역 먹거리를 함께 즐기는 해안 행사</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section class="all-months">
+  <details class="month-group" open>
+    <summary><div class="month-title"><strong>10월</strong><span>25개 · 이번 달</span></div></summary>
+    <div class="month-list">
+      <a class="month-link" href="#"><b>축제명 예시 1</b><span>전남 · 항구 일원 · 가을 바다 체험</span></a>
+      <a class="month-link" href="#"><b>축제명 예시 2</b><span>경남 · 해변 일원 · 먹거리와 공연</span></a>
+      <a class="month-link" href="#"><b>축제명 예시 3</b><span>강원 · 포구 일원 · 수산물 행사</span></a>
+      <a class="month-link" href="#"><b>축제명 예시 4</b><span>제주 · 해안 일원 · 지역 문화 체험</span></a>
+      <a class="month-link" href="#"><b>축제명 예시 5</b><span>경북 · 항구 일원 · 가을 공연</span></a>
+      <a class="month-link" href="#"><b>나머지 실제 축제...</b><span>generator가 25개 전체 출력</span></a>
+    </div>
+  </details>
+
+  <details class="month-group">
+    <summary><div class="month-title"><strong>11월</strong><span>13개</span></div></summary>
+    <div class="month-list"></div>
+  </details>
+
+  <details class="month-group">
+    <summary><div class="month-title"><strong>12월</strong><span>8개</span></div></summary>
+    <div class="month-list"></div>
+  </details>
+</section>
+
+</main>
+</body>
+</html>

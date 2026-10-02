@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>바다가자 /tide/ 2주 상세 펼침 시안</title>
+<style>
+:root{
+  --brand:#2F5D57;--orange:#C07B22;--cream:#FAF6EE;--card:#fff;
+  --line:#E5DCCB;--ink:#201A16;--muted:#6B7680;
+  --green-soft:#E3EFE9;--orange-soft:#FBEFDC;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif}
+button,a{font:inherit}
+.wrap{width:min(1120px,calc(100% - 32px));margin:auto;padding:24px 0 48px}
+.selector{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(310px,.75fr);gap:14px}
+.map{
+  min-height:480px;border:1px solid var(--line);border-radius:20px;
+  background:
+    radial-gradient(circle at 50% 42%,rgba(255,255,255,.7),transparent 22%),
+    linear-gradient(135deg,#93d0dd 0 42%,#e5ead4 42% 58%,#d9ccb1 58%);
+  position:relative;overflow:hidden
+}
+.fake-pin{
+  position:absolute;left:54%;top:52%;transform:translate(-50%,-50%);
+  border:2px solid #fff;background:var(--brand);color:#fff;border-radius:13px;
+  padding:7px 9px;font-size:11px;font-weight:900;box-shadow:0 3px 12px rgba(0,0,0,.18)
+}
+.fake-pin small{display:block;font-size:9px;margin-top:3px;opacity:.9}
+.selected{border:1px solid var(--line);border-radius:20px;background:#fff;overflow:hidden;display:flex;flex-direction:column}
+.photo{height:210px;background:linear-gradient(160deg,#7ab1c4,#de895e);position:relative}
+.photo:after{content:"부안";position:absolute;left:16px;bottom:16px;color:#fff;font-size:28px;font-weight:900}
+.body{padding:15px;display:flex;flex-direction:column;gap:10px;flex:1}
+.station{font-size:11px;color:var(--muted)}
+.today{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.t{padding:10px;border-radius:10px;font-size:12px;font-weight:900}
+.high{background:var(--orange-soft);color:#B8761C}
+.low{background:var(--green-soft);color:var(--brand)}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:auto}
+.btn{min-height:42px;border:1px solid var(--line);border-radius:11px;background:#fff;font-weight:900;font-size:12px}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+
+/* full-width detail below selector */
+.detail{
+  margin-top:14px;border:1px solid var(--line);border-radius:18px;background:#fff;overflow:hidden
+}
+.detail summary{
+  list-style:none;cursor:pointer;min-height:56px;padding:0 16px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;font-weight:900
+}
+.detail summary::-webkit-details-marker{display:none}
+.detail summary:after{content:"＋";font-size:21px;color:var(--brand)}
+.detail[open] summary:after{content:"−"}
+.sum-left{display:flex;align-items:center;gap:10px;min-width:0}
+.sum-left strong{font-size:15px}
+.sum-left span{font-size:11px;color:var(--muted)}
+.detail-body{border-top:1px solid var(--line);padding:14px}
+
+/* today graph: compact, not duplicate giant section */
+.today-row{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:12px;margin-bottom:14px}
+.when{
+  border:1px solid var(--line);border-radius:14px;padding:13px;background:var(--cream)
+}
+.when .eyebrow{font-size:10px;color:var(--orange);font-weight:900}
+.when h3{font-size:17px;margin:4px 0 6px}
+.when p{font-size:11px;line-height:1.55;margin:0;color:#554d46}
+.graph{
+  border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--cream)
+}
+.graph-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
+.graph-title b{font-size:13px}.graph-title span{font-size:10px;color:var(--muted)}
+svg{display:block;width:100%;height:auto}
+
+/* 14-day cards */
+.fortnight-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:4px 0 9px}
+.fortnight-head h3{font-size:18px;margin:0}
+.fortnight-head span{font-size:10px;color:var(--muted)}
+.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}
+.day{
+  min-width:0;border:1px solid var(--line);border-radius:12px;background:#fff;padding:9px
+}
+.day.today-card{border-color:var(--brand);background:#F3F8F6}
+.date{font-size:10px;color:var(--muted);font-weight:800}
+.mul{font-size:21px;font-weight:900;margin:3px 0}
+.flow{display:inline-block;border-radius:999px;background:#F3EFE7;padding:4px 6px;font-size:9px;color:var(--muted);font-weight:800}
+.evt{margin-top:7px;padding-top:6px;border-top:1px solid var(--line);font-size:9px;line-height:1.65}
+.evt b{font-size:10px}
+.more-note{margin-top:10px;font-size:10px;color:var(--muted);line-height:1.5}
+
+/* deeper zoom marker rule demo */
+.zoom-note{
+  margin-top:12px;border-radius:14px;background:#fff;border:1px dashed var(--line);
+  padding:10px 12px;color:var(--muted);font-size:11px
+}
+
+@media(max-width:760px){
+  .wrap{width:min(100% - 24px,420px);padding-top:12px}
+  .selector{grid-template-columns:1fr}
+  .map{min-height:300px}
+  .photo{height:180px}
+  .detail{margin-top:10px}
+  .detail summary{padding:0 12px;min-height:54px}
+  .sum-left{display:block}
+  .sum-left strong{display:block;font-size:14px}
+  .sum-left span{display:block;margin-top:2px}
+  .detail-body{padding:10px}
+  .today-row{grid-template-columns:1fr}
+  .days{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .day{padding:10px}
+  .day:nth-child(n+11){display:none}
+  .days.show-all .day:nth-child(n+11){display:block}
+  .more-days{
+    display:block;width:100%;margin-top:9px;min-height:42px;border-radius:11px;
+    border:1px solid var(--line);background:#fff;font-weight:900;color:var(--brand)
+  }
+}
+@media(min-width:761px){
+  .more-days{display:none}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+<section class="selector">
+  <div class="map">
+    <div class="fake-pin">부안 · 12물<small>간조 11:38</small></div>
+  </div>
+
+  <aside class="selected">
+    <div class="photo"></div>
+    <div class="body">
+      <div class="station">위도 관측소 기준</div>
+      <div class="today">
+        <div class="t high">만조 04:54</div><div class="t low">간조 11:38</div>
+        <div class="t high">만조 17:26</div><div class="t low">간조 23:52</div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" data-open-tide>2주 물때 보기</button>
+        <button class="btn">권역 안내 보기</button>
+      </div>
+    </div>
+  </aside>
+</section>
+
+<details class="detail" id="tide-detail">
+  <summary>
+    <div class="sum-left">
+      <strong>부안 2주 물때</strong>
+      <span>오늘 그래프 · 14일 간조·만조 · 언제 갈까</span>
+    </div>
+  </summary>
+
+  <div class="detail-body">
+    <div class="today-row">
+      <section class="when">
+        <div class="eyebrow">이번 주 언제 갈까</div>
+        <h3>물이 많이 빠지는 날을 먼저 보세요</h3>
+        <p>해루질은 간조 전후를 먼저 보고, 낚시는 물 흐름과 대상어종을 함께 확인하세요. 이 판단 문구는 기존 계산값을 그대로 사용합니다.</p>
+      </section>
+
+      <section class="graph">
+        <div class="graph-title"><b>오늘 시간별 물높이</b><span>위도 관측소 기준</span></div>
+        <svg viewBox="0 0 520 130" aria-label="오늘 물높이 그래프">
+          <defs>
+            <linearGradient id="fill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#7CB4AD" stop-opacity=".42"/>
+              <stop offset="1" stop-color="#7CB4AD" stop-opacity=".04"/>
+            </linearGradient>
+          </defs>
+          <path d="M10,98 C75,20 130,20 190,98 S310,20 370,98 S470,40 510,80 L510,115 L10,115 Z" fill="url(#fill)"/>
+          <path d="M10,98 C75,20 130,20 190,98 S310,20 370,98 S470,40 510,80" fill="none" stroke="#2F5D57" stroke-width="3"/>
+          <circle cx="94" cy="38" r="5" fill="#C07B22"/><circle cx="190" cy="98" r="5" fill="#2F5D57"/>
+          <circle cx="310" cy="38" r="5" fill="#C07B22"/><circle cx="370" cy="98" r="5" fill="#2F5D57"/>
+          <text x="10" y="127" font-size="10" fill="#6B7680">0시</text>
+          <text x="250" y="127" font-size="10" fill="#6B7680">12시</text>
+          <text x="492" y="127" font-size="10" fill="#6B7680">24시</text>
+        </svg>
+      </section>
+    </div>
+
+    <div class="fortnight-head">
+      <h3>14일 물때표</h3>
+      <span>오늘부터 14일 · 서버 자료 그대로</span>
+    </div>
+
+    <div class="days" id="days">
+      <article class="day today-card"><div class="date">10/2 금 · 오늘</div><div class="mul">12물</div><span class="flow">중간</span><div class="evt"><b>만 04:54</b><br>간 11:38<br>만 17:26<br>간 23:52</div></article>
+      <article class="day"><div class="date">10/3 토</div><div class="mul">13물</div><span class="flow">물 적게 빠짐</span><div class="evt">만 05:40<br>간 12:20<br>만 18:12<br>간 00:36</div></article>
+      <article class="day"><div class="date">10/4 일</div><div class="mul">14물</div><span class="flow">물 적게 빠짐</span><div class="evt">간 01:14<br>만 06:30<br>간 13:02<br>만 19:05</div></article>
+      <article class="day"><div class="date">10/5 월</div><div class="mul">15물</div><span class="flow">물 적게 빠짐</span><div class="evt">간 01:58<br>만 07:20<br>간 13:48<br>만 20:00</div></article>
+      <article class="day"><div class="date">10/6 화</div><div class="mul">1물</div><span class="flow">중간</span><div class="evt">간 02:42<br>만 08:12<br>간 14:33<br>만 20:51</div></article>
+      <article class="day"><div class="date">10/7 수</div><div class="mul">2물</div><span class="flow">중간</span><div class="evt">간 03:25<br>만 09:04<br>간 15:18<br>만 21:42</div></article>
+      <article class="day"><div class="date">10/8 목</div><div class="mul">3물</div><span class="flow">중간</span><div class="evt">간 04:08<br>만 09:56<br>간 16:04<br>만 22:31</div></article>
+      <article class="day"><div class="date">10/9 금</div><div class="mul">4물</div><span class="flow">물 많이 빠짐</span><div class="evt">간 04:50<br>만 10:48<br>간 16:51<br>만 23:20</div></article>
+      <article class="day"><div class="date">10/10 토</div><div class="mul">5물</div><span class="flow">물 많이 빠짐</span><div class="evt">간 05:32<br>만 11:40<br>간 17:38<br>만 00:08</div></article>
+      <article class="day"><div class="date">10/11 일</div><div class="mul">6물</div><span class="flow">물 많이 빠짐</span><div class="evt">간 06:14<br>만 12:32<br>간 18:25<br>만 00:56</div></article>
+      <article class="day"><div class="date">10/12 월</div><div class="mul">7물</div><span class="flow">사리</span><div class="evt">간 06:56<br>만 13:24<br>간 19:12<br>만 01:44</div></article>
+      <article class="day"><div class="date">10/13 화</div><div class="mul">8물</div><span class="flow">사리</span><div class="evt">간 07:38<br>만 14:16<br>간 19:59<br>만 02:32</div></article>
+      <article class="day"><div class="date">10/14 수</div><div class="mul">9물</div><span class="flow">사리</span><div class="evt">간 08:20<br>만 15:08<br>간 20:46<br>만 03:20</div></article>
+      <article class="day"><div class="date">10/15 목</div><div class="mul">10물</div><span class="flow">사리</span><div class="evt">간 09:02<br>만 16:00<br>간 21:33<br>만 04:08</div></article>
+    </div>
+
+    <button class="more-days" id="moreDays">나머지 4일 더 보기</button>
+    <p class="more-note">실제 시각과 조위는 기존 API 값을 그대로 사용하세요. 이 파일의 숫자는 배치 확인용 시안 값입니다.</p>
+  </div>
+</details>
+
+<p class="zoom-note">
+  지도 확대 단계 제안: 멀리서 점 → 이름 → 이름+다음 간조 → 가장 가까운 단계에서는
+  <b>권역명 · N물 + 다음 간조</b>까지만 표시. 만조까지 핀에 넣지 않습니다.
+</p>
+
+<script>
+const detail = document.getElementById('tide-detail');
+document.querySelector('[data-open-tide]').addEventListener('click',()=>{
+  detail.open = true;
+  detail.scrollIntoView({behavior:'smooth',block:'start'});
+});
+document.getElementById('moreDays').addEventListener('click',e=>{
+  document.getElementById('days').classList.toggle('show-all');
+  e.currentTarget.textContent =
+    document.getElementById('days').classList.contains('show-all')
+      ? '접기' : '나머지 4일 더 보기';
+});
+</script>
+</main>
+</body>
+</html>

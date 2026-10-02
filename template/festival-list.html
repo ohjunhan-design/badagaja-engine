@@ -1,31 +1,73 @@
 {{#_head.html}}
+<!-- ★ `data-guide` 를 달지 않습니다 — 그것은 **어종 쪽 표식**입니다.
+     (check_rules·check_design 이 그것으로 어종 쪽을 가립니다) -->
 <body>
 {{#_header.html}}
 
-<section class="section hero section--soft"><div class="wrap">
-  <div class="badge badge--orange"><svg class="bi" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 21V4"/><path d="M5.5 5.2c3.6-2 7.2 2 10.8 0v7.6c-3.6 2-7.2-2-10.8 0Z"/></svg> {{한줄}}</div>
-  <h1 class="serif">{{큰제목}}<br><span class="accent">{{큰제목뒷줄}}</span></h1>
-  <p class="hero-lead">{{소개글}}</p>
+<!-- ★ **축제 첫 쪽을 시각형으로 바꿨습니다** (2026-10-02 지피티 시안 v1)
+     `docs/festival-index-visual-v1.html` 을 그대로 옮겼습니다.
 
-  {{{대표사진자리}}}
+     ★ 왜 바꿨나 — 전에는 큰 제목 · 막대 그림 · 단추 두 줄 · 글자
+       카드 197개였습니다. 바다 사이트인데 **첫 화면에 바다가
+       한 장도 없었습니다**(주인 규칙 6-1).
+
+     ★ 무엇을 바꿨나
+       ① 머리를 **큰 바다 사진**으로 — 제목·소개·셈을 사진 안에
+       ② 12달을 **막대 단추**로 — 그 달 축제가 몇인지 길이로 보입니다
+       ③ 이번 달 축제 가운데 **사진 카드 셋**을 먼저 보입니다
+       ④ 197개 링크는 **하나도 안 없앴습니다** — 달 묶음
+          `<details>` 안에 그대로 있습니다 (지피티 지시)
+
+     ★ 자바스크립트가 못 돌아도 197개가 다 보입니다 (계약-23).
+       달 묶음은 **펼친 채로** 만들고, 자바스크립트가 이번 달만
+       남기고 접습니다. 거꾸로 하면 자바스크립트가 죽을 때
+       축제가 한 줄도 안 보입니다. -->
+<section class="section fest-top"><div class="wrap">
+  <article class="fest-hero">
+    {{{대표사진자리}}}
+    <div class="fest-hero__copy">
+      <p class="fest-kicker">{{한줄}}</p>
+      <h1>{{큰제목}}</h1>
+      <p class="fest-lead">{{소개글}}</p>
+      <div class="fest-hero__chips">{{{머리칩}}}</div>
+    </div>
+  </article>
+
+  <!-- 달 고르기 — 막대 길이가 그 달 축제 수입니다 -->
+  <nav class="month-strip" id="monthFilter" aria-label="달 고르기">{{{달단추}}}</nav>
+
+  <!-- 지역 고르기 — 가로로 미는 칩 한 줄 -->
+  <div class="fest-chips" id="groupFilter" role="group" aria-label="지역 고르기">{{{묶음단추}}}</div>
 </div></section>
 
 <section class="section" id="list"><div class="wrap">
-  <div class="section-head">
-    <p class="kicker">어디서 열리나</p>
-    <h2 class="serif">바다 따라 고르기</h2>
-  </div>
-  <div class="filter" id="groupFilter" role="group" aria-label="묶음 고르기">{{{묶음단추}}}</div>
+  <header class="fest-head">
+    <div>
+      <p class="kicker">지금 보기 좋은 축제</p>
+      <h2 class="serif" id="festHeadTitle">{{고른달제목}}</h2>
+    </div>
+    <p class="fest-head__note" id="festCount">{{셈안내}}</p>
+  </header>
 
-  <div class="section-head" style="margin-top:26px">
-    <p class="kicker">언제 열리나</p>
-    <h2 class="serif">달 따라 고르기</h2>
-  </div>
-  <div class="filter" id="monthFilter" role="group" aria-label="달 고르기">{{{달단추}}}</div>
+  <!-- 사진 카드 — 달마다 셋씩 미리 만들어 두고 고른 달만 보입니다 -->
+  <div class="fest-feature" id="festFeature">{{{사진카드}}}</div>
+</div></section>
 
-  <p class="notice" id="festCount">{{셈안내}}</p>
+<!-- ★ **달 목록은 자기 구역입니다** (2026-10-02)
+     사진 카드는 「먼저 볼 것」이고 이 아래는 「모두 볼 것」입니다.
+     성격이 다르니 구역을 가릅니다. check_design 이 구역이
+     12개에서 2개로 줄었다고 알려 준 것을 보고 짜임을 고쳤습니다. -->
+<section class="section section--soft" id="all"><div class="wrap">
+  <header class="fest-head">
+    <div>
+      <p class="kicker">달마다 모두 보기</p>
+      <h2 class="serif">{{한줄}}</h2>
+    </div>
+  </header>
   <div id="festList">{{{달별목록}}}</div>
   <p class="empty" id="festEmpty" hidden>고른 조건에 맞는 축제가 없습니다.</p>
+
+  <p class="notice">{{기준일안내}}</p>
 </div></section>
 
 

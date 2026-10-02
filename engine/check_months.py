@@ -151,8 +151,20 @@ def 시계돌려보기(쪽길, 때들):
       var 눌린 = 칸.querySelector('button[aria-pressed="true"]');
       답.달 = 눌린 ? 눌린.getAttribute('data-month') : null;
     }
+    /* ★ **축제 카드만 셉니다** (2026-10-02)
+         축제 쪽을 `<details>` 묶음으로 바꾸면서, 접힌 달의
+         **묶음 머리**(`<details data-month="N">`)까지 「다른 달
+         축제가 보인다」로 세고 있었습니다. 묶음 머리는 축제가
+         아니라 **길잡이**입니다 — 「나머지 달은 접어서 남긴다」가
+         본디 뜻한 짜임입니다.
+         느슨하게 만드는 것이 아닙니다. 접힌 묶음 **안**의 축제가
+         보이면 그대로 잡힙니다 (바로 앞서 그것으로 잡았습니다 —
+         `.month-list{display:grid}` 가 UA 의 숨김을 덮어 링크
+         172개가 레이아웃에 살아 있었습니다). */
     var 카드 = [].slice.call(document.querySelectorAll('[data-month]'));
-    카드 = 카드.filter(function(c){ return c.tagName !== 'BUTTON'; });
+    카드 = 카드.filter(function(c){
+      return c.tagName !== 'BUTTON' && c.tagName !== 'DETAILS';
+    });
     답.온카드 = 카드.length;
     카드.forEach(function(c){
       if (!c.hidden && c.offsetParent !== null) {

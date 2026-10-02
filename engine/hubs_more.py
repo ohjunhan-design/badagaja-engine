@@ -131,8 +131,14 @@ def 물때지도(d, 쪽길, 언어='ko'):
             '<div class="tp-events" hidden></div>'
             '<p class="tp-empty">오늘 간조·만조 시각을 불러오는 중입니다.'
             '<br>「이 권역 물때 보기」에서 시간별 물높이까지 봅니다.</p>'
+            # ★ **넘어가지 않고 아래에서 펼칩니다** (2026-10-02 주인 지시)
+            #   「링크로 넘어가지 않고 추가적으로 하단에 펼침으로
+            #     2주 물때정보 및 그래프등 기존 자료들이」
+            #   자바스크립트가 죽으면 href 로 그 권역 쪽에 갑니다 —
+            #   눌러도 아무 일이 안 생기는 단추를 두지 않습니다 (계약-23).
             '<div class="tp-acts">'
-            '<a class="tp-btn tp-btn--on tp-go" href="%s">이 권역 물때 보기</a>'
+            '<a class="tp-btn tp-btn--on tp-open" href="%s" '
+            'data-open-tide>2주 물때 보기</a>'
             '<a class="tp-btn tp-guide" href="%s">권역 안내 보기</a>'
             '</div></div></article>'
             % (esc(첫['사진']), esc(첫['이름']), esc(첫['이름']),
@@ -141,7 +147,10 @@ def 물때지도(d, 쪽길, 언어='ko'):
                esc(첫['물때주소']), esc(첫['주소'])))
 
     실을것 = ''
-    for 자리, 파일 in (('assets/js/map-provider.js', 'map-provider.js'),
+    # ★ tide.js 가 **먼저** 와야 합니다 — 지도가 그 입구를 부릅니다
+    for 자리, 파일 in (('assets/js/tide.js', 'tide.js'),
+                       ('assets/js/tide-graph.js', 'tide-graph.js'),
+                       ('assets/js/map-provider.js', 'map-provider.js'),
                        ('assets/js/tide-map.js', 'tide-map.js')):
         길 = os.path.join(ASSETS, 'js', 파일)
         if os.path.isfile(길):
@@ -167,10 +176,49 @@ def 물때지도(d, 쪽길, 언어='ko'):
           '<script type="application/json" id="물때지도자료">%s</script>%s'
           % (''.join(칩), 카드,
              json.dumps(자료, ensure_ascii=False, separators=(',', ':')),
-             실을것))
+             실을것)) + _이주상세(첫)
     # ★ 「곳」이 아니라 **「권역」** 입니다 (2026-10-02 지피티)
     #   「사이트 전체에서 권역을 쓰고 있으니 의미가 더 정확합니다」
     return 칸('지도에서 고르기', '%d권역' % len(것들), 속, 흰=True)
+
+
+def _이주상세(첫):
+    """**2주 상세 — 전폭으로 지도 아래** (2026-10-02 지피티 시안 v1)
+
+    ★ 지피티가 정한 것 그대로
+      · 자리 = 지도+선택카드 **전체 아래 전폭** (PC·모바일 같음)
+      · 기본 **접힘**. 핀 클릭은 선택만 바꿉니다
+      · 「2주 물때 보기」를 눌러야 펼칩니다
+      · 펼친 채로 다른 핀을 고르면 **내용만** 갱신, 열린 상태 유지
+      · 그래프는 **오늘 하루 1개**
+      · 14일 카드 = PC 7열×2행 · 모바일 10일 + 「나머지 4일 더 보기」
+      · /tide/?region=buan#tide-detail 로 들어오면 그 권역 + 자동 펼침
+
+    ★ 여기서는 **자리만** 만듭니다. 14일 달력·그래프·「언제 갈까」는
+      `assets/js/tide.js` 가 그립니다. 새로 짜면 달력이 두 벌이 되어
+      계약-01(한 곳에서)을 어기고, 고칠 때 한 곳을 잊습니다.
+    """
+    return ('<details class="tide-detail" id="tide-detail">'
+            '<summary><span class="td-left">'
+            '<strong id="tdName">%s 2주 물때</strong>'
+            '<span>오늘 그래프 · 14일 간조·만조 · 언제 갈까</span>'
+            '</span></summary>'
+            '<div class="td-body">'
+            # ★ **오늘 하루 그래프 하나** (지피티 결정)
+            #   「14일 전체를 하나의 곡선으로 만들면 정보가 너무 많고
+            #     의미도 약합니다. 오늘 시간별 물높이 그래프 1개만」
+            #   `tide-graph.js` 가 이 칸을 채웁니다. 권역 쪽과 **같은
+            #   그림**입니다 — 두 벌로 그리지 않습니다 (계약-01).
+            '<div class="td-graph">'
+            '<div class="td-graph-head"><b>오늘 시간별 물높이</b>'
+            '<span id="tdStation">%s</span></div>'
+            '<div class="tide-graph" id="tideGraph"></div></div>'
+            '<div class="tide-strip" id="tideStrip" data-region="%s" '
+            'data-station="%s" data-days="14" data-view="full"></div>'
+            '</div></details>'
+            % (esc(첫['이름']),
+               esc((첫['관측소'] + ' 관측소 기준') if 첫['관측소'] else ''),
+               esc(첫['id']), esc(첫['관측소'] or '')))
 
 
 def 물때쪽(d, 언어='ko'):
