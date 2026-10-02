@@ -61,6 +61,32 @@ DATA = os.environ.get('BADAGAJA_DATA', os.path.join(ROOT, 'data'))
 #   권역 57곳 가운데 15곳만 그 자리에 파일이 있었고, 나머지 52곳은
 #   img/coast/{권역}-hero.jpg 였습니다. 그래서 공유 미리보기가
 #   52갈래나 깨져 있었습니다. 이제 자료에서만 읽습니다.
+_사진지문기억 = {}
+
+
+def _사진지문(파일):
+    """사진 **알맹이**의 지문. 이름이 달라도 같은 사진을 알아봅니다.
+
+    2026-10-02 — 히어로와 명소 카드가 같은 사진을 쓰는 곳이 네 권역
+    있었습니다. 이름은 달랐습니다(`changwon-hero` 와 `changwon-udo`).
+    이름만 보면 영영 못 찾습니다.
+    """
+    if not 파일:
+        return None
+    if 파일 in _사진지문기억:
+        return _사진지문기억[파일]
+    import hashlib
+    길 = 파일 if os.path.isabs(파일) else os.path.join(나갈곳, 파일)
+    지문 = None
+    try:
+        with open(길, 'rb') as f:
+            지문 = hashlib.sha1(f.read()).hexdigest()
+    except OSError:
+        pass
+    _사진지문기억[파일] = 지문
+    return 지문
+
+
 def 대표사진(d, 권역=None, 묶음=None):
     """그 쪽의 대표 사진 한 장. 없으면 None — 지어내지 않습니다."""
     if 권역:
@@ -1937,6 +1963,25 @@ def 권역쪽(d, 권역, 언어='ko'):
 
     _쓴사진 = set()
 
+    # ★ **히어로와 같은 사진은 명소 카드에 안 씁니다** (2026-10-02 바깥 검수)
+    #
+    #   바깥 검수가 SHA 로 전수 비교해 잡았습니다 —
+    #       changwon-hero.jpg = changwon-udo.jpg
+    #       gangneung-hero.jpg = gangneung-tour-128757.jpg
+    #       sokcho-hero.jpg = sokcho-yeonggeumjeong.jpg
+    #       seogwipo-hero.jpg = seogwipo-oedolgae.jpg
+    #   「파일 중복 자체가 아니라 **한 페이지에서 같은 사진이 Hero 와
+    #     관광카드에 다시 나오는 경우**가 문제입니다. 그러면 사용자는
+    #     「사진이 많은 사이트」가 아니라 **같은 사진을 돌려 쓰는
+    #     사이트**처럼 느낍니다」
+    #
+    #   **이름이 아니라 알맹이**를 봅니다 — 이름이 달라도 같은 사진입니다
+    #   ([[photo-check-by-distance]] 「이름은 못 믿습니다」).
+    #   겹치면 그 명소는 **사진 없이 글 카드로** 나갑니다. 같은 것을
+    #   두 번 보여 주느니 한 번만 보여 주는 편이 낫습니다.
+    _히어로 = 대표사진(d, 권역=권역) or {}
+    _히어로지문 = _사진지문(_히어로.get('파일'))
+
     def _명소그림(이름):
         사 = _명소사진.get(이름)
         if not 사 and 이름:
@@ -1951,6 +1996,18 @@ def 권역쪽(d, 권역, 언어='ko'):
                     사 = 후보
                     break
         if not 사:
+            return ''
+        if _히어로지문 and _사진지문(사.get('파일')) == _히어로지문:
+            # 히어로와 **같은 사진**입니다. 쪽 맨 위에 이미 크게
+            # 있으니 여기서 또 보여 주지 않습니다.
+            #
+            #   ★ **「썼다」고 표시하고 비웁니다.** 그냥 비우기만 하면
+            #     아래 「남는 사진」 칸이 「아직 안 쓴 사진」으로 보고
+            #     **거기에 또 붙입니다.** 처음에 그렇게 해서 고친 뒤에도
+            #     네 쪽이 그대로였습니다 — 재 보지 않았으면
+            #     「고쳤습니다」라고 할 뻔했습니다
+            #     ([[verify-each-fix]]).
+            _쓴사진.add(사['파일'])
             return ''
         _쓴사진.add(사['파일'])
         찍은이 = 사.get('촬영자') or ''
