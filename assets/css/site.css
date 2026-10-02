@@ -1572,6 +1572,18 @@ html[data-pcview] .pcview{display:block}
 /* 상세는 손님이 **직접 펼친** 곳이라 14일을 다 보입니다 */
 .td-body .tide-day--more{display:block}
 
+/* ★ **PC 에서는 더보기 단추를 없앱니다** (2026-10-02 바깥 검수)
+     「PC: 14일 전부 보임 / 더보기 버튼 없음
+       모바일: 첫 7일 / 다음 7일 보기
+       모바일 펼침 후: 14일 전부 / 둘째 주 접기
+       이렇게 역할을 완전히 분리하면 헷갈리지 않습니다」
+     PC 는 7열×2행으로 14장이 이미 다 보입니다. 그런데 그 아래
+     단추가 남아 있었습니다 — 눌러도 바뀔 것이 없는 단추입니다.
+     자료와 자바스크립트는 그대로 두고 **보이는 것만** 가릅니다. */
+@media (min-width:761px){
+  .td-body .td-more{display:none}
+}
+
 /* 「2주 물때 보기」는 눈에 띄게 */
 .tp-btn.tp-open{font-weight:700}
 
@@ -1613,6 +1625,8 @@ html[data-pcview] .pcview{display:block}
   .td-body .tide-days{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
   .td-body .tide-days .tide-day:nth-child(n+8){display:none}
   .td-body .tide-days--all .tide-day:nth-child(n+8){display:block}
+  /* 휴대폰에서는 단추가 제 몫을 합니다 — 7일 → 14일 */
+  .td-body .td-more{display:block}
   .td-graph{padding:10px;margin-bottom:10px}
 }
 
