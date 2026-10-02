@@ -35,7 +35,32 @@ from engine import url
 ESC = {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}
 
 
+def 말(값, 언어='ko'):
+    """그 언어의 값. 없으면 한국어로 떨어집니다.
+
+    자료의 이름·한줄은 `{'ko': …, 'zh': …}` 꼴입니다. **꺼내 쓰지 않고
+    그대로 넣으면 사전이 글자로 나갑니다** — 2026-10-02 에 두 쪽
+    32군데가 그랬습니다.
+    """
+    if not isinstance(값, dict):
+        return 값 or ''
+    return 값.get(언어) or 값.get('ko') or ''
+
+
 def esc(s):
+    """화면에 낼 글자로 바꿉니다.
+
+    ★ **사전·목록은 받지 않습니다** (2026-10-02 바깥 검수 13차)
+      전에는 `str(s)` 로 무엇이든 받았습니다. 그래서 자료의
+      `{'ko': '백합', 'zh': None}` 이 **그 모양 그대로** 손님에게
+      나갔습니다. 오류도 안 났습니다 — 조용히 샜습니다.
+      이제는 그 자리에서 **죽습니다.** 부르는 쪽에서 `말()` 로
+      꺼내 넣으라는 뜻입니다.
+    """
+    if isinstance(s, (dict, list, tuple, set)):
+        raise TypeError(
+            'esc() 에 %s 가 들어왔습니다 — 말(값, 언어) 로 꺼내 주십시오: %r'
+            % (type(s).__name__, s))
     s = '' if s is None else str(s)
     for a, b in ESC.items():
         s = s.replace(a, b)

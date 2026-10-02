@@ -25,7 +25,7 @@ import os
 from engine import art
 from engine import url
 from engine import template
-from engine.hubs import esc, 칸, _바탕값
+from engine.hubs import esc, 말, 칸, _바탕값
 
 여기 = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -81,16 +81,21 @@ def 기초쪽(d, 갈래, 언어='ko'):
 
     # ── 다음에 갈 곳 — **여기서 끝나면 안 됩니다**
     #   기초를 봤으면 「그래서 어디로 가나」가 바로 있어야 합니다.
+    # ★ **이름은 사전입니다 — 꺼내서 넣습니다** (2026-10-02 바깥 검수)
+    #   전에는 `esc(x.get('이름'))` 이었습니다. 자료의 이름은
+    #   `{'ko': '백합', 'zh': None}` 꼴이라 **그 모양 그대로**
+    #   손님 화면에 나갔습니다. 두 쪽 32군데였습니다.
     어종들 = d.안내(갈래) or []
     고를것 = []
     for x in 어종들[:8]:
+        이 = 말(x.get('이름'), 언어) or x['id']
         고를것.append(
             '<a class="card card--go" href="%s">'
             '<h3 class="card-name">%s</h3>'
             '<p class="card-body">%s</p></a>'
             % (esc(url.rel(쪽길, url.guide(x['id'], 갈래, 언어))),
-               esc(x.get('이름') or x['id']),
-               esc(x.get('한줄') or ('%s 잡는 법' % (x.get('이름') or '')))))
+               esc(이),
+               esc(말(x.get('한줄'), 언어) or ('%s 잡는 법' % 이))))
     if 고를것:
         칸들.append(칸(
             '무엇을 노리시나요', '다음 차례',
