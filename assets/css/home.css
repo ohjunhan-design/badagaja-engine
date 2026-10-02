@@ -267,7 +267,15 @@ body.home-gate .navlinks{margin-left:auto;margin-right:auto}
 .g-today .tide-graph .tg-note,
 .g-today .tide-graph .tg-foot{display:none}
 .g-today .tide-graph .tg-plot{margin:0;background:transparent;border:0;padding:0}
-.g-today .tide-graph .tg-when{margin:0 0 8px}
+/* ★ **간·만조 시각 줄을 뺍니다** (2026-10-02 주인 지시)
+   「이거 글씨가 너무 안어울려 시간을 빼버려」
+
+   첫 쪽 물때 칸은 **좁습니다.** 「만조00:05 간조06:29 만조13:12
+   간조19:38」이 한 줄에 억지로 들어가 글자가 서로 붙고 알약 꼴도
+   무너졌습니다. 이 자리에서 손님이 알고 싶은 것은 「오늘 12물 ·
+   물 많이 빠짐」이고, 그것은 바로 위에 큼직하게 있습니다.
+   자세한 시각은 「전국 물때표 보기」와 권역 쪽에서 봅니다. */
+.g-today .tide-graph .tg-when{display:none}
 /* ★ 글자 크기는 **여기서 손대지 않습니다** (2026-10-02)
    전에는 칸 폭에 맞춰 줄어든 글자를 차림표에서 15~23px 로 키웠는데,
    그러면 점·선과 비례가 깨졌습니다. 이제 `tide-graph.js` 가

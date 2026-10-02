@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>바다가자 전국 물때 지도 선택 UI v1</title>
+<style>
+:root{
+  --brand:#2F5D57;
+  --orange:#C07B22;
+  --cream:#FAF6EE;
+  --card:#FFFFFF;
+  --line:#E5DCCB;
+  --ink:#201A16;
+  --muted:#6B7680;
+  --soft:#F3EFE7;
+  --green-soft:#E3EFE9;
+  --orange-soft:#FBEFDC;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--cream);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif}
+a{text-decoration:none;color:inherit}
+button{font:inherit}
+.wrap{width:min(1120px,calc(100% - 32px));margin:auto;padding:24px 0 40px}
+
+/* ----- compact hero ----- */
+.page-head{
+  display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:14px
+}
+.page-head .eyebrow{color:var(--orange);font-size:12px;font-weight:900;margin-bottom:5px}
+.page-head h1{margin:0;font-size:38px;line-height:1.08;letter-spacing:-.03em}
+.page-head p{margin:8px 0 0;color:#5f564e;font-size:14px}
+.page-head .count{font-size:12px;color:var(--muted);white-space:nowrap}
+
+/* ----- region filter outside map ----- */
+.region-filter{
+  display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding:2px 0 10px
+}
+.region-filter::-webkit-scrollbar{display:none}
+.region-filter button{
+  flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:999px;
+  padding:8px 12px;font-size:12px;font-weight:900;color:var(--ink);cursor:pointer
+}
+.region-filter button.active{background:var(--brand);border-color:var(--brand);color:#fff}
+
+/* ----- main explorer ----- */
+.explorer{
+  display:grid;grid-template-columns:minmax(0,1.25fr) minmax(320px,.75fr);gap:14px;align-items:stretch
+}
+.map-shell{
+  position:relative;min-height:520px;border:1px solid var(--line);border-radius:20px;overflow:hidden;background:#d9ecef
+}
+/* demo background only. Replace with actual Kakao map container. */
+.demo-map{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 70% 25%,rgba(255,255,255,.55),transparent 22%),
+    linear-gradient(128deg,#8ecbd8 0 37%,#d8ead8 37% 58%,#eee1bd 58% 100%)
+}
+.demo-map:after{
+  content:"";position:absolute;inset:0;opacity:.45;
+  background:
+    linear-gradient(32deg,transparent 44%,#fff 45% 46%,transparent 47%),
+    linear-gradient(151deg,transparent 47%,#fff 48% 49%,transparent 50%)
+}
+
+/* map controls: same rule as region maps */
+.map-type{
+  position:absolute;left:12px;top:12px;z-index:20;display:flex;padding:3px;
+  background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:12px;
+  box-shadow:0 3px 12px rgba(0,0,0,.08)
+}
+.map-type button{
+  border:0;background:transparent;border-radius:9px;padding:7px 11px;
+  font-size:12px;font-weight:900;color:var(--muted);cursor:pointer
+}
+.map-type button.active{background:var(--brand);color:#fff}
+.zoom{
+  position:absolute;right:12px;top:12px;z-index:20;display:grid;overflow:hidden;
+  background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:12px;
+  box-shadow:0 3px 12px rgba(0,0,0,.08)
+}
+.zoom button{width:38px;height:38px;border:0;background:transparent;font-size:22px;cursor:pointer}
+.zoom button+button{border-top:1px solid var(--line)}
+.legend{
+  position:absolute;left:12px;bottom:12px;z-index:20;display:flex;gap:8px;
+  align-items:center;padding:7px 10px;background:rgba(255,255,255,.95);
+  border:1px solid var(--line);border-radius:999px;box-shadow:0 3px 12px rgba(0,0,0,.06)
+}
+.legend span{font-size:11px;font-weight:800;color:var(--muted)}
+.map-interaction{
+  display:none;position:absolute;left:50%;bottom:12px;transform:translateX(-50%);
+  z-index:21;border:0;border-radius:999px;padding:8px 12px;background:rgba(32,26,22,.88);
+  color:#fff;font-size:11px;font-weight:900;white-space:nowrap
+}
+
+/* demo markers represent zoom-based label states */
+.marker{
+  position:absolute;z-index:10;border:3px solid #fff;background:var(--brand);color:#fff;
+  box-shadow:0 3px 12px rgba(0,0,0,.18);cursor:pointer
+}
+.marker.dot{width:22px;height:22px;border-radius:50%;font-size:0}
+.marker.name{border-radius:999px;padding:6px 9px;font-size:11px;font-weight:900}
+.marker.tide{border-radius:13px;padding:7px 9px;font-size:11px;font-weight:900;text-align:left}
+.marker.tide small{display:block;font-size:9px;opacity:.88;margin-top:2px}
+.m1{left:29%;top:27%}.m2{left:45%;top:40%}.m3{left:59%;top:55%}.m4{left:67%;top:29%}.m5{left:38%;top:66%}
+
+/* selected region card */
+.selected{
+  min-height:520px;background:var(--card);border:1px solid var(--line);border-radius:20px;
+  overflow:hidden;display:flex;flex-direction:column
+}
+.selected-photo{
+  position:relative;height:220px;background:#ccd8dc;overflow:hidden
+}
+.selected-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.selected-photo:after{
+  content:"";position:absolute;inset:35% 0 0;background:linear-gradient(transparent,rgba(13,22,21,.82))
+}
+.selected-photo .title{
+  position:absolute;z-index:2;left:16px;right:16px;bottom:14px;color:#fff
+}
+.selected-photo h2{margin:0;font-size:27px}
+.selected-photo p{margin:4px 0 0;font-size:12px;opacity:.92}
+.selected-body{padding:15px;display:flex;flex:1;flex-direction:column}
+.today-label{color:var(--orange);font-size:11px;font-weight:900;margin-bottom:5px}
+.today-main{display:flex;align-items:baseline;gap:7px;margin-bottom:10px}
+.today-main b{font-size:31px}.today-main span{font-size:13px;color:var(--muted);font-weight:800}
+.events{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.event{border-radius:10px;padding:9px 10px;font-size:12px;font-weight:900}
+.event.high{background:var(--orange-soft);color:#B8761C}
+.event.low{background:var(--green-soft);color:var(--brand)}
+.station{margin-top:9px;font-size:11px;color:var(--muted)}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:auto;padding-top:14px}
+.btn{
+  min-height:42px;border-radius:11px;border:1px solid var(--line);display:flex;align-items:center;
+  justify-content:center;font-size:12px;font-weight:900;background:#fff
+}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+
+/* fallback / all-regions list: collapsed by default */
+.all-regions{margin-top:14px}
+.all-regions summary{
+  list-style:none;cursor:pointer;background:#fff;border:1px solid var(--line);border-radius:14px;
+  min-height:48px;padding:0 14px;display:flex;align-items:center;justify-content:space-between;
+  font-size:13px;font-weight:900
+}
+.all-regions summary::-webkit-details-marker{display:none}
+.all-regions summary:after{content:"＋";font-size:18px;color:var(--brand)}
+.all-regions[open] summary:after{content:"−"}
+.region-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:9px
+}
+.region-card{
+  background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 12px
+}
+.region-card b{display:block;font-size:13px}
+.region-card span{display:block;margin-top:3px;font-size:10px;color:var(--muted)}
+
+/* mobile */
+@media(max-width:760px){
+  .wrap{width:min(100% - 24px,420px);padding-top:12px}
+  .page-head{align-items:flex-start}
+  .page-head h1{font-size:29px}
+  .page-head p{font-size:12.5px;line-height:1.5}
+  .page-head .count{display:none}
+  .explorer{grid-template-columns:1fr}
+  .map-shell{min-height:320px}
+  .map-interaction{display:block}
+  .legend{left:auto;right:10px;bottom:10px}
+  .selected{min-height:0}
+  .selected-photo{height:190px}
+  .selected-body{padding:12px}
+  .selected-photo h2{font-size:23px}
+  .region-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+<header class="page-head">
+  <div>
+    <div class="eyebrow">전국 57권역</div>
+    <h1>지도에서 바다를 고르세요</h1>
+    <p>전국 해안을 한눈에 보고, 확대하면 권역 이름과 오늘 간조 시각까지 확인할 수 있습니다.</p>
+  </div>
+  <div class="count">57권역 · 관측소 57곳</div>
+</header>
+
+<nav class="region-filter" aria-label="지역 빠른 선택">
+  <button class="active">전국</button>
+  <button>제주</button>
+  <button>인천·경기</button>
+  <button>충남</button>
+  <button>전북</button>
+  <button>전남</button>
+  <button>경남</button>
+  <button>부산·울산</button>
+  <button>경북</button>
+  <button>강원</button>
+</nav>
+
+<section class="explorer">
+  <div class="map-shell" id="tideMap">
+    <div class="demo-map"></div>
+
+    <div class="map-type">
+      <button class="active">일반</button><button>위성</button>
+    </div>
+    <div class="zoom"><button aria-label="확대">+</button><button aria-label="축소">−</button></div>
+    <div class="legend"><span>● 권역</span><span>확대하면 오늘 간조 표시</span></div>
+    <button class="map-interaction" id="mapInteraction">지도 이동 켜기</button>
+
+    <!-- demo: zoom-level dependent labels -->
+    <button class="marker dot m1" aria-label="태안"></button>
+    <button class="marker name m2">신안</button>
+    <button class="marker tide m3">부산 동부<small>간조 11:42</small></button>
+    <button class="marker name m4">포항</button>
+    <button class="marker tide m5">제주시내<small>간조 10:58</small></button>
+  </div>
+
+  <aside class="selected" aria-live="polite">
+    <div class="selected-photo">
+      <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80" alt="">
+      <div class="title">
+        <h2>제주시내</h2>
+        <p>제주 관측소 기준 · 포인트 21곳</p>
+      </div>
+    </div>
+    <div class="selected-body">
+      <div class="today-label">오늘 물때</div>
+      <div class="today-main"><b>12물</b><span>중간</span></div>
+
+      <div class="events">
+        <div class="event high">만조 04:54</div>
+        <div class="event low">간조 11:38</div>
+        <div class="event high">만조 17:26</div>
+        <div class="event low">간조 23:52</div>
+      </div>
+
+      <div class="station">관측소: 제주 · 실제 포인트와 시각 차이가 날 수 있습니다.</div>
+
+      <div class="actions">
+        <a class="btn primary" href="/jejusi.html#tide">제주시내 물때 보기</a>
+        <a class="btn" href="/jejusi.html">권역 안내 보기</a>
+      </div>
+    </div>
+  </aside>
+</section>
+
+<details class="all-regions">
+  <summary><span>57권역 목록으로 보기</span><span style="font-size:11px;color:var(--muted);font-weight:700">지도가 안 떠도 여기서 선택</span></summary>
+  <div class="region-grid">
+    <a class="region-card" href="#"><b>제주시내</b><span>제주 관측소</span></a>
+    <a class="region-card" href="#"><b>애월·한림</b><span>제주 관측소</span></a>
+    <a class="region-card" href="#"><b>태안</b><span>태안 관측소</span></a>
+    <a class="region-card" href="#"><b>신안</b><span>송공항 관측소</span></a>
+    <a class="region-card" href="#"><b>고흥</b><span>녹동항 관측소</span></a>
+    <a class="region-card" href="#"><b>부산 동부</b><span>부산 관측소</span></a>
+    <a class="region-card" href="#"><b>포항 바다</b><span>포항 관측소</span></a>
+    <a class="region-card" href="#"><b>강릉</b><span>묵호 관측소</span></a>
+  </div>
+</details>
+
+</main>
+
+<script>
+/*
+  DESIGN PROTOTYPE ONLY.
+  Claude: reuse oldsite/js/tide-map.js behavior and existing map-provider.js.
+  Do not parse text from cards; use build JSON / page data.
+*/
+(() => {
+  // Mobile map interaction toggle: keep marker clicks active while drag/zoom is locked.
+  const interaction = document.getElementById('mapInteraction');
+  let mapMove = false;
+  interaction?.addEventListener('click', () => {
+    mapMove = !mapMove;
+    interaction.textContent = mapMove ? '지도 이동 끄기' : '지도 이동 켜기';
+    // provider.setInteractive(mapMove)
+  });
+
+  // Mock map type buttons
+  document.querySelectorAll('.map-type button').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.map-type button').forEach(x=>x.classList.remove('active'));
+      btn.classList.add('active');
+      // window.BADAGAJA_MAPTYPE or provider.setType(...)
+    });
+  });
+
+  // Region filters should zoom/focus map, not reload page.
+  document.querySelectorAll('.region-filter button').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.region-filter button').forEach(x=>x.classList.remove('active'));
+      btn.classList.add('active');
+      // filter/focus markers via data, then provider.fitBounds(...)
+    });
+  });
+
+  /*
+    Marker behavior:
+    far zoom   -> dot only
+    mid zoom   -> region name
+    near zoom  -> region name + today's next low tide time
+
+    Marker click:
+    1) update selected card in-place
+    2) DO NOT navigate immediately
+    3) CTA in selected card navigates to /{region}.html#tide
+  */
+})();
+</script>
+</body>
+</html>

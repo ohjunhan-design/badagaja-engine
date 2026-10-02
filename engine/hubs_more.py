@@ -13,8 +13,20 @@
   gear 는 「무엇을 준비하나」, rig 는 「어떻게 묶나」입니다.
   492곳의 뜻을 한꺼번에 바꾸면 404 는 없어져도 짜임이 틀어집니다.
 """
+import json
+import os
+
 from engine import art_gear, template, url
 from engine.hubs import esc, 칸, 카드들, _바탕값
+
+여기 = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ASSETS = os.path.join(여기, 'assets')
+
+
+def 판번호(길):
+    """차림표·코드가 바뀌면 주소도 바뀌게 — 브라우저가 옛것을 안 씁니다."""
+    from engine import io as _io
+    return _io.sha(길)[:8]
 
 
 def 그림카드들(것들):
@@ -48,6 +60,98 @@ def _권역이름(r, 언어):
 # ══════════════════════════════════════════════════════
 #  ② tide/ — 전국 물때
 # ══════════════════════════════════════════════════════
+def 물때지도(d, 쪽길, 언어='ko'):
+    """전국 물때 지도 — 권역을 **지도에서 고릅니다** (2026-10-02).
+
+    ★ 옛 쪽에 있던 것을 되살린 것입니다. 배율 단계도 그대로입니다 —
+      13 이상 점 · 12 이름 · 11 이하 이름 + 오늘 간조 시각.
+
+    ★ 핀을 눌러도 **바로 넘어가지 않습니다.** 오른쪽 카드만 바뀌고,
+      손님이 단추를 눌러야 갑니다. 여러 권역을 견주는 사람에게
+      바로 넘기는 것은 너무 거칩니다 (지피티 판단).
+
+    ★ 그리는 것은 `assets/js/tide-map.js`,
+      카카오 전용 코드는 `assets/js/map-provider.js` 가 가둡니다.
+    """
+    열쇠 = (d.사이트.get('지도') or {}).get('카카오키') or ''
+    if not 열쇠:
+        return ''
+
+    묶음표 = d.색인['묶음이름']
+    것들 = []
+    for r in d.권역들:
+        c = r.get('좌표') or {}
+        if not (c.get('위도') and c.get('경도')):
+            continue
+        묶이름 = 묶음표[r['묶음']]
+        사진 = d.히어로(r['id']) or {}
+        것들.append({
+            'id': r['id'],
+            '이름': _권역이름(r, 언어),
+            '위도': c['위도'], '경도': c['경도'],
+            '묶음이름': str(묶이름.get(언어) or 묶이름['ko']),
+            '관측소': (r.get('물때관측소') or {}).get('이름') or '',
+            '한줄': (r.get('한줄') or ''),
+            '사진': (url.rel(쪽길, 사진['파일']) if 사진.get('파일') else ''),
+            '주소': url.rel(쪽길, url.region(r['id'], 언어)),
+            '물때주소': url.rel(쪽길, url.region(r['id'], 언어)) + '#tide',
+        })
+    if not 것들:
+        return ''
+
+    # 광역 거르기 — 57개를 다 두지 않습니다 (지피티 지시)
+    묶음차례 = []
+    for 묶 in d.색인['묶음차례']:
+        이름 = 묶음표[묶]
+        이름 = str(이름.get(언어) or 이름['ko'])
+        if any(x['묶음이름'] == 이름 for x in 것들):
+            묶음차례.append(이름)
+    칩 = ['<nav class="tm-filter" id="tideMapFilter" aria-label="지역 고르기">',
+          '<button type="button" data-group="전국" class="on" '
+          'aria-pressed="true">전국</button>']
+    for 이름 in 묶음차례:
+        칩.append('<button type="button" data-group="%s" '
+                  'aria-pressed="false">%s</button>'
+                  % (esc(이름), esc(이름)))
+    칩.append('</nav>')
+
+    첫 = 것들[0]
+    카드 = ('<article class="tm-pick" id="tidePick">'
+            '<div class="tp-photo">'
+            '<img class="tp-img" src="%s" alt="%s 바다" '
+            'loading="lazy" width="900" height="600">'
+            '<div class="tp-title"><h3 class="tp-name">%s</h3>'
+            '<p class="tp-sub">%s</p></div></div>'
+            '<div class="tp-body">'
+            '<p class="tp-station">%s</p>'
+            '<div class="tp-acts">'
+            '<a class="tp-btn tp-btn--on tp-go" href="%s">이 권역 물때 보기</a>'
+            '<a class="tp-btn tp-guide" href="%s">권역 안내 보기</a>'
+            '</div></div></article>'
+            % (esc(첫['사진']), esc(첫['이름']), esc(첫['이름']),
+               esc(첫['한줄']),
+               esc((첫['관측소'] + ' 관측소 기준') if 첫['관측소'] else ''),
+               esc(첫['물때주소']), esc(첫['주소'])))
+
+    실을것 = ''
+    for 자리, 파일 in (('assets/js/map-provider.js', 'map-provider.js'),
+                       ('assets/js/tide-map.js', 'tide-map.js')):
+        길 = os.path.join(ASSETS, 'js', 파일)
+        if os.path.isfile(길):
+            실을것 += ('<script src="%s" defer></script>'
+                       % esc(url.asset(자리, 쪽길, 판번호(길))))
+
+    자료 = {'지도키': 열쇠, '권역들': 것들}
+    속 = ('%s<div class="tide-explorer">'
+          '<div class="tm-shell" id="tideMap" aria-label="전국 물때 지도">'
+          '</div>%s</div>'
+          '<script type="application/json" id="물때지도자료">%s</script>%s'
+          % (''.join(칩), 카드,
+             json.dumps(자료, ensure_ascii=False, separators=(',', ':')),
+             실을것))
+    return 칸('지도에서 고르기', '%d곳' % len(것들), 속, 흰=True)
+
+
 def 물때쪽(d, 언어='ko'):
     """물때표는 **권역 쪽에서만** 그립니다.
 
@@ -75,6 +179,26 @@ def 물때쪽(d, 언어='ko'):
             str(묶이름), '%d곳' % len(것들),
             '<ul class="hub-list hub-list--grid">%s</ul>' % ''.join(줄),
             흰=(len(칸들) % 2 == 0)))
+
+    # ★ **지도를 되살립니다** (2026-10-02 주인이 먼저 찾으셨습니다)
+    #   「언제 물때 페이지에 지도가 들어갈까?」
+    #
+    #   옛 사이트에는 있었습니다 — oldsite/js/tide-map.js (2026-09-23
+    #   주인 지시). 새 쪽을 짜며 빠뜨린 것입니다. 끊긴 쪽 아홉과
+    #   같은 모양입니다.
+    #
+    #   지피티 — 「옛 동작을 되살리되, 현재 지도 UI 규칙에 맞춰 다시
+    #     입힙니다. 처음부터 새로 짜지 않습니다. 57개 카드를 처음부터
+    #     전부 세로로 보여주지 않습니다」
+    #
+    #   ★ 카드 57장은 **지우지 않습니다.** 접어 두고 폅니다 (계약-23).
+    지도칸 = 물때지도(d, 쪽길, 언어)
+    if 지도칸:
+        줄접기 = ('<details class="all-regions" id="allRegions">'
+                  '<summary>57권역 목록으로 보기</summary>'
+                  '<div class="ar-in">%s</div></details>'
+                  % ''.join(칸들))
+        칸들 = [지도칸, 줄접기]
 
     값 = _바탕값(
         d, 쪽길, 언어,

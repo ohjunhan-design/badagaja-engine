@@ -473,11 +473,14 @@
     //     「내용은 그대로 유지합니다. 하지만 화면 높이는 크게
     //       줄입니다」 — 가장 많이 빠지는 날 · 주말 판단 · 세기
     //     셋 다 그대로 있습니다.
+    //   ★ **클래스를 더하지 않습니다** (2026-10-02 겪음)
+    //     `언제.classList.add('tt-advice')` 를 했더니
+    //     `class="when tt-advice"` 가 되어 `check_actionable` 이
+    //     **못 찾았습니다.** 그 검사는 `class="when"` 을 글자
+    //     그대로 봅니다. 꾸미는 일은 `.tide-today .when` 으로
+    //     합니다 — 자리로 가리면 클래스를 더할 일이 없습니다.
     var 언제 = 언제갈까(날들);
-    if (언제) {
-      언제.classList.add('tt-advice');
-      집.appendChild(언제);
-    }
+    if (언제) { 집.appendChild(언제); }
 
     칸.appendChild(집);
     요약채우기(오);
