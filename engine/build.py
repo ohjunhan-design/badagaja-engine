@@ -36,6 +36,7 @@ from engine import io, url, template, art, hubs   # noqa: E402
 from engine import hubs_more   # noqa: E402
 from engine import hubs_site   # noqa: E402
 from engine import hubs_basics   # noqa: E402
+from engine import hubs_gear     # noqa: E402
 from engine import hubs_muldae   # noqa: E402
 from engine import hubs_data   # noqa: E402
 from engine import hubs_travel   # noqa: E402
@@ -3406,8 +3407,11 @@ def 첫쪽(d, 언어='ko'):
 
     # ── 초보자 가이드 — 어종 사진을 씁니다
     가이드들 = [
+        # ★ **준비물은 따로 쪽이 있습니다** (2026-10-02 주인 지적)
+        #   「이거 두개가 같은 링크를 가르키고 있어」 — 준비물과
+        #   대상 17가지가 둘 다 catch/ 로 갔습니다. 역할이 다릅니다.
         ('bajirak', '초보자를 위한 해루질 준비물',
-         '처음 갯벌에 서는 분이 챙길 것과 조심할 것', 'catch/'),
+         '장화·장갑·망부터, 무엇을 왜 챙기는지', 'catch/gear.html'),
         ('matjogae', '해루질 대상 %d가지' % len(d.안내('해루질')),
          '바지락·맛조개·낙지까지, 대상별 시기와 잡는 법', 'catch/'),
         ('ureok', '낚시 어종 %d가지' % len(d.안내('낚시')),
@@ -5221,6 +5225,8 @@ def 쪽주소(갈, 권역, 갈래, 언어='ko'):
     #   438쪽 모두가 꼬리에서 겁니다. 자세한 까닭은 engine/hubs_site.py
     if 갈 == '기초':
         return url.basics(권역, 언어)
+    if 갈 == '준비물':
+        return 'catch/gear.html'
     if 갈 == '물때보는법':
         return url.muldae(언어)
     if 갈 == '가진자료':
@@ -5320,6 +5326,9 @@ def 만들목록(d, 만=None):
         # ★ 물때표 보는 법 (2026-10-01) — 사이트의 **전제**를 설명하는 쪽
         #   tide/ 는 「오늘 몇 시인가」, 이 쪽은 「어떻게 읽는가」입니다.
         할것.append(('물때보는법', None, None))
+        # ★ 해루질 준비물 (2026-10-02 주인 지시)
+        #   「준비물에서는 페이지를 만들더라도 준비물만 보이게」
+        할것.append(('준비물', None, None))
         # ★ 가진 자료 (2026-10-01) — **여덟 번째 끊긴 쪽**
         #   서버의 옛 파일이 「사진 264장 · 축제 190개」라는 낡은
         #   숫자를 내고 있었습니다. 이제 engine/counts.py 한 곳에서
@@ -5427,6 +5436,17 @@ def main():
         elif 갈 == '물때보는법':
             것 = hubs_muldae.물때보는법쪽(d, 언어)
             if not 것:
+                continue
+            쪽길, 글 = 것
+            수 = 0
+        elif 갈 == '준비물':
+            # ★ 해루질 준비물 — **catch/ 와 역할이 다릅니다** (2026-10-02)
+            #   주인 지적 — 첫 쪽에서 「준비물」과 「대상 17가지」가
+            #   같은 곳으로 갔습니다. 셋을 가릅니다 —
+            #     gear 무엇을 챙길까 · basics 어떻게 시작할까 ·
+            #     catch 무엇을 대상으로 하나
+            것 = hubs_gear.준비물쪽(d, 언어)
+            if not 것 or not 것[0]:
                 continue
             쪽길, 글 = 것
             수 = 0

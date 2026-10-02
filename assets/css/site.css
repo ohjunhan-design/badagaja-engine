@@ -3463,3 +3463,79 @@ details.area-group .area-list{margin-bottom:12px}
   .tm-pick .tp-empty{min-height:72px;padding:11px;font-size:11px}
   .tm-pin--dot{width:14px;height:14px}
 }
+
+/* ══════════════════════════════════════════════════════════
+   해루질 준비물 (catch/gear.html)
+   2026-10-02 지피티 · catch-gear-prototype.html
+
+   ★ 주인 지적 — 「준비물에서는 페이지를 만들더라도 준비물만
+     보이게 만들어. 제품특성 언제 사용하는지등을 설명하면 더 좋고」
+
+   ★ 제품명·가게로 연결하지 않습니다. 사진 대신 선그림입니다.
+   ══════════════════════════════════════════════════════════ */
+
+/* 머리 — 대표 준비물 여섯 */
+/* ★ 쪽 틀 **안**에 들어가야 합니다 (2026-10-02 겪음)
+   머리말 칸 밖에 놓여 좌우 여백이 없어 화면 밖으로 넘쳤습니다. */
+.hero-kit{
+  display:grid;grid-template-columns:repeat(6,1fr);gap:10px;
+  margin:16px auto 0;max-width:var(--wrap);
+  padding:0 var(--gutter);box-sizing:border-box;
+}
+.kit-mini{
+  background:#fff;border:1px solid #E5DCCB;border-radius:16px;
+  padding:14px 10px;text-align:center;color:#2F5D57;
+}
+.kit-mini svg{width:34px;height:34px;display:block;margin:0 auto 7px}
+.kit-mini b{display:block;font-size:13px;color:#201A16}
+.kit-mini span{display:block;margin-top:3px;font-size:11px;color:#8A8277}
+
+/* 상황부터 고르기 */
+.purpose-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px;
+}
+.purpose{
+  background:#fff;border:1px solid #E5DCCB;border-radius:16px;padding:14px;
+  border-left:4px solid #2F5D57;
+}
+.purpose--night{border-left-color:#3B4A6B}
+.purpose--safe{border-left-color:#C07B22}
+.purpose strong{display:block;font-size:14px;margin-bottom:5px}
+.purpose span{font-size:12.5px;color:#6B5E4F;line-height:1.55}
+
+/* 준비물 카드 */
+.gear-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:10px;
+}
+.gear-card{
+  display:flex;gap:13px;background:#fff;border:1px solid #E5DCCB;
+  border-radius:18px;padding:15px;
+}
+.gear-icon{
+  flex:0 0 52px;height:52px;border-radius:14px;background:#EDF3F1;
+  display:grid;place-items:center;color:#2F5D57;
+}
+.gear-icon svg{width:30px;height:30px}
+.gear-in{min-width:0}
+.gear-title{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.gear-title h3{margin:0;font-size:17px}
+.gear-badge{
+  border-radius:999px;padding:4px 9px;font-size:11px;font-weight:800;
+  background:#EDF3F1;color:#2F5D57;white-space:nowrap;
+}
+.gear-one{margin:7px 0 0;font-size:13px;line-height:1.6;color:#2B2116}
+.gear-specs{display:grid;gap:6px;margin-top:10px}
+.gear-spec{display:flex;gap:8px;font-size:12px;line-height:1.5}
+.gear-spec b{flex:0 0 52px;color:#8A8277;font-weight:800}
+.gear-spec span{color:#6B5E4F}
+
+@media (max-width:760px){
+  .hero-kit{grid-template-columns:repeat(3,1fr);gap:8px}
+  .kit-mini{padding:11px 8px}
+  .kit-mini svg{width:28px;height:28px}
+  .purpose-grid{grid-template-columns:1fr}
+  .gear-grid{grid-template-columns:1fr}
+  .gear-card{padding:13px;gap:11px}
+  .gear-icon{flex-basis:44px;height:44px}
+  .gear-icon svg{width:26px;height:26px}
+}
