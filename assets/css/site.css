@@ -2832,3 +2832,266 @@ details.area-group .area-list{margin-bottom:12px}
   .tide-today{padding:14px 12px}
   .tide-today .tt-main{font-size:30px}
 }
+
+/* ══════════════════════════════════════════════════════════
+   권역 쪽 — 포인트 지도 + 사진카드 (.region-points)
+   2026-10-02 지피티 · region-point-map-controls-v2.html
+
+   ★ 치수·색·자리는 받은 코드 그대로입니다. 다시 해석하지
+     않았습니다 (주인 지시 — 「디자인은 지피티」).
+
+   ★ 자리를 왜 이렇게 두나 (지피티 확정)
+     거르기를 지도 **밖**으로 빼야 네 모서리를 지도 조작에
+     내줄 수 있습니다. 모바일 360px 에서 지도 위에 올라갈 것이
+     칩 3개 + 일반/위성 + 확대축소 + 범례까지 넷이라,
+     한 줄에 몰면 서로 가립니다.
+   ══════════════════════════════════════════════════════════ */
+
+/* 거르기 — 지도 밖 */
+.rm-filter{
+  display:flex;gap:8px;align-items:center;overflow-x:auto;
+  padding:0 0 10px;scrollbar-width:none;
+}
+.rm-filter::-webkit-scrollbar{display:none}
+.rm-filter button{
+  flex:0 0 auto;border:1px solid #E5DCCB;background:#fff;color:#201A16;
+  border-radius:999px;padding:9px 13px;font:inherit;font-weight:800;
+  font-size:13px;cursor:pointer;min-height:40px;
+}
+.rm-filter button.on{background:#2F5D57;border-color:#2F5D57;color:#fff}
+
+/* 지도 + 사진카드 — PC 는 나란히, 모바일은 지도 → 카드 */
+.region-points{
+  display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);
+  gap:14px;align-items:start;
+}
+.rm-shell{
+  position:relative;min-height:410px;border:1px solid #E5DCCB;
+  border-radius:20px;overflow:hidden;background:#dcecef;
+}
+.rm-shell[hidden]{display:none}
+.rm-canvas{position:absolute;inset:0}
+
+/* ① 좌상단 — 일반 / 위성 */
+.rm-type{
+  position:absolute;left:12px;top:12px;z-index:20;
+  display:flex;padding:3px;background:rgba(255,255,255,.94);
+  border:1px solid #E5DCCB;border-radius:12px;
+  box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+.rm-type-b{
+  border:0;background:transparent;border-radius:9px;padding:7px 11px;
+  font:inherit;font-size:12px;font-weight:800;color:#8A8277;cursor:pointer;
+}
+.rm-type-b.on{background:#2F5D57;color:#fff}
+
+/* ② 우상단 — ＋ / － */
+.rm-zoom{
+  position:absolute;right:12px;top:12px;z-index:20;
+  display:grid;overflow:hidden;background:rgba(255,255,255,.96);
+  border:1px solid #E5DCCB;border-radius:12px;
+  box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+.rm-zoom-b{
+  width:38px;height:38px;border:0;background:transparent;color:#201A16;
+  font:inherit;font-size:18px;line-height:1;cursor:pointer;
+}
+.rm-zoom-b + .rm-zoom-b{border-top:1px solid #E5DCCB}
+
+/* ④ 좌하단 — 색 범례 */
+.rm-legend{
+  position:absolute;left:12px;bottom:12px;z-index:20;
+  display:flex;gap:9px;align-items:center;padding:7px 10px;
+  border:1px solid #E5DCCB;border-radius:999px;
+  background:rgba(255,255,255,.94);box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+.rm-legend span{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:800}
+.rm-dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.rm-dot--fish{background:#2F5D57}
+.rm-dot--glean{background:#C07B22}
+
+/* ③ 하단 가운데 — 지도 이동 켜기. **모바일만** 보입니다.
+   ★ 지도를 통째로 덮지 않습니다 — 잠긴 채로도 핀은 눌립니다. */
+.rm-lock{
+  display:none;position:absolute;left:50%;bottom:12px;z-index:21;
+  transform:translateX(-50%);border:0;border-radius:999px;
+  background:rgba(32,26,22,.86);color:#fff;padding:9px 13px;
+  font:inherit;font-size:11px;font-weight:800;white-space:nowrap;
+  box-shadow:0 3px 12px rgba(0,0,0,.15);cursor:pointer;
+}
+
+/* 핀 — 낚시 녹색 · 해루질 주황 (범례와 같은 색) */
+.rm-pin{
+  width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+  border:3px solid #fff;color:#fff;font:inherit;font-size:11px;font-weight:900;
+  box-shadow:0 3px 10px rgba(0,0,0,.18);cursor:pointer;padding:0;
+}
+.rm-pin--fish{background:#2F5D57}
+.rm-pin--glean{background:#C07B22}
+.rm-pin.on{outline:3px solid rgba(192,123,34,.55);outline-offset:2px}
+
+/* 사진카드 — 글자를 **사진 안**에 두어 세로를 아낍니다 */
+.rm-pick{
+  position:relative;height:410px;border-radius:20px;overflow:hidden;
+  border:1px solid #E5DCCB;background:#c8d4d8;display:block;
+}
+.rm-pick[hidden]{display:none}
+.rm-pick .rp-img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover}
+.rm-pick:after{
+  content:"";position:absolute;inset:38% 0 0;
+  background:linear-gradient(transparent,rgba(13,22,21,.84));
+}
+.rm-pick .rp-arrow{
+  position:absolute;right:12px;top:12px;z-index:3;width:34px;height:34px;
+  border-radius:50%;display:grid;place-items:center;
+  background:rgba(47,93,87,.95);color:#fff;text-decoration:none;font-size:18px;
+}
+.rm-pick .rp-copy{position:absolute;left:18px;right:18px;bottom:17px;z-index:3;color:#fff}
+.rm-pick .rp-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.rm-pick .rp-name{margin:0;font-size:25px;color:#fff;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.rm-pick .rp-desc{margin:5px 0 0;font-size:13px;opacity:.92}
+.rm-pick .rp-count{
+  flex:0 0 auto;border-radius:999px;padding:7px 10px;
+  background:rgba(255,255,255,.95);color:#201A16;font-size:12px;font-weight:900;
+}
+.rm-pick .rp-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.rm-pick .rp-acts a{
+  min-height:42px;border-radius:12px;display:flex;align-items:center;
+  justify-content:center;text-decoration:none;font-size:13px;font-weight:900;
+  border:1px solid rgba(255,255,255,.55);background:rgba(255,255,255,.94);
+  color:#201A16;
+}
+.rm-pick .rp-acts a.on{background:#2F5D57;border-color:#2F5D57;color:#fff}
+
+@media (max-width:760px){
+  .region-points{grid-template-columns:1fr}
+  .rm-shell{min-height:290px}
+  .rm-type{left:10px;top:10px}
+  .rm-zoom{right:10px;top:10px}
+  .rm-legend{left:auto;right:10px;bottom:10px}
+  .rm-lock{display:block}
+  .rm-pick{min-height:220px;height:220px}
+  .rm-pick .rp-copy{left:14px;right:14px;bottom:14px}
+  .rm-pick .rp-name{font-size:21px}
+  .rm-pick .rp-desc{font-size:12px}
+  .rm-pick .rp-count{font-size:11px;padding:6px 9px}
+  .rm-pick .rp-acts{margin-top:9px}
+  .rm-pick .rp-acts a{min-height:38px}
+}
+
+/* ══════════════════════════════════════════════════════════
+   권역 쪽 — 압축형 머리말 (.hero-c)
+   2026-10-02 지피티 · region-hero-aeo-compact-v3.html
+
+   ★ 왜 바꿨나
+     머리말이 모바일 390px 에서 **1,292px** 을 썼습니다.
+     제목·부제·소개·답묶음·단추·사진·7칸 세로 차림표가 모두
+     세로로 쌓여, 핵심인 낚시 포인트가 6.2번째 화면에서야
+     나왔습니다.
+
+   ★ 치수·색은 받은 코드 그대로입니다. 다시 해석하지 않았습니다.
+   ══════════════════════════════════════════════════════════ */
+
+.hero-c{padding:22px 0 0}
+.hero-c-top{
+  display:grid;grid-template-columns:minmax(0,1.45fr) minmax(310px,.75fr);
+  gap:14px;align-items:stretch;
+}
+
+/* 사진 — 제목·소개를 **안에** 둡니다. 따로 쌓지 않습니다 */
+.hc-photo{
+  position:relative;min-height:310px;border-radius:22px;overflow:hidden;
+  background:#ccd7dc;border:1px solid #E5DCCB;
+}
+.hc-photo figure,.hc-photo .photo{margin:0;height:100%}
+.hc-photo img{width:100%;height:100%;object-fit:cover;display:block}
+/* 사진 설명(촬영자)은 겹침 글자 뒤로 보냅니다 — 지우지 않습니다 */
+.hc-photo figcaption{
+  position:absolute;right:12px;top:10px;z-index:3;margin:0;
+  font-size:10px;color:rgba(255,255,255,.82);text-shadow:0 1px 3px rgba(0,0,0,.6);
+  max-width:46%;text-align:right;line-height:1.3;
+}
+.hc-photo:after{
+  content:"";position:absolute;inset:28% 0 0;
+  background:linear-gradient(transparent,rgba(12,22,20,.84));
+}
+.hc-copy{position:absolute;z-index:2;left:22px;right:22px;bottom:20px;color:#fff}
+.hc-eyebrow{
+  display:inline-flex;gap:7px;align-items:center;
+  font-size:12px;font-weight:800;margin-bottom:8px;
+}
+.hc-today{
+  background:rgba(255,255,255,.94);color:#2F5D57;border-radius:999px;
+  padding:6px 9px;text-decoration:none;
+}
+.hc-copy h1{
+  font-size:38px;line-height:1.05;margin:0 0 7px;letter-spacing:-.02em;color:#fff;
+}
+.hc-copy p{margin:0;max-width:620px;font-size:14px;line-height:1.55;opacity:.94}
+
+/* 숫자 2×2 + 단추 둘 */
+.hc-side{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-content:start}
+.hc-stat{
+  background:rgba(255,255,255,.96);border:1px solid #E5DCCB;border-radius:17px;
+  padding:16px;min-height:112px;display:flex;flex-direction:column;
+  justify-content:space-between;
+}
+.hc-stat b{font-size:28px;line-height:1;color:#2F5D57}
+.hc-stat span{font-size:12px;color:#8A8277;line-height:1.4}
+.hc-cta{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.hc-btn{
+  min-height:44px;border-radius:12px;border:1px solid #E5DCCB;display:flex;
+  align-items:center;justify-content:center;text-decoration:none;color:#201A16;
+  font-weight:900;background:#fff;font-size:13px;
+}
+.hc-btn--on{background:#2F5D57;color:#fff;border-color:#2F5D57}
+
+/* 답 묶음 — **네 칸 가로 띠**. 내용은 하나도 빼지 않았습니다 */
+.hero-c .answer{
+  margin-top:12px;background:#fff;border:1px solid #E5DCCB;border-radius:16px;
+  padding:12px 14px;display:grid;grid-template-columns:1.2fr 1fr 1fr .9fr;gap:0;
+}
+.hero-c .ans-i{padding:0 12px;border-right:1px solid #E5DCCB;min-width:0}
+.hero-c .ans-i:first-child{padding-left:0}
+.hero-c .ans-i:last-child{border-right:0;padding-right:0}
+.hero-c .ans-k{font-size:11px;color:#8A8277;font-weight:800;margin-bottom:5px}
+.hero-c .ans-v{font-size:13px;line-height:1.45;font-weight:800}
+.hero-c .ans-v a{color:#2F5D57}
+
+/* 빠른 이동 — 가로로 미는 칩 한 줄 (7칸 세로 목록을 대신합니다) */
+.hc-nav{display:flex;gap:8px;overflow:auto;padding:12px 0 2px;scrollbar-width:none}
+.hc-nav::-webkit-scrollbar{display:none}
+.hc-nav a{
+  flex:0 0 auto;border:1px solid #E5DCCB;background:#fff;border-radius:999px;
+  padding:9px 12px;text-decoration:none;color:#201A16;font-size:12px;font-weight:800;
+}
+.hc-nav a:first-child{background:#2F5D57;color:#fff;border-color:#2F5D57}
+
+@media (max-width:760px){
+  .hero-c{padding:12px 0 0}
+  .hero-c-top{grid-template-columns:1fr}
+  .hc-photo{min-height:270px}
+  .hc-copy{left:15px;right:15px;bottom:15px}
+  .hc-copy h1{font-size:30px}
+  .hc-copy p{
+    display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;
+    overflow:hidden;font-size:13px;
+  }
+  .hc-stat{min-height:82px;padding:12px}
+  .hc-stat b{font-size:23px}
+  .hc-stat span{font-size:11px}
+  .hero-c .answer{grid-template-columns:1fr 1fr;padding:0;overflow:hidden}
+  .hero-c .ans-i{
+    padding:11px 12px;border-right:1px solid #E5DCCB;
+    border-bottom:1px solid #E5DCCB;
+  }
+  .hero-c .ans-i:nth-child(2n){border-right:0}
+  .hero-c .ans-i:nth-last-child(-n+2){border-bottom:0}
+  .hero-c .ans-i:first-child{padding-left:12px}
+  .hero-c .ans-i:last-child{padding-right:12px}
+  /* 칩 줄은 **위에 붙어 따라옵니다** — 어디서든 바로 옮겨 갑니다 */
+  .hc-nav{
+    position:sticky;top:0;z-index:20;
+    background:linear-gradient(var(--bg,#FFFBF3) 82%,transparent);
+  }
+}

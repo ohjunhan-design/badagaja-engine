@@ -2,42 +2,54 @@
 <body data-region="{{권역}}">
 {{#_header.html}}
 
-<section class="section hero section--soft"><div class="wrap">
-  <!-- ★ **되풀이 배지를 「오늘 물때」로 바꿨습니다** (2026-10-01)
-       전에는 `{{한줄}}` 이 여기와 아래 부제목에 **두 번** 나왔습니다
-       (57권역 중 42곳). 같은 말이 두 번이면 공간만 쓰고 검색에도
-       불리합니다 (주인 규칙 28).
+<!-- ★ **머리말을 압축했습니다** (2026-10-02 지피티 시안 v3)
+     `docs/region-hero-aeo-compact-v3.html` 을 그대로 옮겼습니다.
 
-       그 자리에 **손님이 가장 알고 싶은 것**을 놓습니다 —
-       휴대폰에서 물때가 1,087px 아래라 1.3화면을 내려야 보였습니다.
+     ★ 왜 바꿨나 — 재 보니 머리말이 모바일 390px 에서 **1,292px**
+       을 썼습니다. 제목·부제·소개·답묶음·단추·사진·7칸 세로
+       차림표가 모두 **세로로 쌓여** 있었습니다. 그 탓에 이 사이트의
+       핵심인 낚시 포인트가 **6.2번째 화면**에서야 나왔습니다.
 
-       ★ 자바스크립트가 못 돌아도 「오늘 물때」는 보입니다 (계약-23).
-         아이디는 첫 쪽과 **같은 것**을 씁니다 — tide.js 를 안 고쳐도
-         채워집니다 (계약-01 한 곳에서). -->
-  <a class="badge badge--orange hero-tide" href="#tide"><svg class="bi" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9c2.5 0 2.5 2.4 5 2.4S9.5 9 12 9s2.5 2.4 5 2.4S19.5 9 22 9M2 15.6c2.5 0 2.5 2.4 5 2.4s2.5-2.4 5-2.4 2.5 2.4 5 2.4 2.5-2.4 5-2.4"/></svg> 오늘
-    <b id="tsMuldae">물때</b> <span id="tsMuldaeName"></span></a>
-  <h1 class="serif">{{큰제목}}<br><span class="accent">{{큰제목뒷줄}}</span></h1>
-  <p class="hero-lead">{{소개글}}</p>
+     ★ 무엇을 바꿨나
+       ① 제목·소개를 **대표 사진 안**으로 — 따로 쌓지 않습니다
+       ② 숫자 2×2 + 단추 둘을 사진 옆(모바일은 아래)에
+       ③ 답 묶음은 **지우지 않고** 네 칸 가로 띠로 — 검색이 읽을
+          글은 그대로 있고, 사람 눈에는 작고 빠르게 읽힙니다
+       ④ 7칸 **세로** 차림표 → 가로로 미는 칩 한 줄
+          (모바일에서는 위에 붙어 따라옵니다)
 
-    <!-- ★ **이 바다에서 무엇을 할 수 있나** (2026-10-01 · AEO-001)
-         「태안 해루질」로 들어온 손님이 포인트 수·많이 나오는 것·
-         물때 기준·지금 금어기를 한눈에 봅니다. 금어기를 여기서
-         보여 주는 것이 핵심입니다 — 손님은 금어기 쪽을 따로
-         찾아가지 않습니다. -->
-    {{{답묶음}}}
-  <div class="btn-row">
-    <a href="#points" class="btn btn--dark">포인트 {{포인트수}}곳 보기</a>
-    <a href="#tide" class="btn btn--white">오늘 물때 보기</a>
+     ★ 자바스크립트가 못 돌아도 「오늘 ○물」은 보입니다 (계약-23).
+       아이디는 첫 쪽과 **같은 것**을 씁니다 (계약-01 한 곳에서). -->
+<section class="section hero-c"><div class="wrap">
+  <div class="hero-c-top">
+    <article class="hc-photo">
+      {{{대표사진자리}}}
+      <div class="hc-copy">
+        <div class="hc-eyebrow"><span>{{권역이름}} 바다 안내</span><a class="hc-today" href="#tide">오늘 <b id="tsMuldae">물때</b> <span id="tsMuldaeName"></span></a></div>
+        <h1>{{큰제목}}</h1>
+        <p>{{소개글}}</p>
+      </div>
+    </article>
+
+    <aside class="hc-side">
+      {{{숫자칸}}}
+      <div class="hc-cta">
+        <a href="#points" class="hc-btn hc-btn--on">포인트 {{포인트수}}곳 보기</a>
+        <a href="#tide" class="hc-btn">오늘 물때 보기</a>
+      </div>
+    </aside>
   </div>
-  <!-- ★ 사진 왼쪽 · 빠른 차림표 오른쪽 (2026-09-29 주인 지시)
-       「사진을 축소하고 오른쪽 여백에 … 전체페이지에 적용해줘」
-       묶음 쪽과 **같은 꼴**입니다 — 권역을 옥겨도
-       같은 사이트로 느껴야 합니다. -->
-  <div class="hero-side">
-    {{{대표사진자리}}}
 
-    <nav class="quicknav quicknav--side" aria-label="이 쪽 안에서 바로 가기">{{{빠른이동}}}</nav>
-  </div>
+  <!-- ★ **이 바다에서 무엇을 할 수 있나** (2026-10-01 · AEO-001)
+       「태안 해루질」로 들어온 손님이 포인트 수·많이 나오는 것·
+       물때 기준·지금 금어기를 한눈에 봅니다. 금어기를 여기서
+       보여 주는 것이 핵심입니다 — 손님은 금어기 쪽을 따로
+       찾아가지 않습니다.
+       ★ 2026-10-02 — 긴 상자를 **네 칸 띠**로 눕혔습니다.
+         내용은 하나도 빼지 않았습니다. -->
+  {{{답묶음}}}
+
+  <nav class="hc-nav" aria-label="이 쪽 안에서 바로 가기">{{{빠른이동}}}</nav>
 </div></section>
 
 <section class="section section--white" id="tide"><div class="wrap">
@@ -55,6 +67,7 @@
     <h2 class="serif">{{권역이름}}에서 어디로 갈까요</h2>
     <p class="lead">{{포인트안내}}</p>
   </div>
+  {{{포인트지도}}}
   <div class="two-up">{{{포인트칸}}}</div>
   {{{통제}}}
   {{{광고칸}}}

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>권역 물때 압축형 중복 제거 시안</title>
+<style>
+:root{
+  --brand:#2F5D57; --orange:#C07B22; --cream:#FAF6EE; --line:#E5DCCB;
+  --muted:#8A8277; --low-bg:#E3EFE9; --high-bg:#FBEFDC; --ink:#201A16;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif}
+.wrap{max-width:760px;margin:auto;padding:16px}
+.tide-summary,.tide-graph{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px}
+.tide-summary{margin-bottom:10px}
+.kicker{font-size:12px;color:var(--orange);font-weight:800}
+.main{display:flex;align-items:baseline;gap:8px;margin:4px 0 10px}
+.main b{font-size:34px}.main span{font-size:14px;color:var(--muted);font-weight:800}
+.events{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.event{padding:10px 11px;border-radius:10px;font-size:13px;font-weight:800}
+.high{background:var(--high-bg);color:#B8761C}.low{background:var(--low-bg);color:var(--brand)}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.btn{min-height:42px;display:flex;align-items:center;justify-content:center;border-radius:11px;border:1px solid var(--line);text-decoration:none;color:var(--ink);font-weight:900;font-size:13px;background:#fff}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+.graph-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.graph-head strong{font-size:18px}.station{font-size:11px;color:var(--muted)}
+.chart{height:168px;background:var(--cream);border-radius:12px;padding:8px}
+.chart svg{width:100%;height:100%;display:block}
+.graph-foot{display:flex;justify-content:space-between;gap:8px;margin-top:8px;align-items:center}
+.legend{display:flex;gap:10px;font-size:11px;font-weight:800}
+.legend span{display:flex;align-items:center;gap:5px}.dot{width:8px;height:8px;border-radius:50%}.dot.low{background:var(--brand)}.dot.high{background:var(--orange)}
+.source{font-size:10px;color:var(--muted);text-align:right}
+@media(max-width:480px){
+  .wrap{padding:12px}
+  .tide-summary,.tide-graph{padding:12px}
+  .main b{font-size:30px}
+  .graph-foot{align-items:flex-start;flex-direction:column}
+  .source{text-align:left}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="tide-summary">
+    <div class="kicker">제주 관측소 기준</div>
+    <div class="main"><b>12물</b><span>중간</span></div>
+    <div class="events">
+      <div class="event high">만조 04:54</div>
+      <div class="event low">간조 11:38</div>
+      <div class="event high">만조 17:26</div>
+      <div class="event low">간조 23:52</div>
+    </div>
+    <div class="actions">
+      <a class="btn primary" href="/tide/">14일 물때표 보기</a>
+      <a class="btn" href="/muldae.html">물때 보는 법</a>
+    </div>
+  </section>
+
+  <section class="tide-graph">
+    <div class="graph-head">
+      <strong>시간별 물높이</strong>
+      <span class="station">군산 관측소 기준</span>
+    </div>
+    <div class="chart">
+      <svg viewBox="0 0 720 168" aria-label="시간별 물높이">
+        <defs>
+          <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#7CB4AD" stop-opacity=".44"/>
+            <stop offset="1" stop-color="#7CB4AD" stop-opacity=".025"/>
+          </linearGradient>
+        </defs>
+        <path d="M16,110 C100,25 165,20 240,108 S390,155 465,55 S610,28 704,115 L704,145 L16,145Z" fill="url(#sea)"/>
+        <path d="M16,110 C100,25 165,20 240,108 S390,155 465,55 S610,28 704,115" fill="none" stroke="#2F5D57" stroke-width="3" stroke-linecap="round"/>
+        <line x1="330" y1="18" x2="330" y2="145" stroke="#C07B22" stroke-width="1.5" stroke-dasharray="5 5"/>
+        <rect x="307" y="3" width="46" height="24" rx="12" fill="#C07B22"/>
+        <text x="330" y="19" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">지금</text>
+        <circle cx="150" cy="42" r="5.5" fill="#C07B22" stroke="#fff" stroke-width="2"/>
+        <circle cx="335" cy="137" r="5.5" fill="#2F5D57" stroke="#fff" stroke-width="2"/>
+        <circle cx="505" cy="50" r="5.5" fill="#C07B22" stroke="#fff" stroke-width="2"/>
+        <circle cx="704" cy="115" r="5.5" fill="#2F5D57" stroke="#fff" stroke-width="2"/>
+        <text x="16" y="163" font-size="11" fill="#8A8277">0시</text>
+        <text x="360" y="163" text-anchor="middle" font-size="11" fill="#8A8277">12시</text>
+        <text x="704" y="163" text-anchor="end" font-size="11" fill="#8A8277">24시</text>
+      </svg>
+    </div>
+    <div class="graph-foot">
+      <div class="legend">
+        <span><i class="dot low"></i>간조</span>
+        <span><i class="dot high"></i>만조</span>
+      </div>
+      <div class="source">국립해양조사원 조석예보 · 10분 간격</div>
+    </div>
+  </section>
+</div>
+</body>
+</html>

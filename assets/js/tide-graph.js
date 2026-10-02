@@ -110,8 +110,18 @@
     // ★ 간·만조 시각은 **곡선 밖 알약 줄**입니다 (지피티 시안)
     //   그래프 안에는 곡선 + 작은 점 + 「지금」 세로선만 둡니다.
     //   그래야 화면이 좁아져도 글자가 점을 덮지 않습니다.
+    //
+    // ★ 2026-10-02 — **권역 쪽에서는 이 줄을 끕니다** (지피티 검수)
+    //   권역 쪽에는 바로 옆에 「오늘 물때」 요약이 있어 **똑같은 네
+    //   시각이 두 번** 나왔습니다. 모바일에서는 세로로 쌓여 바로
+    //   위아래로 붙습니다.
+    //   지피티 — 「요약칸에 시각을 남기고 그래프 머리의 알약은
+    //     제거합니다. 요약칸은 그래프가 실패해도 남아 정보
+    //     안정성이 더 높습니다. 다만 점의 색 의미가 사라지지
+    //     않도록 그래프 아래에 아주 작은 범례만 남깁니다」
+    var 알약보임 = box.getAttribute('data-events') !== 'off';
     var when = box.querySelector('.tg-when');
-    if (when) {
+    if (when && 알약보임) {
       marks.forEach(function (e) {
         var one = el('span', 'tg-w ' + e.type);
         one.appendChild(el('i', 'tg-w-k', e.type === 'high' ? '만조' : '간조'));
@@ -250,13 +260,28 @@
     svg.addEventListener('pointerleave', function () { hv.style.display = 'none'; tip.hidden = true; });
     wrap.appendChild(tip);
 
-    // 꼬리 — 출처 / 주의 두 덩이 (시안)
+    // 꼬리 (시안)
+    //   알약을 켠 쪽  — 출처 / 주의 두 덩이 + 아래에 글 범례
+    //   알약을 끈 쪽  — **점 범례**(● 간조 ● 만조) + 출처
+    //     시각을 되풀이하지 않고 **색이 무엇을 뜻하는지만** 남깁니다
     var foot = box.querySelector('.tg-foot');
     foot.textContent = '';
+    if (!알약보임) {
+      var 범 = el('div', 'tg-legend');
+      [['low', '간조'], ['high', '만조']].forEach(function (x) {
+        var 한 = el('span', null);
+        한.appendChild(el('i', 'tg-dotlbl tg-dotlbl--' + x[0]));
+        한.appendChild(document.createTextNode(x[1]));
+        범.appendChild(한);
+      });
+      foot.appendChild(범);
+    }
     foot.appendChild(el('span', null, '자료: ' + d.source + ' · 10분 간격 예측'));
     foot.appendChild(el('span', null, '실제 방문 지점의 물때와 다를 수 있습니다.'));
-    // 색 범례 — 점과 알약의 색이 무엇을 뜻하는지 한 줄로 (시안)
-    box.appendChild(el('p', 'tg-note', '간조는 녹색, 만조는 주황색으로 표시합니다.'));
+    if (알약보임) {
+      // 색 범례 — 점과 알약의 색이 무엇을 뜻하는지 한 줄로 (시안)
+      box.appendChild(el('p', 'tg-note', '간조는 녹색, 만조는 주황색으로 표시합니다.'));
+    }
   }
 
   function mount(box, region, opt) {

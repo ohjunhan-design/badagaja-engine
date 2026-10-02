@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>제주시 권역 헤더 압축형 프로토타입</title>
+<style>
+:root{
+  --brand:#2F5D57; --orange:#C07B22; --cream:#FAF6EE; --card:#fff;
+  --line:#E5DCCB; --muted:#8A8277; --ink:#201A16;
+  --soft:#F4EFE5; --danger:#B74234;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:22px}
+
+/* HERO */
+.hero{
+  display:grid;grid-template-columns:minmax(0,1.45fr) minmax(310px,.75fr);
+  gap:14px;align-items:stretch;
+}
+.hero-photo{
+  position:relative;min-height:310px;border-radius:22px;overflow:hidden;background:#ccd7dc;
+  border:1px solid var(--line);
+}
+.hero-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.hero-photo:after{
+  content:"";position:absolute;inset:28% 0 0;
+  background:linear-gradient(transparent,rgba(12,22,20,.84));
+}
+.hero-copy{position:absolute;z-index:2;left:22px;right:22px;bottom:20px;color:#fff}
+.eyebrow{display:inline-flex;gap:7px;align-items:center;font-size:12px;font-weight:800;margin-bottom:8px}
+.eyebrow .today{background:rgba(255,255,255,.94);color:var(--brand);border-radius:999px;padding:6px 9px}
+.hero-copy h1{font-size:38px;line-height:1.05;margin:0 0 7px;letter-spacing:-.02em}
+.hero-copy p{margin:0;max-width:620px;font-size:14px;line-height:1.55;opacity:.94}
+
+/* QUICK STATS + CTA */
+.hero-side{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{
+  background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:17px;
+  padding:16px;min-height:112px;display:flex;flex-direction:column;justify-content:space-between
+}
+.stat b{font-size:28px;line-height:1;color:var(--brand)}
+.stat span{font-size:12px;color:var(--muted);line-height:1.4}
+.hero-cta{
+  grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:8px
+}
+.btn{
+  min-height:44px;border-radius:12px;border:1px solid var(--line);display:flex;align-items:center;
+  justify-content:center;text-decoration:none;color:var(--ink);font-weight:900;background:#fff;font-size:13px
+}
+.btn.primary{background:var(--brand);color:#fff;border-color:var(--brand)}
+
+/* AEO ANSWER: compact, no separate giant block */
+.answer-strip{
+  margin-top:12px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 14px;
+  display:grid;grid-template-columns:1.2fr 1fr 1fr .9fr;gap:0;
+}
+.answer-item{padding:0 12px;border-right:1px solid var(--line);min-width:0}
+.answer-item:first-child{padding-left:0}.answer-item:last-child{border-right:0;padding-right:0}
+.answer-label{font-size:11px;color:var(--muted);font-weight:800;margin-bottom:5px}
+.answer-value{font-size:13px;line-height:1.45;font-weight:800}
+.tagline{display:flex;gap:5px;flex-wrap:wrap}
+.tag{border-radius:999px;padding:5px 7px;background:var(--soft);font-size:11px;font-weight:800}
+.tag.danger{color:var(--danger);background:#FBE9E6}
+
+/* Sticky quick nav, replaces 7-row vertical menu */
+.quicknav{
+  display:flex;gap:8px;overflow:auto;padding:12px 0 2px;scrollbar-width:none
+}
+.quicknav::-webkit-scrollbar{display:none}
+.quicknav a{
+  flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:999px;
+  padding:9px 12px;text-decoration:none;color:var(--ink);font-size:12px;font-weight:800
+}
+.quicknav a:first-child{background:var(--brand);color:#fff;border-color:var(--brand)}
+
+/* demo next section */
+.next{
+  margin-top:14px;border-top:1px solid var(--line);padding-top:16px;
+  min-height:220px
+}
+.next h2{margin:0 0 6px;font-size:26px}
+.next p{margin:0;color:var(--muted)}
+@media(max-width:760px){
+  .wrap{padding:12px}
+  .hero{grid-template-columns:1fr}
+  .hero-photo{min-height:270px}
+  .hero-copy{left:15px;right:15px;bottom:15px}
+  .hero-copy h1{font-size:30px}
+  .hero-copy p{
+    display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;
+    font-size:13px
+  }
+  .hero-side{grid-template-columns:1fr 1fr}
+  .stat{min-height:82px;padding:12px}
+  .stat b{font-size:23px}.stat span{font-size:11px}
+  .hero-cta{grid-template-columns:1fr 1fr}
+  .answer-strip{
+    grid-template-columns:1fr 1fr;padding:0;overflow:hidden
+  }
+  .answer-item{
+    padding:11px 12px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)
+  }
+  .answer-item:nth-child(2n){border-right:0}
+  .answer-item:nth-last-child(-n+2){border-bottom:0}
+  .answer-item:first-child{padding-left:12px}.answer-item:last-child{padding-right:12px}
+  .quicknav{
+    position:sticky;top:0;z-index:20;background:linear-gradient(var(--cream) 82%,transparent)
+  }
+  .next{margin-top:10px;padding-top:12px}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+<section class="hero">
+  <article class="hero-photo">
+    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80" alt="">
+    <div class="hero-copy">
+      <div class="eyebrow"><span>제주시내 바다 안내</span><span class="today">오늘 12물</span></div>
+      <h1>제주시내 바다</h1>
+      <p>방파제·갯바위·해안도로가 가까운 제주 북쪽 바다입니다. 오늘 물때와 출입 규정을 먼저 보고 포인트를 고르세요.</p>
+    </div>
+  </article>
+
+  <aside class="hero-side">
+    <div class="stat"><b>21</b><span>낚시·해루질 포인트</span></div>
+    <div class="stat"><b>5종</b><span>많이 찾는 대상어종</span></div>
+    <div class="stat"><b>12물</b><span>오늘 물때 · 제주 관측소</span></div>
+    <div class="stat"><b>1건</b><span>현재 확인할 금어기</span></div>
+    <div class="hero-cta">
+      <a class="btn primary" href="#points">포인트 21곳 보기</a>
+      <a class="btn" href="#tide">오늘 물때 보기</a>
+    </div>
+  </aside>
+</section>
+
+<section class="answer-strip" aria-label="이 바다에서 무엇을 할 수 있나">
+  <div class="answer-item">
+    <div class="answer-label">무엇을 할 수 있나</div>
+    <div class="answer-value">낚시 14곳 · 해루질 7곳</div>
+  </div>
+  <div class="answer-item">
+    <div class="answer-label">많이 나오는 대상</div>
+    <div class="answer-value tagline">
+      <span class="tag">우럭</span><span class="tag">감성돔</span><span class="tag">광어</span><span class="tag">소라</span><span class="tag">전복</span>
+    </div>
+  </div>
+  <div class="answer-item">
+    <div class="answer-label">물때 기준</div>
+    <div class="answer-value">제주 관측소 · 오늘 12물</div>
+  </div>
+  <div class="answer-item">
+    <div class="answer-label">지금 규정</div>
+    <div class="answer-value"><span class="tag danger">금어기 1건 확인</span></div>
+  </div>
+</section>
+
+<nav class="quicknav" aria-label="빠른 이동">
+  <a href="#tide">오늘 물때</a>
+  <a href="#points">포인트 지도</a>
+  <a href="#catch">지금 잡히는 것</a>
+  <a href="#eat">먹거리</a>
+  <a href="#spot">명소</a>
+  <a href="#festival">축제</a>
+  <a href="#with">누구와 함께</a>
+</nav>
+
+<section class="next" id="tide">
+  <h2>오늘 바다는 어때요?</h2>
+  <p>여기에 압축형 물때 요약 + 시간별 그래프가 바로 이어집니다.</p>
+</section>
+
+</main>
+</body>
+</html>

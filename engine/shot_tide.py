@@ -33,7 +33,7 @@ from engine import io as _io             # 쓰기는 io.write 로 (계약-13)  #
 기본폭 = [1440, 412, 390, 360]
 
 
-def 심은쪽(쪽길):
+def 심은쪽(쪽길, 더심을것=''):
     """쪽 **옆에** 가짜 물때를 심은 복사본을 만들어 그 길을 돌려줍니다.
 
     ★ 반드시 **같은 폴더**여야 합니다 — 차림표·그림이 상대 주소라,
@@ -41,7 +41,7 @@ def 심은쪽(쪽길):
     """
     글 = _io.read(쪽길) if hasattr(_io, 'read') else open(
         쪽길, encoding='utf-8').read()
-    심을것 = _fake_tide.심을글()
+    심을것 = _fake_tide.심을글() + (더심을것 or '')
     # </head> **바로 앞**에 넣습니다 — 쪽의 js 가 돌기 전이어야
     # window.fetch 를 가로챌 수 있습니다.
     if '</head>' in 글:
@@ -74,7 +74,7 @@ def 잘라내기(그림길, 폭):
         im.crop((0, 0, 폭, im.size[1])).save(그림길)
 
 
-def 찍기(쪽길, 낼곳, 폭들=None):
+def 찍기(쪽길, 낼곳, 폭들=None, 더심을것='', 꼬리=''):
     폭들 = 폭들 or 기본폭
     이름 = re.sub(r'[^0-9A-Za-z_-]+', '-',
                   os.path.splitext(os.path.basename(쪽길))[0]).strip('-')
@@ -85,7 +85,7 @@ def 찍기(쪽길, 낼곳, 폭들=None):
     낼곳 = os.path.abspath(낼곳)
     if not os.path.isdir(낼곳):
         os.makedirs(낼곳)
-    임시 = 심은쪽(쪽길)
+    임시 = 심은쪽(쪽길, 더심을것)
     난것 = []
     try:
         for w in 폭들:
@@ -93,7 +93,7 @@ def 찍기(쪽길, 낼곳, 폭들=None):
             # 아래로 밀립니다. 3200 으로 찍었더니 물때 그래프가
             # 그림 밖(3200px 아래)에 있어 안 찍혔습니다 (2026-10-02).
             h = 2400 if w >= 1000 else 5200
-            그림 = os.path.join(낼곳, '%s-%d.png' % (이름, w))
+            그림 = os.path.join(낼곳, '%s-%d%s.png' % (이름, w, 꼬리 or ''))
             if shot_phone.찍기(임시, 그림, w, h):
                 잘라내기(그림, w)
                 난것.append(그림)

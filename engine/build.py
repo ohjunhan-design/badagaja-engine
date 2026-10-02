@@ -275,11 +275,23 @@ def 남기기로한것():
     return _남길것
 
 
-def 빠른이동칸(칸들):
-    """아이콘 + 글자로 된 빠른이동. 내용이 있는 칸만 냅니다 (계약-11)."""
+def 빠른이동칸(칸들, 칩=False):
+    """아이콘 + 글자로 된 빠른이동. 내용이 있는 칸만 냅니다 (계약-11).
+
+    ★ `칩=True` 면 **가로로 미는 칩 한 줄**을 냅니다
+      (2026-10-02 지피티 시안 v3 · 권역 쪽)
+
+      전에는 7칸이 **세로로** 쌓여 머리말을 길게 만들었습니다.
+      지피티 — 「7칸 세로 목록은 없앱니다. 이게 스크롤을 잡아먹는
+      큰 원인입니다. 가로 스크롤 칩 한 줄로 바꿉니다」
+      칩에는 아이콘을 넣지 않습니다 — 한 줄에 더 많이 들어갑니다.
+    """
     나옴 = []
     for 어디, 이름, 수 in 칸들:
         if not 수:
+            continue
+        if 칩:
+            나옴.append('<a href="#%s">%s</a>' % (어디, esc(이름)))
             continue
         길 = _빠른이동아이콘.get(어디, '')
         그림 = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" '
@@ -287,6 +299,46 @@ def 빠른이동칸(칸들):
         나옴.append('<a class="qn-item" href="#%s">%s<span>%s</span></a>'
                     % (어디, 그림, esc(이름)))
     return ''.join(나옴)
+
+
+def 숫자칸(d, 권역, 언어='ko'):
+    """머리말 오른쪽 **숫자 2×2** (2026-10-02 지피티 시안 v3).
+
+    지피티가 정한 넷 — 포인트 수 · 많이 찾는 대상 종수 ·
+    오늘 물때 · 지금 확인할 금어기.
+
+    ★ 숫자는 **자료에서 셉니다. 손으로 적지 않습니다** (주인 규칙 29).
+    ★ 「오늘 물때」는 계산이라 자바스크립트가 채웁니다. 못 돌아도
+      칸은 남고 「—」 로 보입니다 (계약-23).
+    """
+    낚, 해 = d.셈(권역, '낚시'), d.셈(권역, '해루질')
+    어종셈 = set()
+    for 갈 in ('낚시', '해루질'):
+        for x in (d.포인트(권역, 갈) or []):
+            어종셈.update(x.get('대상') or [])
+    관 = ((d.권역(권역) or {}).get('물때관측소') or {}).get('이름') or ''
+
+    # 금어기 — 답 묶음과 **같은 셈**을 씁니다 (계약-01)
+    금 = 0
+    try:
+        from engine import rules as _규정
+        for 것, _st, 기들 in _규정.오늘금지():
+            if set(것.get('사이트어종') or []) & 어종셈:
+                금 += 1
+    except Exception:
+        pass
+
+    것들 = [
+        ('%d' % (낚 + 해), '낚시·해루질 포인트'),
+        ('%d종' % len(어종셈), '많이 찾는 대상어종'),
+        ('<b id="tsMuldaeNum">—</b>',
+         '오늘 물때%s' % (' · %s 관측소' % 관 if 관 else '')),
+        ('%d건' % 금, '지금 확인할 금어기'),
+    ]
+    return ''.join(
+        '<div class="hc-stat"><b>%s</b><span>%s</span></div>'
+        % (값 if 값.startswith('<') else esc(값), esc(글))
+        for 값, 글 in 것들)
 
 
 
@@ -773,9 +825,27 @@ def 권역답묶음(d, 권역, 언어='ko'):
     if 연중:
         줄.append('<li><b>연중 금지</b> %s</li>'
                   % esc(' · '.join(연중[:4])))
-    return ('<div class="answer"><p class="answer-h">%s</p>'
-            '<ul>%s</ul></div>'
-            % (esc('이 바다에서 무엇을 할 수 있나'), ''.join(줄)))
+    # ★ **네 칸 가로 띠로 눕힙니다** (2026-10-02 지피티 시안 v3)
+    #
+    #   전에는 세로로 긴 상자였습니다. 지피티 —
+    #     「검색/AEO 때문에 필요한 정보는 **유지하되**, 별도의 긴
+    #       박스가 아니라 2×2/4열 압축 스트립으로 넣습니다.
+    #       검색엔진이 읽을 텍스트는 그대로 있고, 사람이 보는
+    #       화면에서는 작고 빠르게 읽히는 대시보드가 됩니다」
+    #
+    #   ★ **내용은 하나도 빼지 않았습니다.** `<li>` 가 `<div>` 로
+    #     바뀌었을 뿐이고 글자는 그대로입니다. 검색이 읽는 것도
+    #     그대로입니다.
+    칸 = []
+    for 한줄 in 줄:
+        속 = 한줄[len('<li>'):-len('</li>')]
+        # <b>이름</b> 값  →  이름 / 값 으로 가릅니다
+        m = re.match(r'<b>(.*?)</b>\s*(.*)$', 속, re.S)
+        이름, 값 = (m.group(1), m.group(2)) if m else ('', 속)
+        칸.append('<div class="ans-i"><div class="ans-k">%s</div>'
+                  '<div class="ans-v">%s</div></div>' % (이름, 값))
+    return ('<section class="answer" aria-label="%s">%s</section>'
+            % (esc('이 바다에서 무엇을 할 수 있나'), ''.join(칸)))
 
 
 def 축제때상태(축제):
@@ -1731,7 +1801,8 @@ def 권역쪽(d, 권역, 언어='ko'):
             ('spot', '해안 명소', len(v['명소'])),
             ('festival', '축제', len(v['축제'])),
             ('course', '여행 코스', len(v['코스']))]
-    빠른이동 = 빠른이동칸(칸들)
+    # ★ 권역 쪽은 **칩 한 줄**입니다 (2026-10-02 지피티 시안 v3)
+    빠른이동 = 빠른이동칸(칸들, 칩=True)
 
     # ── 포인트 칸 — ★ **배너로 돌려놓습니다** (2026-09-29 주인 지시)
     #
@@ -1764,6 +1835,19 @@ def 권역쪽(d, 권역, 언어='ko'):
     if not 포인트칸:
         포인트칸.append('<p class="notice">이 권역은 아직 포인트를 '
                         '정리하는 중입니다.</p>')
+
+    # ★ **지도를 배너 위에** 둡니다 (2026-10-02 지피티 시안)
+    #   「주인이 특히 원하는 것은 지도 + 사진카드 + 짧은 스크롤입니다」
+    #   배너 둘은 그대로 둡니다 — 지도가 안 떠도 고를 수 있어야
+    #   합니다 (계약-23). 지피티도 못 박았습니다 —
+    #   「지도 실패 시 기존 낚시/해루질 링크는 반드시 남겨」
+    #
+    #   ★ **`.two-up` 안에 넣으면 안 됩니다** (2026-10-02 겪음)
+    #     포인트칸은 틀에서 `<div class="two-up">` 에 들어갑니다.
+    #     지도를 거기 끼웠더니 격자가 자식 **셋**을 3열로 쪼개
+    #     PC 에서 지도가 손가락만큼 좁아지고 배너 글자가 세로로
+    #     쌓였습니다. 틀에 `{{{포인트지도}}}` 자리를 따로 뒀습니다.
+    포인트지도 = 권역지도(d, 권역, 쪽길, 언어)
 
     # ── 통제구역 — 있으면 눈에 띄게
     통제 = ''
@@ -2017,6 +2101,7 @@ def 권역쪽(d, 권역, 언어='ko'):
         '소개글': (r.get('안내') or r.get('소개') or
                    '%s의 포인트와 제철 어종, 먹거리와 축제를 한곳에 모았습니다.' % 이름),
         '답묶음': 권역답묶음(d, 권역, 언어),
+        '숫자칸': 숫자칸(d, 권역, 언어),
         '포인트수': 모두,
         '빠른이동': 빠른이동,
         '물때안내': ('물때 번호와 사리·조금은 늘 자동으로 나옵니다. '
@@ -2055,7 +2140,11 @@ def 권역쪽(d, 권역, 언어='ko'):
                      'data-region="%s" data-station="%s" data-days="14" '
                      'data-view="today" data-tide-url="%s" '
                      'data-muldae-url="%s"></div>'
-                     '<div class="tide-graph" id="tideGraph"></div>'
+                     # ★ data-events="off" — 바로 옆 요약칸에 간·만조가
+                     #   있어 **똑같은 네 시각이 두 번** 나왔습니다.
+                     #   그래프는 곡선·점·「지금」과 색 범례만 둡니다.
+                     '<div class="tide-graph" id="tideGraph" '
+                     'data-events="off"></div>'
                      '</div>'
                      % (esc(권역), esc(물때.get('이름') or ''),
                         esc(url.rel(쪽길, 'tide/index.html')),
@@ -2063,6 +2152,7 @@ def 권역쪽(d, 권역, 언어='ko'):
         '포인트안내': (r.get('포인트안내') or
                        '자리마다 어촌계·지자체 규정이 다릅니다. '
                        '가기 전에 반드시 확인하세요.'),
+        '포인트지도': 포인트지도,
         '포인트칸': ''.join(포인트칸),
         '통제': 통제,
         '어종칸': ''.join(어종칸) or '<p class="notice">제철 어종을 정리하는 중입니다.</p>',
@@ -2552,6 +2642,125 @@ def 많이찾는말(d, 권역들, 언어='ko'):
     많은것 = sorted(센것.items(), key=lambda v: (-v[1], v[0]))
     return [이름 for 이름, _ in 많은것[:5]] + ['축제']
 
+
+
+def 권역지도(d, 권역, 쪽길, 언어='ko'):
+    """권역 쪽 **포인트 지도 + 사진카드** (2026-10-02 지피티 시안)
+
+    ★ 왜 넣었나
+      재 보니 모바일 390px 에서 **낚시 포인트가 6.2번째 화면**에서야
+      나왔습니다. 이 사이트에서 손님이 가장 알고 싶은 것인데
+      네 화면 반을 넘겨야 닿았습니다.
+
+      지피티 — 「43개 포인트를 처음부터 다 노출할 이유가 없습니다.
+        지도에서 하나 선택 → 선택한 카드 1개 크게. 화면 하나에서
+        해결됩니다」
+
+    ★ 자리는 지피티가 확정했습니다 (`region-point-map-controls-v2.html`)
+        지도 **밖** 위 : 전체 / 낚시 / 해루질 거르기
+        좌상단        : 일반 / 위성
+        우상단        : ＋ / －
+        좌하단        : 색 범례
+        하단 가운데   : 「지도 이동 켜기」 — 모바일만
+
+      네 모서리를 지도 조작에 내주려고 거르기를 **밖으로** 뺐습니다.
+      모바일 360px 에서 한 줄에 몰면 서로 가립니다.
+
+    ★ 지도가 안 떠도 쪽은 그대로 씁니다 (계약-23).
+      아래 낚시·해루질 배너가 그대로 있어 고르는 데 지장이 없습니다.
+
+    ★ 그리는 것은 `assets/js/region-map.js`,
+      카카오 전용 코드는 `assets/js/map-provider.js` 에 가둡니다.
+    """
+    열쇠 = (d.사이트.get('지도') or {}).get('카카오키') or ''
+    if not 열쇠:
+        return ''
+
+    r = d.권역(권역)
+    이름 = r['이름'].get(언어) or r['이름']['ko']
+    것들 = []
+    for 갈래 in ('낚시', '해루질'):
+        for x in (d.포인트(권역, 갈래) or []):
+            좌 = x.get('좌표') or {}
+            if not (좌.get('위도') and 좌.get('경도')):
+                continue
+            것들.append({
+                'id': x['id'],
+                '이름': x['이름'].get(언어) or x['이름']['ko'],
+                '위도': 좌['위도'], '경도': 좌['경도'],
+                '지형': x.get('지형') or '',
+                '갈래': 갈래,
+                '어림': bool(x.get('배로가나')) or x.get('출입') == '배로만',
+                '주소': url.rel(쪽길, url.point_list(권역, 갈래, 언어))
+                        + '#' + x['id'],
+            })
+    if not 것들:
+        return ''
+
+    낚 = sum(1 for x in 것들 if x['갈래'] == '낚시')
+    해 = sum(1 for x in 것들 if x['갈래'] == '해루질')
+
+    # 사진 주소는 **자료에서 읽습니다. 짐작해 만들지 않습니다** (규칙 6-1)
+    사진 = d.히어로(권역) or {}
+    대표 = (url.rel(쪽길, 사진['파일']) if 사진.get('파일') else '')
+
+    자료 = {
+        '지도키': 열쇠,
+        '권역': 권역,
+        '한줄': (r.get('한줄') or ''),
+        '대표사진': 대표,
+        '포인트': 것들,
+    }
+
+    거르기 = ['<nav class="rm-filter" id="regionMapFilter" '
+              'aria-label="포인트 갈래">']
+    for 값, 글, 수 in (('전체', '전체', 낚 + 해),
+                       ('낚시', '낚시', 낚), ('해루질', '해루질', 해)):
+        if not 수:
+            continue
+        켜 = (값 == '전체')
+        거르기.append('<button type="button" data-kind="%s"%s '
+                      'aria-pressed="%s">%s %d</button>'
+                      % (esc(값), ' class="on"' if 켜 else '',
+                         'true' if 켜 else 'false', esc(글), 수))
+    거르기.append('</nav>')
+
+    낚주소 = url.rel(쪽길, url.point_list(권역, '낚시', 언어))
+    해주소 = url.rel(쪽길, url.point_list(권역, '해루질', 언어))
+    단추 = ''
+    if 낚:
+        단추 += '<a class="on" href="%s">낚시 포인트</a>' % esc(낚주소)
+    if 해:
+        단추 += '<a href="%s">해루질 포인트</a>' % esc(해주소)
+
+    카드 = ('<article class="rm-pick" id="regionPickCard">'
+            '<img class="rp-img" src="%s" alt="%s 바다" '
+            'loading="lazy" width="900" height="600">'
+            '<a class="rp-arrow" href="%s" aria-label="포인트 목록 보기">→</a>'
+            '<div class="rp-copy"><div class="rp-row">'
+            '<h3 class="rp-name">%s</h3>'
+            '<span class="rp-count">포인트</span></div>'
+            '<p class="rp-desc"></p>'
+            '<div class="rp-acts">%s</div>'
+            '</div></article>'
+            % (esc(대표), esc(이름), esc(낚주소 if 낚 else 해주소),
+               esc(이름), 단추))
+
+    실을것 = ''
+    for 자리, 파일 in (('assets/js/map-provider.js', 'map-provider.js'),
+                       ('assets/js/region-map.js', 'region-map.js')):
+        길 = os.path.join(ASSETS, 'js', 파일)
+        if os.path.isfile(길):
+            실을것 += ('<script src="%s" defer></script>'
+                       % esc(url.asset(자리, 쪽길, 판번호(길))))
+
+    return ('%s<div class="region-points">'
+            '<div class="rm-shell" id="regionPointMap" '
+            'aria-label="%s 포인트 지도"></div>%s</div>'
+            '<script type="application/json" id="권역지도자료">%s</script>%s'
+            % (''.join(거르기), esc(이름), 카드,
+               json.dumps(자료, ensure_ascii=False, separators=(',', ':')),
+               실을것))
 
 
 def 묶음지도(d, 권역들, 쪽길, 언어='ko'):
