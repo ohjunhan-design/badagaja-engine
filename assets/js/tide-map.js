@@ -230,16 +230,50 @@
       var a = 카드.querySelector('.' + c);
       if (a) { a.href = i === 0 ? (r.물때주소 || r.주소) : r.주소; }
     });
-    // 오늘 물때 — **계산은 tide.js 한 곳에서** 합니다 (계약-01).
-    //   여기서는 그 칸에 권역만 알려 주고 다시 그리게 합니다.
-    var 띠 = document.getElementById('tideStrip');
-    if (띠 && 띠.getAttribute('data-region') !== r.id) {
-      띠.setAttribute('data-region', r.id);
-      띠.setAttribute('data-station', r.관측소 || '');
-      if (window.BADAGAJA_TIDE_REDRAW) { window.BADAGAJA_TIDE_REDRAW(); }
-    }
+    물때채우기(r);
     if (!처음 && window.innerWidth <= 760) {
       카드.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
+  }
+
+  // ── 고른 권역의 **오늘 간·만조**를 받아 카드에 채웁니다 ──
+  //
+  //   ★ **빈 흰 칸으로 두지 않습니다** (2026-10-02 지피티 보정)
+  //     「물때가 없으면 빈 흰 공간 대신 작은 상태 영역을 표시.
+  //       실제 서버 값이 들어오면 그 영역을 숨기고 간·만조 4개 표시」
+  //
+  //   ★ 못 받아도 쪽은 그대로 씁니다 (계약-23). 안내 글만 남습니다.
+  var 받은것 = {};
+  function 물때채우기(r) {
+    var 칸들 = 카드.querySelector('.tp-events');
+    var 안내 = 카드.querySelector('.tp-empty');
+    if (!칸들 || !안내) { return; }
+
+    function 그리기(들) {
+      if (!들 || !들.length) {
+        칸들.hidden = true; 안내.hidden = false; return;
+      }
+      칸들.textContent = '';
+      들.slice(0, 4).forEach(function (e) {
+        var 간 = (e.type === '간조');
+        var 한 = 만들기('div', 'tp-ev ' + (간 ? 'low' : 'high'),
+                        (간 ? '간조 ' : '만조 ') + e.time);
+        칸들.appendChild(한);
+      });
+      칸들.hidden = false; 안내.hidden = true;
+    }
+
+    if (받은것[r.id]) { return 그리기(받은것[r.id]); }
+    칸들.hidden = true; 안내.hidden = false;
+    // 지도 쪽은 뿌리에서 한 칸 안이라 '../api/' 입니다
+    var API = 자료.api || '../api/';
+    fetch(API + 'tide-cache.php?region=' + encodeURIComponent(r.id))
+      .then(function (x) { return x.ok ? x.json() : null; })
+      .then(function (j) {
+        var 들 = (j && j.days && j.days[0] && j.days[0].events) || [];
+        받은것[r.id] = 들;
+        if (고른것 === r) { 그리기(들); }
+      })
+      .catch(function () { /* 못 받으면 안내 글이 그대로 남습니다 */ });
   }
 })();

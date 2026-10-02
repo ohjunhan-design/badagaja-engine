@@ -3380,7 +3380,13 @@ details.area-group .area-list{margin-bottom:12px}
 .tm-pick .tp-btn--on{background:#2F5D57;border-color:#2F5D57;color:#fff}
 
 /* 57권역 목록 — **지우지 않고 접습니다** (계약-23) */
-.all-regions{margin-top:14px}
+/* ★ 틀 밖에 있어 **화면에 안 보였습니다** (2026-10-02 겪음)
+   .all-regions 가 section 밖에 놓여 가운데 정렬도, 좌우 여백도
+   없었습니다. 쪽 폭에 맞춰 줍니다. */
+.all-regions{
+  margin:14px auto 0;max-width:var(--wrap);
+  padding:0 var(--gutter);box-sizing:border-box;
+}
 .all-regions summary{
   list-style:none;cursor:pointer;background:#fff;border:1px solid #E5DCCB;
   border-radius:14px;min-height:48px;padding:0 14px;display:flex;
@@ -3398,4 +3404,62 @@ details.area-group .area-list{margin-bottom:12px}
   .tm-pick{min-height:0}
   .tm-pick .tp-photo{height:190px}
   .tm-pick .tp-name{font-size:22px}
+}
+
+/* ══════════════════════════════════════════════════════════
+   전국 물때 지도 — 시각 보정
+   2026-10-02 지피티 · tide-map-polish-v2.css
+
+   「전국 축척에서 점이 조금 과밀합니다. 57개 마커가 해안선을
+     따라 **목걸이처럼** 이어져 보여 지도 자체보다 점이 먼저
+     보입니다」
+   「PC 오른쪽 선택 카드의 **흰 여백이 너무 큽니다**」
+
+   ★ 치수는 받은 코드 그대로입니다.
+   ══════════════════════════════════════════════════════════ */
+
+.tm-shell{min-height:500px}
+
+/* 점을 작게 — 흰 테두리도 3 → 2 로 */
+.tm-pin--dot{
+  width:16px;height:16px;border:2px solid rgba(255,255,255,.96);
+}
+.tm-pin--name{
+  padding:5px 8px;border:2px solid rgba(255,255,255,.96);
+  font-size:11px;line-height:1;box-shadow:0 2px 8px rgba(0,0,0,.16);
+  white-space:nowrap;
+}
+.tm-pin--tide{
+  padding:6px 8px;border-radius:11px;border:2px solid rgba(255,255,255,.96);
+  background:rgba(47,93,87,.96);font-size:11px;line-height:1.15;
+  box-shadow:0 2px 9px rgba(0,0,0,.18);white-space:nowrap;
+}
+.tm-pin--tide small{display:block;margin-top:3px;font-size:9px}
+
+/* 선택 카드 — 빈 흰 공간을 줄입니다 */
+.tm-pick{min-height:500px}
+.tm-pick .tp-photo{height:220px;flex:0 0 220px}
+.tm-pick .tp-body{display:flex;flex-direction:column;gap:10px;padding:15px;flex:1}
+/* 물때를 아직 못 받았을 때 — **빈 흰 칸으로 두지 않습니다** */
+.tm-pick .tp-empty{
+  display:flex;align-items:center;justify-content:center;
+  min-height:92px;padding:14px;margin:0;
+  border:1px dashed #E5DCCB;border-radius:12px;
+  color:#6B7680;font-size:12px;line-height:1.5;text-align:center;
+}
+.tm-pick .tp-empty[hidden]{display:none}
+/* 받으면 이 자리에 간·만조 넷이 들어갑니다 */
+.tm-pick .tp-events{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.tm-pick .tp-events[hidden]{display:none}
+.tm-pick .tp-ev{border-radius:10px;padding:9px 10px;font-size:12px;font-weight:900}
+.tm-pick .tp-ev.high{background:#FBEFDC;color:#B8761C}
+.tm-pick .tp-ev.low{background:#E3EFE9;color:#2F5D57}
+
+@media (max-width:760px){
+  .tm-shell{min-height:300px}
+  .tm-pick{min-height:0}
+  .tm-pick .tp-photo{height:190px;flex-basis:190px}
+  .tm-pick .tp-body{padding:12px;gap:8px}
+  .tm-pick .tp-empty{min-height:72px;padding:11px;font-size:11px}
+  .tm-pin--dot{width:14px;height:14px}
 }

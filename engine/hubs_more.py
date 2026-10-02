@@ -124,6 +124,13 @@ def 물때지도(d, 쪽길, 언어='ko'):
             '<p class="tp-sub">%s</p></div></div>'
             '<div class="tp-body">'
             '<p class="tp-station">%s</p>'
+            # ★ **빈 흰 칸으로 두지 않습니다** (2026-10-02 지피티 보정)
+            #   「오른쪽 카드는 물때가 없으면 빈 흰 공간 대신 작은
+            #     상태 영역을 표시. 실제 서버 값이 들어오면 그
+            #     영역을 숨기고 간·만조 4개 표시」
+            '<div class="tp-events" hidden></div>'
+            '<p class="tp-empty">오늘 간조·만조 시각을 불러오는 중입니다.'
+            '<br>「이 권역 물때 보기」에서 시간별 물높이까지 봅니다.</p>'
             '<div class="tp-acts">'
             '<a class="tp-btn tp-btn--on tp-go" href="%s">이 권역 물때 보기</a>'
             '<a class="tp-btn tp-guide" href="%s">권역 안내 보기</a>'
@@ -141,7 +148,10 @@ def 물때지도(d, 쪽길, 언어='ko'):
             실을것 += ('<script src="%s" defer></script>'
                        % esc(url.asset(자리, 쪽길, 판번호(길))))
 
-    자료 = {'지도키': 열쇠, '권역들': 것들}
+    # ★ api 주소는 **쪽 자리에 맞춰 셉니다** — 묶음 쪽에서 404 가
+    #   난 적이 있습니다 (2026-09-29). 여기서 지어내지 않습니다.
+    자료 = {'지도키': 열쇠, '권역들': 것들,
+            'api': url.rel(쪽길, 'api/_')[:-1]}
     속 = ('%s<div class="tide-explorer">'
           '<div class="tm-shell" id="tideMap" aria-label="전국 물때 지도">'
           '</div>%s</div>'

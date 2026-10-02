@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>해루질 준비물 — 바다가자 디자인 프로토타입</title>
+<style>
+:root{
+  --brand:#2F5D57;
+  --orange:#C07B22;
+  --cream:#FAF6EE;
+  --card:#FFFFFF;
+  --line:#E5DCCB;
+  --ink:#201A16;
+  --muted:#6B7680;
+  --soft:#F3EFE7;
+  --green-soft:#E3EFE9;
+  --orange-soft:#FBEFDC;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--cream);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif}
+a{text-decoration:none;color:inherit}
+.wrap{width:min(1120px,calc(100% - 32px));margin:auto;padding:24px 0 40px}
+
+/* hero */
+.hero{
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);
+  gap:16px;align-items:stretch
+}
+.hero-copy,.hero-kit{
+  background:var(--card);border:1px solid var(--line);border-radius:22px
+}
+.hero-copy{padding:28px}
+.kicker{color:var(--orange);font-size:12px;font-weight:900;margin-bottom:8px}
+h1{margin:0;font-size:40px;line-height:1.08;letter-spacing:-.03em}
+.lead{margin:12px 0 0;color:#5f564e;line-height:1.65;font-size:15px;max-width:680px}
+.hero-actions{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
+.btn{min-height:44px;padding:0 15px;border-radius:12px;border:1px solid var(--line);display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;background:#fff}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+.hero-kit{
+  padding:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;background:linear-gradient(180deg,#fff,#fbf7ef)
+}
+.kit-mini{
+  min-height:112px;border-radius:16px;border:1px solid var(--line);background:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;text-align:center
+}
+.kit-mini svg{width:42px;height:42px;stroke:var(--brand)}
+.kit-mini b{font-size:12px}
+.kit-mini span{font-size:10px;color:var(--muted)}
+
+/* quick choice */
+.section{margin-top:22px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:14px;margin-bottom:10px}
+.section-head h2{margin:0;font-size:27px;line-height:1.15}
+.section-head p{margin:0;color:var(--muted);font-size:12px}
+.purpose-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.purpose{
+  border:1px solid var(--line);border-radius:16px;background:#fff;padding:14px;min-height:108px
+}
+.purpose strong{display:block;font-size:15px;margin-bottom:4px}
+.purpose span{font-size:12px;color:var(--muted);line-height:1.5}
+.purpose.core{background:var(--green-soft)}
+.purpose.night{background:#F5F1E8}
+.purpose.safe{background:var(--orange-soft)}
+
+/* gear cards */
+.gear-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.gear-card{
+  background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;
+  display:grid;grid-template-columns:86px minmax(0,1fr);gap:14px;align-items:start
+}
+.gear-icon{
+  width:86px;height:86px;border-radius:16px;background:var(--soft);display:grid;place-items:center
+}
+.gear-icon svg{width:54px;height:54px;stroke:var(--brand);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.gear-title{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.gear-title h3{margin:0;font-size:18px}
+.badge{border-radius:999px;padding:5px 8px;font-size:10px;font-weight:900;background:var(--green-soft);color:var(--brand)}
+.badge.cond{background:var(--orange-soft);color:#A66213}
+.gear-one{margin:6px 0 10px;font-size:13px;color:#4f4943;line-height:1.5}
+.specs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.spec{border-top:1px solid var(--line);padding-top:8px}
+.spec b{display:block;color:var(--muted);font-size:10px;margin-bottom:3px}
+.spec span{font-size:12px;line-height:1.45}
+
+/* compact safety */
+.notice{
+  margin-top:14px;border-left:4px solid var(--orange);background:#fff;border-radius:0 14px 14px 0;
+  border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+  padding:13px 15px
+}
+.notice strong{font-size:13px}
+.notice p{margin:5px 0 0;color:#5f564e;font-size:12px;line-height:1.55}
+
+/* mobile */
+@media(max-width:760px){
+  .wrap{width:min(100% - 24px,420px);padding-top:12px}
+  .hero{grid-template-columns:1fr}
+  .hero-copy{padding:18px}
+  h1{font-size:30px}
+  .lead{font-size:13px;line-height:1.5}
+  .hero-kit{grid-template-columns:repeat(3,1fr);padding:12px;gap:7px}
+  .kit-mini{min-height:88px}
+  .kit-mini svg{width:34px;height:34px}
+  .section{margin-top:16px}
+  .section-head{align-items:flex-start}
+  .section-head h2{font-size:22px}
+  .section-head p{display:none}
+  .purpose-grid{grid-template-columns:1fr 1fr}
+  .purpose:last-child{grid-column:1/-1}
+  .gear-grid{grid-template-columns:1fr}
+  .gear-card{grid-template-columns:72px minmax(0,1fr);padding:13px;gap:11px}
+  .gear-icon{width:72px;height:72px}
+  .gear-icon svg{width:46px;height:46px}
+  .gear-title h3{font-size:17px}
+  .specs{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+<section class="hero">
+  <div class="hero-copy">
+    <div class="kicker">해루질 처음 준비한다면</div>
+    <h1>무엇을 챙겨야 할까요?</h1>
+    <p class="lead">준비물 이름만 나열하지 않고, <b>왜 필요한지 · 언제 쓰는지 · 어떤 특징을 보면 되는지</b>만 빠르게 확인할 수 있게 정리합니다. 특정 제품이나 쇼핑몰로 연결하지 않습니다.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="#gear">준비물 7가지 보기</a>
+      <a class="btn" href="/catch/basics.html">해루질 기초 보기</a>
+    </div>
+  </div>
+
+  <div class="hero-kit" aria-label="대표 준비물">
+    <div class="kit-mini">
+      <svg viewBox="0 0 64 64"><path d="M20 9v25l-5 18h28l-3-18V9"/><path d="M20 34h20"/></svg>
+      <b>장화</b><span>젖는 바닥</span>
+    </div>
+    <div class="kit-mini">
+      <svg viewBox="0 0 64 64"><path d="M24 9v22M31 9v22M38 12v21M19 32c-5 3-8 8-6 13l4 10h25l5-13c2-7-4-11-9-11"/></svg>
+      <b>장갑</b><span>손 보호</span>
+    </div>
+    <div class="kit-mini">
+      <svg viewBox="0 0 64 64"><circle cx="32" cy="29" r="12"/><path d="M20 29H8M44 29h12M16 13l8 8M48 13l-8 8"/><path d="M26 41v10h12V41"/></svg>
+      <b>헤드랜턴</b><span>어두운 시간</span>
+    </div>
+    <div class="kit-mini">
+      <svg viewBox="0 0 64 64"><path d="M15 10h34l-6 44H21z"/><path d="M21 18h22M19 28h26M18 38h27"/></svg>
+      <b>망</b><span>채집물 보관</span>
+    </div>
+    <div class="kit-mini">
+      <svg viewBox="0 0 64 64"><path d="M33 7v42"/><path d="M15 49h36"/><path d="M20 49l-6 7M28 49l-2 7M36 49l2 7M44 49l6 7"/></svg>
+      <b>갈퀴</b><span>바닥 확인</span>
+    </div>
+    <div class="kit-mini">
+      <svg viewBox="0 0 64 64"><path d="M34 8v43"/><path d="M18 17h31"/><path d="M18 17l8 9"/></svg>
+      <b>호미</b><span>얕은 바닥</span>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <h2>상황부터 고르세요</h2>
+    <p>같은 준비물도 쓰는 때가 다릅니다.</p>
+  </div>
+  <div class="purpose-grid">
+    <article class="purpose core"><strong>기본 보호</strong><span>장화 · 장갑 · 망처럼 대부분의 해안 활동에서 먼저 챙길 것</span></article>
+    <article class="purpose night"><strong>어두운 시간</strong><span>해 뜨기 전·해 진 뒤에는 헤드랜턴처럼 시야를 확보하는 장비가 필요합니다.</span></article>
+    <article class="purpose safe"><strong>노출된 바위·깊은 물가</strong><span>구명조끼 등 안전 장비를 우선하고, 무리해서 들어가지 않습니다.</span></article>
+  </div>
+</section>
+
+<section class="section" id="gear">
+  <div class="section-head">
+    <h2>해루질 준비물 7가지</h2>
+    <p>제품명이 아니라 기능과 쓰는 때를 설명합니다.</p>
+  </div>
+
+  <div class="gear-grid">
+    <article class="gear-card">
+      <div class="gear-icon"><svg viewBox="0 0 64 64"><path d="M20 9v25l-5 18h28l-3-18V9"/><path d="M20 34h20"/></svg></div>
+      <div>
+        <div class="gear-title"><h3>장화</h3><span class="badge">기본</span></div>
+        <p class="gear-one">젖은 갯벌·모래·얕은 물가에서 발을 보호하고 미끄럼을 줄이기 위한 기본 장비입니다.</p>
+        <div class="specs">
+          <div class="spec"><b>이럴 때</b><span>갯벌, 젖은 모래, 얕은 물가</span></div>
+          <div class="spec"><b>볼 특징</b><span>바닥 무늬, 발목 고정, 물 유입 높이</span></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="gear-card">
+      <div class="gear-icon"><svg viewBox="0 0 64 64"><path d="M24 9v22M31 9v22M38 12v21M19 32c-5 3-8 8-6 13l4 10h25l5-13c2-7-4-11-9-11"/></svg></div>
+      <div>
+        <div class="gear-title"><h3>장갑</h3><span class="badge">기본</span></div>
+        <p class="gear-one">조개껍데기·바위·도구를 잡을 때 손이 긁히거나 미끄러지는 것을 줄이는 보호 장비입니다.</p>
+        <div class="specs">
+          <div class="spec"><b>이럴 때</b><span>바위 틈 확인, 도구 사용, 젖은 물건 잡기</span></div>
+          <div class="spec"><b>볼 특징</b><span>손바닥 마찰력, 손가락 움직임, 젖었을 때 착용감</span></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="gear-card">
+      <div class="gear-icon"><svg viewBox="0 0 64 64"><path d="M15 10h34l-6 44H21z"/><path d="M21 18h22M19 28h26M18 38h27"/></svg></div>
+      <div>
+        <div class="gear-title"><h3>망</h3><span class="badge">기본</span></div>
+        <p class="gear-one">손을 비워 두고 이동하기 위해 채집한 것을 임시로 담아 두는 용도로 씁니다.</p>
+        <div class="specs">
+          <div class="spec"><b>이럴 때</b><span>이동하면서 손을 자유롭게 써야 할 때</span></div>
+          <div class="spec"><b>볼 특징</b><span>입구 잠금, 허리·어깨 고정, 배수</span></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="gear-card">
+      <div class="gear-icon"><svg viewBox="0 0 64 64"><circle cx="32" cy="29" r="12"/><path d="M20 29H8M44 29h12M16 13l8 8M48 13l-8 8"/><path d="M26 41v10h12V41"/></svg></div>
+      <div>
+        <div class="gear-title"><h3>헤드랜턴</h3><span class="badge cond">상황별</span></div>
+        <p class="gear-one">해 뜨기 전이나 해 진 뒤에 두 손을 쓰면서 발밑과 이동 경로를 보기 위한 조명입니다.</p>
+        <div class="specs">
+          <div class="spec"><b>이럴 때</b><span>새벽, 야간, 바위가 많은 어두운 해안</span></div>
+          <div class="spec"><b>볼 특징</b><span>방수, 배터리 잔량, 넓게 비추는 모드</span></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="gear-card">
+      <div class="gear-icon"><svg viewBox="0 0 64 64"><path d="M33 7v42"/><path d="M15 49h36"/><path d="M20 49l-6 7M28 49l-2 7M36 49l2 7M44 49l6 7"/></svg></div>
+      <div>
+        <div class="gear-title"><h3>갈퀴</h3><span class="badge cond">규정 확인</span></div>
+        <p class="gear-one">부드러운 바닥을 얕게 확인할 때 쓰는 도구입니다. 지역에 따라 도구 사용 제한이 있을 수 있습니다.</p>
+        <div class="specs">
+          <div class="spec"><b>이럴 때</b><span>갯벌·모래 바닥을 얕게 확인할 때</span></div>
+          <div class="spec"><b>볼 특징</b><span>폭, 날 간격, 손잡이 길이</span></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="gear-card">
+      <div class="gear-icon"><svg viewBox="0 0 64 64"><path d="M34 8v43"/><path d="M18 17h31"/><path d="M18 17l8 9"/></svg></div>
+      <div>
+        <div class="gear-title"><h3>호미</h3><span class="badge cond">규정 확인</span></div>
+        <p class="gear-one">작은 범위를 손으로 다루기 어려울 때 쓰는 도구입니다. 사용 가능 여부를 현지 규정에서 먼저 확인합니다.</p>
+        <div class="specs">
+          <div class="spec"><b>이럴 때</b><span>얕은 모래·갯벌의 작은 범위 확인</span></div>
+          <div class="spec"><b>볼 특징</b><span>날 크기, 손잡이 길이, 휴대성</span></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="gear-card">
+      <div class="gear-icon"><svg viewBox="0 0 64 64"><path d="M20 11l12 7 12-7 6 13-5 29H19l-5-29z"/><path d="M26 20v28M38 20v28"/></svg></div>
+      <div>
+        <div class="gear-title"><h3>구명조끼</h3><span class="badge cond">안전</span></div>
+        <p class="gear-one">바위 가장자리·깊은 물가처럼 미끄러졌을 때 물에 빠질 가능성이 있는 곳에서는 안전을 위해 우선 고려합니다.</p>
+        <div class="specs">
+          <div class="spec"><b>이럴 때</b><span>갯바위, 수심 변화가 큰 곳, 파도가 드는 곳</span></div>
+          <div class="spec"><b>볼 특징</b><span>몸에 맞는 고정, 움직임 방해 여부, 상태 확인</span></div>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <div class="notice">
+    <strong>도구는 지역마다 허용 범위가 다를 수 있습니다.</strong>
+    <p>갈퀴·호미 같은 도구의 사용 여부와 채취 제한은 해당 지역의 어촌계·지자체 규정을 먼저 확인하세요. 이 페이지는 준비물의 기능을 설명하는 페이지이며, 특정 제품 구매를 권하지 않습니다.</p>
+  </div>
+</section>
+
+</main>
+</body>
+</html>

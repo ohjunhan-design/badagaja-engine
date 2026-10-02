@@ -1,0 +1,163 @@
+/* tide-map-polish-v2.css
+   전국 물때 지도 선택 화면 시각 보정.
+   기존 기능/데이터/지도 로직은 유지하고 배치·밀도만 다듬는다. */
+
+:root{
+  --brand:#2F5D57;
+  --orange:#C07B22;
+  --cream:#FAF6EE;
+  --card:#FFFFFF;
+  --line:#E5DCCB;
+  --ink:#201A16;
+  --muted:#6B7680;
+}
+
+/* 1) 전국 지도는 한국 해안이 주인공이 되도록 너무 넓게 보이지 않게 */
+.tide-map-shell{
+  min-height:500px;
+}
+
+/* 2) 멀리서 보이는 점 마커는 너무 큰 흰 테두리를 줄인다 */
+.tide-marker--dot{
+  width:16px;
+  height:16px;
+  border:2px solid rgba(255,255,255,.96);
+  background:var(--brand);
+  border-radius:50%;
+  box-shadow:0 2px 7px rgba(0,0,0,.18);
+}
+
+/* 중간 확대: 이름 */
+.tide-marker--name{
+  padding:5px 8px;
+  border-radius:999px;
+  border:2px solid rgba(255,255,255,.96);
+  background:var(--brand);
+  color:#fff;
+  font-size:11px;
+  font-weight:900;
+  line-height:1;
+  box-shadow:0 2px 8px rgba(0,0,0,.16);
+  white-space:nowrap;
+}
+
+/* 가까이 확대: 이름 + 다음 간조 */
+.tide-marker--detail{
+  padding:6px 8px;
+  border-radius:11px;
+  border:2px solid rgba(255,255,255,.96);
+  background:rgba(47,93,87,.96);
+  color:#fff;
+  font-size:11px;
+  font-weight:900;
+  line-height:1.15;
+  box-shadow:0 2px 9px rgba(0,0,0,.18);
+  white-space:nowrap;
+}
+.tide-marker--detail small{
+  display:block;
+  margin-top:3px;
+  font-size:9px;
+  font-weight:700;
+  opacity:.9;
+}
+
+/* 3) 선택 카드의 빈 공간을 줄인다 */
+.tide-selected-card{
+  display:flex;
+  flex-direction:column;
+  min-height:500px;
+}
+.tide-selected-photo{
+  height:220px;
+  flex:0 0 220px;
+}
+.tide-selected-body{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  padding:15px;
+  flex:1;
+}
+.tide-selected-empty{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:92px;
+  padding:14px;
+  border:1px dashed var(--line);
+  border-radius:12px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
+  text-align:center;
+}
+
+/* 실제 물때가 오면 카드 빈 영역 대신 요약이 채워짐 */
+.tide-selected-events{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+}
+.tide-selected-event{
+  border-radius:10px;
+  padding:9px 10px;
+  font-size:12px;
+  font-weight:900;
+}
+.tide-selected-event.high{
+  background:#FBEFDC;
+  color:#B8761C;
+}
+.tide-selected-event.low{
+  background:#E3EFE9;
+  color:var(--brand);
+}
+
+/* 4) 목록 보기와 안내문을 한 덩어리로 묶어 하단 여백 절약 */
+.tide-list-wrap{
+  margin-top:12px;
+}
+.tide-note{
+  margin-top:8px;
+  padding:10px 12px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#fff;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.5;
+}
+
+/* 5) 모바일 */
+@media(max-width:760px){
+  .tide-map-shell{
+    min-height:300px;
+  }
+
+  .tide-selected-card{
+    min-height:0;
+  }
+
+  .tide-selected-photo{
+    height:190px;
+    flex-basis:190px;
+  }
+
+  .tide-selected-body{
+    padding:12px;
+    gap:8px;
+  }
+
+  .tide-selected-empty{
+    min-height:72px;
+    padding:11px;
+    font-size:11px;
+  }
+
+  /* 모바일 전국 레벨에서 점 크기 더 작게 */
+  .tide-marker--dot{
+    width:14px;
+    height:14px;
+  }
+}
