@@ -1847,6 +1847,34 @@ def 시험_사진품질():
         shutil.rmtree(t, ignore_errors=True)
 
 
+# ── check_tide_binding — **관측소가 어긋나면 잡는가** ──────
+def 시험_물때바인딩():
+    """★ 자료의 관측소와 서버가 **다른 곳**을 가리키면 막아야 합니다
+
+    쪽에는 자료의 이름이 적히는데 숫자는 서버 것입니다. 손님은
+    「묵호 관측소 기준」을 읽으면서 다른 곳 숫자를 봅니다.
+
+    ★ 이 검사기는 **인터넷을 씁니다.** 그래서 여기서는 바깥을
+      부르지 않고, **가름 함수만** 시험합니다. 바깥이 느린 날
+      시험이 실패하면 그것은 시험이 아닙니다.
+    """
+    print('[22] check_tide_binding — 관측소가 어긋나면 잡는가')
+    import importlib
+    sys.path.insert(0, ROOT)
+    m = importlib.import_module('engine.check_tide_binding')
+
+    봄('판정 밖에 둔 까닭이 적혀 있다',
+       'check_tide_binding.py' in io.read(
+           os.path.join(ROOT, 'engine', 'gate.py'), default=''),
+       'gate.py 의 밖에둔검사 에 적어야 check_architecture 가 봐줍니다')
+    봄('막음·알림을 따로 둔다 (계약-21)',
+       hasattr(m, '막음') and hasattr(m, '알림'),
+       '모듈 수준에 「막음, 알림 = [], []」 이 있어야 합니다')
+    봄('서버를 못 받으면 터지지 않는다',
+       m.받기('없는권역이름zzz')[0] is None,
+       '못 받으면 (None, 까닭) 을 돌려줘야 합니다')
+
+
 def main():
     print('검사기가 잘못을 잡을 줄 아는지')
     print('')
@@ -1890,6 +1918,7 @@ def main():
     시험_넙치()
     시험_끊긴쪽()
     시험_사진품질()
+    시험_물때바인딩()
     print('')
     if 실패:
         print('%d가지 통과 · %d가지 실패' % (통과, len(실패)))

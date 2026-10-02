@@ -427,6 +427,15 @@ def main():
                 continue
             길 = os.path.join(칸, 이름)
             글 = io.read(길, default='')
+            # ★ **어종 쪽인지 쪽이 말하게 합니다** (2026-10-02)
+            #   fish/ · catch/ 에 어종 아닌 쪽이 늘고 있습니다 —
+            #   basics(길잡이) · gear(준비물). 이름을 하나씩 더하면
+            #   새 쪽을 지을 때마다 또 걸립니다. 실제로 오늘
+            #   준비물 쪽을 만들자 「삽화가 모자란 어종 쪽」으로
+            #   잡혀 배포가 막혔습니다.
+            #   어종 쪽은 틀이 `<body data-guide="...">` 를 답니다.
+            if 'data-guide=' not in 글:
+                continue
             몇 = 0
             for m in re.finditer(r'<svg[^>]*viewBox="([^"]*)"', 글):
                 칸값 = m.group(1).split()
