@@ -1416,7 +1416,18 @@ def 시험_짜임():
             # ★ 사진 71MB 는 복사할 까닭이 없습니다 (2026-09-28)
             #   시험마다 통째로 베끼다 디스크를 때려, 같이 돌던
             #   check_console 이 크롬을 못 얻고 죽었습니다.
-            'photo'))
+            'photo',
+            # ★ **무거운 것을 더 뺍니다** (2026-10-02)
+            #   2026-10-02 에 D 드라이브가 꽉 차 시험이 통째로
+            #   죽었습니다 — 「WinError 112 디스크 공간이
+            #   부족합니다」. 조사 자료 data-private 만 138MB 이고
+            #   그림·캡처까지 합치면 한 번에 수백 MB 를 베낍니다.
+            #
+            #   이 시험이 보는 것은 **engine/ 의 검사기 목록과
+            #   gate.py 의 차례**뿐입니다. 사진도 조사 자료도
+            #   읽지 않습니다. 복사할 까닭이 없습니다.
+            'data-private', 'img', 'out', '샷', '.shot',
+            '*.jpg', '*.jpeg', '*.png', '*.webp', '*.zip', '*.mp4'))
         io.write(os.path.join(뿌리, 'engine', 'check_아무것도안함.py'),
                  '# -*- coding: utf-8 -*-\nimport sys\nsys.exit(0)\n')
         글 = 돌리기('check_architecture.py', 뿌리=뿌리)

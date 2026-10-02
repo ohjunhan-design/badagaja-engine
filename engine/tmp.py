@@ -120,19 +120,39 @@ def 청소(지난시간=24):
         return 0, 0
     우리것 = ('badagaja-render-', 'checker-test-', 'console-', 'ads-check-',
               'tide-check-', 'contract07-', 'species-test-',
-              'mutation-', 'newmoon-', 'months-')
+              'mutation-', 'newmoon-', 'months-',
+              # ★ **크롬이 만드는 것도 우리 것입니다** (2026-10-02)
+              #   우리가 TMP 를 .tmp 로 돌려놨으니 크롬은 거기에
+              #   제 임시 폴더를 만듭니다. 그런데 이 목록에 없어
+              #   **영영 안 지워졌습니다** — 2026-10-02 에
+              #   HeadlessChrome 폴더가 48,573개 쌓여 D 드라이브가
+              #   꽉 찼고, 시험이 「WinError 112 디스크 공간이
+              #   부족합니다」로 통째로 죽었습니다.
+              #   우리가 부른 크롬이 남긴 것이니 우리가 치웁니다.
+              'HeadlessChrome', 'bada-chrome-', 'scoped_dir',
+              '.org.chromium.', 'chrome_')
     지금 = time.time()
     지운수, 지운바이트 = 0, 0
-    for 이름 in os.listdir(p):
+    것들 = os.listdir(p)
+    재볼까 = (len(것들) <= 300)
+    for 이름 in 것들:
         if not 이름.startswith(우리것):
             continue          # 우리가 만든 것이 아니면 손대지 않습니다
         길 = os.path.join(p, 이름)
         try:
             if 지금 - os.path.getmtime(길) < 지난시간 * 3600:
                 continue      # 아직 쓰고 있을 수 있습니다
-            크기 = sum(os.path.getsize(os.path.join(뿌리, f))
-                       for 뿌리, _, 파일들 in os.walk(길)
-                       for f in 파일들)
+            # ★ 크기 재기는 **보고용**입니다 (2026-10-02)
+            #   폴더가 수만 개면 하나하나 훑는 데만 몇 분이 걸립니다.
+            #   지우는 일이 먼저이므로, 많으면 재지 않습니다.
+            크기 = 0
+            if 재볼까:
+                try:
+                    크기 = sum(os.path.getsize(os.path.join(뿌리, f))
+                             for 뿌리, _, 파일들 in os.walk(길)
+                             for f in 파일들)
+                except OSError:
+                    크기 = 0
             # 우리가 만든 이름으로 시작하고, 하루가 지난 것만 지웁니다
             shutil.rmtree(길, ignore_errors=True)  # 계약-17 예외
             지운수 += 1
