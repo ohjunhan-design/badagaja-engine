@@ -242,10 +242,46 @@ def 크롬프로필자리():
       윈도는 그런 제한이 없어 평소대로 둡니다.
     """
     if 윈도인가:
-        return tempfile.mkdtemp(prefix='bada-chrome-')
+        return _기억해둠(tempfile.mkdtemp(prefix='bada-chrome-'))
     # 이름을 짧게 — /tmp/bc-abc123 쯤이면 30바이트 안쪽입니다
     바탕 = '/tmp' if os.path.isdir('/tmp') else None
-    return tempfile.mkdtemp(prefix='bc-', dir=바탕)
+    return _기억해둠(tempfile.mkdtemp(prefix='bc-', dir=바탕))
+
+
+# ★ **만든 프로필은 끝날 때 지웁니다** (2026-10-02)
+#
+#   전에는 만들기만 하고 아무도 안 지웠습니다. 부르는 쪽은 자리를
+#   문자열로 깃발에 붙여 버리니 나중에 찾지도 못합니다.
+#   그래서 `bada-chrome-*` 폴더가 **1만 개 넘게 쌓여 258GB** 를
+#   먹었고, D 드라이브가 꽉 차 시험이 통째로 죽었습니다
+#   (「WinError 112 디스크 공간이 부족합니다」).
+#
+#   크롬 프로필 하나가 수십 MB 입니다. 쪽 448개를 재는 검사기가
+#   한 번 돌 때마다 여러 개를 만듭니다. 치우지 않으면 쌓일 수밖에
+#   없습니다.
+#
+#   `tmp.청소()` 도 하루 지난 것을 치우지만, **만든 자리에서
+#   바로 치우는 것**이 먼저입니다. 둘 다 둡니다.
+_만든프로필 = []
+
+
+def _기억해둠(자리):
+    if not _만든프로필:
+        import atexit
+        atexit.register(_프로필치우기)
+    _만든프로필.append(자리)
+    return 자리
+
+
+def _프로필치우기():
+    """프로그램이 끝날 때 우리가 만든 크롬 프로필을 지웁니다."""
+    import shutil as _sh
+    for 자리 in _만든프로필:
+        try:
+            _sh.rmtree(자리, ignore_errors=True)   # 계약-17 예외
+        except OSError:
+            pass
+    del _만든프로필[:]
 
 
 
