@@ -1039,18 +1039,33 @@ def 시험_주소표():
     try:
         사본 = os.path.join(t, 'data')
         shutil.copytree(os.path.join(ROOT, 'data'), 사본)
-        p2 = os.path.join(사본, 'raw', 'keep.json')
-        d = io.read_json(p2)
-        d['남길것'].pop('about.html', None)
-        io.write_json(p2, d)
+        # ★ **정말 안 만들어진 쪽을 고릅니다** (2026-10-02)
+        #   전에는 `about.html` 을 박아 두었습니다. 그런데 그 쪽은
+        #   그 뒤 **실제로 만들어졌습니다.** 두 자료에서 빼도
+        #   `site/about.html` 이 있으니 「갈 곳 없음」이 아닙니다.
+        #   그래서 이 시험이 「검사기가 못 잡는다」고 헛되이
+        #   적고 있었습니다. 사이트가 자라면 또 같은 일이 납니다.
+        #   **「아직 안 만듦」에 있으면서 site/ 에도 없는 것**을
+        #   매번 골라냅니다.
         p3 = os.path.join(사본, 'raw', 'url-map.json')
         d3 = io.read_json(p3)
-        d3['아직_안_만듦']['쪽'] = [x for x in d3['아직_안_만듦']['쪽']
-                                     if x != 'about.html']
+        아직들 = list(d3['아직_안_만듦']['쪽'])
+        고를것 = next((x for x in 아직들
+                     if not os.path.exists(os.path.join(ROOT, 'site', x))), None)
+        if not 고를것:
+            raise AssertionError(
+                '「아직 안 만듦」에 적힌 쪽이 모두 실제로 만들어졌습니다 — '
+                '이 시험은 안 만들어진 쪽이 있어야 뜻이 있습니다. '
+                'url-map.json 을 손보거나 이 시험을 고쳐야 합니다.')
+        p2 = os.path.join(사본, 'raw', 'keep.json')
+        d = io.read_json(p2)
+        d['남길것'].pop(고를것, None)
+        io.write_json(p2, d)
+        d3['아직_안_만듦']['쪽'] = [x for x in 아직들 if x != 고를것]
         io.write_json(p3, d3)
         글 = 돌리기('url_table.py', 자료=사본, 인자=['--strict'])
         봄('어디에도 안 적힌 옛 주소를 잡는다',
-           '갈 곳 없는 옛 주소' in 글 and 'about.html' in 글, 글[-400:])
+           '갈 곳 없는 옛 주소' in 글 and 고를것 in 글, 글[-400:])
     finally:
         shutil.rmtree(t, ignore_errors=True)
 
@@ -1198,13 +1213,32 @@ def 시험_휴대폰():
        '화면 밖으로 나가는 것이 없습니다' in 글, 글[-400:])
 
     # (가) 화면보다 넓은 것을 넣으면 잡아야 합니다
+    #
+    #   ★ **검사기에게 물어 표본을 고릅니다** (2026-10-02)
+    #     전에는 `taean.html` 에 박아 심었습니다. 그런데 check_mobile 은
+    #     **갈래마다 한 장씩**만 봅니다. 태안은 권역 쪽 57개 중
+    #     하나이고 그 갈래의 대표는 다른 쪽이라, 심어도 **아무도
+    #     안 봤습니다.** 그래서 이 시험이 「검사기가 못 잡는다」고
+    #     헛되이 적고 있었습니다 ([[new-page-into-check-samples]] —
+    #     「표본에 없으면 영영 안 봅니다」).
+    #     검사기가 실제로 보는 첫 쪽에 심습니다.
+    import importlib
+    _cm = importlib.import_module('engine.check_mobile')
+    # 돌려주는 것은 **온전한 경로**이므로 site/ 아래 상대 경로로 바꿉니다
+    표본 = _cm.볼쪽들(False)
+    심을쪽 = (os.path.relpath(표본[0], _cm.NEW).replace(os.sep, '/')
+            if 표본 else 'index.html')
+
     def 넓은것넣기(사본):
-        a = os.path.join(사본, 'taean.html')
+        a = os.path.join(사본, 심을쪽)
         s2 = io.read(a)
-        io.write(a, s2.replace(
+        새것 = s2.replace(
             '</body>',
             '<div style="width:700px;height:40px">일부러 넘치게</div>'
-            '</body>', 1))
+            '</body>', 1)
+        if 새것 == s2:
+            raise AssertionError('%s 에 </body> 가 없습니다' % 심을쪽)
+        io.write(a, 새것)
 
     t, 사본 = 사이트사본(넓은것넣기)
     try:
