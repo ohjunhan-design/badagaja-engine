@@ -142,12 +142,23 @@ document.getElementById('F').addEventListener('load', function () {
     //   **그래프 없는 쪽**을 재게 됩니다. 조용히 헛도는 것을 막습니다.
     var 그래프칸 = d.querySelector('.tide-graph');
     var 그래프 = 그래프칸 ? 그래프칸.querySelector('svg') : null;
+    // ★ **접힌 칸 안이면 안 그려진 것이 맞습니다** (2026-10-02)
+    //   /tide/ 는 그래프를 <details class="tide-detail"> 안에 둡니다.
+    //   손님이 펼쳐야 그립니다. 그런데 검사는 쪽을 열기만 하므로
+    //   「그래프가 안 그려졌습니다」라고 **거짓으로** 알렸습니다.
+    //   접혀 있는지 보고, 그렇다면 탓하지 않습니다.
+    var 접힘 = false;
+    if (그래프칸 && !그래프) {
+      var 위 = 그래프칸.closest('details');
+      접힘 = !!(위 && !위.open);
+    }
     var out = document.getElementById('R');
     out.textContent = JSON.stringify({
       화면폭: W,
       몸폭: d.body.scrollWidth,
       그래프칸: !!그래프칸,
       그래프: !!그래프,
+      접힘: 접힘,
       그래프폭: 그래프 ? Math.round(그래프.getBoundingClientRect().width) : 0,
       넘침: 넘친것.slice(0, 10)
     });
@@ -348,10 +359,14 @@ def main():
                 #   **그래프 없는 쪽**을 잰 것입니다 — 헛돕니다.
                 꼬리 = ''
                 if 것.get('그래프칸'):
-                    꼬리 = ('  · 그래프 %dpx' % 것.get('그래프폭', 0)
-                            if 것.get('그래프')
-                            else '  ★ 그래프가 안 그려졌습니다')
-                    if not 것.get('그래프'):
+                    if 것.get('그래프'):
+                        꼬리 = '  · 그래프 %dpx' % 것.get('그래프폭', 0)
+                    elif 것.get('접힘'):
+                        # 접힌 칸 안입니다 — 손님이 펼쳐야 그립니다.
+                        # 안 그려진 것이 **맞습니다.**
+                        꼬리 = '  · 그래프는 접힌 칸 안에 있습니다'
+                    else:
+                        꼬리 = '  ★ 그래프가 안 그려졌습니다'
                         알림.append('%s (%dpx) — 그래프를 못 그려 '
                                     '덜 재었습니다' % (이름, 폭))
                 print('  · %-40s 몸 %dpx%s'
