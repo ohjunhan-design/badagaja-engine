@@ -80,6 +80,70 @@ def _글자(v):
     return str(v)
 
 
+# ── 그래프 차림표를 **저절로** 붙입니다 ─────────────────────
+#
+#   ★ 2026-10-02 주인이 화면으로 잡아 주셨습니다
+#     간·만조 점이 검은 동그라미였습니다. `tidegraph.css` 가
+#     안 실린 쪽이 **10쪽** 있었습니다(첫 쪽·묶음 쪽 아홉).
+#
+#   까닭은 **쪽마다 손으로 적는 짜임**이었습니다. 쪽을 새로 지을
+#   때마다 또 빠집니다. 그래서 **여기 한 곳에서** 봅니다
+#   (주인 규칙 26 — 쪽이 아니라 엔진을 고칩니다).
+_그래프칸 = re.compile(r'id="tideGraph"')
+_그래프css = re.compile(r'tidegraph\.css')
+
+
+def _그래프차림표끼우기(s):
+    """그래프 칸이 있는데 차림표가 없으면 머리에 끼웁니다."""
+    if not _그래프칸.search(s) or _그래프css.search(s):
+        return s
+    # 이미 실린 다른 차림표 **바로 뒤**에 둡니다 — 뒤에 와야
+    # 그래프 규칙이 바탕 규칙을 덮습니다
+    m = None
+    for m in re.finditer(r'<link rel="stylesheet" href="[^"]*site\.css[^"]*">',
+                         s):
+        pass
+    if not m:
+        m = re.search(r'</title>', s)
+        if not m:
+            return s
+    # ★ **판번호를 붙입니다** — 없으면 브라우저가 옛 차림표를 씁니다
+    #   (파일 내용으로 셉니다. build 가 쓰는 것과 같은 셈법)
+    뿌리 = _차림표뿌리(s)
+    끼울것 = ('<link rel="stylesheet" href="%stidegraph.css%s">'
+              % (뿌리, _그래프css판번호()))
+    return s[:m.end()] + 끼울것 + s[m.end():]
+
+
+_그래프css판 = None
+
+
+def _그래프css판번호():
+    """tidegraph.css 의 판번호. 한 번만 셉니다."""
+    global _그래프css판
+    if _그래프css판 is None:
+        길2 = os.path.join(os.path.dirname(os.path.dirname(
+            os.path.abspath(__file__))), 'assets', 'css', 'tidegraph.css')
+        try:
+            import hashlib
+            with open(길2, 'rb') as f:
+                # ★ build.판번호() 와 **같은 셈법**이어야 합니다
+                #   (sha1 8자리). 다르면 같은 파일에 판번호가
+                #   두 갈래로 생겨 브라우저가 두 번 받습니다.
+                _그래프css판 = '?v=' + hashlib.sha1(f.read()).hexdigest()[:8]
+        except Exception:
+            _그래프css판 = ''
+    return _그래프css판
+
+
+def _차림표뿌리(s):
+    """이미 실린 site.css 주소에서 폴더 부분만 떼어 냅니다."""
+    m = re.search(r'href="([^"]*?)assets/css/site\.css', s)
+    if m:
+        return m.group(1) + 'assets/css/'
+    return 'assets/css/'
+
+
 def 그리기(이름, 값들, *, 안쓴값알림=True):
     """틀 하나를 값으로 채웁니다.
 
@@ -123,6 +187,8 @@ def 그리기(이름, 값들, *, 안쓴값알림=True):
             그리기.안쓴값 = sorted(윗키)
         else:
             그리기.안쓴값 = []
+    # ★ 그래프 칸이 있으면 **차림표가 저절로** 따라옵니다
+    s = _그래프차림표끼우기(s)
     return s
 
 
