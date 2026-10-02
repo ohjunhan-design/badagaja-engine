@@ -209,10 +209,16 @@ def _이주상세(첫):
             #     의미도 약합니다. 오늘 시간별 물높이 그래프 1개만」
             #   `tide-graph.js` 가 이 칸을 채웁니다. 권역 쪽과 **같은
             #   그림**입니다 — 두 벌로 그리지 않습니다 (계약-01).
-            '<div class="td-graph">'
-            '<div class="td-graph-head"><b>오늘 시간별 물높이</b>'
-            '<span id="tdStation">%s</span></div>'
-            '<div class="tide-graph" id="tideGraph"></div></div>'
+            #
+            #   ★ **머리를 얹지 않습니다** (2026-10-02 캡처에서 잡음)
+            #     그래프가 스스로 머리를 만듭니다 — 「오늘의 바다 /
+            #     시간별 물높이 / ○○ 관측소 기준」. 그 위에 또 얹어
+            #     **같은 말이 두 번** 나왔습니다.
+            #     관측소 이름은 그래프가 적으므로, 숨은 칸에만
+            #     남겨 둡니다 — check_promise 가 권역·관측소·요청이
+            #     한 세트인지 그것으로 봅니다.
+            '<span id="tdStation" hidden>%s</span>'
+            '<div class="tide-graph" id="tideGraph"></div>'
             '<div class="tide-strip" id="tideStrip" data-region="%s" '
             'data-station="%s" data-days="14" data-view="full"></div>'
             '</div></details>'
@@ -289,6 +295,11 @@ def 물때쪽(d, 언어='ko'):
                  '갯바위에서는 물이 드는 시각보다 일찍 나오세요.',
         이름표글='57권역',
         _og갈래='tide')
+    # ★ **그래프 차림표를 싣습니다** (2026-10-02 캡처에서 잡음)
+    #   안 싣고 그렸더니 글자가 거대하고 점이 검은 동그라미였습니다.
+    #   권역 쪽은 싣는데 여기만 빠져 있었습니다.
+    from engine.build import 그래프차림표
+    값['집차림표'] = (값.get('집차림표') or '') + 그래프차림표(쪽길)
     return 쪽길, template.그리기('rig-parts.html', 값)
 
 
