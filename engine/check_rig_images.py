@@ -201,6 +201,79 @@ def 검사_그림값(채비):
         말('  · 그림에 적은 값이 모두 자료와 같습니다')
 
 
+# ★ **아이콘이 사이트 빛깔을 쓰는가** (2026-10-02 바깥 검수 13차)
+#
+#   「SVG 자체의 **모양은 좋지만 색상 시스템은 구버전**입니다.
+#     `float`·`downshot`·`metal`·`minnow`·`galchi` 등이 청색
+#     중심이라 새 `/tide/`, 권역 Hero 와 같이 놓으면 이질적입니다.
+#     파일마다 다시 그릴 필요는 없고 **색만 일괄 토큰화**하는
+#     방향이 맞습니다」
+#
+#   아이콘 26개 중 22개가 옛 빛깔(청색 #2E7D9A · 주황 #D9873A ·
+#   진회색 #3B4A52)을 쓰고 있었습니다. 71곳을 사이트 표준으로
+#   바꿨습니다. **다시 어긋나지 않게** 여기서 봅니다.
+#
+#   ★ 표준은 **`site.css` 에서 읽습니다.** 여기에 베껴 적으면
+#     차림표를 고칠 때 이 목록이 낡습니다 ([[one-source-of-truth]]).
+#
+#   ★ **알림입니다.** 빛깔이 조금 달라도 쪽이 깨지지는 않습니다.
+#     그리고 뜻이 있는 빛깔이 있습니다 — 갈치 아이콘의 야광 초록은
+#     **케미라이트**라 초록이어야 알아봅니다. 모래·껍데기 빛깔도
+#     조개와 갯벌의 제 빛깔이지 브랜드색이 아닙니다.
+_뜻있는빛깔 = {
+    '#B8935C',   # 모래
+    '#E5C99A',   # 조개 껍데기
+    '#7BD34A',   # 갈치 채비의 케미라이트 — 야광이라 초록이어야 합니다
+    '#E5A94F',   # favicon 의 해
+    '#FFF', '#FFFFFF', '#000', '#000000',
+}
+
+
+def _차림표빛깔():
+    """`assets/css/site.css` 에서 표준 빛깔을 읽습니다."""
+    import re as _re
+    길 = os.path.join(뿌리, 'assets', 'css', 'site.css')
+    try:
+        글 = io.open(길, encoding='utf-8', errors='replace').read()
+    except OSError:
+        return set()
+    머리 = 글[:4000]   # :root 둘레만 봅니다
+    return {c.upper() for c in _re.findall(r'#[0-9A-Fa-f]{6}', 머리)}
+
+
+def 검사_아이콘빛깔():
+    import re as _re
+    말()
+    말('[5] 아이콘이 사이트 빛깔을 쓰는가')
+    칸 = os.path.join(뿌리, 'assets', 'icon')
+    if not os.path.isdir(칸):
+        알림.append('아이콘 칸을 못 찾았습니다')
+        말('  ~ 아이콘 칸이 없습니다')
+        return
+    표준 = _차림표빛깔() | _뜻있는빛깔
+    딴것, 본것 = {}, 0
+    for n in sorted(os.listdir(칸)):
+        if not n.endswith('.svg'):
+            continue
+        본것 += 1
+        글 = io.open(os.path.join(칸, n), encoding='utf-8',
+                    errors='replace').read()
+        for c in _re.findall(r'#[0-9A-Fa-f]{3,8}', 글):
+            c = c.upper()
+            if c not in 표준:
+                딴것.setdefault(c, set()).add(n)
+    말('      아이콘 %d개 · 차림표 표준 빛깔 %d가지'
+       % (본것, len(표준) - len(_뜻있는빛깔)))
+    if 딴것:
+        알림.append('사이트 빛깔이 아닌 아이콘 %d가지' % len(딴것))
+        말('  ~ 차림표에 없는 빛깔 %d가지' % len(딴것))
+        for c, 들 in sorted(딴것.items(), key=lambda x: -len(x[1]))[:8]:
+            말('      %-9s %s' % (c, ', '.join(sorted(들)[:4])))
+        말('      → 뜻이 있는 빛깔이면 _뜻있는빛깔 에 적어 주십시오.')
+    else:
+        말('  . 아이콘이 모두 사이트 빛깔을 씁니다')
+
+
 def 하기():
     엄격 = '--strict' in sys.argv
     말()
@@ -212,6 +285,7 @@ def 하기():
     검사_그림있나(채비)
     검사_쪽에실렸나(채비)
     검사_그림값(채비)
+    검사_아이콘빛깔()
 
     말()
     말('-' * 60)

@@ -26,6 +26,13 @@
 
   --bg:#FFFBF3; --ink:#2B2116; --muted:#6B5E4F; --line:#EDE3D0;
   --orange:#C07B22; --green:#2F5D57; --white:#fff;
+  /* ★ 아이콘 속 연한 녹색 (2026-10-02 바깥 검수 13차)
+     아이콘 26개의 빛깔을 사이트 표준으로 맞추면서, 전복
+     껍데기 안쪽처럼 **연한 바다빛**이 필요한 자리가
+     생겼습니다. 옛 하늘색 #BFDCE6 을 녹색 쪽으로 옮긴
+     것입니다. 아이콘이 쓰는 빛깔은 여기 다 적습니다 —
+     check_rig_images [5] 가 차림표와 맞대어 봅니다. */
+  --sea-pale:#DCE8E5;
   --wrap:1120px; --gutter:20px;
   --r-sm:12px; --r-md:16px; --r-lg:18px; --r-full:999px;
 
