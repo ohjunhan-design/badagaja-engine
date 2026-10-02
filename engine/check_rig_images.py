@@ -55,7 +55,17 @@ def _사이트():
 
 
 def _그림칸():
-    return os.path.join(_사이트(), 'img', 'rig')
+    """채비 그림의 **원본 자리**입니다.
+
+    ★ `site/img/rig/` 가 아니라 **`data/img/rig/`** 입니다
+      (2026-10-02 — 처음에 site/ 를 보다가 틀렸습니다).
+      `site/` 는 생성물이라 저장소에 올리지 않습니다(.gitignore).
+      그러니 거기에 그림을 두면 **다음 빌드에 사라지고**, 다른
+      컴퓨터에서는 아예 없습니다. 빌드가 `data/img/rig/` 에서
+      `site/` 로 옮깁니다(build.py 4927줄 둘레).
+      새 그림은 **반드시 `data/img/rig/` 에** 둡니다.
+    """
+    return os.path.join(뿌리, 'data', 'img', 'rig')
 
 
 def 검사_그림있나(채비):
