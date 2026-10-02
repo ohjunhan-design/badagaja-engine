@@ -277,6 +277,7 @@
       // ★ 자료가 **안 와도** 맞춥니다 (계약-23). 오면 한 번 더.
       자리맞추기();
     }
+    그래프그리기(r);
   }
 
   function 상세펴기(r, 부드럽게) {
@@ -392,6 +393,38 @@
       if (권역들[i].id === 아이디) { return 권역들[i]; }
     }
     return null;
+  }
+
+
+  /* ── 오늘 시간별 물높이 그래프 ────────────────────────
+   *
+   *   ★ 2026-10-02 공개 서버 캡처에서 잡았습니다
+   *     「오늘 시간별 물높이」 칸이 **비어 있었습니다.**
+   *     `tide-graph.js` 는 **스스로 돌지 않습니다** —
+   *     `BADAGAJA_TIDEGRAPH.mount()` 를 불러 줘야 합니다.
+   *     권역 쪽에는 부르는 코드가 있는데 `/tide/` 에는 **칸만**
+   *     있었습니다. 또 「문구만 있고 기능은 없는」 꼴이었습니다.
+   *
+   *   ★ `/tide/` 는 권역이 바뀌므로 **고를 때마다** 다시 그립니다.
+   */
+  var 그린권역 = null;
+
+  function 그래프그리기(r) {
+    if (!r || 그린권역 === r.id) { return; }
+    var 칸 = document.getElementById('tideGraph');
+    if (!칸 || !window.BADAGAJA_TIDEGRAPH) { return; }
+    그린권역 = r.id;
+    칸.textContent = '';
+    칸.style.display = '';
+    try {
+      window.BADAGAJA_TIDEGRAPH.mount(칸, r.id, { api: 자료.api || '../api/' });
+    } catch (e) { /* 못 그려도 14일 카드는 그대로 (계약-23) */ }
+    // 자료가 안 오면 **빈 칸을 남기지 않습니다**
+    window.setTimeout(function () {
+      if (그린권역 === r.id && !칸.querySelector('.tg-plot')) {
+        칸.style.display = 'none';
+      }
+    }, 8000);
   }
 
   // ── 고른 권역 카드 ────────────────────────────────────
