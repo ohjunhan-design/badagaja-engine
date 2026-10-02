@@ -52,21 +52,33 @@
   <nav class="hc-nav" aria-label="이 쪽 안에서 바로 가기">{{{빠른이동}}}</nav>
 </div></section>
 
+<!-- ★ **칸 머리를 한 줄로 줄였습니다** (2026-10-02 지피티 시안 v4)
+     전에는 눈썹 + h2 + 긴 안내문 세 줄로 202px 을 썼습니다.
+     지피티 — 「물때표 칸의 눈썹 + H2 + 긴 안내문을 없애고
+       **제주시내 물때 한 줄 + 관측소 기준**만 남깁니다.
+       물때 보는 법 단추가 이미 있으므로 첫 화면에서 같은 설명을
+       또 길게 할 필요가 없습니다」
+     ★ 안내문은 **지우지 않습니다** — `#tideStatus` 는 물때를 못
+       불러왔을 때 까닭을 알리는 자리입니다(계약-23). 글만 비웁니다. -->
 <section class="section section--white" id="tide"><div class="wrap">
-  <div class="section-head">
-    <p class="kicker">이번 주 물때</p>
-    <h2 class="serif">물때표</h2>
-    <p class="lead" id="tideStatus">{{물때안내}}</p>
-  </div>
+  <header class="compact-head">
+    <h2>{{권역이름}} 물때</h2>
+    <span class="side-note" id="tideStatus"></span>
+  </header>
   {{{물때자리}}}
 </div></section>
 
+<!-- ★ **칸 머리를 줄였습니다** (2026-10-02 지피티 시안 v4)
+     지피티 — 「어디로 갈까요도 눈썹 + 큰 H2 + 설명문 구조를
+       버리고 **제주시내 포인트 21곳**으로 바로 시작합니다.
+       안전 문구는 **삭제하지 않고** 지도 바로 위의 작은 한 줄
+       안내로 옮깁니다」 -->
 <section class="section" id="points"><div class="wrap">
-  <div class="section-head">
-    <p class="kicker">해루질 · 낚시 포인트</p>
-    <h2 class="serif">{{권역이름}}에서 어디로 갈까요</h2>
-    <p class="lead">{{포인트안내}}</p>
-  </div>
+  <header class="compact-head">
+    <h2>{{권역이름}} 포인트 {{포인트수}}곳</h2>
+    <span class="side-note">지도에서 먼저 위치를 보세요</span>
+  </header>
+  <p class="safety-line">{{포인트안내}}</p>
   {{{포인트지도}}}
   <div class="two-up">{{{포인트칸}}}</div>
   {{{통제}}}

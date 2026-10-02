@@ -2737,10 +2737,17 @@ def 권역지도(d, 권역, 쪽길, 언어='ko'):
             '<img class="rp-img" src="%s" alt="%s 바다" '
             'loading="lazy" width="900" height="600">'
             '<a class="rp-arrow" href="%s" aria-label="포인트 목록 보기">→</a>'
-            '<div class="rp-copy"><div class="rp-row">'
+            # ★ 차례는 **제목 → 설명 → 배지 → 단추** 입니다
+            #   (2026-10-02 지피티 (나) 선택)
+            #   「포인트 제목 최대 2줄 · 설명 최대 1줄 · 배지는 제목
+            #     오른쪽이 아니라 제목 아래 또는 설명 옆.
+            #     카드 높이는 늘리지 말고 오버레이 안 배치만 바꿉니다」
+            #   실제 이름이 「라마다호텔 앞 해안도로 좌측」처럼 길어
+            #   제목 오른쪽에 배지를 두면 겹칩니다.
+            '<div class="rp-copy">'
             '<h3 class="rp-name">%s</h3>'
-            '<span class="rp-count">포인트</span></div>'
             '<p class="rp-desc"></p>'
+            '<span class="rp-count">포인트</span>'
             '<div class="rp-acts">%s</div>'
             '</div></article>'
             % (esc(대표), esc(이름), esc(낚주소 if 낚 else 해주소),

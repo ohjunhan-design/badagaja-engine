@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>바다가자 권역 물때·포인트 압축 UI v4</title>
+<style>
+:root{
+  --brand:#2F5D57;
+  --orange:#C07B22;
+  --cream:#FAF6EE;
+  --card:#fff;
+  --line:#E5DCCB;
+  --muted:#8A8277;
+  --ink:#201A16;
+  --low-bg:#E3EFE9;
+  --high-bg:#FBEFDC;
+  --soft:#F4EFE5;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--cream);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif}
+.page-inner{
+  width:min(1120px, calc(100% - 32px));
+  margin-inline:auto;
+  padding-block:18px;
+}
+
+/* ---------- shared compact section heading ---------- */
+.compact-head{
+  display:flex;align-items:end;justify-content:space-between;gap:16px;
+  margin:0 0 10px;
+}
+.compact-head .kicker{
+  color:var(--orange);font-size:12px;font-weight:900;margin-bottom:4px;
+}
+.compact-head h2{margin:0;font-size:27px;line-height:1.12;letter-spacing:-.02em}
+.compact-head .side-note{font-size:12px;color:var(--muted);white-space:nowrap}
+
+/* ---------- merged tide card: summary + actionable advice + graph ---------- */
+.tide-card{
+  background:var(--card);border:1px solid var(--line);border-radius:18px;
+  overflow:hidden;
+}
+.tide-top{
+  display:grid;grid-template-columns:260px minmax(0,1fr);gap:14px;padding:14px;
+  border-bottom:1px solid var(--line);
+}
+.tide-summary{min-width:0}
+.tide-main{display:flex;align-items:baseline;gap:8px;margin-bottom:10px}
+.tide-main b{font-size:34px;line-height:1;color:var(--ink)}
+.tide-main span{font-size:14px;font-weight:800;color:var(--muted)}
+.events{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.event{padding:9px 10px;border-radius:10px;font-size:13px;font-weight:900}
+.event.high{background:var(--high-bg);color:#B8761C}
+.event.low{background:var(--low-bg);color:var(--brand)}
+.tide-links{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px}
+.btn{
+  min-height:40px;border-radius:11px;border:1px solid var(--line);display:flex;
+  align-items:center;justify-content:center;text-decoration:none;color:var(--ink);
+  background:#fff;font-size:12px;font-weight:900
+}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+
+/* Contract-33 actionable guidance, but only one compact strip */
+.advice{
+  min-width:0;background:var(--soft);border-radius:13px;padding:12px 13px;
+  display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start
+}
+.advice-badge{
+  background:var(--orange);color:#fff;border-radius:999px;padding:6px 8px;
+  font-size:11px;font-weight:900;white-space:nowrap
+}
+.advice strong{display:block;font-size:15px;line-height:1.35;margin-bottom:3px}
+.advice p{margin:0;color:#685f55;font-size:12px;line-height:1.48}
+.advice .meta{display:block;color:var(--muted);font-size:11px;margin-top:4px}
+
+/* graph no duplicated event chips */
+.graph-wrap{padding:12px 14px 10px}
+.graph-head{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px
+}
+.graph-head strong{font-size:17px}
+.graph-head span{font-size:11px;color:var(--muted)}
+.chart{height:168px;background:var(--cream);border-radius:13px;padding:7px}
+.chart svg{display:block;width:100%;height:100%}
+.graph-foot{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:7px
+}
+.legend{display:flex;gap:10px;font-size:11px;font-weight:800}
+.legend span{display:flex;align-items:center;gap:5px}
+.dot{width:8px;height:8px;border-radius:50%}
+.dot.low{background:var(--brand)} .dot.high{background:var(--orange)}
+.source{font-size:10px;color:var(--muted);text-align:right}
+
+/* ---------- points header: no eyebrow + title + paragraph stack ---------- */
+.points-head{
+  display:grid;grid-template-columns:1fr auto;align-items:end;gap:14px;margin:18px 0 8px
+}
+.points-title h2{margin:0;font-size:27px;line-height:1.12}
+.points-title p{margin:5px 0 0;color:var(--muted);font-size:12px}
+.points-filters{display:flex;gap:7px;overflow:auto;scrollbar-width:none}
+.points-filters::-webkit-scrollbar{display:none}
+.filter{
+  flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:999px;
+  padding:8px 12px;font-size:12px;font-weight:900;color:var(--ink)
+}
+.filter.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.safety-line{
+  margin:0 0 9px;padding:8px 10px;background:#fff;border:1px solid var(--line);
+  border-radius:11px;font-size:11px;line-height:1.45;color:#6f665d
+}
+
+/* demo map area just to show vertical rhythm */
+.map-demo{
+  height:360px;border-radius:18px;border:1px solid var(--line);
+  background:linear-gradient(135deg,#a6d5df 0 44%,#deead7 44% 66%,#efe5c7 66%);
+}
+
+/* ---------- mobile ---------- */
+@media(max-width:760px){
+  .page-inner{width:min(100% - 24px, 420px);padding-block:12px}
+  .compact-head{margin-bottom:8px}
+  .compact-head .kicker{display:none}
+  .compact-head h2{font-size:22px}
+  .compact-head .side-note{font-size:10px}
+  .tide-top{grid-template-columns:1fr;padding:11px;gap:9px}
+  .tide-main{margin-bottom:8px}
+  .tide-main b{font-size:30px}
+  .events{gap:6px}
+  .event{padding:9px}
+  .advice{padding:10px 11px}
+  .advice strong{font-size:14px}
+  .advice p{font-size:11px}
+  .graph-wrap{padding:10px 11px 9px}
+  .chart{height:156px}
+  .graph-head strong{font-size:16px}
+  .graph-foot{align-items:flex-start;flex-direction:column;gap:5px}
+  .source{text-align:left}
+  .points-head{grid-template-columns:1fr;margin-top:14px}
+  .points-title h2{font-size:22px}
+  .points-title p{display:none}
+  .points-filters{grid-row:2}
+  .safety-line{font-size:10.5px}
+  .map-demo{height:290px}
+}
+</style>
+</head>
+<body>
+<main class="page-inner">
+
+  <header class="compact-head">
+    <div>
+      <div class="kicker">오늘 바다</div>
+      <h2>제주시내 물때</h2>
+    </div>
+    <div class="side-note">제주 관측소 기준</div>
+  </header>
+
+  <section class="tide-card">
+    <div class="tide-top">
+      <div class="tide-summary">
+        <div class="tide-main"><b>12물</b><span>중간</span></div>
+        <div class="events">
+          <div class="event high">만조 04:54</div>
+          <div class="event low">간조 11:38</div>
+          <div class="event high">만조 17:26</div>
+          <div class="event low">간조 23:52</div>
+        </div>
+        <div class="tide-links">
+          <a class="btn primary" href="/tide/">14일 물때표</a>
+          <a class="btn" href="/muldae.html">물때 보는 법</a>
+        </div>
+      </div>
+
+      <aside class="advice">
+        <span class="advice-badge">이번 주</span>
+        <div>
+          <strong>가장 많이 빠지는 날은 10/8(목)</strong>
+          <p>이번 주말은 조금 무렵이라 물이 적게 빠집니다. 해루질보다 낚시가 낫습니다.</p>
+          <span class="meta">10/8 · 중간</span>
+        </div>
+      </aside>
+    </div>
+
+    <div class="graph-wrap">
+      <div class="graph-head">
+        <strong>시간별 물높이</strong>
+        <span>실제 포인트와 차이가 날 수 있어요</span>
+      </div>
+      <div class="chart">
+        <svg viewBox="0 0 720 168" aria-label="시간별 물높이">
+          <defs>
+            <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#7CB4AD" stop-opacity=".44"/>
+              <stop offset="1" stop-color="#7CB4AD" stop-opacity=".025"/>
+            </linearGradient>
+          </defs>
+          <path d="M16,110 C100,25 165,20 240,108 S390,155 465,55 S610,28 704,115 L704,145 L16,145Z" fill="url(#sea)"/>
+          <path d="M16,110 C100,25 165,20 240,108 S390,155 465,55 S610,28 704,115" fill="none" stroke="#2F5D57" stroke-width="3" stroke-linecap="round"/>
+          <line x1="330" y1="18" x2="330" y2="145" stroke="#C07B22" stroke-width="1.5" stroke-dasharray="5 5"/>
+          <rect x="307" y="3" width="46" height="24" rx="12" fill="#C07B22"/>
+          <text x="330" y="19" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">지금</text>
+          <circle cx="150" cy="42" r="5.5" fill="#C07B22" stroke="#fff" stroke-width="2"/>
+          <circle cx="335" cy="137" r="5.5" fill="#2F5D57" stroke="#fff" stroke-width="2"/>
+          <circle cx="505" cy="50" r="5.5" fill="#C07B22" stroke="#fff" stroke-width="2"/>
+          <circle cx="704" cy="115" r="5.5" fill="#2F5D57" stroke="#fff" stroke-width="2"/>
+          <text x="16" y="163" font-size="11" fill="#8A8277">0시</text>
+          <text x="360" y="163" text-anchor="middle" font-size="11" fill="#8A8277">12시</text>
+          <text x="704" y="163" text-anchor="end" font-size="11" fill="#8A8277">24시</text>
+        </svg>
+      </div>
+      <div class="graph-foot">
+        <div class="legend"><span><i class="dot low"></i>간조</span><span><i class="dot high"></i>만조</span></div>
+        <div class="source">국립해양조사원 조석예보 · 10분 간격</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="points-head">
+      <div class="points-title">
+        <h2>제주시내 포인트 21곳</h2>
+        <p>지도에서 먼저 위치를 보고 낚시·해루질을 고르세요.</p>
+      </div>
+      <div class="points-filters">
+        <button class="filter active">전체 21</button>
+        <button class="filter">낚시 14</button>
+        <button class="filter">해루질 7</button>
+      </div>
+    </div>
+    <p class="safety-line">자리마다 어촌계·지자체 규정과 출입 조건이 다릅니다. 가기 전에 해당 포인트의 출입·금지 정보를 확인하세요.</p>
+    <div class="map-demo"></div>
+  </section>
+
+</main>
+</body>
+</html>
