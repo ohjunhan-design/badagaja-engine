@@ -155,6 +155,15 @@ def 물때지도(d, 쪽길, 언어='ko'):
     속 = ('%s<div class="tide-explorer">'
           '<div class="tm-shell" id="tideMap" aria-label="전국 물때 지도">'
           '</div>%s</div>'
+          # ★ **한 번만** 밝힙니다 (2026-10-02 바깥 검수)
+          #   「권역마다 '강릉과 같은 값입니다' 같은 문구를 붙이면
+          #     화면이 지저분하고 매핑이 바뀔 때 관리 부담도
+          #     생깁니다. 지금처럼 '묵호 관측소 기준'을 보여주고
+          #     **한 번만** 안내문을 넣으세요」
+          #   조위관측소가 성긴 동해안에서는 이웃 권역이 같은
+          #   관측소를 씁니다 — 양양·속초·강원고성이 모두 속초.
+          '<p class="tm-note">인접 권역이 같은 관측소를 쓰는 경우 '
+          '물때 예보가 같게 표시될 수 있습니다.</p>'
           '<script type="application/json" id="물때지도자료">%s</script>%s'
           % (''.join(칩), 카드,
              json.dumps(자료, ensure_ascii=False, separators=(',', ':')),
