@@ -56,6 +56,7 @@ sys.path.insert(0, ROOT)
 from engine import io     # noqa: E402
 from engine import data   # noqa: E402
 from engine import url    # noqa: E402
+from engine import build  # noqa: E402  (대표사진을 씁니다)
 
 NEW = os.environ.get('BADAGAJA_SITE', os.path.join(ROOT, 'site'))
 
@@ -161,14 +162,42 @@ def main():
     사슬('명소', 것, lambda 열쇠, 글, 원: 열쇠 in 글, 쪽들)
 
     # ── ③ 명소 사진 — 자료에 있는 사진이 쪽에 걸렸는가
+    #
+    #   ★ **히어로와 같은 사진은 빼 줍니다** (2026-10-02)
+    #     바깥 검수가 「한 쪽에서 같은 사진이 Hero 와 관광카드에
+    #     두 번 나오면 **같은 사진을 돌려 쓰는 사이트**처럼
+    #     느껴진다」고 했습니다. 그래서 명소 카드가 히어로와
+    #     알맹이가 같은 사진이면 **일부러 안 씁니다**
+    #     (build.py 의 `_명소그림`).
+    #     창원·강릉·서귀포·속초 네 곳이 그렇습니다 — 히어로
+    #     사진이 곧 그 명소 사진이라 이름만 다릅니다.
+    #     **이름이 아니라 알맹이(sha1)** 로 가립니다
+    #     ([[photo-check-by-distance]] 「이름은 못 믿습니다」).
+    #     아무 까닭 없이 빠진 것은 그대로 잡습니다.
+    import hashlib
+
+    def _지문(파일):
+        if not 파일:
+            return None
+        길 = 파일 if os.path.isabs(파일) else os.path.join(NEW, 파일)
+        try:
+            with open(길, 'rb') as f:
+                return hashlib.sha1(f.read()).hexdigest()
+        except OSError:
+            return None
+
     것 = []
     for r in d.권역들:
+        히어로지문 = _지문((build.대표사진(d, 권역=r['id']) or {}).get('파일'))
         for 사 in (d.명소사진(r['id']) or []):
             파일 = 사.get('파일')
-            if 파일:
-                것.append((os.path.basename(파일),
-                           '%s·%s' % (말(r['이름']), 사.get('제목') or '?'),
-                           url.region(r['id'])))
+            if not 파일:
+                continue
+            if 히어로지문 and _지문(파일) == 히어로지문:
+                continue          # 히어로와 같은 사진 — 일부러 뺀 것입니다
+            것.append((os.path.basename(파일),
+                       '%s·%s' % (말(r['이름']), 사.get('제목') or '?'),
+                       url.region(r['id'])))
     사슬('명소 사진', 것, lambda 열쇠, 글, 원: 열쇠 in 원, 쪽들)
 
     # ── ④ 축제 — 자료의 축제가 권역 쪽에 나오는가
