@@ -56,6 +56,17 @@ _링크 = re.compile(r'(?:href|src)="([^"#?]+)"')
 #   막는 것과 알리는 것을 **따로 모읍니다.**
 막음, 알림 = [], []
 
+def _자료칸():
+    """자료가 있는 자리.
+
+    ★ **시험이 주는 사본을 봅니다** (2026-10-02 판정 [2])
+      박아 두면 검사기 자기검증이 자료를 망가뜨려도 **멀쩡한 진짜
+      자료**를 재고 「탈 없다」고 합니다. 잡는 척하는 검사기는
+      없는 것보다 나쁩니다.
+    """
+    return os.environ.get('BADAGAJA_DATA', os.path.join(여기, 'data'))
+
+
 
 def 쪽들():
     for 뿌리, _, 파일들 in os.walk(쪽밭):
@@ -132,7 +143,7 @@ def main():
     print('[2] 남길 것 목록에 **손님이 보는 한국어 쪽**이 있는가')
     from engine import io as _io
     남길것 = (_io.read_json(
-        os.path.join(여기, 'data', 'raw', 'keep.json'),
+        os.path.join(_자료칸(), 'raw', 'keep.json'),
         default={}).get('남길것') or {})
     감싼것 = []
     for 길 in 남길것:

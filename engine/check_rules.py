@@ -51,6 +51,17 @@ import glob
 #   입니다. 다만 「규정 자료가 아직 없다」처럼 **이번에 잴 것이
 #   없는 것**까지 막으면, 기능을 더하는 중에 배포가 멈춥니다.
 막음, 알림 = [], []
+
+def _자료칸():
+    """자료가 있는 자리.
+
+    ★ **시험이 주는 사본을 봅니다** (2026-10-02 판정 [2])
+      박아 두면 검사기 자기검증이 자료를 망가뜨려도 **멀쩡한 진짜
+      자료**를 재고 「탈 없다」고 합니다. 잡는 척하는 검사기는
+      없는 것보다 나쁩니다.
+    """
+    return os.environ.get('BADAGAJA_DATA', os.path.join(뿌리, 'data'))
+
 어김 = 막음
 
 
@@ -83,7 +94,7 @@ def 이름만(v):
 
 
 def 자료읽기():
-    p = os.path.join(뿌리, 'data', 'raw', 'guide.json')
+    p = os.path.join(_자료칸(), 'raw', 'guide.json')
     if not os.path.isfile(p):
         return None
     return json.load(io.open(p, encoding='utf-8'))
@@ -91,7 +102,7 @@ def 자료읽기():
 
 def 포인트읽기():
     것들 = []
-    for p in sorted(glob.glob(os.path.join(뿌리, 'data', 'raw',
+    for p in sorted(glob.glob(os.path.join(_자료칸(), 'raw',
                                            'points', '*.json'))):
         j = json.load(io.open(p, encoding='utf-8'))
         몸 = j if isinstance(j, list) else (j.get('포인트') or j.get('것들'))
@@ -221,7 +232,7 @@ def 검사_포인트대상(아이디, 포인트쪽):
 def 검사_규정자료():
     말()
     말('[4] 규정 자료')
-    p = os.path.join(뿌리, 'data', 'raw', 'rules', '금어기.json')
+    p = os.path.join(_자료칸(), 'raw', 'rules', '금어기.json')
     if not os.path.isfile(p):
         알린다('규정 자료가 아직 없습니다',
                '자료 꼴을 굳히는 중입니다 (합의 R-001)')

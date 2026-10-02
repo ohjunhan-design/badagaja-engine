@@ -34,7 +34,18 @@ import subprocess
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-자료 = os.path.join(ROOT, 'data', 'raw', 'guide.json')
+def _자료칸():
+    """자료가 있는 자리.
+
+    ★ **시험이 주는 사본을 봅니다** (2026-10-02 판정 [2])
+      박아 두면 검사기 자기검증이 자료를 망가뜨려도 **멀쩡한 진짜
+      자료**를 재고 「탈 없다」고 합니다. 잡는 척하는 검사기는
+      없는 것보다 나쁩니다.
+    """
+    return os.environ.get('BADAGAJA_DATA', os.path.join(ROOT, 'data'))
+
+
+자료 = os.path.join(_자료칸(), 'raw', 'guide.json')
 
 # 사라지면 안 되는 말 — 채비 갈래·미끼·규정처럼 **뜻이 큰 것**만 봅니다.
 #   흔한 말(「좋습니다」 같은)까지 보면 글을 다듬을 때마다 걸려
@@ -76,8 +87,6 @@ def 이전판():
 #   막음 — 있던 말이 사라졌습니다. 고쳐야 합니다
 #   알림 — 잴 수 없었습니다. 막지는 않습니다
 막음, 알림 = [], []
-
-
 def main():
     엄격 = '--strict' in sys.argv
     print('어종 안내를 손보다 있던 것을 잃지 않았는가')

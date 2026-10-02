@@ -51,6 +51,17 @@ OLD = os.environ.get('BADAGAJA_OLD', r'D:\바다가자\badagaja-site')
 
 # 검사 등급 (계약-21)
 막음 = []
+
+def _자료칸():
+    """자료가 있는 자리.
+
+    ★ **시험이 주는 사본을 봅니다** (2026-10-02 판정 [2])
+      박아 두면 검사기 자기검증이 자료를 망가뜨려도 **멀쩡한 진짜
+      자료**를 재고 「탈 없다」고 합니다. 잡는 척하는 검사기는
+      없는 것보다 나쁩니다.
+    """
+    return os.environ.get('BADAGAJA_DATA', os.path.join(ROOT, 'data'))
+
 알림 = []
 
 # ── 갈래마다 옛 쪽 ↔ 새 쪽 한 쌍 ──────────────────────────
@@ -130,7 +141,7 @@ def _정한목록():
     """data/design-accepted.json 을 한 번만 읽습니다."""
     global _정한것
     if _정한것 is None:
-        길 = os.path.join(ROOT, 'data', 'design-accepted.json')
+        길 = os.path.join(_자료칸(), 'design-accepted.json')
         try:
             _정한것 = io.read_json(길, default={}).get('받아들인것') or []
         except Exception:
@@ -485,7 +496,7 @@ def main():
     #   설명 쪽의 절 차례가 권역 쪽과 같을 까닭이 없습니다.
     #   **무엇이 권역인지는 자료가 압니다** (계약-11).
     권역들 = set()
-    _색인 = io.read_json(os.path.join(ROOT, 'data', 'raw', 'index.json'),
+    _색인 = io.read_json(os.path.join(_자료칸(), 'raw', 'index.json'),
                          default={})
     for _k in ('권역', 'regions'):
         것 = _색인.get(_k)
@@ -539,7 +550,7 @@ def main():
     #     화면을 찍어 봐도 잘린 자리가 자연스러워 보여 놓치기 쉽습니다.
     print('[5] 그림 안 글자가 그림 밖으로 나가지 않는가')
     넘친것 = []
-    차례 = io.read_json(os.path.join(ROOT, 'data', 'raw', 'lessons.json'),
+    차례 = io.read_json(os.path.join(_자료칸(), 'raw', 'lessons.json'),
                         default={}).get('차례') or {}
     for 대상 in sorted(차례):
         for 몇, 단 in enumerate(차례[대상], 1):
@@ -839,7 +850,7 @@ def main():
     try:
         import json as _json
         from engine import art as _art
-        _길 = os.path.join(ROOT, 'data', 'raw', 'guide.json')
+        _길 = os.path.join(_자료칸(), 'raw', 'guide.json')
         _d = _json.loads(io.read(_길, default='{}') or '{}')
         _것들 = _d.get('어종') or []
         _빠짐 = []
@@ -893,7 +904,7 @@ def main():
     _막는도구 = ('공기통', '집어등', '수경', '숨대롱', '오리발', '작살')
     try:
         import json as _js
-        _길 = os.path.join(ROOT, 'data', 'raw', 'guide.json')
+        _길 = os.path.join(_자료칸(), 'raw', 'guide.json')
         _d = _js.loads(io.read(_길, default='{}') or '{}')
         _걸림 = []
         for _x in (_d.get('어종') or []):
