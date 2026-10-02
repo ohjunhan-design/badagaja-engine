@@ -38,6 +38,17 @@ import sys
 뿌리 = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 막음, 알림 = [], []
+def _자료칸():
+    """자료가 있는 자리.
+
+    ★ **시험이 주는 사본을 봅니다** (2026-10-02)
+      `os.path.join(뿌리, 'data')` 로 박아 두면 검사기 자기검증이
+      자료를 일부러 망가뜨려도 **멀쩡한 진짜 자료**를 재고
+      「아무 탈 없다」고 합니다. 오늘 그 꼴로 두 가지가 헛되이
+      실패하고 있었습니다.
+    """
+    return os.environ.get('BADAGAJA_DATA', os.path.join(뿌리, 'data'))
+
 
 
 def 말(s=''):
@@ -45,7 +56,7 @@ def 말(s=''):
 
 
 def _자료():
-    길 = os.path.join(뿌리, 'data', 'raw', 'rigs.json')
+    길 = os.path.join(_자료칸(), 'raw', 'rigs.json')
     with io.open(길, encoding='utf-8') as f:
         return json.load(f)
 
@@ -65,7 +76,7 @@ def _그림칸():
       `site/` 로 옮깁니다(build.py 4927줄 둘레).
       새 그림은 **반드시 `data/img/rig/` 에** 둡니다.
     """
-    return os.path.join(뿌리, 'data', 'img', 'rig')
+    return os.path.join(_자료칸(), 'img', 'rig')
 
 
 def 검사_그림있나(채비):
