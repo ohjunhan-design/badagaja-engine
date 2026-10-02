@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>바다가자 권역 Hero 중복 제거 v5</title>
+<style>
+:root{
+  --brand:#2F5D57; --orange:#C07B22; --cream:#FAF6EE; --card:#fff;
+  --line:#E5DCCB; --muted:#8A8277; --ink:#201A16; --soft:#F4EFE5;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--cream);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif}
+.region-top{width:min(1120px,calc(100% - 32px));margin:auto;padding:20px 0 10px}
+
+/* HERO: remove duplicated 2x2 stats completely */
+.hero{
+  position:relative;min-height:330px;border:1px solid var(--line);border-radius:22px;
+  overflow:hidden;background:#ccd8dc;
+}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(8,20,18,.76) 0%,rgba(8,20,18,.38) 48%,rgba(8,20,18,.08) 78%);
+}
+.hero-copy{
+  position:absolute;z-index:2;left:26px;bottom:24px;width:min(620px,62%);color:#fff
+}
+.hero-meta{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-bottom:9px}
+.meta-pill{
+  display:inline-flex;align-items:center;min-height:30px;padding:0 10px;border-radius:999px;
+  background:rgba(255,255,255,.94);color:var(--brand);font-size:12px;font-weight:900
+}
+.hero-copy h1{margin:0 0 7px;font-size:40px;line-height:1.05;letter-spacing:-.03em}
+.hero-copy p{margin:0;font-size:14px;line-height:1.55;opacity:.95}
+
+/* CTA on photo: unique actions, not repeated stats */
+.hero-actions{
+  position:absolute;z-index:3;right:22px;bottom:22px;display:flex;gap:8px
+}
+.hero-actions a{
+  min-width:145px;min-height:44px;padding:0 14px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;text-decoration:none;
+  font-size:13px;font-weight:900;border:1px solid rgba(255,255,255,.65);
+  background:rgba(255,255,255,.94);color:var(--ink);backdrop-filter:blur(3px)
+}
+.hero-actions a.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+
+/* AEO strip is now the ONLY place for detailed stats */
+.answer{
+  margin-top:10px;background:#fff;border:1px solid var(--line);border-radius:16px;
+  display:grid;grid-template-columns:1fr 1.45fr 1fr 1.35fr;overflow:hidden
+}
+.answer-item{padding:12px 14px;border-right:1px solid var(--line);min-width:0}
+.answer-item:last-child{border-right:0}
+.answer-label{font-size:11px;font-weight:900;color:var(--muted);margin-bottom:5px}
+.answer-value{font-size:13px;font-weight:800;line-height:1.45}
+.answer-value a{color:var(--brand)}
+.tags{display:flex;gap:5px;flex-wrap:wrap}
+.tag{font-size:11px;font-weight:800;background:var(--soft);border-radius:999px;padding:4px 7px}
+
+/* Quick nav: one horizontal row, never a 7-row list */
+.quicknav{display:flex;gap:7px;overflow-x:auto;padding:10px 0 2px;scrollbar-width:none}
+.quicknav::-webkit-scrollbar{display:none}
+.quicknav a{
+  flex:0 0 auto;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);
+  border-radius:999px;padding:8px 11px;font-size:12px;font-weight:900
+}
+.quicknav a:first-child{background:var(--brand);color:#fff;border-color:var(--brand)}
+
+/* FIX: section heading must never collapse into vertical letters */
+.section-head{
+  width:min(1120px,calc(100% - 32px));margin:18px auto 8px;
+  display:flex;align-items:end;justify-content:space-between;gap:16px
+}
+.section-head h2{margin:0;font-size:28px;line-height:1.15;white-space:normal}
+.section-head p{margin:0;color:var(--muted);font-size:12px;text-align:right;max-width:560px}
+
+/* Example next card to show rhythm */
+.placeholder{
+  width:min(1120px,calc(100% - 32px));margin:auto;height:260px;
+  border:1px solid var(--line);border-radius:18px;background:#fff
+}
+
+@media(max-width:760px){
+  .region-top{width:min(100% - 24px,420px);padding-top:12px}
+  .hero{min-height:270px}
+  .hero:after{
+    background:linear-gradient(0deg,rgba(8,20,18,.82) 0%,rgba(8,20,18,.30) 62%,rgba(8,20,18,.06) 100%)
+  }
+  .hero-copy{left:15px;right:15px;bottom:15px;width:auto;padding-bottom:48px}
+  .hero-copy h1{font-size:30px}
+  .hero-copy p{
+    font-size:12.5px;line-height:1.45;display:-webkit-box;
+    -webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden
+  }
+  .hero-actions{
+    left:15px;right:15px;bottom:13px;display:grid;grid-template-columns:1fr 1fr;gap:7px
+  }
+  .hero-actions a{min-width:0;min-height:39px;font-size:12px}
+  .answer{grid-template-columns:1fr 1fr}
+  .answer-item{
+    padding:10px 11px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)
+  }
+  .answer-item:nth-child(2n){border-right:0}
+  .answer-item:nth-last-child(-n+2){border-bottom:0}
+  .answer-value{font-size:12px}
+  .quicknav{position:sticky;top:0;z-index:20;background:linear-gradient(var(--cream) 82%,transparent)}
+
+  /* hard fix for screenshot bug */
+  .section-head{
+    width:min(100% - 24px,420px);margin:14px auto 7px;
+    display:block !important;
+  }
+  .section-head h2{
+    display:block !important;width:auto !important;max-width:none !important;
+    writing-mode:horizontal-tb !important;word-break:keep-all;white-space:normal;
+    font-size:22px;line-height:1.25
+  }
+  .section-head p{
+    margin-top:4px;text-align:left;font-size:10.5px;line-height:1.45;
+    max-width:none;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden
+  }
+  .placeholder{width:min(100% - 24px,420px);height:220px}
+}
+</style>
+</head>
+<body>
+
+<section class="region-top">
+  <article class="hero">
+    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80" alt="">
+    <div class="hero-copy">
+      <div class="hero-meta">
+        <span class="meta-pill">제주시내 바다 안내</span>
+        <span class="meta-pill">오늘 12물 중간</span>
+      </div>
+      <h1>제주시내 바다</h1>
+      <p>제주국제공항과 제주항이 모인 섬의 관문입니다. 가까운 해안과 방파제를 오늘 물때에 맞춰 골라보세요.</p>
+    </div>
+    <div class="hero-actions">
+      <a class="primary" href="#points">포인트 21곳 보기</a>
+      <a href="#tide">오늘 물때 보기</a>
+    </div>
+  </article>
+
+  <section class="answer" aria-label="이 바다에서 무엇을 할 수 있나">
+    <div class="answer-item">
+      <div class="answer-label">포인트</div>
+      <div class="answer-value">낚시 14곳 · 해루질 7곳</div>
+    </div>
+    <div class="answer-item">
+      <div class="answer-label">많이 나오는 것</div>
+      <div class="answer-value tags">
+        <span class="tag">벵에돔 14곳</span><span class="tag">참돔 14곳</span>
+        <span class="tag">돌돔 14곳</span><span class="tag">감성돔 8곳</span><span class="tag">농어 8곳</span>
+      </div>
+    </div>
+    <div class="answer-item">
+      <div class="answer-label">물때</div>
+      <div class="answer-value">제주 관측소 기준</div>
+    </div>
+    <div class="answer-item">
+      <div class="answer-label">금어기</div>
+      <div class="answer-value">전국 공통 금어기 해당 없음 · <a href="/rule.html">규정 보기</a></div>
+    </div>
+  </section>
+
+  <nav class="quicknav" aria-label="빠른 이동">
+    <a href="#points">포인트</a><a href="#tide">물때</a><a href="#catch">제철 어종</a>
+    <a href="#eat">먹거리</a><a href="#spot">해안 명소</a><a href="#festival">축제</a><a href="#course">여행 코스</a>
+  </nav>
+</section>
+
+<header class="section-head" id="tide">
+  <h2>제주시내 물때</h2>
+  <p>간조·만조 시각과 오늘 물높이를 제주 관측소 기준으로 확인하세요.</p>
+</header>
+<div class="placeholder"></div>
+
+</body>
+</html>

@@ -3162,3 +3162,58 @@ details.area-group .area-list{margin-bottom:12px}
   .compact-head h2{font-size:22px}
   .compact-head .side-note{font-size:11px}
 }
+
+/* ══════════════════════════════════════════════════════════
+   권역 쪽 — v5 (2026-10-02 지피티 · region-hero-dedup-v5.html)
+
+   ① 숫자 2×2 를 **없앴습니다** — 바로 아래 AEO 띠와 중복
+   ② 단추를 **사진 안 아래**로
+   ③ ★ **모바일 제목 붕괴를 막습니다**
+      바깥 검수 — 「모바일 캡처에서 제주시내 물때 제목이 세로로
+      찢어져 보입니다. 이건 디자인 문제가 아니라 **실제 레이아웃
+      버그**입니다」
+      까닭: `.compact-head` 가 flex 인데 오른쪽 작은 글에
+      `white-space:nowrap` 이 걸려 **가로를 다 먹었습니다.**
+      왼쪽 제목이 한 글자 폭으로 눌려 세로로 쌓였습니다.
+      → 좁은 화면에서는 **세로로 쌓고**, 제목이 눌리지 않게
+        `min-width:0` 과 가로쓰기를 못 박습니다.
+   ══════════════════════════════════════════════════════════ */
+
+/* 사진 한 장이 가로를 다 씁니다 (옆 칸이 없어졌습니다) */
+.hero-c-top{display:block}
+.hero-c .hc-photo{min-height:340px}
+.hero-c .hc-copy{bottom:76px}
+.hero-c .hc-cta{
+  position:absolute;z-index:3;left:22px;right:22px;bottom:18px;
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:420px;
+}
+.hero-c .hc-btn{
+  background:rgba(255,255,255,.94);border-color:rgba(255,255,255,.5);
+}
+/* ★ 녹색 단추는 **다시 못 박습니다** — 바로 위 규칙이 앞의
+   `.hc-btn--on` 을 덮어 흰 바탕에 흰 글자가 됐습니다. */
+.hero-c .hc-btn--on{
+  background:#2F5D57;border-color:#2F5D57;color:#fff;
+}
+
+/* ③ 칸 머리 — 눌려 찢어지지 않게 */
+.compact-head h2{
+  min-width:0;flex:1 1 auto;
+  writing-mode:horizontal-tb;word-break:keep-all;white-space:normal;
+}
+.compact-head .side-note{flex:0 1 auto;min-width:0}
+
+@media (max-width:760px){
+  .hero-c .hc-photo{min-height:300px}
+  .hero-c .hc-copy{left:15px;right:15px;bottom:68px}
+  .hero-c .hc-cta{left:15px;right:15px;bottom:14px;gap:7px}
+  .hero-c .hc-btn{min-height:40px;font-size:12px;padding:0 6px}
+  /* ★ 제목과 작은 글을 **세로로** 쌓습니다 — 한 줄에 두면
+     작은 글이 가로를 먹어 제목이 한 글자 폭으로 눌립니다 */
+  .compact-head{display:block}
+  .compact-head h2{width:auto;max-width:none;font-size:22px;line-height:1.25}
+  .compact-head .side-note{
+    display:block;margin-top:4px;text-align:left;white-space:normal;
+    font-size:11px;line-height:1.45;
+  }
+}
