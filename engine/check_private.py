@@ -24,7 +24,14 @@ import re
 import sys
 
 여기 = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-쪽밭 = os.path.join(여기, 'site')
+# ★ **시험이 주는 사본을 봅니다** (2026-10-02 판정 [2])
+#   전에는 `os.path.join(여기, 'site')` 로 **늘 진짜 site/ 만**
+#   봤습니다. 검사기 자기검증이 사본을 만들어 일부러 깨뜨린 뒤
+#   `BADAGAJA_SITE` 로 가리켜 주는데, 이 검사기는 그것을 안 보고
+#   멀쩡한 진짜 쪽을 재고 「아무 탈 없다」고 했습니다.
+#   그래서 **「검사기가 못 잡는다」로 두 가지가 헛되이 실패**하고
+#   있었습니다. 다른 검사기들은 모두 환경값을 봅니다.
+쪽밭 = os.environ.get('BADAGAJA_SITE', os.path.join(여기, 'site'))
 
 # ── 공개 쪽에 **있으면 안 되는 말** ──────────────────
 #   ① 저희를 가리키는 말 — 사이트는 주인이 운영하는 것입니다
