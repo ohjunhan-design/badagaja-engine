@@ -1738,7 +1738,26 @@ def 시험_채비():
         p = os.path.join(뿌리, 'data', 'raw', 'rigs.json')
         원 = io.read(p)
         d = json.loads(원)
-        아무갈래 = list(d['채비'].keys())[0]
+        # ★ **안내도가 없는 채비를 골라야 합니다** (2026-10-02)
+        #   check_rigs 는 「안내도(webp)를 쓰는 채비는 부품 그림을
+        #   안 따진다」고 적어 두었습니다. 그림을 통째로 쓰니
+        #   부품 하나하나를 SVG 로 그릴 까닭이 없습니다.
+        #   그런데 이 시험은 **첫 번째 채비**에 넣고 있었고,
+        #   오늘 그 첫 번째(bottom)에 안내도가 생겼습니다. 그래서
+        #   검사기가 안 보게 됐고, 시험은 「못 잡는다」고 적었습니다.
+        #   **그림이 더 들어가도 안 깨지게** 매번 골라냅니다.
+        안내도칸 = os.path.join(뿌리, 'data', 'img', 'rig')
+        있는안내도 = set(os.listdir(안내도칸)) if os.path.isdir(안내도칸) else set()
+        고를수있는것 = [k for k in d['채비']
+                    if not any('%s.%s' % (k, 끝) in 있는안내도
+                               for 끝 in ('webp', 'png', 'jpg'))]
+        if not 고를수있는것:
+            raise AssertionError(
+                '안내도 없는 채비가 하나도 없습니다 — 이 시험은 '
+                '부품 SVG 를 쓰는 채비가 있어야 뜻이 있습니다. '
+                '모든 채비에 안내도가 생겼다면 이 시험을 지우거나 '
+                '다른 길로 고쳐야 합니다.')
+        아무갈래 = 고를수있는것[0]
         d['채비'][아무갈래]['부품'].append(
             {'이름': '없는부품이름', '값': ''})
         상한것 = json.dumps(d, ensure_ascii=False, indent=2)
