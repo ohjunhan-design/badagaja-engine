@@ -89,8 +89,16 @@ def _글자(v):
 #   까닭은 **쪽마다 손으로 적는 짜임**이었습니다. 쪽을 새로 지을
 #   때마다 또 빠집니다. 그래서 **여기 한 곳에서** 봅니다
 #   (주인 규칙 26 — 쪽이 아니라 엔진을 고칩니다).
-_그래프칸 = re.compile(r'id="tideGraph"')
-_그래프css = re.compile(r'tidegraph\.css')
+# ★ **글자가 아니라 실제 쓰임을 봅니다** (2026-10-02 바깥 검수)
+#   처음에는 `tidegraph\.css` 라는 **글자만** 찾았습니다. 그러면
+#   주석이나 스크립트 안에 그 이름이 있어도 「실렸다」고 넘어갑니다.
+#   「문구만 있고 기능은 없는」 것을 잡으려는 코드가 **또** 그 덫에
+#   걸린 셈입니다 — 오늘 세 번째입니다.
+#   따옴표·공백·대소문자에도 흔들리지 않게 합니다.
+_그래프칸 = re.compile(r'\bid\s*=\s*["\']tideGraph["\']', re.I)
+_그래프css = re.compile(
+    r'<link\b[^>]*\bhref\s*=\s*["\'][^"\']*tidegraph\.css'
+    r'(?:\?[^"\']*)?["\'][^>]*>', re.I)
 
 
 def _그래프차림표끼우기(s):
@@ -100,8 +108,9 @@ def _그래프차림표끼우기(s):
     # 이미 실린 다른 차림표 **바로 뒤**에 둡니다 — 뒤에 와야
     # 그래프 규칙이 바탕 규칙을 덮습니다
     m = None
-    for m in re.finditer(r'<link rel="stylesheet" href="[^"]*site\.css[^"]*">',
-                         s):
+    for m in re.finditer(
+            r'<link\b[^>]*\bhref\s*=\s*["\'][^"\']*site\.css'
+            r'(?:\?[^"\']*)?["\'][^>]*>', s, re.I):
         pass
     if not m:
         m = re.search(r'</title>', s)
@@ -138,7 +147,8 @@ def _그래프css판번호():
 
 def _차림표뿌리(s):
     """이미 실린 site.css 주소에서 폴더 부분만 떼어 냅니다."""
-    m = re.search(r'href="([^"]*?)assets/css/site\.css', s)
+    m = re.search(r'href\s*=\s*["\']([^"\']*?)assets/css/site\.css',
+                  s, re.I)
     if m:
         return m.group(1) + 'assets/css/'
     return 'assets/css/'

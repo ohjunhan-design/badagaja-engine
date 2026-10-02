@@ -268,6 +268,47 @@ def main():
         else:
             print('  · 권역·관측소·요청이 한 세트로 바뀝니다')
 
+    # ── 그래프 칸이 있는 쪽에 **차림표 link** 가 정말 있는가
+    #
+    #   ★ 바깥 검수 지시 (2026-10-02)
+    #     「68쪽 전부에 **실제 stylesheet link 가 존재하는지
+    #       검사기로 증명하라**」
+    #
+    #   겪은 일 — `tidegraph.css` 가 안 실린 쪽이 **10쪽**
+    #   있었습니다(첫 쪽·묶음 쪽 아홉). 그래서 간·만조 점이
+    #   **검은 동그라미**로 나왔습니다. 주인이 화면으로
+    #   잡아 주셨습니다.
+    #
+    #   ★ **글자가 아니라 실제 `<link>`** 를 봅니다. 주석이나
+    #     스크립트에 이름만 있어도 통과하면 안 됩니다 — 오늘
+    #     그 덫에 세 번 걸렸습니다.
+    _칸있나 = re.compile(r'\bid\s*=\s*["\']tideGraph["\']', re.I)
+    _css있나 = re.compile(
+        r'<link\b[^>]*\bhref\s*=\s*["\'][^"\']*tidegraph\.css'
+        r'(?:\?[^"\']*)?["\'][^>]*>', re.I)
+    print('')
+    print('[3] 그래프 칸이 있는 쪽에 차림표가 실렸는가')
+    그래프쪽, 빠진쪽 = 0, []
+    for p, 글 in 모두.items():
+        if not _칸있나.search(글):
+            continue
+        그래프쪽 += 1
+        if not _css있나.search(글):
+            빠진쪽.append(os.path.relpath(p, NEW).replace(os.sep, '/'))
+    print('      그래프 칸이 있는 쪽 %d개' % 그래프쪽)
+    if 빠진쪽:
+        막음.append('그래프 차림표가 빠진 쪽 %d개' % len(빠진쪽))
+        print('  ✗ 차림표가 안 실린 쪽 %d개' % len(빠진쪽))
+        for x in 빠진쪽[:8]:
+            print('      %s' % x)
+        print('      → 간·만조 점이 **검은 동그라미**로 나옵니다.')
+        print('        engine/template.py 가 틀에서 붙입니다.')
+    elif 그래프쪽:
+        print('  · %d쪽 모두 실제 <link> 로 실려 있습니다' % 그래프쪽)
+    else:
+        알림.append('그래프 칸이 있는 쪽을 못 찾았습니다')
+        print('  ~ 그래프 칸이 있는 쪽이 없습니다')
+
     if 모자란것:
         막음.append('약속한 기능이 모자란 곳 %d가지' % len(모자란것))
         print('  ✗ 약속한 기능이 모자랍니다 %d가지' % len(모자란것))
