@@ -129,9 +129,18 @@ def 알림파일(쪽들):
             길 = m.group(1).split('badagaja.com', 1)[-1].lstrip('/')
             든것.add(길 or 'index.html')
         # 쪽마다 사이트맵에 있는가 — **빠지면 검색에서 사라집니다**
+        # ★ **로봇에게 숨긴 쪽은 빼고 셉니다** (2026-10-06)
+        #   robots noindex 가 박힌 쪽은 **일부러** 검색에 안
+        #   내보내는 쪽입니다. 그런 쪽을 사이트맵에 넣으면
+        #   「담지 말라면서 와서 보라」는 꼴이라 오히려 어긋납니다
+        #   (네이버·구글 가이드). 방문 기록 쪽(stats.html)이
+        #   그렇습니다 — 열쇠말을 넣어야 보이는 주인 전용 쪽입니다.
         빠진 = []
         for p in 쪽들:
             길 = os.path.relpath(p, NEW).replace(os.sep, '/')
+            _글 = io.꼭읽기(p) or ''
+            if 'noindex' in _글 and 'name="robots"' in _글:
+                continue          # 일부러 숨긴 쪽입니다
             후보 = {길}
             if 길 == 'index.html':
                 후보.add('index.html')
