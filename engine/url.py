@@ -316,6 +316,16 @@ def sources(언어='ko'):
     return _붙이기(언어, 'sources.html')
 
 
+def stats(언어='ko'):
+    """방문 기록 — stats.html
+
+    ★ **주인만 보는 쪽입니다** (2026-10-06)
+      열쇠말을 넣어야 숫자가 나옵니다. 그래도 차림표에는 안 겁니다 —
+      손님에게 보일 쪽이 아닙니다. 주소를 아는 사람만 들어옵니다.
+    """
+    return _붙이기(언어, 'stats.html')
+
+
 def photos(언어='ko'):
     """사진 출처 — photos.html"""
     return _붙이기(언어, 'photos.html')

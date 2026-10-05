@@ -39,5 +39,35 @@
   var a = n.querySelector('[data-tab="' + 어디 + '"]');
   if (a) { a.className += ' on'; a.setAttribute('aria-current', 'page'); }
 })();</script>
+<script>(function(){
+  /* 방문 기록 — **쿠키를 쓰지 않습니다** (2026-10-06 주인 지시)
+     옛 사이트에는 쪽마다 있던 줄인데 새 사이트를 지으며 빠져,
+     448쪽이 방문을 하나도 안 세고 있었습니다. 10월 기록이 넷뿐이었고
+     그마저 서버에 남은 옛 쪽에서 우연히 잡힌 것이었습니다.
+     보내는 것은 셋뿐입니다 — 어느 쪽을 봤나·어디서 들어왔나·이 탭에서
+     처음인가. 누구인지는 안 보냅니다.
+     내 컴퓨터(file:·localhost)에서는 안 셉니다 — 만들며 여는 것까지
+     세면 숫자가 거짓이 됩니다.
+     기록이 실패해도 화면은 멀쩡합니다 (계약-23). */
+  try {
+    if (location.protocol === 'file:'
+        || /^(localhost|127\.|0\.0\.0\.0$)/.test(location.hostname)) { return; }
+    var 처음 = '0';
+    try {
+      if (!sessionStorage.getItem('bgHit')) {
+        sessionStorage.setItem('bgHit', '1'); 처음 = '1';
+      }
+    } catch (e) {}
+    /* api/ 는 언제나 뿌리에 있습니다. 쪽마다 깊이가 달라
+       (rig/float.html · point/jeju/aewol_fishing.html) 상대 주소로
+       찾으면 흔들립니다. */
+    var 주소 = '/api/hit.php?p=' + encodeURIComponent(location.pathname || '/')
+             + '&n=' + 처음
+             + '&r=' + encodeURIComponent(document.referrer || '')
+             + '&_=' + Date.now();
+    if (navigator.sendBeacon) { navigator.sendBeacon(주소); }
+    else { var 그림 = new Image(); 그림.src = 주소; }
+  } catch (e) {}
+})();</script>
 </body>
 </html>

@@ -685,7 +685,109 @@ def _허락설명(이름):
     return 표.get(이름, '')
 
 
+# ══════════════════════════════════════════════════════
+#  ⑤ stats.html — 몇 사람이 다녀갔나 (주인만 봅니다)
+# ══════════════════════════════════════════════════════
+def 방문기록쪽(d, 언어='ko'):
+    """**주인만 보는 쪽입니다** (2026-10-06 주인 지시).
+
+    ★ 왜 다시 만드나
+      옛 사이트의 stats.html 이 서버에 남아 돌고 있었습니다. 새 쪽들과
+      생김새가 달랐습니다. 더 큰 것은 **새 사이트 448쪽이 방문을 하나도
+      안 세고 있었다**는 것입니다 — 쪽을 지으며 세는 줄이 빠졌습니다.
+      10월 한 달 기록이 넷뿐이었고, 그마저 서버에 남은 옛 쪽에서
+      우연히 잡힌 것이었습니다.
+
+    ★ **손님에게 보일 쪽이 아닙니다**
+      열쇠말을 넣어야 숫자가 나오고, 차림표에도 안 겁니다.
+      열쇠말은 서버 `config.php` 에만 있고 저장소에는 없습니다.
+
+    ★ 숫자만 늘어놓지 않습니다 (주인 규칙 6-1)
+      날마다 막대를 그려 **언제 사람이 오는지 눈으로** 보입니다.
+    """
+    쪽길 = url.stats(언어)
+
+    숫자칸 = ('<div class="bignums">'
+              '<div class="bignum"><b id="stToday">—</b><span>오늘 조회</span></div>'
+              '<div class="bignum"><b id="stTodayV">—</b><span>오늘 방문</span></div>'
+              '<div class="bignum"><b id="stMonth">—</b><span>이 달 조회</span></div>'
+              '<div class="bignum"><b id="stMonthV">—</b><span>이 달 방문</span></div>'
+              '<div class="bignum"><b id="stMobile">—</b><span>휴대폰 비율</span></div>'
+              '</div>')
+
+    고르기칸 = ('<div class="st-top">'
+                '<label class="st-pick">달 고르기 '
+                '<select id="stMonthPick"></select></label>'
+                '<button type="button" class="btn btn--sm" id="stForget">'
+                '열쇠말 지우기</button>'
+                '</div>'
+                '<p class="st-msg" id="stMsg" hidden></p>')
+
+    칸들 = []
+    칸들.append(칸(
+        '얼마나 다녀갔나', '방문 기록',
+        고르기칸 + 숫자칸 +
+        '<p class="long">쿠키를 쓰지 않습니다. 어느 쪽을 봤는지와 '
+        '어디서 들어왔는지만 날짜별 <b>합계</b>로 모읍니다. '
+        '누가 봤는지는 모으지 않고, 검색 로봇은 세지 않습니다.</p>'))
+
+    칸들.append(칸(
+        '날마다', '언제 오시나',
+        '<div class="st-chart" id="stDays"></div>'
+        '<p class="pt-in">막대가 길수록 그날 많이 봤다는 뜻입니다.</p>',
+        흰=False))
+
+    칸들.append(칸(
+        '많이 본 쪽', '무엇을 보시나',
+        '<div class="st-table"><table class="tbl">'
+        '<thead><tr><th>주소</th><th class="st-n">조회</th></tr></thead>'
+        '<tbody id="stPages"></tbody></table></div>'))
+
+    칸들.append(칸(
+        '어디서 들어왔나', '어떻게 오시나',
+        '<div class="st-table"><table class="tbl">'
+        '<thead><tr><th>들어온 곳</th><th class="st-n">조회</th></tr></thead>'
+        '<tbody id="stFrom"></tbody></table></div>',
+        흰=False))
+
+    값 = _바탕값(
+        d, 쪽길, 언어,
+        제목='방문 기록 | %s' % d.사이트['이름']['ko'],
+        짧은제목='방문 기록',
+        설명='바다가자닷컴에 며칠 몇 분이 다녀갔는지 봅니다. '
+             '쿠키를 쓰지 않고 날짜별 합계만 모읍니다.',
+        머리말='방문 기록',
+        큰제목='얼마나 다녀갔나',
+        소개글='쿠키 없이 날짜별 합계만 모읍니다.',
+        한줄='주인만 보는 쪽입니다',
+        갈래칸=''.join(칸들),
+        꼬리안내='숫자가 안 보이면 열쇠말을 다시 넣어야 합니다.',
+        이름표글='기록',
+        _og갈래='guide')
+
+    # ★ **검색에 걸리지 않게 합니다** (2026-10-06)
+    #   손님에게 보일 쪽이 아닙니다. 사이트맵에서도 빼고,
+    #   로봇에게도 담지 말라고 알립니다.
+    글 = template.그리기('rig-parts.html', 값)
+    글 = 글.replace(
+        '</head>',
+        '<meta name="robots" content="noindex,nofollow"></head>', 1)
+    # 쪽을 그리는 코드를 싣습니다
+    글 = 글.replace(
+        '</body>',
+        '<script src="%s" defer></script></body>'
+        % url.rel(쪽길, 'assets/js/stats.js'), 1)
+    return 쪽길, 글
+
+
 def 네쪽(d, 언어='ko'):
-    """네 쪽을 한꺼번에. **하나를 빠뜨리면 또 끊깁니다.**"""
+    """낱쪽을 한꺼번에. **하나를 빠뜨리면 또 끊깁니다.**
+
+    ★ 2026-10-06 에 방문기록쪽이 더해져 **다섯**이 되었습니다.
+      이름은 그대로 둡니다 — 부르는 곳이 여럿이고, 이름을 바꾸면
+      그 자리를 다 고쳐야 합니다. 세는 것은 이 목록이지 이름이
+      아닙니다.
+    """
     return [소개쪽(d, 언어), 출처쪽(d, 언어),
-            개인정보쪽(d, 언어), 사진출처쪽(d, 언어)]
+            개인정보쪽(d, 언어), 사진출처쪽(d, 언어),
+            방문기록쪽(d, 언어)]
