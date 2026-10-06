@@ -76,13 +76,33 @@ def _사진지문(파일):
     if 파일 in _사진지문기억:
         return _사진지문기억[파일]
     import hashlib
-    길 = 파일 if os.path.isabs(파일) else os.path.join(나갈곳, 파일)
+    # ★ **원본 자리에서도 찾습니다** (2026-10-06 — 계약-07 이 깨졌습니다)
+    #
+    #   전에는 `나갈곳`(site/)만 봤습니다. 쌓인 자리에서는 사진이
+    #   이미 옮겨져 있어 지문이 나오는데, **빈 자리에 처음 지으면**
+    #   아직 없어 `OSError` → 지문 None → 「중복 아님」이 됩니다.
+    #
+    #   그래서 창원·강릉·서귀포 세 쪽이 **지을 때마다 달라졌습니다** —
+    #   쌓인 자리는 사진 5장, 빈 자리는 6장. 계약-07(두 번 만들어도
+    #   결과가 같아야 한다)이 그것을 잡았습니다.
+    #
+    #   사진의 알맹이는 옮기기 전후가 같습니다. 원본을 보면
+    #   **자리 형편과 상관없이** 같은 답이 나옵니다.
+    후보 = []
+    if os.path.isabs(파일):
+        후보.append(파일)
+    else:
+        후보.append(os.path.join(나갈곳, 파일))
+        후보.append(os.path.join(ROOT, 'assets', 'photo', 파일))
+        후보.append(os.path.join(DATA, 파일))
     지문 = None
-    try:
-        with open(길, 'rb') as f:
-            지문 = hashlib.sha1(f.read()).hexdigest()
-    except OSError:
-        pass
+    for 길 in 후보:
+        try:
+            with open(길, 'rb') as f:
+                지문 = hashlib.sha1(f.read()).hexdigest()
+            break
+        except OSError:
+            continue
     _사진지문기억[파일] = 지문
     return 지문
 
