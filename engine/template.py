@@ -160,6 +160,15 @@ def 그리기(이름, 값들, *, 안쓴값알림=True):
     이름  — template/ 안의 파일 이름 (보기: 'point-list.html')
     값들  — 채울 값. 점으로 파고들 수 있습니다 ({'권역': {'이름': '태안'}})
     """
+    # ★ **모든 쪽에 지금 판을 새깁니다** (2026-10-07 주인 지시)
+    #   호출부마다 넣으면 또 빠뜨립니다 — 여기 한 곳에서 채웁니다.
+    _짧, _날 = 지금판()
+    if isinstance(값들, dict):
+        값들 = dict(값들)
+        값들.setdefault('판이름', _짧)
+        값들.setdefault('판날짜', _날)
+        값들.setdefault('판날짜보기', _날.replace('-', '.') if _날 else '')
+
     s = 읽기(이름)
 
     # 1) 조각을 먼저 넣습니다 (조각 안에 또 조각이 있어도 됩니다)
@@ -227,3 +236,33 @@ def 숫자검사(이름):
     s = re.sub(r'viewBox="[^"]*"', ' ', s)                 # 그림 좌표
     s = re.sub(r'\bd="[^"]*"', ' ', s)
     return sorted(set(re.findall(r'\b\d{3,}\b', s)))
+
+
+# ── 지금 판을 밝히는 지문 ────────────────────────────────
+#   ★ 2026-10-07 주인 지시 — 「누가 보든 **새 판**을 보고 판단해야 한다」
+#     보는 사람이 「기준일 26년 9월」 같은 엉뚱한 단서로 최신 여부를
+#     짐작하지 않도록, **쪽 자신이 자기 판을 밝힙니다.**
+#   ★ 멱등(계약-07) — 「오늘 날짜」가 아니라 **커밋 날짜**를 씁니다.
+#     같은 커밋이면 몇 번을 다시 만들어도 같은 값입니다.
+_판 = None
+
+
+def 지금판():
+    """(커밋 짧은이름, 커밋 날짜) — git 에서 읽습니다. 못 읽으면 빈 값."""
+    global _판
+    if _판 is not None:
+        return _판
+    import subprocess
+    뿌 = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    try:
+        r = subprocess.run(['git', 'log', '-1', '--format=%h\t%cs'],
+                           cwd=뿌, capture_output=True, text=True,
+                           encoding='utf-8', timeout=30)
+        if r.returncode == 0 and r.stdout.strip():
+            조각 = r.stdout.strip().split('\t')
+            _판 = (조각[0], 조각[1] if len(조각) > 1 else '')
+            return _판
+    except (OSError, subprocess.SubprocessError):
+        pass
+    _판 = ('', '')
+    return _판

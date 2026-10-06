@@ -4059,3 +4059,7 @@ details.area-group .area-list{margin-bottom:12px}
 
 /* 값 자리로 올라온 설명은 **주값처럼** 보이게 */
 .rig-dl dd>b{font-weight:800}
+
+
+/* ★ 꼬리말 판 표시 — 작게, 조용히 (2026-10-07) */
+.foot-build{margin:10px 0 0;font-size:11.5px;color:var(--muted);opacity:.8}
