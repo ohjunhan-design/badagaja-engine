@@ -138,6 +138,26 @@ def 일터(prefix='mutation-'):
                     shutil.copy2(p, os.path.join(뿌리, 이름))
                 except OSError:
                     pass
+        # ★ **사본 안에 git 기록을 만듭니다** (2026-10-06)
+        #   check_guide_loss 는 `git show HEAD:...` 로 이전 판과
+        #   견줍니다. 사본에 .git 이 없으면 git 이 **상위 폴더를
+        #   거슬러 올라가** 엉뚱한 저장소를 읽거나 아무것도 못 읽어
+        #   「견줄 것이 없습니다」로 조용히 넘어갑니다.
+        #   제 컴퓨터에서는 통과하고 깃허브에서는 실패했습니다.
+        #   여기서 한 번 봉해 두면 **어디서 돌려도 같습니다.**
+        _깃 = ['git', '-c', 'user.name=badagaja',
+               '-c', 'user.email=bot@badagaja.local',
+               '-c', 'core.autocrlf=false', '-c', 'safe.directory=*']
+        try:
+            subprocess.run(_깃 + ['init', '-q'], cwd=뿌리,
+                           capture_output=True, timeout=120)
+            subprocess.run(_깃 + ['add', '-A', '--', 'data'], cwd=뿌리,
+                           capture_output=True, timeout=300)
+            subprocess.run(_깃 + ['commit', '-q', '-m', 'base'], cwd=뿌리,
+                           capture_output=True, timeout=300)
+        except (OSError, subprocess.SubprocessError):
+            pass          # git 이 없어도 다른 시험은 돌아야 합니다
+
         yield 뿌리
     finally:
         # 우리가 방금 만든 임시 자리만 지웁니다 — 남의 것은 안 건드립니다

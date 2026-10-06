@@ -3982,3 +3982,33 @@ details.area-group .area-list{margin-bottom:12px}
   body[data-region] .hc-photo{min-height:0;height:510px}
   body[data-region] .hero-c-top{align-items:start}
 }
+
+
+/* ★ 장비 쪽도 **설명보다 고를 것이 먼저** (2026-10-06)
+     제목 블록이 PC 첫 화면의 48%(395px)를 먹어 장비가 하나도
+     안 보였습니다. /tide/ 와 같은 수법 — 전용 클래스로만 좁힙니다.
+     ★ 공용 .hero--text 는 건드리지 않습니다. */
+.p-gear .hero--text{padding-block:30px 26px}
+.p-gear .hero--text>.wrap{padding-block:0}
+.p-gear .hero--text h1{margin-bottom:10px}
+.p-gear .hero-lead{margin-bottom:12px}
+.p-gear .ls-basic{margin-top:10px}
+@media (max-width:760px){
+  .p-gear .hero--text{padding-block:24px 20px}
+  .p-gear .hero--text h1{font-size:27px;line-height:1.25}
+}
+
+
+/* ★ 장비 쪽 — **빈 칸을 없애고 카드를 넓힙니다** (2026-10-06 바깥 검수)
+     「큰 장비」가 3개인데 틀이 4열이라 **네 번째 자리가 빈 채**로
+     남고, 카드가 좁아 설명이 「던질낚 / 시는」처럼 어색하게
+     끊겼습니다.
+     ★ 3열로 못 박지 않고 auto-fit 을 씁니다 — 카드가 3개면 3열,
+       더 많으면 4열이 되어 **다른 묶음도 함께** 맞습니다.
+     ★ 아이콘은 PC 에서 약 23% 크게 (바깥 검수 권고 20~25%). */
+.p-gear .gc-grid{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+@media (min-width:901px){
+  .p-gear .gc{grid-template-columns:94px minmax(0,1fr);gap:16px}
+  .p-gear .gc-art svg{width:94px;height:94px}
+  .p-gear .hero--text{padding-block:26px 22px}
+}
