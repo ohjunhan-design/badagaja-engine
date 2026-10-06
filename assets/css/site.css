@@ -3968,3 +3968,17 @@ details.area-group .area-list{margin-bottom:12px}
   .p-tide .hero-lead{margin-bottom:10px}
   .section-head--slim{margin-bottom:9px}
 }
+
+
+/* ───────────────────────────────────────────────────────────
+   권역 쪽 PC 히어로를 **510px** 로 (2026-10-06 바깥 검수 확정)
+   사진 하나가 PC 첫 화면의 76%(620px)를 먹어 그 아래 요약 띠가
+   바닥에 겨우 걸쳤습니다. 휴대폰은 250px 라 짜임이 좋으니
+   **PC 만** 손봅니다 — 「모바일은 큰 구조 그대로 두세요」
+   ★ body[data-region] 은 권역 쪽에만 있습니다. 공용 규칙은
+     건드리지 않습니다.
+   ─────────────────────────────────────────────────────────── */
+@media (min-width:901px){
+  body[data-region] .hc-photo{min-height:0;height:510px}
+  body[data-region] .hero-c-top{align-items:start}
+}

@@ -128,12 +128,22 @@ def 밝힌사진들():
     본것 = {x.get('파일') for x in 것}
     것 += [x for x in (_읽기('spot-photos-new.json').get('사진') or [])
            if x.get('파일') not in 본것]
-    쪽밭 = os.path.join(여기, 'site')
+    # ★ **빌드 순서에 기대지 않습니다** (2026-10-06 — 깃허브에서만 0장)
+    #   전에는 `site/` 에 **파일이 있는지**로 셌습니다. 그런데
+    #   site/img 는 깃에 안 들어가는 생성물이고, 빌드는 **쪽을 다 만든
+    #   뒤에** 사진을 옮깁니다. 그래서 깨끗한 체크아웃(깃허브)에서는
+    #   쪽을 만드는 순간 site/img 가 비어 있어 **「사진 0장」**이
+    #   박혔습니다. 제 컴퓨터는 site/img 가 이미 차 있어 **영영
+    #   드러나지 않았습니다.**
+    #
+    #   이제 **자료로** 셉니다 — 촬영자·이용허락이 있고
+    #   photo-reject.json 의 「거를것」에 없는 사진.
+    #   그것이 곧 생성기가 site/ 로 옮기는 것과 같습니다.
+    거를것 = {x.get('파일') for x in
+              (_읽기('photo-reject.json').get('거를것') or [])}
     return [x for x in 것
             if x.get('촬영자') and x.get('이용허락')
-            and x.get('파일')
-            and os.path.exists(os.path.join(쪽밭,
-                                            x['파일'].replace('/', os.sep)))]
+            and x.get('파일') and x['파일'] not in 거를것]
 
 
 def _공개출처(글):
