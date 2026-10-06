@@ -603,6 +603,73 @@ def 끝줄(글, 몇=1):
     return ' / '.join(줄[-몇:])[:90] if 줄 else '(아무 말도 없음)'
 
 
+def _뮤테이션건너뛸까():
+    """**검사기가 안 바뀌었으면** 지난 결과를 잇습니다 (2026-10-06).
+
+    돌려주는 것: 이어도 되면 까닭(글), 아니면 None
+
+    ★ 왜 — 판정 26분 가운데 **20분이 이것**이었습니다
+      주인 — 「자주 디자인수정이 발생할텐데 너무 길어 … 3분 이내로」
+
+      디자인을 고칠 때 **검사기는 안 바뀝니다.** 그런데 검사기
+      40개를 저마다 사본 떠서 망가뜨려 보는 데 20분을 씁니다.
+      같은 코드를 같은 방법으로 다시 재어 같은 답을 얻습니다.
+
+    ★ **거짓말은 하지 않습니다**
+      「안 돌렸으니 통과」가 아닙니다. 아래 둘이 **모두** 맞아야
+      지난 결과를 잇습니다.
+
+        ① `engine/` 과 `tests/` 가 지난 판정 뒤로 한 글자도
+           안 바뀌었다 (git 이 말합니다)
+        ② 지난 판정에서 이 항목이 **PASS 였다**
+
+      하나라도 어긋나면 **돌립니다.** 검사기를 고쳤는데 안 재면
+      계약-28(검사기도 시험받는다)을 어기는 것입니다.
+
+    ★ git 을 못 쓰면 **돌립니다**
+      모르면 재는 쪽입니다. 「모르니까 통과」는 가장 나쁜 답입니다.
+    """
+    옛판 = io.read_json(os.path.join(ROOT, 'tests', 'out', 'gate.json'),
+                        default=None)
+    if not 옛판:
+        return None                      # 지난 판이 없습니다 — 돕니다
+    옛것 = None
+    for x in (옛판.get('항목') or []):
+        if x.get('번호') == '2':
+            옛것 = x
+            break
+    if not 옛것 or 옛것.get('상태') != 'PASS':
+        return None                      # 지난번에 통과 못 했습니다
+    옛커밋 = 옛판.get('커밋')
+    if not 옛커밋:
+        return None
+    try:
+        r = subprocess.run(
+            ['git', 'diff', '--name-only', 옛커밋, '--',
+             'engine', 'tests'],
+            cwd=ROOT, capture_output=True, text=True,
+            encoding='utf-8', errors='replace', timeout=60)
+    except (OSError, subprocess.SubprocessError):
+        return None                      # git 을 못 씁니다 — 돕니다
+    if r.returncode != 0:
+        return None
+    바뀐것 = [x for x in (r.stdout or '').split('\n') if x.strip()]
+    if 바뀐것:
+        return None                      # 검사기가 바뀌었습니다 — 돕니다
+    # 아직 커밋 안 한 것도 봅니다 — 고쳐 놓고 안 올렸을 수 있습니다
+    try:
+        r2 = subprocess.run(['git', 'status', '--porcelain',
+                             'engine', 'tests'],
+                            cwd=ROOT, capture_output=True, text=True,
+                            encoding='utf-8', errors='replace', timeout=60)
+        if r2.returncode == 0 and (r2.stdout or '').strip():
+            return None                  # 손에 든 고침이 있습니다 — 돕니다
+    except (OSError, subprocess.SubprocessError):
+        return None
+    return ('engine/·tests/ 가 지난 판정(%s) 뒤로 안 바뀌어 '
+            '그때 결과를 잇습니다 — 20분을 아낍니다' % 옛커밋[:7])
+
+
 # ── 1. 계약 상태표 정합성 ──────────────────────────────────
 def 항목1(빠르게):
     인자 = ['--smoke'] if 빠르게 else []
@@ -1154,6 +1221,11 @@ def main():
     if 빠르게:
         적기('2', '검사기 자기검증 (뮤테이션)', 'NOT_TESTED',
              '--full 로 돌려야 잽니다 (20분 걸립니다)')
+    elif _뮤테이션건너뛸까():
+        # ★ **검사기가 안 바뀌었으면 지난 결과를 잇습니다** (2026-10-06)
+        #   까닭은 아래 `_뮤테이션건너뛸까()` 에 적어 두었습니다.
+        적기('2', '검사기 자기검증 (뮤테이션)', 'PASS',
+             _뮤테이션건너뛸까())
     else:
         맡기기(True, 검사기로, '2', '검사기 자기검증 (뮤테이션)',
                'tests/test_checkers.py',
