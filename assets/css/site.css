@@ -3938,3 +3938,33 @@ details.area-group .area-list{margin-bottom:12px}
   .header-meta::-webkit-scrollbar{display:none}
   .header-meta>*{flex:0 0 auto}
 }
+
+
+/* ───────────────────────────────────────────────────────────
+   /tide/ 는 **랜딩이 아니라 도구 쪽**입니다 (2026-10-06 바깥 검수)
+   「설명보다 선택 UI 가 먼저」 — 물때를 보러 온 손님이 첫 화면에서
+   아무것도 고를 수 없었습니다.
+     잰 값 (고치기 전)  PC 지도 y 605 · 휴대폰 지도 y 560
+     목표              PC 400 전후 · 휴대폰 450 이하
+   ★ 공용 .hero--text 를 전역으로 줄이면 다른 hub 쪽이 함께 무너집니다.
+     그래서 body 에 실은 **전용 클래스**로만 좁힙니다.
+   ─────────────────────────────────────────────────────────── */
+/* ★ .hero .wrap 에 34/40px 이 따로 붙어 **두 번 더해졌습니다.**
+     안쪽을 0 으로 두고 바깥에서 한 번만 줍니다. */
+.p-tide .hero--text{padding-block:30px 26px}
+.p-tide .hero--text>.wrap{padding-block:0}
+.p-tide .hero--text h1{margin-bottom:10px}
+.p-tide .hero-lead{margin-bottom:12px}
+.p-tide .kicker:empty{display:none}
+.p-tide .ls-basic{margin-top:10px}
+
+/* 큰 제목 없이 작은 라벨만 쓰는 머리 */
+.section-head--slim{margin:0 0 12px}
+.section-head--slim .kicker{margin:0}
+
+@media (max-width:760px){
+  .p-tide .hero--text{padding-block:24px 20px}
+  .p-tide .hero--text h1{font-size:27px;line-height:1.25}
+  .p-tide .hero-lead{margin-bottom:10px}
+  .section-head--slim{margin-bottom:9px}
+}

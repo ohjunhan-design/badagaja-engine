@@ -152,4 +152,6 @@ def 기초쪽(d, 갈래, 언어='ko'):
                  '보고 움직이세요.'),
         이름표글='그림 %d장' % len(것['단계']),
         _og갈래=('fish' if 낚시 else 'catch'))
+    # ★ 겉틀이 body 클래스로 쓰는 값 — 안 주면 틀이 멈춥니다
+    값.setdefault('쪽갈래', '')
     return 쪽길, template.그리기('rig-parts.html', 값)

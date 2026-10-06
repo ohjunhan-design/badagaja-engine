@@ -273,6 +273,8 @@ def 소개쪽(d, 언어='ko'):
                  '한 번 더 확인해 주세요.',
         이름표글='개인 운영',
         _og갈래='guide')
+    # ★ 겉틀이 body 클래스로 쓰는 값 — 안 주면 틀이 멈춥니다
+    값.setdefault('쪽갈래', '')
     return 쪽길, template.그리기('rig-parts.html', 값)
 
 
@@ -364,6 +366,8 @@ def 출처쪽(d, 언어='ko'):
         꼬리안내='출처가 바뀌거나 자료가 틀린 것을 보시면 알려 주세요.',
         이름표글='%d가지' % len(자료들),
         _og갈래='guide')
+    # ★ 겉틀이 body 클래스로 쓰는 값 — 안 주면 틀이 멈춥니다
+    값.setdefault('쪽갈래', '')
     return 쪽길, template.그리기('rig-parts.html', 값)
 
 
@@ -569,6 +573,8 @@ def 개인정보쪽(d, 언어='ko'):
         이름표글='시행 %s' % 시행일.replace('년 ', '.').replace('월 ', '.')
                    .replace('일', ''),
         _og갈래='guide')
+    # ★ 겉틀이 body 클래스로 쓰는 값 — 안 주면 틀이 멈춥니다
+    값.setdefault('쪽갈래', '')
     return 쪽길, template.그리기('rig-parts.html', 값)
 
 
@@ -664,6 +670,8 @@ def 사진출처쪽(d, 언어='ko'):
                  '바로 내립니다.',
         이름표글='%d장' % len(사진),
         _og갈래='guide')
+    # ★ 겉틀이 body 클래스로 쓰는 값 — 안 주면 틀이 멈춥니다
+    값.setdefault('쪽갈래', '')
     return 쪽길, template.그리기('rig-parts.html', 값)
 
 
@@ -782,6 +790,8 @@ def 방문기록쪽(d, 언어='ko'):
     # ★ **검색에 걸리지 않게 합니다** (2026-10-06)
     #   손님에게 보일 쪽이 아닙니다. 사이트맵에서도 빼고,
     #   로봇에게도 담지 말라고 알립니다.
+    # ★ 겉틀이 body 클래스로 쓰는 값 — 안 주면 틀이 멈춥니다
+    값.setdefault('쪽갈래', '')
     글 = template.그리기('rig-parts.html', 값)
     글 = 글.replace(
         '</head>',

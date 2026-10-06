@@ -138,4 +138,6 @@ def 물때보는법쪽(d, 언어='ko'):
                  '꼭 확인하세요.',
         이름표글='그림 %d장' % sum(len(x['그림']) for x in 것['절']),
         _og갈래='tide')
+    # ★ 겉틀이 body 클래스로 쓰는 값 — 안 주면 틀이 멈춥니다
+    값.setdefault('쪽갈래', '')
     return 쪽길, template.그리기('rig-parts.html', 값)

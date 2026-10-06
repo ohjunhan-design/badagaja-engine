@@ -228,4 +228,6 @@ def 가진자료쪽(d, 언어='ko'):
                  '손으로 적지 않습니다.',
         이름표글='%s곳' % ㄱ('포인트'),
         _og갈래='guide')
+    # ★ 겉틀이 body 클래스로 쓰는 값 — 안 주면 틀이 멈춥니다
+    값.setdefault('쪽갈래', '')
     return 쪽길, template.그리기('rig-parts.html', 값)

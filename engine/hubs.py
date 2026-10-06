@@ -69,10 +69,16 @@ def esc(s):
 
 def 칸(제목, 꼬리말, 속, 흰=True):
     """쪽 안 한 칸 — 부품 쪽과 같은 차림을 씁니다."""
+    # ★ 큰 제목이 비면 **작은 라벨만** 냅니다 (2026-10-06 바깥 검수)
+    #   「지도가 보이면 고르는 곳인 줄 압니다」 — 도구 쪽에서는
+    #   설명 블록이 고를 자리를 아래로 밀어냅니다.
+    머리 = ('<div class="section-head section-head--slim">'
+            '<p class="kicker">%s</p></div>' % esc(꼬리말)) if not 제목 else (
+        '<div class="section-head"><p class="kicker">%s</p>'
+        '<h2 class="serif">%s</h2></div>' % (esc(꼬리말), esc(제목)))
     return ('<section class="section section--%s"><div class="wrap">'
-            '<div class="section-head"><p class="kicker">%s</p>'
-            '<h2 class="serif">%s</h2></div>%s</div></section>'
-            % ('white' if 흰 else 'soft', esc(꼬리말), esc(제목), 속))
+            '%s%s</div></section>'
+            % ('white' if 흰 else 'soft', 머리, 속))
 
 
 def 카드들(것들):
@@ -127,6 +133,8 @@ def _바탕값(d, 쪽길, 언어, 제목, 짧은제목, 설명, 머리말,
         '메일': d.사이트['메일'],
         '로고': B.로고(뿌리, 이름),
         '꼬리로고': B.꼬리로고(뿌리, 이름),
+        # ★ 쪽 갈래를 body 에 실어 **그 쪽에만** 듣는 규칙을 씁니다
+        '쪽갈래': _og갈래 or '',
         '한줄': 한줄,
         '큰제목': 큰제목,
         '소개글': 소개글,
@@ -316,4 +324,6 @@ def 금어기쪽(d, 언어='ko'):
         'var on=!v||r.getAttribute("data-q").indexOf(v)>=0;'
         'r.hidden=!on;if(on)c++;});'
         'n.hidden=!!c;});})();</script>')
+    # ★ 겉틀이 body 클래스로 쓰는 값 — 안 주면 틀이 멈춥니다
+    값.setdefault('쪽갈래', '')
     return 쪽길, template.그리기('rig-parts.html', 값)
