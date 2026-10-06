@@ -4012,3 +4012,24 @@ details.area-group .area-list{margin-bottom:12px}
   .p-gear .gc-art svg{width:94px;height:94px}
   .p-gear .hero--text{padding-block:26px 22px}
 }
+
+
+/* ★ 해루질·어종 목록 쪽도 **설명보다 고를 것이 먼저** (2026-10-06)
+     제목 블록이 PC 첫 화면의 52%(425px)를 먹어 카드가 바닥에
+     겨우 걸쳤습니다. /tide/·장비 쪽과 같은 수법 — 전용 클래스로만. */
+.p-catch .hero--text,
+.p-fish .hero--text{padding-block:28px 24px}
+.p-catch .hero--text>.wrap,
+.p-fish .hero--text>.wrap{padding-block:0}
+.p-catch .hero--text h1,
+.p-fish .hero--text h1{margin-bottom:10px}
+.p-catch .hero-lead,
+.p-fish .hero-lead{margin-bottom:12px;max-width:72ch}
+.p-catch .ls-basic,
+.p-fish .ls-basic{margin-top:10px}
+@media (max-width:760px){
+  .p-catch .hero--text,
+  .p-fish .hero--text{padding-block:22px 18px}
+  .p-catch .hero--text h1,
+  .p-fish .hero--text h1{font-size:27px;line-height:1.25}
+}
