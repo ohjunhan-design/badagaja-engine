@@ -656,7 +656,14 @@ def _뮤테이션건너뛸까():
     #               (검사기 · 시험 · 계약 정의 · 판정이 도는 틀)
     #     안 보는 것 assets/ data/ site/ img/
     #               (쪽의 **내용**이지 **재는 방법**이 아닙니다)
-    볼범위 = ['engine', 'tests', 'docs/CONTRACTS.md', '.github/workflows']
+    #   ★ **기준값은 「재는 방법」이 아닙니다** (2026-10-06)
+    #     `tests/golden/` 은 쪽이 지금 어떤 모양인지 **적어 둔 값**
+    #     입니다. 쪽을 고치면 거기도 따라 바뀝니다 — 시험 코드가
+    #     바뀐 것이 아닙니다. 그런데 이것 때문에 뮤테이션 20분이
+    #     다시 돌고 있었습니다.
+    #     `tests/out/` 도 같습니다 — 판정이 남긴 결과일 뿐입니다.
+    볼범위 = ['engine', 'tests', 'docs/CONTRACTS.md', '.github/workflows',
+              ':!tests/golden', ':!tests/out']
     try:
         r = subprocess.run(
             ['git', 'diff', '--name-only', 옛커밋, '--'] + 볼범위,
