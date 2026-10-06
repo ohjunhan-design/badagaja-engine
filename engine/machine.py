@@ -42,7 +42,20 @@ import shutil
 #
 #   자료가 있는 드라이브에 임시 파일도 두면, 옮겨 붙일 일이 없고
 #   C 가 꽉 차서 윈도가 느려지는 일도 없습니다.
-from engine import tmp  # noqa: F401  (불러오는 것만으로 자리가 바뀝니다)
+#   ★ **두 가지 길로 불러옵니다** (2026-10-06 — 깃허브가 넘어졌습니다)
+#     처음에 `from engine import tmp` 한 줄만 적었더니 제 컴퓨터
+#     에서는 돌고 **깃허브에서는 판정이 통째로 죽었습니다.**
+#
+#         ModuleNotFoundError: No module named 'engine'
+#
+#     이 파일을 `python engine/machine.py` 처럼 **따로** 돌리면
+#     꾸러미 뿌리가 경로에 없습니다. 제 컴퓨터는 마침 그 자리에서
+#     돌려 모르고 지나갔습니다.
+#     `io.py` 가 이미 같은 까닭으로 두 길을 쓰고 있었습니다.
+try:
+    from . import tmp as _tmp          # noqa: F401  (꾸러미로 불릴 때)
+except ImportError:                     # 파일 하나만 따로 돌릴 때
+    import tmp as _tmp                  # noqa: F401
 
 윈도인가 = sys.platform.startswith('win')
 

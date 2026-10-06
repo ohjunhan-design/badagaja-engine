@@ -85,14 +85,33 @@ def 크롬찾기():
 겉틀 = """<!doctype html><html><head><meta charset="utf-8">
 <style>html,body{margin:0;padding:0;background:#fff}
 iframe{border:0;display:block}</style></head><body>
-<iframe id="F" src="%s" width="%d" height="2400"></iframe>
+<!-- ★ **폭을 한꺼번에 잽니다** (2026-10-06 주인 지시)
+     주인 — 「판정시간을 단축시킬 수 있는 방법을 찾아봐 … 3분 이내로」
+
+     재 보니 이 검사기 하나가 판정 시간의 **열에 여덟**을 먹고
+     있었습니다. 까닭은 간단했습니다 —
+
+         for 폭 in 7가지:
+             for 쪽 in 38개:
+                 크롬을 띄운다          ← 266번 · 한 번 3.5초
+
+     쪽 하나를 **일곱 번 다시 그리느라** 15분이 걸렸습니다.
+     한 쪽에 iframe 일곱을 나란히 두면 **크롬은 38번**이면
+     됩니다. 그리는 일은 그대로이고 띄우는 품만 덜어 냅니다.
+
+     가짜 물때를 심은 사본도 쪽마다 한 번만 만들면 됩니다 —
+     전에는 폭마다 만들었다 지웠습니다. -->
+%s
 <div id="R" style="display:none">?</div>
 <script>
-document.getElementById('F').addEventListener('load', function () {
-  setTimeout(function () {
-    var f = document.getElementById('F');
-    var d = f.contentDocument, w = f.contentWindow;
-    var W = d.documentElement.clientWidth;
+var 틀들 = %s;          /* [[id, 폭], …] */
+var 남은 = 틀들.length;
+var 모은것 = {};
+
+function 하나재기(아이디, 폭) {
+  var f = document.getElementById(아이디);
+  var d = f.contentDocument, w = f.contentWindow;
+  var W = d.documentElement.clientWidth;
     var 넘친것 = [];
     var 모두 = d.querySelectorAll('body *');
     for (var i = 0; i < 모두.length; i++) {
@@ -152,8 +171,7 @@ document.getElementById('F').addEventListener('load', function () {
       var 위 = 그래프칸.closest('details');
       접힘 = !!(위 && !위.open);
     }
-    var out = document.getElementById('R');
-    out.textContent = JSON.stringify({
+    모은것[String(폭)] = {
       화면폭: W,
       몸폭: d.body.scrollWidth,
       그래프칸: !!그래프칸,
@@ -161,10 +179,29 @@ document.getElementById('F').addEventListener('load', function () {
       접힘: 접힘,
       그래프폭: 그래프 ? Math.round(그래프.getBoundingClientRect().width) : 0,
       넘침: 넘친것.slice(0, 10)
-    });
-  // ★ 900ms 는 짧습니다 — 물높이 그래프가 그려질 시간을 줍니다
+    };
+}
+
+/* ★ **모두 그려진 뒤 한 번에 잽니다** (2026-10-06)
+     iframe 일곱이 제각기 끝납니다. 하나가 끝날 때마다 재면
+     아직 안 끝난 것이 섞입니다. 다 끝난 것을 세어 기다립니다.
+     ★ 900ms 는 짧습니다 — 물높이 그래프가 그려질 시간을 줍니다 */
+function 다왔나() {
+  남은 -= 1;
+  if (남은 > 0) { return; }
+  setTimeout(function () {
+    for (var i = 0; i < 틀들.length; i++) {
+      try { 하나재기(틀들[i][0], 틀들[i][1]); }
+      catch (e) { 모은것[String(틀들[i][1])] = null; }
+    }
+    document.getElementById('R').textContent = JSON.stringify(모은것);
   }, 2200);
-});
+}
+
+for (var i = 0; i < 틀들.length; i++) {
+  document.getElementById(틀들[i][0])
+          .addEventListener('load', 다왔나);
+}
 </script></body></html>"""
 
 
@@ -196,40 +233,61 @@ def _가짜심은쪽(쪽길, 임시):
     return 새길
 
 
-def 재기(쪽길, 폭):
-    """iframe 안에 넣어 **진짜 그 폭으로** 그려 봅니다."""
+def 재기여러폭(쪽길, 폭들):
+    """쪽 하나를 **여러 폭으로 한 번에** 잽니다 (2026-10-06).
+
+    돌려주는 것: {폭: 잰것 또는 None}
+
+    ★ 왜 한 번에 재나 — 판정 시간의 83%가 여기였습니다
+      전에는 `재기(쪽길, 폭)` 이 폭마다 크롬을 띄웠습니다.
+      38쪽 × 7폭 = **266번**, 한 번 3.5초라 15분이 걸렸습니다.
+      iframe 을 폭 수만큼 나란히 두면 크롬은 **쪽마다 한 번**
+      이면 됩니다. 그리는 일은 그대로이고 띄우는 품만 덜어 냅니다.
+
+    ★ 창은 가장 넓은 폭에 맞춥니다
+      창보다 넓은 iframe 은 제 폭대로 못 그립니다.
+    """
     t = tempfile.mkdtemp(prefix='mobile-')
     임시 = []
     try:
         # ★ 가짜 물때를 심어 **그래프가 그려진 채로** 잽니다 (2026-10-01)
+        #   쪽마다 **한 번만** 만듭니다 — 전에는 폭마다 만들었습니다.
         쪽길 = _가짜심은쪽(쪽길, 임시)
         안길 = 'file:///' + os.path.abspath(쪽길).replace(os.sep, '/')
-        겉 = 겉틀 % (안길, 폭)
+        틀글 = ''.join(
+            '<iframe id="F%d" src="%s" width="%d" height="2400"></iframe>'
+            % (i, 안길, 폭) for i, 폭 in enumerate(폭들))
+        목록 = '[' + ','.join('["F%d",%d]' % (i, 폭)
+                              for i, 폭 in enumerate(폭들)) + ']'
+        겉 = 겉틀 % (틀글, 목록)
         p = os.path.join(t, 'z.html')
         io.write(p, 겉)
+        빈것 = dict((폭, None) for 폭 in 폭들)
         try:
             r = subprocess.run(
                 machine.크롬앞머리() + [
-                 '--window-size=%d,2600' % max(폭 + 140, 620),
+                 '--window-size=%d,2600' % max(max(폭들) + 140, 620),
                  '--allow-file-access-from-files',
                  # 바깥으로 안 나갑니다 — 인터넷에 흔들리면 시험이 아닙니다
                  '--host-resolver-rules=MAP * 127.0.0.1:1',
-                 '--virtual-time-budget=11000', '--dump-dom',
+                 # ★ 일곱을 함께 그리니 시간을 넉넉히 줍니다
+                 '--virtual-time-budget=20000', '--dump-dom',
                  'file:///' + p.replace(os.sep, '/')],
                 capture_output=True, text=True, encoding='utf-8',
-                errors='replace', timeout=180)
+                errors='replace', timeout=240)
         except subprocess.TimeoutExpired:
-            return None
+            return 빈것
         m = re.search(r'id="R"[^>]*>(.*?)</div>', r.stdout or '', re.S)
         if not m:
-            return None
+            return 빈것
         글 = _h.unescape(m.group(1))
         if 글.strip() in ('', '?'):
-            return None
+            return 빈것
         try:
-            return json.loads(글)
+            받은것 = json.loads(글)
         except ValueError:
-            return None
+            return 빈것
+        return dict((폭, 받은것.get(str(폭))) for 폭 in 폭들)
     finally:
         shutil.rmtree(t, ignore_errors=True)
         for x in 임시:
@@ -237,6 +295,11 @@ def 재기(쪽길, 폭):
                 os.remove(x)  # 계약-17 예외 — **방금 내가 만든** 임시 쪽만 지웁니다
             except OSError:
                 pass
+
+
+def 재기(쪽길, 폭):
+    """폭 하나만 잴 때 — 위 함수를 그대로 씁니다 (부르는 곳이 남아 있습니다)."""
+    return 재기여러폭(쪽길, [폭]).get(폭)
 
 
 def 쪽갈래(상대):
@@ -332,11 +395,19 @@ def main():
                                                       for w in 재볼폭들)))
     print('')
 
+    # ★ **쪽을 바깥, 폭을 안쪽으로 뒤집었습니다** (2026-10-06 주인 지시)
+    #   전에는 폭마다 38쪽을 돌아 크롬을 266번 띄웠습니다.
+    #   이제 쪽마다 한 번 띄워 일곱 폭을 함께 잽니다.
+    #   보이는 차례는 그대로 두려고 결과를 먼저 모은 뒤 폭별로 냅니다.
+    잰것 = {}
+    for p in 쪽들:
+        잰것[p] = 재기여러폭(p, list(재볼폭들))
+
     for 폭 in 재볼폭들:
         print('[%dpx]' % 폭)
         for p in 쪽들:
             이름 = os.path.relpath(p, NEW).replace(os.sep, '/')
-            것 = 재기(p, 폭)
+            것 = 잰것[p].get(폭)
             if 것 is None:
                 못잼.append('%s (%dpx)' % (이름, 폭))
                 print('  □ %-40s 잴 형편이 안 됩니다' % 이름)

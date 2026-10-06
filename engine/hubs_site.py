@@ -721,6 +721,20 @@ def 방문기록쪽(d, 언어='ko'):
                 '<button type="button" class="btn btn--sm" id="stForget">'
                 '열쇠말 지우기</button>'
                 '</div>'
+                # ★ **열쇠말은 쪽 안에서 받습니다** (2026-10-06)
+                #   전에는 `window.prompt()` 로 물었습니다. 브라우저
+                #   기본 창이 튀어나와 거칠었고, 더 큰 것은 그 창이
+                #   뜨면 **쪽이 멈춘다**는 것이었습니다. 헤드리스
+                #   크롬으로 재는 검사기가 영영 안 끝나, 이 쪽
+                #   하나가 판정에서 240초를 먹었습니다
+                #   (다른 쪽은 1초). 쪽 안에 두면 둘 다 풀립니다.
+                '<div class="st-key" id="stKeyBox" hidden>'
+                '<label for="stKey">열쇠말</label>'
+                '<input type="password" id="stKey" autocomplete="off"'
+                ' placeholder="열쇠말을 넣으세요">'
+                '<button type="button" class="btn btn--sm btn--on"'
+                ' id="stKeyGo">보기</button>'
+                '</div>'
                 '<p class="st-msg" id="stMsg" hidden></p>')
 
     칸들 = []

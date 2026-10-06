@@ -114,11 +114,32 @@
     if (칸) { 칸.textContent = 글; 칸.hidden = !글; }
   }
 
+  /* ★ **열쇠말은 쪽 안에서 받습니다** (2026-10-06)
+   *
+   *   처음에는 `window.prompt()` 로 물었습니다. 두 가지가
+   *   나빴습니다.
+   *
+   *   ① 손님(주인)에게 **브라우저 기본 창**이 튀어나옵니다.
+   *      사이트 생김새와 아무 상관없는 거친 창입니다.
+   *   ② 그 창이 뜨면 쪽이 **멈춥니다.** 헤드리스 크롬으로 재는
+   *      검사기가 영영 안 끝나, 이 쪽 하나가 판정에서
+   *      **240초**를 먹었습니다 (다른 쪽은 1초).
+   *      그 240초가 판정 전체 시간의 큰 몫이었습니다.
+   *
+   *   쪽 안에 입력칸을 두면 둘 다 풀립니다.
+   */
+  function 열쇠칸보이기() {
+    var 칸 = 찾기('stKeyBox');
+    if (칸) { 칸.hidden = false; }
+    var 넣는곳 = 찾기('stKey');
+    if (넣는곳) { try { 넣는곳.focus(); } catch (e) {} }
+  }
+
   function 받기(달) {
     if (!열쇠) {
-      열쇠 = window.prompt('열쇠말을 넣어 주세요') || '';
-      if (!열쇠) { 알림('열쇠말이 있어야 숫자를 봅니다.'); return; }
-      try { localStorage.setItem(열쇠칸, 열쇠); } catch (e) {}
+      열쇠칸보이기();
+      알림('열쇠말을 넣고 「보기」를 누르세요.');
+      return;
     }
     알림('받는 중입니다…');
     var 주소 = '/api/stats.php?t=' + encodeURIComponent(열쇠)
@@ -149,8 +170,31 @@
     지우기.addEventListener('click', function () {
       try { localStorage.removeItem(열쇠칸); } catch (e) {}
       열쇠 = '';
-      알림('열쇠말을 지웠습니다. 새로 고치면 다시 묻습니다.');
+      열쇠칸보이기();
+      알림('열쇠말을 지웠습니다. 다시 넣어야 숫자가 보입니다.');
     });
   }
+
+  /* 쪽 안 열쇠말 칸 — 「보기」를 누르거나 엔터를 치면 받습니다 */
+  function 넣은것받기() {
+    var 넣는곳 = 찾기('stKey');
+    var 값 = (넣는곳 && 넣는곳.value || '').trim();
+    if (!값) { 알림('열쇠말을 넣어 주세요.'); return; }
+    열쇠 = 값;
+    try { localStorage.setItem(열쇠칸, 열쇠); } catch (e) {}
+    var 칸 = 찾기('stKeyBox');
+    if (칸) { 칸.hidden = true; }
+    if (넣는곳) { 넣는곳.value = ''; }
+    받기('');
+  }
+  var 보기단추 = 찾기('stKeyGo');
+  if (보기단추) { 보기단추.addEventListener('click', 넣은것받기); }
+  var 넣는곳 = 찾기('stKey');
+  if (넣는곳) {
+    넣는곳.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); 넣은것받기(); }
+    });
+  }
+
   받기('');
 })();
