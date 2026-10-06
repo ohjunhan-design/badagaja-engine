@@ -250,6 +250,22 @@ def gear(언어='ko'):
     return _붙이기(언어, 'gear.html')
 
 
+def catch_gear(언어='ko'):
+    """해루질 준비물 — catch/gear.html
+
+    ★ **gear.html 과 다릅니다.** 위의 `gear()` 는 낚시까지
+      아우르는 「무엇을 준비하나」이고, 이것은 **해루질** 준비물
+      일곱 가지를 다루는 쪽입니다.
+
+    ★ 왜 여기에 두나 (2026-10-06)
+      `hubs_gear.준비물쪽()` 이 `쪽길 = 'catch/gear.html'` 을
+      **손으로 적고** 있었습니다. 다른 곳에서 그 쪽을 가리키려면
+      같은 글자를 또 적어야 하고, 주소가 바뀌면 한 곳을 잊습니다.
+      주소는 여기 한 곳에서 봅니다 (계약-01).
+    """
+    return _붙이기(언어, 'catch', 'gear.html')
+
+
 def travel(언어='ko'):
     """바다 여행 — travel/index.html
 

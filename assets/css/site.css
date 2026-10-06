@@ -3196,6 +3196,28 @@ details.area-group .area-list{margin-bottom:12px}
 }
 .rm-filter button.on{background:#2F5D57;border-color:#2F5D57;color:#fff}
 
+/* ★ **지도와 그 아래 포인트 카드를 띄웁니다** (2026-10-06 주인 지시)
+     주인 — 「여기 공간도 너무 붙어있어 약간 벌려봐 어울리게」
+
+     재 보니 **0px** 이었습니다. 지도가 끝나는 선에 포인트 카드가
+     그대로 닿아 있어, 두 덩어리가 하나처럼 붙어 보였습니다.
+     둘레와 견주면 이 자리만 어긋나 있었습니다.
+
+         거르개 → 지도          PC 28px · 폰 46px
+         지도 → 포인트 카드      PC  0px · 폰  0px   ← 여기
+         포인트 카드 → 처음이신가요  PC 14px · 폰 14px
+
+     PC 는 지도가 410px 로 큰 덩어리라 조금 더 띄웁니다.
+     휴대폰은 아래쪽(14px)과 같게 맞춰 위아래가 가지런하게 합니다.
+
+     ★ **`+` 가 아니라 `~` 입니다** — 처음에 `+` 로 썼다가
+       아무 일도 안 일어났습니다. 둘 사이에 `<script>` 가 셋
+       끼어 있어(지도 자료 · map-provider · region-map)
+       「바로 다음 형제」가 아니었습니다. 차림표는 조용히
+       버려지고 여백은 0px 그대로였습니다.
+       권역 쪽에 `.two-up` 은 하나뿐이라 `~` 로 안전합니다. */
+.region-points ~ .two-up{margin-top:20px}
+
 /* 지도 + 사진카드 — PC 는 나란히, 모바일은 지도 → 카드 */
 .region-points{
   display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);
@@ -3301,6 +3323,8 @@ details.area-group .area-list{margin-bottom:12px}
 
 @media (max-width:760px){
   .region-points{grid-template-columns:1fr}
+  /* 좁은 화면에서는 아래쪽(14px)과 같게 — 위아래가 가지런합니다 */
+  .region-points ~ .two-up{margin-top:14px}
   .rm-shell{min-height:290px}
   .rm-type{left:10px;top:10px}
   .rm-zoom{right:10px;top:10px}
