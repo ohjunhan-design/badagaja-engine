@@ -591,7 +591,8 @@ def main():
     #     정말 잘린 것은 훨씬 크게 납니다 — 막대찌는 86px 였습니다.
     print('[5-2] 그림 안 도형이 그림 밖으로 나가지 않는가 ★')
     난도형 = []
-    쪽들 = sorted(glob.glob(os.path.join(NEW, '**', '*.html'), recursive=True))
+    # 쪽은 io.쪽들() 한 곳에서 모읍니다 (2026-10-06)
+    쪽들 = io.쪽들(NEW)
     본그림 = 0
     for p in 쪽들:
         글 = io.read(p, default='')

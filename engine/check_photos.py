@@ -52,7 +52,8 @@ DATA = os.environ.get('BADAGAJA_DATA', os.path.join(ROOT, 'data'))
 
 
 def 쪽들():
-    return sorted(glob.glob(os.path.join(NEW, '**', '*.html'), recursive=True))
+    # 쪽은 io.쪽들() 한 곳에서 모읍니다 (2026-10-06)
+    return io.쪽들(NEW)
 
 
 def 자료사진들():

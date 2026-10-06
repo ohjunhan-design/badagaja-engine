@@ -319,3 +319,53 @@ def scan(root='site'):
             if ext in _NEEDS_BOM and not s.startswith(BOM):
                 bad.append((p, 'BOM 이 있어야 하는데 없음'))
     return bad
+
+
+def 쪽들(뿌리='site', *, 상대로=False):
+    """**사이트의 쪽을 모으는 한 곳입니다.** (2026-10-06)
+
+    ★ 왜 만들었나 — 같은 일에 **세 번** 당했습니다
+
+      `check_mobile` 은 쪽을 잴 때 가짜 물때를 심은 사본을
+      **그 쪽과 같은 폴더에** 잠깐 만듭니다 (`__재기임시.html`).
+      차림표·그림이 상대 경로라 딴 데 두면 차림표 없는 쪽을
+      재게 되어, 자리를 옮길 수가 없습니다.
+
+      평소에는 `finally` 로 지웁니다. 그런데 **검사기가 밖에서
+      죽으면**(시간 초과로 판정이 끊으면) `finally` 도 안 돕니다.
+      그 찌꺼기가 남으면 다른 검사기들이 그것을 **진짜 쪽으로**
+      세어 헛 FAIL 을 냅니다.
+
+          2026-10-06 ①  7 아이콘 전수 · 17 미작성 쪽 고아 링크
+          2026-10-06 ②  `check_assets`
+          2026-10-06 ③  `check_seo` — 제목·설명·canonical 넷
+
+      그때마다 그 검사기에 건너뛰기를 **한 줄씩** 넣었습니다.
+      일곱 곳에 같은 줄이 생겼고 그래도 또 샜습니다. 쪽을 모으는
+      자리가 여섯 군데로 흩어져 있으니 당연한 일입니다.
+
+      **모으는 곳을 하나로 둡니다.** 여기만 지키면 다 지켜집니다.
+
+    ★ 무엇을 빼나
+      `__` 로 시작하는 **파일이든 폴더든** 뺍니다. 검사기가 재는
+      동안 만드는 자국입니다. 사이트의 진짜 쪽은 이 꼴로 짓지
+      않습니다 (`__probe__/` 는 판 지문이라 html 이 아닙니다).
+
+      폴더까지 보는 것은 `check_golden` 에서 배웠습니다 —
+      거기만 경로의 **어느 조각이든** 보고 있었습니다.
+      가장 꼼꼼한 쪽에 맞춥니다.
+    """
+    모음 = []
+    for base, _dirs, files in os.walk(뿌리):
+        상대밭 = os.path.relpath(base, 뿌리).replace(os.sep, '/')
+        if any(조각.startswith('__') for 조각 in 상대밭.split('/')):
+            continue              # 자국 폴더 안은 통째로 건너뜁니다
+        for name in files:
+            if not name.endswith('.html'):
+                continue
+            if name.startswith('__'):
+                continue          # 재는 동안 스쳐 간 자국입니다
+            p = os.path.join(base, name)
+            모음.append(os.path.relpath(p, 뿌리).replace(os.sep, '/')
+                       if 상대로 else p)
+    return sorted(모음)

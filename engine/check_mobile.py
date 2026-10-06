@@ -272,8 +272,11 @@ def 볼쪽들(전부):
       다만 풍경칸이 있는 쪽은 짜임이 달라 따로 넣습니다.
     """
     if 전부:
-        return sorted(glob.glob(os.path.join(NEW, '**', '*.html'),
-                                recursive=True))
+        # 쪽은 io.쪽들() 한 곳에서 모읍니다 (2026-10-06)
+        # ★ 이 검사기가 바로 `__재기임시.html` 을 만드는 쪽입니다.
+        #   밖에서 죽으면 finally 가 안 돌아 자국이 남습니다.
+        #   제가 남긴 자국을 제가 또 재면 안 됩니다.
+        return io.쪽들(NEW)
     import json
     모든쪽 = []
     판 = os.path.join(NEW, 'build.json')
@@ -286,8 +289,7 @@ def 볼쪽들(전부):
             모든쪽 = []
     if not 모든쪽:
         모든쪽 = [os.path.relpath(p, NEW).replace(os.sep, '/')
-                  for p in glob.glob(os.path.join(NEW, '**', '*.html'),
-                                     recursive=True)]
+                  for p in io.쪽들(NEW)]
 
     # 권역 쪽을 가려냅니다 — 자료가 아는 권역 이름입니다
     권역들 = set()

@@ -71,7 +71,9 @@ def 옛주소들(중국어=False):
 
 def 새주소들():
     나옴 = set()
-    for p in glob.glob(os.path.join(NEW, '**', '*.html'), recursive=True):
+    # 쪽은 io.쪽들() 한 곳에서 모읍니다 — 재는 동안 남은
+    # `__` 자국을 진짜 쪽으로 세면 헛 FAIL 이 납니다 (2026-10-06)
+    for p in io.쪽들(NEW):
         나옴.add(os.path.relpath(p, NEW).replace('\\', '/'))
     return 나옴
 

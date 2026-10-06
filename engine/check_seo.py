@@ -207,7 +207,13 @@ def 알림파일(쪽들):
 
 
 def main():
-    쪽들 = sorted(glob.glob(os.path.join(NEW, '**', '*.html'), recursive=True))
+    # ★ **쪽은 한 곳에서 모읍니다** (2026-10-06)
+    #   전에는 여기서 glob 으로 직접 훑었습니다. 그러면 검사기가
+    #   재는 동안 남긴 `__재기임시.html` 까지 진짜 쪽으로 세어
+    #   「제목이 겹침 1쪽 · 설명이 겹침 1쪽 · canonical 이 제
+    #   주소가 아닌 쪽 1개」라는 헛 FAIL 을 넷이나 냈습니다.
+    #   쪽이 틀린 것이 아니라 스쳐 간 자국에 걸린 것입니다.
+    쪽들 = io.쪽들(NEW)
     if not 쪽들:
         print('볼 쪽이 없습니다. 먼저 build.py 로 만드세요.')
         return 1

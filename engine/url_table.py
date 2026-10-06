@@ -57,9 +57,9 @@ def 옛주소들():
 
 
 def 새주소들():
+    # 쪽은 io.쪽들() 한 곳에서 모읍니다 (2026-10-06)
     return set(os.path.relpath(p, NEW).replace(os.sep, '/')
-               for p in glob.glob(os.path.join(NEW, '**', '*.html'),
-                                  recursive=True))
+               for p in io.쪽들(NEW))
 
 
 def main():

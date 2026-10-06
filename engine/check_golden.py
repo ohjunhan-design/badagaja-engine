@@ -122,14 +122,12 @@ def 쪽들():
       고쳤는데 결과가 달라지면 골든은 못 믿을 것이 됩니다
       (주인 규칙 26). 사이트 쪽은 `__` 로 시작하지 않습니다.
     """
-    것 = []
-    for p in sorted(glob.glob(os.path.join(NEW, '**', '*.html'),
-                              recursive=True)):
-        상대 = os.path.relpath(p, NEW).replace(os.sep, '/')
-        if any(조각.startswith('__') for 조각 in 상대.split('/')):
-            continue
-        것.append((상대, p))
-    return 것
+    # 쪽은 io.쪽들() 한 곳에서 모읍니다 (2026-10-06)
+    # ★ `__` 를 거르는 일은 **여기서 배워** io 로 옮겼습니다.
+    #   전에는 이 검사기만 경로의 어느 조각이든 보고 있었고,
+    #   다른 일곱은 각자 반쪽짜리 건너뛰기를 갖고 있었습니다.
+    return [(상대, os.path.join(NEW, 상대))
+            for 상대 in io.쪽들(NEW, 상대로=True)]
 
 
 def 몸통만(s):
