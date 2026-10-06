@@ -643,10 +643,23 @@ def _뮤테이션건너뛸까():
     옛커밋 = 옛판.get('커밋')
     if not 옛커밋:
         return None
+    # ★ **볼 범위를 넓혔습니다** (2026-10-06 바깥 검수)
+    #   「engine/·tests/ 만 보지 말고 **뮤테이션 시험 결과에 영향을
+    #     주는 파일 범위**를 명시적으로 보세요. 검사 fixture 나
+    #     계약 정의, workflow 설정이 다른 경로에 있다면 그것도
+    #     포함하세요. 반대로 assets/css, 사진, 일반 데이터처럼
+    #     **자기검증 방법 자체를 바꾸지 않는** 파일은 재실행
+    #     사유가 아니어야 합니다.」
+    #
+    #   그래서 이렇게 가릅니다.
+    #     보는 것   engine/ tests/ docs/CONTRACTS.md .github/workflows/
+    #               (검사기 · 시험 · 계약 정의 · 판정이 도는 틀)
+    #     안 보는 것 assets/ data/ site/ img/
+    #               (쪽의 **내용**이지 **재는 방법**이 아닙니다)
+    볼범위 = ['engine', 'tests', 'docs/CONTRACTS.md', '.github/workflows']
     try:
         r = subprocess.run(
-            ['git', 'diff', '--name-only', 옛커밋, '--',
-             'engine', 'tests'],
+            ['git', 'diff', '--name-only', 옛커밋, '--'] + 볼범위,
             cwd=ROOT, capture_output=True, text=True,
             encoding='utf-8', errors='replace', timeout=60)
     except (OSError, subprocess.SubprocessError):
@@ -658,8 +671,8 @@ def _뮤테이션건너뛸까():
         return None                      # 검사기가 바뀌었습니다 — 돕니다
     # 아직 커밋 안 한 것도 봅니다 — 고쳐 놓고 안 올렸을 수 있습니다
     try:
-        r2 = subprocess.run(['git', 'status', '--porcelain',
-                             'engine', 'tests'],
+        r2 = subprocess.run(['git', 'status', '--porcelain']
+                            + 볼범위,
                             cwd=ROOT, capture_output=True, text=True,
                             encoding='utf-8', errors='replace', timeout=60)
         if r2.returncode == 0 and (r2.stdout or '').strip():
@@ -1570,6 +1583,18 @@ def main():
         #   느려졌나」를 뒤에서 알 길이 없었고, 15분이 되도록 아무도
         #   몰랐습니다. 계약-37(판정은 180초 안에)이 이 값을 봅니다.
         '걸린초': round(걸린, 1),
+        # ★ **모드를 나눠 적습니다** (2026-10-06 바깥 검수)
+        #
+        #   「검사기를 고친 날의 전체 자기검증까지 180초 안에
+        #     강제하면 **계약 자체가 현실과 충돌**합니다.」
+        #
+        #       routine     디자인·자료·쪽을 고쳤을 때 → 180초 이하
+        #       full-self   engine/·tests/ 를 고쳐 뮤테이션까지 돌 때
+        #
+        #   주인께서 바라신 「디자인 수정 때 3분 안」은 routine 의
+        #   계약입니다. full-self 시간을 **감추라는 뜻이 아닙니다** —
+        #   둘 다 실제 시간을 남깁니다.
+        '모드': 'routine' if _뮤테이션건너뛸까() else 'full-self',
         '판정한도초': 180,
         '커밋': 지금커밋(),
         '빠른검사': 빠르게,
