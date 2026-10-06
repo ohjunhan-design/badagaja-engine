@@ -4033,3 +4033,29 @@ details.area-group .area-list{margin-bottom:12px}
   .p-catch .hero--text h1,
   .p-fish .hero--text h1{font-size:27px;line-height:1.25}
 }
+
+
+/* ───────────────────────────────────────────────────────────
+   채비 쪽 — **그림을 빨리 만나게** (2026-10-07 바깥 검수)
+     제목 블록이 PC 첫 화면의 60%(y 100~500)를 먹어 안내도가
+     535px 부터 시작했습니다. 목표는 400~430px 안쪽.
+     그리고 2열이 50:50 이라 안내도가 작고(515×365) 오른쪽 표가
+     더 길어 **왼쪽 아래가 비어** 보였습니다. 57:43 으로 바꿉니다.
+   ★ 모바일은 지금이 좋습니다 — min-width:901px 안에서만 고칩니다.
+   ★ 공용 .hero--text 는 건드리지 않습니다.
+   ─────────────────────────────────────────────────────────── */
+@media (min-width:901px){
+  .p-rig .hero--text{padding-block:24px 22px}
+  .p-rig .hero--text>.wrap{padding-block:0}
+  .p-rig .hero--text h1{margin-bottom:8px}
+  .p-rig .hero-lead{margin-bottom:10px}
+  .p-rig .rig-wrap{grid-template-columns:minmax(0,1.35fr) minmax(360px,1fr);gap:24px}
+  /* 안내도는 가용 폭을 거의 다 씁니다. **비율은 그대로** 둡니다 —
+     억지로 세로를 늘리면 그림이 일그러집니다 (바깥 검수). */
+  .p-rig .rig-art{padding:16px 12px}
+  .p-rig .rig-art svg,
+  .p-rig .rig-guide-open img{width:100%;height:auto;object-fit:contain}
+}
+
+/* 값 자리로 올라온 설명은 **주값처럼** 보이게 */
+.rig-dl dd>b{font-weight:800}
