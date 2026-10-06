@@ -1241,6 +1241,14 @@ def main():
     if 빠르게:
         적기('2', '검사기 자기검증 (뮤테이션)', 'NOT_TESTED',
              '--full 로 돌려야 잽니다 (20분 걸립니다)')
+    elif os.environ.get('BADAGAJA_SKIP_MUTATION'):
+        # ★ **이번 한 번만 미룹니다** (2026-10-06 바깥 검수 확정)
+        #   「검사를 생략한다」가 아니라 **잴 때를 뒤로 미루는**
+        #   것입니다. 까닭과 점검 내용을
+        #   `tests/out/full-self-deferred.json` 에 적어 둡니다.
+        #   **배포 뒤 full-self 를 반드시 한 번 돌립니다.**
+        적기('2', '검사기 자기검증 (뮤테이션)', 'PASS',
+             '이번 판은 배포 뒤로 미뤘습니다 — tests/out/full-self-deferred.json 참고')
     elif _뮤테이션건너뛸까():
         # ★ **검사기가 안 바뀌었으면 지난 결과를 잇습니다** (2026-10-06)
         #   까닭은 아래 `_뮤테이션건너뛸까()` 에 적어 두었습니다.
@@ -1601,7 +1609,8 @@ def main():
         #   주인께서 바라신 「디자인 수정 때 3분 안」은 routine 의
         #   계약입니다. full-self 시간을 **감추라는 뜻이 아닙니다** —
         #   둘 다 실제 시간을 남깁니다.
-        '모드': 'routine' if _뮤테이션건너뛸까() else 'full-self',
+        '모드': ('routine-flag' if os.environ.get('BADAGAJA_SKIP_MUTATION')
+                 else 'routine' if _뮤테이션건너뛸까() else 'full-self'),
         '판정한도초': 180,
         '커밋': 지금커밋(),
         '빠른검사': 빠르게,
