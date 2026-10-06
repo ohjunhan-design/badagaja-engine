@@ -61,7 +61,7 @@
 .g-club>a{display:block;text-align:center;background:#E5A94F;color:#2A1B08;border-radius:11px;padding:10px;font-weight:700;font-size:.9rem;text-decoration:none}
 .g-club>a:hover{background:#D9993B}
 .g-club small{display:block;text-align:center;margin-top:9px;font-size:.74rem;color:rgba(243,236,221,.6)}
-.g-credit{position:absolute;right:12px;bottom:10px;z-index:3;margin:0;font-size:.68rem;color:rgba(255,251,243,.86);
+.hero-credit{position:absolute;right:12px;bottom:10px;z-index:3;margin:0;font-size:.68rem;color:rgba(255,251,243,.86);
   background:rgba(22,30,36,.45);border-radius:999px;padding:3px 11px;backdrop-filter:blur(3px)}
 
 /* 숫자 띠 */
@@ -327,7 +327,7 @@ body.home-gate .navlinks{margin-left:auto;margin-right:auto}
 
 @media (max-width:900px){ .g-club{display:none} }   /* 휴대폰: 히어로 아래 동호회 모집 카드 숨김 — 맨 위 「동호회 →」 단추와 아래 동호회 칸은 그대로 (2026-09-22 주인 지시) */
 
-@media (max-width:720px){ .g-hero-in{padding-bottom:40px} .g-credit{bottom:8px;right:10px;font-size:.62rem} }   /* 휴대폰: 사진 출처가 '많이 찾는' 단추 줄을 가리던 것 — 단추 아래로 (2026-09-22) */
+@media (max-width:720px){ .g-hero-in{padding-bottom:40px} .hero-credit{bottom:8px;right:10px;font-size:.62rem} }   /* 휴대폰: 사진 출처가 '많이 찾는' 단추 줄을 가리던 것 — 단추 아래로 (2026-09-22) */
 
 /* 휴대폰 첫 화면 글자 크기 줄임 — 큰 제목이 두 줄로 나뉘고 설명이 화면을 많이 차지하던 것 (2026-09-22 주인 지시) */
 @media (max-width:560px){
@@ -567,3 +567,55 @@ footer.site-footer .footer-bottom{padding-bottom:calc(64px + env(safe-area-inset
   border-top:1px solid rgba(255,255,255,.18);word-break:keep-all;
 }
 
+
+
+/* ───────────────────────────────────────────────────────────
+   2026-10-06 바깥 검수 — 홈 첫 화면 묶음 수정
+   차례: 중복 정리 → 첫 화면 압축 → 가독성 보정
+   ★ 숫자는 **숫자띠 한 곳에서만** 보입니다. 머리띠 칩과
+     브랜드 카드에서 뺐습니다 (engine/build.py).
+   ─────────────────────────────────────────────────────────── */
+
+/* ② 히어로 글이 밝은 사진에 묻히지 않게 — 왼쪽·아래를 더 짙게 */
+.g-hero-shade{
+  background:
+    linear-gradient(105deg, rgba(12,22,30,.72) 0%, rgba(12,22,30,.44) 46%,
+                    rgba(12,22,30,.18) 72%, rgba(12,22,30,.10) 100%),
+    linear-gradient(180deg, rgba(12,22,30,.10) 0%, rgba(12,22,30,.30) 62%,
+                    rgba(12,22,30,.62) 100%);
+}
+.g-lede{text-shadow:0 1px 3px rgba(0,0,0,.55), 0 2px 14px rgba(0,0,0,.35)}
+.g-hero h1 .l1{text-shadow:0 1px 10px rgba(0,0,0,.5)}
+
+/* ③ 출처는 **언제나 사진 안쪽**에 둡니다. 밖으로 흘러나오면
+      흰 배경에 검은 글씨로 걸쳐 보입니다 (2026-10-06 겪음). */
+.g-hero .hero-credit{
+  position:absolute;right:12px;bottom:10px;z-index:3;
+  color:rgba(255,251,243,.88);background:rgba(22,30,36,.52);
+  border-radius:999px;padding:3px 11px;max-width:calc(100% - 24px);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+
+@media (max-width:760px){
+  /* ④ 휴대폰 첫 화면을 **압축**합니다 — 머리가 4줄을 먹어
+        제목·검색칸이 아래로 밀려 있었습니다. */
+  .g-hero-in{padding-top:18px;padding-bottom:30px}
+
+  /* ⑤ 찾기 아래 칩은 **한 줄**로. 넘치면 옆으로 넘깁니다. */
+  .g-quick{
+    flex-wrap:nowrap;overflow-x:auto;gap:6px;
+    margin-top:11px;padding-bottom:2px;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  }
+  .g-quick::-webkit-scrollbar{display:none}
+  /* ★ 한 줄로 만들 때는 **모든 자식**에 줍니다. a 에만 주면
+        앞의 안내 글(span)이 눌려 **한 글자씩 세로로** 쌓입니다.
+        2026-10-06 실제로 그렇게 깨졌습니다. */
+  .g-quick>*{flex:0 0 auto}
+  .g-quick a{padding:5px 11px}
+  /* 안내 글은 휴대폰에서 자리만 먹습니다 — 칩만으로 뜻이 통합니다 */
+  .g-quick>span:first-child{display:none}
+
+  /* ⑥ 사진 출처는 더 작게, 글이 길면 … 로 줄입니다 */
+  .g-hero .hero-credit{right:10px;bottom:8px;font-size:11px;padding:2px 9px}
+}
