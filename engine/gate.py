@@ -1609,7 +1609,7 @@ def main():
         #   주인께서 바라신 「디자인 수정 때 3분 안」은 routine 의
         #   계약입니다. full-self 시간을 **감추라는 뜻이 아닙니다** —
         #   둘 다 실제 시간을 남깁니다.
-        '모드': ('routine-flag' if os.environ.get('BADAGAJA_SKIP_MUTATION')
+        '모드': ('full-deferred' if os.environ.get('BADAGAJA_SKIP_MUTATION')
                  else 'routine' if _뮤테이션건너뛸까() else 'full-self'),
         '판정한도초': 180,
         '커밋': 지금커밋(),
