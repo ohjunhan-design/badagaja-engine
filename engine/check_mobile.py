@@ -108,7 +108,7 @@ var 틀들 = %s;          /* [[id, 폭], …] */
 var 남은 = 틀들.length;
 var 모은것 = {};
 
-function 하나재기(아이디, 폭) {
+function 하나재기(아이디, 폭, 열쇠) {
   var f = document.getElementById(아이디);
   var d = f.contentDocument, w = f.contentWindow;
   var W = d.documentElement.clientWidth;
@@ -171,7 +171,7 @@ function 하나재기(아이디, 폭) {
       var 위 = 그래프칸.closest('details');
       접힘 = !!(위 && !위.open);
     }
-    모은것[String(폭)] = {
+    모은것[열쇠] = {
       화면폭: W,
       몸폭: d.body.scrollWidth,
       그래프칸: !!그래프칸,
@@ -191,8 +191,11 @@ function 다왔나() {
   if (남은 > 0) { return; }
   setTimeout(function () {
     for (var i = 0; i < 틀들.length; i++) {
-      try { 하나재기(틀들[i][0], 틀들[i][1]); }
-      catch (e) { 모은것[String(틀들[i][1])] = null; }
+      /* ★ 열쇠는 **쪽번호|폭** 입니다 (2026-10-07)
+         한 판에 쪽이 여럿 들어가므로 폭만으로는 못 가립니다. */
+      var 열쇠 = String(틀들[i][2]) + '|' + String(틀들[i][1]);
+      try { 하나재기(틀들[i][0], 틀들[i][1], 열쇠); }
+      catch (e) { 모은것[열쇠] = null; }
     }
     var R = document.getElementById('R');
     R.textContent = JSON.stringify(모은것);
@@ -275,13 +278,54 @@ def _가짜심은쪽(쪽길, 임시, 둘자리=None):
 
     # ★ **`site/` 밖에 둡니다** — 다른 검사기가 베끼다 터지지 않게
     자리 = 둘자리 or tempfile.mkdtemp(prefix='mobile-쪽-')
+    # ★ **이름이 겹치면 안 됩니다** (2026-10-07)
+    #
+    #   한 판에 쪽을 여럿 넣게 되면서 이 자리가 탈이 났습니다.
+    #   이름이 `재기임시.html` 로 **고정**이라, 한 묶음의 쪽 셋이
+    #   **서로 덮어써서 셋 다 마지막 쪽을 보고 있었습니다.**
+    #   about.html 에 없는 물때 그래프가 보였습니다.
+    #
+    #   `tests/mobile_ab.py` 가 259칸 가운데 **100칸이 다르다**고
+    #   잡아 주었습니다. 묶음을 넣기 전에 기준선을 떠 두지
+    #   않았다면 **조용히 거짓 통과**했을 것입니다.
     새길 = os.path.join(자리, '재기임시.html')
+    번 = 0
+    while os.path.exists(새길):
+        번 += 1
+        새길 = os.path.join(자리, '재기임시-%d.html' % 번)
     io.write(새길, 글)
     임시.append(새길)
     return 새길
 
 
+def 묶음크기():
+    """**한 판에 몇 쪽**을 넣을까 (2026-10-07 바깥 검수).
+
+    「1 batch = 3쪽 × 7폭 = iframe 21개 **부터**입니다 …
+      5쪽 × 7폭 = 35 iframe 도 기술적으로 가능하지만, 지금 검사
+      목적이 『가로 넘침을 놓치지 않는 것』이라 **렌더 타이밍과
+      메모리 안정성을 먼저 확인해야** 합니다」
+
+    ★ **속도보다 결과 동일성이 먼저입니다.**
+      `tests/mobile_ab.py --견주기` 가 259칸을 모두 견줍니다.
+      한 칸이라도 다르면 그 크기는 **탈락**입니다.
+
+    시험할 때만 환경변수로 바꿉니다 — 평소에는 손대지 않습니다.
+    """
+    try:
+        것 = int(os.environ.get('BADAGAJA_MOBILE_BATCH') or 3)
+    except ValueError:
+        것 = 3
+    return max(1, min(것, 12))
+
+
 def 재기여러폭(쪽길, 폭들):
+    """쪽 하나를 여러 폭으로 — **재기여러쪽() 에 맡깁니다**."""
+    return 재기여러쪽([쪽길], 폭들).get(쪽길) or dict(
+        (폭, None) for 폭 in 폭들)
+
+
+def 재기여러쪽(쪽길들, 폭들):
     """쪽 하나를 **여러 폭으로 한 번에** 잽니다 (2026-10-06).
 
     돌려주는 것: {폭: 잰것 또는 None}
@@ -301,17 +345,29 @@ def 재기여러폭(쪽길, 폭들):
         # ★ 가짜 물때를 심어 **그래프가 그려진 채로** 잽니다 (2026-10-01)
         #   쪽마다 **한 번만** 만듭니다 — 전에는 폭마다 만들었습니다.
         #   자리는 `t`(임시 폴더)입니다 — `site/` 를 안 건드립니다.
-        쪽길 = _가짜심은쪽(쪽길, 임시, 둘자리=t)
-        안길 = 'file:///' + os.path.abspath(쪽길).replace(os.sep, '/')
+        # ★ **쪽 × 폭을 모두 한 판에** 늘어놓습니다 (2026-10-07)
+        #   전에는 쪽마다 크롬을 띄워 37번이었습니다. 바닥을 재니
+        #   크롬 37번이 29.1초로 **전체의 100%** 였습니다.
+        #   예산을 줄여도 안 줄었던 까닭이 이것입니다.
+        #
+        #   ※ 묶음 크기는 **속도보다 결과 동일성이 먼저**입니다
+        #     (바깥 검수). tests/mobile_ab.py 로 259칸을 견줍니다.
+        칸들 = []
+        for 쪽번 in range(len(쪽길들)):
+            심은것 = _가짜심은쪽(쪽길들[쪽번], 임시, 둘자리=t)
+            안길 = 'file:///' + os.path.abspath(심은것).replace(os.sep, '/')
+            for 폭 in 폭들:
+                칸들.append((len(칸들), 안길, 폭, 쪽번))
         틀글 = ''.join(
             '<iframe id="F%d" src="%s" width="%d" height="2400"></iframe>'
-            % (i, 안길, 폭) for i, 폭 in enumerate(폭들))
-        목록 = '[' + ','.join('["F%d",%d]' % (i, 폭)
-                              for i, 폭 in enumerate(폭들)) + ']'
+            % (i, 안길, 폭) for i, 안길, 폭, _ in 칸들)
+        목록 = '[' + ','.join('["F%d",%d,%d]' % (i, 폭, 쪽번)
+                              for i, _, 폭, 쪽번 in 칸들) + ']'
         겉 = 겉틀 % (틀글, 목록)
         p = os.path.join(t, 'z.html')
         io.write(p, 겉)
-        빈것 = dict((폭, None) for 폭 in 폭들)
+        빈것 = dict((쪽, dict((폭, None) for 폭 in 폭들))
+                    for 쪽 in 쪽길들)
         # ★ **예산은 상한일 뿐입니다** (2026-10-07 바깥 검수)
         #   20초를 **무조건 다 써서** 31초가 걸렸습니다. 쪽 안
         #   타이머는 2,200ms 면 답을 냅니다. 6초로 줄이고,
@@ -321,7 +377,9 @@ def 재기여러폭(쪽길, 폭들):
             try:
                 r = subprocess.run(
                      machine.크롬앞머리() + [
-                     '--window-size=%d,2600' % max(max(폭들) + 140, 620),
+                     # ★ 창은 **한 줄에 늘어선 모든 칸**을 담아야 합니다
+                     '--window-size=%d,2600'
+                     % max(sum(폭 for _, _, 폭, _ in 칸들) + 140, 620),
                      '--allow-file-access-from-files',
                      # 바깥으로 안 나갑니다 — 인터넷에 흔들리면 시험이 아닙니다
                      '--host-resolver-rules=MAP * 127.0.0.1:1',
@@ -332,7 +390,7 @@ def 재기여러폭(쪽길, 폭들):
             except subprocess.TimeoutExpired:
                 return 빈것
             # ★ **완료 신호**를 봅니다 — 「비었나」가 아닙니다
-            다잿나 = ('data-다잿음="%d"' % len(폭들)) in (r.stdout or '')
+            다잿나 = ('data-다잿음="%d"' % len(칸들)) in (r.stdout or '')
             if 다잿나:
                 break
         if not 다잿나:
@@ -347,7 +405,12 @@ def 재기여러폭(쪽길, 폭들):
             받은것 = json.loads(글)
         except ValueError:
             return 빈것
-        return dict((폭, 받은것.get(str(폭))) for 폭 in 폭들)
+        # ★ 열쇠가 **쪽번호|폭** 입니다 — 쪽길로 되돌립니다
+        나옴 = {}
+        for 쪽번, 쪽 in enumerate(쪽길들):
+            나옴[쪽] = dict((폭, 받은것.get('%d|%d' % (쪽번, 폭)))
+                           for 폭 in 폭들)
+        return 나옴
     finally:
         shutil.rmtree(t, ignore_errors=True)
         for x in 임시:
@@ -459,9 +522,13 @@ def main():
     #   전에는 폭마다 38쪽을 돌아 크롬을 266번 띄웠습니다.
     #   이제 쪽마다 한 번 띄워 일곱 폭을 함께 잽니다.
     #   보이는 차례는 그대로 두려고 결과를 먼저 모은 뒤 폭별로 냅니다.
+    # ★ **쪽을 묶어** 한 판에 그립니다 (2026-10-07)
+    #   크롬 37번이 29.1초로 전체의 100% 였습니다.
+    #   묶으면 띄우는 횟수가 그만큼 줄어듭니다.
+    묶음 = 묶음크기()
     잰것 = {}
-    for p in 쪽들:
-        잰것[p] = 재기여러폭(p, list(재볼폭들))
+    for i in range(0, len(쪽들), 묶음):
+        잰것.update(재기여러쪽(쪽들[i:i + 묶음], list(재볼폭들)))
 
     for 폭 in 재볼폭들:
         print('[%dpx]' % 폭)
