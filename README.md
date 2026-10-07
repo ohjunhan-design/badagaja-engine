@@ -22,26 +22,26 @@
 
 ---
 
-## ★ 저장소가 두 개입니다 — **`origin` 이 대장이 아닙니다**
-
-여기서 가장 헷갈리는 것입니다. 꼭 읽어 주십시오.
+## ★ 저장소가 두 개입니다 — `origin` 이 대장입니다
 
 | 깃 원격 이름 | 깃허브 저장소 | 무엇인가 |
 |---|---|---|
-| **`engine`** | **`ohjunhan-design/badagaja-engine`** | **대장입니다. 배포도 여기서 돕니다** |
-| `origin` | `ohjunhan-design/badagaja-2nd` | **2026-09-28 에 멈춘 저장소**입니다 |
-
-이름이 거꾸로 붙어 있습니다. 보통 `origin` 이 대장이지만 **여기서는 아닙니다.**
-`badagaja-2nd` 를 보면 **9일 전 판**이 나옵니다. 그래서 바깥에서 볼 때
-「옛판을 본다」는 일이 생겼습니다.
+| **`origin`** | **`ohjunhan-design/badagaja-engine`** | **대장입니다. 배포도 여기서 돕니다** |
+| `old-2nd-stopped` | `ohjunhan-design/badagaja-2nd` | **2026-09-28 에 멈춘 저장소**입니다 |
 
 ```bash
-git push engine main      # ← 대장에 올립니다
-git log -1 engine/main    # ← 지금 판
+git push origin main      # ← 대장에 올립니다
+git log -1 origin/main    # ← 지금 판
 ```
 
-원격 이름을 바꾸려 했으나 막혀 있어, 대신 여기에 적어 둡니다.
-`badagaja-2nd` 에는 아직 **9개 커밋**이 남아 있어 지우지 않았습니다.
+> **겪은 일 (2026-10-07)** — 전에는 이름이 **거꾸로** 붙어 있었습니다.
+> 멈춘 `badagaja-2nd` 가 `origin` 이었고 대장은 `engine` 이었습니다.
+> 보통 `origin` 이 대장이므로, 사람도 도구도 습관적으로 **9일 전 판**을
+> 보고 판단했습니다. 바깥에서 「옛판을 본다」고 한 일의 뿌리 하나였습니다.
+>
+> 주인 허락을 받아 이름을 바로잡았고, `engine/check_origin.py` 가
+> **되돌아가면 배포를 막습니다.** `badagaja-2nd` 에는 아직 커밋 9개가
+> 남아 있어 지우지 않았습니다.
 
 ---
 

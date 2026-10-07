@@ -45,10 +45,12 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # ★ 대장 저장소 — **한 곳에만 적습니다** (주인 규칙 29 의 정신)
 대장 = 'ohjunhan-design/badagaja-engine'
 
-# ★ 이름을 바로잡으면 이것을 True 로 올립니다
+# ★ **막음입니다** — 2026-10-07 주인 허락으로 이름을 바로잡았습니다
 #     git remote rename origin old-2nd-stopped
 #     git remote rename engine origin
-막음으로 = False
+#   이제 `origin` 이 대장을 가리킵니다. 되돌아가면 **막습니다** —
+#   고칠 수 있는 것이 되었으니 알림으로 둘 까닭이 없습니다.
+막음으로 = True
 
 막음, 알림 = [], []
 
