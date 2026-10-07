@@ -368,6 +368,55 @@ jobs:
           fi
           echo "· 되돌렸고 사이트가 살아 있습니다. 왜 나빴는지 보고 다시 하세요."
 
+      # ── ★ **올린 판을 봉해 둡니다** (2026-10-07 바깥 검수)
+      #
+      #   되돌리기용 백업을 서버에서 통째로 받느라 **11분 10초**가
+      #   듭니다. 판정(12분 50초)과 거의 맞먹습니다. 34분 가운데
+      #   둘이 24분입니다.
+      #
+      #   까닭은 `--only-newer` 였습니다. 러너는 **매번 새로 뜨므로**
+      #   `_before/` 가 늘 비어 있어 매번 115MB 를 통째로 받습니다.
+      #   그런데 그 115MB 는 **우리가 만들어 올린 바로 그것**입니다
+      #   (site/ 가 115MB · 그중 img/ 가 96MB).
+      #
+      #   바깥 검수가 정해 준 차례 —
+      #     ① 검증된 site/ release artifact 를 **지금부터 매 배포 보관**
+      #     ② artifact 에 build_id · commit · SHA256 · manifest ·
+      #        gate 결과 저장
+      #     ③ 이전/새 artifact 로 **되돌리기 재현 시험**
+      #     ④ **새 파일 삭제까지 포함해** exact rollback 검증
+      #     ⑤ 서버 build_id 가 known previous release 와 **일치할
+      #        때만** 전체 FTP 백업 생략
+      #     ⑥ 일치하지 않으면 **기존 11분 full backup 으로 되돌아감**
+      #
+      #   ★ 지금은 **①②만** 합니다 — 쌓기만 하고 백업은 그대로 둡니다.
+      #     ③④가 통과하기 전에는 **한 푼도 생략하지 않습니다.**
+      #     「백업 파일이 있다」와 「그 백업으로 복구할 수 있다」는
+      #     다릅니다 — 이미 한 번 겪은 자리입니다(그래서 사진까지
+      #     받게 되었습니다).
+      - name: 올린 판을 봉해 둡니다 (다음 배포가 되돌릴 바탕)
+        if: success()
+        run: |
+          mkdir -p _release
+          # ★ build.json 에 이미 **커밋·전체 지문·파일마다의 SHA-256**
+          #   이 들어 있습니다 (engine/build_id.py). 그것이 manifest 입니다.
+          cp site/build.json _release/build.json
+          cp tests/out/gate.json _release/gate.json
+          cp tests/out/deployed.json _release/deployed.json 2>/dev/null || true
+          tar -czf _release/site.tgz site
+          echo "봉한 것 $(du -sh _release | cut -f1)"
+          # ★ heredoc 은 YAML 블록 안에서 들여쓰기에 걸리기 쉽습니다 —
+          #   한 줄짜리로 둡니다.
+          python engine/build_id.py --보기
+
+      - name: 봉한 판 남기기
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          # ★ 커밋을 이름에 넣습니다 — 다음 배포가 **찾아 쓸** 이름입니다
+          name: 배포판-${{ github.sha }}
+          path: _release
+          retention-days: 30
       - name: 결과 남기기
         if: always()
         uses: actions/upload-artifact@v4

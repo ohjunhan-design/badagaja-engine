@@ -34,3 +34,7 @@ tests/out/*.zip
 
 # 쪽 묶음 A/B 기준선 — 내 컴퓨터에서 잰 값입니다 (사람마다 다릅니다)
 data-private/mobile-기준선.json
+
+# 봉해 둔 배포판 (러너에서만 만듭니다)
+_release/
+_release.tgz
