@@ -49,6 +49,8 @@ sys.path.insert(0, ROOT)
 from engine._fake_coupang import 가짜쿠팡   # noqa: E402  가짜 쿠팡은 한 곳에만
 from engine import io   # noqa: E402
 from engine import machine   # noqa: E402  크롬 자리·메모리는 machine.py 한 곳에서만
+# 표본에 꼭 들어야 하는 쪽은 samples 한 곳에서 가립니다 (2026-10-08)
+from engine import samples   # noqa: E402
 
 NEW = os.environ.get('BADAGAJA_SITE', os.path.join(ROOT, 'site'))
 DATA = os.environ.get('BADAGAJA_DATA', os.path.join(ROOT, 'data'))
@@ -298,6 +300,13 @@ def 볼쪽들():
             것 = [x for x in 것 if not x.endswith('index.html')]
         if 것:
             나옴.append((이름, 것[0]))
+    # ★ **새 짜임을 켠 쪽을 반드시 봅니다** (2026-10-08)
+    #   포인트 상세 패널은 「광고를 그 안에도, 지도와 패널 사이에도
+    #   두지 않는다」는 조건이 붙어 있습니다. 표본에 없으면 그
+    #   조건이 지켜지는지 아무도 안 봅니다.
+    for 이름, 길 in samples.켠쪽들(NEW):
+        if 길 not in [x[1] for x in 나옴]:
+            나옴.append((이름, 길))
     return 나옴
 
 

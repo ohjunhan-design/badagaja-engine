@@ -4682,3 +4682,107 @@ body.p-travel .tv-more{display:none}
   outline-offset:-2px}
 .tp-next{grid-column:1/-1;margin:8px 0 0;font-size:13.5px;
   font-weight:700;color:var(--green,#2F5D57);text-align:center}
+
+/* ══ 포인트 상세 패널 — 오른쪽 35% (2026-10-08 바깥 검수 지시)
+   「오른쪽 35% 영역을 단순 포인트 목록이 아니라
+     "선택한 포인트의 즉석 상세 패널"로」
+   한 화면에서 「장소 고르기 → 어종 → 오늘 물때 → 출조 판단」까지. */
+.phm-list{display:flex;flex-direction:column;gap:10px}
+
+/* ── 고르는 카드 (처음 화면) ─────────────────────────
+   ★ 전체 목록 카드를 그대로 쓰지 않습니다 — id 가 겹쳐
+     공개 서버에 중복 id 가 쪽마다 셋씩 있었습니다. */
+.pp-pick{display:grid;
+  grid-template-columns:1fr auto;grid-template-rows:auto auto;
+  gap:2px 10px;width:100%;min-height:62px;
+  padding:12px 14px;border:1px solid var(--line);
+  border-radius:var(--r-md);background:var(--white);
+  text-align:left;cursor:pointer;font:inherit;color:inherit}
+.pp-pick:hover,.pp-pick:focus-visible{border-color:var(--green);
+  background:var(--soft)}
+.pp-pick-n{grid-column:1;font-weight:800;font-size:15.5px;
+  line-height:1.35;color:var(--ink)}
+.pp-pick-k{grid-column:1;font-size:12.5px;color:var(--muted)}
+.pp-pick-f{grid-column:1;font-size:13px;color:var(--green);
+  font-weight:700}
+.pp-pick-go{grid-column:2;grid-row:1/-1;align-self:center;
+  font-size:20px;color:var(--muted)}
+
+/* ── 상세 ────────────────────────────────────────── */
+.pp{display:flex;flex-direction:column;gap:12px;
+  padding:14px;border:1px solid var(--line);
+  border-radius:var(--r-lg);background:var(--white)}
+/* 누름자리는 44px 이상 — 엄지로 눌러야 합니다 */
+.pp-back{align-self:flex-start;min-height:44px;padding:8px 12px;
+  border:0;background:none;cursor:pointer;font:inherit;
+  font-size:14px;font-weight:700;color:var(--green)}
+.pp-back:hover{text-decoration:underline}
+.pp-head{display:flex;flex-direction:column;gap:7px}
+.pp-name{margin:0;font-size:19px;font-weight:800;line-height:1.3;
+  color:var(--ink)}
+.pp-chips{display:flex;flex-wrap:wrap;gap:6px;margin:0}
+.pp-chip{padding:3px 9px;border-radius:var(--r-full);
+  background:var(--soft);border:1px solid var(--line);
+  font-size:12.5px;font-weight:700;color:var(--muted)}
+/* 확인된 자리인지 대략 위치인지 — 가장 먼저 알아야 하는 것 */
+.pp-chip.is-ok{background:var(--sea-pale);border-color:var(--sea-pale);
+  color:var(--green)}
+.pp-chip.is-area{background:#F7EADA;border-color:#EBD6B8;
+  color:var(--orange)}
+.pp-fish,.pp-where{margin:0;font-size:14px;line-height:1.55;
+  color:var(--ink)}
+.pp-lbl{display:block;font-size:12px;font-weight:800;
+  color:var(--muted);margin-bottom:2px}
+.pp-xy{display:block;font-size:13px;color:var(--muted);
+  font-variant-numeric:tabular-nums}
+.pp-memo{display:block;font-size:13.5px;color:var(--ink);
+  margin-top:3px}
+.pp-warn{margin:0;padding:7px 10px;border-radius:var(--r-sm);
+  background:#FBF0E2;font-size:13.5px;font-weight:700;
+  color:var(--orange)}
+
+/* ── 오늘 물때 — **숫자가 주인공** ──────────────────
+   ★ 관측소 이름을 반드시 적습니다 (지시 ②). 포인트마다
+     관측소가 있는 것이 아니라 **권역 기준점**입니다.
+     숨기면 그 자리 물때로 오해합니다. */
+.pp-tide{display:flex;flex-direction:column;gap:8px;
+  padding-top:12px;border-top:1px solid var(--line)}
+.pp-tide-head{display:flex;flex-wrap:wrap;align-items:baseline;
+  justify-content:space-between;gap:4px 8px}
+.pp-tide-t{margin:0;font-size:15px;font-weight:800;color:var(--ink)}
+.pp-station{font-size:12px;color:var(--muted)}
+.pp-ev{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.pp-ev-1{display:flex;align-items:baseline;gap:6px;
+  padding:8px 10px;border-radius:var(--r-sm);background:var(--soft)}
+.pp-ev-1.low{background:#E6F0EE}
+.pp-ev-1.high{background:#FBF1E3}
+.pp-ev-k{flex:0 0 auto;font-size:12px;font-weight:800;
+  color:var(--muted)}
+.pp-ev-t{flex:1 1 auto;font-size:15.5px;font-weight:800;
+  color:var(--ink);font-variant-numeric:tabular-nums}
+.pp-ev-h{flex:0 0 auto;font-size:12px;color:var(--muted);
+  font-variant-numeric:tabular-nums}
+/* 다가오는 것 하나를 또렷하게 */
+.pp-ev-1.is-next{outline:2px solid var(--green);outline-offset:-2px}
+.pp-next{margin:0;font-size:13.5px;font-weight:800;
+  color:var(--green);text-align:center}
+/* ★ 못 받았거나 관측소가 안 붙은 권역 — **짐작해 적지 않습니다** */
+.pp-tide-note{margin:0;font-size:13px;line-height:1.55;
+  color:var(--muted)}
+.pp-graph{margin:0}
+
+/* ── 나가는 단추 둘 ─────────────────────────────── */
+.pp-go{display:flex;flex-wrap:wrap;gap:8px;
+  padding-top:10px;border-top:1px solid var(--line)}
+.pp-go-b{flex:1 1 auto;min-height:44px;justify-content:center;
+  font-size:14px;white-space:nowrap}
+
+/* ── 휴대폰 ──────────────────────────────────────
+   ★ 지도 **바로 아래**에 선택 포인트가 옵니다 (지시 ⑥).
+     `.point-hero-map` 이 900px 아래에서 1열로 접힙니다. */
+@media (max-width:560px){
+  .pp-ev{grid-template-columns:1fr}
+  .pp-name{font-size:18px}
+  .pp-go{flex-direction:column}
+  .pp-go-b{width:100%}
+}

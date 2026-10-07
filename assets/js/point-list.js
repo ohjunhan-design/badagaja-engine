@@ -129,6 +129,46 @@
     }, { passive: true });
   }
 
+  // ── 상세 패널 ─────────────────────────────────────────
+  //
+  // ★ 오른쪽 35% 를 **선택한 포인트의 즉석 상세**로 (2026-10-08 지시)
+  //   손님이 한 화면에서 「장소 고르기 → 어종 보기 → 오늘 물때
+  //   보기 → 나갈지 정하기」를 끝내게 합니다.
+  //
+  // ★ 패널이 안 실린 쪽에서는 **아무 일도 안 일어납니다.**
+  //   지시 ⑦ — 「처음부터 전 지역 확장하지 말고 대표 쪽 1개에서
+  //   먼저 구현·검증 후 템플릿 확장」. 그래서 없으면 없는 대로
+  //   돌아가게 둡니다 — 옛 움직임(카드로 내려가기)이 그대로입니다.
+  var 패널 = null;
+  (function 패널달기() {
+    if (!자료.상세패널 || !window.BADAGAJA_POINTPANEL) { return; }
+    var 패널칸 = document.getElementById('phmPicks');
+    var 목록칸 = document.getElementById('phmList');
+    if (!패널칸 || !목록칸) { return; }
+    패널 = window.BADAGAJA_POINTPANEL.달기({
+      칸: 패널칸,
+      목록칸: 목록칸,
+      권역: 자료.권역,
+      api: 자료.api,
+      물때주소: 자료.물때주소,
+      // 「포인트 전체정보」 — 아래 전체 목록의 그 카드로 내려갑니다
+      카드로: function (p) { 카드로(p); }
+    });
+    /* ★ **오른쪽 카드를 누르면 지도도 움직입니다** (양방향)
+         한쪽만 움직이면 「내가 고른 것이 어디지」를 또 찾게 됩니다. */
+    목록칸.addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-point]');
+      if (!b) { return; }
+      var 아이디 = b.getAttribute('data-point');
+      var 찾은 = 포인트.filter(function (p) { return p.id === 아이디; })[0];
+      if (!찾은) { return; }
+      /* 지도가 떴으면 그 자리로 보내고(열기 가 패널도 엽니다),
+         지도를 못 받았으면 패널만 엽니다 — 지도는 바깥입니다. */
+      if (지도 && 찾은.핀) { 열기(찾은); }
+      else { 패널.보이기(찾은, true); }
+    });
+  })();
+
   // ── 지도 ──────────────────────────────────────────────
   var 지도칸 = document.getElementById('pointMap');
   var 지도그림 = null, 지도 = null, 핀 = {}, 풍선 = null, 어림원 = null;
@@ -281,6 +321,14 @@
     Object.keys(핀).forEach(function (k) { 핀[k].classList.remove('on'); });
     if (p.핀) p.핀.classList.add('on');
 
+    /* ★ 핀을 누르면 **오른쪽이 그 포인트의 상세로 바뀝니다**
+         (2026-10-08 지시 — 「지도 점 클릭 또는 말풍선 자세히
+         보기 → 오른쪽을 선택 포인트 상세로 전환」)
+         여기서는 **쪽을 움직이지 않습니다.** 핀을 누를 때마다
+         화면이 뛰면 여러 자리를 견주기 어렵습니다 — 일부러
+         「자세히 보기」를 누른 때만 끌어올립니다. */
+    if (패널) { 패널.보이기(p, false); }
+
     var 자리 = new kakao.maps.LatLng(p.그릴위도, p.그릴경도);
     var 상자 = 만들기('div', 'map-pop');
     var 닫기 = 만들기('button', 'x', '×');
@@ -297,9 +345,16 @@
     }
     상자.appendChild(만들기('span', 'acc' + (p.어림 ? ' area' : ''),
       p.어림 ? '대략 위치 (주변 지역)' : '확인된 자리'));
+    /* ★ 「자세히 보기」가 **오른쪽 상세 패널**을 엽니다 (2026-10-08)
+         전에는 아래 전체 목록까지 내려보냈습니다. 그러면 지도가
+         화면에서 사라지고, 물때를 보려면 또 다른 쪽으로 나가야
+         했습니다 — 돌아오면 고른 것을 잊습니다.
+         패널이 없는 쪽에서는 옛 움직임 그대로 카드로 내려갑니다. */
     var 가기 = 만들기('button', 'go', '자세히 보기');
     가기.type = 'button';
-    가기.addEventListener('click', function () { 카드로(p); });
+    가기.addEventListener('click', function () {
+      if (패널) { 패널.보이기(p, true); } else { 카드로(p); }
+    });
     상자.appendChild(가기);
 
     풍선.setContent(상자);

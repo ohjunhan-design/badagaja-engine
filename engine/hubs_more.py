@@ -163,7 +163,12 @@ def 물때지도(d, 쪽길, 언어='ko'):
 
     실을것 = ''
     # ★ tide.js 가 **먼저** 와야 합니다 — 지도가 그 입구를 부릅니다
+    # ★ tide-next.js 는 **「다음 물때까지 얼마」 계산 한 가지**입니다
+    #   (2026-10-08) 그 계산이 tide-map.js 안에만 있었는데 포인트
+    #   상세 패널에도 같은 줄이 필요해져 밖으로 뺐습니다. 안 실으면
+    #   「다음 간조까지 …」 줄이 조용히 사라집니다 — 오류도 안 납니다.
     for 자리, 파일 in (('assets/js/tide.js', 'tide.js'),
+                       ('assets/js/tide-next.js', 'tide-next.js'),
                        ('assets/js/tide-graph.js', 'tide-graph.js'),
                        ('assets/js/map-provider.js', 'map-provider.js'),
                        ('assets/js/tide-map.js', 'tide-map.js')):

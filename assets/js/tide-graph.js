@@ -310,15 +310,37 @@
     box.appendChild(el('div', 'tg-when'));
     box.appendChild(el('p', 'tg-foot', '물높이 예보를 불러오는 중…'));
     var T = window.BADAGAJA_TIDE, cache = {}, tidePromise = null;
+    var 알린적있나 = false;
     function load(day) {
       var dt = new Date(); dt.setDate(dt.getDate() + day);
       var sun = (T && opt.coords) ? T.sunTimes(dt, opt.coords[0], opt.coords[1]) : null;
+      /* ★ **받은 자료를 밖에도 알립니다** (2026-10-08 바깥 검수 지시)
+           「물때 그래프는 새 계산 로직을 만들지 말고 기존 메인
+             compact 그래프 renderer/data 를 재사용할 것」
+         포인트 상세 패널이 「▲ 만조 04:12 312cm」 요약과 「다음
+         간조까지」를 적어야 하는데, 그 자료는 여기서 이미 받고
+         있습니다. 또 받으면 **두 곳에서 따로 셈하게 됩니다.**
+         그래서 그리는 쪽은 그대로 두고 **알림만** 보냅니다.
+         못 받았으면 null 을 보내 「추정 금지」가 지켜지게 합니다. */
+      var 알리기 = function (d, ev) {
+        if (typeof opt.받으면 === 'function') {
+          try { opt.받으면(d, ev, day); } catch (e) {}
+        }
+      };
+      var 물때알리기 = function (전체) {
+        if (알린적있나) { return; }      // 날짜를 바꿀 때마다 또 보내지 않습니다
+        알린적있나 = true;
+        if (typeof opt.물때받으면 === 'function') {
+          try { opt.물때받으면(전체); } catch (e) {}
+        }
+      };
       var go = function (d, ev) {
         if (!d || !d.ok) {
           box.querySelector('.tg-foot').textContent = '물높이 예보를 불러오지 못했어요.';
-          지우기(box); return;
+          지우기(box); 알리기(null, null); return;
         }
         draw(box, d, { dark: opt.dark, sun: sun, today: day === 0, events: ev });
+        알리기(d, ev);
       };
       if (cache[day]) return go(cache[day].d, cache[day].ev);
       if (!tidePromise) tidePromise = fetch(API + 'tide-cache.php?region=' + region).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
@@ -327,8 +349,12 @@
         tidePromise
       ]).then(function (a) {
         var ev = a[1] && a[1].days && a[1].days[day] ? a[1].days[day].events : null;
+        /* ★ 물때표 **전체**(14일치)도 한 번 알립니다 — 오늘 것이
+             다 지난 밤에는 **내일 첫 물때**를 가리켜야 하는데,
+             그 자료가 여기 이미 들어 있습니다. */
+        물때알리기(a[1]);
         cache[day] = { d: a[0], ev: ev }; go(a[0], ev);
-      }).catch(function () { go(null); });
+      }).catch(function () { 물때알리기(null); go(null); });
     }
     load(0);
     return { load: load };

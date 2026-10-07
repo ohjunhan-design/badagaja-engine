@@ -54,6 +54,8 @@ sys.path.insert(0, ROOT)
 from engine import io        # noqa: E402
 from engine import machine   # noqa: E402
 from engine import _fake_tide  # noqa: E402
+# 표본에 꼭 들어야 하는 쪽은 samples 한 곳에서 가립니다 (2026-10-08)
+from engine import samples   # noqa: E402
 
 NEW = os.environ.get('BADAGAJA_SITE', os.path.join(ROOT, 'site'))
 
@@ -502,6 +504,13 @@ def 볼쪽들(전부):
         p = os.path.join(NEW, 이름)
         if os.path.exists(p) and p not in 나옴:
             나옴.append(p)
+    # ★ **새 짜임을 켠 쪽을 반드시 봅니다** (2026-10-08)
+    #   갈래로 묶으면 포인트 쪽 하나로 갈음되는데, 상세 패널을
+    #   켠 쪽은 **짜임이 다릅니다.** 표본에 없으면 그 쪽이 휴대폰
+    #   폭에서 넘치는지 아무도 안 봅니다.
+    for _, 길 in samples.켠쪽들(NEW):
+        if 길 not in 나옴:
+            나옴.append(길)
     return 나옴
 
 def main():

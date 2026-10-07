@@ -47,6 +47,8 @@ sys.path.insert(0, ROOT)
 from engine._fake_coupang import 가짜쿠팡   # noqa: E402  가짜 쿠팡은 한 곳에만
 from engine import io    # noqa: E402
 from engine import machine   # noqa: E402  크롬 자리·메모리는 machine.py 한 곳에서만
+# ★ 표본에 꼭 들어야 하는 쪽은 samples 한 곳에서 가립니다 (2026-10-08)
+from engine import samples   # noqa: E402
 from engine import net   # noqa: E402  주소 가르기는 net.py 한 곳에서만
 
 NEW = os.environ.get('BADAGAJA_SITE', os.path.join(ROOT, 'site'))
@@ -289,20 +291,45 @@ f.addEventListener('load', function () {
 
 
 def 볼쪽들(전부):
+    볼쪽들.못찾음 = []
     if 전부:
         return sorted(glob.glob(os.path.join(NEW, '**', '*.html'),
                                 recursive=True))
-    나옴 = []
+    # ★ **표본이 조용히 줄면 막습니다** (2026-10-08에 잡음)
+    #
+    #   묶음 쪽이 `chungnam.html` 에서 `chungnam/index.html` 로
+    #   바뀌었는데 여기는 옛 이름을 찾고 있었습니다. 못 찾으면
+    #   **그냥 건너뛰어서**, 묶음 쪽을 **영영 한 번도 안 보고**
+    #   「갈래마다 한 쪽씩 6개」라고 적고 있었습니다.
+    #
+    #   검사기가 덜 보면서 통과라 말하는 것이 가장 나쁩니다.
+    #   이제 **못 찾은 갈래를 돌려주어** main 이 막습니다.
+    #   (기억 「시험에 이름을 박지 않기 — 사이트가 자라며 조용히
+    #     깨집니다」)
+    나옴, 못찾음 = [], []
     for 이름, 무늬 in (('첫화면', 'index.html'),
                        ('권역', 'taean.html'),
-                       ('묶음', 'chungnam.html'),
+                       ('묶음', 'chungnam/index.html'),
                        ('포인트목록', 'point/chungnam/taean_fishing.html'),
                        ('축제달력', 'festival/index.html'),
                        ('어종', 'fish/*.html')):
         것 = sorted(glob.glob(os.path.join(NEW, 무늬)))
-        것 = [x for x in 것 if not x.endswith('index.html')] or 것
+        # 어종처럼 여러 장인 갈래에서는 묶음 쪽(index)을 피합니다.
+        # 다만 그것 하나뿐이면 그대로 씁니다.
+        만 = [x for x in 것 if not x.endswith('index.html')]
+        것 = 만 or 것
         if 것:
             나옴.append(것[0])
+        else:
+            못찾음.append('%s (%s)' % (이름, 무늬))
+    볼쪽들.못찾음 = 못찾음
+    # ★ **새 짜임을 켠 쪽을 반드시 봅니다** (2026-10-08)
+    #   한 쪽에만 켜 놓으면 표본에 안 들어 아무도 안 봅니다.
+    #   쪽 이름은 박지 않습니다 — samples 가 쪽이 싣는 스크립트로
+    #   가립니다. 대표 쪽이 바뀌어도 저절로 따라갑니다.
+    for _, 길 in samples.켠쪽들(NEW):
+        if 길 not in 나옴:
+            나옴.append(길)
     return 나옴
 
 
@@ -328,6 +355,16 @@ def main():
     쪽들 = 볼쪽들(전부)
     if not 쪽들:
         print('볼 쪽이 없습니다. 먼저 build.py 로 만드세요.')
+        return 1
+    # ★ **표본이 조용히 줄면 막습니다** (2026-10-08)
+    #   묶음 쪽 이름이 바뀐 것을 모르고 **한 번도 안 보면서**
+    #   「갈래마다 한 쪽씩」이라 적고 있었습니다. 덜 보면서
+    #   통과라 말하는 것이 가장 나쁩니다.
+    못찾음 = getattr(볼쪽들, '못찾음', [])
+    if 못찾음:
+        print('✗ 표본으로 볼 쪽을 못 찾았습니다 — %s' % ' · '.join(못찾음))
+        print('  쪽 이름이나 자리가 바뀐 것입니다. 표본을 고쳐 주세요.')
+        print('  (덜 보면서 통과라 말하지 않습니다)')
         return 1
 
     print('쪽이 브라우저에서 조용한가 (검수 지시 5·9)')
