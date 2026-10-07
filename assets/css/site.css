@@ -4333,3 +4333,96 @@ body.p-travel .tv-more{display:none}
      이 두 줄이 **모든 묶음 쪽**을 함께 고칩니다. */
 .hub-list li{display:flex}
 .hub-list li > a{flex:1 1 auto;height:100%}
+
+
+/* ══ 왕초보 7단계 코스 (fish/basics.html · catch/basics.html) ══
+   2026-10-07 바깥 검수 콘티 —
+     「7장 그림을 **작게 장식처럼 넣지 말고, 페이지의 주인공으로
+       크게** 쓰는 것입니다. 이 페이지는 **글보다 그림이 앞에**
+       와야 합니다」
+     「PC 는 이미지 60~70% / 글 30~40% 로 교차, 모바일은
+       이미지 위·텍스트 아래 **고정**(교차배치 금지)」 */
+
+.bc-lede{max-width:760px;margin:0 0 18px;font-size:17px;
+  line-height:1.7;color:var(--muted,#6B5E4F)}
+
+/* ── 단계 칩 — 맨 위에서 차례를 한눈에 */
+.bc-chips{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;
+  margin:0 0 26px}
+.bc-chip{display:flex;align-items:center;justify-content:center;
+  gap:6px;min-height:56px;padding:6px 4px;border-radius:14px;
+  border:1px solid var(--line,#E3DACB);background:var(--white,#fff);
+  color:var(--green,#2F5D57);font-weight:800;font-size:14px;
+  text-decoration:none;text-align:center;line-height:1.25}
+.bc-chip i{display:flex;align-items:center;justify-content:center;
+  width:22px;height:22px;flex:0 0 auto;border-radius:50%;
+  background:var(--soft,#FAF6EE);color:var(--orange,#C07B22);
+  font-style:normal;font-size:12px;font-weight:900}
+.bc-chip:hover{border-color:var(--green,#2F5D57);
+  box-shadow:0 5px 16px rgba(47,93,87,.10)}
+
+/* ── 한 단계 = 한 칸. 그림이 넓고 글이 좁습니다 */
+.bc-lessons{display:block}
+.bc-lesson{display:grid;
+  grid-template-columns:minmax(0,1.55fr) minmax(280px,.78fr);
+  gap:30px;align-items:center;margin:0 0 22px;padding:24px;
+  border:1px solid var(--line,#E3DACB);border-radius:22px;
+  background:var(--white,#fff)}
+.bc-lesson.is-reverse{
+  grid-template-columns:minmax(280px,.78fr) minmax(0,1.55fr)}
+.bc-lesson.is-reverse .bc-visual{order:2}
+
+.bc-visual{min-width:0;overflow:hidden;border-radius:18px;
+  background:var(--soft,#FAF6EE)}
+.bc-visual svg{display:block;width:100%;height:auto}
+
+.bc-copy{min-width:0}
+.bc-no{display:flex;align-items:center;justify-content:center;
+  width:42px;height:42px;margin:0 0 12px;border-radius:50%;
+  background:var(--green,#2F5D57);color:#fff;
+  font-style:normal;font-size:18px;font-weight:900}
+.bc-title{margin:0 0 10px;font-size:27px;line-height:1.25;
+  color:var(--ink,#293D39)}
+.bc-body{margin:0;font-size:17px;line-height:1.75;
+  color:var(--muted,#6B5E4F)}
+
+/* ── ③매듭·④던지기 잔걸음 미니도해 */
+.bc-minis{display:grid;grid-template-columns:repeat(4,1fr);
+  gap:8px;margin:16px 0 0;padding:0;list-style:none}
+.bc-mini{padding:10px 8px;border-radius:13px;
+  border:1px solid var(--line,#E3DACB);background:var(--soft,#FAF6EE);
+  text-align:center}
+.bc-mini i{display:block;margin-bottom:4px;font-style:normal;
+  font-size:12px;font-weight:900;color:var(--orange,#C07B22)}
+.bc-mini b{display:block;font-size:13.5px;line-height:1.35;
+  color:var(--ink,#304945)}
+
+/* ── 이제 어디로 갈까요 — 다음 행동 세 장 */
+.bc-next{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.bc-next-card{display:block;padding:20px;border-radius:18px;
+  border:1px solid var(--line,#E3DACB);background:var(--white,#fff);
+  text-decoration:none;color:inherit}
+.bc-next-card strong{display:block;margin-bottom:6px;font-size:20px;
+  color:var(--green,#2F5D57)}
+.bc-next-card span{font-size:15px;line-height:1.55;
+  color:var(--muted,#6B5E4F)}
+.bc-next-card:hover{border-color:var(--green,#2F5D57);
+  box-shadow:0 6px 18px rgba(47,93,87,.10)}
+
+@media (max-width:760px){
+  /* ★ 휴대폰은 **그림 위 · 글 아래로 고정**합니다 */
+  .bc-chips{grid-template-columns:repeat(4,1fr);gap:6px;
+    margin-bottom:20px}
+  .bc-chip{min-height:50px;font-size:13px;gap:4px}
+  .bc-chip i{width:19px;height:19px;font-size:11px}
+
+  .bc-lesson,
+  .bc-lesson.is-reverse{grid-template-columns:1fr;gap:14px;
+    padding:15px;border-radius:18px}
+  .bc-lesson.is-reverse .bc-visual{order:0}
+
+  .bc-title{font-size:22px}
+  .bc-body{font-size:16px;line-height:1.7}
+  .bc-minis{grid-template-columns:repeat(2,1fr)}
+  .bc-next{grid-template-columns:1fr}
+}
