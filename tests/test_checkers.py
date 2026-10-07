@@ -118,6 +118,13 @@ def 돌리기(도구, 사이트=None, 자료=None, 인자=(), 뿌리=None):
         env=환경, timeout=1200)
     걸린 = time.perf_counter() - 시작
     _걸린시간.append((도구, 걸린))
+    # ★ **느린 것은 그 자리에서 알립니다** (2026-10-07 바깥 검수)
+    #   끝난 뒤 TOP 10 만 내면 **6~8분 동안 어디서 막혔는지**
+    #   모릅니다. 진행을 숨기면 감독할 수 없습니다.
+    if 걸린 >= 10:
+        print('  ⚠ 느린 검사 %.1f초 — %s' % (걸린, 도구), flush=True)
+    elif 걸린 >= 5:
+        print('  ⏱ %.1f초  %s' % (걸린, 도구), flush=True)
     return 돌린결과((r.stdout or '') + (r.stderr or ''), r.returncode, 걸린)
 
 
@@ -225,15 +232,21 @@ class 변이상자:
 
     def 쓰기(self, 길, 글, **덧):
         self._기억(길)
-        터 = os.path.dirname(길)
-        if 터 and not os.path.isdir(터):
-            os.makedirs(터, exist_ok=True)
-            self.만든폴더.append(터)
+        # ★ **중첩 폴더를 하나씩 기록합니다** (2026-10-07)
+        #   a/b/c.html 을 쓰면 a 와 a/b 가 **둘 다** 새로 생깁니다.
+        #   맨 아래만 적으면 위쪽 폴더가 **찌꺼기로 남습니다.**
+        self._폴더챙기기(os.path.dirname(길))
         if isinstance(글, bytes):
             with open(길, 'wb') as f:
                 f.write(글)
         else:
             io.write(길, 글)
+
+    def 복사(self, 원본, 길, **덧):
+        """파일을 베껴 둡니다 — **되돌릴 수 있게** 기록합니다."""
+        self._기억(길)
+        self._폴더챙기기(os.path.dirname(길))
+        shutil.copyfile(원본, 길)
 
     def 지우기(self, 길, **덧):
         self._기억(길)
@@ -242,12 +255,25 @@ class 변이상자:
         except OSError:
             pass
 
+    def _폴더챙기기(self, 터):
+        """없는 폴더를 **위에서부터 하나씩** 만들고 적습니다."""
+        if not 터 or os.path.isdir(터):
+            return
+        없는것 = []
+        한 = 터
+        while 한 and not os.path.isdir(한):
+            없는것.append(한)
+            위 = os.path.dirname(한)
+            if 위 == 한:
+                break
+            한 = 위
+        os.makedirs(터, exist_ok=True)
+        self.만든폴더.extend(없는것)
+
     def 폴더만들기(self, 길, **덧):
         # ★ `os.makedirs(…, exist_ok=True)` 를 그대로 받습니다 —
         #   기계 변환으로 바뀐 자리가 덧인자를 함께 넘깁니다.
-        if not os.path.isdir(길):
-            os.makedirs(길, exist_ok=True)
-            self.만든폴더.append(길)
+        self._폴더챙기기(길)
 
     def 바꾼것있나(self):
         return bool(self.건드린것) or bool(self.만든폴더)
@@ -292,6 +318,14 @@ class 사이트변이:
         self.고치기 = 고치기
         self.상자 = None
 
+    def 시작(self):
+        """모래밭을 열고 고치기를 돌립니다 — `__enter__` 와 같습니다."""
+        return self.__enter__()
+
+    def 되돌리기(self):
+        """건드린 것만 되돌립니다 — `__exit__` 와 같습니다."""
+        self.__exit__()
+
     def __enter__(self):
         밭 = _모래밭준비()
         if _모래밭['첫지문'] is None:
@@ -333,10 +367,12 @@ def 본문끝에심기(사본, 조각, 쪽='index.html', 상자=None):
     for 닫 in ('</main>', '</footer>', '</body>'):
         if 닫 in s:
             새글 = s.replace(닫, 조각 + 닫, 1)
-            if 상자 is not None:
-                상자.쓰기(p, 새글)
-            else:
-                io.write(p, 새글)
+            if 상자 is None:
+                raise AssertionError(
+                    '본문끝에심기 에 **상자를 안 넘겼습니다** — '
+                    '되돌릴 수 없어 모래밭에 찌꺼기가 남습니다. '
+                    '`상자=상자` 를 넘기십시오.')
+            상자.쓰기(p, 새글)
             return
     raise AssertionError(
         '%s 에 심을 자리가 없습니다 — </main>·</footer>·</body> '
@@ -368,9 +404,11 @@ def 사이트사본(고치기=None):
       옮기면 들여쓰기까지 바꿔야 해 위험합니다. **되돌리개도 명시적**이고
       호출부만 보고도 무엇을 하는지 압니다.
     """
+    # ★ **매직 메서드를 cleanup 손잡이처럼 내보내지 않습니다**
+    #   (2026-10-07 바깥 검수 — 「다음 사람이 읽기 어렵습니다」)
     상자 = 사이트변이(고치기)
-    밭 = 상자.__enter__()
-    return 상자.__exit__, 밭
+    밭 = 상자.시작()
+    return 상자.되돌리기, 밭
 
 
 def 모래밭이깨끗한가():
@@ -2355,7 +2393,7 @@ def 시험_사진두번():
                 continue
             밑, 끝 = os.path.splitext(원본)
             쌍둥이 = 밑 + '-시험쌍둥이' + 끝
-            shutil.copyfile(원본, 쌍둥이)       # 알맹이는 같고 이름만 다릅니다
+            상자.복사(원본, 쌍둥이)       # 알맹이는 같고 이름만 다릅니다
             새주소 = (os.path.splitext(주소)[0] + '-시험쌍둥이'
                       + os.path.splitext(주소)[1])
             본문끝에심기(사본,
@@ -2626,6 +2664,23 @@ def 시험_닿는가():
         shutil.rmtree(t, ignore_errors=True)
 
 
+def 느린순서():
+    """**어디서 시간을 쓰는지** 봅니다 (2026-10-07 바깥 검수)."""
+    if not _걸린시간:
+        return
+    합 = sum(x[1] for x in _걸린시간)
+    from collections import defaultdict
+    묶 = defaultdict(lambda: [0, 0.0])
+    for 이름, 초 in _걸린시간:
+        묶[이름][0] += 1
+        묶[이름][1] += 초
+    print('')
+    print('어디서 시간을 쓰나 — 검사기를 돌린 %d번 · 합계 %.0f초'
+          % (len(_걸린시간), 합))
+    for 이름, (몇, 초) in sorted(묶.items(), key=lambda a: -a[1][1])[:10]:
+        print('  %6.1f초  %2d번  %s' % (초, 몇, 이름))
+
+
 def main():
     print('검사기가 잘못을 잡을 줄 아는지')
     print('')
@@ -2675,6 +2730,12 @@ def main():
     시험_채비그림()
     시험_원격()
     시험_닿는가()
+    # ★ **마지막 안전망** (2026-10-07 바깥 검수)
+    #   「어떤 mutation 이 찌꺼기를 남겼는지」를 잡습니다.
+    #   만들어 두고 **안 부르면 없는 것과 같습니다** — 실제로
+    #   그랬습니다(0번 불렸습니다).
+    느린순서()
+    모래밭이깨끗한가()
     print('')
     if 실패:
         print('%d가지 통과 · %d가지 실패' % (통과, len(실패)))
