@@ -280,6 +280,7 @@ def 여행쪽(d, 언어='ko'):
         'if(!목)return;'
         'var 것들=목.querySelectorAll(".tv-region");'
         'var 물음=document.getElementById("tvGoal");'
+        'var 더2=document.getElementById("tvMore");'
         # 갈래 탭 — **해시만** 갈아끼웁니다
         'Array.prototype.forEach.call('
         'document.querySelectorAll(".tv-tab"),function(단){'
@@ -305,7 +306,20 @@ def 여행쪽(d, 언어='ko'):
         'var 골=단.getAttribute("data-prov");'
         'Array.prototype.forEach.call(것들,function(a){'
         'a.hidden=(골!=="all"&&a.getAttribute("data-prov")!==골);});'
+        # 지역을 고르면 그 지역은 수가 적으므로 **전부** 보입니다
+        'if(골!=="all"){목.classList.add("is-open");}'
+        'if(더2&&골!=="all"){더2.hidden=true;}'
+        'else if(더2){더2.hidden=false;}'
         '});});'
+        # ★ **모두 보기** — 첫 화면에서만 접습니다 (2026-10-07)
+        #   광역을 고르면 그 지역은 수가 적으므로 **전부** 보입니다.
+        'var 더=document.getElementById("tvMore");'
+        'if(더){더.addEventListener("click",function(){'
+        'var 펼=목.classList.toggle("is-open");'
+        '더.setAttribute("aria-expanded",펼?"true":"false");'
+        # ★ 숫자를 **박지 않습니다** — 틀의 data-all 을 되돌려 씁니다
+        '더.textContent=펼?"접기":(더.getAttribute("data-all")||"모두 보기");'
+        '});}'
         '})();</script>')
 
     값 = _바탕값(

@@ -57,6 +57,12 @@
   <div class="tv-regions" id="tvRegions">
     {{{권역한벌}}}
   </div>
+  <!-- ★ **첫 화면에서만 접습니다** (2026-10-07 바깥 검수)
+       「57개를 없애는 게 아니라 첫 화면에서만 접습니다」
+       휴대폰에서만 보이고, 광역을 고르면 그 지역은 전부 보입니다. -->
+  <button type="button" class="tv-more" id="tvMore"
+          aria-expanded="false" aria-controls="tvRegions"
+          data-all="{{권역수글}} 모두 보기">{{권역수글}} 모두 보기</button>
   <p class="tv-hint">{{고르기안내}}</p>
 </div></section>
 

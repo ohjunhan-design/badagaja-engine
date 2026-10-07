@@ -337,6 +337,28 @@ def 물때쪽(d, 언어='ko'):
 # ══════════════════════════════════════════════════════
 #  ③ guide/ — 무엇을 잡나
 # ══════════════════════════════════════════════════════
+# ★ 어종 그림 — **있는 것만** 씁니다 (2026-10-07 주인 규칙 6-1)
+#   「사진 주소는 자료에서 읽습니다. **짐작해 만들지 않습니다**」
+#   겪은 일 — img/{권역}/hero.jpg 로 지어냈는데 57곳 중 15곳만
+#   그 자리에 있었고, 공유 미리보기가 52갈래 깨져 있었습니다.
+#
+#   ★ 보는 자리는 **assets/photo/**(저장소 안)입니다.
+#     `site/img` 는 빌드가 쪽을 다 만든 **뒤에** 채우는 생성물이라
+#     깨끗한 체크아웃(깃허브)에서는 비어 있습니다.
+#     2026-10-06 에 그것 때문에 「사진 0장」이 나와 배포가 두 번 막혔습니다.
+_그림밭 = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    'assets', 'photo')
+
+
+def _어종그림(어종id, 쪽길):
+    """`img/species/{id}.jpg` 가 **실제로 있으면** 그 상대 주소."""
+    상대 = 'img/species/%s.jpg' % 어종id
+    if not os.path.exists(os.path.join(_그림밭, *상대.split('/'))):
+        return ''
+    return url.rel(쪽길, 상대)
+
+
 def 안내쪽(d, 언어='ko'):
     """fish/ 와 catch/ 로 가는 갈림길입니다."""
     쪽길 = url.guide_hub(언어)
@@ -354,18 +376,35 @@ def 안내쪽(d, 언어='ko'):
         것들 = d.안내(갈래) or []
         if not 것들:
             continue
+        # ★ **그림으로 고르게 합니다** (2026-10-07 · 주인 규칙 6-1)
+        #   「글만 있는 쪽은 아무리 내용이 옳아도 손님이 머물지
+        #     않습니다」 — 어종 그림이 35장 다 있는데 고르는
+        #   자리에서는 안 쓰고 글자 칩만 늘어놓고 있었습니다.
+        #   ★ 주소를 **짐작해 만들지 않습니다.** 파일이 실제로
+        #     있는 것만 그림으로 내고, 없으면 글자 칩 그대로입니다.
         줄 = []
         for x in 것들:
             이 = x.get('이름')
             이 = 이.get('ko') if isinstance(이, dict) else 이
-            줄.append('<li><a href="%s"><b>%s</b></a></li>'
-                      % (esc(url.rel(쪽길, url.guide(x['id'], 갈래, 언어))),
-                         esc(이)))
+            간곳 = esc(url.rel(쪽길, url.guide(x['id'], 갈래, 언어)))
+            그림 = _어종그림(x['id'], 쪽길)
+            if 그림:
+                줄.append('<li class="hub-card"><a href="%s">'
+                          '<img src="%s" alt="%s" loading="lazy"'
+                          ' decoding="async" width="300" height="200">'
+                          '<b>%s</b></a></li>'
+                          % (간곳, esc(그림), esc(이), esc(이)))
+            else:
+                줄.append('<li><a href="%s"><b>%s</b></a></li>'
+                          % (간곳, esc(이)))
+        그림쓴다 = any('hub-card' in x for x in 줄)
         칸들.append(칸(
             제목, '%s · %d가지' % (꼬리, len(것들)),
             '<p class="hub-lead">%s</p>'
-            '<ul class="hub-list hub-list--grid">%s</ul>'
-            % (esc(설명), ''.join(줄)),
+            '<ul class="hub-list %s">%s</ul>'
+            % (esc(설명),
+               'hub-list--photo' if 그림쓴다 else 'hub-list--grid',
+               ''.join(줄)),
             흰=(len(칸들) % 2 == 0)))
 
     칸들.append(칸(

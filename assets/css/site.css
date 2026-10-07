@@ -4195,7 +4195,10 @@ body.p-travel .tv-card-where{
 }
 @media (max-width:640px){
   /* 히어로 — 바깥 검수 「260~300px」 */
-  body.p-travel .tv-hero-card{min-height:280px;border-radius:18px}
+  /* ★ `height` 를 덮으려면 **height 로** 써야 합니다 —
+     min-height 로 쓰니 기본 380px 가 그대로 이겨 **400px**
+     로 나왔습니다 (바깥 검수 승인값은 280px). */
+  body.p-travel .tv-hero-card{height:280px;border-radius:18px}
   body.p-travel .tv-hero-copy{left:16px;right:16px;bottom:16px}
   /* 「…즐길 / 까」로 끊기지 않게 한 호 줄입니다 */
   body.p-travel .tv-hero-copy h1{font-size:21.5px}
@@ -4230,3 +4233,103 @@ body.p-travel .tv-card-where{
   body.p-travel .tv-card{
     flex:0 0 74%;scroll-snap-align:start;aspect-ratio:5/4}
 }
+
+
+/* ══════════════════════════════════════════════════════
+   어종 그림 카드 — guide/  (2026-10-07 주인 규칙 6-1)
+
+   「무엇을 잡으러 가시나요」가 어종 35가지를 **글자 칩으로만**
+   늘어놓고 있었습니다. 어종 그림이 35장 다 있는데 고르는
+   자리에서는 안 쓰고 있었습니다.
+
+   「글만 있는 쪽은 아무리 내용이 옳아도 손님이 머물지 않습니다」
+   ══════════════════════════════════════════════════════ */
+
+.hub-list--photo{
+  list-style:none;margin:14px 0 0;padding:0;
+  display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+.hub-list--photo .hub-card{margin:0}
+.hub-list--photo .hub-card a{
+  /* ★ 기존 .hub-list a 의 패딩·꺾쇠를 **되돌립니다.**
+     안 되돌리면 그림이 padding(10/14/오른쪽 30) 만큼
+     줄어 카드 가운데로 몰리고, 꺾쇠까지 겹칩니다. */
+  display:block;padding:0;min-height:0;
+  text-decoration:none;color:inherit;
+  border-radius:14px;overflow:hidden;
+  border:1px solid var(--line);background:var(--white);
+  transition:border-color .14s,transform .14s}
+.hub-list--photo .hub-card a::after{content:none}
+.hub-list--photo .hub-card a:hover{
+  border-color:var(--orange);transform:translateY(-2px)}
+.hub-list--photo .hub-card img{
+  display:block;width:100%;aspect-ratio:3/2;object-fit:cover;
+  background:#ccd7dc}
+.hub-list--photo .hub-card b{
+  display:block;padding:9px 10px 10px;
+  font-size:14px;font-weight:800;line-height:1.25;
+  text-align:center;word-break:keep-all}
+
+@media (max-width:1100px){
+  .hub-list--photo{grid-template-columns:repeat(5,minmax(0,1fr))}
+}
+@media (max-width:860px){
+  .hub-list--photo{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+}
+@media (max-width:640px){
+  /* 휴대폰 — 세 칸. 엄지로 누를 만한 크기가 됩니다 */
+  .hub-list--photo{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .hub-list--photo .hub-card a{border-radius:12px}
+  .hub-list--photo .hub-card b{padding:7px 5px 8px;font-size:12.5px}
+}
+
+
+/* ──────────────────────────────────────────────────────
+   여행 쪽 — 바깥 검수가 정한 **세 군데** (2026-10-07)
+     ① PC 히어로→탭 사이 여백 36~40px
+     ② 모바일 57권역 기본 3줄 + 모두 보기
+     ③ 활성 탭 주황 → 브랜드 녹색
+   나머지는 승인되어 **건드리지 않습니다.**
+   ────────────────────────────────────────────────────── */
+
+/* ① 히어로와 탭 사이가 60~70px 이라 화면이 끊겨 보였습니다 */
+body.p-travel .tv-pick{padding-top:38px}
+
+/* ③ 활성 탭 — 큰 주황 면적이 **광고처럼** 보였습니다.
+      주황은 숫자·작은 강조에 남깁니다. */
+body.p-travel .tv-tab.is-on{
+  background:#2F5D57;border-color:#2F5D57;color:#fff}
+body.p-travel .tv-tab.is-on .tv-tab-n{color:rgba(255,255,255,.88)}
+
+/* ② 모두 보기 단추 — 휴대폰에서만 보입니다 */
+body.p-travel .tv-more{display:none}
+
+@media (max-width:640px){
+  /* ② 첫 화면에서만 **접습니다.** 없애는 것이 아닙니다.
+        칩 38px + 사이 7px → 세 줄이 128px 입니다. */
+  /* 칩 36px + 사이 7px → **세 줄이 122px** 입니다.
+     128px 로 두니 넷째 줄이 비쳐 네 줄처럼 보였습니다. */
+  body.p-travel .tv-regions{
+    max-height:120px;overflow:hidden;position:relative}
+  body.p-travel .tv-regions.is-open{max-height:none}
+  body.p-travel .tv-regions:not(.is-open)::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:34px;
+    pointer-events:none;
+    background:linear-gradient(180deg,rgba(248,244,236,0),var(--bg))}
+
+  body.p-travel .tv-more{
+    display:block;width:100%;margin:10px 0 0;min-height:42px;
+    cursor:pointer;border-radius:12px;
+    border:1px solid var(--line);background:var(--white);
+    font-family:inherit;font-size:13.5px;font-weight:800;color:#4A3F33}
+}
+
+
+/* ★ **카드 높이를 한 줄로 맞춥니다** (2026-10-07 주인 지적)
+     「이거 크기 잘 맞춰」 — gear.html 「채비에 쓰는 작은 것」
+     칸에서 글 길이에 따라 카드가 제각각이고 위아래로
+     흔들려 보였습니다.
+     li(격자 칸)는 높이가 같은데 그 안의 a(테두리를 그리는
+     카드)가 **내용만큼만** 차지한 탓입니다.
+     이 두 줄이 **모든 묶음 쪽**을 함께 고칩니다. */
+.hub-list li{display:flex}
+.hub-list li > a{flex:1 1 auto;height:100%}
