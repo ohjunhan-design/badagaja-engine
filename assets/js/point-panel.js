@@ -255,9 +255,31 @@
       }
     }
 
+    /* ★ **고른 포인트를 주소에 남깁니다** (2026-10-08 지피티 제안)
+     *   「지도에서 포인트를 눌렀을 때도 가능하면 replaceState 로
+     *     ?point=... 를 갱신해 두면 공유성이 더 좋아집니다」
+     *   주소창을 복사해 보내면 **받는 분에게 그 포인트가 바로**
+     *   열립니다. `#` 이 아니라 `?` 라 화면이 뛰지 않습니다.
+     *   기록을 쌓지 않으려고 push 가 아닌 replace 를 씁니다 —
+     *   포인트를 여럿 눌러 보고 뒤로 가기를 누르면, 누른 횟수만큼
+     *   되돌아가야 하면 답답합니다.
+     */
+    function 주소에남기기(아이디) {
+      if (!window.history || !history.replaceState) { return; }
+      try {
+        var 곳 = window.location;
+        var 물음 = (곳.search || '').replace(/[?&]point=[^&]*/g, '')
+                                     .replace(/^&/, '?');
+        if (물음 === '?') { 물음 = ''; }
+        물음 += (물음 ? '&' : '?') + 'point=' + encodeURIComponent(아이디);
+        history.replaceState(null, '', 곳.pathname + 물음 + (곳.hash || ''));
+      } catch (e) { }
+    }
+
     function 보이기(p, 끌어올까) {
       if (!p) { return; }
       지금것 = p;
+      주소에남기기(p.id);
       머리그리기(p);
       목록칸.hidden = true;
       상세.hidden = false;
@@ -278,6 +300,17 @@
       상세.hidden = true;
       목록칸.hidden = false;
       지금것 = null;
+      /* 주소에서도 뺍니다 — 안 그러면 목록으로 돌아간 뒤 새로고침할
+         때 상세가 다시 열려 「내가 닫았는데」가 됩니다. */
+      if (window.history && history.replaceState) {
+        try {
+          var 곳 = window.location;
+          var 물음 = (곳.search || '').replace(/[?&]point=[^&]*/g, '')
+                                       .replace(/^&/, '?');
+          if (물음 === '?') { 물음 = ''; }
+          history.replaceState(null, '', 곳.pathname + 물음 + (곳.hash || ''));
+        } catch (e) { }
+      }
     }
 
     return { 보이기: 보이기, 목록으로: 목록으로,

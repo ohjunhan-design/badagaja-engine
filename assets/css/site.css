@@ -4732,8 +4732,16 @@ body.p-travel .tv-more{display:none}
 .pp{display:flex;flex-direction:column;gap:12px;
   padding:14px;border:1px solid var(--line);
   border-radius:var(--r-lg);background:var(--white)}
-/* 누름자리는 44px 이상 — 엄지로 눌러야 합니다 */
-.pp-back{align-self:flex-start;min-height:44px;padding:8px 12px;
+/* ★ **누름자리는 44px 를 지키되 눈에 보이는 여백만 줄입니다**
+     (2026-10-08 지피티 검수)
+     휴대폰에서 「← 목록으로」와 포인트 제목 사이가 떠 보였고,
+     그만큼 아래 단추가 고정 차림표 쪽으로 밀렸습니다.
+     「터치 영역 자체를 30px대로 줄이면 안 됩니다」 — 그래서
+     min-height 44px 는 그대로 두고 padding 과 margin 으로
+     **보이는 틈**만 당깁니다. */
+.pp-back{align-self:flex-start;min-height:44px;padding:4px 8px;
+  margin:-4px 0 -6px -8px;
+  display:inline-flex;align-items:center;
   border:0;background:none;cursor:pointer;font:inherit;
   font-size:14px;font-weight:700;color:var(--green)}
 .pp-back:hover{text-decoration:underline}
