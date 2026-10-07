@@ -187,8 +187,16 @@ jobs:
         env:
           BADAGAJA_CHROME: ${{ steps.chrome.outputs.chrome-path || steps.chromewin.outputs.chrome-path }}
           BADAGAJA_CHROMES: '3'
+          # ★ **gate.yml 과 똑같은 조건으로** 돕니다 (2026-10-07 바깥 검수)
+          #   전에는 gate 는 --serial, deploy 는 parallel 이었습니다.
+          #   gate.py 는 그에 따라 **필요 메모리가 갈립니다**
+          #     full + parallel  4.0GB
+          #     full + serial    2.0GB
+          #   검사 항목이 비슷해도 **실행 조건이 다르면 같은 판정이
+          #   아닙니다.** 그래서 둘을 맞춥니다.
+          BADAGAJA_JOBS: '1,3'
         run: |
-          python engine/gate.py --full || true
+          python engine/gate.py --full --serial || true
           python engine/report.py --strict
           # 판정표를 요약 칸에 올립니다 — 막혔을 때 까닭이
           # 로그를 뒤지지 않아도 바로 보이게 (2026-09-29)
