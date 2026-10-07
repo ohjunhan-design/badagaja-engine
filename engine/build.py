@@ -260,11 +260,24 @@ def 사진자리(d, 한장, 쪽길, 앞장서나=True):
     늦게 = '' if 앞장서나 else ' loading="lazy" decoding="async"'
     빠르게 = ' fetchpriority="high"' if 앞장서나 else ''
     설명 = ('사진 · %s · %s' % (제목, 찍은이)) if 찍은이 else ('사진 · %s' % 제목)
-    return ('<figure class="photo%s">'
+    # ★ **흐린 바탕**을 같은 사진으로 깝니다 (2026-10-07 바깥 검수)
+    #   「흐린 배경 + 원본 전체 표시입니다. 이러면 물고기 전체는
+    #     하나도 안 잘리고, 남는 공간도 허전하지 않습니다」
+    #   차림표가 `--fish-bg` 을 읽어 뒤에 깝니다. 맨 위 사진
+    #   에만 붙입니다 — 아래쪽 사진은 자리가 좁아 쓸 데가 없습니다.
+    바탕 = ''
+    if 앞장서나:
+        # ★ **따옴표를 안 씁니다** (2026-10-07 — check_assets 가 잡음)
+        #   url() 안에 HTML 엔티티 따옴표를 넣었더니 검사기가 그것을
+        #   주소로 읽어 **없는 자산 216갈래**로 잡았습니다.
+        #   사진 주소에는 공백도 괄호도 없어 따옴표가 필요 없습니다.
+        바탕 = (' style="--fish-bg:url(%s)"'
+                % html.escape(주소, quote=True))
+    return ('<figure class="photo%s"%s>'
             '<img src="%s" alt="%s"%s%s%s>'
             '<figcaption>%s</figcaption>'
             '</figure>'
-            % (' photo--hero' if 앞장서나 else '',
+            % (' photo--hero' if 앞장서나 else '', 바탕,
                주소, html.escape(제목), 크기글, 늦게, 빠르게,
                html.escape(설명)))
 

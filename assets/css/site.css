@@ -4587,3 +4587,66 @@ body.p-travel .tv-more{display:none}
   .fish-pick-gear{margin-top:7px;padding-top:7px;font-size:11.5px}
   .fish-pick-gear .card-ico{width:17px;height:17px}
 }
+
+
+/* ══ 어종 프로필 카드 (fish/{id}.html · catch/{id}.html)
+   2026-10-07 바깥 검수 콘티 —
+     「사진이 **제목 바로 옆에 즉시** 보여야 합니다」
+     「사진 잘림 — 여기서는 cover 만 쓰면 안 됩니다.
+       **흐린 배경 + 원본 전체 표시**입니다」 */
+
+.species-profile{
+  display:grid;
+  grid-template-columns:minmax(0,1.3fr) minmax(320px,.7fr);
+  gap:28px;
+  align-items:center;
+  margin:14px 0 0;
+}
+.species-facts{min-width:0}
+.species-facts h1{margin:10px 0 10px}
+.species-facts .hero-lead{margin:0 0 14px}
+
+/* ★ 사진 — **물고기를 자르지 않습니다**
+   원본 전체를 보이고(contain), 남는 자리는 같은 사진을 흐리게
+   깔아 채웁니다. 주인이 「사진이 화면을 꽉 채우며 물고기가
+   잘린다」고 짚으신 자리입니다. */
+.species-profile .photo--hero{
+  position:relative;
+  min-width:0;
+  margin:0;
+  overflow:hidden;
+  border-radius:22px;
+  background:var(--sea-pale,#DCE8E5);
+}
+.species-profile .photo--hero::before{
+  content:"";
+  position:absolute;
+  inset:-24px;
+  background-image:var(--fish-bg);
+  background-size:cover;
+  background-position:center;
+  filter:blur(18px);
+  opacity:.35;
+  transform:scale(1.08);
+}
+.species-profile .photo--hero img{
+  position:relative;
+  display:block;
+  width:100%;
+  height:clamp(260px,34vw,420px);
+  /* ★ cover 가 아니라 contain — 한 마리도 안 잘립니다 */
+  object-fit:contain;
+}
+.species-profile .photo--hero figcaption{
+  position:relative;
+  padding:8px 12px 10px;
+  font-size:12.5px;
+  color:var(--muted,#6B5E4F);
+}
+
+@media (max-width:860px){
+  /* 휴대폰은 사진 위 · 글 아래 */
+  .species-profile{grid-template-columns:1fr;gap:16px;align-items:start}
+  .species-profile .photo--hero img{height:clamp(220px,56vw,320px)}
+  .species-facts h1{margin:6px 0 8px}
+}
