@@ -45,9 +45,22 @@ from engine import io as _io   # 쓰기는 io.write 로 (계약-13)   # noqa: E4
 
 def 찍기(쪽길, 낼곳, 폭=390, 높이=2600):
     """쪽 하나를 **진짜 `폭`px** 로 찍습니다."""
+    # ★ **주소 조각(#…)을 떼어 둡니다** (2026-10-08)
+    #   `쪽.html#yeosu-f-001` 을 그대로 abspath 에 넣으면 조각까지
+    #   파일 이름으로 쳐서 **없는 파일**이 되고, 회색 빈 칸이
+    #   찍힙니다. 조각은 주소 뒤에 다시 붙입니다 — 쪽이 그것을
+    #   읽어 그 포인트를 열어 줍니다.
+    조각 = ''
+    if '#' in 쪽길:
+        쪽길, 뒤 = 쪽길.split('#', 1)
+        조각 = '#' + 뒤
+    # ★ 물음표(?point=…)도 같습니다 — 파일 이름에 섞이면 못 찾습니다
+    if '?' in 쪽길:
+        쪽길, 뒤 = 쪽길.split('?', 1)
+        조각 = '?' + 뒤 + 조각
     쪽길 = os.path.abspath(쪽길)
     주소 = 'file:///' + urllib.parse.quote(
-        쪽길.replace('\\', '/'), safe='/:')
+        쪽길.replace('\\', '/'), safe='/:') + 조각
     집 = tempfile.mkdtemp(prefix='bada-shot-')
     래퍼 = os.path.join(집, 'wrap.html')
     _io.write(래퍼, 틀 % {'w': 폭, 'h': 높이, 'url': 주소})
