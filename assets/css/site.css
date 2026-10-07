@@ -4650,3 +4650,20 @@ body.p-travel .tv-more{display:none}
   .species-profile .photo--hero img{height:clamp(220px,56vw,320px)}
   .species-facts h1{margin:6px 0 8px}
 }
+
+/* ══ 포인트 쪽 첫 화면 — 지도와 포인트를 나란히 (2026-10-07 바깥 검수)
+   「핵심은 **지도 + 실제 포인트 이름이 첫 화면 안에** 들어오는 것」
+   「PC — 지도 65% · 선택 포인트 정보 35%」 */
+.point-hero-map{display:grid;
+  grid-template-columns:minmax(0,1.55fr) minmax(320px,.75fr);
+  gap:18px;align-items:start;margin:18px 0 0}
+.phm-map{min-width:0;border-radius:20px;overflow:hidden;
+  background:var(--sea-pale,#DCE8E5)}
+.phm-map .map-wrap{height:clamp(300px,38vw,460px)}
+.phm-picks{min-width:0;display:flex;flex-direction:column;gap:10px}
+.phm-picks > *{margin:0}
+
+@media (max-width:900px){
+  .point-hero-map{grid-template-columns:1fr;gap:14px}
+  .phm-map .map-wrap{height:clamp(240px,52vw,340px)}
+}

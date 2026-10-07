@@ -16,14 +16,25 @@
        ★ **사진보다 앞**에 둡니다 (바깥 검수 지적)
          사진은 믿음과 분위기를 만듭니다. 답 묶음은 이 쪽의
          **답**입니다. 검색으로 들어온 쪽에서는 답이 먼저입니다. -->
-  {{{답묶음}}}
+
 
   <div class="btn-row">
-    <a href="#map" class="btn btn--dark">지도에서 포인트 보기</a>
-    <a href="#points" class="btn btn--white">전체 목록 보기 · {{포인트수}}곳</a>
+    <a href="#points" class="btn btn--dark">전체 목록 보기 · {{포인트수}}곳</a>
+    <a href="#dapmukkeum" class="btn btn--white">한눈에 보기</a>
   </div>
 
-  {{{대표사진자리}}}
+  <!-- ★ **지도 + 포인트가 첫 화면 안에** (2026-10-07 바깥 검수 콘티)
+       「핵심은 지도 + 실제 포인트 이름이 첫 화면 안에 들어오는 것」
+       손님이 이 쪽에 온 까닭은 「어디로 갈까」인데, 전에는 첫
+       화면에 포인트가 한 곳도 없고 숫자 요약만 있었습니다. -->
+  <div class="point-hero-map">
+    <div class="phm-map" id="map">
+      <div class="map-wrap" id="pointMap" data-region="{{권역}}" data-kind="{{갈래코드}}">
+        <p class="sr-only">{{포인트수}}곳의 위치를 지도에 표시합니다. 지도를 못 보시면 아래 목록을 보세요.</p>
+      </div>
+    </div>
+    <div class="phm-picks">{{{첫포인트들}}}</div>
+  </div>
 
 </div></section>
 
@@ -35,11 +46,12 @@
   </div>
 </div></section>
 
-<section class="section section--white" id="map"><div class="wrap">
-  <div class="list-head"><h2 class="serif">{{권역이름}} {{갈래}} 포인트 지도</h2></div>
-  <div class="map-wrap" id="pointMap" data-region="{{권역}}" data-kind="{{갈래코드}}">
-    <p class="sr-only">{{포인트수}}곳의 위치를 지도에 표시합니다. 지도를 못 보시면 아래 목록을 보세요.</p>
-  </div>
+<!-- ★ 숫자 요약과 대표 사진은 **두 번째 화면 이후**로 (바깥 검수)
+     「숫자 요약은 없애지 말고 두 번째 화면 이후로 내립니다」
+     「대표 사진은 쪽 중간 관광 참고용으로」 -->
+<section class="section section--white" id="dapmukkeum"><div class="wrap">
+  {{{답묶음}}}
+  {{{대표사진자리}}}
 </div></section>
 
 <section class="section" id="points"><div class="wrap">
