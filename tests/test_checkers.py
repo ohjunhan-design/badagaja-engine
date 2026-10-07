@@ -2155,6 +2155,85 @@ def 시험_채비그림():
         shutil.rmtree(t, ignore_errors=True)
 
 
+# ── check_origin — `origin` 이 옛 저장소를 가리키는 것을 잡는가 ──
+def 시험_원격():
+    """★ **git 원격을 실제로 꾸며** 잡는지 봅니다 (2026-10-07 바깥 검수)
+
+    실제로 나간 잘못 — `origin` 이 **2026-09-28 에 멈춘** `badagaja-2nd`
+    를 가리키고 있었습니다. 대장은 `badagaja-engine` 인데 이름이
+    거꾸로라, 바깥에서 볼 때 **9일 전 판**을 보고 판단했습니다.
+
+    바깥 검수 — 「도구가 **기본 remote 를 따라가거나**, 사람이
+      **습관적으로 origin 을 보면** 다시 옛판을 기준으로 판단합니다」
+    """
+    print('[38] check_origin — origin 이 옛 저장소를 가리키면 잡는가')
+
+    대장주소 = 'git@github.com:ohjunhan-design/badagaja-engine.git'
+    옛주소 = 'git@github.com:ohjunhan-design/badagaja-2nd.git'
+
+    def 꾸민사본(원격들):
+        """`engine/check_origin.py` 만 둔 사본에 **원격을 붙입니다.**"""
+        t = tempfile.mkdtemp(prefix='원격-')
+        os.makedirs(os.path.join(t, 'engine'))
+        shutil.copy2(os.path.join(ROOT, 'engine', 'check_origin.py'),
+                     os.path.join(t, 'engine', 'check_origin.py'))
+        깃 = ['git', '-c', 'safe.directory=*']
+        subprocess.run(깃 + ['init', '-q'], cwd=t,
+                       capture_output=True, timeout=60)
+        for 이름, 주소 in 원격들:
+            subprocess.run(깃 + ['remote', 'add', 이름, 주소], cwd=t,
+                           capture_output=True, timeout=60)
+        return t
+
+    def 끝난값(뿌리):
+        r = subprocess.run(
+            [sys.executable, os.path.join(뿌리, 'engine', 'check_origin.py')],
+            capture_output=True, text=True, encoding='utf-8',
+            errors='replace', timeout=120)
+        return r.returncode, (r.stdout or '') + (r.stderr or '')
+
+    # (가) origin 이 대장이면 — 깨끗하게 통과해야 합니다
+    t = 꾸민사본([('origin', 대장주소)])
+    try:
+        값, 글 = 끝난값(t)
+        봄('origin 이 대장이면 통과한다',
+           값 == 0 and 'origin` 이 대장을 가리킵니다' in 글, 글[-500:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # (나) ★ **실제로 나간 모양** — 대장이 딴 이름에 붙어 있습니다
+    t = 꾸민사본([('origin', 옛주소), ('engine', 대장주소)])
+    try:
+        값, 글 = 끝난값(t)
+        봄('origin 이 옛 저장소를 가리키면 알린다',
+           'origin` 이 대장이 아닙니다' in 글, 글[-700:])
+        봄('그래도 배포는 막지 않는다 (아직 못 고치는 것이라)',
+           값 == 0, '끝난값 %s' % 값)
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # (다) 대장을 가리키는 원격이 **하나도 없으면** — 막아야 합니다
+    t = 꾸민사본([('origin', 옛주소)])
+    try:
+        값, 글 = 끝난값(t)
+        봄('대장을 가리키는 원격이 없으면 막는다',
+           값 == 1 and '올릴 곳이 없습니다' in 글, 글[-700:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+    # (라) 호스트 **별칭**을 써도 알아봐야 합니다
+    #     저희는 ssh 설정으로 badagaja-engine.github.com 처럼 갈라 씁니다.
+    t = 꾸민사본([('origin',
+                  'git@badagaja-engine.github.com:'
+                  'ohjunhan-design/badagaja-engine.git')])
+    try:
+        값, 글 = 끝난값(t)
+        봄('호스트 별칭을 써도 대장으로 알아본다',
+           값 == 0 and 'origin` 이 대장을 가리킵니다' in 글, 글[-500:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
 def main():
     print('검사기가 잘못을 잡을 줄 아는지')
     print('')
@@ -2202,6 +2281,7 @@ def main():
     시험_물때바인딩()
     시험_사진두번()
     시험_채비그림()
+    시험_원격()
     print('')
     if 실패:
         print('%d가지 통과 · %d가지 실패' % (통과, len(실패)))
