@@ -264,11 +264,22 @@ jobs:
           #   「백업 파일이 있다」와 「그 백업으로 복구할 수 있다」는
           #   완전히 다른 이야기입니다.
           mkdir -p _before
+          # ★ **숨은 파일까지 받습니다** (2026-10-07 바깥 검수 순서 ①)
+          #
+          #   `ftp:list-options -a` 가 없으면 lftp 는 서버 목록에서
+          #   **점으로 시작하는 파일을 못 봅니다.** `.htaccess` 가
+          #   그렇습니다.
+          #
+          #   되돌릴 때 `.htaccess` 가 없으면 **사이트가 500 으로
+          #   멈춥니다.** 이미 두 번 겪은 자리입니다 (주인 규칙 27).
+          #   「백업 파일이 있다」와 「그 백업으로 복구할 수 있다」는
+          #   다릅니다.
           lftp -c "
             set ftp:ssl-allow no;
             set net:max-retries 3;
             set ftp:charset utf-8;
             set file:charset utf-8;
+            set ftp:list-options -a;
             open -u \"$FTP_USERNAME\",\"$FTP_PASSWORD\" \"$FTP_SERVER\";
             mirror --only-newer --parallel=4 --exclude-glob _stage/ /www/ _before/;
           " || {
@@ -279,6 +290,21 @@ jobs:
           # 받아 둔 것의 지문을 남깁니다 — 되돌린 뒤 견주려고
           (cd _before && find . -type f -exec sha256sum {} \; | sort) > _before.sha256
           echo "지문 $(wc -l < _before.sha256)줄"
+
+          # ★ **서버와 받은 것을 견줍니다** (바깥 검수 순서 ②)
+          #   「백업 완전성 + 삭제 계획을 증명하고 넣는 것이 맞습니다」
+          #   이것이 증명되기 전에는 되돌리기에 --delete 를 넣지
+          #   않습니다. 지금은 **재어 보기만** 합니다.
+          lftp -c "
+            set ftp:ssl-allow no;
+            set net:max-retries 3;
+            set ftp:charset utf-8;
+            set file:charset utf-8;
+            set ftp:list-options -a;
+            open -u \"$FTP_USERNAME\",\"$FTP_PASSWORD\" \"$FTP_SERVER\";
+            find /www/;
+          " > _server.list 2>/dev/null || true
+          python engine/check_backup.py || true
           tar -czf _before.tgz _before _before.sha256
 
       - name: 되돌릴 것을 남겨 둡니다
