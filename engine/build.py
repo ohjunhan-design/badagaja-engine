@@ -2515,9 +2515,18 @@ def 대상아이콘(이름, 쪽길):
     p = os.path.join(ASSETS, 'icon', '%s.svg' % 이름)
     if not os.path.isfile(p):
         return ''
-    return ('<img class="card-ico" src="%s" alt="" width="28" height="28" '
-            'loading="lazy" decoding="async">'
-            % esc(url.asset(상대, 쪽길, 판번호(p))))
+    # ★ **빈 alt 를 두지 않습니다** (2026-10-08 주인 지시)
+    #   네이버 사이트 진단이 「Alt 속성 누락」으로 잡았습니다.
+    #
+    #   ★ 옆 글자와 **같은 말을 두 번 읽히지 않게** 합니다.
+    #     카드에는 이미 이름이 적혀 있습니다. 아이콘에는 그 아이콘이
+    #     **무엇인지**를 적습니다 — make_icons 가 들고 있는 이름
+    #     (`shell` → 「조개」, `float` → 「찌 채비」)입니다.
+    #     지어낸 말이 아니라 자료에서 읽습니다.
+    말 = _채비이름(이름) or 이름
+    return ('<img class="card-ico" src="%s" alt="%s 그림" '
+            'width="28" height="28" loading="lazy" decoding="async">'
+            % (esc(url.asset(상대, 쪽길, 판번호(p))), esc(말)))
 
 
 
@@ -3428,9 +3437,10 @@ def 첫쪽(d, 언어='ko'):
         한장 = 대표사진(d, 묶음=묶음)
         그림 = ''
         if 한장 and 한장.get('파일'):
-            그림 = ('<img class="gc-photo" src="%s" alt="" '
+            # ★ 빈 alt 를 두지 않습니다 (2026-10-08 주인 지시)
+            그림 = ('<img class="gc-photo" src="%s" alt="%s" '
                     'width="%d" height="%d" loading="lazy" decoding="async">'
-                    % (esc(url.rel(쪽길, 한장['파일'])),
+                    % (esc(url.rel(쪽길, 한장['파일'])), esc(이름),
                        한장.get('가로') or 1200, 한장.get('세로') or 800))
         묶음칸.append(
             '<a class="group-card" href="%s">%s'
@@ -3450,9 +3460,10 @@ def 첫쪽(d, 언어='ko'):
         if not 상대 or not os.path.exists(
                 os.path.join(ASSETS, 'cover', os.path.basename(상대))):
             return ''
-        return ('<img class="gc-photo" src="%s" alt="" width="1200" '
+        # ★ 빈 alt 를 두지 않습니다 (2026-10-08 주인 지시)
+        return ('<img class="gc-photo" src="%s" alt="%s" width="1200" '
                 'height="800" loading="lazy" decoding="async">'
-                % esc(url.rel(쪽길, 상대)))
+                % (esc(url.rel(쪽길, 상대)), esc(무엇 or '바다')))
 
     # ── 숫자 칸 — 모두 **셉니다** (주인 규칙 29)
     #   ★ 옛 쪽은 축제 190·어종 35 가 손으로 박혀 있었습니다.
@@ -3715,9 +3726,13 @@ def 첫쪽(d, 언어='ko'):
         한장 = d.어종사진(어종)
         그림 = ''
         if 한장 and 한장.get('파일'):
-            그림 = ('<span class="gb-th"><img src="%s" alt="" '
+            # ★ 빈 alt 를 두지 않습니다 (2026-10-08 주인 지시)
+            #   어종 이름을 적습니다 — 옆 제목과 달라 겹치지 않습니다
+            #   (제목은 「낚시 어종 18가지」, 사진은 「우럭」).
+            그림 = ('<span class="gb-th"><img src="%s" alt="%s" '
                     'loading="lazy" decoding="async"></span>'
-                    % esc(url.rel(쪽길, 한장['파일'])))
+                    % (esc(url.rel(쪽길, 한장['파일'])),
+                       esc((한장.get('제목') or 어종))))
         가이드칸.append(
             '<a class="gb" href="%s">%s<span class="gb-tx">'
             '<b>%s</b><small>%s</small></span></a>'
