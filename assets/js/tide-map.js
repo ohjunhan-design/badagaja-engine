@@ -487,7 +487,7 @@
     var 안내 = 카드.querySelector('.tp-empty');
     if (!칸들 || !안내) { return; }
 
-    function 그리기(들) {
+    function 그리기(들, 내일들) {
       if (!들 || !들.length) {
         /* ★ 정적 글은 「자동으로 불러옵니다」로 두고,
            정말 못 받았을 때만 여기서 바꿉니다.
@@ -498,17 +498,57 @@
         칸들.hidden = true; 안내.hidden = false; return;
       }
       칸들.textContent = '';
+      /* ★ **숫자가 주인공입니다** (2026-10-07 바깥 검수 콘티)
+           「tide 에서는 풍경 사진보다 숫자와 그래프가 주인공」
+         물높이(level)가 자료에 이미 있었는데 안 쓰고 시각만
+         냈습니다. 없으면 안 적습니다 — 만들어 넣지 않습니다. */
+      var 이제 = new Date();
+      var 분지금 = 이제.getHours() * 60 + 이제.getMinutes();
+      var 다음것 = null;
       들.slice(0, 4).forEach(function (e) {
         var 간 = (e.type === '간조');
-        var 한 = 만들기('div', 'tp-ev ' + (간 ? 'low' : 'high'),
-                        (간 ? '간조 ' : '만조 ') + e.time);
-        칸들.appendChild(한);
+        var 쪽 = 만들기('div', 'tp-ev ' + (간 ? 'low' : 'high'));
+        쪽.appendChild(만들기('b', 'tp-ev-k',
+                              (간 ? '▼ 간조' : '▲ 만조')));
+        쪽.appendChild(만들기('span', 'tp-ev-t', e.time));
+        if (e.level || e.level === 0) {
+          쪽.appendChild(만들기('span', 'tp-ev-h', e.level + 'cm'));
+        }
+        /* 아직 안 온 것 가운데 **가장 이른 것**이 「다음」입니다 */
+        var 몫 = String(e.time || '').split(':');
+        var 분 = (parseInt(몫[0], 10) * 60) + parseInt(몫[1], 10);
+        if (!다음것 && 분 > 분지금) {
+          다음것 = { 때: e, 분: 분 };
+          쪽.className += ' is-next';
+        }
+        칸들.appendChild(쪽);
       });
+      /* ★ **지금 무엇이 다가오는가** — 콘티의 「다음 간조까지 2시간 18분」 */
+      if (다음것) {
+        var 남 = 다음것.분 - 분지금;
+        var 시 = Math.floor(남 / 60), 밈 = 남 % 60;
+        var 말 = '다음 ' + 다음것.때.type + '까지 '
+               + (시 ? 시 + '시간 ' : '') + 밈 + '분';
+        칸들.appendChild(만들기('p', 'tp-next', 말));
+      } else if (내일들 && 내일들.length) {
+        /* ★ 오늘 넷이 다 지났으면 **내일 첫 것**을 가리킵니다.
+           밤에 보는 사람이야말로 「다음에 언제 나갈까」를 묻습니다.
+           없는 값을 만들지는 않습니다 — 내일치가 없으면 안 적습니다. */
+        var 내 = 내일들[0];
+        var ㅁ = String(내.time || '').split(':');
+        var 내분 = (parseInt(ㅁ[0], 10) * 60) + parseInt(ㅁ[1], 10);
+        var 남2 = (24 * 60 - 분지금) + 내분;
+        var 시2 = Math.floor(남2 / 60), 밈2 = 남2 % 60;
+        칸들.appendChild(만들기('p', 'tp-next',
+          '내일 ' + 내.type + ' ' + 내.time + ' · '
+          + (시2 ? 시2 + '시간 ' : '') + 밈2 + '분 뒤'));
+      }
       칸들.hidden = false; 안내.hidden = true;
     }
 
     if (받은것[r.id]) {
-      그리기(((받은것[r.id].days || [])[0] || {}).events || []);
+      그리기(((받은것[r.id].days || [])[0] || {}).events || [],
+             ((받은것[r.id].days || [])[1] || {}).events || []);
       상세갱신(r);
       return;
     }
@@ -521,7 +561,8 @@
         if (!j || !j.days || !j.days.length) { return; }
         받은것[r.id] = j;              // ★ 통째로 둡니다
         if (고른것 !== r) { return; }
-        그리기((j.days[0] || {}).events || []);
+        그리기((j.days[0] || {}).events || [],
+               (j.days[1] || {}).events || []);
         상세갱신(r);
       })
       .catch(function () { /* 못 받으면 안내 글이 그대로 남습니다 */ });

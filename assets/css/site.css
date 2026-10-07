@@ -4667,3 +4667,18 @@ body.p-travel .tv-more{display:none}
   .point-hero-map{grid-template-columns:1fr;gap:14px}
   .phm-map .map-wrap{height:clamp(240px,52vw,340px)}
 }
+
+/* ══ 물때 카드 — 숫자가 주인공 (2026-10-07 바깥 검수 콘티)
+   「tide 에서는 풍경 사진보다 숫자와 그래프가 주인공입니다」 */
+.tp-events .tp-ev{display:flex;align-items:baseline;gap:8px;
+  padding:9px 12px;border-radius:12px;font-size:15px}
+.tp-ev-k{flex:0 0 auto;font-weight:800;font-size:13.5px}
+.tp-ev-t{flex:1 1 auto;font-weight:800;font-size:17px;
+  font-variant-numeric:tabular-nums}
+.tp-ev-h{flex:0 0 auto;font-size:13px;opacity:.8;
+  font-variant-numeric:tabular-nums}
+/* ★ 다가오는 것 하나를 또렷하게 */
+.tp-events .tp-ev.is-next{outline:2px solid var(--green,#2F5D57);
+  outline-offset:-2px}
+.tp-next{grid-column:1/-1;margin:8px 0 0;font-size:13.5px;
+  font-weight:700;color:var(--green,#2F5D57);text-align:center}
