@@ -671,6 +671,11 @@ def 자리그림(어종, 쪽길=None):
     from engine import url
     주소 = url.rel(쪽길, 사진)
     물선 = float(바탕.get('물선y') or 150)
+    # ★ **자르는 자리**도 자료에서 (2026-10-07 바깥 검수)
+    #   640×240 은 2.67:1 이라 원본에서 띠 하나만 남습니다.
+    #   어디를 남기느냐에 따라 「발밑」이 읽히기도 하고
+    #   빈 물만 보이기도 합니다.
+    자르기 = 바탕.get('자르기') or 'xMidYMid'
 
     # ── 어종마다 다른 표시 — **자료에서 읽습니다** (주인 지시)
     바닥 = _고르기(어디, '바닥')
@@ -746,7 +751,7 @@ def 자리그림(어종, 쪽길=None):
         ' aria-label="%s 노리는 자리 그림" preserveAspectRatio="xMidYMid slice"'
         ' xmlns="http://www.w3.org/2000/svg">\n'
         '  <image href="%s" x="0" y="0" width="640" height="240"'
-        ' preserveAspectRatio="xMidYMid slice"/>\n'
+        ' preserveAspectRatio="%s slice"/>\n'
         '  <rect width="640" height="240" fill="url(#어둠)"/>\n'
         '  <defs><linearGradient id="어둠" x1="0" y1="0" x2="0" y2="1">'
         '<stop offset="0" stop-color="#000" stop-opacity=".14"/>'
@@ -758,7 +763,7 @@ def 자리그림(어종, 쪽길=None):
         '</svg>\n'
         '<figcaption>%s</figcaption>\n'
         '</figure>'
-        % (조사(글(이름), '를'), html.escape(주소),
+        % (조사(글(이름), '를'), html.escape(주소), 자르기,
            바닥띠, ''.join(꾸밈), ''.join(라벨),
            _알약(16, 32, '어디에 서서 노리나', 14, '#fff',
                  'rgba(0,0,0,.42)'),
