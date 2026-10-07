@@ -230,7 +230,13 @@ f.addEventListener('load', function () {
              '--allow-file-access-from-files',
              # 바깥으로 안 나갑니다 — 시험이 인터넷에 흔들리면 안 됩니다
              '--host-resolver-rules=MAP * 127.0.0.1:1',
-             '--virtual-time-budget=10000', '--dump-dom',
+             # ★ **10초 → 5초** (2026-10-07 바깥 검수)
+             #   쪽 안 타이머는 3,200ms 면 답을 냅니다.
+             #   3200 은 「ads.js 안전망 2초 + 폴링 0.5초 + 여유」라
+             #   **건드리지 않습니다** — 「성능 최적화와 함께
+             #   바꾸면 원인이 섞입니다」(바깥 검수).
+             #   4초는 여유가 너무 적어 **5초**로 둡니다.
+             '--virtual-time-budget=5000', '--dump-dom',
              'file:///' + p.replace(os.sep, '/')],
             capture_output=True, text=True, encoding='utf-8', timeout=180)
         m = re.search(r'id="R"[^>]*>(.*?)</div>', r.stdout or '', re.S)
