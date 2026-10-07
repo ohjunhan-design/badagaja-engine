@@ -4175,7 +4175,7 @@ body.p-travel .tv-card img{
 body.p-travel .tv-card figcaption{
   position:absolute;right:7px;top:6px;z-index:3;margin:0;
   padding:2px 7px;border-radius:999px;background:rgba(0,0,0,.34);
-  font-size:9.5px;color:rgba(255,255,255,.95);
+  font-size:10.5px;color:rgba(255,255,255,.95);
   max-width:62%;text-align:right;line-height:1.35}
 body.p-travel .tv-card::after{
   content:"";position:absolute;inset:0;z-index:1;pointer-events:none;

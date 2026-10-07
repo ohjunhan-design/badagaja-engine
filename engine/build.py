@@ -3332,21 +3332,28 @@ def 첫쪽(d, 언어='ko'):
             ('%d' % _수['어종모두'], '제철 어종·해루질 안내', 'catch/'),
         ])
 
-    # ── 찾기 폼과 빠른 꼬리표 (옛 쪽 그대로)
-    #   ★ 옛 쪽은 guide/?q= 로 보냈습니다. 새 틀엔 그 쪽이 없어
-    #     지금은 **있는 쪽으로 곧장** 보냅니다. 찾기 쪽을 만들면
-    #     여기만 고치면 됩니다.
-    찾기폼 = (
-        '<form class="g-search" action="%s" method="get" role="search">'
-        '<label class="sr-only" for="gq">권역·어종·축제·포인트 찾기</label>'
-        '<svg class="g-search-ico" viewBox="0 0 24 24" aria-hidden="true">'
-        '<circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" '
-        'stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" '
-        'stroke-width="2" stroke-linecap="round"/></svg>'
-        '<input id="gq" name="q" type="search" '
-        'placeholder="지금, 바다에 갈 준비 되셨나요?" autocomplete="off">'
-        '<button type="submit">찾아보기</button></form>'
-        % esc(url.rel(쪽길, url.festival_list(언어))))
+    # ── 찾기 폼은 **만들지 않습니다** (2026-10-07 주인 지적)
+    #
+    #   주인 — 「**치명적인 오류야 물때를 검색했더니 축제가 나오고있어**」
+    #
+    #   까닭은 데이터가 아니었습니다. 이 폼이 `action="festival/..."`
+    #   이라 **무엇을 쳐도 축제 쪽**으로 갔습니다. 옛 쪽의 `guide/?q=`
+    #   를 새 틀에 못 옮기면서 **임시로 꽂아 둔 것**이 그대로 남았습니다.
+    #
+    #   바깥 검수 —
+    #     「기능이 미완성인 정도가 아니라 **입력한 의도와 무관하게
+    #       축제로 보내는 잘못된 약속**입니다」
+    #     「CSS 로만 숨기지 말고 **생성기에서 아예 렌더링하지 않는**
+    #       쪽이 낫습니다. 그래야 접근성 트리와 HTML 에도 **거짓 폼이
+    #       남지 않습니다**」
+    #
+    #   ★ **찾기 쪽(search.html)을 만들기 전까지는 폼을 두지 않습니다.**
+    #     만들 때는 빌드 때 **정적 색인**을 만들어 그것을 봅니다.
+    #     `engine/check_search.py` 가 「찾을 곳 없이 검색폼이 있으면」
+    #     배포를 막습니다.
+    #
+    #   아래 「이렇게 찾아보세요」 다섯 꼬리표가 그 일을 대신합니다.
+    찾기폼 = ''
 
     빠른꼬리표 = ''.join(
         '<a href="%s">%s</a>' % (esc(url.rel(쪽길, 길)), esc(이름))
