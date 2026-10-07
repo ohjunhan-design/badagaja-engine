@@ -194,7 +194,14 @@ function 다왔나() {
       try { 하나재기(틀들[i][0], 틀들[i][1]); }
       catch (e) { 모은것[String(틀들[i][1])] = null; }
     }
-    document.getElementById('R').textContent = JSON.stringify(모은것);
+    var R = document.getElementById('R');
+    R.textContent = JSON.stringify(모은것);
+    /* ★ **계약된 측정이 모두 끝났다**는 신호 (2026-10-07 바깥 검수)
+       「『무언가 나왔다』가 아니라 **『계약된 측정이 모두 끝났다』**를
+         봅니다. 결과가 **일부만 그려져도 DOM 은 비어 있지 않을 수**
+         있어서, 『비었나?』만 보면 **거짓 통과가 가능**합니다」
+       이 신호가 없으면 **긴 예산으로 한 번 더** 돕니다. */
+    R.setAttribute('data-다잿음', String(틀들.length));
   }, 2200);
 }
 
@@ -305,19 +312,30 @@ def 재기여러폭(쪽길, 폭들):
         p = os.path.join(t, 'z.html')
         io.write(p, 겉)
         빈것 = dict((폭, None) for 폭 in 폭들)
-        try:
-            r = subprocess.run(
-                machine.크롬앞머리() + [
-                 '--window-size=%d,2600' % max(max(폭들) + 140, 620),
-                 '--allow-file-access-from-files',
-                 # 바깥으로 안 나갑니다 — 인터넷에 흔들리면 시험이 아닙니다
-                 '--host-resolver-rules=MAP * 127.0.0.1:1',
-                 # ★ 일곱을 함께 그리니 시간을 넉넉히 줍니다
-                 '--virtual-time-budget=20000', '--dump-dom',
-                 'file:///' + p.replace(os.sep, '/')],
-                capture_output=True, text=True, encoding='utf-8',
-                errors='replace', timeout=240)
-        except subprocess.TimeoutExpired:
+        # ★ **예산은 상한일 뿐입니다** (2026-10-07 바깥 검수)
+        #   20초를 **무조건 다 써서** 31초가 걸렸습니다. 쪽 안
+        #   타이머는 2,200ms 면 답을 냅니다. 6초로 줄이고,
+        #   **다 못 쟀으면** 긴 예산으로 한 번 더 돕니다.
+        r, 다잿나 = None, False
+        for 예산 in (6000, 20000):
+            try:
+                r = subprocess.run(
+                     machine.크롬앞머리() + [
+                     '--window-size=%d,2600' % max(max(폭들) + 140, 620),
+                     '--allow-file-access-from-files',
+                     # 바깥으로 안 나갑니다 — 인터넷에 흔들리면 시험이 아닙니다
+                     '--host-resolver-rules=MAP * 127.0.0.1:1',
+                     '--virtual-time-budget=%d' % 예산, '--dump-dom',
+                     'file:///' + p.replace(os.sep, '/')],
+                    capture_output=True, text=True, encoding='utf-8',
+                    errors='replace', timeout=240)
+            except subprocess.TimeoutExpired:
+                return 빈것
+            # ★ **완료 신호**를 봅니다 — 「비었나」가 아닙니다
+            다잿나 = ('data-다잿음="%d"' % len(폭들)) in (r.stdout or '')
+            if 다잿나:
+                break
+        if not 다잿나:
             return 빈것
         m = re.search(r'id="R"[^>]*>(.*?)</div>', r.stdout or '', re.S)
         if not m:

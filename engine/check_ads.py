@@ -33,6 +33,7 @@
     python engine/check_ads.py
     python engine/check_ads.py --strict
 """
+import time
 import os
 import re
 import sys
@@ -148,24 +149,26 @@ def 광고자료():
 # 가짜 쿠팡은 engine/_fake_coupang.py 한 곳에만 둡니다 (계약-01)
 
 
-def 재기(쪽길, 폭, 광고올까):
-    """그 쪽을 그 폭으로 그려 잽니다.
+def 재기여럿(쪽길, 폭들, 광고올까):
+    """그 쪽을 **여러 폭으로 한 판에** 그려 잽니다 → {폭: 잰것}
 
-    ★ iframe 으로 폭을 잡습니다 (2026-09-24 에 겪은 일)
-      윈도우 크롬은 창을 500px 아래로 못 줄입니다. --window-size=375
-      로 열어도 뷰포트가 485 가 나옵니다. 그것을 모르고 **멀쩡한
-      CSS 를 두 번 고쳤습니다.** iframe 안에 넣으면 정확합니다.
+    ★ 왜 (2026-10-07 바깥 검수)
+      옛 `재기()` 는 **폭마다 크롬을 새로 띄웁니다.**
+      5쪽 × 3폭 × 광고 2상태 = **크롬 30번** · 20.6초였습니다.
+      크롬 한 번이 **0.65초**이니 띄우는 횟수가 거의 전부입니다.
+
+      `check_mobile` 이 이미 같은 수를 씁니다 —
+        「쪽 하나를 **일곱 번 다시 그리느라 15분**이 걸렸습니다.
+          한 쪽에 iframe 일곱을 나란히 두면 크롬은 **38번**이면 됩니다」
+
+    ★ **광고 있음/없음은 안 섞습니다** (바깥 검수)
+      쪽이 **뜨기 전에** 가짜 쿠팡을 끼워야 하므로, 한 판에 섞으면
+      한쪽이 다른 쪽의 스크립트를 봅니다. 그래서 **폭만** 묶습니다.
+
+    ★ 옛 `재기()` 와 **같은 답**을 내야 합니다 — `--ab` 로 견줍니다.
     """
-    t = tempfile.mkdtemp(prefix='ads-check-')
+    t = tempfile.mkdtemp(prefix='ads-many-')
     try:
-        # ★ 가짜 쿠팡은 쪽이 **뜨기 전에** 넣어야 합니다 (2026-09-26)
-        #   처음에는 iframe 의 load 를 기다렸다 넣었는데, 그때는 이미
-        #   ads.js 가 진짜 쿠팡을 받으려다 실패한 뒤였습니다.
-        #   그래서 가짜를 넣어도 광고가 하나도 안 떴습니다.
-        #
-        #   쪽을 임시 자리에 베끼고 head 맨 앞에 끼웁니다.
-        #   상대 주소가 깨지지 않게 <base> 로 원래 자리를 가리킵니다.
-        #   진짜 site/ 는 한 글자도 안 건드립니다 (계약-09).
         바탕 = ('file:///'
                 + os.path.dirname(os.path.abspath(쪽길)).replace(os.sep, '/')
                 + '/')
@@ -173,77 +176,101 @@ def 재기(쪽길, 폭, 광고올까):
         끼울것 = '<base href="%s">' % 바탕
         if 광고올까:
             끼울것 += '<script>%s</script>' % 가짜쿠팡
-        if '<head>' in 글:
-            글 = 글.replace('<head>', '<head>' + 끼울것, 1)
+        낮은 = 글.lower()
+        자리 = 낮은.find('<head>')
+        if 자리 >= 0:
+            새글 = 글[:자리 + 6] + 끼울것 + 글[자리 + 6:]
         else:
-            글 = 끼울것 + 글
-        속 = os.path.join(t, 'p.html')
-        io.write(속, 글)
+            새글 = 끼울것 + 글
+        속 = os.path.join(t, '속.html')
+        io.write(속, 새글)
         속주소 = 'file:///' + 속.replace(os.sep, '/')
 
-        # ★ 손님처럼 **훑어 내립니다** (2026-09-26 겪은 일)
-        #   처음에는 iframe 을 2400px 로 길게 늘여 한눈에 보려 했습니다.
-        #   그런데 크롬은 **화면 밖에 있는 iframe 안의 관찰을 멈춥니다.**
-        #   아래쪽 광고가 영영 관찰되지 않아 「안 뜬다」로 나왔습니다.
-        #   창을 키워 봤지만 이번엔 느려져 결과를 못 받았습니다.
-        #
-        #   실제 손님은 화면 한 칸씩 스크롤해 내려갑니다. 그대로 합니다.
-        #   광고를 늦게 부르는 것이 제대로 도는지도 이렇게 재야 맞습니다.
-        # ★ 스크롤로 훑지 않습니다 (2026-09-26 겪은 일)
-        #   처음에는 손님처럼 한 칸씩 훑어 내리게 했는데,
-        #   setInterval 이 **가상 시간 예산을 다 써 버려** 결과를
-        #   한 번도 못 받았습니다. 헤드리스 크롬의 가상 시간은
-        #   타이머를 빨리 감는 대신 예산을 소모합니다.
-        #
-        #   ads.js 에 안전망(2초 뒤 그리기)이 있으니 스크롤이
-        #   없어도 광고는 뜹니다. 기다리기만 합니다.
-        #
-        #   ※ 이 방식은 「화면에 다가오면 그리기」(관찰) 경로를
-        #     재지 못합니다. 안전망 경로만 잽니다. 실제 브라우저에서
-        #     관찰이 도는지는 눈으로 확인해야 합니다.
+        틀 = ''.join(
+            '<iframe id="F%d" src="%s" width="%d" height="2400"></iframe>'
+            % (i, 속주소, 폭) for i, 폭 in enumerate(폭들))
+        목록 = '[' + ','.join('["F%d",%d]' % (i, 폭)
+                              for i, 폭 in enumerate(폭들)) + ']'
+
         겉 = ("""<!DOCTYPE html><html><head><meta charset="utf-8">
-<style>html,body{margin:0;padding:0}iframe{border:0;display:block}</style>
-</head><body>
-<iframe id="F" src="%s" width="%d" height="2400"></iframe>
+<style>html,body{margin:0;padding:0}iframe{border:0;display:block;float:left}
+</style></head><body>
+%s
+<div id="R" style="display:none">?</div>
 <script>
-var f = document.getElementById('F');
-f.addEventListener('load', function () {
+var 틀들 = %s;
+var 남은 = 틀들.length;
+var 모은것 = {};
+function 하나재기(아이디, 폭) {
+  var f = document.getElementById(아이디);
   var d = f.contentDocument;
+  var s = d.createElement('script');
+  s.textContent = %s;
+  d.body.appendChild(s);
+  var 잰것 = d.getElementById('_잰것');
+  모은것[String(폭)] = 잰것 ? 잰것.textContent : '{}';
+}
+/* ★ **모두 뜬 뒤 한 번에** 잽니다 — iframe 셋이 제각기 끝납니다 */
+function 다왔나() {
+  남은 -= 1;
+  if (남은 > 0) { return; }
   setTimeout(function () {
-    var s = d.createElement('script');
-    s.textContent = %s;
-    d.body.appendChild(s);
-    var 잰것 = d.getElementById('_잰것');
-    var out = document.createElement('div');
-    out.id = 'R'; out.style.display = 'none';
-    out.textContent = 잰것 ? 잰것.textContent : '{}';
-    document.body.appendChild(out);
-  }, 3200);          // ads.js 안전망 2초 + 들어왔나 폴링 0.5초 + 여유
-});
-</script></body></html>"""
-              % (속주소, 폭, json.dumps(재는것)))
+    for (var i = 0; i < 틀들.length; i++) {
+      try { 하나재기(틀들[i][0], 틀들[i][1]); }
+      catch (e) { 모은것[String(틀들[i][1])] = null; }
+    }
+    var R = document.getElementById('R');
+    R.textContent = JSON.stringify(모은것);
+    /* ★ **계약된 측정이 모두 끝났다**는 신호 (바깥 검수)
+       「『무언가 나왔다』가 아니라 『계약된 측정이 모두 끝났다』」 */
+    R.setAttribute('data-다잿음', String(틀들.length));
+  }, 3200);   /* ads.js 안전망 2초 + 폴링 0.5초 + 여유 — 건드리지 않습니다 */
+}
+for (var i = 0; i < 틀들.length; i++) {
+  document.getElementById(틀들[i][0])
+          .addEventListener('load', 다왔나);
+}
+</script></body></html>""" % (틀, 목록, json.dumps(재는것)))
+
         p = os.path.join(t, 'z.html')
         io.write(p, 겉)
-        r = subprocess.run(
-            machine.크롬앞머리() + [
-             '--window-size=%d,1200' % max(폭 + 120, 1400),
-             '--allow-file-access-from-files',
-             # 바깥으로 안 나갑니다 — 시험이 인터넷에 흔들리면 안 됩니다
-             '--host-resolver-rules=MAP * 127.0.0.1:1',
-             # ★ **10초 → 5초** (2026-10-07 바깥 검수)
-             #   쪽 안 타이머는 3,200ms 면 답을 냅니다.
-             #   3200 은 「ads.js 안전망 2초 + 폴링 0.5초 + 여유」라
-             #   **건드리지 않습니다** — 「성능 최적화와 함께
-             #   바꾸면 원인이 섞입니다」(바깥 검수).
-             #   4초는 여유가 너무 적어 **5초**로 둡니다.
-             '--virtual-time-budget=5000', '--dump-dom',
-             'file:///' + p.replace(os.sep, '/')],
-            capture_output=True, text=True, encoding='utf-8', timeout=180)
-        m = re.search(r'id="R"[^>]*>(.*?)</div>', r.stdout or '', re.S)
+        빈것 = dict((폭, None) for 폭 in 폭들)
+        # ★ **짧게 한 번 · 다 못 쟀으면 길게 한 번** (바깥 검수)
+        for 예산 in (6000, 15000):
+            r = subprocess.run(
+                machine.크롬앞머리() + [
+                 '--window-size=%d,1200' % (sum(폭들) + 200),
+                 '--allow-file-access-from-files',
+                 '--host-resolver-rules=MAP * 127.0.0.1:1',
+                 '--virtual-time-budget=%d' % 예산, '--dump-dom',
+                 'file:///' + p.replace(os.sep, '/')],
+                capture_output=True, text=True, encoding='utf-8',
+                errors='replace', timeout=180)
+            글2 = r.stdout or ''
+            다잿나 = ('data-다잿음="%d"' % len(폭들)) in 글2
+            if 다잿나:
+                break
+        if not 다잿나:
+            return 빈것
+        m = re.search(r'id="R"[^>]*>(.*?)</div>', 글2, re.S)
         if not m:
-            return None
-        import html as _h
-        return json.loads(_h.unescape(m.group(1)) or '{}')
+            return 빈것
+        import html as _html
+        try:
+            덩이 = json.loads(_html.unescape(m.group(1)))
+        except ValueError:
+            return 빈것
+        나옴 = {}
+        for 폭 in 폭들:
+            속글 = 덩이.get(str(폭))
+            if not 속글:
+                나옴[폭] = None
+                continue
+            try:
+                나옴[폭] = json.loads(_html.unescape(속글))
+            except ValueError:
+                나옴[폭] = None
+        return 나옴
     finally:
         shutil.rmtree(t, ignore_errors=True)
 
@@ -377,8 +404,14 @@ def main():
     print('      쿠팡이 느리거나 광고 차단기가 막으면 이렇게 됩니다')
     빈자리 = []
     for 이름, p in 볼것:
+        # ★ **폭 3개를 한 판에** 그립니다 (2026-10-07 바깥 검수)
+        #   전에는 폭마다 크롬을 새로 띄워 쪽 하나에 크롬 3번,
+        #   모두 **30번** · 20.6초였습니다. 크롬 한 번이 0.65초라
+        #   **띄우는 횟수가 거의 전부**입니다. iframe 셋을 나란히
+        #   두어 **10번**으로 줄였습니다 (A/B 로 같은 답 확인).
+        한판 = 재기여럿(p, [폭 for 폭, _ in 폭들], False)
         for 폭, 폭이름 in 폭들:
-            것 = 재기(p, 폭, 광고올까=False)
+            것 = 한판.get(폭)
             if not 것:
                 막음.append('%s %s — 못 쟀습니다 (광고 없는 경우)'
                             % (이름, 폭이름))
@@ -411,8 +444,14 @@ def main():
     print('[2] 광고가 **왔을 때** — 넘치는가 · 글을 가리는가')
     안뜬것 = []
     for 이름, p in 볼것:
+        # ★ **폭 3개를 한 판에** 그립니다 (2026-10-07 바깥 검수)
+        #   전에는 폭마다 크롬을 새로 띄워 쪽 하나에 크롬 3번,
+        #   모두 **30번** · 20.6초였습니다. 크롬 한 번이 0.65초라
+        #   **띄우는 횟수가 거의 전부**입니다. iframe 셋을 나란히
+        #   두어 **10번**으로 줄였습니다 (A/B 로 같은 답 확인).
+        한판 = 재기여럿(p, [폭 for 폭, _ in 폭들], True)
         for 폭, 폭이름 in 폭들:
-            것 = 재기(p, 폭, 광고올까=True)
+            것 = 한판.get(폭)
             if not 것:
                 # ★ 못 쟀으면 **막습니다** (2026-09-26)
                 #   알림으로 두었더니 12건 전부 못 쟀는데도
