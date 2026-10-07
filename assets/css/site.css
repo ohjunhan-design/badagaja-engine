@@ -1075,11 +1075,24 @@ html[data-pcview] .pcview{display:block}
 .rig-guide-open{display:block;position:relative;border-radius:14px;
                 overflow:hidden;border:1px solid var(--line)}
 .rig-guide-open img{display:block;width:100%;height:auto}
+/* ★ **확대는 보조 기능이 아니라 주 행동입니다** (2026-10-08 지피티 검수)
+     「이미지 안 글씨를 읽기 어렵게 축소해서 보여주면서 확대 버튼까지
+       약하면, 사실상 정보가 숨겨진 것과 같습니다」
+     휴대폰에서 이 안내도는 글씨가 4px 쯤이라 반드시 눌러야 읽힙니다.
+     전에는 11.5px 반투명 알약이라 「있으면 좋은 기능」처럼 보였습니다.
+     진한 초록 + 흰 글씨 + 누름자리 44px 로 올립니다. */
 .rig-guide-hint{
-  position:absolute;right:8px;bottom:8px;
-  background:rgba(38,51,46,.78);color:#fff;
-  font-size:11.5px;font-weight:700;padding:5px 10px;
-  border-radius:999px;pointer-events:none;
+  position:absolute;right:14px;bottom:14px;
+  display:inline-flex;align-items:center;gap:6px;
+  min-height:44px;padding:0 16px;
+  background:var(--green);color:var(--white);
+  font-size:14px;font-weight:800;
+  border-radius:var(--r-full);pointer-events:none;
+  box-shadow:0 6px 18px rgba(0,0,0,.18);
+}
+@media (max-width:760px){
+  .rig-guide-hint{right:10px;bottom:10px;
+    min-height:46px;padding:0 14px;font-size:15px}
 }
 
 /* 크게 보는 칸 — `:target` 으로 폅니다 (자바스크립트 없이) */
