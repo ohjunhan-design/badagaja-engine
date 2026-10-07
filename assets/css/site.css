@@ -4688,6 +4688,13 @@ body.p-travel .tv-more{display:none}
      "선택한 포인트의 즉석 상세 패널"로」
    한 화면에서 「장소 고르기 → 어종 → 오늘 물때 → 출조 판단」까지. */
 .phm-list{display:flex;flex-direction:column;gap:10px}
+/* ★ **hidden 을 꼭 이기게 합니다** (2026-10-08 — 화면 보고 잡음)
+   `display:flex` 가 브라우저 기본 `[hidden]{display:none}` 을
+   **덮습니다.** 그래서 상세를 열어도 목록이 그대로 남아,
+   포인트 둘이 위에 붙은 채 아래에 상세가 또 섰습니다.
+   검사기는 다 통과했습니다 — 눈으로 봐야 잡히는 종류입니다
+   (주인 규칙 6-2). 같은 까닭으로 .pp 도 함께 적습니다. */
+.phm-list[hidden],.pp[hidden]{display:none}
 
 /* ── 고르는 카드 (처음 화면) ─────────────────────────
    ★ 전체 목록 카드를 그대로 쓰지 않습니다 — id 가 겹쳐
@@ -4729,13 +4736,19 @@ body.p-travel .tv-more{display:none}
   color:var(--green)}
 .pp-chip.is-area{background:#F7EADA;border-color:#EBD6B8;
   color:var(--orange)}
-.pp-fish,.pp-where{margin:0;font-size:14px;line-height:1.55;
-  color:var(--ink)}
+.pp-fish{margin:0;font-size:14px;line-height:1.55;color:var(--ink)}
+/* ★ **위치는 물때 아래 보조 정보**입니다 (지피티 검수)
+     「지도에서 그 점을 눌러 들어왔습니다. 좌표는 정확하지만
+       일반 사용자에게는 판단정보가 아닙니다」
+     없애지 않고 비중만 한 단계 낮춥니다. */
+.pp-where-box{padding-top:10px;border-top:1px solid var(--line)}
+.pp-where-box:empty{display:none;padding:0;border:0}
+.pp-where{margin:0;font-size:13px;line-height:1.55;color:var(--muted)}
 .pp-lbl{display:block;font-size:12px;font-weight:800;
   color:var(--muted);margin-bottom:2px}
-.pp-xy{display:block;font-size:13px;color:var(--muted);
+.pp-xy{display:block;font-size:12px;color:var(--muted);
   font-variant-numeric:tabular-nums}
-.pp-memo{display:block;font-size:13.5px;color:var(--ink);
+.pp-memo{display:block;font-size:13px;color:var(--ink);
   margin-top:3px}
 .pp-warn{margin:0;padding:7px 10px;border-radius:var(--r-sm);
   background:#FBF0E2;font-size:13.5px;font-weight:700;
@@ -4769,7 +4782,11 @@ body.p-travel .tv-more{display:none}
 /* ★ 못 받았거나 관측소가 안 붙은 권역 — **짐작해 적지 않습니다** */
 .pp-tide-note{margin:0;font-size:13px;line-height:1.55;
   color:var(--muted)}
-.pp-graph{margin:0}
+/* ★ **그래프 높이 120px** (2026-10-08 지피티가 정한 값)
+     「그 이상 커지면 포인트 상세보다 그래프가 주인공이 되고,
+       80px 수준이면 시간축과 곡선이 너무 작아집니다」
+     PC·모바일 공통 120px 에서 화면을 보고 ±10px 조절합니다. */
+.pp-graph{margin:0;min-height:120px}
 
 /* ── 나가는 단추 둘 ─────────────────────────────── */
 .pp-go{display:flex;flex-wrap:wrap;gap:8px;
@@ -4781,6 +4798,11 @@ body.p-travel .tv-more{display:none}
    ★ 지도 **바로 아래**에 선택 포인트가 옵니다 (지시 ⑥).
      `.point-hero-map` 이 900px 아래에서 1열로 접힙니다. */
 @media (max-width:560px){
+  /* ★ **지피티가 정한 지도 높이** (2026-10-08)
+       「지도 35~40% · 상세정보 60~65%. 375px 폭 기준 지도
+         실제 높이는 180~210px 정도가 적당합니다」
+       상세 카드 제목이 **스크롤하기 전에** 보여야 합니다. */
+  .phm-map .map-wrap{height:clamp(180px,52vw,210px);min-height:0}
   .pp-ev{grid-template-columns:1fr}
   .pp-name{font-size:18px}
   .pp-go{flex-direction:column}
