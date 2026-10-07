@@ -1,0 +1,175 @@
+# -*- coding: utf-8 -*-
+"""**최종 판정이 올바른가** — 몇 초짜리 회귀시험 (2026-10-07).
+
+★ 왜 만들었나
+  배포가 **세 번 연속** 같은 자리에서 멈췄습니다.
+
+      #15  13분 56초  NO-GO
+      #16  15분 13초  NO-GO
+      #17  16분 18초  NO-GO    ← 어김이 20번 하나뿐
+      약 **50분**을 쓰고 공개 서버는 그대로였습니다.
+
+  **올려야 잴 수 있는데 못 재서 안 올라갔습니다.**
+
+  바깥 검수 —
+    「**올려야 검사할 수 있는 것을 올리기 전에 검사하지 못했다고
+      막는 것**은 **순환논리**라서 반드시 끊어야 합니다」
+    「#17 에서 이미 항목20만 FAIL 이었다면, **항목20 phase 처리만
+      고친 뒤 관련 코드 시험만 먼저** 하세요 … **이 네 가지는 작은
+      순수함수 테스트로 몇 초면 됩니다**」
+
+★ 그래서 **전체 15분 판정을 또 돌리지 않고** 이것만 봅니다.
+
+쓰는 법
+    python tests/test_gate_final.py
+"""
+import os
+import re
+import sys
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, ROOT)
+
+통과, 실패 = 0, []
+
+
+def 봄(이름, 참인가, 덧=''):
+    global 통과
+    if 참인가:
+        통과 += 1
+        print('  · %s' % 이름)
+    else:
+        실패.append(이름)
+        print('  ✗ %s %s' % (이름, 덧))
+
+
+def 판정(결과, 올려야재는것=('20',)):
+    """`gate.py` 의 최종 셈법과 **같은 규칙**입니다.
+
+    gate 쪽이 바뀌면 여기도 함께 고쳐야 합니다.
+    """
+    셈 = {}
+    for x in 결과:
+        셈[x['상태']] = 셈.get(x['상태'], 0) + 1
+    for k in ('PASS', 'FAIL', 'NOT_TESTED', 'ERROR', 'INFRA_FAIL', 'N.A.'):
+        셈.setdefault(k, 0)
+
+    나중에잴것 = [x for x in 결과
+                  if x.get('번호') in 올려야재는것
+                  and x.get('상태') in ('NOT_TESTED', 'FAIL')]
+    지금못잰것 = 셈['NOT_TESTED'] - len(
+        [x for x in 나중에잴것 if x.get('상태') == 'NOT_TESTED'])
+    나중에잴FAIL = len([x for x in 나중에잴것 if x.get('상태') == 'FAIL'])
+
+    막는것이있나 = ((셈['FAIL'] - 나중에잴FAIL) or 셈['ERROR']
+                    or 셈['INFRA_FAIL'])
+    덜잰것이있나 = (지금못잰것 > 0)
+    갈수있나 = not 막는것이있나 and not 덜잰것이있나 and not 나중에잴것
+    올릴준비됐나 = not 막는것이있나 and not 덜잰것이있나
+
+    if 갈수있나:
+        return 'GO 후보'
+    if 올릴준비됐나:
+        return '검증 배포 필요'
+    return 'NO-GO'
+
+
+def 꾸러미(이십='NOT_TESTED', 덧=None):
+    """1~19 는 PASS, 20 은 주는 대로."""
+    것 = [{'번호': '%02d' % i, '상태': 'PASS'} for i in range(1, 20)]
+    것.append({'번호': '20', '상태': 이십})
+    for 번, 상 in (덧 or {}).items():
+        for x in 것:
+            if x['번호'] == 번:
+                x['상태'] = 상
+    return 것
+
+
+def 시험_최종판정():
+    print('[1] 최종 판정 — 올려야 재는 것 때문에 막히지 않는가')
+
+    # ① 20번만 NOT_TESTED → **검증 배포 필요**
+    #    이것이 안 되면 배포가 **영영** 안 됩니다 (#15·#16·#17 이 그랬습니다)
+    봄('① 20번만 NOT_TESTED 이면 「검증 배포 필요」',
+       판정(꾸러미()) == '검증 배포 필요', 판정(꾸러미()))
+
+    # ② 20번 밖에 FAIL 이 하나라도 있으면 → NO-GO
+    #    **무르게 하는 것이 아닙니다.** 진짜 잘못은 그대로 막습니다.
+    것 = 꾸러미(덧={'05': 'FAIL'})
+    봄('② 20번 밖에 FAIL 이 있으면 NO-GO', 판정(것) == 'NO-GO', 판정(것))
+
+    # ③ 20번 밖에 NOT_TESTED 가 있으면 → NO-GO
+    #    「안 쟀다」는 「멀쩡하다」가 아닙니다.
+    것 = 꾸러미(덧={'09': 'NOT_TESTED'})
+    봄('③ 20번 밖에 NOT_TESTED 가 있으면 NO-GO',
+       판정(것) == 'NO-GO', 판정(것))
+
+    # ④ 모두 PASS → GO 후보
+    것 = 꾸러미(이십='PASS')
+    봄('④ 모두 PASS 이면 GO 후보', 판정(것) == 'GO 후보', 판정(것))
+
+    # ⑤ 20번이 FAIL 이어도 → 검증 배포 필요
+    #    올리기 전에 잰 20번은 **옛 판**을 잰 것이라 뜻이 없습니다.
+    것 = 꾸러미(이십='FAIL')
+    봄('⑤ 20번이 FAIL 이어도 「검증 배포 필요」',
+       판정(것) == '검증 배포 필요', 판정(것))
+
+    # ⑥ 20번 FAIL + 다른 FAIL → NO-GO
+    것 = 꾸러미(이십='FAIL', 덧={'07': 'FAIL'})
+    봄('⑥ 20번 말고도 FAIL 이 있으면 NO-GO',
+       판정(것) == 'NO-GO', 판정(것))
+
+
+def 시험_항목20이서버를안재나():
+    """★ **배포 전에 서버를 재면 안 됩니다** (순환논리).
+
+    바깥 검수 — 「항목20은 배포 전 gate 에서 **check_deployed.py 를
+    실행하지 마세요**」
+    """
+    print('')
+    print('[2] 항목20 이 배포 전에 서버를 재지 않는가')
+    import io as _io
+    글 = _io.open(os.path.join(ROOT, 'engine', 'gate.py'),
+                  encoding='utf-8').read()
+    시 = 글.find('def 항목20():')
+    마 = 글.find('\ndef ', 시 + 10)
+    몸 = 글[시:마 if 마 > 0 else 시 + 3000]
+
+    # ★ **설명글은 빼고 봅니다** — 주석·도움말에 이름이 나오는 것은
+    #   괜찮습니다. **정말 돌리는가**만 봅니다.
+    세겹 = '"' * 3
+    코드만 = re.sub(세겹 + r'[\s\S]*?' + 세겹, '', 몸)
+    코드만 = '\n'.join(x for x in 코드만.split('\n')
+                       if not x.strip().startswith('#'))
+
+    봄('항목20 이 검사기를 **돌리지** 않는다',
+       '돌리기(' not in 코드만,
+       '아직 돌립니다 — 올리기 전에 재면 **옛 판**을 잽니다')
+    봄('항목20 이 NOT_TESTED 로 적는다', 'NOT_TESTED' in 코드만)
+    봄('한국어 문장을 API 로 쓰지 않는다',
+       "아직 안 올렸습니다' in " not in 코드만,
+       '글자 맞추기는 조용히 끊깁니다 (바깥 검수)')
+
+
+def main():
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+    print('최종 판정이 **순환논리에 걸리지 않는가** (2026-10-07)')
+    print('')
+    시험_최종판정()
+    시험_항목20이서버를안재나()
+    print('')
+    if 실패:
+        print('%d가지 통과 · %d가지 실패' % (통과, len(실패)))
+        for x in 실패:
+            print('  ✗ %s' % x)
+        print('')
+        print('  ★ **올려야 잴 수 있는 것을 올리기 전에 못 쟀다고')
+        print('    막으면 영영 못 올립니다.** 배포가 세 번 그렇게')
+        print('    멈췄고 50분을 썼습니다 (2026-10-07).')
+        return 1
+    print('%d가지 모두 통과 — 올려야 재는 것이 배포를 막지 않습니다.' % 통과)
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())
