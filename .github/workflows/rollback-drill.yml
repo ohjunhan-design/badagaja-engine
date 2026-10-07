@@ -148,6 +148,22 @@ jobs:
           rm -f _B/taean.html && echo "   · taean.html 을 지웠습니다"
           # (나) 자산 하나를 비웁니다 — 꾸밈이 사라집니다
           : > _B/assets/css/site.css && echo "   · site.css 를 비웠습니다"
+          # ★ (나-2) **새 쪽을 더합니다** (2026-10-07)
+          #
+          #   연습은 지금껏 **지우기·비우기·지문 흔들기**만 했습니다.
+          #   그래서 **새로 생긴 파일**이 되돌릴 때 지워지는지를
+          #   **한 번도 본 적이 없습니다.**
+          #
+          #   바깥 검수 — 「새 파일 삭제까지 포함해 **exact rollback**
+          #   검증」. 이것이 없으면 「되돌렸다」가 「덮어썼다」일 뿐입니다.
+          #
+          #   실제로 운영 배포의 되돌리기에는 --delete 가 **없어서**
+          #   새 쪽이 그대로 남습니다. 연습(여기)에는 있습니다 —
+          #   **연습과 실전이 다릅니다.** 그 어긋남도 이 판에서 드러납니다.
+          mkdir -p _B/연습임시
+          echo "<p>되돌리면 사라져야 합니다</p>" > _B/새로생긴쪽.html
+          echo "<p>폴더째 사라져야 합니다</p>" > _B/연습임시/속.html
+          echo "   · 새로 생긴 쪽 둘을 더했습니다 (되돌리면 없어져야 합니다)"
           # (다) 판 지문을 흔듭니다 — 올린 것이 만든 것과 달라집니다
           if [ -f _B/build.json ]; then
             python -c "import json,io;p='_B/build.json';d=json.load(io.open(p,encoding='utf-8'));d['통지문']='0'*64;io.open(p,'w',encoding='utf-8').write(json.dumps(d,ensure_ascii=False,indent=2))"
@@ -261,6 +277,23 @@ jobs:
                 "https://badagaja.com/$CARD$U")
             printf '   %-28s %s\n' "$U" "$C"
             [ "$C" = "200" ] || BAD=1
+          done
+
+          # ★ **새로 생긴 것이 정말 사라졌는가** (2026-10-07)
+          #   (가)의 지문 견주기가 이미 잡습니다. 그래도 눈으로도
+          #   보이게 둡니다 — 되돌림의 뜻이 바로 이것이기 때문입니다.
+          echo ""
+          echo "── 새로 생긴 것이 사라졌는가 (404 여야 맞습니다)"
+          for U in /새로생긴쪽.html /연습임시/속.html; do
+            C=$(curl -s -o /dev/null -w '%{http_code}' --max-time 25 \
+                "https://badagaja.com/$CARD$U")
+            printf '   %-28s %s' "$U" "$C"
+            if [ "$C" = "404" ]; then
+              echo "  · 사라졌습니다"
+            else
+              echo "  ✗ **남아 있습니다** — 덮어썼을 뿐 되돌린 것이 아닙니다"
+              BAD=1
+            fi
           done
 
           echo ""
