@@ -245,15 +245,30 @@ def 검사3_상태목록():
 #     있는 줄 알았던 검사가 도는 적이 없습니다.
 def 검사4_검사기등록():
     print('[4] 만든 검사기가 판정에 물려 있는가')
-    gate = io.read(os.path.join(ROOT, 'engine', 'gate.py'), default='')
+    # ★ **돌리는 자리를 모두 봅니다** (2026-10-07)
+    #
+    #   전에는 `gate.py` 글 안에 이름이 있는가만 보았습니다.
+    #   그런데 **배포 때만 뜻이 있는 검사기**가 있습니다 —
+    #   `check_backup.py` 는 서버에서 받아 둔 것이 있어야 재므로
+    #   gate 에 넣으면 로컬에서는 늘 「못 쟀음」이 됩니다.
+    #   그것을 `deploy.yml` 이 돌리는데도 「아무도 안 돌립니다」라며
+    #   배포를 막았습니다 (#20 NO-GO).
+    #
+    #   ★ **예외 목록은 만들지 않습니다.** 이름만 더하면 통과하는
+    #     문을 두면 검사가 무뎌집니다. 어디서도 안 부르면 그때는
+    #     진짜로 아무도 안 돌리는 것이고, 그대로 막습니다.
+    도는곳 = io.read(os.path.join(ROOT, 'engine', 'gate.py'), default='')
+    일꾼터 = os.path.join(ROOT, '.github', 'workflows')
+    for 일꾼 in sorted(glob.glob(os.path.join(일꾼터, '*.yml'))):
+        도는곳 += io.read(일꾼, default='')
     검사기 = sorted(os.path.basename(p) for p in
                     glob.glob(os.path.join(ROOT, 'engine', 'check_*.py')))
-    안물림 = [x for x in 검사기 if x not in gate]
+    안물림 = [x for x in 검사기 if x not in 도는곳]
     if 안물림:
         말('막음', '판정에 안 물린 검사기 %d개 — 아무도 안 돌립니다'
            % len(안물림), ' · '.join(안물림))
     else:
-        됨('검사기 %d개가 모두 판정에 물려 있습니다' % len(검사기))
+        됨('검사기 %d개가 모두 어딘가에서 돕니다 (판정 또는 일꾼)' % len(검사기))
 
 
 # ── 5. 같은 고르개가 여러 차림표에 있는가 ─────────────────
