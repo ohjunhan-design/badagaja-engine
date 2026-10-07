@@ -345,12 +345,90 @@ jobs:
       #   쓸모없어진 파일은 손으로 확인하고 지웁니다.
 
       # ── ⑥ 올린 뒤 재고, 나쁘면 되돌립니다
+      # ── ★ **되돌림 계획을 재 봅니다** (2026-10-07 바깥 검수 순서 ⑥⑦)
+      #
+      #   ★ 자리가 중요합니다. 제가 처음에 「백업 단계 직후」라고
+      #     생각했는데 **반만 맞았습니다.**
+      #
+      #     바깥 검수 — 「그 시점에는 서버와 `_before` 가 사실상 같은
+      #       상태라서, **새 배포가 추가한 파일을 삭제하는 실제
+      #       rollback 상황을 재현하지 못합니다.** 삭제 예정 목록이
+      #       거의 0 으로 나올 가능성이 큽니다. 가장 좋은 위치는
+      #       **업로드가 끝난 직후 → post-deploy 검사 전**입니다」
+      #
+      #     그래야 **성공하는 배포에서도 매번 진짜 「새 판 → 옛 판」**
+      #     되돌림 계획을 보게 됩니다. 되돌리기 단계는 배포가 실패해야만
+      #     도니, 거기 두면 **영영 안 돌아 봅니다.**
+      #
+      #   ★ **아직 아무것도 지우지 않습니다.** --dry-run 입니다.
+      - name: 되돌림 계획을 재 봅니다 (아직 안 지웁니다)
+        id: rollplan
+        # ★ 여기서 바로 멈추면 **20번 검증이 안 돕니다** (2026-10-07)
+        #   올린 것이 서버에서 멀쩡한지 보는 것이 20번입니다. 되돌림
+        #   준비가 덜 됐다고 그것까지 건너뛰면 **더 모르는 상태**가
+        #   됩니다. 그래서 여기서는 재기만 하고, **20번을 돌린 뒤**에
+        #   아래 「되돌림 준비가 됐는가」 에서 막습니다.
+        #   지금은 되돌리기에 --delete 가 없어 **멈춰도 안전**합니다.
+        continue-on-error: true
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          echo "── 올린 뒤 서버 목록을 다시 뜹니다"
+          lftp -c "
+            set ftp:ssl-allow no;
+            set net:max-retries 3;
+            set ftp:charset utf-8;
+            set file:charset utf-8;
+            set ftp:list-options -a;
+            open -u \"$FTP_USERNAME\",\"$FTP_PASSWORD\" \"$FTP_SERVER\";
+            find /www/;
+          " > _server-after.list 2>/dev/null || true
+          echo "   줄 $(wc -l < _server-after.list)"
+
+          echo ""
+          echo "── lftp 는 무엇을 지우겠다는가 (--dry-run · 안 지웁니다)"
+          lftp -c "
+            set ftp:ssl-allow no;
+            set net:max-retries 3;
+            set ftp:charset utf-8;
+            set file:charset utf-8;
+            set ftp:list-options -a;
+            open -u \"$FTP_USERNAME\",\"$FTP_PASSWORD\" \"$FTP_SERVER\";
+            mirror -R --delete --exclude-glob _stage/ --dry-run _before/ /www/;
+          " > rollback-plan.txt 2>&1 || true
+          echo "   줄 $(wc -l < rollback-plan.txt)"
+
+          echo ""
+          # ★ **판정은 내 셈이 합니다** — lftp 글은 교차검증입니다
+          #   「작은 문자열 처리 하나가 .htaccess 를 망가뜨렸습니다」
+          python engine/check_backup.py --strict
       - name: 올린 것을 서버에서 확인 (20번)
         id: after
         run: |
           python engine/check_deployed.py --net --strict
           python engine/smoke.py --net
 
+      # ── ★ **되돌림 준비가 됐는가** — 20번을 돌린 뒤에 막습니다
+      #   바깥 검수 — 「위험한가(지울것) 가 하나라도 나오면 **그 즉시
+      #   배포 workflow 를 실패시키세요**. 아직 이 단계에서는 실제
+      #   삭제는 안 합니다」 · 「**절대로 『경고만 하고 계속』하지
+      #   마세요**」
+      - name: 되돌림 준비가 됐는가
+        if: always() && steps.rollplan.outcome == 'failure'
+        run: |
+          echo "::error::되돌릴 준비가 안 됐습니다 — 위 「되돌림 계획」 칸을 보십시오"
+          echo ""
+          echo "  올린 판 자체는 판정을 통과했고 서버에서도 쟀습니다."
+          echo "  막는 까닭은 **되돌려야 할 때 되돌리지 못할 상태**이기"
+          echo "  때문입니다. 백업에 빠진 것이 있거나, 되돌릴 때 지우면"
+          echo "  안 되는 것(.htaccess·api/·중국어판)이 삭제 목록에"
+          echo "  들어 있습니다."
+          echo ""
+          echo "  「백업 파일이 있다」와 「그 백업으로 복구할 수 있다」는"
+          echo "  다릅니다. 다음 배포 전에 고쳐야 합니다."
+          exit 1
       - name: 나쁘면 되돌립니다
         if: failure() && steps.after.conclusion == 'failure'
         env:

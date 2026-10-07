@@ -34,7 +34,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 
 from engine.check_backup import (견주기, 지울것, 위험한가,
-                                 길다듬기, 건드리면안될것)
+                                 길다듬기, 건드리면안될것,
+                                 lftp계획읽기)
 
 통과, 실패 = 0, []
 
@@ -193,6 +194,44 @@ def 시험_진짜파일로():
         shutil.rmtree(t, ignore_errors=True)
 
 
+def 시험_교차검증():
+    """★ lftp 가 하려는 일과 **내 셈**이 같은가.
+
+    바깥 검수 — 「저는 `lftp --dry-run` **출력 문자열 자체를
+      안전판정의 유일한 근거로 쓰지는 않겠습니다.** … 판정은
+      **경로 집합 계산**을 기준으로 하고, `--dry-run` 은
+      **우리 계산이 맞는지** 확인하는 교차검증으로 쓰세요」
+    """
+    print('')
+    print('[7] lftp 가 낸 삭제 계획을 제대로 읽는가')
+
+    글 = [
+        'mkdir /www/새폴더',
+        'rm /www/새쪽.html',
+        'rm /www/fish/bollak.html',
+        'put /www/index.html',
+        'rmdir /www/연습임시',
+        '',
+    ]
+    것 = lftp계획읽기(글)
+    봄('㉑ 지우겠다는 것만 뽑는다',
+       것 == ['fish/bollak.html', '새쪽.html', '연습임시'], 것)
+    봄('㉒ 올리는 줄은 안 센다', 'index.html' not in 것)
+    봄('㉓ 빈 줄에 안 걸린다', lftp계획읽기(['', '   ']) == [])
+    봄('㉔ 점 파일도 제 이름으로 읽는다',
+       lftp계획읽기(['rm /www/.htaccess']) == ['.htaccess'],
+       lftp계획읽기(['rm /www/.htaccess']))
+
+    # ★ **내 셈과 lftp 가 같은지**가 쓰임새입니다
+    내셈 = 지울것(새판, 옛판)
+    lftp것 = lftp계획읽기(['rm /www/' + x for x in 내셈])
+    봄('㉕ 내 셈과 lftp 가 같으면 차이가 없다',
+       sorted(내셈) == sorted(lftp것))
+    # 하나를 빠뜨리면 **드러나야** 합니다
+    모자란것 = lftp계획읽기(['rm /www/' + x for x in 내셈[:1]])
+    봄('㉖ lftp 가 덜 지우면 차이로 드러난다',
+       set(내셈) ^ set(모자란것) != set())
+
 def main():
     sys.stdout.reconfigure(encoding='utf-8', errors='replace')
     print('되돌리면 **정확히 그 판이 되는가** (바깥 검수 2026-10-07)')
@@ -203,6 +242,7 @@ def main():
     시험_견주기()
     시험_길다듬기()
     시험_진짜파일로()
+    시험_교차검증()
     print('')
     if 실패:
         print('%d가지 통과 · %d가지 실패' % (통과, len(실패)))

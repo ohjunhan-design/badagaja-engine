@@ -129,6 +129,7 @@ jobs:
           mkdir -p _A
           lftp -c "
             set ftp:ssl-allow no;
+            set ftp:list-options -a;
             set ftp:charset utf-8;
             set file:charset utf-8;
             set net:max-retries 3;
@@ -178,6 +179,7 @@ jobs:
         run: |
           lftp -c "
             set ftp:ssl-allow no;
+            set ftp:list-options -a;
             set ftp:charset utf-8;
             set file:charset utf-8;
             set net:max-retries 3;
@@ -233,6 +235,7 @@ jobs:
         run: |
           lftp -c "
             set ftp:ssl-allow no;
+            set ftp:list-options -a;
             set ftp:charset utf-8;
             set file:charset utf-8;
             set net:max-retries 3;
@@ -255,6 +258,7 @@ jobs:
           mkdir -p _after
           lftp -c "
             set ftp:ssl-allow no;
+            set ftp:list-options -a;
             set ftp:charset utf-8;
             set file:charset utf-8;
             set net:max-retries 3;
