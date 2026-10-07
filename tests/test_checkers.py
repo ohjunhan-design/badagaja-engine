@@ -2274,6 +2274,127 @@ def 시험_원격():
         shutil.rmtree(t, ignore_errors=True)
 
 
+# ── check_reachable — 들어갈 길이 없는 쪽을 잡는가 ─────────
+def 시험_닿는가():
+    """★ **판정 함수를 바로** 시험합니다 (2026-10-07 바깥 검수 설계)
+
+    2026-10-07 주인이 첫 쪽 그림에 동그라미를 치고 —
+      「너희 이것도 확인해 **이거 링크 없어**」
+
+        <a href="#bada">향토 먹거리 · 명소</a>
+
+    `travel/` 을 만들고도 첫 쪽에서 안 걸고 있었습니다. 고치다
+    `data.html`(20.4KB)도 **아무 쪽에서도 안 걸리는** 것을 찾았습니다.
+    링크 검사·쪽 목록 검사·약속 검사가 **모두 통과했습니다** —
+    쪽은 있고 링크도 안 깨졌으니까요.
+
+    ★ 처음에는 **진짜 site/ 449쪽을 복사**해 링크를 끊는 식으로
+      시험을 짰습니다. **네 번 깨졌습니다.** 그런데 깨진 데가 전부
+      사본 만들기·정규식 꼴 맞추기였고 **검사 논리는 한 줄도
+      안 건드렸습니다.** 바깥 검수가 그 방식을 버리라고 했습니다 —
+      「실사이트 복사와 정규식이 잘 되느냐를 시험하고 있었다」
+
+      그래서 **판정 함수를 작은 가짜 쪽으로 바로** 시험하고,
+      CLI 통합시험은 **작은 가짜 사이트 한 벌**로 한 번만 돕니다.
+    """
+    print('[39] check_reachable — 들어갈 길이 없는 쪽을 잡는가')
+
+    sys.path.insert(0, ROOT)
+    from engine import check_reachable as CR
+
+    # ── 가짜 쪽 한 벌 — 실제로 나간 잘못과 **같은 모양**입니다
+    기본 = {
+        'index.html': ('<a href="travel/">여행</a>'
+                       '<a href="about.html">소개</a>'
+                       '<a href="#bada">향토 먹거리 · 명소</a>'),
+        'about.html': '<a href="guide">전체 권역</a>',
+        'guide/index.html': '<a href="../index.html">첫 쪽</a>',
+        'travel/index.html': '<a href="../index.html">첫 쪽</a>',
+    }
+
+    고아, 못닿음, 먼것, 닿음, 걸린곳 = CR.고아들(기본)
+    봄('멀쩡하면 고아가 없다', 고아 == [] and 못닿음 == [],
+       '고아 %s · 못닿음 %s' % (고아, 못닿음))
+    봄('끝 슬래시가 없어도 폴더 쪽으로 본다',
+       닿음.get('guide/index.html') == 2,
+       '걸음 %s' % 닿음.get('guide/index.html'))
+
+    # (가) ★ **실제로 나간 잘못** — 쪽은 있는데 아무도 안 겁니다
+    쪽들 = dict(기본)
+    쪽들['data.html'] = '<a href="index.html">첫 쪽</a>'
+    고아, 못닿음, _먼, _닿, _건 = CR.고아들(쪽들)
+    봄('아무도 안 거는 쪽을 잡는다',
+       고아 == ['data.html'], '고아 %s' % 고아)
+    봄('그 쪽은 첫 쪽에서도 못 닿는다',
+       못닿음 == ['data.html'], '못닿음 %s' % 못닿음)
+
+    # (나) ★ **닻으로 때운 것**도 길이 아닙니다
+    #     `#bada` 는 같은 쪽 안 닻이라 travel/ 로 가지 않습니다.
+    쪽들 = dict(기본)
+    쪽들['index.html'] = 쪽들['index.html'].replace(
+        '<a href="travel/">여행</a>', '<a href="#bada">여행</a>')
+    고아, 못닿음, _먼, _닿, _건 = CR.고아들(쪽들)
+    봄('#닻 으로 때우면 그 쪽은 고아가 된다',
+       고아 == ['travel/index.html'], '고아 %s' % 고아)
+
+    # (다) ★ **검색에 숨긴 쪽은 잡지 않아야** 합니다
+    #     stats.html 은 noindex 가 붙은 운영자용입니다.
+    #     안 걸리는 것이 **의도한 것**이라 잡으면 거짓 경보입니다.
+    쪽들 = dict(기본)
+    쪽들['stats.html'] = ('<meta name="robots" content="noindex,nofollow">'
+                          '<a href="index.html">첫 쪽</a>')
+    고아, _못, _먼, _닿, _건 = CR.고아들(쪽들)
+    봄('검색에 숨긴 쪽은 고아로 세지 않는다', 고아 == [], '고아 %s' % 고아)
+
+    # (라) ★ **걸려는 있는데 첫 쪽에서 못 가는** 쪽
+    #     data.html 만 guide 를 걸고, data.html 자신은 아무도 안 걸던
+    #     바로 그 모양입니다.
+    쪽들 = dict(기본)
+    쪽들['버림.html'] = '<a href="외딴.html">외딴</a>'
+    쪽들['외딴.html'] = '<a href="버림.html">버림</a>'
+    고아, 못닿음, _먼, _닿, _건 = CR.고아들(쪽들)
+    봄('서로만 걸고 첫 쪽에서 못 가면 잡는다',
+       못닿음 == ['버림.html', '외딴.html'], '못닿음 %s' % 못닿음)
+
+    # (마) 너무 먼 쪽은 **알림**입니다 (막지 않습니다)
+    줄 = {'index.html': '<a href="a1.html">a1</a>'}
+    for i in range(1, 8):
+        줄['a%d.html' % i] = '<a href="a%d.html">다음</a>' % (i + 1)
+    줄['a8.html'] = '<a href="index.html">첫 쪽</a>'
+    _고, _못, 먼것, _닿, _건 = CR.고아들(줄)
+    봄('첫 쪽에서 너무 먼 쪽을 알린다',
+       len(먼것) >= 3 and all(v > CR.먼걸음 for v, _k in 먼것),
+       '먼것 %s' % 먼것[:4])
+
+    # (바) ★ **통합시험 하나** — 작은 가짜 사이트로 CLI 를 실제로 돕니다
+    #     함수가 맞아도 출력·끝난값이 틀리면 배포가 안 막힙니다.
+    t = tempfile.mkdtemp(prefix='닿-')
+    try:
+        밭 = os.path.join(t, 'site')
+        os.makedirs(os.path.join(밭, 'travel'))
+        io.write(os.path.join(밭, 'index.html'),
+                 '<a href="travel/">여행</a>')
+        io.write(os.path.join(밭, 'travel', 'index.html'),
+                 '<a href="../index.html">첫 쪽</a>')
+        io.write(os.path.join(밭, '외톨이.html'),
+                 '<a href="index.html">첫 쪽</a>')
+        r = subprocess.run(
+            [sys.executable,
+             os.path.join(ROOT, 'engine', 'check_reachable.py')],
+            capture_output=True, text=True, encoding='utf-8',
+            errors='replace', timeout=120,
+            env=dict(os.environ, BADAGAJA_SITE=밭,
+                     PYTHONIOENCODING='utf-8'))
+        글 = (r.stdout or '') + (r.stderr or '')
+        봄('CLI 가 고아를 잡고 **끝난값 1** 을 낸다',
+           r.returncode == 1 and '외톨이.html' in 글,
+           '끝난값 %s · %s' % (r.returncode, 글[-400:]))
+        봄('CLI 가 막는 까닭을 사람 말로 적는다',
+           '들어갈 길이 없습니다' in 글, 글[-300:])
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
 def main():
     print('검사기가 잘못을 잡을 줄 아는지')
     print('')
@@ -2322,6 +2443,7 @@ def main():
     시험_사진두번()
     시험_채비그림()
     시험_원격()
+    시험_닿는가()
     print('')
     if 실패:
         print('%d가지 통과 · %d가지 실패' % (통과, len(실패)))

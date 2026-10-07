@@ -4063,3 +4063,170 @@ details.area-group .area-list{margin-bottom:12px}
 
 /* ★ 꼬리말 판 표시 — 작게, 조용히 (2026-10-07) */
 .foot-build{margin:10px 0 0;font-size:11.5px;color:var(--muted);opacity:.8}
+
+
+/* ══════════════════════════════════════════════════════
+   바다 여행 묶음 — travel/  (2026-10-07 바깥 검수 시안)
+
+   고친 것 둘
+     ① 사진이 한 장도 없었습니다 (주인 규칙 6-1)
+     ② 권역 57개 목록이 **세 번** 되풀이됐습니다
+        → 「갈래 3개는 탭, 권역 선택은 단 한 벌」
+
+   모양은 권역 쪽(.hc-photo)에서 그대로 가져왔습니다 —
+   손님이 보던 그림이 그대로여야 낯설지 않습니다.
+   ══════════════════════════════════════════════════════ */
+
+/* ───── 히어로 ───── */
+body.p-travel .tv-hero{padding-top:14px}
+body.p-travel .tv-hero-card{
+  /* ★ 높이를 **못 박습니다** — min-height 만 두면 사진 자연
+     높이를 따라가 610px 이 되고, **갈래 탭이 첫 화면 밖으로** 
+     밀립니다. 탭은 이 쪽의 핵심 조작입니다 (주인 규칙 6-2). */
+  position:relative;height:380px;border-radius:22px;overflow:hidden;
+  background:#ccd7dc;border:1px solid var(--line);
+}
+body.p-travel .tv-hero-card .photo{margin:0;height:100%}
+body.p-travel .tv-hero-card img{
+  width:100%;height:100%;object-fit:cover;display:block}
+/* 촬영자 — 작게, 오른쪽 위 (주인 규칙 6: 촬영자만 적습니다) */
+body.p-travel .tv-hero-card figcaption{
+  /* ★ 밝은 하늘 위에서는 그림자만으로 **안 읽힙니다.**
+     출처는 반드시 보여야 합니다 (주인 규칙 6). */
+  position:absolute;right:10px;top:9px;z-index:3;margin:0;
+  padding:3px 8px;border-radius:999px;
+  background:rgba(0,0,0,.34);backdrop-filter:blur(2px);
+  font-size:10.5px;color:rgba(255,255,255,.95);
+  max-width:52%;text-align:right;line-height:1.35;
+}
+/* 글이 읽히도록 아래쪽을 어둡게 */
+body.p-travel .tv-hero-card::after{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(0,0,0,.08) 0%,
+             rgba(0,0,0,0) 36%,rgba(0,0,0,.62) 100%);
+}
+body.p-travel .tv-hero-copy{
+  position:absolute;z-index:2;left:24px;right:24px;bottom:22px;color:#fff}
+body.p-travel .tv-hero-copy .kicker{
+  color:rgba(255,255,255,.88);margin:0 0 6px}
+body.p-travel .tv-hero-copy h1{
+  margin:0;color:#fff;font-size:30px;line-height:1.22;
+  text-wrap:balance;word-break:keep-all;
+  text-shadow:0 2px 8px rgba(0,0,0,.45)}
+body.p-travel .tv-hero-lead{
+  margin:8px 0 0;color:rgba(255,255,255,.93);font-size:14.5px;
+  line-height:1.6;max-width:44em;text-shadow:0 1px 5px rgba(0,0,0,.45)}
+
+/* ───── 갈래 탭 ───── */
+body.p-travel .tv-tabs{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;margin:0 0 20px}
+body.p-travel .tv-tab{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2px;min-height:62px;padding:10px 8px;cursor:pointer;
+  border-radius:14px;border:1px solid var(--line);background:var(--white);
+  font-family:inherit;color:#4A3F33;transition:background .14s,border-color .14s}
+body.p-travel .tv-tab-name{font-size:15px;font-weight:900;line-height:1.2}
+body.p-travel .tv-tab-n{font-size:12px;color:var(--muted);font-weight:700}
+body.p-travel .tv-tab.is-on{
+  background:var(--orange);border-color:var(--orange);color:#fff}
+body.p-travel .tv-tab.is-on .tv-tab-n{color:rgba(255,255,255,.9)}
+
+/* ───── 권역 고르기 ───── */
+body.p-travel .tv-region-head{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:12px;margin:0 0 12px}
+body.p-travel .tv-region-head .kicker{margin:0 0 2px}
+body.p-travel .tv-region-head h2{margin:0;font-size:21px}
+body.p-travel .tv-region-total{
+  flex:0 0 auto;font-size:12.5px;font-weight:800;color:var(--muted)}
+
+body.p-travel .tv-provinces{
+  display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+body.p-travel .tv-prov{
+  padding:7px 13px;min-height:36px;cursor:pointer;
+  border-radius:999px;border:1px solid var(--line);background:transparent;
+  font-family:inherit;font-size:13px;font-weight:800;color:var(--muted)}
+body.p-travel .tv-prov.is-on{
+  background:#201A16;border-color:#201A16;color:#fff}
+
+/* 권역 칩 — 쪽에 **단 한 벌**만 있습니다 */
+body.p-travel .tv-regions{display:flex;flex-wrap:wrap;gap:7px}
+body.p-travel .tv-region{
+  display:inline-flex;align-items:center;
+  padding:8px 13px;border-radius:999px;
+  background:var(--white);border:1px solid var(--line);
+  font-size:13.5px;font-weight:700;color:#4A3F33;text-decoration:none;
+  min-height:38px;word-break:keep-all}
+body.p-travel .tv-region[hidden]{display:none}
+body.p-travel .tv-hint{
+  margin:14px 0 0;font-size:12.5px;color:var(--muted);line-height:1.6}
+
+/* ───── 추천 사진 카드 ───── */
+body.p-travel .tv-shot-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+body.p-travel .tv-card{
+  position:relative;display:block;border-radius:16px;overflow:hidden;
+  border:1px solid var(--line);background:#ccd7dc;text-decoration:none;
+  aspect-ratio:4/3}
+body.p-travel .tv-card .photo{margin:0;height:100%}
+body.p-travel .tv-card img{
+  width:100%;height:100%;object-fit:cover;display:block}
+body.p-travel .tv-card figcaption{
+  position:absolute;right:7px;top:6px;z-index:3;margin:0;
+  padding:2px 7px;border-radius:999px;background:rgba(0,0,0,.34);
+  font-size:9.5px;color:rgba(255,255,255,.95);
+  max-width:62%;text-align:right;line-height:1.35}
+body.p-travel .tv-card::after{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(0,0,0,0) 44%,rgba(0,0,0,.66) 100%)}
+body.p-travel .tv-card-copy{
+  position:absolute;z-index:2;left:13px;right:13px;bottom:11px;color:#fff}
+body.p-travel .tv-card-name{
+  display:block;font-size:15px;font-weight:900;line-height:1.25;
+  text-shadow:0 1px 5px rgba(0,0,0,.5)}
+body.p-travel .tv-card-where{
+  display:block;margin-top:2px;font-size:12px;
+  color:rgba(255,255,255,.86);text-shadow:0 1px 4px rgba(0,0,0,.5)}
+
+/* ───── 휴대폰 ───── */
+@media (max-width:860px){
+  body.p-travel .tv-shot-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  /* 히어로 — 바깥 검수 「260~300px」 */
+  body.p-travel .tv-hero-card{min-height:280px;border-radius:18px}
+  body.p-travel .tv-hero-copy{left:16px;right:16px;bottom:16px}
+  /* 「…즐길 / 까」로 끊기지 않게 한 호 줄입니다 */
+  body.p-travel .tv-hero-copy h1{font-size:21.5px}
+  body.p-travel .tv-hero-lead{font-size:13.5px;margin-top:6px}
+
+  /* 갈래 탭 — 3칸 고정 (엄지가 닿는 자리) */
+  body.p-travel .tv-tabs{gap:6px;margin-bottom:16px}
+  body.p-travel .tv-tab{min-height:56px;padding:9px 4px;border-radius:12px}
+  body.p-travel .tv-tab-name{font-size:14px}
+  body.p-travel .tv-tab-n{font-size:11px}
+
+  body.p-travel .tv-region-head h2{font-size:18px}
+
+  /* 광역 — 한 줄로 두고 옆으로 넘깁니다 */
+  body.p-travel .tv-provinces{
+    flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+    margin-left:calc(var(--gutter) * -1);margin-right:calc(var(--gutter) * -1);
+    padding-left:var(--gutter);padding-right:var(--gutter)}
+  body.p-travel .tv-provinces::-webkit-scrollbar{display:none}
+  body.p-travel .tv-prov{flex:0 0 auto}
+
+  body.p-travel .tv-region{font-size:13px;padding:7px 11px;min-height:36px}
+
+  /* 추천 카드 — 옆으로 넘겨 봅니다 */
+  body.p-travel .tv-shot-grid{
+    display:flex;gap:11px;overflow-x:auto;scroll-snap-type:x mandatory;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch;
+    margin-left:calc(var(--gutter) * -1);margin-right:calc(var(--gutter) * -1);
+    padding-left:var(--gutter);padding-right:var(--gutter)}
+  body.p-travel .tv-shot-grid::-webkit-scrollbar{display:none}
+  body.p-travel .tv-card{
+    flex:0 0 74%;scroll-snap-align:start;aspect-ratio:5/4}
+}
