@@ -520,23 +520,32 @@ def 동호회칸(d):
       글과 주소는 data/raw/site.json 에 있습니다. 여기 안 박습니다.
     """
     것 = d.사이트.get('동호회') or {}
-    주소 = 것.get('주소')
-    if not 주소:
-        return ''                # 자료가 없으면 안 만듭니다
     제목 = 것.get('제목') or []
+    if not 제목:
+        return ''                # 자료가 없으면 안 만듭니다
+
+    # ★ **주소가 없으면 단추만 뺍니다** (2026-10-07 주인 지시)
+    #   전에는 주소가 없으면 칸을 통째로 안 만들었습니다. 그러면
+    #   모집을 닫았을 때 **마감 공고까지 사라집니다.**
+    #   갈 곳 없는 단추를 두는 것보다 안 두는 것이 맞습니다
+    #   (주인 규칙 — 「단추가 약속한 것이 제자리에 있어야」).
+    주소 = 것.get('주소')
+    단추 = ''
+    if 주소 and 것.get('단추'):
+        단추 = ('<a class="gcp-btn" href="%s" rel="noopener">%s</a>'
+                % (esc(주소), esc(것.get('단추'))))
+
     줄 = ''.join('<li>%s</li>' % esc(x) for x in (것.get('줄') or []))
+    작은글 = 것.get('작은글') or ''
     return (
         '<section class="g-panel g-clubpanel"><div class="gcp-in">'
         '<span class="gc-tag">%s</span>'
-        '<h2>%s</h2><p>%s</p><ul>%s</ul>'
-        '<a class="gcp-btn" href="%s" rel="noopener">%s</a>'
-        '<small>%s</small>'
+        '<h2>%s</h2><p>%s</p><ul>%s</ul>%s%s'
         '</div></section>'
         % (esc(것.get('이름표', '')),
            '<br>'.join(esc(x) for x in 제목),
-           esc(것.get('소개', '')), 줄,
-           esc(주소), esc(것.get('단추', '')),
-           esc(것.get('작은글', ''))))
+           esc(것.get('소개', '')), 줄, 단추,
+           ('<small>%s</small>' % esc(작은글)) if 작은글 else ''))
 
 def 브랜드각인(d, 언어='ko'):
     """첫 화면 오른쪽 빈자리에 **이름을 새깁니다** (2026-09-29 주인 지시).
