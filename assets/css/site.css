@@ -4473,3 +4473,117 @@ body.p-travel .tv-more{display:none}
   .bc-mini{padding:10px 8px}
   .bc-mini b{font-size:13.5px}
 }
+
+
+/* ══ 사진으로 고르는 어종 도감 (fish/index.html · catch/index.html)
+   2026-10-07 바깥 검수 콘티 —
+     「물고기 사진이 얼굴이고, **채비 아이콘은 보조 정보**가
+       되어야 합니다」
+     「카드 안에는 딱 네 정보 — 사진 / 어종명 / 제철 /
+       난이도 + 대표 채비」
+
+   전에는 28px 채비 아이콘이 카드의 얼굴이었습니다. 18장 가운데
+   6장이 같은 바닥채비 아이콘이라 볼락과 참돔이 똑같아 보였습니다. */
+
+/* 도감 카드가 하나라도 있으면 격자를 6열로 바꿉니다.
+   `:has()` 를 못 쓰는 브라우저에서는 본래 격자 그대로입니다. */
+.grid:has(.fish-pick-card){
+  display:grid;
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:14px;
+}
+
+.fish-pick-card{min-width:0}
+.fish-pick-card > a{
+  display:flex;
+  flex-direction:column;
+  height:100%;
+  overflow:hidden;
+  border:1px solid var(--line,#EDE3D0);
+  border-radius:18px;
+  background:var(--card,#fff);
+  box-shadow:0 3px 12px rgba(41,61,57,.05);
+  text-decoration:none;
+  color:inherit;
+  transition:transform .18s ease, box-shadow .18s ease,
+             border-color .18s ease;
+}
+.fish-pick-card > a:hover{
+  transform:translateY(-3px);
+  border-color:var(--green,#2F5D57);
+  box-shadow:0 10px 24px rgba(41,61,57,.12);
+}
+
+/* ★ 사진이 카드의 얼굴입니다 — 높이의 약 65~70% */
+.fish-pick-photo{
+  display:block;
+  aspect-ratio:4/3;
+  overflow:hidden;
+  background:var(--soft,#FAF6EE);
+}
+.fish-pick-photo img{
+  display:block;
+  width:100%;
+  height:100%;
+  /* 사진마다 가로세로가 제각각입니다(1.0 ~ 2.48) — 잘라서 맞춥니다 */
+  object-fit:cover;
+}
+
+.fish-pick-body{
+  display:block;
+  flex:1 1 auto;
+  padding:12px 13px 13px;
+}
+.fish-pick-name{
+  display:block;
+  margin:0 0 5px;
+  font-size:17px;
+  font-weight:800;
+  line-height:1.3;
+  color:var(--ink,#2B2116);
+}
+.fish-pick-meta{
+  display:flex;
+  flex-wrap:wrap;
+  /* ★ **두 줄 자리를 미리 잡습니다** (2026-10-07 — 찍어 보고 알았습니다)
+     「겨울 · 가을 난이도 어려움」처럼 글이 길면 두 줄이 되어
+     그 카드만 길어지고 6열 격자가 어긋났습니다. */
+  min-height:2.9em;
+  align-content:flex-start;
+  gap:4px 9px;
+  font-size:13px;
+  line-height:1.45;
+  color:var(--muted,#6B5E4F);
+}
+.fish-pick-meta span{display:inline-block}
+
+/* ★ 채비 아이콘은 **보조**입니다 — 작게, 아래에 */
+.fish-pick-gear{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  margin:9px 0 0;
+  padding-top:9px;
+  border-top:1px solid var(--line,#EDE3D0);
+  font-size:12.5px;
+  color:var(--muted,#6B5E4F);
+}
+.fish-pick-gear .card-ico{
+  width:20px;
+  height:20px;
+  flex:0 0 auto;
+  opacity:.75;
+}
+
+@media (max-width:1100px){
+  .grid:has(.fish-pick-card){grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media (max-width:760px){
+  /* 「1열이면 너무 길고, 3열이면 사진과 글이 너무 작습니다」 */
+  .grid:has(.fish-pick-card){grid-template-columns:repeat(2,1fr);gap:10px}
+  .fish-pick-body{padding:10px 11px 11px}
+  .fish-pick-name{font-size:15.5px}
+  .fish-pick-meta{font-size:12.5px;gap:3px 7px}
+  .fish-pick-gear{margin-top:7px;padding-top:7px;font-size:11.5px}
+  .fish-pick-gear .card-ico{width:17px;height:17px}
+}

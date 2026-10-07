@@ -2346,6 +2346,135 @@ def 물높이그래프(쪽길, 권역):
 
 
 
+def _어종사진(어종id, 쪽길):
+    """어종 사진의 상대 주소 — **있는 것만**.
+
+    ★ `hubs_more._어종그림` 이 이미 이 일을 합니다. 여기서 또 적으면
+      한 곳을 고치고 다른 곳을 잊습니다 (짜임 검사가 잡는 바로 그것).
+    """
+    from engine import hubs_more
+    return hubs_more._어종그림(어종id, 쪽길)
+
+
+def _채비이름(아이콘이름):
+    """아이콘 이름 → **사람이 읽는 채비 이름** (`float` → 「찌 채비」).
+
+    ★ `make_icons` 가 아이콘마다 이름을 들고 있습니다. 짐작해서
+      적지 않고 거기서 읽습니다. 없으면 **빈 글자**입니다 —
+      모르는 것을 지어내지 않습니다.
+    """
+    try:
+        from engine import make_icons
+    except ImportError:
+        return ''
+    표 = getattr(make_icons, '그림들', None) or {}
+    것 = 표.get(아이콘이름)
+    if isinstance(것, (tuple, list)) and 것 and isinstance(것[0], str):
+        return 것[0]
+    return ''
+
+
+def _철계절(철):
+    """달 목록 → **계절 한 마디** (「1·2·3·12월」 → 「겨울~봄」).
+
+    ★ 왜 (2026-10-07 — 찍어 보고 알았습니다)
+      도감 카드가 6열로 가지런해야 하는데, 철을 달로 다 적으면
+      어떤 카드는 두 줄이 되어 **격자 줄이 어긋났습니다.**
+      바깥 검수 콘티의 보기가 이미 「겨울~봄」이었습니다.
+
+    ★ **자료는 안 고칩니다.** 보여 주는 자리에서만 묶습니다 —
+      어종 쪽에 들어가면 달이 그대로 다 나옵니다.
+
+    ★ 열두 달이 다 있으면 「연중」입니다.
+    """
+    달들 = []
+    for x in (철 or []):
+        try:
+            n = int(str(x).replace('월', '').strip())
+        except ValueError:
+            continue
+        if 1 <= n <= 12:
+            달들.append(n)
+    달들 = sorted(set(달들))
+    if not 달들:
+        return ''
+    if len(달들) >= 12:
+        return '연중'
+
+    철이름 = {12: '겨울', 1: '겨울', 2: '겨울', 3: '봄', 4: '봄', 5: '봄',
+              6: '여름', 7: '여름', 8: '여름',
+              9: '가을', 10: '가을', 11: '가을'}
+    # 계절은 **겨울부터** 셉니다 — 12·1·2 가 한 덩이라야 「겨울」입니다
+    차례 = ['겨울', '봄', '여름', '가을']
+    있는것 = set(철이름[n] for n in 달들)
+    것 = [s for s in 차례 if s in 있는것]
+    if len(것) == 1:
+        return 것[0]
+    if len(것) >= 4:
+        return '연중'
+    # 차례로 이어지면 「겨울~봄」, 떨어져 있으면 「겨울 · 가을」
+    자리 = sorted(차례.index(s) for s in 것)
+    이어짐 = all(자리[i] + 1 == 자리[i + 1] for i in range(len(자리) - 1))
+    if 이어짐:
+        return '%s~%s' % (차례[자리[0]], 차례[자리[-1]])
+    return ' · '.join(차례[i] for i in 자리)
+
+
+def _도감카드(x, 갈래, 쪽길, 언어='ko'):
+    """어종 하나의 **사진 카드** (2026-10-07 바깥 검수 콘티).
+
+    돌려주는 짜임 —
+        사진 → 이름 → 철 · 난이도 → 대표 채비(보조)
+
+    ★ 사진이 없으면 **빈 네모를 두지 않습니다.** 글자 카드로 둡니다.
+    """
+    이름 = x['이름'].get(언어) or x['이름']['ko']
+    간곳 = esc(url.rel(쪽길, url.guide(x['id'], 갈래, 언어)))
+    사진 = _어종사진(x['id'], 쪽길)
+
+    if not 사진:
+        # 예전 생김새 그대로 — 사진이 생기면 저절로 도감 카드가 됩니다
+        return ('<a class="card card--go" href="%s">'
+                '<div class="card-head">%s<h3 class="card-name">%s</h3>%s</div>'
+                '<p class="card-body">%s</p></a>'
+                % (간곳, 대상아이콘(x.get('그림'), 쪽길), esc(이름),
+                   이름표(x['어려움'], 'badge--orange') if x.get('어려움') else '',
+                   esc((x['한줄'] or {}).get(언어)
+                       or (x['한줄'] or {}).get('ko') or '')))
+
+    잰것 = []
+    if x.get('철'):
+        # ★ 카드에서는 **계절 한 마디**로 — 줄이 어긋나지 않게
+        잰것.append('<span>%s</span>'
+                    % esc(_철계절(x['철']) or 철묶기(x['철'])))
+    if x.get('어려움'):
+        잰것.append('<span>난이도 %s</span>' % esc(x['어려움']))
+
+    # ★ 대표 채비는 **아이콘 이름표에서** 가져옵니다 (짐작 금지)
+    #   make_icons.py 가 아이콘마다 사람이 읽는 이름을 들고 있습니다.
+    채비 = ''
+    그림이름 = x.get('그림')
+    if 그림이름:
+        이름표글 = _채비이름(그림이름)
+        if 이름표글:
+            # ★ `<p>` 는 `<span>` 안에 못 들어갑니다 — 브라우저가
+            #   열려 있던 span 을 **밖으로 밀어내** 카드 짜임이
+            #   깨집니다. 차림표도 함께 어긋납니다.
+            채비 = ('<span class="fish-pick-gear">%s<span>%s</span></span>'
+                    % (대상아이콘(그림이름, 쪽길), esc(이름표글)))
+
+    return ('<article class="fish-pick-card"><a href="%s">'
+            '<span class="fish-pick-photo">'
+            '<img src="%s" alt="%s" loading="lazy" decoding="async"'
+            ' width="300" height="200"></span>'
+            '<span class="fish-pick-body">'
+            '<b class="fish-pick-name">%s</b>'
+            '<span class="fish-pick-meta">%s</span>'
+            '%s</span></a></article>'
+            % (간곳, esc(사진), esc(이름), esc(이름),
+               ''.join(잰것), 채비))
+
+
 def 대상아이콘(이름, 쪽길):
     """어종·해루질 대상의 작은 그림 (2026-09-28 주인 규칙 6-1).
 
@@ -4731,18 +4860,24 @@ def 어종목록(d, 갈래, 언어='ko'):
     #
     #   자료에 `그림` 칸이 있습니다(shell · float · egi …).
     #   그 이름의 svg 를 engine/make_icons.py 가 그려 둡니다.
-    카드 = ''.join(
-        '<a class="card card--go" href="%s">'
-        '<div class="card-head">%s<h3 class="card-name">%s</h3>%s</div>'
-        '<p class="card-body">%s</p>%s</a>'
-        % (esc(url.rel(쪽길, url.guide(x['id'], 갈래, 언어))),
-           대상아이콘(x.get('그림'), 쪽길),
-           esc(x['이름'].get(언어) or x['이름']['ko']),
-           이름표(x['어려움'], 'badge--orange') if x.get('어려움') else '',
-           esc((x['한줄'] or {}).get(언어) or (x['한줄'] or {}).get('ko') or ''),
-           '<p class="card-note">%s</p>' % esc(철묶기(x['철']))
-           if x.get('철') else '')
-        for x in 것들)
+    # ★ **사진으로 고르는 도감** (2026-10-07 바깥 검수 콘티)
+    #
+    #   전에는 28px 채비 아이콘이 카드의 얼굴이었습니다. 그런데
+    #   18장 가운데 6장이 같은 바닥채비 아이콘이라 **볼락과 참돔을
+    #   눈으로 가릴 수가 없었습니다.** 글을 읽어야만 알았습니다.
+    #
+    #     「물고기 사진이 얼굴이고, **채비 아이콘은 보조 정보**가
+    #       되어야 합니다」
+    #     「카드 안에는 딱 네 정보 — 사진 / 어종명 / 제철 /
+    #       난이도 + 대표 채비」
+    #
+    #   사진은 `img/species/{id}.jpg` 에 이미 다 있습니다. 새로
+    #   만들 것이 없었습니다 — **가지고 있으면서 고르는 자리에서만**
+    #   안 쓰고 있었습니다 (주인 규칙 6-1 「사람은 눈으로 봅니다」).
+    #
+    #   ★ 사진이 없는 것은 **빈 네모를 두지 않고** 글자 카드로
+    #     둡니다. 주소를 짐작해 만들지 않습니다.
+    카드 = ''.join(_도감카드(x, 갈래, 쪽길, 언어) for x in 것들)
 
     값 = {
         '언어코드': 'ko' if 언어 == 'ko' else 'zh-Hans',
