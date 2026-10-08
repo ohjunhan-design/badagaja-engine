@@ -344,9 +344,21 @@ def main():
     #   것을 아무도 못 봅니다.** 그래서 여기서 봅니다 —
     #   `data-점찍은것` 을 가진 단추가 있으면, 그것을 움직이는
     #   코드가 쪽에 실려 있어야 합니다.
+    #   ★ **한 표시를 여러 파일이 맡을 수 있습니다** (2026-10-08)
+    #     `data-more` 는 포인트 쪽에서는 `point-list.js` 가, 묶음
+    #     쪽에서는 `more.js` 가 맡습니다. 한 파일만 보면 묶음 쪽
+    #     아홉 곳이 거짓으로 잡힙니다. **하나라도 실렸으면 됩니다.**
     움직이는단추 = (
-        # 몸에 있는 표시,      그것을 움직이는 글이 든 파일
-        ('data-point=', 'point-list.js'),
+        # 몸에 있는 표시,      그것을 움직이는 글이 든 파일들
+        ('data-point=', ('point-list.js',)),
+        ('data-filter=', ('point-list.js',)),
+        ('data-fish=', ('point-list.js',)),
+        ('data-more', ('point-list.js', 'more.js')),
+        ('id="pointMap"', ('point-list.js',)),
+        ('id="searchInput"', ('point-list.js', 'group-search.js')),
+        ('id="tideGraph"', ('tide-graph.js',)),
+        ('id="tideMap"', ('tide-map.js',)),
+        ('data-ad-slot', ('ads.js',)),
     )
     #   ★ **글자만 보면 주석에 속습니다** (2026-10-08에 겪음)
     #     처음에 `파일 not in 글` 로 봤더니, 틀 주석에 적어 둔
@@ -354,19 +366,20 @@ def main():
     #     일부러 스크립트를 빼고 재 봤는데도 잡지 못했습니다.
     #     **실제로 실렸는지**는 `<script src=…>` 로 봐야 압니다.
     #     (기억 「쪽 종류를 추측하지 않기」와 같은 종류입니다)
-    for 표시, 파일 in 움직이는단추:
-        실렸나 = re.compile(r'<script[^>]+src="[^"]*'
-                            + re.escape(파일))
+    for 표시, 파일들 in 움직이는단추:
+        무늬들 = [re.compile(r'<script[^>]+src="[^"]*' + re.escape(f))
+                  for f in 파일들]
         안움직임 = []
         for p in 쪽들():
             글 = 읽기(p)
             if 표시 not in 글:
                 continue
-            if not 실렸나.search(글):
+            if not any(x.search(글) for x in 무늬들):
                 안움직임.append(os.path.relpath(p, NEW).replace(os.sep, '/'))
         if 안움직임:
-            막음.append('%s 단추가 있는데 %s 가 안 실린 쪽 %d개 (%s)'
-                        % (표시, 파일, len(안움직임), 안움직임[0]))
+            막음.append('%s 이 있는데 %s 가 안 실린 쪽 %d개 (%s)'
+                        % (표시, ' 나 '.join(파일들),
+                           len(안움직임), 안움직임[0]))
 
     if 알림:
         print('살펴볼 것 %d가지 (막지 않습니다)' % len(알림))
