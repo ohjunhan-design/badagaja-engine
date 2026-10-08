@@ -48,7 +48,13 @@ import glob
 sys.path.insert(0, 여기)
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
-일꾼터 = os.path.join(여기, '.github', 'workflows')
+# ★ **볼 자리를 바꿀 수 있게 둡니다** (2026-10-08)
+#   그래야 일부러 깨뜨린 설정을 임시 폴더에 두고 **검사기가 정말
+#   잡는지** 재어 볼 수 있습니다. 시험이 없으면 검사기가 조용히
+#   헛돌아도 모릅니다 (기억 「뮤테이션은 정말 망가뜨려야」).
+일꾼터 = os.environ.get(
+    'BADAGAJA_WORKFLOWS',
+    os.path.join(여기, '.github', 'workflows'))
 
 # ★ **작업 수준 `env:` 에서 못 쓰는 것** — 단계 안에서만 삽니다
 단계전용 = ('runner', 'steps', 'job', 'matrix', 'strategy')
@@ -56,6 +62,67 @@ sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 # 깃허브가 아는 컨텍스트 이름
 아는것 = ('github', 'env', 'vars', 'secrets', 'inputs', 'needs',
           'runner', 'steps', 'job', 'jobs', 'matrix', 'strategy')
+
+# ★ **자리마다 쓸 수 있는 컨텍스트가 다릅니다** (바깥 검수가 준 표)
+#   「env, jobs.<id>.env, runs-on, job.if, step.if … 마다 허용
+#     컨텍스트가 다릅니다. 예를 들어 jobs.<job_id>.env 에도 runner 는
+#     안 되고, jobs.<job_id>.if 에는 runner·secrets·matrix 도
+#     허용되지 않습니다. 반면 step 수준은 훨씬 넓습니다」
+#   한 줄 때문에 워크플로가 통째로 거절되고, 그동안 배포를 걸
+#   수도 없습니다 (2026-10-08에 여섯 번 겪음).
+자리별허용 = {
+    'jobs.<id>.if': ('github', 'needs', 'vars', 'inputs'),
+    'jobs.<id>.env': ('github', 'needs', 'strategy', 'matrix',
+                      'vars', 'secrets', 'inputs'),
+    'runs-on': ('github', 'needs', 'strategy', 'matrix', 'vars', 'inputs'),
+}
+
+# ★ **재사용 워크플로를 부르는 작업**은 쓸 수 있는 칸이 좁습니다
+#   「jobs.<id>.uses: 로 다른 workflow 를 부르는 job 은 일반 job 처럼
+#     runs-on·steps·env 등을 마음대로 같이 둘 수 없습니다」
+재사용허용 = ('uses', 'with', 'secrets', 'needs', 'if', 'permissions',
+              'strategy', 'concurrency', 'name')
+
+
+def 겹친키찾기(글):
+    """**같은 칸을 두 번 적은 곳**을 찾습니다 (2026-10-08 바깥 검수).
+
+    ★ 「PyYAML 은 중복 키를 기본적으로 **경고 없이 마지막 값으로
+      덮는** 경우가 있어 별도 duplicate-key loader 가 좋습니다」
+
+      `steps` 의 `id` 가 겹치거나 작업 이름이 겹치면, 읽을 때는
+      조용히 하나만 남습니다. **쓴 사람은 둘 다 돈다고 믿습니다.**
+      YAML 로는 완벽히 정상이라 문법 검사로는 못 잡습니다.
+    """
+    try:
+        import yaml
+    except ImportError:
+        return []
+
+    난것 = []
+
+    class _겹침잡개(yaml.SafeLoader):
+        pass
+
+    def _매핑(loader, node, deep=False):
+        본것 = set()
+        for k, _v in node.value:
+            키 = loader.construct_object(k, deep=deep)
+            try:
+                if 키 in 본것:
+                    난것.append((str(키), k.start_mark.line + 1))
+                본것.add(키)
+            except TypeError:
+                pass
+        return yaml.SafeLoader.construct_mapping(loader, node, deep)
+
+    _겹침잡개.add_constructor(
+        yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, _매핑)
+    try:
+        yaml.load(글, Loader=_겹침잡개)
+    except Exception:                                 # noqa: BLE001
+        return []          # 못 읽는 것은 ①에서 따로 잡습니다
+    return 난것
 
 
 def 주석뺀것(줄):
@@ -167,6 +234,58 @@ def main():
                 if 이름 not in 아는것:
                     알림.append('%s:%d — 모르는 이름 `%s`'
                                 % (짧, n, 이름))
+
+        # ⑤ **같은 칸을 두 번 적지 않았는가** (바깥 검수)
+        for 키, 줄번 in 겹친키찾기(글):
+            막음.append('%s:%d — 같은 칸을 두 번 적었습니다 (`%s`) —'
+                        ' 조용히 마지막 것만 남습니다' % (짧, 줄번, 키))
+
+        # ⑥⑦ **자리마다 쓸 수 있는 컨텍스트가 다릅니다**
+        #     작업(job) 안을 보려면 짜임이 필요합니다
+        작업들 = (d.get('jobs') or {}) if isinstance(d, dict) else {}
+        for 작업이름, 작업 in (작업들.items()
+                               if isinstance(작업들, dict) else []):
+            if not isinstance(작업, dict):
+                continue
+
+            # ⑥ 재사용 워크플로를 부르는 작업은 둘 수 있는 칸이 좁습니다
+            if 작업.get('uses'):
+                덤 = [k for k in 작업 if k not in 재사용허용]
+                if 덤:
+                    막음.append(
+                        '%s — 작업 `%s` 는 다른 워크플로를 부르는데'
+                        ' `%s` 를 함께 두었습니다 (못 둡니다)'
+                        % (짧, 작업이름, ', '.join(sorted(덤)[:3])))
+                continue      # 아래 검사는 일반 작업 것입니다
+
+            # ⑦ 자리별 허용 컨텍스트
+            for 자리, 값 in (('jobs.<id>.if', 작업.get('if')),
+                             ('runs-on', 작업.get('runs-on'))):
+                쓴것 = re.findall(r'\$\{\{\s*([A-Za-z_][\w-]*)\s*\.',
+                                  str(값 or ''))
+                for 이름 in 쓴것:
+                    if 이름 not in 자리별허용[자리]:
+                        막음.append(
+                            '%s — 작업 `%s` 의 `%s` 에서 `%s` 를 쓸 수'
+                            ' 없습니다' % (짧, 작업이름, 자리, 이름))
+            작업env = 작업.get('env')
+            if isinstance(작업env, dict):
+                for _k, v in 작업env.items():
+                    for 이름 in re.findall(
+                            r'\$\{\{\s*([A-Za-z_][\w-]*)\s*\.', str(v or '')):
+                        if 이름 not in 자리별허용['jobs.<id>.env']:
+                            막음.append(
+                                '%s — 작업 `%s` 의 `env:` 에서 `%s` 를'
+                                ' 쓸 수 없습니다 (단계 안에서만 삽니다)'
+                                % (짧, 작업이름, 이름))
+
+            # ⑧ 일반 작업이면 `runs-on` 과 `steps` 가 있어야 합니다
+            if not 작업.get('runs-on'):
+                막음.append('%s — 작업 `%s` 에 `runs-on` 이 없습니다'
+                            % (짧, 작업이름))
+            if not 작업.get('steps'):
+                막음.append('%s — 작업 `%s` 에 `steps` 가 없습니다'
+                            % (짧, 작업이름))
 
     print('  파일 %d개를 봤습니다' % len(파일들))
     print()
