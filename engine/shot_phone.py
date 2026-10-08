@@ -50,6 +50,36 @@ def 찍기(쪽길, 낼곳, 폭=390, 높이=2600):
     #   파일 이름으로 쳐서 **없는 파일**이 되고, 회색 빈 칸이
     #   찍힙니다. 조각은 주소 뒤에 다시 붙입니다 — 쪽이 그것을
     #   읽어 그 포인트를 열어 줍니다.
+    # ★ **공개 주소도 받습니다 — 다만 badagaja.com 은 안 됩니다**
+    #   (2026-10-08)
+    #
+    #   물때·지도처럼 바깥에서 오는 것은 로컬 파일로 찍으면 늘
+    #   비어 있어, 공개 쪽을 iframe 에 넣어 보았습니다.
+    #   **빈 칸만 찍혔습니다.** 서버가 `X-Frame-Options: SAMEORIGIN`
+    #   을 보내기 때문입니다 — `file://` 래퍼와 출처가 다릅니다.
+    #
+    #   그 설정은 **올바른 것이라 바꾸지 않습니다.** 공개 쪽을
+    #   휴대폰 폭으로 보려면 크롬 창을 줄여 찍습니다(500px 까지만
+    #   줄어듭니다). 같은 출처에 래퍼를 둘 수 있게 되면 이 길이
+    #   다시 쓸모 있어 남겨 둡니다.
+    낮은것 = (쪽길 or '').lower()
+    if 낮은것.startswith('http://') or 낮은것.startswith('https://'):
+        주소 = 쪽길
+        집 = tempfile.mkdtemp(prefix='bada-shot-')
+        래퍼 = os.path.join(집, 'wrap.html')
+        _io.write(래퍼, 틀 % {'w': 폭, 'h': 높이, 'url': 주소})
+        깃발 = machine.크롬앞머리() + [
+            '--hide-scrollbars', '--force-device-scale-factor=1',
+            '--window-size=%d,%d' % (max(폭, 520), 높이),
+            # 바깥에서 받아 오므로 넉넉히 기다립니다
+            '--virtual-time-budget=12000',
+            '--screenshot=%s' % 낼곳,
+            'file:///' + urllib.parse.quote(래퍼.replace('\\', '/'),
+                                            safe='/:'),
+        ]
+        subprocess.run(깃발, capture_output=True, timeout=180)
+        return os.path.exists(낼곳)
+
     조각 = ''
     if '#' in 쪽길:
         쪽길, 뒤 = 쪽길.split('#', 1)
