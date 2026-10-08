@@ -531,6 +531,21 @@ def main():
         자리표.setdefault(키, []).append(x)
     겹친것 = [x for 들 in 자리표.values() if len(들) > 1 for x in 들]
 
+    # ★ **방위만 다른데 똑같은 좌표** — 가장 분명한 잘못입니다
+    #   「장흥 득량만 남측 갯벌」과 「장흥 득량만 북측 갯벌」이 한
+    #   점일 수는 없습니다. 이름이 방위 하나만 빼고 글자까지 같습니다.
+    #   어디로 옮길지는 자료에 없어 고치지 않고 **세기만** 합니다.
+    from engine import dupspot as _ds
+    짝난것 = []
+    for 들 in 자리표.values():
+        if len(들) < 2:
+            continue
+        이름들 = []
+        for x in 들:
+            n = x.get('이름')
+            이름들.append((n.get('ko') if isinstance(n, dict) else n) or '')
+        짝난것.extend(_ds.짝방위(이름들))
+
     # ── 상태를 매깁니다
     기준 = 기준읽기()
     옛것 = set(기준.get('알던것') or [])
@@ -699,6 +714,16 @@ def main():
         print('    %s' % ' · '.join(
             '%s %d' % (k, v) for k, v in
             sorted(권별.items(), key=lambda t: -t[1])[:6]))
+    짝기준 = 기준.get('방위짝수')
+    if 짝난것:
+        print('  (**방위만 다른데 똑같은 좌표**인 쌍 %d개 — 한 점일 수'
+              ' 없습니다)' % len(짝난것))
+        for a, b in 짝난것[:3]:
+            print('      %s  ↔  %s' % (a[:26], b[:26]))
+    짝늘었다 = (짝기준 is not None and len(짝난것) > 짝기준)
+    if 짝늘었다:
+        print('  ✗ 방위만 다른 겹침이 늘었습니다 — 기준 %d쌍 → 지금 %d쌍'
+              % (짝기준, len(짝난것)))
     겹침늘었다 = (겹침기준 is not None and len(겹친것) > 겹침기준)
     if 겹침늘었다:
         print('  ✗ 같은 좌표를 쓰는 곳이 늘었습니다 — 기준 %d곳 →'
@@ -776,6 +801,8 @@ def main():
             # 서로 다른 곳이 **똑같은 좌표**를 쓰는 수.
             # 693곳을 지금 고칠 수는 없지만 늘지는 않게 합니다.
             '좌표겹침수': len(겹친것),
+            # 방위만 다른데 똑같은 좌표인 쌍 (한 점일 수 없습니다)
+            '방위짝수': len(짝난것),
         }
         os.makedirs(os.path.dirname(기준길), exist_ok=True)
         _io.open(기준길, 'w', encoding='utf-8').write(
@@ -877,7 +904,7 @@ def main():
         print('   python engine/check_coast.py --받아들이기)')
         return 1
 
-    if 좌표없음늘었다 or 겹침늘었다:
+    if 좌표없음늘었다 or 겹침늘었다 or 짝늘었다:
         return 1
 
     print('엉뚱한 곳에 찍힌 핀이 없습니다.')
