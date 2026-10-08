@@ -16,7 +16,7 @@
 import json
 import os
 
-from engine import art_gear, template, url
+from engine import art, art_gear, template, url
 from engine.hubs import esc, 칸, 카드들, _바탕값
 
 여기 = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -493,12 +493,23 @@ def 장비쪽(d, 언어='ko'):
                    '여름에는 작은 것이라도 꼭 챙기세요.'},
         ])))
 
+    # * **갈래마다 그림을 보여 주고, 그 자리로 보냅니다** (2026-10-09)
+    #   전에는 6칸이 글만이었고 **모두 같은 곳**(부품 쪽 맨 위)으로
+    #   갔습니다. 「줄」을 눌러도 「미끼」를 눌러도 같은 화면이라
+    #   누를 까닭이 없었습니다.
+    #   그림은 `rig/parts.html` 에 **이미 다** 있었습니다 - 갈래의
+    #   첫 부품 그림을 그대로 씁니다. 지어내지 않습니다 (규칙 6-1).
+    부품쪽 = esc(url.rel(쪽길, url.rig_parts(언어)))
     줄들 = []
     for 갈, 이름들 in 묶.items():
         제, 설 = 갈래글.get(갈, (갈, ''))
+        첫 = 이름들[0] if 이름들 else ''
+        그 = art.부품그림(첫, 폭=64, 높이=64, 채우기=True) if 첫 else ''
         줄들.append(
-            '<li><a href="%s"><b>%s</b><span>%s · %d가지</span></a></li>'
-            % (esc(url.rel(쪽길, url.rig_parts(언어))),
+            '<li><a href="%s#pt-%s">%s<span class="hp-t"><b>%s</b>'
+            '<span>%s · %d가지</span></span></a></li>'
+            % (부품쪽, esc(첫),
+               ('<span class="hp-art">%s</span>' % 그) if 그 else '',
                esc(제), esc(설), len(이름들)))
     if 줄들:
         칸들.append(칸(
@@ -506,7 +517,8 @@ def 장비쪽(d, 언어='ko'):
             '<p class="hub-lead">줄·찌·도래·봉돌·바늘입니다. '
             '이름을 몰라 낚시점에서 못 사는 일이 없게 크기와 쓰임을 '
             '그림으로 적어 두었습니다.</p>'
-            '<ul class="hub-list hub-list--grid">%s</ul>' % ''.join(줄들),
+            '<ul class="hub-list hub-list--grid hub-list--art">%s</ul>'
+            % ''.join(줄들),
             흰=False))
 
     칸들.append(칸(

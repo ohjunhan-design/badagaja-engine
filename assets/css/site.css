@@ -521,6 +521,33 @@ html.has-navi .navi:hover{filter:brightness(.94)}
   .hub-list--grid{grid-template-columns:repeat(2,1fr)}
 }
 
+/* -- 부품 갈래 카드 - 그림을 함께 보여 줍니다 (2026-10-09) ----
+   장비 쪽의 다른 칸에는 다 그림이 있는데 이 줄만 글이었습니다.
+   부품 그림은 rig/parts.html 에 이미 다 있었습니다.
+
+   * 구체성을 맞춥니다 - `.hub-list a` 가 flex-direction:column
+     이라 그냥 쓰면 집니다. `.hub-list--art a` 는 클래스가
+     둘이라 이깁니다 (기억 「차림표는 맨 뒤만으로 안 됩니다」). */
+.hub-list--art{grid-template-columns:repeat(auto-fill,minmax(228px,1fr))}
+.hub-list--art a{
+  flex-direction:row;align-items:center;gap:12px;
+  min-height:76px;padding:12px 14px;
+}
+.hub-list--art .hp-art{
+  flex:0 0 auto;width:52px;height:52px;display:block;line-height:0;
+}
+.hub-list--art .hp-art svg{width:52px;height:52px;display:block}
+.hub-list--art .hp-t{
+  display:flex;flex-direction:column;gap:2px;min-width:0;
+  font-size:inherit;color:inherit;
+}
+
+@media (max-width:767px){
+  /* 휴대폰에서는 한 줄에 하나 - 그림 52px 과 설명이 함께 들어가려면
+     2열은 너무 좁습니다 (390px 에서 한 칸 ~175px). */
+  .hub-list--art{grid-template-columns:1fr}
+}
+
 
 
 /* ── 이름표 안 작은 아이콘 (2026-10-01) ───────────
@@ -1164,18 +1191,25 @@ html[data-pcview] .pcview{display:block}
      휴대폰에서 이 안내도는 글씨가 4px 쯤이라 반드시 눌러야 읽힙니다.
      전에는 11.5px 반투명 알약이라 「있으면 좋은 기능」처럼 보였습니다.
      진한 초록 + 흰 글씨 + 누름자리 44px 로 올립니다. */
+/* ★ **그림 위가 아니라 그림 아래 띠입니다** (2026-10-09)
+     전에는 오른쪽 아래에 떠 있었는데, 안내도는 **오른쪽에 이름표
+     1~7 을 세로로** 늘어놓습니다. 그래서 단추가 **마지막 이름표를
+     통째로 덮었습니다** — 원투 채비에서 7번 부품 이름이 안 보였습니다.
+     17쪽 모두 같은 자리라 모두 같은 일이 있었습니다.
+
+     아래 띠로 내리면 아무것도 안 덮고, 휴대폰에서 **엄지가 닿는
+     자리**에 가로로 넓게 놓여 누르기도 쉽습니다 (주인 규칙 6-2).
+     지피티 검수가 말한 「확대는 주 행동」은 그대로 지킵니다 —
+     진한 초록 · 흰 글씨 · 누름자리 44px. */
 .rig-guide-hint{
-  position:absolute;right:14px;bottom:14px;
-  display:inline-flex;align-items:center;gap:6px;
+  display:flex;align-items:center;justify-content:center;gap:6px;
   min-height:44px;padding:0 16px;
   background:var(--green);color:var(--white);
-  font-size:14px;font-weight:800;
-  border-radius:var(--r-full);pointer-events:none;
-  box-shadow:0 6px 18px rgba(0,0,0,.18);
+  font-size:15px;font-weight:800;
+  pointer-events:none;
 }
 @media (max-width:760px){
-  .rig-guide-hint{right:10px;bottom:10px;
-    min-height:46px;padding:0 14px;font-size:15px}
+  .rig-guide-hint{min-height:46px;padding:0 14px;font-size:15px}
 }
 
 /* 크게 보는 칸 — `:target` 으로 폅니다 (자바스크립트 없이) */

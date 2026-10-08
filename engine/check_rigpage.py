@@ -59,7 +59,7 @@ NEW = os.environ.get('BADAGAJA_SITE', os.path.join(ROOT, 'site'))
 (function () {
   function 재자() {
     var 난것 = { 폭: innerWidth, 넘침: document.body.scrollWidth > innerWidth,
-                 숨어야할것: [], 큰그림: [], 확대단추: null };
+                 숨어야할것: [], 큰그림: [], 확대단추: null, 덮는것: [] };
     // ① 확대 칸이 처음에 숨어 있는가
     var 칸들 = document.querySelectorAll('[id^="guide-"]');
     for (var i = 0; i < 칸들.length; i++) {
@@ -82,6 +82,38 @@ NEW = os.environ.get('BADAGAJA_SITE', os.path.join(ROOT, 'site'))
         보임: bs.display !== 'none' && bs.visibility !== 'hidden'
               && bs.opacity !== '0'
       };
+    }
+    // ⑤ **안내도 그림 위에 떠 있는 것** (2026-10-09)
+    //    안내도는 그림 하나에 모든 정보가 들어 있습니다 - 오른쪽에
+    //    이름표 1~7 을 세로로 늘어놓습니다. 그 위에 무엇이든 띄우면
+    //    **정보가 가려집니다.** 전에 「크게 보기」가 오른쪽 아래에
+    //    떠 있어 마지막 이름표를 통째로 덮었습니다(17쪽 전부).
+    난것.덮는것 = [];
+    var 안내도 = document.querySelectorAll('.rig-guide img, .rig-guide svg');
+    for (var k = 0; k < 안내도.length; k++) {
+      var ir = 안내도[k].getBoundingClientRect();
+      if (ir.width < 40 || ir.height < 40) continue;
+      var 다 = document.querySelectorAll('.rig-guide *');
+      for (var m = 0; m < 다.length; m++) {
+        var el = 다[m];
+        if (el === 안내도[k] || el.contains(안내도[k])) continue;
+        if (el.tagName === 'SOURCE' || el.tagName === 'PICTURE') continue;
+        var es = getComputedStyle(el);
+        if (es.position !== 'absolute' && es.position !== 'fixed') continue;
+        if (es.display === 'none' || es.visibility === 'hidden'
+            || es.opacity === '0') continue;
+        var er = el.getBoundingClientRect();
+        if (er.width < 4 || er.height < 4) continue;
+        var 겹폭 = Math.min(er.right, ir.right) - Math.max(er.left, ir.left);
+        var 겹높 = Math.min(er.bottom, ir.bottom) - Math.max(er.top, ir.top);
+        if (겹폭 > 2 && 겹높 > 2) {
+          난것.덮는것.push({
+            이름: el.className || el.tagName,
+            글: (el.textContent || '').trim().slice(0, 16),
+            겹폭: Math.round(겹폭), 겹높: Math.round(겹높)
+          });
+        }
+      }
     }
     // ④ 1100px 넘게 그려지는 그림
     var 그림들 = document.querySelectorAll('img, svg, picture');
@@ -202,6 +234,14 @@ def main():
             # ③ 가로 넘침
             if 잰것['넘침']:
                 막음.append('%s %dpx — 가로로 넘칩니다' % (짧, 폭))
+            # ⑤ **안내도를 덮는 것** (2026-10-09)
+            #   안내도는 그림 하나에 모든 정보가 들어 있습니다.
+            #   위에 무엇이든 띄우면 그만큼 가려집니다.
+            for c in 잰것.get('덮는것') or []:
+                막음.append('%s %dpx — 안내도를 덮습니다 '
+                            '(%s · %dx%d · 「%s」)'
+                            % (짧, 폭, c['이름'], c['겹폭'], c['겹높'],
+                               c['글']))
             # ④ 너무 큰 그림
             for g in 잰것['큰그림']:
                 막음.append('%s %dpx — 그림이 %dpx 로 그려집니다 '
@@ -224,13 +264,13 @@ def main():
         for t in 막음[:12]:
             print('  ✗ %s' % t)
         print()
-        print('  바깥 검수가 정한 네 가지입니다 —')
-        print('  초기 숨김 · 확대 CTA · 가로 넘침 · %dpx 초과 그림'
-              % 최대그림폭)
+        print('  바깥 검수가 정한 네 가지 + 덮는 것 —')
+        print('  초기 숨김 · 확대 CTA · 가로 넘침 · %dpx 초과 그림 ·'
+              ' 안내도를 덮는 것' % 최대그림폭)
         return 1
 
-    print('  · 초기 숨김 · 확대 CTA · 가로 넘침 · %dpx 초과 그림 —'
-          ' 네 가지 모두 괜찮습니다' % 최대그림폭)
+    print('  · 초기 숨김 · 확대 CTA · 가로 넘침 · %dpx 초과 그림 ·'
+          ' 덮는 것 — 다섯 가지 모두 괜찮습니다' % 최대그림폭)
     return 0
 
 
