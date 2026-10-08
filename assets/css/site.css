@@ -1067,8 +1067,8 @@ html[data-pcview] .pcview{display:block}
 }
 /* 많이 빠짐(사리) · 중간 · 적게 빠짐(조금) — **색만으로 알리지 않습니다** */
 .td-flow--spring{background:#E8F1EC;color:#2F5D57}
-.td-flow--mid{background:#EFF3F1;color:#5C6B64}
-.td-flow--neap{background:#F4F1EA;color:#8A7F6B}
+.td-flow--mid{background:#EFF3F1;color:#46524C}
+.td-flow--neap{background:#F4F1EA;color:#6B6254}
 
 /* 물때 네 줄 — 세로로 */
 .td-times{margin-top:10px;border-top:1px solid var(--line);padding-top:8px}
@@ -1431,7 +1431,7 @@ html[data-pcview] .pcview{display:block}
   position:absolute;z-index:2;left:28px;bottom:26px;max-width:640px;color:#fff
 }
 .fest-kicker{
-  margin:0 0 6px;font-size:12px;font-weight:800;color:#F6C06A;letter-spacing:.01em
+  margin:0 0 6px;font-size:12px;font-weight:800;color:var(--orange-ink);letter-spacing:.01em
 }
 .fest-hero__copy h1{
   margin:0;font-family:var(--serif);font-size:40px;line-height:1.08;
@@ -2229,7 +2229,7 @@ html[data-pcview] .pcview{display:block}
   margin: 0 0 4px;
   font-size: 12px;
   letter-spacing: .04em;
-  color: #B08A4A;
+  color: var(--orange-ink);
 }
 .when-t {
   margin: 0 0 4px;
@@ -3585,7 +3585,9 @@ details.area-group .area-list{margin-bottom:12px}
   background:#F4EFE5;border-radius:13px;padding:12px 13px;margin:0;
 }
 .tide-today .when .when-k{
-  display:inline-block;background:#C07B22;color:#fff;border-radius:999px;
+  /* ★ **바탕을 진하게** — 작은 배지는 글자색이 아니라 바탕을 바꿉니다
+     (바깥 검수 「방법 1 — 작은 배지 배경도 진하게. #9A5F14 + white 는 5.22:1」) */
+  display:inline-block;background:var(--orange-ink);color:#fff;border-radius:999px;
   padding:5px 9px;font-size:11px;font-weight:900;margin:0 0 7px;
 }
 .tide-today .when .when-t{
@@ -5051,6 +5053,7 @@ body.p-travel .tv-more{display:none}
 .ls-kicker,
 .catch-card .season,
 .season,
+.footer-nav .here,
 .when-k,
 .here,
 .badge{color:var(--orange-ink)}
