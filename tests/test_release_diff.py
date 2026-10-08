@@ -142,6 +142,111 @@ def 시험_실제판():
        R.위험한가(계획, 모두=len(파일)) is None)
 
 
+def 시험_lftp명령():
+    print('[8] 지우는 명령 만들기')
+    줄들, 뺀것 = R.lftp지우기(['a.html', 'sub/b.css'])
+    봄('보통 파일은 명령이 됩니다',
+       줄들 == ['rm -f "/www/a.html";', 'rm -f "/www/sub/b.css";'], 줄들)
+    봄('뺀 것이 없습니다', 뺀것 == [], 뺀것)
+
+    # ★ **따옴표가 든 경로는 뺍니다** — 명령이 깨져 엉뚱한 것을
+    #   지우느니 안 지우는 편이 낫습니다
+    줄들, 뺀것 = R.lftp지우기(['괜찮.html', 'bad".html', "bad'.html",
+                               'bad\nnewline.html', 'back\\slash.html'])
+    봄('따옴표·줄바꿈이 든 경로는 뺍니다',
+       줄들 == ['rm -f "/www/괜찮.html";'] and len(뺀것) == 4,
+       '%s / %s' % (줄들, 뺀것))
+
+    # ★ 혹시 계획에 섞여 들어와도 **여기서 한 번 더** 막습니다
+    줄들, 뺀것 = R.lftp지우기(['.htaccess', 'api/x.php', 'ok.html'])
+    봄('건드리면 안 될 것은 명령에서도 막습니다',
+       줄들 == ['rm -f "/www/ok.html";'] and len(뺀것) == 2,
+       '%s / %s' % (줄들, 뺀것))
+
+    봄('mirror --delete 를 쓰지 않습니다',
+       all('--delete' not in x for x in 줄들))
+
+
+def 시험_가짜서버되돌리기():
+    print('[9] 가짜 서버에서 **실제로** 되돌려 봅니다')
+    #   ★ 셈이 맞는 것과 실제로 되돌아가는 것은 다릅니다.
+    #     폴더를 서버 삼아 계획대로 지우고 덮어 보고, 끝난 모습이
+    #     지난 판과 **똑같은지** 봅니다.
+    import shutil
+    import tempfile
+    t = tempfile.mkdtemp(prefix='되돌리기-')
+    try:
+        서버 = os.path.join(t, 'www')
+        지난판 = os.path.join(t, 'before')
+        for d in (서버, 지난판):
+            os.makedirs(os.path.join(d, 'sub'))
+            os.makedirs(os.path.join(d, 'api'))
+
+        def 쓰기(밭, 길, 글):
+            p = os.path.join(밭, 길.replace('/', os.sep))
+            d = os.path.dirname(p)
+            if d and not os.path.isdir(d):
+                os.makedirs(d)
+            io_ = __import__('io')
+            io_.open(p, 'w', encoding='utf-8').write(글)
+
+        # 지난 판 (되돌아갈 모습)
+        옛파일 = {}
+        for 길, 글 in (('a.html', '옛a'), ('sub/b.css', '옛b'),
+                       ('사라질.html', '옛사라질')):
+            쓰기(지난판, 길, 글)
+            쓰기(서버, 길, 글)
+            옛파일[길] = 글
+
+        # 이번 판 — a 를 고치고, c 를 새로 올리고, 사라질.html 을 없앰
+        쓰기(서버, 'a.html', '새a')
+        쓰기(서버, 'c.html', '새c')
+        os.remove(os.path.join(서버, '사라질.html'))
+        새파일 = {'a.html': '새a', 'sub/b.css': '옛b', 'c.html': '새c'}
+
+        # 서버에만 있는 것 — 되돌리기가 **건드리면 안 됩니다**
+        쓰기(서버, 'api/marine.php', '손으로 올린 것')
+        쓰기(서버, '손으로올린.txt', '남의 것')
+
+        계획 = R.되돌림계획(옛파일, 새파일)
+        봄('지울 것은 c.html 뿐', 계획['지울것'] == ['c.html'],
+           계획['지울것'])
+        봄('되돌릴 것은 a.html 과 사라질.html',
+           계획['되돌릴것'] == ['a.html', '사라질.html'],
+           계획['되돌릴것'])
+
+        # 실제로 되돌립니다 — 지우고, 지난 판을 덮습니다
+        for k in 계획['지울것']:
+            p = os.path.join(서버, k.replace('/', os.sep))
+            if os.path.isfile(p):
+                os.remove(p)
+        for k in 계획['되돌릴것']:
+            쓰기(서버, k, 옛파일[k])
+
+        # 끝난 모습을 봅니다
+        def 읽기(밭, 길):
+            p = os.path.join(밭, 길.replace('/', os.sep))
+            if not os.path.isfile(p):
+                return None
+            return __import__('io').open(p, encoding='utf-8').read()
+
+        봄('a.html 이 옛 것으로 돌아왔습니다',
+           읽기(서버, 'a.html') == '옛a', 읽기(서버, 'a.html'))
+        봄('사라졌던 것이 살아났습니다',
+           읽기(서버, '사라질.html') == '옛사라질')
+        봄('이번 판에만 있던 c.html 이 사라졌습니다',
+           읽기(서버, 'c.html') is None)
+        봄('안 바뀐 것은 그대로입니다',
+           읽기(서버, 'sub/b.css') == '옛b')
+        # ★ 가장 중요합니다 — 남의 것을 안 건드렸는가
+        봄('api/ 를 안 건드렸습니다',
+           읽기(서버, 'api/marine.php') == '손으로 올린 것')
+        봄('서버에만 있던 파일도 그대로입니다',
+           읽기(서버, '손으로올린.txt') == '남의 것')
+    finally:
+        shutil.rmtree(t, ignore_errors=True)
+
+
 def main():
     print('판 견주기와 되돌림 계획 (2026-10-08)')
     print('')
@@ -152,6 +257,8 @@ def main():
     시험_모르면안지움()
     시험_위험한가()
     시험_실제판()
+    시험_lftp명령()
+    시험_가짜서버되돌리기()
     print('')
     if 실패:
         print('✗ %d가지가 틀렸습니다' % len(실패))
