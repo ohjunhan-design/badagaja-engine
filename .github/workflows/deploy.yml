@@ -96,9 +96,15 @@ jobs:
       #     깨진 워크플로는 **푸시마다 실패 기록**을 남기고, 그
       #     사이 배포를 걸 수도 없습니다. 여섯 번 그랬습니다.
       #     `runner` 컨텍스트는 **단계 안**에서만 살아 있습니다.
-      #     그래서 여기서는 `github.workspace`(여기서는 쓸 수 있습니다)
-      #     의 **윗자리**를 가리킵니다 — 체크아웃이 지우지 않는 곳입니다.
-      BADAGAJA_TALLY: ${{ github.workspace }}/../badagaja-그림자장부.json
+      #   ★ **`github.workspace` 도 안전하지 않습니다** (바깥 검수)
+      #     「github.workspace 는 **checkout 작업 디렉터리**라,
+      #       actions/checkout 이 clean/reset 하면 그 안의 장부가
+      #       지워질 수 있습니다. 배포마다 살아남아야 하는 장부라면
+      #       checkout 밖의 **self-hosted runner 영속 디렉터리**나
+      #       artifact/cache 쪽이 더 맞습니다」
+      #     그래서 여기서 적지 않고 **단계 안에서** 셈해
+      #     `$GITHUB_ENV` 로 넘깁니다 — 단계에서는 `runner.*` 가
+      #     살아 있습니다 (작업 수준 env 에서는 못 씁니다).
 
     steps:
       # ── ① 정말 올릴 것인지
@@ -111,6 +117,25 @@ jobs:
             exit 1
           fi
           echo "· 다짐을 받았습니다"
+
+      # ── ★ **그림자 장부 자리를 단계 안에서 셉니다** (2026-10-08)
+      #   `runner.temp` 는 **작업마다 지워지고**, `github.workspace`
+      #   는 checkout 이 clean/reset 할 수 있습니다. 둘 다 장부에는
+      #   못 씁니다. 일꾼 집(`RUNNER_WORKSPACE` 의 윗자리)은
+      #   체크아웃이 건드리지 않습니다.
+      #   ★ 여기(step)에서는 `runner.*` 가 살아 있습니다 —
+      #     작업 수준 `env:` 에서 쓰면 워크플로가 통째로 거절됩니다.
+      - name: 그림자 장부 자리를 정합니다
+        run: |
+          밭="${RUNNER_WORKSPACE:-$GITHUB_WORKSPACE/..}/.."
+          장부="$(cd "$밭" 2>/dev/null && pwd)/badagaja-그림자장부.json"
+          echo "BADAGAJA_TALLY=$장부" >> "$GITHUB_ENV"
+          echo "· 장부 자리 — $장부"
+          if [ -f "$장부" ]; then
+            echo "· 지난 장부가 살아 있습니다 ($(wc -c < "$장부") 바이트)"
+          else
+            echo "· 장부가 아직 없습니다 — 이번부터 쌓입니다"
+          fi
 
       - uses: actions/checkout@v4
       # ★ **우분투일 때만 깝니다** (2026-09-30)
