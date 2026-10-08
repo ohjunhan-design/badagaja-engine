@@ -120,7 +120,11 @@ def 물때지도(d, 쪽길, 언어='ko'):
             '<div class="tp-photo">'
             '<img class="tp-img" src="%s" alt="%s 바다" '
             'loading="lazy" width="900" height="600">'
-            '<div class="tp-title"><h3 class="tp-name">%s</h3>'
+            # * **h2 입니다** (2026-10-09) — 이 카드는 걸러내기 단추
+            #   바로 뒤에 오는 **대표 카드**라 묶음 제목(h2)과
+            #   같은 자리입니다. h3 이면 h1 다음이 h3 이 되어
+            #   제목 차례가 건너뜁니다 (449쪽 중 이 쪽만).
+            '<div class="tp-title"><h2 class="tp-name">%s</h2>'
             '<p class="tp-sub">%s</p></div></div>'
             '<div class="tp-body">'
             '<p class="tp-station">%s</p>'
