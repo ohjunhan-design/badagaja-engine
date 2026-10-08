@@ -4738,7 +4738,17 @@ def 어종쪽(d, 안내, 언어='ko'):
             if _채:
                 채비그림 = (
                     '<section class="fish-rig" data-rig="%s">'
-                    '<figure class="fish-rig-visual">'
+                    # ★ **`rig-guide` 를 함께 답니다** (2026-10-08에 막힘)
+                    #   `check_photos` 는 `<figure>` 안의 `<img>` 마다
+                    #   `<figcaption>` 을 요구합니다. 처음에 안 달아
+                    #   **배포 #38 이 「사진 설명이 없는 곳 18개」로
+                    #   NO-GO** 가 되었습니다. 18은 제가 바꾼 어종 쪽
+                    #   수와 정확히 같았습니다.
+                    #   채비 안내도는 **우리가 만든 그림**이라 촬영자가
+                    #   없습니다. 그래서 `rig-guide` 칸에 두고 「그림 ·
+                    #   …」으로 적습니다 — `/rig/` 쪽이 쓰는 그 규칙을
+                    #   그대로 따릅니다 (새로 만들지 않습니다).
+                    '<figure class="fish-rig-visual rig-guide">'
                     '<picture>'
                     '<source media="(max-width:767px)" srcset="%s">'
                     '<img src="%s" alt="%s 안내도" loading="lazy"'
@@ -4748,6 +4758,8 @@ def 어종쪽(d, 안내, 언어='ko'):
                     #   「hover 전용 금지 · 모바일 최소 46px」
                     '<a class="rig-zoom" href="%s" target="_blank"'
                     ' rel="noopener">크게 보기</a>'
+                    '<figcaption>그림 · %s 안내도 · 바다가자닷컴'
+                    '</figcaption>'
                     '</figure>'
                     '<div class="fish-rig-say">'
                     '<h3 class="fish-rig-name">추천 채비 · %s</h3>'
@@ -4760,9 +4772,18 @@ def 어종쪽(d, 안내, 언어='ko'):
                        esc(url.rel(쪽길, _채['PC사진'])),
                        esc(_채['이름']),
                        esc(url.rel(쪽길, _채['PC사진'])),
-                       esc(_채['이름']),
+                       esc(_채['이름']),      # figcaption 의 이름
+                       esc(_채['이름']),      # 카드 제목의 이름
+                       # ★ **`_굵게()` 를 씁니다** (2026-10-08에 막힘)
+                       #   자료의 「왜」에는 `**놀려서**` 처럼 굵게
+                       #   표시가 들어 있습니다. `esc()` 로 내면
+                       #   별표가 **글자로 그대로** 보입니다.
+                       #   배포 #38 이 그것으로 NO-GO 였습니다
+                       #   (갑오징어·주꾸미·무늬오징어 3곳).
+                       #   기억 「굵게 표시는 모든 칸에」 — 새 칸을
+                       #   만들 때마다 같은 일을 겪습니다.
                        ('<p class="fish-rig-why">%s</p>'
-                        % esc(rigref.첫줄(_채['왜'])))
+                        % _굵게(rigref.첫줄(_채['왜'])))
                        if _채['왜'] else '',
                        esc(url.rel(쪽길, url.rig(_채['id'], 언어))),
                        esc(_채['이름'])))
