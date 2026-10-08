@@ -121,7 +121,9 @@
 .sc-ph{display:block;width:100%;aspect-ratio:148/115;border-radius:12px;overflow:hidden;background:#DCE9EE}
 .sc-ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}
 .sc:hover .sc-ph img{transform:scale(1.05)}
-.sc-d{font-size:.76rem;color:#5E7382;line-height:1.5;margin-top:auto}
+/* ★ #5E7382 은 여섯 바탕 가운데 다섯에서 4.5:1 미달이었습니다 (4.30~4.45).
+   #50626F 는 가장 낮은 바탕에서도 5.51 입니다. */
+.sc-d{font-size:.76rem;color:#50626F;line-height:1.5;margin-top:auto}
 /* 02 칸 — 낚시를 누르면 낚시 쪽, 해루질을 누르면 해루질 쪽으로 (2026-09-23 주인 지시)
    그림에 박힌 글자는 흐리므로 사진은 글자 위까지만 쓰고 단추는 화면 글자로 그립니다 */
 .sc-two{position:relative}
@@ -147,7 +149,7 @@
 .si{display:flex;align-items:center;gap:8px;min-width:0}
 .si svg{width:22px;height:22px;flex:none;fill:none;stroke:#7A4FC0;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .si b{font-size:.8rem;font-weight:800;color:#2B4453;flex:none}
-.si em{font-style:normal;font-size:.74rem;color:#6B7A85;margin-left:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.si em{font-style:normal;font-size:.74rem;color:#5C6A75;margin-left:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 @media (max-width:1080px){
   .st-row{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
