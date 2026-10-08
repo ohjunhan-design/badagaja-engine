@@ -25,6 +25,12 @@
   --logo:'Nanum Gothic','나눔고딕',system-ui,sans-serif;
 
   --bg:#FFFBF3; --ink:#2B2116; --muted:#6B5E4F; --line:#EDE3D0;
+  /* ★ **읽어야 하는 작은 글씨용 진한 주황** (2026-10-08 바깥 검수)
+     브랜드 주황 #C07B22 는 흰 바탕에서 3.44:1 — 10~12px 글씨에는
+     약합니다. #9A5F14 는 흰 바탕 5.22:1 · 연주황 바탕 4.65:1 로
+     둘 다 W3C 작은 글 기준(4.5:1)을 넘습니다.
+     **큰 글·아이콘·테두리·장식은 #C07B22 그대로** 둡니다. */
+  --orange-ink:#9A5F14;
   --orange:#C07B22; --green:#2F5D57; --white:#fff;
   /* ★ 아이콘 속 연한 녹색 (2026-10-02 바깥 검수 13차)
      아이콘 26개의 빛깔을 사이트 표준으로 맞추면서, 전복
@@ -849,7 +855,7 @@ html[data-pcview] .pcview{display:block}
 /* ── 권역 쪽 ──────────────────────────────────────────── */
 .section-head{margin-bottom:20px}
 .section-head .kicker{
-  font-size:12px;font-weight:700;color:var(--orange);
+  font-size:12px;font-weight:700;color:var(--orange-ink);
   letter-spacing:.04em;margin-bottom:6px;
 }
 .section-head h2{font-size:1.9rem;font-weight:700}
@@ -951,7 +957,7 @@ html[data-pcview] .pcview{display:block}
   background:var(--white);border:1px solid var(--line);
   border-radius:var(--r-md);padding:16px;
 }
-.catch-card .season{font-size:11px;font-weight:700;color:var(--orange);margin-bottom:6px}
+.catch-card .season{font-size:11px;font-weight:700;color:var(--orange-ink);margin-bottom:6px}
 .catch-card h3{font-size:15px;font-weight:700}
 .catch-card p{margin-top:7px;font-size:12.5px;line-height:1.65;color:var(--muted)}
 
@@ -1090,9 +1096,9 @@ html[data-pcview] .pcview{display:block}
   font-variant-numeric:tabular-nums;letter-spacing:-.01em;
 }
 /* 물높이·증감은 **보조** */
-.tt-cm{font-size:12px;font-weight:600;color:#8A8277;
+.tt-cm{font-size:12px;font-weight:600;color:var(--muted);
   font-variant-numeric:tabular-nums}
-.tt-d{font-size:11.5px;font-weight:700;color:#C07B22;
+.tt-d{font-size:11.5px;font-weight:700;color:var(--orange-ink);
   font-variant-numeric:tabular-nums;white-space:nowrap}
 .tt-d--down{color:#3E7D73}
 
@@ -1359,7 +1365,7 @@ html[data-pcview] .pcview{display:block}
 }
 .toc-mini a i{
   flex:none;font-style:normal;font-size:11px;font-weight:800;
-  color:var(--orange);
+  color:var(--orange-ink);
 }
 .toc-mini a:hover{border-color:var(--orange);color:var(--orange)}
 
@@ -1763,7 +1769,8 @@ html[data-pcview] .pcview{display:block}
 .course-card{display:flex;flex-direction:column}
 .course-where{margin:2px 0 10px;font-size:12.5px}
 .course-where a{
-  color:var(--orange);text-decoration:none;font-weight:600;
+  /* 크기(12.5px)가 **부모**에 적혀 있어 자동 고침이 못 잡았습니다 */
+  color:var(--orange-ink);text-decoration:none;font-weight:600;
   border-bottom:1px solid transparent;
 }
 .course-where a:hover{border-bottom-color:var(--orange)}
@@ -2558,7 +2565,7 @@ body.fp-open{overflow:hidden}
 .tr-list a:hover .nm{color:var(--orange)}
 .tr-list .rk{
   flex:none;width:22px;font-size:13px;font-weight:800;
-  color:var(--orange);text-align:center;
+  color:var(--orange-ink);text-align:center;
 }
 .tr-list .nm{
   flex:1;min-width:0;font-size:14px;font-weight:700;
@@ -3003,7 +3010,7 @@ details.area-group .area-list{margin-bottom:12px}
 .ad-link-sub{font-size:12px;color:var(--muted)}
 .ad-link-go{
   margin-top:6px;align-self:flex-start;
-  font-size:12px;font-weight:800;color:var(--orange);
+  font-size:12px;font-weight:800;color:var(--orange-ink);
 }
 /* ── 카드꼴 광고 (2026-10-01 주인 지시) ────────────────────
    「여기에 제주패스 광고 올릴꺼야 예쁘게 만들어서 넣어줘」
@@ -3061,7 +3068,7 @@ details.area-group .area-list{margin-bottom:12px}
 .adc-sub{font-size:12px;color:var(--muted);line-height:1.45}
 .adc-go{
   margin-top:auto;padding-top:8px;
-  font-size:13.5px;font-weight:800;color:var(--orange);
+  font-size:13.5px;font-weight:800;color:var(--orange-ink);
 }
 .ad-card:hover .adc-go{text-decoration:underline}
 /* 제휴문구는 카드 **안** 맨 아래입니다 (2026-10-01)
@@ -3215,12 +3222,12 @@ details.area-group .area-list{margin-bottom:12px}
 .tide-today{
   background:#fff;border:1px solid #E5DCCB;border-radius:18px;padding:16px;
 }
-.tide-today .tt-kicker{font-size:12px;color:#C07B22;font-weight:800}
+.tide-today .tt-kicker{font-size:12px;color:var(--orange-ink);font-weight:800}
 .tide-today .tt-main{
   font-size:34px;font-weight:900;margin:5px 0 10px;
   display:flex;align-items:baseline;gap:8px;line-height:1.1;
 }
-.tide-today .tt-main small{font-size:15px;color:#8A8277;font-weight:700}
+.tide-today .tt-main small{font-size:15px;color:var(--muted);font-weight:700}
 
 /* 간·만조 — 그래프의 알약과 **같은 색**입니다.
    그래야 범례를 따로 보지 않아도 눈이 둘을 잇습니다. */
@@ -3322,7 +3329,7 @@ details.area-group .area-list{margin-bottom:12px}
 }
 .rm-type-b{
   border:0;background:transparent;border-radius:9px;padding:7px 11px;
-  font:inherit;font-size:12px;font-weight:800;color:#8A8277;cursor:pointer;
+  font:inherit;font-size:12px;font-weight:800;color:var(--muted);cursor:pointer;
 }
 .rm-type-b.on{background:#2F5D57;color:#fff}
 
@@ -3480,7 +3487,7 @@ details.area-group .area-list{margin-bottom:12px}
   justify-content:space-between;
 }
 .hc-stat b{font-size:28px;line-height:1;color:#2F5D57}
-.hc-stat span{font-size:12px;color:#8A8277;line-height:1.4}
+.hc-stat span{font-size:12px;color:var(--muted);line-height:1.4}
 .hc-cta{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .hc-btn{
   min-height:44px;border-radius:12px;border:1px solid #E5DCCB;display:flex;
@@ -3497,7 +3504,7 @@ details.area-group .area-list{margin-bottom:12px}
 .hero-c .ans-i{padding:0 12px;border-right:1px solid #E5DCCB;min-width:0}
 .hero-c .ans-i:first-child{padding-left:0}
 .hero-c .ans-i:last-child{border-right:0;padding-right:0}
-.hero-c .ans-k{font-size:11px;color:#8A8277;font-weight:800;margin-bottom:5px}
+.hero-c .ans-k{font-size:11px;color:var(--muted);font-weight:800;margin-bottom:5px}
 .hero-c .ans-v{font-size:13px;line-height:1.45;font-weight:800}
 .hero-c .ans-v a{color:#2F5D57}
 
@@ -3563,7 +3570,7 @@ details.area-group .area-list{margin-bottom:12px}
   font-family:var(--serif,inherit);
 }
 .compact-head .side-note{
-  font-size:12px;color:#8A8277;white-space:nowrap;text-align:right;
+  font-size:12px;color:var(--muted);white-space:nowrap;text-align:right;
 }
 .compact-head .side-note:empty{display:none}
 
@@ -3585,7 +3592,7 @@ details.area-group .area-list{margin-bottom:12px}
   margin:0 0 4px;font-size:15px;font-weight:900;line-height:1.35;
 }
 .tide-today .when .when-s{
-  margin:0;font-size:11.5px;color:#8A8277;font-weight:800;
+  margin:0;font-size:11.5px;color:var(--muted);font-weight:800;
 }
 .tide-today .when .when-w{
   margin:4px 0 0;font-size:12.5px;line-height:1.5;color:#201A16;
@@ -3705,7 +3712,7 @@ details.area-group .area-list{margin-bottom:12px}
 /* 지도에 안 뜨는 곳 안내 — **숨기지 않습니다** (2026-10-02)
    좌표를 아직 못 잡은 포인트가 지도에서 빠집니다.
    그 사실을 안 밝히면 손님은 숫자가 왜 다른지 모릅니다. */
-.rm-note{margin:0 0 10px;font-size:12px;color:#8A8277;line-height:1.5}
+.rm-note{margin:0 0 10px;font-size:12px;color:var(--muted);line-height:1.5}
 
 /* ══════════════════════════════════════════════════════════
    전국 물때 지도 (.tide-explorer)
@@ -3749,7 +3756,7 @@ details.area-group .area-list{margin-bottom:12px}
 }
 .tm-type-b{
   border:0;background:transparent;border-radius:9px;padding:7px 11px;
-  font:inherit;font-size:12px;font-weight:900;color:#8A8277;cursor:pointer;
+  font:inherit;font-size:12px;font-weight:900;color:var(--muted);cursor:pointer;
 }
 .tm-type-b.on{background:#2F5D57;color:#fff}
 .tm-zoom{
@@ -3766,7 +3773,7 @@ details.area-group .area-list{margin-bottom:12px}
   align-items:center;padding:7px 10px;background:rgba(255,255,255,.95);
   border:1px solid #E5DCCB;border-radius:999px;box-shadow:0 3px 12px rgba(0,0,0,.06);
 }
-.tm-legend span{font-size:11px;font-weight:800;color:#8A8277}
+.tm-legend span{font-size:11px;font-weight:800;color:var(--muted)}
 .tm-lock{
   display:none;position:absolute;left:50%;bottom:12px;transform:translateX(-50%);
   z-index:21;border:0;border-radius:999px;padding:8px 12px;
@@ -3801,7 +3808,7 @@ details.area-group .area-list{margin-bottom:12px}
 .tm-pick .tp-name{margin:0;font-size:27px;color:#fff}
 .tm-pick .tp-sub{margin:4px 0 0;font-size:12px;opacity:.92}
 .tm-pick .tp-body{padding:15px;display:flex;flex:1;flex-direction:column}
-.tm-pick .tp-station{margin:0;font-size:12px;color:#8A8277}
+.tm-pick .tp-station{margin:0;font-size:12px;color:var(--muted)}
 .tm-pick .tp-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;
   margin-top:auto;padding-top:14px}
 .tm-pick .tp-btn{
@@ -3920,7 +3927,7 @@ details.area-group .area-list{margin-bottom:12px}
 }
 .kit-mini svg{width:34px;height:34px;display:block;margin:0 auto 7px}
 .kit-mini b{display:block;font-size:13px;color:#201A16}
-.kit-mini span{display:block;margin-top:3px;font-size:11px;color:#8A8277}
+.kit-mini span{display:block;margin-top:3px;font-size:11px;color:var(--muted)}
 
 /* 상황부터 고르기 */
 .purpose-grid{
@@ -3958,7 +3965,7 @@ details.area-group .area-list{margin-bottom:12px}
 .gear-one{margin:7px 0 0;font-size:13px;line-height:1.6;color:#2B2116}
 .gear-specs{display:grid;gap:6px;margin-top:10px}
 .gear-spec{display:flex;gap:8px;font-size:12px;line-height:1.5}
-.gear-spec b{flex:0 0 52px;color:#8A8277;font-weight:800}
+.gear-spec b{flex:0 0 52px;color:var(--muted);font-weight:800}
 .gear-spec span{color:#6B5E4F}
 
 @media (max-width:760px){
@@ -3982,7 +3989,7 @@ details.area-group .area-list{margin-bottom:12px}
 /* 관측소 안내 — **한 번만** 적습니다 (2026-10-02)
    조위관측소가 성긴 동해안에서는 이웃 권역이 같은 관측소를
    씁니다. 권역마다 적으면 지저분하고 관리도 어렵습니다. */
-.tm-note{margin:10px 0 0;font-size:12px;color:#8A8277;line-height:1.55}
+.tm-note{margin:10px 0 0;font-size:12px;color:var(--muted);line-height:1.55}
 
 
 /* ───────────────────────────────────────────────────────────
@@ -4843,7 +4850,7 @@ body.p-travel .tv-more{display:none}
   margin-top:3px}
 .pp-warn{margin:0;padding:7px 10px;border-radius:var(--r-sm);
   background:#FBF0E2;font-size:13.5px;font-weight:700;
-  color:var(--orange)}
+  color:var(--orange-ink)}
 /* ★ **이 둘레 ○곳** — 같은 좌표를 여럿이 쓸 때 (2026-10-08)
      바깥 검수가 문구까지 정했습니다 —
        「이 둘레 6곳 — 개별 위치는 아직 정확히 확인되지
@@ -5023,3 +5030,41 @@ body.p-travel .tv-more{display:none}
   .hero-c .hc-today{min-height:44px;padding-top:0;padding-bottom:0;
     display:inline-flex;align-items:center}
 }
+
+/* ── 작은 글씨는 진하게 ─────────────────────────────────
+   2026-10-08 바깥 검수가 정한 색 규칙입니다.
+
+     「큰 시각 요소는 #C07B22, **읽어야 하는 작은 주황 글씨와
+       작은 주황 배지는 #9A5F14.** 회갈색 var(--muted) 은 작은 본문용
+       에서 빼고 #6B5E4F 로 교체하세요」
+
+   대비 (바깥 검수가 셈한 값) —
+     #9A5F14 on #FFFFFF  5.22:1     #C07B22 on #FFFFFF  3.44:1
+     #9A5F14 on #FFF0D6  4.65:1     #C07B22 on #FFF0D6  3.06:1
+     #6B5E4F on #FFFFFF  6.29:1     var(--muted) on #FFFFFF  3.79:1
+
+   ★ **아이콘·테두리·장식은 안 건드립니다** — 브랜드를 지킵니다.
+   ★ `engine/check_contrast.py` 가 지킵니다.
+   ★ 맨 뒤에 둡니다 (기억 「차림표 맨 뒤가 이깁니다」).         */
+.kicker,
+.tt-kicker,
+.ls-kicker,
+.catch-card .season,
+.season,
+.when-k,
+.here,
+.badge{color:var(--orange-ink)}
+/* 작은 배지는 **바탕도** 진하게, 글씨는 **흰색**으로.
+   바깥 검수 — 「#9A5F14 + white 는 5.22:1 이라 안전합니다」
+   ★ 바탕만 바꾸고 글자색을 그대로 두면 **같은 색**이 됩니다(대비 1).
+     2026-10-08 밤에 제가 그렇게 한 번 깨뜨렸습니다. */
+.badge--orange,
+.when-k[class*="on"]{
+  background:var(--orange-ink);border-color:var(--orange-ink);
+  color:#fff;
+}
+/* 회갈색 작은 글씨 — var(--muted) → #6B5E4F */
+.tg-foot,
+.ans-k,
+.side-note,
+.when-s{color:var(--muted)}
