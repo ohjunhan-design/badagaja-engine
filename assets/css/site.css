@@ -327,6 +327,33 @@ a.badge{min-height:44px}
 .card-go .maplink{order:1}
 .card-go .navi{order:2}
 .card-go .maplink{flex:1;margin-top:0;justify-content:center}
+
+/* ★ **좌표가 없는 카드** (2026-10-08)
+   89곳은 좌표가 없어 `.card-go` 가 빈 채로 남아 있었습니다.
+   짐작한 좌표로 채우지 않고 **없다고 말합니다**. 단추처럼
+   보이면 안 되므로 글은 흐리게, 찾아보기만 링크로 둡니다. */
+.card-go:has(.card-nocoord){display:block}
+.card-nocoord{
+  flex:1 1 100%;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;
+  padding:8px 10px;border-radius:var(--r-sm);
+  background:var(--soft);border:1px dashed var(--line);
+}
+.card-nocoord-say{font-size:12px;color:var(--muted);line-height:1.5}
+.card-nocoord .maplink--find{
+  min-height:32px;padding:0 8px;margin:0;border:0;background:none;
+  flex:0 0 auto;display:inline-flex;align-items:center;
+  font-size:12px;font-weight:700;color:var(--go);text-decoration:underline;
+}
+.card-nocoord .maplink--find:hover{filter:brightness(.9)}
+/* ★ 휴대폰에서는 **엄지가 닿게** 한 줄을 다 씁니다 (주인 규칙 6-2) */
+@media (max-width:767px){
+  .card-nocoord{flex-direction:column;align-items:stretch;gap:8px}
+  .card-nocoord .maplink--find{
+    min-height:44px;justify-content:center;
+    border:1px solid var(--line);border-radius:var(--r-sm);
+    background:var(--white);text-decoration:none;
+  }
+}
 html.has-navi .navi{
   flex:1;display:inline-flex;align-items:center;justify-content:center;
   gap:4px;padding:0 14px;border-radius:10px;

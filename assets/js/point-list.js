@@ -218,6 +218,39 @@
     p.한자리 = 묶음표[p.위도.toFixed(6) + ',' + p.경도.toFixed(6)];
   });
 
+  /* ★ **좌표가 없는 카드를 비워 두지 않습니다** (2026-10-08)
+   *
+   *   89곳은 좌표가 아예 없습니다. 지금까지 그 카드의 단추 자리
+   *   (`.card-go`)가 **아무 말 없이 빈 채**로 남았습니다. 손님은
+   *   왜 어떤 카드에만 「위치 확인하기」가 있고 어떤 카드에는
+   *   없는지 알 수 없었습니다.
+   *
+   *   좌표를 짐작해 채우지 않습니다 — 틀린 자리로 손님을 보내는
+   *   것이 비워 두는 것보다 나쁩니다. 대신 **없다고 말하고**,
+   *   이름으로 직접 찾아볼 길을 줍니다.
+   *
+   *   (지도가 못 떠도 이 말은 나와야 하므로 지도 만들기 **밖**에
+   *    둡니다 — 바로 위 묶음표와 같은 까닭입니다)
+   *
+   *   `engine/check_nocoord.py` 가 크롬으로 그려서 셉니다 —
+   *   자료의 좌표없음 수와 화면의 안내 수가 **같아야** 합니다.
+   */
+  포인트.forEach(function (p) {
+    if (typeof p.위도 === 'number' && typeof p.경도 === 'number') return;
+    if (!p.el) return;
+    var 줄 = p.el.querySelector('.card-go') || p.el;
+    if (줄.querySelector('.card-nocoord')) return;
+    var 칸 = 만들기('div', 'card-nocoord');
+    칸.appendChild(만들기('span', 'card-nocoord-say',
+      '위치를 아직 못 잡아 지도에 안 나옵니다'));
+    var a = 만들기('a', 'maplink maplink--find', '🔎 이름으로 찾아보기');
+    a.href = 'https://map.kakao.com/?q=' + encodeURIComponent(p.이름 || '');
+    a.target = '_blank';
+    a.rel = 'noopener';
+    칸.appendChild(a);
+    줄.appendChild(칸);
+  });
+
   if (지도칸 && 자료.지도키 && 좌표있는것.length) {
     var s = document.createElement('script');
     s.src = 'https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey='
