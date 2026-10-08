@@ -38,6 +38,7 @@ import subprocess
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, ROOT)
+from engine import mustmeasure   # noqa: E402
 from engine import io   # noqa: E402
 
 DATA = os.environ.get('BADAGAJA_DATA', os.path.join(ROOT, 'data'))
@@ -199,11 +200,16 @@ def main():
     # ── 1. 시험 자국
     print('[1] 시험이 넣는 표시가 남아 있는가')
     찾음 = []
+    # ★ **읽은 파일을 셉니다** (2026-10-08 바깥 검수)
+    #   `io.read(p, default='')` 는 못 읽어도 빈 글을 줍니다.
+    #   그러면 「자국 없음」이 되어 **안 보고 통과**였습니다.
+    읽은것 = 0
     for 길, 꼴, 무엇 in 시험자국:
         p = os.path.join(ROOT, 길.replace('/', os.sep))
         if not os.path.exists(p):
             continue
         s = io.read(p, default='')
+        읽은것 += 1 if s else 0
         if re.search(꼴, s):
             찾음.append('%s — %s' % (길, 무엇))
     for 길, 값, 무엇 in 자료자국:
@@ -241,6 +247,9 @@ def main():
     #       본 트리는 애초에 건드리지 않습니다. 그러니 이 검사는
     #       「사고를 막는 장치」가 아니라 **마지막 안전망**입니다.
     커밋전 = '--커밋전' in sys.argv
+    mustmeasure.있어야한다(range(읽은것), '읽은 파일', 최소=1,
+                           어디=ROOT)
+
     print('[2] 시험이 지금 돌고 있는가%s'
           % ('' if 커밋전 else '  (커밋 직전이 아니므로 알림만)'))
     도는것 = 시험이도나()

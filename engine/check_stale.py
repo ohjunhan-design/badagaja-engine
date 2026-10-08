@@ -40,6 +40,7 @@ import glob
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, ROOT)
+from engine import mustmeasure   # noqa: E402
 from engine import io   # noqa: E402
 
 DATA = os.environ.get('BADAGAJA_DATA', os.path.join(ROOT, 'data'))
@@ -83,11 +84,16 @@ def main():
     # ── 2. 대상이 아이디인가
     print('[2] 포인트의 대상이 아이디인가 (한글 이름이 아니라)')
     파일들 = sorted(glob.glob(os.path.join(DATA, 'raw', 'points', '*.json')))
+    # ★ 자료가 0개면 **아무것도 안 보고 통과**였습니다 (2026-10-08)
+    mustmeasure.있어야한다(파일들, '포인트 자료', 최소=5,
+                           어디=os.path.join(DATA, 'raw', 'points'))
+    읽은자료 = 0
     한글대상 = {}
     본포인트 = 0
     쓰인아이디 = set()
     for p in 파일들:
         d = io.read_json(p, default={})
+        읽은자료 += 1 if d else 0
         이름 = os.path.basename(p)
         for x in d.get('포인트', []):
             본포인트 += 1
@@ -113,6 +119,10 @@ def main():
     print('')
 
     # ── 3. 가리키는 어종이 있는가
+    # ★ 목록은 있는데 **내용을 하나도 못 읽으면** 못잼입니다
+    mustmeasure.있어야한다(range(읽은자료), '읽은 포인트 자료',
+                           최소=5, 어디=DATA)
+
     print('[3] 포인트가 가리키는 어종이 자료에 있는가')
     어종 = io.read_json(os.path.join(DATA, 'raw', 'species.json'), default={})
     있는것 = set(x.get('id') for x in (어종.get('어종') or []))

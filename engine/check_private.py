@@ -32,6 +32,8 @@ import sys
 #   그래서 **「검사기가 못 잡는다」로 두 가지가 헛되이 실패**하고
 #   있었습니다. 다른 검사기들은 모두 환경값을 봅니다.
 쪽밭 = os.environ.get('BADAGAJA_SITE', os.path.join(여기, 'site'))
+sys.path.insert(0, 여기)
+from engine import mustmeasure   # noqa: E402
 
 # ── 공개 쪽에 **있으면 안 되는 말** ──────────────────
 #   ① 저희를 가리키는 말 — 사이트는 주인이 운영하는 것입니다
@@ -82,6 +84,9 @@ def 보이는글(html):
 
 def 보기():
     샌것 = []
+    # ★ 쪽을 하나도 못 읽어도 **「샌 것 없음」으로 통과**했습니다
+    #   (2026-10-08 실측 — 바깥 검수 fail-open 전수조사)
+    본쪽 = 0
     for 뿌리, _, 파일들 in os.walk(쪽밭):
         for 이름 in 파일들:
             if not 이름.endswith('.html'):
@@ -97,6 +102,7 @@ def 보기():
                 글 = 보이는글(open(길, encoding='utf-8').read())
             except OSError:
                 continue          # 읽는 사이에 사라졌으면 넘어갑니다
+            본쪽 += 1
             for 말, 까닭 in 새면안되는것:
                 자리 = 글.find(말)
                 if 자리 < 0:
@@ -104,6 +110,7 @@ def 보기():
                 앞뒤 = re.sub(r'\s+', ' ',
                               글[max(0, 자리 - 50):자리 + len(말) + 50])
                 샌것.append((상대, 말, 까닭, 앞뒤.strip()))
+    mustmeasure.있어야한다(range(본쪽), '읽은 쪽', 최소=50, 어디=쪽밭)
     return 샌것
 
 

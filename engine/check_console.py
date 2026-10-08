@@ -348,7 +348,11 @@ def main():
         print('□ %s' % 말)
         print('  **틀린 것이 아니라 못 잰 것입니다.**')
         print('  BADAGAJA_CHROME 으로 크롬 자리를 알려 주세요.')
-        return 4 if '--strict' in sys.argv else 0
+        # ★ **기본에서도 못잼(4)** 입니다 (2026-10-08 바깥 검수)
+        #   전에는 `--strict` 일 때만 4 였습니다. 그러면 기본으로
+        #   돌린 사람이 「통과」를 보고 안심합니다. 못 잰 것은
+        #   언제나 통과가 아닙니다. 4 는 배포를 막지 않습니다.
+        return 4
     print('  크롬 %s' % 말)
 
     전부 = '--all' in sys.argv

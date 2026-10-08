@@ -40,6 +40,7 @@ import glob
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, ROOT)
+from engine import mustmeasure   # noqa: E402
 from engine import io   # noqa: E402
 
 NEW = os.environ.get('BADAGAJA_SITE', os.path.join(ROOT, 'site'))
@@ -88,6 +89,9 @@ def _몸통만(s):
 
 def main():
     것들 = 쪽들()
+    # ★ 「잴 것이 없습니다」로 **통과(0)** 를 내고 있었습니다 (2026-10-08)
+    #   아무것도 안 본 것과 탈이 없는 것은 다릅니다.
+    mustmeasure.있어야한다(것들, '쪽', 최소=50, 어디=NEW)
     if not 것들:
         print('잴 것이 없습니다 — site/ 에 쪽이 없습니다.')
         return 0
@@ -297,11 +301,13 @@ def main():
             사진표[x['파일']] = x
     첫화면들 = {'index'}
     어긋난것, 원장에없는것, 본쪽 = [], [], 0
+    읽은쪽 = 0
     for 길 in 쪽들():
         이름 = os.path.basename(길)[:-5]
         if 이름 in 첫화면들 or os.sep in os.path.relpath(길, NEW):
             continue                       # 권역 쪽만 봅니다
         글 = io.read(길, default='')
+        읽은쪽 += 1 if 글 else 0
         m = re.search(r'<img[^>]*src="([^"]*img/[^"]+)"', 글)
         if not m:
             continue
@@ -399,6 +405,8 @@ def main():
             print('  · 권역 쪽 %d개의 대표 사진이 모두 그 고장 것입니다'
                   % 본쪽)
     print('')
+    # ★ 목록은 있는데 **내용을 하나도 못 읽으면** 못잼입니다
+    mustmeasure.있어야한다(range(읽은쪽), '읽은 쪽', 최소=50, 어디=NEW)
 
     print('[5] 공유 미리보기 그림이 제대로인가 (규칙 28)')
     사진표 = io.read_json(os.path.join(DATA, 'raw', 'photos.json'),

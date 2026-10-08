@@ -29,7 +29,10 @@ import os
 import re
 import sys
 
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, ROOT)
+from engine import mustmeasure   # noqa: E402
 _지문 = re.compile(r'name="badagaja-build"\s+content="([^"]*)"')
 _날짜 = re.compile(r'name="badagaja-build-date"\s+content="([^"]*)"')
 _사람 = re.compile(r'사이트 업데이트\s*([0-9.]+)')
@@ -51,7 +54,10 @@ def main():
         for 이름 in 들:
             if 이름.endswith('.html'):
                 쪽들.append(os.path.join(뿌, 이름))
+    # ★ 쪽이 0개면 **안 재고 통과**였습니다 (2026-10-08 실측)
+    mustmeasure.있어야한다(쪽들, '쪽', 최소=50, 어디=밭)
 
+    읽은쪽 = 0
     없는것, 판별 = [], {}
     날짜별, 사람없음 = {}, []
     for 길 in 쪽들:
@@ -60,6 +66,7 @@ def main():
             글 = io.open(길, encoding='utf-8', errors='replace').read()
         except OSError:
             continue
+        읽은쪽 += 1
         m = _지문.search(글)
         if not m or not m.group(1).strip():
             없는것.append(쪽)
@@ -71,6 +78,8 @@ def main():
             날짜별[d.group(1)] += 1
         if not _사람.search(글):
             사람없음.append(쪽)
+    # ★ 목록은 있는데 **내용을 하나도 못 읽으면** 역시 못잼입니다
+    mustmeasure.있어야한다(range(읽은쪽), '읽은 쪽', 최소=50, 어디=밭)
 
     print('')
     print('[1] 쪽마다 판 지문이 있는가')

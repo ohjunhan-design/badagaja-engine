@@ -50,6 +50,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, ROOT)
+from engine import mustmeasure   # noqa: E402
 from engine import io    # noqa: E402
 
 NEW = os.environ.get('BADAGAJA_SITE', os.path.join(ROOT, 'site'))
@@ -81,6 +82,9 @@ def 사진깔렸나(그림):
 def main():
     엄격 = '--strict' in sys.argv
     본쪽 = 0
+    # ★ 쪽을 하나도 못 읽어도 「덧그림 0」이라 통과였습니다 (2026-10-08)
+    mustmeasure.있어야한다(list(io.쪽들(NEW)), '쪽', 최소=50, 어디=NEW)
+    읽은쪽 = 0
     본그림 = 0
     사진깔린그림 = 0
 
@@ -90,6 +94,7 @@ def main():
             글 = _io.open(길, encoding='utf-8', errors='replace').read()
         except OSError:
             continue
+        읽은쪽 += 1
         것들 = 그림들(글)
         if not 것들:
             continue
@@ -115,6 +120,9 @@ def main():
                 알림.append(
                     '%s — 사진 위에 도형 %d개가 얹혀 있습니다'
                     % (짧, 도형수))
+
+    # ★ 목록은 있는데 **내용을 하나도 못 읽으면** 못잼입니다
+    mustmeasure.있어야한다(range(읽은쪽), '읽은 쪽', 최소=50, 어디=NEW)
 
     print()
     print('  사진 위에 임의로 얹은 위치 표시가 없는가')

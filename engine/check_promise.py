@@ -37,7 +37,10 @@ import os
 import re
 import sys
 
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, ROOT)
+from engine import mustmeasure   # noqa: E402
 NEW = os.environ.get('BADAGAJA_SITE', os.path.join(ROOT, 'site'))
 
 # ── 약속하는 말 → 간 쪽에 있어야 할 표식 (정규식)
@@ -123,12 +126,16 @@ def 간쪽길(뿌리, 주소):
 def main():
     모두 = {}
     못읽은것 = []
+    # ★ 쪽을 하나도 못 읽어도 통과였습니다 (2026-10-08 실측)
+    mustmeasure.있어야한다(list(쪽들()), '쪽', 최소=50, 어디=NEW)
     for p in 쪽들():
         글 = 읽기(p)
         if not 글:
             못읽은것.append(os.path.relpath(p, NEW))
             continue
         모두[os.path.normpath(p)] = 글
+    # ★ 목록은 있는데 **하나도 못 읽으면** 통과가 아닙니다 (2026-10-08)
+    mustmeasure.있어야한다(모두, '읽은 쪽', 최소=50, 어디=NEW)
     if 못읽은것:
         알림.append('못 읽은 쪽 %d개' % len(못읽은것))
 

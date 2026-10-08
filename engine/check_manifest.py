@@ -39,8 +39,10 @@ import os
 import re
 import sys
 
+
 여기 = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, 여기)
+from engine import mustmeasure   # noqa: E402
 쪽밭 = os.environ.get('BADAGAJA_SITE') or os.path.join(여기, 'site')
 
 # ★ **일부러 옛것으로 두는 것** — 손님이 보는 한국어 쪽이 아닙니다
@@ -106,6 +108,8 @@ def 풀기(쪽, 주소):
 
 def main():
     만든것 = {쪽 for 쪽, _글 in 쪽들()}
+    # ★ 쪽이 0개면 「없는 주소 0곳」이라 통과였습니다 (2026-10-08)
+    mustmeasure.있어야한다(만든것, '쪽', 최소=50, 어디=쪽밭)
     print('[1] 쪽이 거는 .html 주소를 build 가 모두 만드는가')
     print('      만든 쪽 %d개' % len(만든것))
 
