@@ -745,6 +745,92 @@ def 바다지도(d, 쪽길, 언어='ko'):
     return ''.join(조각)
 
 
+def 축제미니(d, 쪽길, 언어='ko'):
+    """첫 화면 지도 옆 **축제 미니카드** (2026-10-09 주인 지시)
+
+    ★ 자리 — 지도(.hm-left) 오른쪽, 차림표 왼쪽.
+      휴대폰에서는 2열이 1열로 풀려 **지도 바로 아래**로 옵니다.
+      그래서 DOM 차례를 지도 → 축제 → 차림표로 둡니다.
+
+    ★ 제목을 「이번 주」로 못 합니다 — **자료에 날짜가 없습니다.**
+      축제 197개에 `달` 만 있습니다. 「이번 주」라고 적으면
+      지어내는 것이 됩니다. 그래서 「바다 근처 축제」로 두고
+      **달은 카드 안에** 적습니다 — 「전북 부안 · 10월」.
+
+    ★ 열두 달을 **모두 넣고** 자바스크립트가 이번 달만 보입니다.
+      빌드할 때 「이번 달」을 박으면 **자료를 안 고쳐도 결과가
+      달라집니다** — 계약-08 어김입니다. 축제 쪽이 이미 쓰는
+      방식(`data-month`)과 같습니다.
+      자바스크립트가 죽어도 첫째 것이 보입니다 (계약-23).
+      숨은 것은 브라우저가 사진을 받지 않습니다.
+
+    ★ 가짜 축제를 만들지 않습니다. 그 달에 자료가 없으면
+      그 달은 아예 없습니다.
+    """
+    칸 = []
+    for m in range(1, 13):
+        것들 = [x for x in d.축제(달=m)
+                if (d.히어로(x['권역']) or {}).get('파일')]
+        if not 것들:
+            continue
+        x = 것들[0]            # 아이디 차례 첫째 — 다시 만들어도 같습니다
+        한장 = d.히어로(x['권역'])
+        제목 = _사진이름(한장)
+        찍은이 = (한장.get('촬영자') or '').strip()
+        넓, 높 = 한장.get('가로'), 한장.get('세로')
+        크기 = (' width="%d" height="%d"' % (넓, 높)) if (넓 and 높) else ''
+        권역이름 = (d.권역(x['권역']) or {}).get('이름')
+        권역이름 = (권역이름.get(언어) or 권역이름.get('ko')) \
+            if isinstance(권역이름, dict) else (권역이름 or x['권역'])
+        한줄 = (x.get('한줄') or '').strip()
+        칸.append(
+            '<li class="hm-fes-item" data-month="%d">'
+            '<a class="hm-fes-a" href="%s">'
+            '<img src="%s" alt="%s"%s loading="lazy" decoding="async">'
+            '<span class="hm-fes-when">%s · %d월</span>'
+            '<strong class="hm-fes-name">%s</strong>'
+            '%s'
+            '<span class="hm-fes-go">축제 보러가기 →</span>'
+            '<span class="hm-fes-by">사진 · %s</span>'
+            '</a></li>'
+            % (m, esc(url.rel(쪽길, url.festival(x['id'], 언어))),
+               esc(url.rel(쪽길, 한장['파일'])), esc(제목), 크기,
+               esc(권역이름), m,
+               esc(x['이름'].get(언어) or x['이름']['ko']),
+               ('<span class="hm-fes-say">%s</span>' % esc(카드글(한줄, 38)))
+               if 한줄 else '',
+               esc('%s · %s' % (제목, 찍은이) if 찍은이 else 제목)))
+    if not 칸:
+        return ''
+    # ★ 스크립트를 **여기 함께** 둡니다 — 쪽과 움직임이 한 곳에
+    #   있어야 한쪽만 고치는 일이 없습니다. 작아서 파일을 따로
+    #   만들면 첫 화면이 한 번 더 기다립니다.
+    #   ★ `js-on` 을 **찾은 뒤에** 붙입니다. 이번 달 것이 없으면
+    #     안 붙이고, 그러면 CSS 가 첫째를 보입니다 (계약-23).
+    # ★ 스크립트를 **여기 함께** 둡니다 — 쪽과 움직임이 한 곳에
+    #   있어야 한쪽만 고치는 일이 없습니다. 작아서 파일을 따로
+    #   만들면 첫 화면이 한 번 더 기다립니다.
+    #   ★ `js-on` 은 **찾은 뒤에** 붙입니다. 이번 달 것이 없으면
+    #     안 붙이고, 그러면 CSS 가 첫째를 보입니다 (계약-23).
+    #   ★ querySelector 로 [data-month="…"] 를 찾지 않습니다 —
+    #     따옴표가 세 겹이라 도구를 거치며 조용히 깨집니다.
+    #     children 을 도는 쪽이 따옴표 한 겹이라 안전합니다.
+    움직임 = ('<script>(function(){'
+              'var L=document.getElementById("hmFesList");if(!L)return;'
+              'var m=new Date().getMonth()+1,x=L.children,i;'
+              'for(i=0;i<x.length;i++){'
+              'if(x[i].getAttribute("data-month")==m){'
+              'x[i].className+=" is-on";L.className+=" js-on";break;}}'
+              '})();</script>')
+    return ('<section class="hm-fes" aria-labelledby="hmFesT">'
+            '<p class="hm-fes-t" id="hmFesT">바다 근처 축제</p>'
+            '<ul class="hm-fes-list" id="hmFesList">%s</ul>'
+            '<a class="hm-fes-all" href="%s">축제 달력 모두 보기</a>'
+            '</section>%s'
+            % (''.join(칸), esc(url.rel(쪽길, url.festival_list(언어))),
+               움직임))
+
+
 def 지도차림표(d, 쪽길, 언어='ko'):
     """지도 옆 차림표. **숫자는 자료에서 셉니다** (주인 규칙 29).
 
@@ -4178,6 +4264,7 @@ def 첫쪽(d, 언어='ko'):
                                  판번호(os.path.join(ASSETS, 'css',
                                                      'home.css')))),
         '바다지도': 바다지도(d, 쪽길, 언어),
+        '축제미니': 축제미니(d, 쪽길, 언어),
         '지도차림표': 지도차림표(d, 쪽길, 언어),
         '묶음칸': ''.join(묶음칸),
         '숫자칸': 숫자칸,
