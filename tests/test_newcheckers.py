@@ -19,7 +19,7 @@
     'check_overlay.py' · 'check_panel.py' · 'check_rigref.py'
     'check_search.py' · 'check_nocoord.py' · 'check_backup.py'
     'check_cssdup.py' · 'check_cover.py' · 'check_rigpage.py'
-    'check_interact.py' · 'check_visual.py'
+    'check_interact.py' · 'check_visual.py' · 'check_contrast.py'
 
 ★ **정말 망가뜨려야 합니다** (기억 「뮤테이션은 정말 망가뜨려야」)
     살짝 건드려 놓고 「잡았다」 하면 헛돕니다. 검사기가 보는 바로
@@ -410,6 +410,30 @@ def 시험_눈으로볼때():
         봄('「비어 있습니다」라고 말해 준다', '비어 있습니다' in 난것, 난것)
 
 
+def 시험_글이읽히는가():
+    """'check_contrast.py' — 글을 흐리게 하면 잡는가
+
+    W3C 대비 기준(보통 글 4.5:1)을 **정말** 밑돌게 만들어 봅니다.
+    """
+    print('[14] check_contrast — 흐린 글을 잡는가')
+    with isolate.일터() as 뿌리:
+        길 = os.path.join(뿌리, 'assets', 'css', 'site.css')
+        글 = io.read(길)
+        # ★ **정말 흐리게** — 바탕과 거의 같은 색으로
+        io.write(길, 글 + chr(10)
+                 + '.card-name{color:#F0EADF}' + chr(10))
+        만들기 = subprocess.run(
+            [sys.executable, '-X', 'utf8',
+             os.path.join(뿌리, 'engine', 'build.py')],
+            cwd=뿌리, capture_output=True, text=True,
+            encoding='utf-8', errors='replace', timeout=900)
+        봄('사본에서 다시 만들 수 있다', 만들기.returncode == 0)
+        난것 = 돌리기('check_contrast.py', 뿌리=뿌리, 시간=2400)
+        봄('바탕과 거의 같은 색이면 막는다 (끝난값 1)',
+           난것.끝난값 == 1, 난것)
+        봄('「흐립니다」라고 말해 준다', '흐립니다' in 난것, 난것)
+
+
 def main():
     print('새로 만든 검사기도 잘못을 잡는지 봅니다 (2026-10-08)')
     print('  바깥 검수 — 「broken fixture → FAIL 회귀시험을 추가하세요」')
@@ -427,6 +451,7 @@ def main():
     시험_채비쪽그림()
     시험_눌러보기()
     시험_눈으로볼때()
+    시험_글이읽히는가()
     print('')
     if 실패:
         print('%d가지 통과 · %d가지 실패' % (통과, len(실패)))
