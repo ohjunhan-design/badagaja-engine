@@ -255,33 +255,68 @@
       strokeStyle: 'dash', fillColor: '#C07B22', fillOpacity: .12
     });
 
-    // 같은 자리에 여럿이면 조금씩 벌려 놓습니다 — 안 그러면 하나만 보입니다
-    var 본자리 = {};
+    /* ★ **같은 좌표를 쓰는 곳은 벌려 놓지 않습니다** (2026-10-08)
+     *
+     *   전에는 같은 자리에 여럿이면 100m 쯤 벌려 그렸습니다. 그래야
+     *   다 보이니까요. 그런데 그것은 **거짓 정확함**이었습니다 —
+     *   손님은 핀 하나하나가 제자리라고 믿습니다.
+     *
+     *   세어 보니 3,603곳 가운데 **693곳(19.2%)** 이 서로 다른
+     *   곳인데 똑같은 좌표를 쓰고 있었습니다. 옛 사이트에서 옮겨
+     *   올 때 권역 대표 좌표를 넣고 개별 좌표를 안 채운 자리입니다.
+     *
+     *   바깥 검수 —
+     *     「지금은 693곳을 정확하게 고치는 프로젝트가 아니라,
+     *       **693곳에서 거짓 정확함을 제거하는 프로젝트**로
+     *       접근하는 게 맞습니다. … 「묶음 핀 + 『이 둘레 N곳 /
+     *       개별 위치 미확인』」이 지금 가장 현실적이고 신뢰도 높은
+     *       해결책입니다」
+     *
+     *   그래서 **한 점에 핀 하나**만 그리고, 그 핀이 몇 곳을
+     *   대표하는지 숫자로 밝힙니다. 누르면 패널이 「이 둘레 ○곳,
+     *   개별 위치는 아직 확인되지 않았습니다」라고 말합니다.
+     */
+    var 묶음표 = {};
     좌표있는것.forEach(function (p) {
-      var 키 = p.위도.toFixed(4) + ',' + p.경도.toFixed(4);
-      var n = 본자리[키] = (본자리[키] || 0) + 1;
-      if (n > 1) {
-        var 각 = n * 2.4, r = 0.0009 * Math.sqrt(n);
-        p.그릴위도 = p.위도 + r * Math.sin(각);
-        p.그릴경도 = p.경도 + r * Math.cos(각);
-      } else { p.그릴위도 = p.위도; p.그릴경도 = p.경도; }
+      var 키 = p.위도.toFixed(6) + ',' + p.경도.toFixed(6);
+      (묶음표[키] = 묶음표[키] || []).push(p);
+    });
+    좌표있는것.forEach(function (p) {
+      var 키 = p.위도.toFixed(6) + ',' + p.경도.toFixed(6);
+      p.그릴위도 = p.위도;
+      p.그릴경도 = p.경도;
+      p.한자리 = 묶음표[키];          // 이 점을 함께 쓰는 곳들
     });
 
     var 테두리 = new kakao.maps.LatLngBounds();
-    좌표있는것.forEach(function (p) {
+    Object.keys(묶음표).forEach(function (키) {
+      var 들 = 묶음표[키];
+      var p = 들[0];                 // 묶음을 대표하는 곳
+      var 여럿 = 들.length > 1;
       var b = 만들기('button', 'pin pin--' + (p.등급 || 'C')
-                     + (p.어림 ? ' pin--area' : ''), String(p.차례));
+                     + (p.어림 ? ' pin--area' : '')
+                     + (여럿 ? ' pin--many' : ''),
+                     여럿 ? String(들.length) : String(p.차례));
       b.type = 'button';
-      b.title = p.이름;
-      b.setAttribute('aria-label', p.차례 + '. ' + p.이름);
-      b.addEventListener('click', function (e) { e.stopPropagation(); 열기(p); });
-      핀[p.id] = b;
-      p.핀 = b;
+      b.title = 여럿
+        ? ('이 둘레 ' + 들.length + '곳 — 개별 위치는 아직 확인되지'
+           + ' 않았습니다')
+        : p.이름;
+      b.setAttribute('aria-label', 여럿
+        ? ('이 둘레 ' + 들.length + '곳')
+        : (p.차례 + '. ' + p.이름));
+      b.addEventListener('click', function (e) {
+        e.stopPropagation();
+        열기(p);
+      });
+      /* 묶음 안의 모든 곳이 **같은 핀**을 가리킵니다. 그래야
+         목록에서 고르거나 ?point= 로 들어와도 그 핀이 켜집니다. */
+      들.forEach(function (q) { 핀[q.id] = b; q.핀 = b; });
       new kakao.maps.CustomOverlay({
-        position: new kakao.maps.LatLng(p.그릴위도, p.그릴경도),
+        position: new kakao.maps.LatLng(p.위도, p.경도),
         content: b, yAnchor: .5, zIndex: p.어림 ? 1 : 2
       }).setMap(지도);
-      테두리.extend(new kakao.maps.LatLng(p.그릴위도, p.그릴경도));
+      테두리.extend(new kakao.maps.LatLng(p.위도, p.경도));
     });
 
     function 맞추기() {

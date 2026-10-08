@@ -383,6 +383,17 @@ html.has-navi .navi:hover{filter:brightness(.94)}
 .pin--B{background:var(--orange)}
 .pin--C{background:#8A7E6E}
 .pin--area{border-style:dashed;opacity:.9}
+/* ★ **여러 곳이 같은 좌표를 쓰는 핀** (2026-10-08)
+     전에는 100m 쯤 벌려 그려 서로 다른 자리처럼 보였습니다.
+     그것이 거짓 정확함이었습니다. 이제 한 점에 핀 하나만 두고
+     **몇 곳을 대표하는지**를 숫자로 밝힙니다.
+     두 겹 테두리로 「여럿이 겹쳐 있다」를 눈에 보이게 합니다. */
+.pin--many{
+  box-shadow:0 0 0 3px rgba(255,255,255,.65),
+             0 0 0 5px rgba(0,0,0,.18),
+             0 2px 8px rgba(0,0,0,.28);
+  font-size:12px;
+}
 .pin[hidden]{display:none}
 
 /* 핀을 눌렀을 때 뜨는 풍선 */
@@ -4774,6 +4785,19 @@ body.p-travel .tv-more{display:none}
 .pp-warn{margin:0;padding:7px 10px;border-radius:var(--r-sm);
   background:#FBF0E2;font-size:13.5px;font-weight:700;
   color:var(--orange)}
+/* ★ **이 둘레 ○곳** — 같은 좌표를 여럿이 쓸 때 (2026-10-08)
+     바깥 검수가 문구까지 정했습니다 —
+       「이 둘레 6곳 — 개별 위치는 아직 정확히 확인되지
+         않았습니다. 위성지도에서 해안과 진입로를 확인해 주세요」
+     숨기지 않고 밝힙니다. 다만 경고(.pp-warn)보다 조용하게 —
+     잘못이 아니라 **아직 모르는 것**입니다. */
+.pp-shared{margin:6px 0 0;padding:7px 10px;
+  border-radius:var(--r-sm);background:var(--paper);
+  border:1px dashed var(--line)}
+.pp-shared-n{display:block;font-size:12.5px;font-weight:800;
+  color:var(--ink)}
+.pp-shared-t{display:block;font-size:12px;color:var(--muted);
+  margin-top:2px;line-height:1.5}
 
 /* ── 오늘 물때 — **숫자가 주인공** ──────────────────
    ★ 관측소 이름을 반드시 적습니다 (지시 ②). 포인트마다
