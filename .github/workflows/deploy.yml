@@ -87,9 +87,18 @@ jobs:
       #   끝나면 사라집니다. 배포 #29 가 성공했는데 장부에 그 줄이
       #   없는 것으로 들통났습니다 — **연속 3회가 영영 안 쌓이는**
       #   상태였습니다.
-      #   `runner.temp` 는 작업마다 지워지니 못 씁니다. 일꾼 집
-      #   (`RUNNER_WORKSPACE` 의 윗자리)에 둡니다.
-      BADAGAJA_TALLY: ${{ runner.workspace }}/../badagaja-그림자장부.json
+      #
+      #   ★ **`env:` 에서는 `runner.*` 를 못 씁니다** (2026-10-08에 겪음)
+      #     처음에 `${{ runner.workspace }}` 로 적었다가 워크플로가
+      #     통째로 깨졌습니다 —
+      #         Invalid workflow file (Line 92):
+      #         Unrecognized named-value: 'runner'
+      #     깨진 워크플로는 **푸시마다 실패 기록**을 남기고, 그
+      #     사이 배포를 걸 수도 없습니다. 여섯 번 그랬습니다.
+      #     `runner` 컨텍스트는 **단계 안**에서만 살아 있습니다.
+      #     그래서 여기서는 `github.workspace`(여기서는 쓸 수 있습니다)
+      #     의 **윗자리**를 가리킵니다 — 체크아웃이 지우지 않는 곳입니다.
+      BADAGAJA_TALLY: ${{ github.workspace }}/../badagaja-그림자장부.json
 
     steps:
       # ── ① 정말 올릴 것인지
