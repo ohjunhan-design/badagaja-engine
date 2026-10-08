@@ -81,6 +81,9 @@
 
   function draw(box, d, opt) {
     지우기(box);
+    /* ★ compact — 좁은 칸(포인트 상세 패널)용 표시 모드 (2026-10-08)
+       계산은 그대로이고 **보여 주는 방식만** 다릅니다. */
+    var compact = (opt.mode === 'compact');
     var 역 = box.querySelector('.tg-station');
     if (역) { 역.textContent = (d.station || '') + ' 관측소 기준'; }
 
@@ -119,7 +122,9 @@
     //     제거합니다. 요약칸은 그래프가 실패해도 남아 정보
     //     안정성이 더 높습니다. 다만 점의 색 의미가 사라지지
     //     않도록 그래프 아래에 아주 작은 범례만 남깁니다」
-    var 알약보임 = box.getAttribute('data-events') !== 'off';
+    /* compact 에서는 알약 줄이 아예 없습니다 — 바로 위 패널에
+       같은 네 시각이 수위까지 붙어 있습니다 (지피티 검수) */
+    var 알약보임 = !compact && box.getAttribute('data-events') !== 'off';
     var when = box.querySelector('.tg-when');
     if (when && 알약보임) {
       marks.forEach(function (e) {
@@ -148,7 +153,35 @@
     var 실폭 = svg.getBoundingClientRect().width || 720;
     var k = Math.max(1, 720 / 실폭);
 
-    var W = 720, H = 168 * k, L = 16 * k, R = 12 * k, T = 28 * k, B = 26 * k;
+    /* ★ **좁은 칸을 위한 compact 모드** (2026-10-08 지피티 검수)
+     *
+     *   포인트 상세 패널(폭 346px)에 그대로 넣었더니 그래프가
+     *   **376px** 로 커졌습니다. 까닭은 계산이 틀려서가 아니라
+     *   **720px 폭용 UI 를 346px 칸에 그대로 넣었기** 때문입니다.
+     *     720 논리폭 → 346px 화면에 축소 → 글씨도 반토막
+     *     → k=2.08 로 모든 것을 다시 키움 → 높이 376px
+     *
+     *   지피티 — 「max-height 로 자르지도 말고, 기존 k 를 없애지도
+     *     마세요. 정답은 공식 compact 표시 모드를 하나 추가하는
+     *     것입니다. 손댈 것은 데이터나 계산이 아니라 그래프의
+     *     표현 레이어뿐입니다」
+     *
+     *   compact 는 **논리 폭을 실제 폭과 맞춥니다.**
+     *     346 논리폭 → 346px 화면 → 글씨 12px 그대로 → 높이 120px
+     *
+     *   ★ mode 를 안 주면 **지금까지와 한 글자도 다르지 않습니다.**
+     *     홈·물때 쪽 그래프는 한 픽셀도 바뀌면 안 됩니다.
+     */
+    var W, H, L, R, T, B;
+    if (compact) {
+      W = Math.max(280, Math.round(실폭));
+      H = 120;
+      k = 1;
+      L = 10; R = 8; T = 12; B = 22;
+    } else {
+      W = 720;
+      H = 168 * k; L = 16 * k; R = 12 * k; T = 28 * k; B = 26 * k;
+    }
     svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H.toFixed(1));
 
     var X = function (m) { return L + m / 1440 * (W - L - R); };
@@ -224,16 +257,23 @@
         x1: xn.toFixed(1), y1: T.toFixed(1), x2: xn.toFixed(1), y2: (H - B).toFixed(1),
         class: 'tg-now', 'stroke-width': (1.5 * k).toFixed(1),
         'stroke-dasharray': (4 * k).toFixed(1) + ' ' + (5 * k).toFixed(1) }));
-      var bw = 42 * k, bh = 22 * k;
-      // 배지가 양 끝에서 잘리지 않게 안으로 당깁니다
-      var bx = Math.min(W - bw - 2, Math.max(2, xn - bw / 2));
-      svg.appendChild(s('rect', { x: bx.toFixed(1), y: k.toFixed(1),
-                                  width: bw.toFixed(1), height: bh.toFixed(1),
-                                  rx: (11 * k).toFixed(1), class: 'tg-nowbadge' }));
-      var tn = s('text', { x: (bx + bw / 2).toFixed(1), y: (16 * k).toFixed(1),
-                           'text-anchor': 'middle', class: 'tg-nowlbl',
-                           'font-size': (12 * k).toFixed(1) });
-      tn.textContent = '지금'; svg.appendChild(tn);
+      /* ★ compact 에서는 **알약 없이 선만** 둡니다 (지피티 검수)
+           「상세 패널에는 이미 『다음 간조까지 4시간 31분』이라는
+             훨씬 가치 있는 정보가 있습니다. 그래프 안의 지금 검은
+             알약까지 넣으면 좁은 폭에서 복잡하기만 합니다.
+             글자 없는 얇은 세로선 정도는 허용합니다」 */
+      if (!compact) {
+        var bw = 42 * k, bh = 22 * k;
+        // 배지가 양 끝에서 잘리지 않게 안으로 당깁니다
+        var bx = Math.min(W - bw - 2, Math.max(2, xn - bw / 2));
+        svg.appendChild(s('rect', { x: bx.toFixed(1), y: k.toFixed(1),
+                                    width: bw.toFixed(1), height: bh.toFixed(1),
+                                    rx: (11 * k).toFixed(1), class: 'tg-nowbadge' }));
+        var tn = s('text', { x: (bx + bw / 2).toFixed(1), y: (16 * k).toFixed(1),
+                             'text-anchor': 'middle', class: 'tg-nowlbl',
+                             'font-size': (12 * k).toFixed(1) });
+        tn.textContent = '지금'; svg.appendChild(tn);
+      }
     }
 
     // 눌러서 보기
@@ -266,6 +306,14 @@
     //     시각을 되풀이하지 않고 **색이 무엇을 뜻하는지만** 남깁니다
     var foot = box.querySelector('.tg-foot');
     foot.textContent = '';
+    /* ★ compact 에서는 **꼬리도 범례도 두지 않습니다** (지피티 검수)
+         좁은 칸에서 「간조만조」가 붙어 나오고, 출처와 주의 두
+         문장도 붙어 나왔습니다. 위 패널에 이미 ▼간조·▲만조 네
+         칸이 있어 범례가 중복입니다.
+         ★ 출처를 **없애는 것이 아닙니다** — 쪽의 출처 자리에
+           한 번만 있으면 됩니다. 346px 그래프 바로 밑에 둘
+           까닭이 없습니다. */
+    if (compact) { return; }
     if (!알약보임) {
       var 범 = el('div', 'tg-legend');
       [['low', '간조'], ['high', '만조']].forEach(function (x) {
@@ -299,15 +347,24 @@
     //     「날자별 버튼도 지워버려 이건 필요없어
     //       오늘 시간별 물높이 이렇게 통일하자」
     //     먼 날은 「물때표 2주 전체 보기」가 맡습니다 — 몫이 나뉩니다.
-    var head = el('div', 'tg-head');
-    var 왼 = el('div', 'tg-head-l');
-    왼.appendChild(el('div', 'tg-eyebrow', '오늘의 바다'));
-    왼.appendChild(el('h2', 'tg-title', '시간별 물높이'));
-    head.appendChild(왼);
-    head.appendChild(el('div', 'tg-station', ''));
-    box.appendChild(head);
-    // 간·만조 알약 줄 — draw 가 채웁니다
-    box.appendChild(el('div', 'tg-when'));
+    //   ★ **compact 에서는 머리를 만들지 않습니다** (2026-10-08 지피티)
+    //     포인트 상세 패널에는 이미 「오늘 물때 · ○○ 관측소 기준」이
+    //     있는데, 머리가 「오늘의 바다 / 시간별 물높이 / ○○ 관측소
+    //     기준」을 또 적어 **같은 말이 두 번** 나왔습니다.
+    //     mode 를 안 주면 지금까지와 똑같습니다.
+    var compact = (opt.mode === 'compact');
+    if (compact) { box.classList.add('tg-compact'); }
+    if (!compact) {
+      var head = el('div', 'tg-head');
+      var 왼 = el('div', 'tg-head-l');
+      왼.appendChild(el('div', 'tg-eyebrow', '오늘의 바다'));
+      왼.appendChild(el('h2', 'tg-title', '시간별 물높이'));
+      head.appendChild(왼);
+      head.appendChild(el('div', 'tg-station', ''));
+      box.appendChild(head);
+      // 간·만조 알약 줄 — draw 가 채웁니다
+      box.appendChild(el('div', 'tg-when'));
+    }
     box.appendChild(el('p', 'tg-foot', '물높이 예보를 불러오는 중…'));
     var T = window.BADAGAJA_TIDE, cache = {}, tidePromise = null;
     var 알린적있나 = false;
@@ -339,7 +396,8 @@
           box.querySelector('.tg-foot').textContent = '물높이 예보를 불러오지 못했어요.';
           지우기(box); 알리기(null, null); return;
         }
-        draw(box, d, { dark: opt.dark, sun: sun, today: day === 0, events: ev });
+        draw(box, d, { dark: opt.dark, sun: sun, today: day === 0, events: ev,
+                       mode: opt.mode });
         알리기(d, ev);
       };
       if (cache[day]) return go(cache[day].d, cache[day].ev);

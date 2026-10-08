@@ -190,9 +190,15 @@
       if (!window.BADAGAJA_TIDEGRAPH || !설정.권역) {
         물때자료.받았나 = true; 물때자료.실패 = true; 물때그리기(); return;
       }
+      /* ★ **compact 모드로 부릅니다** (2026-10-08 지피티 검수)
+           그냥 부르면 720px 폭용 UI 가 346px 칸에 들어와 그래프가
+           376px 로 커지고, 머리·관측소·범례·꼬리가 모두 두 번
+           나옵니다. compact 는 **같은 자료·같은 계산**에 표현만
+           좁은 칸에 맞춘 것입니다. */
       그래프칸.setAttribute('data-events', 'off');
       window.BADAGAJA_TIDEGRAPH.mount(그래프칸, 설정.권역, {
         api: 설정.api || 'api/',
+        mode: 'compact',
         받으면: function (d) {
           /* 관측소 이름은 시계열 쪽이 더 또렷합니다 (지시 ②) */
           if (d && d.station) { 물때자료.관측소 = d.station; }
