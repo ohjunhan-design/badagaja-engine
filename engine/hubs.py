@@ -31,6 +31,7 @@ from engine import art
 from engine import rules
 from engine import template
 from engine import url
+from engine.korean import 조사      # noqa: E402
 
 ESC = {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}
 
@@ -269,7 +270,8 @@ def 금어기쪽(d, 언어='ko'):
     연중글 = ''.join('<li>%s</li>' % esc(것['설명'])
                      for 것 in 자료.get('포획제한', []))
     if 연중:
-        연중글 += ''.join('<li>%s는 연중 금지</li>' % esc(것['법령명'])
+        연중글 += ''.join('<li>%s 연중 금지</li>'
+                          % esc(조사(것['법령명'], '는'))
                           for 것, _, _ in 연중)
     칸들.append(칸('철과 상관없이 늘 금지', '연중 금지',
                    '<ul class="rl-always">%s</ul>' % 연중글))
