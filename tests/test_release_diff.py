@@ -16,7 +16,7 @@ import sys
 sys.path.insert(0, 여기)
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
-from engine import release as R   # noqa: E402
+from engine import release_diff as R   # noqa: E402
 
 실패 = []
 

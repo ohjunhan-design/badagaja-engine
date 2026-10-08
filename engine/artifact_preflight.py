@@ -28,7 +28,7 @@ import urllib.request
 sys.path.insert(0, 여기)
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
-from engine import release as R   # noqa: E402
+from engine import release_diff as R   # noqa: E402
 from engine import shadow_tally   # noqa: E402
 
 괜찮음 = 0

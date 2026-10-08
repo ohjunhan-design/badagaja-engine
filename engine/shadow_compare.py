@@ -103,6 +103,7 @@ def main():
     판 = 새.get('이번판') or '(모름)'
     덧 = ('새것만 %d · lftp만 %d' % (len(새것만), len(옛것만)))
     try:
+        sys.path.insert(0, 여기)
         from engine import shadow_tally
         장부 = shadow_tally.적기(판, 같았나, 덧)
         n = shadow_tally.연속(장부)
