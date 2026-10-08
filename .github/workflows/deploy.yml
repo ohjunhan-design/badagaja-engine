@@ -287,6 +287,34 @@ jobs:
       - name: lftp 설치
         run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
 
+      # ── ★ **아티팩트 사전확인** — 전환 2단계 (2026-10-08 바깥 검수)
+      #
+      #   「full backup 을 건너뛰기 **전에** 직전 성공판 artifact 가
+      #     실제로 존재하는지 확인합니다. 단순히 build_id 만 맞는
+      #     것이 아니라 **직전 public build_id == 직전 성공 artifact
+      #     build_id** 이고, **artifact 메타데이터가 존재**하고,
+      #     **그 안의 build.json/manifest 가 읽히는** 상태여야
+      #     합니다. 이 셋 중 하나라도 불확실하면 **기존 FTP 전체
+      #     백업으로 자동 fallback** 합니다」
+      #
+      #   ★ **아직 아무것도 건너뛰지 않습니다.** 묻기만 합니다.
+      #     바로 아래 전체 백업(16분35초)이 그대로 돕니다.
+      #     그림자가 연속 3회 같아진 **뒤에** 건너뛰기를 켭니다.
+      #     돌려주는 값 — 0 괜찮음 · 3 모르겠음
+      - name: 아티팩트 사전확인 (아직 건너뛰지 않습니다)
+        id: preflight
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python engine/artifact_preflight.py && 값=0 || 값=$?
+          echo "결과=$값" >> "$GITHUB_OUTPUT"
+          if [ "$값" = "0" ]; then
+            echo "· 괜찮습니다 — 다음 단계에서 건너뛸 수 있는 상태입니다"
+          else
+            echo "· 모르겠습니다 — 기존 전체 백업을 씁니다 (지금도 그렇습니다)"
+          fi
+
       # ── ⑤ 되돌릴 것을 먼저 챙깁니다
       - name: 지금 서버를 내려받아 둡니다 (되돌리기용)
         env:
