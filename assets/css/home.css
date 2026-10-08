@@ -62,16 +62,44 @@
 .g-club>a:hover{background:#D9993B}
 .g-club small{display:block;text-align:center;margin-top:9px;font-size:.74rem;color:rgba(243,236,221,.6)}
 
-/* 숫자 띠 */
-.g-stats{background:#FFFBF3;border-bottom:1px solid var(--line)}
-.g-stats .wrap{display:grid;grid-template-columns:repeat(5,1fr)}
-/* 다섯 칸 모두 눌러서 그 자료로 갑니다 (2026-09-21) */
-.g-stats a{display:block;text-align:center;padding:12px 8px;border-left:1px solid var(--line);text-decoration:none}
-.g-stats a:first-child{border-left:0}
-.g-stats a:hover{background:#F7F1E4}
+/* 숫자 띠 — ★ **히어로 하단에 살짝 겹치는 카드** (2026-10-08 주인 시안)
+   전에는 히어로와 본문 사이에 끼인 평평한 줄이었습니다. 바깥 검수 —
+   「이 구간은 단순 숫자영역이 아니라 바다가자가 얼마나 큰 정보를 갖고
+     있는지 보여주는 핵심 신뢰 구간입니다」
+   그래서 띠가 아니라 **떠 있는 카드**로 올립니다. */
+.g-stats{background:transparent;border-bottom:0;position:relative;z-index:10}
+.g-stats .wrap{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  max-width:980px;margin:-42px auto 30px;
+  background:var(--soft);border-radius:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+  overflow:hidden;
+}
+/* 세 칸 모두 눌러서 그 자료로 갑니다 (2026-09-21) */
+.g-stats a{display:block;text-align:center;padding:22px 16px 18px;
+  border-right:1px solid rgba(0,0,0,.08);border-left:0;text-decoration:none}
+.g-stats a:last-child{border-right:0}
+.g-stats a:hover{background:#F2EADC}
 .g-stats a:hover b{color:var(--lantern)}
-.g-stats b{display:block;font-family:'Noto Serif KR',serif;font-size:1.36rem;color:var(--teal);line-height:1.3}
-.g-stats span{font-size:.76rem;color:var(--foam-dim)}
+.g-stats b{display:block;font-family:'Noto Serif KR',serif;
+  font-size:46px;font-weight:800;line-height:1;color:var(--teal);
+  margin-bottom:8px}
+/* ★ 가운데(포인트 수)가 이 사이트의 강점이라 색을 달리합니다 */
+.g-stats a:nth-child(2) b{color:#D8A24C}
+.g-stats span{display:block;font-size:16px;color:var(--foam-dim)}
+
+/* 휴대폰 — 세 칸을 나란히 두면 답답합니다. 세로로 쌓습니다 */
+@media (max-width:768px){
+  .g-stats .wrap{
+    max-width:calc(100% - 24px);margin:-28px auto 24px;
+    grid-template-columns:1fr;border-radius:16px;
+  }
+  .g-stats a{padding:18px 14px;border-right:0;
+    border-bottom:1px solid rgba(0,0,0,.08)}
+  .g-stats a:last-child{border-bottom:0}
+  .g-stats b{font-size:32px}
+  .g-stats span{font-size:14px}
+}
 
 /* 여섯 걸음 — 오늘 갈 바다를 정하는 순서 (2026-09-23 주인 지시, 바로가기 줄을 대신합니다) */
 .stw{background:linear-gradient(180deg,#F3F9FD,#FBFDFE 62%,var(--night));border-bottom:1px solid var(--line);
@@ -239,8 +267,10 @@
 @media (max-width:720px){
   .g-hero{min-height:auto}
   .g-hero-in{padding-top:26px;padding-bottom:24px}
-  .g-stats .wrap{grid-template-columns:repeat(3,1fr)}
-  .g-stats a:nth-child(4){border-left:0}
+  /* ★ 숫자 카드는 **위 768px 규칙(세로 쌓기)** 을 따릅니다.
+     전에 여기 `repeat(3,1fr)` 이 있었는데, 이 미디어쿼리가
+     **뒤에 있어** 세로 쌓기를 조용히 덮었습니다. 숫자 크기만
+     바뀌어 더 헷갈렸습니다 (기억 「차림표 맨 뒤가 이깁니다」). */
   .g-main{grid-template-columns:1fr}
   .g-four{grid-template-columns:1fr}
   .g-search button{padding:10px 15px}

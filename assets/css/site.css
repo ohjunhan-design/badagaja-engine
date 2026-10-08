@@ -774,8 +774,28 @@ html.has-navi .navi:hover{filter:brightness(.94)}
   .totop,.to-top,#toTop{bottom:72px}
 }
 /* ── 꼬리 ─────────────────────────────────────────────── */
-.site-footer{border-top:1px solid var(--line);margin-top:40px;padding:28px 0 60px;font-size:12px;color:var(--muted);line-height:1.8}
-.footer-nav{display:flex;gap:28px;flex-wrap:wrap;margin-bottom:20px}
+.site-footer{border-top:1px solid var(--line);margin-top:40px;
+  padding:34px 0 18px;font-size:12px;color:var(--muted);line-height:1.8}
+/* ★ **압축형 꼬리말** (2026-10-08 주인 시안)
+   전에는 모두 왼쪽에 몰려 오른쪽이 비고, 세로로만 길었습니다.
+   바깥 검수 — 「바다가자는 정보가 많은 사이트라서 푸터를 크고
+   장식적으로 만들 필요는 없습니다. 한눈에 찾고 바로 이동하는
+   압축형 푸터가 가장 어울립니다」
+   PC 는 **브랜드 + 3열 메뉴**, 휴대폰은 2열입니다. */
+.site-footer>.wrap{display:grid;grid-template-columns:1.25fr 2fr;
+  gap:60px;align-items:start}
+.footer-brand{min-width:0}
+.footer-brand p{margin:0 0 10px;font-size:13px;line-height:1.6}
+.footer-nav{display:grid;grid-template-columns:repeat(3,1fr);
+  gap:36px;margin:0}
+/* 아래 한 줄 — 안내문은 왼쪽, 판 표시는 오른쪽 */
+.site-footer>.wrap>.pcview,
+.footer-bottom{grid-column:1/-1}
+.footer-bottom{display:flex;justify-content:space-between;gap:20px;
+  margin:4px 0 0;padding-top:16px;
+  border-top:1px solid var(--line);font-size:12px}
+.footer-bottom p{margin:0}
+.footer-bottom .foot-build{white-space:nowrap;opacity:.8}
 /* PC 화면으로 보기 — 휴대폰에서만 보입니다 (2026-09-30 주인 지적으로 되살림)
    ★ 켠 뒤에는 폭이 1280 이 되어 좁은 화면 규칙이 꺼집니다.
      그래도 보이게 해야 **되돌아올 수 있습니다** — 안 그러면 갇힙니다. */
@@ -813,6 +833,18 @@ html[data-pcview] .pcview{display:block}
 }
 /* 지금 보고 있는 쪽 — 링크가 아니라 표시만 */
 .footer-nav .here{display:block;padding:3px 0;color:var(--orange);font-weight:700}
+
+/* 꼬리말 — 휴대폰에서는 브랜드 한 칸 + 메뉴 2열 (2026-10-08 주인 시안) */
+@media (max-width:768px){
+  .site-footer{padding:28px 0 60px}
+  .site-footer>.wrap{grid-template-columns:1fr;gap:24px}
+  .footer-nav{grid-template-columns:repeat(2,1fr);gap:24px 18px}
+  .footer-bottom{flex-direction:column;gap:6px;padding-top:14px}
+  /* ★ 아래 차림표(탭바)에 가리지 않게 — **여기가 뒤**라 이깁니다
+     (기억 「차림표 맨 뒤가 이깁니다」 — 앞의 72px 규칙은 뒤의
+      `.site-footer{padding:...}` 에 조용히 덮여 있었습니다) */
+  .site-footer{padding-bottom:72px}
+}
 
 /* ── 권역 쪽 ──────────────────────────────────────────── */
 .section-head{margin-bottom:20px}

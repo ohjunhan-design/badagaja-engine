@@ -79,6 +79,40 @@ def 사진깔렸나(그림):
     return False
 
 
+# ★ **사진 위에 겹쳐 올린 꼴** (2026-10-08 — 시험이 찾아낸 구멍)
+#
+#   위의 `사진깔렸나()` 는 `<svg>` **안쪽**만 봅니다. 그런데 사진 위에
+#   그림을 얹는 **가장 흔한 방법**은 svg 안에 사진을 넣는 것이 아니라,
+#   같은 칸에 `<img>` 와 `<svg>` 를 나란히 두고 svg 를
+#   `position:absolute` 로 **겹치는** 것입니다.
+#
+#       <figure style="position:relative">
+#         <img src="사진.jpg">
+#         <svg style="position:absolute;left:0;top:0">...</svg>
+#       </figure>
+#
+#   이 꼴을 넣어 보았더니 검사기가 「사진이 깔린 것 0개」라며 그냥
+#   통과시켰습니다. 그림 **안**만 보면 겹친 것을 영영 못 봅니다.
+겹친칸 = re.compile(
+    r'<(figure|div|span|a|picture)\b[^>]*>(.*?)</\1>', re.S | re.I)
+_사진태그 = re.compile(r'<(?:img|picture|source)\b', re.I)
+_겹치기 = re.compile(r'position\s*:\s*absolute', re.I)
+
+
+def 겹쳐올린그림들(글):
+    """같은 칸 안에 **사진과 겹친 그림**이 있으면 그 그림들을 냅니다."""
+    난것 = []
+    for m in 겹친칸.finditer(글):
+        속 = m.group(2)
+        if not _사진태그.search(속):
+            continue
+        머리 = m.group(0)[:200]
+        for 그림 in 그림들(속):
+            if _겹치기.search(그림) or _겹치기.search(머리):
+                난것.append(그림)
+    return 난것
+
+
 def main():
     엄격 = '--strict' in sys.argv
     본쪽 = 0
@@ -96,12 +130,14 @@ def main():
             continue
         읽은쪽 += 1
         것들 = 그림들(글)
+        # ★ **겹쳐 올린 것도 셉니다** (2026-10-08)
+        겹친것 = set(겹쳐올린그림들(글))
         if not 것들:
             continue
         본쪽 += 1
         for 그림 in 것들:
             본그림 += 1
-            if not 사진깔렸나(그림):
+            if not 사진깔렸나(그림) and 그림 not in 겹친것:
                 continue        # B — 사진과 떨어진 일반 도해입니다
             사진깔린그림 += 1
 

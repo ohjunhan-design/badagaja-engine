@@ -755,12 +755,18 @@ def 계약28():
     검사기가 늘 통과를 내도록 망가져 있어도 모르면 소용없습니다.
     실제로 check_tide 가 tide.js 의 식을 베껴 적어 메아리였습니다.
     """
-    시험길 = os.path.join(ROOT, 'tests', 'test_checkers.py')
-    if not os.path.exists(시험길):
+    # ★ **시험 파일 하나만 보지 않습니다** (2026-10-08)
+    #   전에는 `tests/test_checkers.py` 만 봤습니다. 그래서
+    #   `tests/test_workflow_check.py` · `tests/test_failclosed.py`
+    #   처럼 **전용 시험을 따로 쓴 검사기가 「안 다룬다」로** 걸렸습니다.
+    #   계약의 뜻은 「검사기도 시험받는다」이지 「그 한 파일에 적혀
+    #   있다」가 아닙니다.
+    시험들 = sorted(glob.glob(os.path.join(ROOT, 'tests', 'test_*.py')))
+    if not 시험들:
         적기('28', '검사기도 시험받는다', '안잼',
-             'tests/test_checkers.py 가 없습니다')
+             'tests/ 에 시험이 하나도 없습니다')
         return
-    글 = io.read(시험길, default='')
+    글 = ''.join(io.read(p, default='') for p in 시험들)
     검사기 = [os.path.basename(p) for p in
               sorted(glob.glob(os.path.join(ROOT, 'engine', 'check_*.py')))]
     # 계약 검사 자신은 여기서 빼지 않습니다 — 그것도 시험받아야 합니다
@@ -769,7 +775,7 @@ def 계약28():
          '어김' if 빠진것 else '지킴',
          ('시험이 안 다루는 검사기 %d개: %s'
           % (len(빠진것), ' · '.join(빠진것))) if 빠진것 else
-         '검사기 %d개에 일부러 망가뜨려 보는 시험이 있습니다' % len(검사기))
+         '검사기 %d개에 일부러 망가뜨려 보는 시험이 있습니다 (시험 %d장)' % (len(검사기), len(시험들)))
 
 
 # ── 계약-30 · 다른 언어 쪽은 그 언어여야 낸다 ──────────────
