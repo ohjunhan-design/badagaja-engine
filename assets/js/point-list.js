@@ -198,6 +198,26 @@
     return typeof p.위도 === 'number' && typeof p.경도 === 'number';
   });
 
+  /* ★ **같은 좌표를 쓰는 곳을 먼저 묶습니다** (2026-10-08)
+   *
+   *   처음에는 이 셈을 지도 만들기 **안**에 두었습니다. 그런데
+   *   로컬에서 보니 지도를 못 불러오는 자리에서는 「이 둘레 ○곳」도
+   *   함께 사라졌습니다. 지도는 바깥 것(카카오)이라 못 뜰 수
+   *   있지만, **「개별 위치가 아직 확인되지 않았다」는 사실은
+   *   지도와 상관없이 말해야 합니다.**
+   *
+   *   계약-23 — 지도가 없어도 쪽은 그대로 쓸 수 있어야 합니다.
+   *   그 정신을 여기에도 적용합니다.
+   */
+  var 묶음표 = {};
+  좌표있는것.forEach(function (p) {
+    var 키 = p.위도.toFixed(6) + ',' + p.경도.toFixed(6);
+    (묶음표[키] = 묶음표[키] || []).push(p);
+  });
+  좌표있는것.forEach(function (p) {
+    p.한자리 = 묶음표[p.위도.toFixed(6) + ',' + p.경도.toFixed(6)];
+  });
+
   if (지도칸 && 자료.지도키 && 좌표있는것.length) {
     var s = document.createElement('script');
     s.src = 'https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey='
@@ -276,18 +296,8 @@
      *   대표하는지 숫자로 밝힙니다. 누르면 패널이 「이 둘레 ○곳,
      *   개별 위치는 아직 확인되지 않았습니다」라고 말합니다.
      */
-    var 묶음표 = {};
-    좌표있는것.forEach(function (p) {
-      var 키 = p.위도.toFixed(6) + ',' + p.경도.toFixed(6);
-      (묶음표[키] = 묶음표[키] || []).push(p);
-    });
-    좌표있는것.forEach(function (p) {
-      var 키 = p.위도.toFixed(6) + ',' + p.경도.toFixed(6);
-      p.그릴위도 = p.위도;
-      p.그릴경도 = p.경도;
-      p.한자리 = 묶음표[키];          // 이 점을 함께 쓰는 곳들
-    });
-
+    /* 묶음은 **위에서 이미 셈했습니다**(지도 없이도 알려야 하므로).
+       여기서는 그것으로 핀만 그립니다. */
     var 테두리 = new kakao.maps.LatLngBounds();
     Object.keys(묶음표).forEach(function (키) {
       var 들 = 묶음표[키];
@@ -386,7 +396,9 @@
          「자세히 보기」를 누른 때만 끌어올립니다. */
     if (패널) { 패널.보이기(p, false); }
 
-    var 자리 = new kakao.maps.LatLng(p.그릴위도, p.그릴경도);
+    /* 벌려 그리기를 없앴으므로 **제 좌표 그대로**입니다.
+       (전에는 겹친 핀을 100m 쯤 벌려 `그릴위도` 를 따로 두었습니다) */
+    var 자리 = new kakao.maps.LatLng(p.위도, p.경도);
     var 상자 = 만들기('div', 'map-pop');
     var 닫기 = 만들기('button', 'x', '×');
     닫기.type = 'button';
