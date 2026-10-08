@@ -105,10 +105,18 @@ def main():
     try:
         sys.path.insert(0, 여기)
         from engine import shadow_tally
+        if shadow_tally.사라질자리인가():
+            # ★ 적어도 이 배포가 끝나면 사라집니다. 세는 척만 하는
+            #   것이라 **말해 주어야** 합니다 (2026-10-08 에 겪음)
+            print('   ✗ **장부가 체크아웃 안에 있습니다** — 적어도'
+                  ' 이 배포가 끝나면 사라집니다.')
+            print('     연속 횟수가 영영 안 쌓입니다.'
+                  ' deploy.yml 의 BADAGAJA_TALLY 를 보세요.')
+            print('     지금 자리: %s' % shadow_tally.장부길)
         장부 = shadow_tally.적기(판, 같았나, 덧)
         n = shadow_tally.연속(장부)
-        print('   장부: 연속 %d회 같았습니다 (합격선 %d회)'
-              % (n, shadow_tally.합격선))
+        print('   장부: 연속 %d회 같았습니다 (합격선 %d회) — %s'
+              % (n, shadow_tally.합격선, shadow_tally.장부길))
     except Exception as e:
         print('   ~ 장부에 못 적었습니다 (%s)' % e)
 

@@ -81,6 +81,15 @@ jobs:
       PYTHONUNBUFFERED: '1'
       BADAGAJA_URL: https://badagaja.com
       BADAGAJA_URL_ROOT: https://badagaja.com
+      # ★ **그림자 장부를 체크아웃 밖에 둡니다** (2026-10-08)
+      #   일꾼은 배포마다 저장소를 **새로 받습니다.** 그래서 일꾼이
+      #   `tests/golden/그림자장부.json` 에 적은 줄은 그 배포가
+      #   끝나면 사라집니다. 배포 #29 가 성공했는데 장부에 그 줄이
+      #   없는 것으로 들통났습니다 — **연속 3회가 영영 안 쌓이는**
+      #   상태였습니다.
+      #   `runner.temp` 는 작업마다 지워지니 못 씁니다. 일꾼 집
+      #   (`RUNNER_WORKSPACE` 의 윗자리)에 둡니다.
+      BADAGAJA_TALLY: ${{ runner.workspace }}/../badagaja-그림자장부.json
 
     steps:
       # ── ① 정말 올릴 것인지

@@ -24,7 +24,26 @@ import sys
 여기 = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
-장부길 = os.path.join(여기, 'tests', 'golden', '그림자장부.json')
+# ★ **장부는 체크아웃 밖에 둡니다** (2026-10-08 에 겪음)
+#
+#   처음에는 `tests/golden/그림자장부.json` 한 곳에만 썼습니다.
+#   그런데 판정·배포는 깃허브 일꾼에서 돌고, 일꾼은 배포마다
+#   **저장소를 새로 받습니다.** 그러니 일꾼이 적은 줄은 그 배포가
+#   끝나면 **사라집니다.**
+#
+#   증거 — 배포 #29(b969834)가 성공으로 끝났는데 장부에는 그 줄이
+#   없었습니다. 장부에는 제가 제 컴퓨터에서 적은 한 줄(27c8527)뿐.
+#   **연속 3회가 영영 안 쌓이는 상태**였습니다.
+#
+#   「사람이 세면 잊으니 코드가 세게 하겠습니다」라고 해 놓고
+#   코드도 못 세고 있었습니다.
+#
+#   그래서 일꾼이 **체크아웃 밖 고정 자리**에 쌓게 합니다
+#   (`BADAGAJA_TALLY`). 잃어도 큰일이 아닙니다 — 되돌리기 밑천이
+#   아니라 **세는 것**이라 연속이 0부터 다시 시작될 뿐입니다.
+#   밑천은 깃허브 아티팩트가 따로 보관합니다.
+_기본장부 = os.path.join(여기, 'tests', 'golden', '그림자장부.json')
+장부길 = os.environ.get('BADAGAJA_TALLY') or _기본장부
 합격선 = 3
 
 
@@ -50,6 +69,30 @@ def 적기(판, 같았나, 덧=''):
     io.open(장부길, 'w', encoding='utf-8').write(
         json.dumps(장부, ensure_ascii=False, indent=1))
     return 장부
+
+
+def 사라질자리인가():
+    """장부가 **배포마다 지워지는 자리**에 있는가.
+
+    ★ 일꾼(깃허브 액션)은 배포마다 저장소를 새로 받습니다. 장부가
+      체크아웃 안에 있으면 적어 봐야 그 배포와 함께 사라지고,
+      연속 횟수가 영영 안 쌓입니다. 2026-10-08 에 그 상태였습니다 —
+      배포 #29 가 성공했는데 장부에 그 줄이 없었습니다.
+
+      그때는 **아무도 알려 주지 않아** 제가 로그를 뒤져 알았습니다.
+      다음부터는 그 자리에서 말하게 합니다.
+    """
+    if not os.environ.get('GITHUB_ACTIONS'):
+        return False            # 내 컴퓨터에서는 안 지워집니다
+    일터 = os.environ.get('GITHUB_WORKSPACE')
+    if not 일터:
+        return False
+    try:
+        안인가 = os.path.commonpath(
+            [os.path.abspath(장부길), os.path.abspath(일터)])
+        return 안인가 == os.path.abspath(일터)
+    except ValueError:
+        return False            # 드라이브가 다르면 바깥입니다
 
 
 def 연속(장부=None):
