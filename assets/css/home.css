@@ -85,7 +85,10 @@
   font-size:46px;font-weight:800;line-height:1;color:var(--teal);
   margin-bottom:8px}
 /* ★ 가운데(포인트 수)가 이 사이트의 강점이라 색을 달리합니다 */
-.g-stats a:nth-child(2) b{color:#D8A24C}
+/* ★ 가운데(포인트 수)가 이 사이트의 강점이라 색을 달리합니다.
+   시안은 #D8A24C 였으나 카드 바탕에서 2.12:1 이라 기준(3:1)을
+   못 넘었습니다. 바깥 검수가 #B07A1E(3.45:1)로 확정했습니다. */
+.g-stats a:nth-child(2) b{color:var(--gold-ink)}
 .g-stats span{display:block;font-size:16px;color:var(--foam-dim)}
 
 /* 휴대폰 — 세 칸을 나란히 두면 답답합니다. 세로로 쌓습니다 */

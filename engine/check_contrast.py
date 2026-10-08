@@ -34,6 +34,7 @@ import os
 import re
 import sys
 import json
+import glob
 import shutil
 import tempfile
 import subprocess
@@ -186,6 +187,43 @@ def 쪽재기(쪽길, 폭=1280, 높이=2200):
         shutil.rmtree(임시, ignore_errors=True)
 
 
+_색박음 = re.compile(r'(?<![-\w])color:\s*#([0-9A-Fa-f]{3,8})')
+_토큰 = re.compile(r'^\s*(--[\w-]+)\s*:', re.M)
+
+
+def 임의색찾기():
+    """★ **역할 토큰을 쓰는가** (2026-10-08 바깥 검수)
+
+      「새 색을 추가할 때마다 임의 HEX 를 넣기보다 --orange,
+        --orange-ink, --gold-ink, --muted 처럼 **역할 기반 토큰만**
+        쓰는 방식으로 막는 게 좋습니다」
+
+    작은 글씨(14px 미만)에 **토큰이 아닌 HEX 를 직접 박은 곳**을
+    찾습니다. 오늘 하루에만 #8A8277 · #B08A4A · #F6C06A · #D8A24C …
+    다섯 가지가 각각 다른 자리에서 나왔습니다. 한 곳씩 쫓는 대신
+    **들어오는 길**을 막습니다.
+
+    ★ 큰 글씨·바탕·테두리는 봐 줍니다 — 디자인의 자유입니다.
+    """
+    난것 = []
+    _블록 = re.compile(r'([^{}]+)\{([^{}]*)\}')
+    _크기 = re.compile(r'font-size:\s*([\d.]+)px')
+    for p in sorted(glob.glob(os.path.join(ROOT, 'assets', 'css', '*.css'))):
+        글 = _io.read(p, default='')
+        for m in _블록.finditer(글):
+            고르개, 속 = m.group(1).strip(), m.group(2)
+            if 고르개.startswith('@') or 고르개.startswith(':root'):
+                continue
+            크 = _크기.search(속)
+            if not 크 or float(크.group(1)) >= 14:
+                continue
+            for cm in _색박음.finditer(속):
+                난것.append('%s — `%s` 가 색을 직접 박았습니다 (#%s · %spx)'
+                            % (os.path.basename(p), 고르개[:34],
+                               cm.group(1), 크.group(1)))
+    return 난것
+
+
 def 볼쪽들(전부):
     것들 = sorted(_io.쪽들(NEW))
     if 전부:
@@ -253,6 +291,11 @@ def main():
         print('  · 기준선에 %d곳을 적었습니다 — %s'
               % (len(막음), os.path.relpath(기준길, ROOT)))
         return 0
+
+    # ★ **역할 토큰을 쓰는가** (바깥 검수 2026-10-08)
+    박은것 = 임의색찾기()
+    for t in 박은것:
+        알림.append('%s — 역할 토큰(`--orange-ink` 같은)을 쓰세요' % t)
 
     새것 = [t for t in 막음 if t not in 알던것]
     if 알림:
