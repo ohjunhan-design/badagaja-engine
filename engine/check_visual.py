@@ -70,7 +70,7 @@ NEW = os.environ.get('BADAGAJA_SITE', os.path.join(ROOT, 'site'))
     return t.trim();
   }
   function 재자() {
-    var 난것 = { 폭: innerWidth, 잘린글: [], 겹친글: [],
+    var 난것 = { 폭: innerWidth, 잘린글: [], 겹친글: [], 너무줄임: [],
                  찌그러진사진: [], 빈칸: [] };
     var 모두 = document.querySelectorAll('body *');
 
@@ -81,7 +81,23 @@ NEW = os.environ.get('BADAGAJA_SITE', os.path.join(ROOT, 'site'))
       var s = getComputedStyle(e);
       if (s.overflow !== 'hidden' && s.overflowY !== 'hidden'
           && s.overflowX !== 'hidden') continue;
-      if (s.webkitLineClamp && s.webkitLineClamp !== 'none') continue;
+      // ★ **줄임과 숨김은 다릅니다** (2026-10-09)
+      //   clamp 가 걸린 것은 「일부러 줄인 것」이라 봐 주고 있었는데,
+      //   채비 모음 쪽에서 **248px 짜리 글이 41px 만** 보였습니다.
+      //   글의 6분의 1입니다. 그건 줄인 것이 아니라 숨긴 것입니다.
+      //   세 배를 넘게 숨기면 알립니다.
+      if (s.webkitLineClamp && s.webkitLineClamp !== 'none') {
+        if (e.scrollHeight > e.clientHeight * 3 && e.clientHeight > 0) {
+          난것.너무줄임.push({
+            태그: e.tagName,
+            클래스: (e.className || '').toString().trim().split(/\\s+/)[0] || '',
+            글: 글만(e).slice(0, 24),
+            보임: Math.round(e.clientHeight),
+            속: Math.round(e.scrollHeight)
+          });
+        }
+        continue;
+      }
       if (s.textOverflow === 'ellipsis') continue;   // 일부러 …로 줄임
       var 글 = 글만(e);
       if (글.length < 6) continue;
@@ -264,6 +280,15 @@ def main():
                 막음.append('%s %dpx — `%s` 안의 글이 잘립니다 '
                             '(보임 %dpx · 속 %dpx · 「%s」)'
                             % (짧, 폭, x['클래스'] or x['태그'],
+                               x['보임'], x['속'], x['글']))
+            # ★ 너무 많이 줄인 글 — 먼저 **알림**으로 둡니다
+            #   (2026-10-09). 거짓 양성을 걷어내기 전에 막으면
+            #   배포가 멈춥니다 (기억 「거짓 양성부터 걷어냅니다」).
+            for x in (잰것.get('너무줄임') or []):
+                알림.append('%s %dpx — `%s` 가 글의 %d분의 1만 '
+                            '보여 줍니다 (보임 %dpx · 속 %dpx · 「%s」)'
+                            % (짧, 폭, x['클래스'] or x['태그'],
+                               max(1, round(x['속'] / max(x['보임'], 1))),
                                x['보임'], x['속'], x['글']))
             for x in 잰것['찌그러진사진']:
                 막음.append('%s %dpx — 사진이 찌그러집니다 '

@@ -110,7 +110,7 @@ def _일꾼이깔것():
 맞는인자 = {'build.py': ['--only', 'index']}
 
 
-def _정말멈추나(파일, 꾸러미):
+def _정말멈추나(파일, 꾸러미, 참을시간=240):
     """가짜 모듈로 가려 보고 **끝난값 4** 가 나오는지 봅니다."""
     with tempfile.TemporaryDirectory() as 가짜:
         io.open(os.path.join(가짜, 꾸러미 + '.py'), 'w',
@@ -123,7 +123,7 @@ def _정말멈추나(파일, 꾸러미):
                 [sys.executable, '-X', 'utf8',
                  os.path.join(여기, 파일)]
                 + 맞는인자.get(파일, []),
-                cwd=뿌리, env=터, timeout=240,
+                cwd=뿌리, env=터, timeout=참을시간,
                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
             ).returncode
         except subprocess.TimeoutExpired:
@@ -174,10 +174,15 @@ def main():
         #   **정말 멈추는가**만이 뜻이 있습니다.
         손것 = 이름.startswith(손으로만)
         꾸 = sorted(쓴것)[0]
-        끝 = _정말멈추나(이름, 꾸)
+        # 손으로만 쓰는 것은 **짧게 끊습니다** (2026-10-09)
+        #   안 멈추면 끝까지 도는데(그림을 통째로 다시 만들기도
+        #   합니다) 어차피 막지 않고 알림만 냅니다. 판정이 한참
+        #   길어지는 것이 더 나쁩니다.
+        끝 = _정말멈추나(이름, 꾸, 참을시간=20 if 손것 else 240)
         재본것.append(이름)
         if 끝 is None:
-            알림.append('%s - 가려 보니 시간이 넘었습니다' % 이름)
+            알림.append('%s - 가려 보니 시간이 넘었습니다%s'
+                        % (이름, ' · 손으로만 돌리는 것' if 손것 else ''))
             print('  ~ %-26s 시간 넘음' % 이름)
         elif 끝 == 4:
             print('  O %-26s %s 를 가리면 못잼(4)' % (이름, 바깥것[꾸]))
