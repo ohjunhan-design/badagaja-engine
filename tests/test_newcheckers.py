@@ -18,7 +18,7 @@
     'check_build_stamp.py' · 'check_coast.py' · 'check_failclosed.py'
     'check_overlay.py' · 'check_panel.py' · 'check_rigref.py'
     'check_search.py' · 'check_nocoord.py' · 'check_backup.py'
-    'check_cssdup.py'
+    'check_cssdup.py' · 'check_cover.py'
 
 ★ **정말 망가뜨려야 합니다** (기억 「뮤테이션은 정말 망가뜨려야」)
     살짝 건드려 놓고 「잡았다」 하면 헛돕니다. 검사기가 보는 바로
@@ -302,6 +302,36 @@ def 시험_이름겹침():
        돌리기('check_cssdup.py', 인자=['--strict'], 시간=180).끝난값 == 0)
 
 
+def 시험_덮는것():
+    """'check_cover.py' — 본문을 덮는 것을 잡는가
+
+    ★ 2026-10-08 — 확대 그림이 채비 16쪽을 덮었는데 **기존 검사기
+      어느 것도 못 잡았습니다.** 그때의 차림표를 그대로 되살립니다.
+    """
+    print('[10] check_cover — 본문을 덮는 것을 잡는가')
+    with isolate.일터() as 뿌리:
+        길 = os.path.join(뿌리, 'assets', 'css', 'site.css')
+        글 = io.read(길)
+        옛 = '.fish-rig-zoom{position:absolute;right:10px;bottom:10px;'
+        봄('그때의 줄을 되살릴 수 있다', 옛 in 글)
+        io.write(길, 글.replace(
+            옛, '.rig-zoom{position:absolute;right:10px;bottom:10px;', 1))
+        # ★ **쪽을 다시 만들어야** 차림표가 site/ 로 갑니다.
+        #   안 만들고 재면 옛 차림표를 재어 「탈 없음」이 나옵니다 —
+        #   2026-10-08에 제가 그렇게 두 번 속았습니다.
+        만들기 = subprocess.run(
+            [sys.executable, '-X', 'utf8',
+             os.path.join(뿌리, 'engine', 'build.py')],
+            cwd=뿌리, capture_output=True, text=True,
+            encoding='utf-8', errors='replace', timeout=900)
+        봄('사본에서 다시 만들 수 있다', 만들기.returncode == 0,
+           (만들기.stderr or '')[-200:])
+        난것 = 돌리기('check_cover.py', 뿌리=뿌리, 시간=900)
+        봄('본문을 덮으면 막는다 (끝난값 1)', 난것.끝난값 == 1, 난것)
+        봄('어느 쪽·무엇인지 말해 준다',
+           'rig-zoom' in 난것 and '덮습니다' in 난것, 난것)
+
+
 def main():
     print('새로 만든 검사기도 잘못을 잡는지 봅니다 (2026-10-08)')
     print('  바깥 검수 — 「broken fixture → FAIL 회귀시험을 추가하세요」')
@@ -315,6 +345,7 @@ def main():
     시험_거짓통과()
     시험_되돌릴것()
     시험_이름겹침()
+    시험_덮는것()
     print('')
     if 실패:
         print('%d가지 통과 · %d가지 실패' % (통과, len(실패)))
