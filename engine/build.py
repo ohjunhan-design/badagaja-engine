@@ -732,12 +732,19 @@ def 판번호(길):
 
     시각을 넣으면 안 고쳐도 결과가 달라져 재현성이 깨집니다 (계약-08).
     내용이 같으면 판 번호도 같습니다.
+
+    ★ **셈하는 법은 `io.sha()` 한 곳에만 둡니다** (2026-10-09 · 계약-03)
+      전에는 여기서 따로 셈했고 `hubs_more.판번호()` 도 따로였습니다.
+      한쪽만 고치니 쪽에 박히는 값이 그대로였습니다.
+
+      `io.sha()` 는 글자 파일의 줄바꿈을 맞춘 뒤 셉니다 —
+      `io.write()` 가 쓸 때 LF 로 통일하므로 같은 기준이어야
+      서버에 올라간 파일과 값이 맞습니다. 전에는 원본(CRLF)을
+      그대로 세어 **449쪽의 판번호가 서버와 영영 달랐습니다.**
     """
     if not os.path.exists(길):
         return '0'
-    with open(길, 'rb') as f:
-        return hashlib.sha1(f.read()).hexdigest()[:8]
-
+    return io.sha(길)[:8]
 
 def esc(s):
     return html.escape(s or '', quote=True)

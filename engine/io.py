@@ -288,11 +288,32 @@ def copy_binary(src, dst, *, mkdir=True):
     return True
 
 
+# 글자 파일 — 줄바꿈을 맞춰 셈합니다
+_글자확장자 = ('.css', '.js', '.mjs', '.json', '.html', '.xml',
+               '.txt', '.svg', '.md', '.yml', '.yaml')
+
+
 def sha(path_or_text):
-    """내용의 지문. 재현성 검사와 자산 해시에 씁니다. (계약-07)"""
+    """내용의 지문. 재현성 검사와 자산 해시에 씁니다. (계약-07)
+
+    ★ **글자 파일은 줄바꿈을 맞춘 뒤 셉니다** (2026-10-09 새벽)
+      `write()` 는 쓸 때 줄바꿈을 LF 로 통일합니다. 그런데 여기서는
+      원본(CRLF)을 그대로 세어, 쪽에 박히는 판번호가 서버에 올라간
+      파일과 **영영 안 맞았습니다.**
+
+          assets/css/site.css        CRLF 5,080개 → 43dae407
+          site/assets/css/site.css   CRLF 0개     → 33b70078
+
+      `check_deployed --net` 이 「449쪽 모두 내용이 다릅니다」라고
+      했는데 실제로 다른 것은 **차림표 판번호 한 줄**뿐이었습니다.
+      사진·글꼴 같은 바이너리는 그대로 셉니다.
+    """
     if os.path.exists(path_or_text):
         with _io.open(path_or_text, 'rb') as f:
-            return hashlib.sha256(f.read()).hexdigest()
+            덩이 = f.read()
+        if os.path.splitext(path_or_text)[1].lower() in _글자확장자:
+            덩이 = 덩이.replace(b'\r\n', b'\n').replace(b'\r', b'\n')
+        return hashlib.sha256(덩이).hexdigest()
     return hashlib.sha256(path_or_text.encode('utf-8')).hexdigest()
 
 
