@@ -187,8 +187,22 @@ def 쪽재기(쪽길, 폭=1280, 높이=2200):
         shutil.rmtree(임시, ignore_errors=True)
 
 
-_색박음 = re.compile(r'(?<![-\w])color:\s*#([0-9A-Fa-f]{3,8})')
+# ★  처럼 **다른 속성 안의 색**을 글자색으로
+#   읽으면 안 됩니다. 줄 머리에서 `color:` 로 시작하는 것만 봅니다.
+# 주의 — border/background 안의 색을 글자색으로 읽으면 안 됩니다.
+#   속성 **처음에 오는** color: 만 봅니다.
+_색박음 = re.compile(r'(?:^|;)\s*color:\s*#([0-9A-Fa-f]{3,8})\s*(?:;|$)')
 _토큰 = re.compile(r'^\s*(--[\w-]+)\s*:', re.M)
+
+
+def _흰바탕대비(h):
+    """흰 바탕에서의 대비. 글자색이 밝을수록 작습니다."""
+    def f(x):
+        x = x / 255.0
+        return x / 12.92 if x <= 0.03928 else ((x + 0.055) / 1.055) ** 2.4
+    y = (0.2126 * f(int(h[0:2], 16)) + 0.7152 * f(int(h[2:4], 16))
+         + 0.0722 * f(int(h[4:6], 16)))
+    return (1.0 + 0.05) / (y + 0.05)
 
 
 def 임의색찾기():
@@ -217,9 +231,33 @@ def 임의색찾기():
             크 = _크기.search(속)
             if not 크 or float(크.group(1)) >= 14:
                 continue
+            # ★ 바탕이 함께 적혀 있으면 봐 줍니다 — 진한 바탕 위의
+            #   흰 글씨는 대비가 **높습니다**. 흰 바탕으로 셈하면 틀립니다.
+            if 'background' in 속:
+                continue
             for cm in _색박음.finditer(속):
+                h = cm.group(1)
+                if len(h) == 3:
+                    h = h[0] * 2 + h[1] * 2 + h[2] * 2
+                if len(h) != 6:
+                    continue
+                # ★ 흰색·검정은 **색을 추가하는 것이 아닙니다.**
+                #   바탕이 다른 규칙에 있어(`.pin--A{background:…}`)
+                #   같은 블록만 봐서는 대비를 알 수 없고, 역할
+                #   토큰으로 바꿀 대상도 아닙니다.
+                if h.lower() in ('ffffff', '000000'):
+                    continue
+                # ★ 흰색·검정은 **대비 그 자체**라 봐 줍니다.
+                #   이미 기준(4.5:1)을 넘는 색도 바꿀 까닭이 없습니다.
+                #   바깥 검수의 뜻은 「새 색을 **추가**할 때」입니다.
+                try:
+                    if _흰바탕대비(h) >= 4.5:
+                        continue
+                except ValueError:
+                    continue
                 난것.append('%s — `%s` 가 색을 직접 박았습니다 (#%s · %spx)'
-                            % (os.path.basename(p), 고르개[:34],
+                            % (os.path.basename(p),
+                               ' '.join(고르개.split())[:34],
                                cm.group(1), 크.group(1)))
     return 난것
 
