@@ -18,7 +18,7 @@
     'check_build_stamp.py' · 'check_coast.py' · 'check_failclosed.py'
     'check_overlay.py' · 'check_panel.py' · 'check_rigref.py'
     'check_search.py' · 'check_nocoord.py' · 'check_backup.py'
-    'check_cssdup.py' · 'check_cover.py'
+    'check_cssdup.py' · 'check_cover.py' · 'check_rigpage.py'
 
 ★ **정말 망가뜨려야 합니다** (기억 「뮤테이션은 정말 망가뜨려야」)
     살짝 건드려 놓고 「잡았다」 하면 헛돕니다. 검사기가 보는 바로
@@ -332,6 +332,34 @@ def 시험_덮는것():
            'rig-zoom' in 난것 and '덮습니다' in 난것, 난것)
 
 
+def 시험_채비쪽그림():
+    """'check_rigpage.py' — 바깥 검수가 정한 네 가지를 잡는가
+
+      초기 overlay 숨김 · 확대 CTA · 가로 넘침 · 1100px 초과 그림
+    """
+    print('[11] check_rigpage — 채비 쪽 네 가지를 잡는가')
+    with isolate.일터() as 뿌리:
+        길 = os.path.join(뿌리, 'assets', 'css', 'site.css')
+        글 = io.read(길)
+        옛 = '.fish-rig-zoom{position:absolute;right:10px;bottom:10px;'
+        봄('그때의 줄을 되살릴 수 있다', 옛 in 글)
+        io.write(길, 글.replace(
+            옛, '.rig-zoom{position:absolute;right:10px;bottom:10px;', 1))
+        만들기 = subprocess.run(
+            [sys.executable, '-X', 'utf8',
+             os.path.join(뿌리, 'engine', 'build.py')],
+            cwd=뿌리, capture_output=True, text=True,
+            encoding='utf-8', errors='replace', timeout=900)
+        봄('사본에서 다시 만들 수 있다', 만들기.returncode == 0)
+        난것 = 돌리기('check_rigpage.py', 뿌리=뿌리, 시간=1500)
+        봄('확대 칸이 펼쳐져 있으면 막는다 (끝난값 1)',
+           난것.끝난값 == 1, 난것)
+        봄('「처음부터 펼쳐져」라고 말해 준다',
+           '처음부터 펼쳐져' in 난것, 난것)
+        봄('1100px 넘는 그림도 함께 잡는다',
+           '1100 넘음' in 난것, 난것)
+
+
 def main():
     print('새로 만든 검사기도 잘못을 잡는지 봅니다 (2026-10-08)')
     print('  바깥 검수 — 「broken fixture → FAIL 회귀시험을 추가하세요」')
@@ -346,6 +374,7 @@ def main():
     시험_되돌릴것()
     시험_이름겹침()
     시험_덮는것()
+    시험_채비쪽그림()
     print('')
     if 실패:
         print('%d가지 통과 · %d가지 실패' % (통과, len(실패)))
