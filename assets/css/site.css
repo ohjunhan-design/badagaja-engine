@@ -4976,3 +4976,46 @@ body.p-travel .tv-more{display:none}
   .pp-go{flex-direction:column}
   .pp-go-b{width:100%}
 }
+
+/* ── 휴대폰에서 엄지가 닿게 ──────────────────────────────
+   주인 규칙 6-2 — 「휴대폰은 「안 잘린다」가 기준이 아닙니다 —
+   한 손으로 쓸 수 있는가, **엄지가 닿는 자리에 주요 단추가
+   있는가**까지 봅니다」
+
+   2026-10-08 밤 전수로 재니 182곳이 44px 에 못 미쳤습니다.
+   애플·구글이 함께 권하는 값이 44px 입니다 — 짐작이 아닙니다.
+
+   ★ **맨 뒤에 둡니다.** 앞에 두면 각자의 미디어쿼리가 덮습니다.
+   ★ PC 는 건드리지 않습니다 — 마우스는 화살표라 작아도 닿습니다.
+   ★ `engine/check_thumb.py` 가 지킵니다.                        */
+@media (max-width:767px){
+  .gs-quick button,
+  .filters--fish button:not([hidden]),
+  .tide-region,
+  .rm-filter button,
+  .tm-filter button,
+  /* ★ 구체성을 맞춥니다 — `body.p-travel .tv-prov` 가 이깁니다 */
+  body.p-travel .tv-prov,
+  body.p-travel .tv-region,
+  .tm-pick .tp-btn,
+  .hc-nav a,
+  .hc-cta .hc-btn,
+  .rm-pick .rp-acts a,
+  .tt-actions .tt-btn,
+  .rm-pick .rp-arrow,
+  body.p-travel .tv-more,
+  .hc-btn,
+  .hc-today,
+  .pt-go-btn,
+  .rig-go-btn,
+  .gp-btn,
+  .gcp-btn{
+    min-height:44px;
+    display:inline-flex;align-items:center;justify-content:center;
+  }
+  /* 알약은 글자가 작아 높이만 주면 글이 가운데로 안 옵니다 */
+  /* 이 알약은 앞 미디어쿼리에서 min-height:27px 로 묶여 있습니다 —
+     구체성을 맞춰 풀어 줍니다 */
+  .hero-c .hc-today{min-height:44px;padding-top:0;padding-bottom:0;
+    display:inline-flex;align-items:center}
+}

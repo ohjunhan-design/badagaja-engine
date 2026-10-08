@@ -640,7 +640,11 @@ footer.site-footer .footer-bottom{padding-bottom:calc(64px + env(safe-area-inset
         앞의 안내 글(span)이 눌려 **한 글자씩 세로로** 쌓입니다.
         2026-10-06 실제로 그렇게 깨졌습니다. */
   .g-quick>*{flex:0 0 auto}
-  .g-quick a{padding:5px 11px}
+  /* ★ **엄지가 닿게** 44px (2026-10-08 밤 · 주인 규칙 6-2)
+     전에는 `padding:5px` 라 34px 이었습니다. 첫 화면에서
+     가장 먼저 눌리는 것인데 손가락보다 작았습니다. */
+  .g-quick a{padding:0 13px;min-height:44px;
+    display:inline-flex;align-items:center}
   /* 안내 글은 휴대폰에서 자리만 먹습니다 — 칩만으로 뜻이 통합니다 */
   .g-quick>span:first-child{display:none}
 
