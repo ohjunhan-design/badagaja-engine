@@ -34,6 +34,28 @@
   그래야 시험에서 진짜 서버 없이 재 볼 수 있습니다.
 """
 import json
+import unicodedata
+
+
+def _값(d, *이름들):
+    """한글 키를 **정규화해서** 찾습니다.
+
+    ★ 겪은 일 (2026-10-08) — `build.json` 에 `커밋짧은` 이 분명히
+      있는데 `d.get('커밋짧은')` 이 **None** 이었습니다. 한글은
+      같은 글자를 조합형(NFD)과 완성형(NFC) 두 가지로 적을 수 있고,
+      파이썬에게는 **다른 글자**입니다. 눈으로는 똑같아 보여
+      찾기 어려운 종류입니다.
+
+      그래서 양쪽을 NFC 로 맞춘 뒤 찾습니다.
+    """
+    표 = {}
+    for k, v in (d or {}).items():
+        표[unicodedata.normalize('NFC', k)] = v
+    for 이 in 이름들:
+        v = 표.get(unicodedata.normalize('NFC', 이))
+        if v is not None:
+            return v
+    return None
 
 
 def 판읽기(글):
@@ -50,10 +72,11 @@ def 판읽기(글):
         d = json.loads(글)
     except Exception:
         return None, None
-    파일 = d.get('파일')
+    파일 = _값(d, '파일')
     if not isinstance(파일, dict):
         return None, None
-    return 파일, d.get('판번호') or d.get('커밋짧은') or ''
+    판 = _값(d, '판번호', '커밋짧은', '커밋') or ''
+    return 파일, (판[:7] if isinstance(판, str) else str(판))
 
 
 def 견주기(옛파일, 새파일):
