@@ -4805,6 +4805,38 @@ body.p-travel .tv-more{display:none}
      그래서 테두리를 없애고 한 줄로만 조용히 둡니다. */
 .pp-shared--ok{padding:2px 0;background:none;border:0}
 
+/* ★ **어종 쪽의 추천 채비 카드** (2026-10-08 주인 지적)
+     「새로운 채비사진이 있는데 왜 구형을 사용하려는거야?」
+     바깥 검수가 역할을 갈랐습니다 —
+       /fish/ = 어떤 채비를 쓰는지 **빠르게 판단**
+       /rig/  = 어떻게 구성하는지 **자세히 학습**
+     그래서 여기는 사진 + 한 줄 + 단추 둘만 둡니다. */
+.fish-rig{display:grid;gap:14px;margin:18px 0;
+  padding:14px;border:1px solid var(--line);
+  border-radius:var(--r-lg);background:var(--card)}
+.fish-rig-visual{position:relative;margin:0}
+.fish-rig-visual img{display:block;width:100%;height:auto;
+  border-radius:var(--r-md)}
+/* ★ 「크게 보기」는 **늘 보입니다** — hover 전용 금지 (바깥 검수)
+     PC 최소 44px · 모바일 최소 46px */
+.rig-zoom{position:absolute;right:10px;bottom:10px;
+  display:inline-flex;align-items:center;gap:6px;
+  min-height:44px;padding:0 16px;border-radius:var(--r-full);
+  background:#2F5D57;color:#fff;font-weight:800;font-size:14px;
+  text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.rig-zoom::before{content:"\1F50D";font-size:15px}
+.fish-rig-name{margin:0 0 4px;font-size:17px;font-weight:800;
+  color:var(--ink)}
+.fish-rig-why{margin:0 0 10px;font-size:14px;line-height:1.6;
+  color:var(--muted)}
+@media (min-width:768px){
+  .fish-rig{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);
+    align-items:start;gap:18px}
+}
+@media (max-width:767px){
+  .rig-zoom{min-height:46px}
+}
+
 /* ★ **끌어올릴 때 고정 머리에 가리지 않게** (2026-10-08에 재고 고침)
      주소(`?point=`)로 들어오면 휴대폰에서 패널이 0.92 화면 아래에
      있어 끌어올리는데, 그냥 올리면 **포인트 이름이 고정 머리에

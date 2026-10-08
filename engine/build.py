@@ -34,6 +34,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, ROOT)
 from engine import io, url, template, art, hubs   # noqa: E402
 from engine import dupspot   # 같은 좌표를 쓰는 곳 가리기   # noqa: E402
+from engine import rigref    # 채비 자산을 **한 곳**에서   # noqa: E402
 from engine import hubs_more   # noqa: E402
 from engine import hubs_site   # noqa: E402
 from engine import hubs_basics   # noqa: E402
@@ -4714,19 +4715,57 @@ def 어종쪽(d, 안내, 언어='ko'):
             #   ★ 간단 그림(art.채비그림)은 **뺐습니다** (2026-09-30 주인 지시)
             #     「이건 필요 없잖아 이제」 — 자세한 채비도가 바로 아래
             #     있는데 찌·봉돌·바늘만 있는 그림을 또 그리고 있었습니다.
-            채비그림 = art.채비도(안내, d.채비자료)
-            # ★ **채비법 쪽으로 가는 길** (2026-09-30 주인 지시)
-            #   「그 자료를 홈에서도 활용하게」 — 어종 쪽에서도 잇습니다.
-            #   같은 자료를 두 곳에서 보여 주되, 자세한 것은 한 곳에만
-            #   둡니다. 갈래가 자료에 없으면 길도 안 놓습니다.
-            _갈 = 안내.get('그림')
-            _것 = ((d.채비자료 or {}).get('채비') or {}).get(_갈)
-            if _것:
-                채비그림 += (
+            # ★★ **추천 채비 카드** — 새 사진을 씁니다 (2026-10-08)
+            #
+            #   주인 — 「**새로운 채비사진이 있는데 왜 구형을
+            #          사용하려는거야?**」
+            #
+            #   `data/img/rig/` 에 새 채비 사진 32장(16종 × PC·모바일)이
+            #   있고 `/rig/` 16쪽은 그것을 씁니다. 그런데 어종 쪽은
+            #   하나도 안 쓰고 옛 SVG 채비도를 그리고 있었습니다.
+            #
+            #   바깥 검수가 역할을 갈랐습니다 —
+            #     「/fish/ = 이 어종에 **어떤 채비를 쓰는지 빠르게 판단**
+            #       /rig/  = 그 채비를 **어떻게 구성하는지 자세히 학습**」
+            #     「같은 사진 파일을 **참조**하는 것은 괜찮습니다.
+            #       금지한 것은 같은 자산을 **두 벌로** 유지하는 것입니다」
+            #
+            #   그래서 어종 쪽에는 **사진 + 짧은 한 줄 + 크게 보기 +
+            #   채비 자세히**만 둡니다. 부품표와 긴 설명은 `/rig/` 몫입니다.
+            #   자산은 `engine/rigref.py` **한 곳**에서만 받습니다.
+            _갈 = rigref.어종의채비(안내)
+            _채 = rigref.채비(_갈, d.채비자료)
+            if _채:
+                채비그림 = (
+                    '<section class="fish-rig" data-rig="%s">'
+                    '<figure class="fish-rig-visual">'
+                    '<picture>'
+                    '<source media="(max-width:767px)" srcset="%s">'
+                    '<img src="%s" alt="%s 안내도" loading="lazy"'
+                    ' decoding="async">'
+                    '</picture>'
+                    # ★ 「크게 보기」는 **늘 보입니다** (바깥 검수 기준)
+                    #   「hover 전용 금지 · 모바일 최소 46px」
+                    '<a class="rig-zoom" href="%s" target="_blank"'
+                    ' rel="noopener">크게 보기</a>'
+                    '</figure>'
+                    '<div class="fish-rig-say">'
+                    '<h3 class="fish-rig-name">추천 채비 · %s</h3>'
+                    '%s'
                     '<p class="rig-go"><a class="rig-go-btn" href="%s">'
                     '%s 자세히 보기 &rsaquo;</a></p>'
-                    % (esc(url.rel(쪽길, url.rig(_갈, 언어))),
-                       esc(_것.get('이름') or '채비')))
+                    '</div></section>'
+                    % (esc(_채['id']),
+                       esc(url.rel(쪽길, _채['모바일사진'])),
+                       esc(url.rel(쪽길, _채['PC사진'])),
+                       esc(_채['이름']),
+                       esc(url.rel(쪽길, _채['PC사진'])),
+                       esc(_채['이름']),
+                       ('<p class="fish-rig-why">%s</p>'
+                        % esc(rigref.첫줄(_채['왜'])))
+                       if _채['왜'] else '',
+                       esc(url.rel(쪽길, url.rig(_채['id'], 언어))),
+                       esc(_채['이름'])))
         어디그림 += art.물때그림(갈래)
         # 그림 넉 장으로 가르치는 배우는 차례 (35갈래에만 있습니다)
         배우는차례 = art.배우는차례(안내, d.배우는차례)
