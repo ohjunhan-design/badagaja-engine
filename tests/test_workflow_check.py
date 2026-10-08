@@ -117,6 +117,33 @@ def main():
     시험('`steps` 가 없으면 막습니다',
          돌리기(멀쩡한것.replace(
              '    steps:\n      - run: echo 1\n', '')) == 1)
+    시험('**없는 단계**를 가리키면 막습니다 (빈 값이 됩니다)',
+         돌리기(멀쩡한것.replace(
+             '      - run: echo 1\n',
+             '      - run: echo ${{ steps.nowhere.outputs.x }}\n')) == 1)
+    시험('`needs:` 에 없는 작업을 가리키면 막습니다',
+         돌리기(멀쩡한것.replace(
+             '      - run: echo 1\n',
+             '      - run: echo ${{ needs.build.outputs.x }}\n')) == 1)
+    시험('`run` 도 `uses` 도 없는 단계를 막습니다',
+         돌리기(멀쩡한것.replace(
+             '      - run: echo 1\n', '      - name: 빈 단계\n')) == 1)
+
+    print('')
+    print('[막으면 안 되는 것]')
+    print('  잡는 것이 느는 것과 **맞게 잡는 것**은 다릅니다.')
+    시험('단계에 `id` 가 있으면 그 참조를 통과시킵니다',
+         돌리기(멀쩡한것.replace(
+             '      - run: echo 1\n',
+             '      - id: aa\n        run: echo 1\n'
+             '      - run: echo ${{ steps.aa.outputs.x }}\n')) == 0)
+    시험('`needs:` 에 적힌 작업 참조는 통과시킵니다',
+         돌리기('name: 시험\non:\n  workflow_dispatch:\njobs:\n'
+                '  a:\n    runs-on: ubuntu-latest\n    steps:\n'
+                '      - run: echo 1\n'
+                '  b:\n    needs: a\n    runs-on: ubuntu-latest\n'
+                '    steps:\n'
+                '      - run: echo ${{ needs.a.outputs.x }}\n') == 0)
 
     print('')
     print('%d가지 통과 · %d가지 어김' % (ok, fail))

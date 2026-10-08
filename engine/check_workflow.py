@@ -39,6 +39,7 @@
     python engine/check_workflow.py --strict
 """
 import io
+import json
 import os
 import re
 import sys
@@ -286,6 +287,49 @@ def main():
             if not 작업.get('steps'):
                 막음.append('%s — 작업 `%s` 에 `steps` 가 없습니다'
                             % (짧, 작업이름))
+                continue
+
+            # ⑨ **없는 것을 가리키지 않는가** (바깥 검수가 더 넣으라 한 것)
+            #   「`steps.foo.outputs.bar`·`needs.build.outputs.x` 처럼
+            #     참조했는데 실제 `id: foo` 나 `needs: build` 가 없는
+            #     경우. 깃허브에서 **빈 문자열**이 되거나 검증 오류가
+            #     섞여 나오니 정적으로 잡는 게 좋습니다」
+            #   빈 문자열로 조용히 흘러가는 것이 가장 나쁩니다 —
+            #   배포가 「성공」했는데 값이 비어 있을 수 있습니다.
+            단계들 = 작업.get('steps') or []
+            있는id = set()
+            for s in 단계들:
+                if isinstance(s, dict) and s.get('id'):
+                    있는id.add(str(s['id']))
+            필요 = 작업.get('needs')
+            있는needs = set()
+            if isinstance(필요, str):
+                있는needs.add(필요)
+            elif isinstance(필요, list):
+                있는needs |= set(str(x) for x in 필요)
+
+            글조각 = json.dumps(작업, ensure_ascii=False)
+            for 쓴id in set(re.findall(r'steps\.([^.\s}]+)\.', 글조각)):
+                if 쓴id not in 있는id:
+                    막음.append(
+                        '%s — 작업 `%s` 가 없는 단계 `steps.%s` 를'
+                        ' 가리킵니다 (빈 값이 됩니다)'
+                        % (짧, 작업이름, 쓴id))
+            for 쓴n in set(re.findall(r'needs\.([^.\s}]+)\.', 글조각)):
+                if 쓴n not in 있는needs:
+                    막음.append(
+                        '%s — 작업 `%s` 가 `needs:` 에 없는 `%s` 를'
+                        ' 가리킵니다' % (짧, 작업이름, 쓴n))
+
+            # ⑩ 단계마다 `run` 이나 `uses` 가 있어야 합니다
+            for i, s in enumerate(단계들, 1):
+                if not isinstance(s, dict):
+                    continue
+                if not s.get('run') and not s.get('uses'):
+                    막음.append(
+                        '%s — 작업 `%s` 의 %d번째 단계에 `run` 도'
+                        ' `uses` 도 없습니다 (%s)'
+                        % (짧, 작업이름, i, s.get('name') or '이름 없음'))
 
     print('  파일 %d개를 봤습니다' % len(파일들))
     print()
