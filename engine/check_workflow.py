@@ -84,6 +84,26 @@ sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 재사용허용 = ('uses', 'with', 'secrets', 'needs', 'if', 'permissions',
               'strategy', 'concurrency', 'name')
 
+# ★ **셸에서 쓸 수 없는 변수 이름** — 한글로 시작하는 대입
+#   bash 는 `밭=값` 을 **명령**으로 읽습니다 (exit 127).
+def _셸변수한글(줄):
+    """그 줄이 **셸 변수를 한글로 짓는** 대입인가.
+
+    ★ 정규식을 안 씁니다 (2026-10-08에 겪음)
+      `[^\\x00-\\x7f]` 를 쓰려다 도구를 거치며 **진짜 널 바이트**가
+      파일에 박혔고, 파이썬이 「source code cannot contain null
+      bytes」로 파일 전체를 못 읽었습니다.
+      글자 코드를 직접 보는 편이 짧고 안전합니다.
+      (기억 「정규식에 백슬래시 쓰지 않기」와 같은 종류입니다)
+    """
+    벗 = (줄 or '').strip()
+    if '=' not in 벗:
+        return False
+    앞 = 벗.split('=', 1)[0]
+    if not 앞 or ' ' in 앞 or '"' in 앞 or "'" in 앞:
+        return False
+    return ord(앞[0]) > 127
+
 
 def 겹친키찾기(글):
     """**같은 칸을 두 번 적은 곳**을 찾습니다 (2026-10-08 바깥 검수).
@@ -320,6 +340,32 @@ def main():
                     막음.append(
                         '%s — 작업 `%s` 가 `needs:` 에 없는 `%s` 를'
                         ' 가리킵니다' % (짧, 작업이름, 쓴n))
+
+            # ⑪ **셸 변수 이름을 한글로 짓지 않았는가** (2026-10-08에 겪음)
+            #
+            #   `밭="..."` 라고 썼더니 bash 가 그것을 **명령으로** 읽어
+            #   `exit code 127`(명령 없음)로 배포가 3초 만에 죽었습니다.
+            #       line 1: 밭=/home/runner/work/...: No such file or directory
+            #
+            #   이 저장소는 파이썬 변수를 **일부러 한글로** 씁니다.
+            #   그 버릇이 셸로 넘어오면 죽습니다. 파이썬은 받고
+            #   셸은 못 받습니다 — **같은 파일 안에서 규칙이 다릅니다.**
+            #   YAML 로는 완벽히 정상이라 문법 검사로는 못 잡습니다.
+            for i, s in enumerate(단계들, 1):
+                if not isinstance(s, dict) or not s.get('run'):
+                    continue
+                쉘 = str(s.get('shell') or 'bash')
+                if 'pwsh' in 쉘 or 'powershell' in 쉘:
+                    continue      # 파워셸은 `$한글` 을 받습니다
+                for 줄 in str(s['run']).splitlines():
+                    벗 = 줄.strip()
+                    if _셸변수한글(벗):
+                        막음.append(
+                            '%s — 작업 `%s` %d번째 단계가 **셸 변수를'
+                            ' 한글로** 지었습니다 — bash 는 명령으로'
+                            ' 읽고 죽습니다 (%s)'
+                            % (짧, 작업이름, i, 벗[:30]))
+                        break
 
             # ⑩ 단계마다 `run` 이나 `uses` 가 있어야 합니다
             for i, s in enumerate(단계들, 1):

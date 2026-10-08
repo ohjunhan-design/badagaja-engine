@@ -127,12 +127,19 @@ jobs:
       #     작업 수준 `env:` 에서 쓰면 워크플로가 통째로 거절됩니다.
       - name: 그림자 장부 자리를 정합니다
         run: |
-          밭="${RUNNER_WORKSPACE:-$GITHUB_WORKSPACE/..}/.."
-          장부="$(cd "$밭" 2>/dev/null && pwd)/badagaja-그림자장부.json"
-          echo "BADAGAJA_TALLY=$장부" >> "$GITHUB_ENV"
-          echo "· 장부 자리 — $장부"
-          if [ -f "$장부" ]; then
-            echo "· 지난 장부가 살아 있습니다 ($(wc -c < "$장부") 바이트)"
+          # ★ **셸 변수 이름은 한글로 짓지 않습니다** (2026-10-08에 겪음)
+          #   `밭="..."` 라고 썼더니 bash 가 그것을 **명령으로** 읽어
+          #   `exit code 127`(명령 없음)로 배포가 3초 만에 죽었습니다.
+          #       line 1: 밭=/home/runner/work/...: No such file or directory
+          #   파이썬은 한글 이름을 받지만 셸은 못 받습니다.
+          #   이 저장소는 파이썬 변수를 한글로 쓰는데, **셸만은 다릅니다.**
+          TALLY_DIR="${RUNNER_WORKSPACE:-$GITHUB_WORKSPACE/..}/.."
+          TALLY_DIR="$(cd "$TALLY_DIR" 2>/dev/null && pwd || echo /tmp)"
+          TALLY="$TALLY_DIR/badagaja-shadow-tally.json"
+          echo "BADAGAJA_TALLY=$TALLY" >> "$GITHUB_ENV"
+          echo "· 장부 자리 — $TALLY"
+          if [ -f "$TALLY" ]; then
+            echo "· 지난 장부가 살아 있습니다 ($(wc -c < "$TALLY") 바이트)"
           else
             echo "· 장부가 아직 없습니다 — 이번부터 쌓입니다"
           fi
