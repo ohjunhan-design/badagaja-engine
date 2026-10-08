@@ -464,19 +464,6 @@
    "파일": "img/coast/geoje-baramuieondeok.jpg"
   },
   {
-   "가로": 940,
-   "권역": "geoje",
-   "명소": "칠천량해전공원",
-   "세로": 626,
-   "쓰임": "spot",
-   "이용허락": "공공누리 제1유형",
-   "제목": "칠천량해전공원전시관",
-   "촬영자": "한국관광공사",
-   "출처주소": "https://tong.visitkorea.or.kr/cms/resource/42/3510642_image2_1.jpg",
-   "크기": 150452,
-   "파일": "img/coast/geoje-chilcheonryanghaejeongongwon.jpg"
-  },
-  {
    "가로": 1600,
    "권역": "geoje",
    "명소": "학동흑진주몽돌해변",
@@ -3280,6 +3267,13 @@
     "파일": "img/coast/busanwest-taejongdae.jpg",
     "권역": "busanwest",
     "왜뺐나": "**부조벽과 데크**만 보입니다. 바다가 전혀 없습니다 (주인 규칙 4 — 건물·구조물)"
+   },
+   {
+    "명소": "칠천량해전공원",
+    "제목": "칠천량해전공원전시관",
+    "파일": "img/coast/geoje-chilcheonryanghaejeongongwon.jpg",
+    "권역": "geoje",
+    "왜뺐나": "제목이 「칠천량해전공원**전시관**」입니다. 사진에는 **건물과 잔디밭·산**만 보이고 바다가 전혀 없습니다 (주인 규칙 4 — 건물 외관)"
    }
   ]
  }
