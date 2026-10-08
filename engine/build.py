@@ -33,6 +33,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, ROOT)
 from engine import io, url, template, art, hubs   # noqa: E402
+from engine import mustmeasure   # noqa: E402
 from engine import dupspot   # 같은 좌표를 쓰는 곳 가리기   # noqa: E402
 from engine import rigref    # 채비 자산을 **한 곳**에서   # noqa: E402
 from engine import hubs_more   # noqa: E402
@@ -6180,6 +6181,19 @@ def 만들목록(d, 만=None):
 
 
 def main():
+    # * **Pillow 가 없으면 여기서 멈춥니다** (2026-10-09 . 계약-24)
+    #   없으면 `그림크기()` 가 모두 (0,0) 을 돌려주고 사진의
+    #   width/height 속성이 **조용히 빠집니다.** 쪽은 만들어지므로
+    #   아무 소리 없이 넘어가고, 서버에 올라간 38쪽에서 사진이
+    #   뜰 때 쪽이 흔들렸습니다(CLS).
+    #   배포 #50 에서 겪은 일 - 일꾼은 PyYAML 만 깔고 있었습니다.
+    #   어제 PyYAML 로 당한 것과 **같은 함정**입니다.
+    mustmeasure.꾸러미가있어야한다(
+        'PIL',
+        '사진의 가로세로를 읽어 width/height 속성에 넣습니다.'
+        ' 없으면 사진이 뜰 때 쪽이 흔들립니다(CLS).',
+        깔이름='Pillow')
+
     만 = None
     if '--only' in sys.argv:
         i = sys.argv.index('--only')

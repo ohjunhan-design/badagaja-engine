@@ -161,7 +161,7 @@ jobs:
       #   가장 나쁜 꼴입니다 (기억 「클라우드 판정이 로컬과 다를 때」).
       - name: 파이썬 꾸러미를 깝니다
         shell: bash
-        run: python -m pip install --quiet --disable-pip-version-check PyYAML
+        run: python -m pip install --quiet --disable-pip-version-check PyYAML Pillow
 
       # ★ 윈도우에서는 **있는 파이썬이 쓸 만한지 봅니다**
       #   3.12 가 아니면 거기서 멈춥니다 — 딴 판으로 재면
