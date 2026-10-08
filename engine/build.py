@@ -592,44 +592,60 @@ def 히어로설명(한장):
 #   「인천·경기」라는 글자를 읽는 것보다 지도 위 그 자리가 빠릅니다.
 #
 #   좌표는 data/raw/map.json 에서 읽습니다. 손으로 안 적습니다.
-def 동호회칸(d):
-    """첫 화면 동호회 칸 — 바다가자 클라우드로 보냅니다.
+def 동호회칸(d, 쪽길=None):
+    """첫 화면 동호회 칸 — **지원 신청 쪽으로 보냅니다.**
 
-    ★ 2026-09-27 주인 지시 「바다가자 클라우드로 링크걸어서 만들어」
+    ★ 2026-10-09 주인 지시 (지피티 상세 명세)
 
-      규칙 12(개인 사이트로 연결하지 않습니다)는 **남의** 개인
-      사이트를 말합니다. badagaja.cloud 는 주인 소유 도메인이고,
-      저장소 cloud/ 에 그 쪽이 함께 있습니다.
+      「메인 카드에 이메일 주소가 직접 노출되어 있는데, 사용자가
+        메일 보내기를 번거롭게 느낄 수 있으므로 **직접 이메일 문의
+        방식은 제거**한다. 대신 『동호회 지원 신청하기』 CTA 버튼만
+        두고, 클릭 시 별도 지원 쪽으로 이동한다」
 
-      글과 주소는 data/raw/site.json 에 있습니다. 여기 안 박습니다.
+      메일앱을 열어야 하면 손님이 그 자리에서 떠납니다.
+      그리고 「무엇을 신청할 수 있는지」가 설명되지 않았습니다.
+
+    ★ 짜임과 클래스 이름은 **지피티 시안 그대로**입니다
+      (`club-support-banner__*`). 제가 임의로 정하지 않습니다 —
+      주인 지시 2번: 「디자인 방향은 ChatGPT 기준을 우선한다」
+
+    ★ 글과 주소는 data/raw/site.json 에 있습니다. 여기 안 박습니다.
     """
     것 = d.사이트.get('동호회') or {}
     제목 = 것.get('제목') or []
     if not 제목:
         return ''                # 자료가 없으면 안 만듭니다
 
-    # ★ **주소가 없으면 단추만 뺍니다** (2026-10-07 주인 지시)
-    #   전에는 주소가 없으면 칸을 통째로 안 만들었습니다. 그러면
-    #   모집을 닫았을 때 **마감 공고까지 사라집니다.**
-    #   갈 곳 없는 단추를 두는 것보다 안 두는 것이 맞습니다
-    #   (주인 규칙 — 「단추가 약속한 것이 제자리에 있어야」).
-    주소 = 것.get('주소')
+    # ★ **갈 곳이 없으면 단추를 안 둡니다** (2026-10-07 주인 지시)
+    #   단추가 약속한 것이 제자리에 있어야 합니다.
+    주소 = (것.get('주소') or '').strip()
+    단추글 = (것.get('단추') or '').strip()
     단추 = ''
-    if 주소 and 것.get('단추'):
-        단추 = ('<a class="gcp-btn" href="%s" rel="noopener">%s</a>'
-                % (esc(주소), esc(것.get('단추'))))
+    if 주소 and 단추글:
+        갈곳 = url.rel(쪽길, 주소.lstrip('/')) if 쪽길 else 주소
+        단추 = ('<div class="club-support-banner__bottom">'
+                '<a class="club-support-banner__cta" href="%s">%s</a>'
+                '</div>' % (esc(갈곳), esc(단추글)))
 
     줄 = ''.join('<li>%s</li>' % esc(x) for x in (것.get('줄') or []))
     작은글 = 것.get('작은글') or ''
     return (
-        '<section class="g-panel g-clubpanel"><div class="gcp-in">'
-        '<span class="gc-tag">%s</span>'
-        '<h2>%s</h2><p>%s</p><ul>%s</ul>%s%s'
+        '<section class="club-support-banner"'
+        ' aria-labelledby="club-support-title">'
+        '<div class="club-support-banner__inner">'
+        '<div class="club-support-banner__badge">%s</div>'
+        '<h3 id="club-support-title" class="club-support-banner__title">%s</h3>'
+        '<p class="club-support-banner__desc">%s</p>'
+        '<ul class="club-support-banner__list">%s</ul>'
+        '%s'
+        '%s'
         '</div></section>'
         % (esc(것.get('이름표', '')),
            '<br>'.join(esc(x) for x in 제목),
            esc(것.get('소개', '')), 줄, 단추,
-           ('<small>%s</small>' % esc(작은글)) if 작은글 else ''))
+           ('<p class="club-support-banner__footnote">%s</p>' % esc(작은글))
+           if 작은글 else ''))
+
 
 def 브랜드각인(d, 언어='ko'):
     """첫 화면 오른쪽 빈자리에 **이름을 새깁니다** (2026-09-29 주인 지시).
@@ -4155,7 +4171,7 @@ def 첫쪽(d, 언어='ko'):
         #   함께 나와 어느 바다인지 숨기지 않습니다.
         '물때기준권역': esc(첫물때권역(d)),
         '가이드칸': ''.join(가이드칸),
-        '동호회칸': 동호회칸(d),
+        '동호회칸': 동호회칸(d, 쪽길),
         # ★ 첫 화면만 옛 짜임 차림표를 함께 싣습니다
         '집차림표': ('<link rel="stylesheet" href="%s">'
                      % url.asset('assets/css/home.css', 쪽길,
@@ -5931,6 +5947,227 @@ def _부품어디쓰나(d):
     return 어디
 
 
+def 동호회지원쪽(d, 언어='ko'):
+    """동호회 지원 신청 쪽 (2026-10-09 주인 지시 · 지피티 상세 명세)
+
+    ★ 왜 생겼나
+
+      메인 카드에 메일 주소가 그대로 있었습니다. 누르면 메일앱이
+      열리는데, 그 자리에서 **손님이 떠납니다.** 그리고 「무엇을
+      신청할 수 있는지」가 설명되지 않았습니다.
+
+      주인 지시: 「직접 이메일 문의 방식은 제거하고, 지원 안내 +
+      샘플 + 신청 흐름으로 바꾼다」
+
+    ★ 차례는 지피티가 정한 그대로입니다
+        A 상단 hero  B 어떤 지원을 하나요  C 샘플 미리보기  D 신청 폼
+
+    ★ 공개와 비공개를 가립니다 (명세 9번)
+        공개   안내 · 샘플 · 예시
+        비공개 신청 내용 — 공개 목록으로 내보내지 않습니다
+
+    ★ 샘플은 **회색 네모를 늘어놓지 않습니다** (명세 금지사항).
+      실제로 만들어 드릴 모양 그대로 그립니다.
+    """
+    것 = d.사이트.get('동호회지원쪽') or {}
+    쪽길 = url.club_support(언어)
+    뿌리 = url.뿌리로(쪽길)
+    차림표 = os.path.join(ASSETS, 'css', 'site.css')
+
+    누가 = ''.join('<li>%s</li>' % esc(x) for x in (것.get('누가') or []))
+
+    # ── B. 어떤 지원을 하나요
+    지원칸 = ''.join(
+        '<article class="cs-card"><h3>%s</h3><p>%s</p></article>'
+        % (esc(x.get('제목', '')), esc(x.get('설명', '')))
+        for x in (것.get('지원') or []))
+
+    # ── C. 샘플 — 게시판 · 배너 · 소개 카드
+    ㄱ = 것.get('게시판보기') or {}
+    게시판 = ('<figure class="cs-sample">'
+              '<figcaption>게시판</figcaption>'
+              '<div class="cs-board">'
+              '<div class="cs-board__top">%s</div>'
+              '<ul class="cs-board__tabs">%s</ul>'
+              '<div class="cs-board__rows">%s</div>'
+              '</div></figure>'
+              % (esc(ㄱ.get('이름', '')),
+                 ''.join('<li>%s</li>' % esc(x) for x in (ㄱ.get('칸') or [])),
+                 ''.join('<span></span>' for _ in range(4))))
+
+    ㄴ = 것.get('배너보기') or {}
+    배너 = ('<figure class="cs-sample">'
+            '<figcaption>배너</figcaption>'
+            '<div class="cs-banner"><b>%s</b>%s</div>'
+            '</figure>'
+            % (esc(ㄴ.get('이름', '')),
+               ''.join('<span>%s</span>' % esc(x)
+                       for x in (ㄴ.get('줄') or []))))
+
+    ㄷ = 것.get('소개보기') or {}
+    소개 = ('<figure class="cs-sample">'
+            '<figcaption>소개 카드</figcaption>'
+            '<div class="cs-intro"><b>%s</b><dl>%s</dl></div>'
+            '</figure>'
+            % (esc(ㄷ.get('이름', '')),
+               ''.join('<dt>%s</dt><dd>%s</dd>' % (esc(a), esc(b))
+                       for a, b in (ㄷ.get('칸') or []))))
+
+    샘플칸 = '<div class="cs-samples">%s%s%s</div>' % (게시판, 배너, 소개)
+
+    # ── D. 신청 폼
+    신청폼 = _동호회신청폼(것)
+
+    값 = {
+        '언어코드': 'ko' if 언어 == 'ko' else 'zh-Hans',
+        '제목': '%s — %s | %s'
+                % (것.get('큰제목', ''), 것.get('한줄', ''),
+                   d.사이트['이름']['ko']),
+        '짧은제목': 것.get('큰제목', ''),
+        '설명': 것.get('부제', ''),
+        '정식주소': url.full(쪽길),
+        '사이트이름': d.사이트['이름'].get(언어) or d.사이트['이름']['ko'],
+        '대표사진': 공유그림(d, 'club', 'support', 사진주소(d, 대표사진(d))),
+        '차림표주소': url.asset('assets/css/site.css', 쪽길, 판번호(차림표)),
+        '집차림표': '',
+        '뿌리': 뿌리,
+        '언어연결': 언어연결(d, lambda 언: url.club_support(언)),
+        '구조화자료': json.dumps({
+            '@context': 'https://schema.org', '@type': 'WebPage',
+            'name': 것.get('큰제목', ''), 'url': url.full(쪽길),
+            'inLanguage': 'ko',
+        }, ensure_ascii=False, separators=(',', ':')),
+        '머리말': 것.get('한줄', ''),
+        '기준일조각': '',
+        '머리이름표': 이름표(것.get('한줄', ''), 'badge--green'),
+        '돌아갈주소': esc(url.rel(쪽길, url.home(언어))),
+        '돌아갈글': '첫 화면으로',
+        '권역이름': 것.get('큰제목', ''),
+        '메일': d.사이트['메일'],
+        '로고': 로고(뿌리, d.사이트['이름'].get(언어) or d.사이트['이름']['ko']),
+        '꼬리로고': 꼬리로고(뿌리,
+                             d.사이트['이름'].get(언어) or d.사이트['이름']['ko']),
+        '한줄': 것.get('한줄', ''),
+        '큰제목': 것.get('큰제목', ''),
+        '부제': 것.get('부제', ''),
+        '누가': 누가,
+        '지원안내': 것.get('지원안내', ''),
+        '지원칸': 지원칸,
+        '샘플안내': 것.get('샘플안내', ''),
+        '샘플칸': 샘플칸,
+        '신청안내': 것.get('신청안내', ''),
+        '신청폼': 신청폼,
+        '안내띠': '',
+        '광고칸': 광고칸('안내'),
+        '기준일안내': 것.get('개인정보', ''),
+        '사이트한줄': d.사이트['한줄'].get(언어) or d.사이트['한줄']['ko'],
+        '운영책임자': d.사이트['운영책임자'],
+        '꼬리메뉴': 꼬리메뉴(d, 쪽길, 언어),
+        '알림글': '지원은 모두 무료입니다. 비용을 받지 않습니다.',
+        '쪽스크립트': '',
+    }
+    값['쪽갈래'] = 'club'
+    return 쪽길, template.그리기('club-support.html', 값)
+
+
+# 신청 폼에 받을 것 — **자료가 아니라 짜임**이라 여기 둡니다.
+#   (이름, 보이는 글, 갈래, 꼭필요한가, 고를것)
+_신청칸 = [
+    ('club_name', '동호회명', 'text', True, None),
+    ('area', '활동 지역', 'text', True, None),
+    ('kind', '활동 종류', 'radio', True, ('낚시', '해루질', '둘 다')),
+    ('name', '신청자 이름', 'text', True, None),
+    ('contact', '연락처', 'text', True, None),
+    ('members', '현재 회원 수', 'number', False, None),
+    ('sns', '쓰시는 카페·밴드·SNS 주소', 'url', False, None),
+    ('want', '원하는 지원', 'check', False,
+     ('게시판', '배너', '로고', '홍보', '그 밖에')),
+    ('intro', '동호회 소개', 'textarea', False, None),
+]
+
+
+def _동호회신청폼(것):
+    """신청 폼 — **갈 곳이 있을 때만** 냅니다.
+
+    ★ 갈 곳이 없으면 폼을 안 만듭니다. 눌러도 아무 일이 없는
+      단추를 두지 않습니다 (주인 규칙 — 약속한 것이 거기 있어야).
+
+    ★ 지금 `받는곳` 은 메일입니다. 배포가 site/ 만 올리고 api/ 는
+      건드리지 않아 서버 쪽(PHP)을 제가 올릴 수 없습니다.
+      그래서 **손님은 폼만 채우고**, 보내기를 누르면 적은 내용이
+      그대로 담긴 메일이 열립니다. 주소를 외우거나 무엇을 적을지
+      고민할 일이 없습니다. 메인 카드에서 메일 주소를 뺀 뜻은
+      그대로 지킵니다 — 쪽 어디에도 주소를 보이지 않습니다.
+      서버가 붙으면 `받는곳` 한 줄만 바꾸면 됩니다.
+    """
+    받는곳 = (것.get('받는곳') or '').strip()
+    if not 받는곳:
+        return ('<p class="notice">신청 창구를 준비하고 있습니다. '
+                '열리면 이곳에 바로 알려 드립니다.</p>')
+    메일인가 = 받는곳.startswith('mailto:')
+
+    칸들 = []
+    for 이름, 글, 갈래, 꼭, 고를것 in _신청칸:
+        표 = esc(글) + ('<em aria-hidden="true">*</em>' if 꼭 else '')
+        필 = ' required' if 꼭 else ''
+        if 갈래 in ('radio', 'check'):
+            한칸 = ''.join(
+                '<label class="cs-chip"><input type="%s" name="%s"'
+                ' value="%s"%s><span>%s</span></label>'
+                % ('radio' if 갈래 == 'radio' else 'checkbox',
+                   esc(이름 if 갈래 == 'radio' else 이름 + '[]'),
+                   esc(x), ' required' if (꼭 and i == 0) else '', esc(x))
+                for i, x in enumerate(고를것 or ()))
+            칸들.append('<fieldset class="cs-field cs-field--pick">'
+                        '<legend>%s</legend><div class="cs-chips">%s</div>'
+                        '</fieldset>' % (표, 한칸))
+        elif 갈래 == 'textarea':
+            칸들.append('<p class="cs-field"><label for="cs-%s">%s</label>'
+                        '<textarea id="cs-%s" name="%s" rows="4"%s></textarea>'
+                        '</p>' % (esc(이름), 표, esc(이름), esc(이름), 필))
+        else:
+            칸들.append('<p class="cs-field"><label for="cs-%s">%s</label>'
+                        '<input id="cs-%s" name="%s" type="%s"%s></p>'
+                        % (esc(이름), 표, esc(이름), esc(이름),
+                           esc(갈래), 필))
+
+    동의 = ('<p class="cs-field cs-field--agree">'
+            '<label><input type="checkbox" name="agree" value="예" required>'
+            '<span>%s</span></label></p>' % esc(것.get('개인정보', '')))
+
+    보냄 = ('<p class="cs-submit">'
+            '<button type="submit" class="btn btn--dark">'
+            '무료 지원 신청하기</button></p>')
+
+    # 메일로 보낼 때는 적은 것을 **보기 좋게 담아** 메일을 엽니다.
+    움직임 = ''
+    if 메일인가:
+        움직임 = ('<script>(function(){'
+                  'var f=document.getElementById("clubApply");if(!f)return;'
+                  'f.addEventListener("submit",function(e){'
+                  'e.preventDefault();'
+                  'var d=new FormData(f),m={},k;'
+                  'd.forEach(function(v,n){'
+                  'if(n==="agree")return;'
+                  'n=n.replace("[]","");'
+                  'm[n]=m[n]?m[n]+" · "+v:v;});'
+                  'var L=%s,b=[];'
+                  'for(k in L){if(m[k])b.push(L[k]+": "+m[k]);}'
+                  'location.href=f.getAttribute("data-to")'
+                  '+"?subject="+encodeURIComponent("동호회 지원 신청 — "'
+                  '+(m.club_name||""))'
+                  '+"&body="+encodeURIComponent(b.join("\n"));'
+                  '});})();</script>'
+                  % json.dumps(dict((이, 글) for 이, 글, _g, _k, _c
+                                    in _신청칸), ensure_ascii=False))
+
+    return ('<form class="cs-form" id="clubApply" method="post"'
+            ' enctype="text/plain" action="%s" data-to="%s">'
+            '%s%s%s</form>%s'
+            % (esc(받는곳), esc(받는곳),
+               ''.join(칸들), 동의, 보냄, 움직임))
+
+
 def 부품쪽(d, 언어='ko'):
     """부품별 이름과 쓰는 법 — rig/parts.html
 
@@ -6308,6 +6545,8 @@ def 쪽주소(갈, 권역, 갈래, 언어='ko'):
         return url.photos(언어)
     if 갈 == '방문기록':
         return url.stats(언어)
+    if 갈 == '동호회지원':
+        return url.club_support(언어)
     return url.point_list(권역, 갈래, 언어)
 
 
@@ -6388,7 +6627,8 @@ def 만들목록(d, 만=None):
         #   세는 줄은 template/_footer.html 에 넣었고, 이 쪽은
         #   그 숫자를 봅니다. 열쇠말을 넣어야 보이는 주인 전용
         #   쪽이라 차림표에는 안 겁니다.
-        for _것 in ('소개', '출처', '개인정보', '사진출처', '방문기록'):
+        for _것 in ('소개', '출처', '개인정보', '사진출처', '방문기록',
+                    '동호회지원'):
             할것.append((_것, None, None))
         # ★ 왕초보 그림 강의 (2026-10-01) — **권역 57쪽이 각각 겁니다**
         #   「처음이신가요」 칸이 fish/basics.html · catch/basics.html 로
@@ -6569,6 +6809,9 @@ def main():
             수 = 0
         elif 갈 == '방문기록':
             쪽길, 글 = hubs_site.방문기록쪽(d, 언어)
+            수 = 0
+        elif 갈 == '동호회지원':
+            쪽길, 글 = 동호회지원쪽(d, 언어)
             수 = 0
         elif 갈 == '채비부품':
             쪽길, 글 = 부품쪽(d, 언어)

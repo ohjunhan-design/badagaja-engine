@@ -218,6 +218,8 @@ a.badge{min-height:44px}
 .btn--dark{background:var(--green);color:#fff;
            border-color:var(--green)}
 .btn--white{background:var(--white);border:1px solid var(--line);color:var(--ink)}
+.btn--sm{min-height:38px;padding:8px 13px;font-size:13px}
+.btn--on{background:var(--green);color:#fff;border-color:var(--green)}
 .btn-row{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
 
 /* ── 단추가 살아 있게 ─────────────────────────────────── */
@@ -3981,6 +3983,11 @@ details.area-group .area-list{margin-bottom:12px}
   border-left:4px solid #2F5D57;
 }
 .purpose--night{border-left-color:#3B4A6B}
+/* ★ 2026-10-09 check_classes 가 잡았습니다 — 쪽에서 쓰는데
+   규칙이 없어 **강조가 통째로 안 먹고 있었습니다.**
+   장비 쪽에서 「기본 준비」는 가장 먼저 보여야 할 칸입니다. */
+.purpose--core{border-left-color:#C07B22;background:#FFFBF3}
+.purpose--core > strong{color:#8A5512}
 .purpose--safe{border-left-color:#C07B22}
 .purpose strong{display:block;font-size:14px;margin-bottom:5px}
 .purpose span{font-size:12.5px;color:#6B5E4F;line-height:1.55}
@@ -5112,3 +5119,106 @@ body.p-travel .tv-more{display:none}
 .ans-k,
 .side-note,
 .when-s{color:var(--muted)}
+
+/* ── 동호회 지원 쪽 (club/support.html) ──────────────────────
+   ★ 2026-10-09 주인 지시 · 지피티 상세 명세
+     「샘플 영역은 홍보 페이지처럼 보이게. 단순 회색 박스 나열 금지」
+     그래서 게시판·배너·소개 카드를 **실제 모양 그대로** 그립니다.
+   ★ 크기 (주인 규칙 23 — PC·모바일 둘 다)
+       PC(1280)    지원 카드 4칸 · 샘플 3칸 가로
+       태블릿(900) 지원 2칸 · 샘플 세로
+       휴대폰(390) 모두 한 칸 · 입력칸 높이 48px (엄지 44px 위)  */
+.cs-who{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:7px}
+.cs-who li{position:relative;padding-left:17px;font-size:.95rem;
+  color:var(--muted);line-height:1.6}
+.cs-who li::before{content:'';position:absolute;left:2px;top:.72em;
+  width:6px;height:6px;border-radius:50%;background:var(--sand-deep,#E5A94F);
+  transform:translateY(-50%)}
+.cs-hero-cta{margin:20px 0 0}
+
+.cs-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.cs-card{padding:20px 18px;border:1px solid var(--line);border-radius:18px;
+  background:#fff}
+.cs-card h3{margin:0 0 8px;font-family:'Noto Serif KR',serif;
+  font-size:1.06rem;color:var(--ink)}
+.cs-card p{margin:0;font-size:.9rem;line-height:1.72;color:var(--muted)}
+
+.cs-samples{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;align-items:start}
+.cs-sample{margin:0}
+.cs-sample figcaption{margin:0 0 8px;font-size:.78rem;font-weight:800;
+  letter-spacing:.03em;color:#2E6F9E}
+
+.cs-board{border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  background:#fff}
+.cs-board__top{padding:11px 14px;background:#2F5D57;color:#FFFBF3;
+  font-weight:800;font-size:.92rem}
+.cs-board__tabs{display:flex;flex-wrap:wrap;gap:6px;margin:0;
+  padding:11px 12px 9px;list-style:none;border-bottom:1px solid var(--line)}
+.cs-board__tabs li{padding:5px 11px;border-radius:999px;background:#F1F6F5;
+  font-size:.78rem;font-weight:700;color:#2F5D57}
+.cs-board__rows{padding:11px 14px 14px;display:grid;gap:9px}
+.cs-board__rows span{display:block;height:9px;border-radius:5px;
+  background:linear-gradient(90deg,#E9EEF2,#F5F8FA)}
+.cs-board__rows span:nth-child(2){width:84%}
+.cs-board__rows span:nth-child(3){width:92%}
+.cs-board__rows span:nth-child(4){width:70%}
+
+.cs-banner{display:flex;flex-direction:column;justify-content:center;gap:7px;
+  min-height:148px;padding:20px 18px;border-radius:14px;color:#FFFBF3;
+  background:linear-gradient(135deg,#1F4E49,#2F5D57 55%,#3C7A62)}
+.cs-banner b{font-family:'Noto Serif KR',serif;font-size:1.18rem;
+  line-height:1.35}
+.cs-banner span{font-size:.85rem;color:rgba(255,248,235,.9)}
+
+.cs-intro{min-height:148px;padding:18px;border:1px solid var(--line);
+  border-radius:14px;background:#FFFBF3}
+.cs-intro b{display:block;margin-bottom:11px;font-family:'Noto Serif KR',serif;
+  font-size:1.08rem;color:var(--ink)}
+.cs-intro dl{display:grid;grid-template-columns:auto 1fr;gap:7px 12px;margin:0}
+.cs-intro dt{font-size:.8rem;font-weight:800;color:#2E6F9E;white-space:nowrap}
+.cs-intro dd{margin:0;font-size:.86rem;color:var(--muted);line-height:1.55}
+
+.cs-form{max-width:680px;margin:0 auto;display:grid;gap:16px}
+.cs-field{margin:0;display:grid;gap:7px}
+.cs-field > label,.cs-field legend{font-size:.9rem;font-weight:800;
+  color:var(--ink);padding:0}
+.cs-field em{margin-left:4px;color:#C0533B;font-style:normal}
+.cs-field input[type=text],.cs-field input[type=number],
+.cs-field input[type=url],.cs-field textarea{
+  width:100%;min-height:48px;padding:12px 14px;border:1px solid var(--line);
+  border-radius:12px;background:#fff;font:inherit;font-size:1rem;
+  color:var(--ink)}
+.cs-field textarea{min-height:108px;line-height:1.7;resize:vertical}
+.cs-field input:focus,.cs-field textarea:focus{outline:2px solid #2E6F9E;
+  outline-offset:1px}
+.cs-field--pick{border:0;margin:0;padding:0}
+.cs-chips{display:flex;flex-wrap:wrap;gap:9px}
+.cs-chip{display:inline-flex;align-items:center;gap:7px;min-height:44px;
+  padding:0 15px;border:1px solid var(--line);border-radius:999px;
+  background:#fff;font-size:.92rem;cursor:pointer}
+.cs-chip input{width:18px;height:18px;accent-color:#2F5D57}
+.cs-chip:has(input:checked){border-color:#2F5D57;background:#F1F6F5;
+  font-weight:800}
+.cs-field--agree label{display:flex;align-items:flex-start;gap:10px;
+  min-height:44px;font-size:.88rem;font-weight:400;color:var(--muted);
+  line-height:1.6;cursor:pointer}
+.cs-field--agree input{flex:0 0 auto;width:20px;height:20px;margin-top:2px;
+  accent-color:#2F5D57}
+.cs-submit{margin:6px 0 0}
+.cs-submit .btn{width:100%;min-height:54px;font-size:1.02rem}
+
+@media (max-width:1080px){
+  .cs-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:860px){
+  .cs-samples{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:560px){
+  .cs-grid{grid-template-columns:minmax(0,1fr)}
+  .cs-card{padding:17px 15px}
+  .cs-banner{min-height:128px;padding:17px 15px}
+  .cs-banner b{font-size:1.06rem}
+  .cs-intro{min-height:0}
+  .cs-form{gap:14px}
+}

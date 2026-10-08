@@ -94,6 +94,14 @@ def home(언어='ko'):
     return _붙이기(언어, 'index.html') if 언어폴더.get(언어) else 'index.html'
 
 
+def club_support(언어='ko'):
+    """동호회 지원 신청 쪽 — club/support.html
+
+    2026-10-09 주인 지시. 메인 카드의 단추가 여기로 옵니다.
+    """
+    return _붙이기(언어, 'club', 'support.html')
+
+
 def festival(축제아이디, 언어='ko'):
     """축제 쪽 — festival/boryeong-2.html
 
