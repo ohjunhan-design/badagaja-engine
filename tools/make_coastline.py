@@ -42,7 +42,14 @@ sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
 
 def main():
-    폴더들 = [d for d in ('coast_all', 'coast_all2', 'coast_all3')
+    # ★ `coast_gap` — **구멍을 메운 조각**입니다 (2026-10-08)
+    #   옛 조각들의 범위가 위도 33.87~38.71 · 경도 125.08~130.94
+    #   뿐이라 제주 남부·백령도·대청도·독도가 통째로 빠져 있었습니다.
+    #   그래서 백령도 포인트 14곳이 「바다까지 105km」로 나와
+    #   멀쩡한 좌표가 「먼저 볼 것」에 쌓였습니다.
+    #   `tools/fetch_coast_gaps.py` 가 그 자리만 받아 둡니다.
+    폴더들 = [d for d in ('coast_all', 'coast_all2', 'coast_all3',
+                           'coast_gap')
                if os.path.isdir(os.path.join(원본자리, d))]
     if not 폴더들:
         print('□ 원본 해안선을 못 찾았습니다 — %s' % 원본자리)
