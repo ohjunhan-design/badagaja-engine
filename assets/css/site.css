@@ -342,7 +342,7 @@ a.badge{min-height:44px}
 .card-nocoord .maplink--find{
   min-height:32px;padding:0 8px;margin:0;border:0;background:none;
   flex:0 0 auto;display:inline-flex;align-items:center;
-  font-size:12px;font-weight:700;color:var(--go);text-decoration:underline;
+  font-size:12px;font-weight:700;color:var(--teal);text-decoration:underline;
 }
 .card-nocoord .maplink--find:hover{filter:brightness(.9)}
 /* ★ 휴대폰에서는 **엄지가 닿게** 한 줄을 다 씁니다 (주인 규칙 6-2) */
