@@ -33,6 +33,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, ROOT)
 from engine import io, url, template, art, hubs   # noqa: E402
+from engine import dupspot   # 같은 좌표를 쓰는 곳 가리기   # noqa: E402
 from engine import hubs_more   # noqa: E402
 from engine import hubs_site   # noqa: E402
 from engine import hubs_basics   # noqa: E402
@@ -1207,6 +1208,25 @@ def 쪽자료만들기(d, 권역, 갈래, 포인트들, 언어='ko', 자세히=F
                 if x.get(키):
                     한곳[키] = x[키]
         자리.append(한곳)
+
+    # ★ **같은 좌표를 쓰는 곳의 갈래를 함께 싣습니다** (2026-10-08)
+    #
+    #   3,603곳 가운데 693곳이 서로 다른 곳인데 똑같은 좌표를 씁니다.
+    #   화면이 그것을 밝히려면 **갈래**를 알아야 합니다 — 같은 항의
+    #   방파제·선착장(같은자리)은 경고할 일이 아니고, 서로 다른
+    #   마을이 한 점에 있는 것(잘못겹침)은 밝혀야 합니다.
+    #
+    #   가리는 법은 `engine/dupspot.py` 한 곳에만 둡니다. 자바스크립트가
+    #   따로 가리면 두 곳이 다르게 셉니다 (기억 「숫자는 한 곳에서만」).
+    묶인것 = dupspot.묶기(
+        자리,
+        이름뽑기=lambda x: x.get('이름'),
+        갈래뽑기=lambda x: 갈래,
+        좌표뽑기=lambda x: (x.get('위도'), x.get('경도')))
+    for 묶음 in 묶인것.values():
+        for x in 묶음['것들']:
+            x['자리갈래'] = 묶음['갈래']
+            x['자리수'] = len(묶음['것들'])
     r = d.권역(권역)
     난것 = {
         '권역': 권역,

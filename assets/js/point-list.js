@@ -302,17 +302,21 @@
     Object.keys(묶음표).forEach(function (키) {
       var 들 = 묶음표[키];
       var p = 들[0];                 // 묶음을 대표하는 곳
-      var 여럿 = 들.length > 1;
+      /* ★ **같은자리는 경고가 아닙니다** (바깥 검수)
+       *   같은 항의 방파제·선착장은 한 곳을 여러 관점으로 나눈
+       *   것이라 좌표가 틀린 것이 아닙니다. 그래서 핀도 보통처럼
+       *   두고, 「개별 위치가 미확인」인 것만 숫자로 밝힙니다. */
+      var 밝힐것 = 들.length > 1 && p.자리갈래 !== '같은자리';
       var b = 만들기('button', 'pin pin--' + (p.등급 || 'C')
                      + (p.어림 ? ' pin--area' : '')
-                     + (여럿 ? ' pin--many' : ''),
-                     여럿 ? String(들.length) : String(p.차례));
+                     + (밝힐것 ? ' pin--many' : ''),
+                     밝힐것 ? String(들.length) : String(p.차례));
       b.type = 'button';
-      b.title = 여럿
+      b.title = 밝힐것
         ? ('이 둘레 ' + 들.length + '곳 — 개별 위치는 아직 확인되지'
            + ' 않았습니다')
         : p.이름;
-      b.setAttribute('aria-label', 여럿
+      b.setAttribute('aria-label', 밝힐것
         ? ('이 둘레 ' + 들.length + '곳')
         : (p.차례 + '. ' + p.이름));
       b.addEventListener('click', function (e) {

@@ -4798,6 +4798,12 @@ body.p-travel .tv-more{display:none}
   color:var(--ink)}
 .pp-shared-t{display:block;font-size:12px;color:var(--muted);
   margin-top:2px;line-height:1.5}
+/* ★ **같은 항의 여러 모습은 경고가 아닙니다** (바깥 검수)
+     「같은 항의 방파제·선착장처럼 실제로 같은 장소를 다른 관점에서
+       나눈 정보라면, 사용자는 그걸 『좌표가 부정확하다』로
+       받아들이면 안 됩니다」
+     그래서 테두리를 없애고 한 줄로만 조용히 둡니다. */
+.pp-shared--ok{padding:2px 0;background:none;border:0}
 
 /* ── 오늘 물때 — **숫자가 주인공** ──────────────────
    ★ 관측소 이름을 반드시 적습니다 (지시 ②). 포인트마다
