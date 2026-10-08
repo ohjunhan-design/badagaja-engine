@@ -33,6 +33,7 @@ import tempfile
 sys.path.insert(0, 여기)
 
 import mustmeasure   # noqa: E402
+import machine       # noqa: E402
 
 막음, 알림 = [], []        # 계약-21 — 모듈 수준에 둡니다
 
@@ -46,7 +47,7 @@ import mustmeasure   # noqa: E402
 
 잼 = """
 (function(){
-  function 글(el){ return (el.textContent||'').replace(/\s+/g,' ').trim(); }
+  function 글(el){ return (el.textContent||'').replace(/\\s+/g,' ').trim(); }
   var 난것 = { 제목:[], 단추:[], 그림:[], 숫자:[], 넘김:0 };
   var 바닥 = %d;
   document.querySelectorAll('h1,h2,h3').forEach(function(el){
@@ -77,17 +78,7 @@ import mustmeasure   # noqa: E402
 """ % 폰높
 
 
-def _크롬():
-    for 후보 in (r'C:\Program Files\Google\Chrome\Application\chrome.exe',
-                 r'C:\Program Files (x86)\Google\Chrome\Application'
-                 r'\chrome.exe',
-                 '/usr/bin/google-chrome', '/usr/bin/chromium-browser'):
-        if os.path.exists(후보):
-            return 후보
-    return None
-
-
-def 한쪽재기(크롬, 쪽길, 터):
+def 한쪽재기(쪽길, 터):
     """쪽을 **같은 폴더에** 복사해 띄웁니다 — 차림표를 잃지 않게.
 
     ★ 임시 폴더로 옮겨 띄웠다가 **차림표를 하나도 못 불러** 넘침이
@@ -100,11 +91,17 @@ def 한쪽재기(크롬, 쪽길, 터):
     io.open(잰것, 'w', encoding='utf-8').write(글)
     냄 = os.path.join(터, 'dom.html')
     try:
+        # * **크롬은 `machine.크롬앞머리()` 한 곳에서만 부릅니다**
+        #   (2026-10-09 · 판정 덧검사 「짜임」이 잡았습니다)
+        #   깃발 하나가 빠지면 그 자리만 조용히 못 잽니다 —
+        #   2026-09-28 에 `--no-sandbox` 가 없어 클라우드 판정이
+        #   **통째로** 못 쟀던 일이 있습니다.
         subprocess.run(
-            [크롬, '--headless=new', '--disable-gpu', '--hide-scrollbars',
-             '--window-size=%d,%d' % (폰폭, 폰높),
-             '--virtual-time-budget=5000', '--dump-dom',
-             'file:///' + os.path.abspath(잰것).replace(os.sep, '/')],
+            machine.크롬앞머리()
+            + ['--hide-scrollbars',
+               '--window-size=%d,%d' % (폰폭, 폰높),
+               '--virtual-time-budget=5000', '--dump-dom',
+               'file:///' + os.path.abspath(잰것).replace(os.sep, '/')],
             stdout=io.open(냄, 'w', encoding='utf-8', errors='replace'),
             stderr=subprocess.DEVNULL, timeout=90)
         돔 = io.open(냄, encoding='utf-8', errors='replace').read()
@@ -120,11 +117,6 @@ def 한쪽재기(크롬, 쪽길, 터):
 
 
 def main():
-    크롬 = _크롬()
-    if not 크롬:
-        print('  ✗ 크롬을 못 찾았습니다 — **못 쟀습니다**')
-        return 4
-
     쪽들 = sys.argv[1:] or 기본쪽
     mustmeasure.있어야한다(쪽들, '볼 쪽', 최소=1, 어디='site/')
 
@@ -135,7 +127,7 @@ def main():
         if not os.path.exists(길):
             못쟨것.append(쪽)
             continue
-        난것 = 한쪽재기(크롬, 길, 터)
+        난것 = 한쪽재기(길, 터)
         if 난것 is None:
             못쟨것.append(쪽)
             continue
