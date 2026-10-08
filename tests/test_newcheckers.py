@@ -20,6 +20,7 @@
     'check_search.py' · 'check_nocoord.py' · 'check_backup.py'
     'check_cssdup.py' · 'check_cover.py' · 'check_rigpage.py'
     'check_interact.py' · 'check_visual.py' · 'check_contrast.py'
+    'check_thumb.py' · 'check_filter.py'
 
 ★ **정말 망가뜨려야 합니다** (기억 「뮤테이션은 정말 망가뜨려야」)
     살짝 건드려 놓고 「잡았다」 하면 헛돕니다. 검사기가 보는 바로
@@ -434,6 +435,55 @@ def 시험_글이읽히는가():
         봄('「흐립니다」라고 말해 준다', '흐립니다' in 난것, 난것)
 
 
+def 시험_엄지가닿나():
+    """'check_thumb.py' — 단추를 작게 만들면 잡는가"""
+    print('[15] check_thumb — 손가락보다 작은 단추를 잡는가')
+    with isolate.일터() as 뿌리:
+        길 = os.path.join(뿌리, 'assets', 'css', 'site.css')
+        # ★ **정말 작게** — 맨 뒤에 두어 앞 규칙을 덮습니다
+        io.write(길, io.read(길) + chr(10)
+                 + '@media (max-width:767px){.filter button{'
+                 + 'min-height:20px;padding:0}}' + chr(10))
+        만들기 = subprocess.run(
+            [sys.executable, '-X', 'utf8',
+             os.path.join(뿌리, 'engine', 'build.py')],
+            cwd=뿌리, capture_output=True, text=True,
+            encoding='utf-8', errors='replace', timeout=900)
+        봄('사본에서 다시 만들 수 있다', 만들기.returncode == 0)
+        난것 = 돌리기('check_thumb.py', 뿌리=뿌리, 시간=2400)
+        봄('20px 단추를 막는다 (끝난값 1)', 난것.끝난값 == 1, 난것)
+        봄('어느 칸인지 사슬로 말해 준다', '.filter' in 난것, 난것)
+
+
+def 시험_걸러내기():
+    """'check_filter.py' — 걸러내기가 죽으면 잡는가
+
+    자바스크립트가 조용히 죽으면 단추는 눌리는데 목록이 그대로입니다.
+    손님은 「이 권역엔 갯바위가 이렇게 많구나」 하고 **잘못 압니다.**
+    """
+    print('[16] check_filter — 걸러내기가 죽으면 잡는가')
+    with isolate.일터() as 뿌리:
+        길 = os.path.join(뿌리, 'assets', 'js', 'point-list.js')
+        글 = io.read(길)
+        # ★ **정말 죽입니다** — 거르는 함수를 아무 일도 안 하게
+        옛 = 'function 다시그리기('
+        봄('다시 그리는 함수를 찾을 수 있다', 옛 in 글, '이름이 바뀌었습니다')
+        if 옛 in 글:
+            io.write(길, 글.replace(옛, '함수_다시그리기_꺼둠(', 1)
+                     + chr(10) + 'function 다시그리기(){ return; }' + chr(10))
+            만들기 = subprocess.run(
+                [sys.executable, '-X', 'utf8',
+                 os.path.join(뿌리, 'engine', 'build.py')],
+                cwd=뿌리, capture_output=True, text=True,
+                encoding='utf-8', errors='replace', timeout=900)
+            봄('사본에서 다시 만들 수 있다', 만들기.returncode == 0)
+            난것 = 돌리기('check_filter.py', 뿌리=뿌리, 시간=2400)
+            봄('눌러도 안 걸러지면 막는다 (끝난값 1)',
+               난것.끝난값 == 1, 난것)
+            봄('「그대로 입니다」라고 말해 준다',
+               '그대로' in 난것, 난것)
+
+
 def main():
     print('새로 만든 검사기도 잘못을 잡는지 봅니다 (2026-10-08)')
     print('  바깥 검수 — 「broken fixture → FAIL 회귀시험을 추가하세요」')
@@ -452,6 +502,8 @@ def main():
     시험_눌러보기()
     시험_눈으로볼때()
     시험_글이읽히는가()
+    시험_엄지가닿나()
+    시험_걸러내기()
     print('')
     if 실패:
         print('%d가지 통과 · %d가지 실패' % (통과, len(실패)))

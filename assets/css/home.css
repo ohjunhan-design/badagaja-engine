@@ -651,3 +651,12 @@ footer.site-footer .footer-bottom{padding-bottom:calc(64px + env(safe-area-inset
   /* ⑥ 사진 출처는 더 작게, 글이 길면 … 로 줄입니다 */
   .g-hero .hero-credit{right:10px;bottom:8px;font-size:11px;padding:2px 9px}
 }
+
+/* ── 휴대폰에서 엄지가 닿게 ──────────────────────────────
+   주인 규칙 6-2. 44px 은 애플·구글이 함께 권하는 값입니다.
+   ★ **맨 뒤에 둡니다** — 앞의 미디어쿼리가 덮지 못하게.
+   ★ `engine/check_thumb.py` 가 지킵니다.                   */
+@media (max-width:767px){
+  .sc-pill,
+  .hm-b a{min-height:44px}
+}
