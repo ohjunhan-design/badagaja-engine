@@ -23,6 +23,11 @@
     이상이고 높이가 400px 넘는 것. 그런 것은 손님 눈에 **다른 것을
     가립니다.**
 
+    ★ **깔린 것과 덮은 것을 쪽이 스스로 말하게** 가립니다.
+      히어로 배경은 `aria-hidden="true"` 입니다 — 읽히지 않는
+      꾸밈이고 그 위에 글이 올라갑니다. 덮개는 반대로 읽혀야
+      합니다(닫기 단추·그림 설명). 크기로는 못 가립니다.
+
     ★ 일부러 덮는 것은 **봐 줍니다** —
       · 아래 차림표(`.tabbar`)·맨 위로 단추처럼 작고 가장자리인 것
       · `:target`·`:hover` 로만 펴지는 것 (평소에는 안 보입니다)
@@ -70,6 +75,13 @@ NEW = os.environ.get('BADAGAJA_SITE', os.path.join(ROOT, 'site'))
       // 쪽이 스스로 「덮개」라 밝힌 것은 봐 줍니다
       if (e.hasAttribute('data-overlay') || e.tagName === 'DIALOG') continue;
       if (e.closest('[data-overlay],dialog')) continue;
+      // ★ **읽히지 않는 꾸밈은 덮개가 아닙니다** (2026-10-08)
+      //   히어로 배경은 `aria-hidden="true"` — 「손님에게 읽히지 않는
+      //   꾸밈」이라는 뜻이고, 그 위에 글이 올라갑니다.
+      //   덮개는 반대로 **읽혀야 합니다**(닫기 단추·그림 설명).
+      //   크기로는 둘을 못 가립니다.
+      if (e.getAttribute('aria-hidden') === 'true') continue;
+      if (e.closest('[aria-hidden="true"]')) continue;
       var r = e.getBoundingClientRect();
       if (r.width < innerWidth * __폭비__ || r.height < __높이__) continue;
       난것.덮는것.push({
@@ -194,6 +206,15 @@ def main():
     것들 = 표본고르기(전부)
     mustmeasure.있어야한다(것들, '쪽', 최소=10, 어디=NEW)
 
+    기준길 = os.path.join(ROOT, 'tests', 'golden', '덮는것.json')
+    기준 = {}
+    try:
+        기준 = json.loads(_io.read(기준길, default='{}'))
+    except Exception:                                 # noqa: BLE001
+        기준 = {}
+    알던것 = set(기준.get('알던것') or [])
+    받아들이기 = '--받아들이기' in sys.argv
+
     막음, 알림 = [], []
     잰쪽 = 0
     for p in 것들:
@@ -219,16 +240,41 @@ def main():
         for t in 알림[:4]:
             print('  ~ %s' % t)
         print()
-    if 막음:
-        print('  손볼 곳 %d가지' % len(막음))
-        for t in 막음[:12]:
+    if 받아들이기:
+        os.makedirs(os.path.dirname(기준길), exist_ok=True)
+        _io.write(기준길, json.dumps({
+            '_무엇인가': ('본문 위에 올라앉은 것의 기준선입니다. 여기 있는 '
+                          '것은 **새로 생긴 것이 아니라는 뜻**일 뿐입니다.'),
+            '_왜쌓아두나': ('히어로 배경(`g-hero-bg`·`g-hero-shade`)처럼 '
+                            '**깔린 것**도 크고 `absolute` 라 걸립니다. '
+                            '그 위에 글이 올라가므로 덮는 것이 아닙니다. '
+                            '`elementFromPoint` 로 가려 보았더니 화면 아래에 '
+                            '있는 **진짜 덮개까지 놓쳐** 되돌렸습니다 — '
+                            '구별하지 못하는 꾀는 두지 않습니다.'),
+            '_어떻게줄이나': '고친 뒤 여기서 그 줄을 지웁니다.',
+            '알던것': sorted(막음),
+        }, ensure_ascii=False, indent=1))
+        print('  · 기준선에 %d곳을 적었습니다 — %s'
+              % (len(막음), os.path.relpath(기준길, ROOT)))
+        return 0
+
+    새것 = [t for t in 막음 if t not in 알던것]
+    고쳐진것 = 알던것 - set(막음)
+    if 고쳐진것 and not 새것:
+        print('  · 고쳐진 곳 %d곳 — `--받아들이기` 로 기준을 조이세요'
+              % len(고쳐진것))
+        print()
+    if 새것:
+        print('  **새로 생긴** 손볼 곳 %d가지' % len(새것))
+        for t in 새것[:12]:
             print('  ✗ %s' % t)
         print()
         print('  **화면 밖으로 안 나간다고 괜찮은 것이 아닙니다.**')
         print('  화면 **안**에서 본문 위에 올라앉으면 손님은 아무것도')
         print('  못 읽습니다. 숨겨 두어야 할 것이 펼쳐졌는지 보세요.')
         return 1
-    print('  · 본문 위에 올라앉은 것이 없습니다')
+    print('  · 본문 위에 올라앉은 것이 새로 생기지 않았습니다'
+          ' (쌓인 것 %d곳)' % len(알던것))
     return 0
 
 
