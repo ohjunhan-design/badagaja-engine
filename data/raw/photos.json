@@ -31,19 +31,6 @@
   {
    "가로": 940,
    "권역": "boryeong",
-   "명소": "대천해수욕장",
-   "세로": 626,
-   "쓰임": "spot",
-   "이용허락": "공공누리 제1유형",
-   "제목": "대천해수욕장",
-   "촬영자": "한국관광공사",
-   "출처주소": "https://tong.visitkorea.or.kr/cms/resource/10/3560610_image2_1.jpg",
-   "크기": 88435,
-   "파일": "img/coast/boryeong-daecheon-beach.jpg"
-  },
-  {
-   "가로": 940,
-   "권역": "boryeong",
    "명소": "대천항",
    "세로": 627,
    "쓰임": "spot",
@@ -196,19 +183,6 @@
    "파일": "img/coast/busaneast-gwanganrihaesuyokjang.jpg"
   },
   {
-   "가로": 1600,
-   "권역": "busaneast",
-   "명소": "해동용궁사",
-   "세로": 1067,
-   "쓰임": "spot",
-   "이용허락": "CC BY 2.0",
-   "제목": "Busan (53854676259)",
-   "촬영자": "David Lee from Redmond, WA, USA",
-   "출처주소": "https://commons.wikimedia.org/wiki/File:Busan_(53854676259).jpg",
-   "크기": 300842,
-   "파일": "img/coast/busaneast-haedongyonggungsa.jpg"
-  },
-  {
    "가로": 1800,
    "권역": "busaneast",
    "세로": 1201,
@@ -258,19 +232,6 @@
    "출처주소": "https://tong.visitkorea.or.kr/cms/resource/59/3436159_image2_1.jpg",
    "크기": 73689,
    "파일": "img/coast/busanwest-songdohaesuyokjang.jpg"
-  },
-  {
-   "가로": 1600,
-   "권역": "busanwest",
-   "명소": "태종대",
-   "세로": 1200,
-   "쓰임": "spot",
-   "이용허락": "CC BY-SA 4.0",
-   "제목": "Taejongdae, Busan, South Korea, October 2019 09",
-   "촬영자": "Ahmed",
-   "출처주소": "https://commons.wikimedia.org/wiki/File:Taejongdae,_Busan,_South_Korea,_October_2019_09.jpg",
-   "크기": 471700,
-   "파일": "img/coast/busanwest-taejongdae.jpg"
   },
   {
    "가로": 940,
@@ -3247,7 +3208,7 @@
   }
  ],
  "_뺀사진": {
-  "_왜": "명소 이름과 **다른 곳**을 찍은 사진입니다. 파일은 이미 없었고, 출처가 위키미디어 설명 쪽이라 받아도 HTML 이 옵니다. 이름만 보고 고르면 이런 일이 생깁니다 - 「다대포해수욕장역」은 「다대포해수욕장」이 아닙니다.",
+  "_왜": "명소 이름과 **다른 곳**을 찍은 사진입니다. 파일은 이미 없었고, 출처가 위키미디어 설명 쪽이라 받아도 HTML 이 옵니다. 이름만 보고 고르면 이런 일이 생깁니다 - 「다대포해수욕장역」은 「다대포해수욕장」이 아닙니다. 2026-10-09 둘째 묶음은 **바다가 주제가 아닌** 사진입니다 — 명소 사진을 한 장에 모아 붙여 보고 찾았습니다 (engine/photo_sheet.py).",
   "_뺀날": "2026-10-09",
   "것들": [
    {
@@ -3298,6 +3259,27 @@
     "파일": "img/coast/gyeongju-najeonggounmoraehaebyeon.jpg",
     "권역": "gyeongju",
     "왜뺐나": "제목이 「Starfish of Korea」 - 불가사리 접사입니다"
+   },
+   {
+    "명소": "대천해수욕장",
+    "제목": "대천해수욕장",
+    "파일": "img/coast/boryeong-daecheon-beach.jpg",
+    "권역": "boryeong",
+    "왜뺐나": "화면의 3분의 2가 **스카이바이크 철골**이고 바다는 왼쪽 귀퉁이에만 조금 보입니다 (주인 규칙 3 — 바다가 주제로 보여야 합니다)"
+   },
+   {
+    "명소": "해동용궁사",
+    "제목": "Busan (53854676259)",
+    "파일": "img/coast/busaneast-haedongyonggungsa.jpg",
+    "권역": "busaneast",
+    "왜뺐나": "절 입구 **현판(간판)** 사진입니다. 바다가 전혀 없고 아래에 사람들 얼굴이 보입니다 (주인 규칙 4 — 간판 · 규칙 2)"
+   },
+   {
+    "명소": "태종대",
+    "제목": "Taejongdae, Busan, South Korea, October 2019 09",
+    "파일": "img/coast/busanwest-taejongdae.jpg",
+    "권역": "busanwest",
+    "왜뺐나": "**부조벽과 데크**만 보입니다. 바다가 전혀 없습니다 (주인 규칙 4 — 건물·구조물)"
    }
   ]
  }
