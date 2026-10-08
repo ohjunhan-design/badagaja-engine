@@ -4756,7 +4756,7 @@ def 어종쪽(d, 안내, 언어='ko'):
                     '</picture>'
                     # ★ 「크게 보기」는 **늘 보입니다** (바깥 검수 기준)
                     #   「hover 전용 금지 · 모바일 최소 46px」
-                    '<a class="rig-zoom" href="%s" target="_blank"'
+                    '<a class="fish-rig-zoom" href="%s" target="_blank"'
                     ' rel="noopener">크게 보기</a>'
                     '<figcaption>그림 · %s 안내도 · 바다가자닷컴'
                     '</figcaption>'

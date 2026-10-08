@@ -18,6 +18,7 @@
     'check_build_stamp.py' · 'check_coast.py' · 'check_failclosed.py'
     'check_overlay.py' · 'check_panel.py' · 'check_rigref.py'
     'check_search.py' · 'check_nocoord.py' · 'check_backup.py'
+    'check_cssdup.py'
 
 ★ **정말 망가뜨려야 합니다** (기억 「뮤테이션은 정말 망가뜨려야」)
     살짝 건드려 놓고 「잡았다」 하면 헛돕니다. 검사기가 보는 바로
@@ -273,6 +274,34 @@ def 시험_되돌릴것():
            돌리기('check_backup.py', 뿌리=뿌리, 시간=300).끝난값 == 4)
 
 
+def 시험_이름겹침():
+    """'check_cssdup.py' — 같은 이름을 두 뜻으로 쓰면 잡는가
+
+    ★ 2026-10-08 실제로 사이트를 망가뜨린 그 줄을 **그대로** 되살립니다.
+      `.rig-zoom` 은 「크게 보는 칸」(평소 display:none)이었는데
+      「크게 보기 단추」에 같은 이름을 썼고, 뒤쪽 규칙이 그 숨김을
+      덮어 1372x980 확대 그림이 채비 16쪽에서 늘 펼쳐졌습니다.
+    """
+    print('[9] check_cssdup — 같은 이름을 두 뜻으로 쓰면 잡는가')
+    with isolate.일터() as 뿌리:
+        길 = os.path.join(뿌리, 'assets', 'css', 'site.css')
+        글 = io.read(길)
+        # ★ **정말 그때처럼** — 단추 이름을 확대 칸과 같게 되돌립니다
+        옛 = '.fish-rig-zoom{position:absolute;right:10px;bottom:10px;'
+        봄('그때의 줄을 되살릴 수 있다', 옛 in 글, '앵커를 못 찾았습니다')
+        io.write(길, 글.replace(
+            옛, '.rig-zoom{position:absolute;right:10px;bottom:10px;', 1))
+        난것 = 돌리기('check_cssdup.py', 뿌리=뿌리, 인자=['--strict'],
+                      시간=180)
+        봄('`display` 가 none / inline-flex 로 갈리면 막는다 (끝난값 1)',
+           난것.끝난값 == 1, 난것)
+        봄('어느 이름인지 말해 준다', 'rig-zoom' in 난것, 난것)
+
+    # 손대지 않은 판은 통과해야 합니다 — 거짓 양성이 없어야 둘 수 있습니다
+    봄('지금 차림표는 통과한다',
+       돌리기('check_cssdup.py', 인자=['--strict'], 시간=180).끝난값 == 0)
+
+
 def main():
     print('새로 만든 검사기도 잘못을 잡는지 봅니다 (2026-10-08)')
     print('  바깥 검수 — 「broken fixture → FAIL 회귀시험을 추가하세요」')
@@ -285,6 +314,7 @@ def main():
     시험_찾기()
     시험_거짓통과()
     시험_되돌릴것()
+    시험_이름겹침()
     print('')
     if 실패:
         print('%d가지 통과 · %d가지 실패' % (통과, len(실패)))

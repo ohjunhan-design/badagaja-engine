@@ -4878,12 +4878,19 @@ body.p-travel .tv-more{display:none}
   border-radius:var(--r-md)}
 /* ★ 「크게 보기」는 **늘 보입니다** — hover 전용 금지 (바깥 검수)
      PC 최소 44px · 모바일 최소 46px */
-.rig-zoom{position:absolute;right:10px;bottom:10px;
+/* ★ **이름을 가릅니다** (2026-10-08 중대 오류)
+   처음에 이 단추를 `.rig-zoom` 이라 지었습니다. 그런데 그 이름은
+   이미 **「크게 보는 칸」**(`:target` 덮개, 평소 `display:none`)
+   이 쓰고 있었습니다. 이 규칙이 **뒤에 있어** 그 `display:none` 을
+   덮었고, 1372×980 짜리 확대 그림이 채비 16쪽에서 **늘 펼쳐져** 
+   본문을 가렸습니다 (기억 「차림표 맨 뒤가 이깁니다」).
+   폭을 억지로 막는 것이 아니라 **이름을 가르는 것**이 고침입니다. */
+.fish-rig-zoom{position:absolute;right:10px;bottom:10px;
   display:inline-flex;align-items:center;gap:6px;
   min-height:44px;padding:0 16px;border-radius:var(--r-full);
   background:#2F5D57;color:#fff;font-weight:800;font-size:14px;
   text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.25)}
-.rig-zoom::before{content:"\1F50D";font-size:15px}
+.fish-rig-zoom::before{content:"\1F50D";font-size:15px}
 .fish-rig-name{margin:0 0 4px;font-size:17px;font-weight:800;
   color:var(--ink)}
 .fish-rig-why{margin:0 0 10px;font-size:14px;line-height:1.6;
@@ -4893,7 +4900,7 @@ body.p-travel .tv-more{display:none}
     align-items:start;gap:18px}
 }
 @media (max-width:767px){
-  .rig-zoom{min-height:46px}
+  .fish-rig-zoom{min-height:46px}
 }
 
 /* ★ **끌어올릴 때 고정 머리에 가리지 않게** (2026-10-08에 재고 고침)
