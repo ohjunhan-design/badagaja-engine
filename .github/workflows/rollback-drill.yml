@@ -76,6 +76,15 @@ jobs:
         if: runner.os == 'Linux'
         with:
           python-version: '3.12'
+      # ★ **PyYAML 을 깝니다** (2026-10-08 — 배포 #41 이 여기서 막혔습니다)
+      #   `setup-python` 은 깨끗한 파이썬을 깝니다. 제 윈도우에는
+      #   PyYAML 이 있어 시험이 다 통과했는데, 우분투에는 없어서
+      #   `check_workflow.py` 가 짜임 검사를 **건너뛰고 통과**했습니다.
+      #   클라우드에서 검사가 안 도는데 통과로 보이는 것이
+      #   가장 나쁜 꼴입니다 (기억 「클라우드 판정이 로컬과 다를 때」).
+      - name: 파이썬 꾸러미를 깝니다
+        shell: bash
+        run: python -m pip install --quiet --disable-pip-version-check PyYAML
 
       # ★ 윈도우에서는 **있는 파이썬이 쓸 만한지 봅니다**
       #   3.12 가 아니면 거기서 멈춥니다 — 딴 판으로 재면

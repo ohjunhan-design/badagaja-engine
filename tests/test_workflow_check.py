@@ -45,8 +45,13 @@ def 시험(이름, 조건, 설명=''):
         print('  ✗ %s   %s' % (이름, 설명))
 
 
-def 돌리기(글):
-    """그 글을 워크플로 한 장으로 두고 검사기를 돌립니다."""
+def 돌리기(글, yaml없이=False):
+    """그 글을 워크플로 한 장으로 두고 검사기를 돌립니다.
+
+    `yaml없이=True` 면 **PyYAML 을 못 찾는 환경**을 흉내 냅니다 —
+    우분투 러너가 그렇습니다. 가짜 `yaml.py` 를 앞세워 import 를
+    실패시킵니다.
+    """
     터 = tempfile.mkdtemp(prefix='wf-test-')
     try:
         밭 = os.path.join(터, 'workflows')
@@ -55,6 +60,13 @@ def 돌리기(글):
         환 = dict(os.environ)
         환['PYTHONUTF8'] = '1'
         환['BADAGAJA_WORKFLOWS'] = 밭
+        if yaml없이:
+            가짜 = os.path.join(터, 'yaml없는곳')
+            os.makedirs(가짜)
+            io.open(os.path.join(가짜, 'yaml.py'), 'w',
+                    encoding='utf-8').write(
+                        "raise ImportError('없는 셈 칩니다')\n")
+            환['PYTHONPATH'] = 가짜
         끝 = subprocess.run(
             [sys.executable, '-X', 'utf8',
              os.path.join(여기, 'engine', 'check_workflow.py')],
@@ -91,7 +103,17 @@ def main():
              True in d,
              'YAML 1.2 로 바뀐 듯합니다 — check_workflow 를 보세요')
     except ImportError:
-        시험('yaml 이 있습니다', False, 'PyYAML 이 없어 못 쟀습니다')
+        시험('yaml 이 있습니다', False,
+             '★ PyYAML 이 없습니다 — 이 시험 묶음은 PyYAML 을 **전제**합니다. '
+             '일꾼 설정 넷에 `pip install PyYAML` 단계가 있습니다')
+
+    print('')
+    print('[검사가 안 돌았는데 통과로 보이지 않는가]')
+    print('  ★ 2026-10-08 배포 #41 — 우분투에 PyYAML 이 없어')
+    print('    검사기가 짜임을 **한 줄도 안 보고** 통과를 찍고 있었습니다.')
+    시험('PyYAML 이 없으면 **못잼(4)** 을 냅니다 (통과 아님)',
+         돌리기(멀쩡한것, yaml없이=True) == 4,
+         '통과(0)를 내면 클라우드에서 검사가 죽어도 모릅니다')
 
     print('')
     print('[막지 말아야 할 것]')

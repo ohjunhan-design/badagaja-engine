@@ -202,6 +202,25 @@ def env칸찾기(글):
 def main():
     엄격 = '--strict' in sys.argv
     막음, 알림 = [], []
+
+    # ★ **PyYAML 이 없으면 「못 잼」입니다. 통과가 아닙니다.**
+    #   (2026-10-08 — 배포 #41 이 이것을 드러냈습니다)
+    #
+    #   `setup-python` 은 깨끗한 파이썬을 깝니다. 우분투 러너에는
+    #   PyYAML 이 없어, 이 검사기가 짜임을 **하나도 안 보고**
+    #   「✅ 통과 · 이름·걸리는 조건·컨텍스트가 모두 제자리입니다」
+    #   를 찍고 있었습니다. 제 윈도우에서는 PyYAML 이 있어 멀쩡히
+    #   돌았으므로 **반 년이라도 모를 수 있었습니다.**
+    #
+    #   검사가 안 돌았는데 통과로 보이는 것이 가장 나쁜 꼴입니다.
+    try:
+        import yaml                                   # noqa: F401
+    except ImportError:
+        print()
+        print('  ✗ PyYAML 이 없어 일꾼 설정을 **한 줄도 못 봤습니다.**')
+        print('    이것은 통과가 아닙니다 — `pip install PyYAML` 하세요.')
+        print('    (일꾼 설정 넷에 깔기 단계가 들어 있습니다)')
+        return 4
     파일들 = sorted(glob.glob(os.path.join(일꾼터, '*.yml'))
                     + glob.glob(os.path.join(일꾼터, '*.yaml')))
     if not 파일들:
