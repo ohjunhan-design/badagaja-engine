@@ -1780,6 +1780,53 @@ def 광고움직임(쪽길, 쪽갈래, 권역=None):
                          판번호(os.path.join(ASSETS, 'js', 'ads.js')))))
 
 
+def _쪽안사진파일(쪽길, 상대):
+    """쪽에서 부르는 **상대 주소**를 진짜 파일 자리로 되짚습니다.
+
+    ★ **원본 자리에서 찾습니다** — `site/` 가 아니라 (2026-10-08 밤)
+      사진은 쪽보다 **나중에** 옮겨질 수 있습니다. `site/` 에서
+      찾으면 「어제 옮겨 둔 것이 남아 있어 찾아지고, 딴 자리에
+      새로 만들면 못 찾는」 일이 생깁니다 —
+      **두 번 만들면 결과가 달라집니다**(계약-07).
+    """
+    if not 상대:
+        return ''
+    from engine import hubs_more
+    # 쪽 자리에서 푼 뒤, 사이트 뿌리 기준 주소만 남깁니다
+    밭 = os.path.dirname(os.path.join(나갈곳, 쪽길))
+    p = os.path.normpath(os.path.join(밭, 상대))
+    안 = os.path.relpath(p, 나갈곳).replace(os.sep, '/')
+    원본 = os.path.join(hubs_more._그림밭, *안.split('/'))
+    if os.path.isfile(원본):
+        return 원본
+    return p if os.path.isfile(p) else ''
+
+
+def _크기칸(길):
+    """` width="…" height="…"` 조각. 못 읽으면 빈 글자."""
+    if not 길:
+        return ''
+    w, h = 그림크기(길)
+    return (' width="%d" height="%d"' % (w, h)) if w else ''
+
+
+def 그림크기(길):
+    """그림의 **진짜 가로세로**. 못 읽으면 (0, 0).
+
+    ★ 왜 자료가 아니라 파일에서 읽나 — 자료에 적어 두면 그림을 바꿀
+      때 한쪽만 고쳐 어긋납니다 (기억 「숫자는 한 곳에서만」).
+    """
+    try:
+        from PIL import Image
+    except ImportError:
+        return 0, 0
+    try:
+        with Image.open(길) as im:
+            return im.width, im.height
+    except Exception:                                 # noqa: BLE001
+        return 0, 0
+
+
 def 꼬리메뉴(d, 쪽길, 언어='ko'):
     """꼬리 메뉴.
 
@@ -2669,14 +2716,18 @@ def _도감카드(x, 갈래, 쪽길, 언어='ko'):
 
     return ('<article class="fish-pick-card"><a href="%s">'
             '<span class="fish-pick-photo">'
-            '<img src="%s" alt="%s" loading="lazy" decoding="async"'
-            ' width="300" height="200"></span>'
+            # ★ **진짜 크기를 읽어 적습니다** (2026-10-08 밤 시각 점검)
+            #   전에는 `300×200`(비율 1.5)을 모든 사진에 박아 두었는데,
+            #   실제는 1.33·1.88·2.13 처럼 제각각이라 사진이 뜨는 순간
+            #   **쪽이 덜컥 흔들렸습니다**(CLS).
+            '<img src="%s" alt="%s" loading="lazy" decoding="async"%s>'
+            '</span>'
             '<span class="fish-pick-body">'
             '<b class="fish-pick-name">%s</b>'
             '<span class="fish-pick-meta">%s</span>'
             '%s</span></a></article>'
-            % (간곳, esc(사진), esc(이름), esc(이름),
-               ''.join(잰것), 채비))
+            % (간곳, esc(사진), esc(이름), _크기칸(_쪽안사진파일(쪽길, 사진)),
+               esc(이름), ''.join(잰것), 채비))
 
 
 def 대상아이콘(이름, 쪽길):
@@ -4750,8 +4801,12 @@ def 어종쪽(d, 안내, 언어='ko'):
                     #   그대로 따릅니다 (새로 만들지 않습니다).
                     '<figure class="fish-rig-visual rig-guide">'
                     '<picture>'
-                    '<source media="(max-width:767px)" srcset="%s">'
-                    '<img src="%s" alt="%s 안내도" loading="lazy"'
+                    # ★ **가로세로를 적습니다** (2026-10-08 밤 시각 점검)
+                    #   없으면 사진이 뜨기 전 자리가 0 이라, 뜨는 순간
+                    #   쪽이 통째로 밀립니다. 휴대폰 사진은 비율이
+                    #   달라 `<source>` 에도 제 값을 적습니다.
+                    '<source media="(max-width:767px)" srcset="%s"%s>'
+                    '<img src="%s" alt="%s 안내도"%s loading="lazy"'
                     ' decoding="async">'
                     '</picture>'
                     # ★ 「크게 보기」는 **늘 보입니다** (바깥 검수 기준)
@@ -4769,8 +4824,10 @@ def 어종쪽(d, 안내, 언어='ko'):
                     '</div></section>'
                     % (esc(_채['id']),
                        esc(url.rel(쪽길, _채['모바일사진'])),
+                       _크기칸(_채.get('모바일사진파일')),
                        esc(url.rel(쪽길, _채['PC사진'])),
                        esc(_채['이름']),
+                       _크기칸(_채.get('PC사진파일')),
                        esc(url.rel(쪽길, _채['PC사진'])),
                        esc(_채['이름']),      # figcaption 의 이름
                        esc(_채['이름']),      # 카드 제목의 이름
@@ -5420,8 +5477,15 @@ def 안내도(d, 갈래, 쪽길, 이름, 밭='rig'):
                 or os.path.getmtime(세로원본) >
                 os.path.getmtime(세로목적)):
             shutil.copy2(세로원본, 세로목적)
-        세로조각 = ('<source media="(max-width:767px)" srcset="%s">'
-                     % esc(url.rel(쪽길, 세로아래)))
+        # ★ **제 가로세로를 적습니다** (2026-10-08 밤 시각 점검)
+        #   안 적으면 브라우저가 PC 사진 비율로 자리를 잡아, 휴대폰에서
+        #   사진이 뜨는 순간 쪽이 **덜컥 흔들립니다**(CLS).
+        #   bottom 은 PC 1.64 · 휴대폰 0.45 로 비율이 아주 다릅니다.
+        세로폭, 세로높이 = 그림크기(세로원본)
+        세로조각 = ('<source media="(max-width:767px)" srcset="%s"%s>'
+                     % (esc(url.rel(쪽길, 세로아래)),
+                        (' width="%d" height="%d"' % (세로폭, 세로높이))
+                        if 세로폭 else ''))
     return ('<figure class="rig-guide">'
             '<a class="rig-guide-open" href="#%s"'
             ' aria-label="%s 안내도 크게 보기">'

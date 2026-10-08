@@ -394,11 +394,17 @@ def 안내쪽(d, 언어='ko'):
             간곳 = esc(url.rel(쪽길, url.guide(x['id'], 갈래, 언어)))
             그림 = _어종그림(x['id'], 쪽길)
             if 그림:
+                # ★ **진짜 크기를 읽어 적습니다** (2026-10-08 밤)
+                #   `300×200`(비율 1.5)을 박아 두었는데 실제 사진은
+                #   1.33·1.88·2.13 처럼 제각각이라, 사진이 뜨는 순간
+                #   쪽이 덜컥 흔들렸습니다(CLS).
+                from engine.build import _크기칸, _쪽안사진파일
                 줄.append('<li class="hub-card"><a href="%s">'
                           '<img src="%s" alt="%s" loading="lazy"'
-                          ' decoding="async" width="300" height="200">'
+                          ' decoding="async"%s>'
                           '<b>%s</b></a></li>'
-                          % (간곳, esc(그림), esc(이), esc(이)))
+                          % (간곳, esc(그림), esc(이),
+                             _크기칸(_쪽안사진파일(쪽길, 그림)), esc(이)))
             else:
                 줄.append('<li><a href="%s"><b>%s</b></a></li>'
                           % (간곳, esc(이)))

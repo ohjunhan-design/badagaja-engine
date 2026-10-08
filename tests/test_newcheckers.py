@@ -19,6 +19,7 @@
     'check_overlay.py' · 'check_panel.py' · 'check_rigref.py'
     'check_search.py' · 'check_nocoord.py' · 'check_backup.py'
     'check_cssdup.py' · 'check_cover.py' · 'check_rigpage.py'
+    'check_interact.py' · 'check_visual.py'
 
 ★ **정말 망가뜨려야 합니다** (기억 「뮤테이션은 정말 망가뜨려야」)
     살짝 건드려 놓고 「잡았다」 하면 헛돕니다. 검사기가 보는 바로
@@ -360,6 +361,55 @@ def 시험_채비쪽그림():
            '1100 넘음' in 난것, 난것)
 
 
+def 시험_눌러보기():
+    """'check_interact.py' — 덮개가 안 닫히면 잡는가
+
+    손님이 확대 그림에 **갇히는** 것이 가장 나쁩니다.
+    닫는 길을 없애 보고 잡는지 봅니다.
+    """
+    print('[12] check_interact — 덮개가 안 닫히면 잡는가')
+    with isolate.일터() as 뿌리:
+        길 = os.path.join(뿌리, 'assets', 'css', 'site.css')
+        글 = io.read(길)
+        # ★ **정말 못 닫게** — 닫기 단추와 배경을 모두 숨깁니다
+        옛 = '.rig-zoom-bg{position:absolute;inset:0}'
+        봄('닫는 길을 없앨 수 있다', 옛 in 글)
+        io.write(길, 글.replace(
+            옛, '.rig-zoom-bg{display:none}' + chr(10)
+            + '.rig-zoom-x{display:none}', 1))
+        만들기 = subprocess.run(
+            [sys.executable, '-X', 'utf8',
+             os.path.join(뿌리, 'engine', 'build.py')],
+            cwd=뿌리, capture_output=True, text=True,
+            encoding='utf-8', errors='replace', timeout=900)
+        봄('사본에서 다시 만들 수 있다', 만들기.returncode == 0)
+        난것 = 돌리기('check_interact.py', 뿌리=뿌리, 시간=2400)
+        봄('닫는 길이 없으면 막는다 (끝난값 1)', 난것.끝난값 == 1, 난것)
+        봄('「닫는 길이 없습니다」라고 말해 준다',
+           '닫는 길이 없습니다' in 난것, 난것)
+
+
+def 시험_눈으로볼때():
+    """'check_visual.py' — 빈 칸을 잡는가"""
+    print('[13] check_visual — 글 없는 빈 칸을 잡는가')
+    with isolate.일터() as 뿌리:
+        길 = os.path.join(뿌리, 'engine', 'template.py')
+        글 = io.read(길)
+        옛 = "    s = _빈칸지우기(s)"
+        봄('빈 칸 지우기를 끌 수 있다', 옛 in 글)
+        io.write(길, 글.replace(옛, "    pass  # 일부러 끔", 1))
+        만들기 = subprocess.run(
+            [sys.executable, '-X', 'utf8',
+             os.path.join(뿌리, 'engine', 'build.py')],
+            cwd=뿌리, capture_output=True, text=True,
+            encoding='utf-8', errors='replace', timeout=900)
+        봄('사본에서 다시 만들 수 있다', 만들기.returncode == 0)
+        난것 = 돌리기('check_visual.py', 뿌리=뿌리, 시간=2400)
+        봄('글 없는 빈 칸이 생기면 막는다 (끝난값 1)',
+           난것.끝난값 == 1, 난것)
+        봄('「비어 있습니다」라고 말해 준다', '비어 있습니다' in 난것, 난것)
+
+
 def main():
     print('새로 만든 검사기도 잘못을 잡는지 봅니다 (2026-10-08)')
     print('  바깥 검수 — 「broken fixture → FAIL 회귀시험을 추가하세요」')
@@ -375,6 +425,8 @@ def main():
     시험_이름겹침()
     시험_덮는것()
     시험_채비쪽그림()
+    시험_눌러보기()
+    시험_눈으로볼때()
     print('')
     if 실패:
         print('%d가지 통과 · %d가지 실패' % (통과, len(실패)))
