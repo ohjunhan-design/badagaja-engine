@@ -6225,7 +6225,7 @@ _신청구역 = [
         ('name', '담당자 이름', 'text', True, None),
         ('contact', '연락 방법 — 전화·문자·카톡·메일 가운데 하나',
          'text', True, None),
-        ('intro', '동호회 소개·그 밖에 하실 말씀', 'textarea', False, None),
+        ('intro', '동호회 소개·추가 요청사항', 'textarea', False, None),
     ]),
 ]
 
