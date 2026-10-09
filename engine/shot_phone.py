@@ -79,13 +79,16 @@ def 찍기(쪽길, 낼곳, 폭=390, 높이=2600):
             '--hide-scrollbars', '--force-device-scale-factor=1',
             '--window-size=%d,%d' % (max(폭, 520), 높이),
             # 바깥에서 받아 오므로 넉넉히 기다립니다
-            '--virtual-time-budget=12000',
+            # ★ 긴 쪽(5,000px 넘는 것)은 12초로 모자랍니다 —
+            #   2026-10-09 운영 첫 쪽을 찍었더니 **빈 화면**이
+            #   나왔습니다. 쪽 높이에 맞춰 늘립니다.
+            '--virtual-time-budget=%d' % max(12000, 높이 * 6),
             '--screenshot=%s' % 낼곳,
             'file:///' + urllib.parse.quote(래퍼.replace('\\', '/'),
                                             safe='/:'),
         ]
         subprocess.run(깃발, capture_output=True, timeout=180)
-        return os.path.exists(낼곳)
+        return _정말찍혔나(낼곳)
 
     조각 = ''
     if '#' in 쪽길:
@@ -109,7 +112,43 @@ def 찍기(쪽길, 낼곳, 폭=390, 높이=2600):
         'file:///' + urllib.parse.quote(래퍼.replace('\\', '/'), safe='/:'),
     ]
     subprocess.run(깃발, capture_output=True, timeout=120)
-    return os.path.exists(낼곳)
+    return _정말찍혔나(낼곳)
+
+
+def _정말찍혔나(낼곳):
+    """파일이 생겼다고 **찍힌 것이 아닙니다.**
+
+    ★ 2026-10-09 — 공개 서버를 찍었더니 **통째로 회색**이었습니다.
+      `X-Frame-Options: SAMEORIGIN` 이 iframe 을 막습니다.
+      그런데 도구는 「찍었습니다」라고 했습니다. 그 말을 믿고
+      빈 그림을 주인께 보낼 뻔했습니다.
+
+      파일이 있는지가 아니라 **그림에 내용이 있는지**를 봅니다.
+    """
+    if not os.path.exists(낼곳):
+        return False
+    try:
+        from PIL import Image
+        with Image.open(낼곳) as im:
+            작 = im.convert('RGB').resize((20, 60))
+            색 = set(작.getpixel((x, y))
+                     for y in range(60) for x in range(20))
+        # ★ 색 **가짓수**로는 못 가립니다 — 빈 쪽도 회색 음영이
+        #   열 가지쯤 나옵니다. **색이 있는가**를 봅니다:
+        #   R·G·B 가 서로 다른 점(= 회색이 아닌 점)이 있는지.
+        색있음 = sum(1 for r, g, b in 색
+                     if max(r, g, b) - min(r, g, b) > 12)
+        if 색있음 < 2:
+            print('✗ 빈 그림입니다 (회색뿐 — 색 %d가지, 유채색 %d가지).'
+                  % (len(색), 색있음))
+            print('  공개 서버는 X-Frame-Options 로 iframe 을 막습니다 —')
+            print('  이 도구는 **로컬 서버 전용**입니다.')
+            print('  공개 쪽은 크롬 탭으로 직접 찍으세요.')
+            return False
+    except ImportError:
+        pass          # Pillow 가 없으면 못 봅니다 — 막지는 않습니다
+    return True
+
 
 
 def main():
