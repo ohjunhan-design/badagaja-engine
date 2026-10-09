@@ -6222,9 +6222,18 @@ def _동호회신청폼(것):
             '<label><input type="checkbox" name="agree" value="예" required>'
             '<span>%s</span></label></p>' % esc(것.get('개인정보', '')))
 
+    # ★ 단추 글은 **일어나는 일 그대로** 적습니다 (2026-10-09 지피티 지적)
+    #   메일로 보내는 동안 「무료 지원 신청하기」라고 적으면
+    #   손님이 **눌렀으니 보내졌다**고 여깁니다. 메일앱이 없는
+    #   컴퓨터에서는 아무 일도 안 일어납니다.
+    #   서버가 붙으면 그때 「무료 지원 신청하기」로 돌립니다.
     보냄 = ('<p class="cs-submit">'
-            '<button type="submit" class="btn btn--dark">'
-            '무료 지원 신청하기</button></p>')
+            '<button type="submit" class="btn btn--dark">%s</button>'
+            '%s</p>'
+            % ('메일 앱으로 신청서 열기' if 메일인가 else '무료 지원 신청하기',
+               ('<small class="cs-submit-say">누르면 적으신 내용이 담긴 '
+                '메일이 열립니다. <b>메일에서 한 번 더 보내 주셔야</b> '
+                '접수됩니다.</small>') if 메일인가 else ''))
 
     # 메일로 보낼 때는 적은 것을 **보기 좋게 담아** 메일을 엽니다.
     움직임 = ''

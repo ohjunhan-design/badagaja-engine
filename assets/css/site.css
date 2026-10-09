@@ -5207,6 +5207,8 @@ body.p-travel .tv-more{display:none}
   accent-color:#2F5D57}
 .cs-submit{margin:6px 0 0}
 .cs-submit .btn{width:100%;min-height:54px;font-size:1.02rem}
+.cs-submit-say{display:block;margin-top:9px;font-size:.84rem;
+  line-height:1.6;color:var(--muted);text-align:center}
 
 @media (max-width:1080px){
   .cs-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
