@@ -1,0 +1,26 @@
+{
+ "_왜": "차림표에 규칙이 없는 클래스. 자바스크립트가 붙이는 것이라 알고 둡니다. 여기 없는 이름이 새로 생기면 막습니다",
+ "이름": {
+  "area-chip": 34,
+  "fest-pick": 1,
+  "filters": 114,
+  "firsttime": 57,
+  "fish-rig-say": 18,
+  "fn-col": 450,
+  "ft-more": 57,
+  "g-book": 1,
+  "gc-body": 1,
+  "hm-left": 1,
+  "p-guide": 7,
+  "p-rule": 1,
+  "rl-bad": 1,
+  "rl-now": 1,
+  "rl-ok": 1,
+  "rl-row": 1,
+  "rl-warn": 1,
+  "tbl": 1,
+  "tp-guide": 1,
+  "tv-shots": 1,
+  "warn-small": 35
+ }
+}

@@ -3080,6 +3080,49 @@ details.area-group .area-list{margin-bottom:12px}
 .rig-dl dt:last-of-type,.rig-dl dd:last-of-type{border-bottom:0}
 .rig-none{color:var(--foam-dim)}
 .rig-tip{display:block;margin-top:3px;font-size:.76rem;color:var(--foam-dim)}
+
+/* ━━ 채비 쪽 요령·장비 칸 ━━━━━━━━━━━━━━━━━━━━━━━━
+   ★ 2026-10-09 — 이 일곱 가지의 차림표가 **없었습니다.**
+     주인이 「장비 칸을 특히 보라」 하신 바로 그 칸이 테두리도
+     바탕도 없는 맨 글머리표 목록이었습니다.
+   ★ 장비 칸은 **낚시점에 보여 주는 쪽지**입니다. 그 쓰임에
+     맞춰 네모 안에 또렷하게 담고, 하나씩 짚어 가며 읽도록
+     줄을 벌립니다.
+   ★ 위의 `.rig-tip`(작은 곁글)과 **다른 것**입니다. 이름이
+     비슷해 있는 줄 알았던 것이 이 빠뜨림의 까닭입니다.      */
+.rig-tips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;margin-top:18px;align-items:start}
+.rig-tips > div{padding:18px 20px;border-radius:16px}
+.rig-tips .rig-tip{display:block;margin:0;font-size:inherit;
+  color:inherit;border:1px solid var(--line);background:var(--white)}
+.rig-kit{border:1.5px solid var(--green);background:#F3F7F6}
+.rig-tip-h{margin:0 0 11px;font-size:1rem;font-weight:800;
+  letter-spacing:-.02em;color:var(--ink);word-break:keep-all}
+.rig-kit .rig-tip-h{color:var(--green)}
+.rig-tip-list,.rig-kit-list{margin:0;padding:0;list-style:none;
+  display:grid;gap:8px}
+.rig-tip-list li{position:relative;padding-left:16px;font-size:.9rem;
+  line-height:1.65;color:var(--muted);word-break:keep-all}
+.rig-tip-list li::before{content:'';position:absolute;left:2px;top:.72em;
+  width:5px;height:5px;border-radius:50%;background:var(--orange);
+  transform:translateY(-50%)}
+/* 장비는 **하나씩 짚어 가며 챙깁니다** — 줄을 갈라 둡니다 */
+.rig-kit-list li{display:flex;align-items:flex-start;gap:9px;
+  padding:7px 0;border-bottom:1px dashed #D5E2DF;
+  font-size:.92rem;line-height:1.55;color:var(--ink);
+  word-break:keep-all}
+.rig-kit-list li:last-child{border-bottom:0}
+.rig-kit-list li::before{content:'';flex:0 0 auto;margin-top:.45em;
+  width:13px;height:13px;border-radius:4px;
+  border:1.5px solid var(--green);background:#fff}
+.rig-kit-note{margin:12px 0 0;padding-top:11px;
+  border-top:1px solid #D5E2DF;font-size:.82rem;line-height:1.6;
+  color:var(--green);font-weight:700;word-break:keep-all}
+
+@media (max-width:767px){
+  .rig-tips{grid-template-columns:minmax(0,1fr);gap:13px}
+  .rig-tips > div{padding:16px 17px}
+}
 @media (max-width:760px){
   .rig-wrap{grid-template-columns:1fr;gap:16px}
   .rig-dl dt,.rig-dl dd{padding:8px 11px;font-size:.84rem}
