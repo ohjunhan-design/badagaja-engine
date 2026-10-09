@@ -47,6 +47,12 @@
      밝은 바탕·본문·라인은 전문 명세 값입니다.
      견줌 — #2F5D57 on #F7FBFA 6.4:1 · #243735 on #fff 11.9:1 */
   --club:#2F5D57; --club-accent:#E5A94F;
+  /* ★ **방문 기록 쪽 빛깔** (2026-10-09 지피티 명세)
+     「통계 화면은 바다가자 본체보다 약간 더 업무용으로
+       정리합니다」. 막대는 한 색 계열로 두고 명도만 가릅니다 —
+     검색 #0F5B59 · 직접 #547A75 · 그 밖 #8DA6A2 */
+  --stats-brand:#0F5B59; --stats-text:#263432; --stats-muted:#62716E;
+  --stats-bg:#F5F8F7; --stats-line:#DCE6E3; --stats-danger:#A93E32;
   --club-soft:#F7FBFA; --club-ink:#243735; --club-line:#D9E7E4;
   /* ★ 아이콘 속 연한 녹색 (2026-10-02 바깥 검수 13차)
      아이콘 26개의 빛깔을 사이트 표준으로 맞추면서, 전복
@@ -408,6 +414,14 @@ html.has-navi .navi:hover{filter:brightness(.94)}
   border-radius:14px;border:1px solid var(--line);background:var(--white);
   font:inherit;font-size:15px;font-weight:700;color:var(--ink);cursor:pointer;
 }
+/* ★ **`hidden` 이 클래스에 집니다** (2026-10-09)
+   브라우저 기본은 `[hidden]{display:none}` 인데, `.btn{display:
+   inline-flex}` 같은 **클래스 규칙이 구체성에서 이깁니다.**
+   그래서 `hidden` 을 달아도 그대로 보입니다. 실제로 통계 쪽의
+   「열쇠말 지우기」가 숨지 않았습니다.
+   쪽마다 `.more[hidden]` 식으로 따로 적어 왔는데, **한 곳에서**
+   끝냅니다. `hidden` 은 뜻 자체가 「숨김」이라 예외가 없습니다. */
+[hidden]{display:none !important}
 .more[hidden],.empty[hidden]{display:none}
 .empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:28px 0;font-size:14px}
 .notice{
@@ -1397,6 +1411,108 @@ html[data-pcview] .pcview{display:block}
 .bignum span{
   display:block;margin-top:4px;font-size:12.5px;
   color:var(--muted);font-weight:700;
+}
+
+/* ━━ 방문 기록 쪽 (주인만 봅니다) ━━━━━━━━━━━━━━━━━━━━
+   ★ 2026-10-09 — 이 쪽의 차림표가 **통째로 없었습니다.**
+     `.st-*` 아홉 가지가 쪽에는 쓰이는데 규칙이 하나도 없어
+     카드가 맨 글줄로 나왔습니다. 10월 6일에 쪽을 지으며
+     차림표를 안 쓴 것입니다. `check_classes` 는 `--` 가 든
+     수식어만 보기에 그냥 지나갔습니다.
+   ★ 색은 지피티 명세의 `--stats-*` 입니다 — 본체보다 조금
+     더 업무용으로 정리합니다.
+   ★ 「3초 안에 오늘 상태가 정상인가를 판단」하게 만듭니다.   */
+.st-top{display:flex;flex-wrap:wrap;align-items:center;gap:10px;
+  margin-bottom:14px}
+.st-pick{display:inline-flex;align-items:center;gap:8px;
+  font-size:14px;font-weight:700;color:var(--stats-text,#263432)}
+.st-pick select{min-height:40px;padding:0 10px;border-radius:9px;
+  border:1px solid var(--stats-line,#DCE6E3);background:#fff;
+  font:inherit;font-size:14px}
+.st-key{display:flex;flex-wrap:wrap;align-items:center;gap:9px;
+  margin:0 0 14px;padding:14px 16px;border-radius:12px;
+  background:var(--stats-bg,#F5F8F7);
+  border:1px solid var(--stats-line,#DCE6E3)}
+.st-key label{font-size:14px;font-weight:800;
+  color:var(--stats-text,#263432)}
+.st-key input{flex:1 1 180px;min-height:44px;padding:10px 13px;
+  border:1px solid var(--stats-line,#DCE6E3);border-radius:10px;
+  background:#fff;font:inherit;font-size:15px}
+.st-msg{margin:0 0 14px;font-size:14px;color:var(--stats-muted,#62716E)}
+
+/* 기간 고르기 */
+.st-range{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+
+/* 숫자 카드 — 명세 구조 그대로.
+   나중에 넷이 될 수 있게 auto-fit 으로 둡니다 (지피티 지시) */
+.stats-summary{display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;
+  margin:0 0 18px}
+.stat-card{min-height:126px;padding:18px;
+  border:1px solid var(--stats-line,#DCE6E3);border-radius:16px;
+  background:#fff;display:flex;flex-direction:column}
+.stat-label{display:block;color:var(--stats-muted,#62716E);
+  font-size:14px;font-weight:700}
+.stat-value{display:block;margin-top:10px;
+  color:var(--stats-text,#263432);font-size:30px;line-height:1;
+  font-weight:800;letter-spacing:-.02em}
+.stat-delta{display:block;margin-top:9px;font-size:13px;font-weight:800;
+  color:var(--stats-muted,#62716E)}
+.stat-delta.up{color:#1F6B4F}
+.stat-delta.down{color:var(--stats-danger,#A93E32)}
+/* ★ **값의 정의를 숨기지 않습니다** (지피티 기준)
+     「hit 수·세션 수·페이지뷰 수가 섞여도 잘못 해석하지 않게」 */
+.stat-what{display:block;margin-top:auto;padding-top:10px;
+  font-size:12px;line-height:1.45;color:var(--stats-muted,#62716E);
+  word-break:keep-all}
+
+/* 유입 경로 막대 — 숫자를 글로만 적지 않습니다 (주인 규칙 6-1) */
+.st-paths{display:grid;gap:9px;margin:0 0 16px}
+.st-path{display:grid;grid-template-columns:48px minmax(0,1fr) 48px;
+  align-items:center;gap:10px}
+.st-path__t{font-size:13.5px;font-weight:700;
+  color:var(--stats-text,#263432)}
+.st-path__bar{height:14px;border-radius:7px;
+  background:var(--stats-bg,#F5F8F7);overflow:hidden}
+.st-path__bar i{display:block;height:100%;border-radius:7px;
+  background:var(--stats-brand,#0F5B59)}
+.st-path:nth-child(2) .st-path__bar i{background:#547A75}
+.st-path:nth-child(3) .st-path__bar i{background:#8DA6A2}
+.st-path__n{font-size:13px;font-weight:800;text-align:right;
+  color:var(--stats-text,#263432)}
+
+/* 날마다 막대 */
+.st-chart{display:flex;align-items:flex-end;gap:3px;height:150px;
+  padding:12px 10px 0;border:1px solid var(--stats-line,#DCE6E3);
+  border-radius:12px;background:#fff;overflow-x:auto}
+.st-bar{flex:1 0 9px;display:flex;flex-direction:column;
+  align-items:center;justify-content:flex-end;height:100%;gap:4px}
+.st-bar i{display:block;width:100%;min-height:2px;border-radius:3px 3px 0 0;
+  background:var(--stats-brand,#0F5B59)}
+.st-bar b{font-size:10px;font-weight:700;line-height:1;
+  color:var(--stats-muted,#62716E)}
+
+/* 표 */
+.st-table{border:1px solid var(--stats-line,#DCE6E3);border-radius:12px;
+  background:#fff;overflow:auto}
+.st-table table{width:100%;border-collapse:collapse}
+.st-table th,.st-table td{padding:10px 13px;font-size:14px;
+  text-align:left;border-bottom:1px solid var(--stats-line,#DCE6E3)}
+.st-table th{font-weight:800;color:var(--stats-muted,#62716E);
+  background:var(--stats-bg,#F5F8F7)}
+.st-table tr:last-child td{border-bottom:0}
+.st-table td a{color:var(--stats-brand,#0F5B59)}
+.st-n{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.st-empty{margin:0;padding:18px;text-align:center;font-size:14px;
+  color:var(--stats-muted,#62716E)}
+
+@media (max-width:767px){
+  /* 390px — 카드를 억지로 한 줄에 넣지 않습니다 (지피티 지시) */
+  .stats-summary{grid-template-columns:minmax(0,1fr);gap:10px}
+  .stat-card{min-height:0;padding:15px}
+  .stat-value{font-size:26px}
+  .st-chart{height:130px}
+  .st-path{grid-template-columns:42px minmax(0,1fr) 42px}
 }
 
 /* 쪽 안 차례 — **건너뛰라고 두는 것입니다** (2026-10-01)

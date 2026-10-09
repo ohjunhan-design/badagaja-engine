@@ -74,23 +74,95 @@
     칸.innerHTML = 몸;
   }
 
+  /* ★ **검색에서 왔는가** — 들어온 곳 이름으로 가립니다.
+   *   서버가 주는 키가 호스트인지 전체 주소인지 모르므로,
+   *   **글자 안에 들어 있는지**로 봅니다. 둘 다에서 먹힙니다.
+   *   (짐작해 자료 모양을 정하지 않습니다)
+   */
+  var 검색엔진 = ['naver', 'google', 'daum', 'bing', 'yahoo',
+                  'zum', 'duckduckgo', 'yandex', 'baidu'];
+  function 검색이냐(k) {
+    var s = (k || '').toLowerCase();
+    for (var i = 0; i < 검색엔진.length; i++) {
+      if (s.indexOf(검색엔진[i]) >= 0) { return true; }
+    }
+    return false;
+  }
+  function 직접이냐(k) {
+    var s = (k || '').toLowerCase();
+    return !s || s === '-' || s.indexOf('직접') >= 0
+        || s === 'direct' || s === '(direct)' || s === 'none';
+  }
+
+  /* 유입 경로 막대 — 숫자를 글로만 적지 않습니다 (주인 규칙 6-1) */
+  function 길막대(칸, from) {
+    if (!칸) { return; }
+    var 열쇠들 = Object.keys(from || {});
+    if (!열쇠들.length) {
+      칸.innerHTML = '<p class="st-empty">아직 기록이 없습니다</p>';
+      return;
+    }
+    var 검 = 0, 직 = 0, 밖 = 0;
+    열쇠들.forEach(function (k) {
+      var v = from[k] || 0;
+      if (직접이냐(k)) { 직 += v; }
+      else if (검색이냐(k)) { 검 += v; }
+      else { 밖 += v; }
+    });
+    var 모두 = 검 + 직 + 밖;
+    if (!모두) {
+      칸.innerHTML = '<p class="st-empty">아직 기록이 없습니다</p>';
+      return;
+    }
+    var 몸 = '';
+    [['검색', 검], ['직접', 직], ['그 밖', 밖]].forEach(function (p) {
+      var 몫 = Math.round((p[1] / 모두) * 100);
+      몸 += '<div class="st-path">'
+          + '<span class="st-path__t">' + p[0] + '</span>'
+          + '<span class="st-path__bar"><i style="width:' + 몫
+          + '%"></i></span>'
+          + '<span class="st-path__n">' + 몫 + '%</span></div>';
+    });
+    칸.innerHTML = 몸;
+    return { 검색: 검, 모두: 모두 };
+  }
+
   function 그리기(d) {
     var 이제 = new Date();
     var 두자 = function (n) { return (n < 10 ? '0' : '') + n; };
-    var 오늘 = 이제.getFullYear() + '-' + 두자(이제.getMonth() + 1)
-             + '-' + 두자(이제.getDate());
+    var 날글 = function (t) {
+      return t.getFullYear() + '-' + 두자(t.getMonth() + 1)
+           + '-' + 두자(t.getDate()); };
+    var 오늘 = 날글(이제);
     var 오 = (d.days && d.days[오늘]) || { views: 0, visits: 0 };
     var 합 = d.sum || {};
 
-    찾기('stToday').textContent = 수(오.views);
     찾기('stTodayV').textContent = 수(오.visits);
-    찾기('stMonth').textContent = 수(합.views);
     찾기('stMonthV').textContent = 수(합.visits);
 
-    var 기기 = 합.device || {};
-    var 폰 = 기기.mobile || 0, 피시 = 기기.desktop || 0;
-    var 모두 = 폰 + 피시;
-    찾기('stMobile').textContent = 모두 ? Math.round((폰 / 모두) * 100) + '%' : '—';
+    /* 어제 대비 — 어제 기록이 **있을 때만** 적습니다.
+       없는데 0% 를 적으면 「안 늘었다」로 읽힙니다. */
+    var 어제날 = new Date(이제.getTime() - 86400000);
+    var 어 = d.days && d.days[날글(어제날)];
+    var 덧 = 찾기('stDelta');
+    if (덧) {
+      if (어 && 어.visits) {
+        var 율 = ((오.visits - 어.visits) / 어.visits) * 100;
+        덧.textContent = '어제 ' + (율 >= 0 ? '+' : '')
+                       + (Math.round(율 * 10) / 10) + '%';
+        덧.className = 'stat-delta ' + (율 >= 0 ? 'up' : 'down');
+      } else {
+        덧.textContent = '';
+        덧.className = 'stat-delta';
+      }
+    }
+
+    var 길 = 길막대(찾기('stPaths'), 합.from);
+    var 검칸 = 찾기('stSearch');
+    if (검칸) {
+      검칸.textContent = (길 && 길.모두)
+        ? Math.round((길.검색 / 길.모두) * 100) + '%' : '—';
+    }
 
     막대그리기(d.days);
     줄채우기(찾기('stPages'), 합.pages, true);
@@ -154,10 +226,64 @@
         return;
       }
       알림('');
+      var 지움 = 찾기('stForget');
+      if (지움) { 지움.hidden = false; }   // 열쇠말이 있을 때만 보입니다
+      받은것 = d;
       그리기(d);
     }).catch(function () {
       // 서버가 죽어도 쪽은 삽니다 — 까닭을 적고 멈춥니다
       알림('서버에서 못 받았습니다. 잠시 뒤 다시 보세요.');
+    });
+  }
+
+  /* ★ 기간 단추 — 자료는 **달 단위**로 옵니다. 오늘·7일·30일은
+   *   받아 둔 날짜에서 **셉니다.** 30일이 앞 달에 걸치면 그만큼은
+   *   빠지므로, 그 사실을 화면에 적습니다. 모르는 채로 적은
+   *   숫자를 내보이지 않습니다.
+   */
+  var 받은것 = null;
+  function 기간셈(범위) {
+    if (!받은것) { return; }
+    var d = 받은것;
+    if (범위 === 'month') { 그리기(d); return; }
+    var 이제 = new Date();
+    var 두자 = function (n) { return (n < 10 ? '0' : '') + n; };
+    var 날글 = function (t) {
+      return t.getFullYear() + '-' + 두자(t.getMonth() + 1)
+           + '-' + 두자(t.getDate()); };
+    var 날수 = 범위 === 'today' ? 1 : (범위 === '7d' ? 7 : 30);
+    var 더함 = 0, 본날 = 0, 빠진날 = 0;
+    for (var i = 0; i < 날수; i++) {
+      var t = new Date(이제.getTime() - i * 86400000);
+      var k = 날글(t);
+      if (d.days && Object.prototype.hasOwnProperty.call(d.days, k)) {
+        더함 += (d.days[k].visits || 0); 본날++;
+      } else if (k.slice(0, 7) !== (d.month || '')) {
+        빠진날++;                      // 앞 달이라 안 받은 날
+      } else { 본날++; }               // 그 달인데 기록이 없는 날
+    }
+    찾기('stMonthV').textContent = 수(더함);
+    var 이름 = 찾기('stMonthV').closest('.stat-card')
+                .querySelector('.stat-label');
+    var 뜻 = 찾기('stMonthV').closest('.stat-card')
+                .querySelector('.stat-what');
+    이름.textContent = 범위 === 'today' ? '오늘 방문'
+                     : ('최근 ' + 날수 + '일 방문');
+    뜻.textContent = 빠진날
+      ? ('최근 ' + 날수 + '일 가운데 이 달에 든 ' + 본날 + '일만 셌습니다')
+      : ('최근 ' + 날수 + '일을 더한 값입니다');
+  }
+
+  var 기간칸 = document.querySelector('.st-range');
+  if (기간칸) {
+    기간칸.addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-range]');
+      if (!b) { return; }
+      var 들 = 기간칸.querySelectorAll('button');
+      for (var i = 0; i < 들.length; i++) {
+        들[i].className = 들[i] === b ? 'btn btn--sm btn--on' : 'btn btn--sm';
+      }
+      기간셈(b.getAttribute('data-range'));
     });
   }
 
@@ -170,6 +296,7 @@
     지우기.addEventListener('click', function () {
       try { localStorage.removeItem(열쇠칸); } catch (e) {}
       열쇠 = '';
+      this.hidden = true;
       열쇠칸보이기();
       알림('열쇠말을 지웠습니다. 다시 넣어야 숫자가 보입니다.');
     });

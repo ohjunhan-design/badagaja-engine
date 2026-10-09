@@ -725,19 +725,46 @@ def 방문기록쪽(d, 언어='ko'):
     """
     쪽길 = url.stats(언어)
 
-    숫자칸 = ('<div class="bignums">'
-              '<div class="bignum"><b id="stToday">—</b><span>오늘 조회</span></div>'
-              '<div class="bignum"><b id="stTodayV">—</b><span>오늘 방문</span></div>'
-              '<div class="bignum"><b id="stMonth">—</b><span>이 달 조회</span></div>'
-              '<div class="bignum"><b id="stMonthV">—</b><span>이 달 방문</span></div>'
-              '<div class="bignum"><b id="stMobile">—</b><span>휴대폰 비율</span></div>'
-              '</div>')
+    # ★ 카드마다 **값의 정의**를 붙입니다 (지피티 명세)
+    #   「hit 수·세션 수·페이지뷰 수가 섞여도 숫자를 잘못
+    #     해석하지 않게」. 숨기지 않고 카드 안에 작게 적습니다.
+    _카드 = [
+        ('stTodayV', '오늘 방문', '오늘 0시부터 지금까지', 'stDelta'),
+        ('stMonthV', '이번 달 방문', '이 달 1일부터 지금까지', None),
+        ('stSearch', '검색 유입', '들어온 기록 가운데 검색에서 온 몫', None),
+    ]
+    숫자칸 = ('<div class="stats-summary">%s</div>'
+              % ''.join(
+                  '<article class="stat-card">'
+                  '<span class="stat-label">%s</span>'
+                  '<strong class="stat-value" id="%s">—</strong>'
+                  '%s'
+                  '<span class="stat-what">%s</span>'
+                  '</article>'
+                  % (글자, 아이디,
+                     ('<span class="stat-delta" id="%s"></span>' % 덧)
+                     if 덧 else '',
+                     뜻)
+                  for 아이디, 글자, 뜻, 덧 in _카드))
+
+    # 기간 고르기 — 자료가 **달 단위**로 오므로 7일·30일은
+    # 받아 둔 날짜에서 셉니다. 달을 넘으면 앞 달을 한 번 더
+    # 받습니다 (stats.js 가 합니다).
+    기간칸 = ('<div class="st-range" role="group" aria-label="기간">%s</div>'
+              % ''.join(
+                  '<button type="button" class="btn btn--sm%s"'
+                  ' data-range="%s">%s</button>'
+                  % (' btn--on' if 값 == 'month' else '', 값, 글자)
+                  for 값, 글자 in (('today', '오늘'), ('7d', '7일'),
+                                   ('30d', '30일'), ('month', '이번 달'))))
 
     고르기칸 = ('<div class="st-top">'
                 '<label class="st-pick">달 고르기 '
                 '<select id="stMonthPick"></select></label>'
-                '<button type="button" class="btn btn--sm" id="stForget">'
-                '열쇠말 지우기</button>'
+                # 열쇠말을 아직 안 넣었는데 「지우기」가 보이면
+                # 어리둥절합니다. 넣은 뒤에만 보입니다 (stats.js).
+                '<button type="button" class="btn btn--sm" id="stForget"'
+                ' hidden>열쇠말 지우기</button>'
                 '</div>'
                 # ★ **열쇠말은 쪽 안에서 받습니다** (2026-10-06)
                 #   전에는 `window.prompt()` 로 물었습니다. 브라우저
@@ -756,16 +783,20 @@ def 방문기록쪽(d, 언어='ko'):
                 '<p class="st-msg" id="stMsg" hidden></p>')
 
     칸들 = []
+    # ★ 히어로 제목이 「얼마나 다녀갔나」입니다. 칸 제목도 같게
+    #   두면 **한 화면에 같은 말이 두 번** 나옵니다.
     칸들.append(칸(
-        '얼마나 다녀갔나', '방문 기록',
-        고르기칸 + 숫자칸 +
+        '이 달 숫자', '지금 어떤가',
+        고르기칸 + 기간칸 + 숫자칸 +
         '<p class="long">쿠키를 쓰지 않습니다. 어느 쪽을 봤는지와 '
         '어디서 들어왔는지만 날짜별 <b>합계</b>로 모읍니다. '
         '누가 봤는지는 모으지 않고, 검색 로봇은 세지 않습니다.</p>'))
 
     칸들.append(칸(
         '날마다', '언제 오시나',
-        '<div class="st-chart" id="stDays"></div>'
+        '<div class="st-chart" id="stDays">'
+        '<p class="st-empty">열쇠말을 넣으면 날마다 막대가 보입니다</p>'
+        '</div>'
         '<p class="pt-in">막대가 길수록 그날 많이 봤다는 뜻입니다.</p>',
         흰=False))
 
@@ -773,13 +804,16 @@ def 방문기록쪽(d, 언어='ko'):
         '많이 본 쪽', '무엇을 보시나',
         '<div class="st-table"><table class="tbl">'
         '<thead><tr><th>주소</th><th class="st-n">조회</th></tr></thead>'
-        '<tbody id="stPages"></tbody></table></div>'))
+        '<tbody id="stPages"><tr><td colspan="2" class="st-empty">열쇠말을 넣으면 보입니다</td></tr></tbody></table></div>'))
 
     칸들.append(칸(
         '어디서 들어왔나', '어떻게 오시나',
+        # 막대부터 — 숫자를 글로만 적지 않습니다 (주인 규칙 6-1)
+        '<div class="st-paths" id="stPaths">'
+        '<p class="st-empty">열쇠말을 넣으면 보입니다</p></div>'
         '<div class="st-table"><table class="tbl">'
         '<thead><tr><th>들어온 곳</th><th class="st-n">조회</th></tr></thead>'
-        '<tbody id="stFrom"></tbody></table></div>',
+        '<tbody id="stFrom"><tr><td colspan="2" class="st-empty">열쇠말을 넣으면 보입니다</td></tr></tbody></table></div>',
         흰=False))
 
     값 = _바탕값(
@@ -788,6 +822,7 @@ def 방문기록쪽(d, 언어='ko'):
         짧은제목='방문 기록',
         설명='바다가자닷컴에 며칠 몇 분이 다녀갔는지 봅니다. '
              '쿠키를 쓰지 않고 날짜별 합계만 모읍니다.',
+        안내띠켜기=False,
         머리말='방문 기록',
         큰제목='얼마나 다녀갔나',
         소개글='쿠키 없이 날짜별 합계만 모읍니다.',
