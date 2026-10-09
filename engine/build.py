@@ -6180,18 +6180,53 @@ def 동호회지원쪽(d, 언어='ko'):
 
 # 신청 폼에 받을 것 — **자료가 아니라 짜임**이라 여기 둡니다.
 #   (이름, 보이는 글, 갈래, 꼭필요한가, 고를것)
-_신청칸 = [
-    ('club_name', '동호회명', 'text', True, None),
-    ('area', '활동 지역', 'text', True, None),
-    ('kind', '활동 종류', 'radio', True, ('낚시', '해루질', '둘 다')),
-    ('name', '신청자 이름', 'text', True, None),
-    ('contact', '연락처', 'text', True, None),
-    ('members', '현재 회원 수', 'number', False, None),
-    ('sns', '쓰시는 카페·밴드·SNS 주소', 'url', False, None),
-    ('want', '원하는 지원', 'check', False,
-     ('게시판', '배너', '로고', '홍보', '그 밖에')),
-    ('intro', '동호회 소개', 'textarea', False, None),
+# ★ 폼을 **세 구역으로 나눕니다** (2026-10-09 지피티 실행팀 명세)
+#
+#   「신청 폼 10칸을 한 화면에 늘어놓지 말고 3단계처럼 보이게
+#     만드세요. 실제 HTML form 은 한 개여도 됩니다. 시각적으로만
+#     세 구역으로 나누세요」
+#
+#   열 칸이 한 줄로 늘어서면 **보기만 해도 길어서 닫습니다.**
+#   구역으로 묶으면 「다섯 칸씩 세 번」으로 보입니다.
+#
+#   ★ 자리가 바뀐 것
+#     · 「활동 종류」 → 「주요 활동」 (명세 이름)
+#     · 「신청자 이름」 → 「담당자 이름」 · 「연락처」 → 「연락 방법」
+#     · SNS 주소는 **01 기본정보**에 둡니다 — 지피티 결정:
+#       「어떤 지원을 원하는가보다 **현재 이 동호회가 어떻게
+#         활동하고 있는가**를 설명하는 정보입니다」
+#     · 「동호회 소개」는 명세 03 의 「추가 요청」 자리에 둡니다.
+#       칸을 새로 만들지 않습니다 — 지피티: 「새 필드로 중복
+#       만들지 마세요」
+#   ★ 「현재 회원 수」 = 명세의 「회원 규모」 입니다. 따로 안 만듭니다.
+_신청구역 = [
+    ('01', '동호회 기본정보', [
+        ('club_name', '동호회 이름', 'text', True, None),
+        ('area', '활동 지역', 'text', True, None),
+        ('kind', '주요 활동', 'radio', True, ('낚시', '해루질', '둘 다')),
+        ('members', '현재 회원 수', 'number', False, None),
+        ('sns', '쓰시는 카페·밴드·SNS 주소', 'url', False, None),
+    ]),
+    # 고를 것은 코드에 안 적습니다 — **안내 칸의 네 가지를 그대로**
+    # 씁니다. 두 곳에 따로 적으면 반드시 어긋납니다
+    # (기억: 숫자는 한 곳에서만).
+    ('02', '원하는 지원', [
+        # 라벨 앞의 `~` 는 **화면에서만 숨긴다**는 표시입니다.
+        # 이 구역은 칸이 하나뿐이라 구역 제목이 곧 라벨입니다.
+        # 그냥 두면 「원하는 지원 / 필요한 것만 고르셔도 됩니다 /
+        # 필요한 것을 고르세요」로 **같은 말이 세 번** 나옵니다.
+        ('want', '~원하는 지원 — 필요한 것을 고르세요',
+         'check', False, '지원칸에서'),
+    ]),
+    ('03', '연락받을 정보', [
+        ('name', '담당자 이름', 'text', True, None),
+        ('contact', '연락 방법', 'text', True, None),
+        ('intro', '동호회 소개·그 밖에 하실 말씀', 'textarea', False, None),
+    ]),
 ]
+
+# 메일 본문에 쓸 이름표 — 구역 목록에서 **셈합니다**
+_신청칸 = [칸 for _no, _제, 칸들 in _신청구역 for 칸 in 칸들]
 
 
 def _동호회신청폼(것):
@@ -6214,30 +6249,54 @@ def _동호회신청폼(것):
                 '열리면 이곳에 바로 알려 드립니다.</p>')
     메일인가 = 받는곳.startswith('mailto:')
 
+    # 고를 것을 **안내 칸에서** 끌어옵니다 — 두 곳에 적지 않습니다
+    지원이름 = [x.get('제목', '') for x in (것.get('지원') or [])
+                if x.get('제목')]
+    고를것들 = {'지원칸에서': tuple(지원이름) + ('그 밖에',)}
+    구역글 = 것.get('폼구역') or {}
+
     칸들 = []
-    for 이름, 글, 갈래, 꼭, 고를것 in _신청칸:
-        표 = esc(글) + ('<em aria-hidden="true">*</em>' if 꼭 else '')
-        필 = ' required' if 꼭 else ''
-        if 갈래 in ('radio', 'check'):
-            한칸 = ''.join(
-                '<label class="cs-chip"><input type="%s" name="%s"'
-                ' value="%s"%s><span>%s</span></label>'
-                % ('radio' if 갈래 == 'radio' else 'checkbox',
-                   esc(이름 if 갈래 == 'radio' else 이름 + '[]'),
-                   esc(x), ' required' if (꼭 and i == 0) else '', esc(x))
-                for i, x in enumerate(고를것 or ()))
-            칸들.append('<fieldset class="cs-field cs-field--pick">'
-                        '<legend>%s</legend><div class="cs-chips">%s</div>'
-                        '</fieldset>' % (표, 한칸))
-        elif 갈래 == 'textarea':
-            칸들.append('<p class="cs-field"><label for="cs-%s">%s</label>'
-                        '<textarea id="cs-%s" name="%s" rows="4"%s></textarea>'
-                        '</p>' % (esc(이름), 표, esc(이름), esc(이름), 필))
-        else:
-            칸들.append('<p class="cs-field"><label for="cs-%s">%s</label>'
-                        '<input id="cs-%s" name="%s" type="%s"%s></p>'
-                        % (esc(이름), 표, esc(이름), esc(이름),
-                           esc(갈래), 필))
+    for 번호, 제목, 속칸들 in _신청구역:
+        속 = []
+        for 이름, 글, 갈래, 꼭, 고를것 in 속칸들:
+            if isinstance(고를것, str):
+                고를것 = 고를것들.get(고를것) or ()
+            숨김 = 글.startswith('~')
+            글 = 글[1:] if 숨김 else 글
+            표 = esc(글) + ('<em aria-hidden="true">*</em>' if 꼭 else '')
+            필 = ' required' if 꼭 else ''
+            if 갈래 in ('radio', 'check'):
+                한칸 = ''.join(
+                    '<label class="cs-chip"><input type="%s" name="%s"'
+                    ' value="%s"%s><span>%s</span></label>'
+                    % ('radio' if 갈래 == 'radio' else 'checkbox',
+                       esc(이름 if 갈래 == 'radio' else 이름 + '[]'),
+                       esc(x), ' required' if (꼭 and i == 0) else '',
+                       esc(x))
+                    for i, x in enumerate(고를것 or ()))
+                속.append('<fieldset class="cs-field cs-field--pick">'
+                          '<legend%s>%s</legend>'
+                          '<div class="cs-chips">%s</div>'
+                          '</fieldset>'
+                          % (' class="sr-only"' if 숨김 else '', 표, 한칸))
+            elif 갈래 == 'textarea':
+                속.append('<p class="cs-field"><label for="cs-%s">%s</label>'
+                          '<textarea id="cs-%s" name="%s" rows="4"%s>'
+                          '</textarea></p>'
+                          % (esc(이름), 표, esc(이름), esc(이름), 필))
+            else:
+                속.append('<p class="cs-field"><label for="cs-%s">%s</label>'
+                          '<input id="cs-%s" name="%s" type="%s"%s></p>'
+                          % (esc(이름), 표, esc(이름), esc(이름),
+                             esc(갈래), 필))
+        말 = (구역글.get(제목) or '').strip()
+        칸들.append(
+            '<section class="cs-sec">'
+            '<h3 class="cs-sec__h"><span class="cs-sec__no">%s</span>%s</h3>'
+            '%s<div class="cs-sec__body">%s</div></section>'
+            % (esc(번호), esc(제목),
+               ('<p class="cs-sec__d">%s</p>' % esc(말)) if 말 else '',
+               ''.join(속)))
 
     동의 = ('<p class="cs-field cs-field--agree">'
             '<label><input type="checkbox" name="agree" value="예" required>'
