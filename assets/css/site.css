@@ -39,6 +39,15 @@
      배경 미세 변화까지 생각하면 여유가 없습니다」 */
   --gold-ink:#B07A1E;
   --orange:#C07B22; --green:#2F5D57; --white:#fff;
+  /* ★ **동호회 지원 쪽 빛깔** (2026-10-09 지피티 실행팀 확정)
+     주색은 사이트 기존색을 그대로 씁니다 — --green(#2F5D57) 과
+     같은 값입니다. 따로 이름을 두는 까닭은 **동호회 쪽만 나중에
+     옮길 수 있게** 하기 위함입니다(쪽 하나를 고쳐 전체가 바뀌면
+     안 됩니다).
+     밝은 바탕·본문·라인은 전문 명세 값입니다.
+     견줌 — #2F5D57 on #F7FBFA 6.4:1 · #243735 on #fff 11.9:1 */
+  --club:#2F5D57; --club-accent:#E5A94F;
+  --club-soft:#F7FBFA; --club-ink:#243735; --club-line:#D9E7E4;
   /* ★ 아이콘 속 연한 녹색 (2026-10-02 바깥 검수 13차)
      아이콘 26개의 빛깔을 사이트 표준으로 맞추면서, 전복
      껍데기 안쪽처럼 **연한 바다빛**이 필요한 자리가
@@ -5132,13 +5141,70 @@ body.p-travel .tv-more{display:none}
        PC(1280)    지원 카드 4칸 · 샘플 3칸 가로
        태블릿(900) 지원 2칸 · 샘플 세로
        휴대폰(390) 모두 한 칸 · 입력칸 높이 48px (엄지 44px 위)  */
-.cs-who{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:7px}
-.cs-who li{position:relative;padding-left:17px;font-size:.95rem;
-  color:var(--muted);line-height:1.6}
-.cs-who li::before{content:'';position:absolute;left:2px;top:.72em;
-  width:6px;height:6px;border-radius:50%;background:var(--sand-deep,#E5A94F);
-  transform:translateY(-50%)}
-.cs-hero-cta{margin:20px 0 0}
+
+/* ━━ A. Hero — 지피티 실행팀 확정(2026-10-09) ━━━━━━━━━━━━━
+   ★ 왜 **밝은** 바탕인가
+       첫 쪽 동호회 카드(.club-support-banner)가 진한 녹색입니다.
+       거기서 눌러 들어온 쪽이 또 진하면 **옮겨온 줄 모릅니다.**
+       밝게 열어 「안으로 들어왔다」가 보이게 합니다.
+   ★ 신뢰 문구(.club-hero__trust)는 **빼지 않습니다.**
+       이름과 운영권을 빼앗기는 것이 아닌지가 가장 큰 걱정이라
+       지피티가 「Hero 아래 반드시」라고 못박았습니다.
+   ★ 크기 (주인 규칙 23 — PC·모바일 둘 다)
+       PC(1280)    제목 44px · 단추 가로 나란히 · 높이 52px
+       태블릿(900) 제목 36px
+       휴대폰(390) 제목 28px · 단추 세로로 꽉 · 높이 52px     */
+.club-hero{background:linear-gradient(180deg,var(--club-soft),#fff);
+  border-bottom:1px solid var(--club-line);padding:46px 0 42px}
+.club-hero__inner{max-width:860px;margin:0 auto;
+  padding:0 var(--gutter)}
+.club-hero__badge{display:inline-block;margin:0 0 16px;
+  padding:7px 14px;border-radius:999px;
+  background:var(--club);color:#fff;
+  font-size:13px;font-weight:800;letter-spacing:-.02em}
+.club-hero__title{margin:0;font-size:clamp(28px,3.4vw,44px);
+  line-height:1.26;font-weight:900;letter-spacing:-.035em;
+  color:var(--club-ink);word-break:keep-all;overflow-wrap:anywhere}
+.club-hero__lead{margin:16px 0 0;font-size:clamp(15px,1.3vw,18px);
+  line-height:1.75;color:#4A605D;word-break:keep-all}
+/* 신뢰 문구 — 금색 세로줄을 둬 **눈이 먼저 걸리게** 합니다 */
+/* ★ PC 에서 띠가 글보다 훨씬 길어 오른쪽이 텅 비었습니다.
+      `inline-block` 으로 **글 길이에 맞춥니다.** 휴대폰에서는
+      어차피 두 줄이라 꽉 찹니다. */
+.club-hero__trust{display:inline-block;margin:20px 0 0;padding:13px 16px;
+  border-left:4px solid var(--club-accent);border-radius:0 12px 12px 0;
+  background:#FFF8EC;color:#5A4320;
+  font-size:clamp(14px,1.15vw,15px);font-weight:700;line-height:1.65;
+  word-break:keep-all}
+.club-hero__who{margin:22px 0 0;padding:0;list-style:none;
+  display:grid;gap:9px}
+.club-hero__who li{position:relative;padding-left:20px;
+  font-size:clamp(14px,1.1vw,15px);line-height:1.65;color:#4A605D;
+  word-break:keep-all}
+.club-hero__who li::before{content:'';position:absolute;left:3px;
+  top:.78em;width:7px;height:7px;border-radius:50%;
+  background:var(--club-accent);transform:translateY(-50%)}
+.club-hero__cta{margin:28px 0 0;display:flex;flex-wrap:wrap;gap:12px}
+.club-hero__btn{display:inline-flex;align-items:center;
+  justify-content:center;min-height:52px;padding:0 24px;
+  border-radius:14px;font-size:16px;font-weight:800;
+  letter-spacing:-.02em;text-decoration:none;
+  transition:transform .12s ease,box-shadow .12s ease}
+.club-hero__btn--on{background:var(--club);color:#fff;
+  border:1px solid var(--club);
+  box-shadow:0 6px 16px rgba(47,93,87,.22)}
+.club-hero__btn--off{background:#fff;color:var(--club);
+  border:1.5px solid var(--club)}
+.club-hero__btn:hover{transform:translateY(-1px)}
+.club-hero__btn:focus-visible{outline:3px solid var(--club-accent);
+  outline-offset:2px}
+
+@media (max-width:640px){
+  .club-hero{padding:32px 0 30px}
+  .club-hero__cta{gap:10px}
+  /* 휴대폰은 **한 손**으로 씁니다 — 단추를 가로로 꽉 채웁니다 */
+  .club-hero__btn{width:100%}
+}
 
 .cs-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .cs-card{padding:20px 18px;border:1px solid var(--line);border-radius:18px;

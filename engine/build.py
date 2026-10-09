@@ -6063,6 +6063,15 @@ def 동호회지원쪽(d, 언어='ko'):
 
     누가 = ''.join('<li>%s</li>' % esc(x) for x in (것.get('누가') or []))
 
+    # ── A. Hero 단추 — 꼴은 자료가 정합니다(으뜸/버금). 코드가 안 정합니다.
+    _꼴 = {'으뜸': 'club-hero__btn club-hero__btn--on',
+           '버금': 'club-hero__btn club-hero__btn--off'}
+    단추 = ''.join(
+        '<a class="%s" href="%s">%s</a>'
+        % (_꼴.get(x.get('꼴'), 'club-hero__btn club-hero__btn--off'),
+           esc(x.get('주소', '#')), esc(x.get('글', '')))
+        for x in (것.get('단추') or []))
+
     # ── B. 어떤 지원을 하나요
     지원칸 = ''.join(
         '<article class="cs-card"><h3>%s</h3><p>%s</p></article>'
@@ -6137,6 +6146,10 @@ def 동호회지원쪽(d, 언어='ko'):
         '한줄': 것.get('한줄', ''),
         '큰제목': 것.get('큰제목', ''),
         '부제': 것.get('부제', ''),
+        # ★ 지피티 확정 — Hero 아래 **반드시** 들어갑니다.
+        #   이름·운영권을 빼앗기는 것이 아닌지가 가장 큰 걱정입니다.
+        '신뢰문구': 것.get('신뢰문구', ''),
+        '단추': 단추,
         '누가': 누가,
         '지원안내': 것.get('지원안내', ''),
         '지원칸': 지원칸,

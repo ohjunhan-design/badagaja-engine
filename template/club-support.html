@@ -15,17 +15,22 @@
        공개 : 안내 · 샘플 · 예시
        비공개 : 신청 내용. 공개 목록으로 내보내지 않습니다. -->
 
-<section class="section hero hero--text section--soft"><div class="wrap">
-  <p class="kicker">{{한줄}}</p>
-  <h1 class="serif">{{큰제목}}</h1>
-  <p class="hero-lead">{{부제}}</p>
-  <ul class="cs-who">{{{누가}}}</ul>
-  <p class="cs-hero-cta">
-    <a class="btn btn--dark" href="#club-apply-form">신청서 쓰러 가기</a>
-  </p>
-</div></section>
+<!-- A. Hero — 지피티 실행팀 확정(2026-10-09)
+       · 제목은 「이름 그대로」를 먼저 말합니다
+       · 신뢰 문구는 **반드시** 들어갑니다 (이름·운영권 걱정이 가장 큽니다)
+       · 단추는 둘 — 알아보기(버금) · 신청하기(으뜸) -->
+<section class="club-hero" aria-labelledby="club-hero-title">
+  <div class="club-hero__inner">
+    <p class="club-hero__badge">{{한줄}}</p>
+    <h1 class="club-hero__title" id="club-hero-title">{{큰제목}}</h1>
+    <p class="club-hero__lead">{{부제}}</p>
+    <p class="club-hero__trust">{{신뢰문구}}</p>
+    <ul class="club-hero__who">{{{누가}}}</ul>
+    <div class="club-hero__cta">{{{단추}}}</div>
+  </div>
+</section>
 
-<section class="section section--white" id="bada"><div class="wrap">
+<section class="section section--white" id="club-support-what"><div class="wrap">
   <div class="section-head">
     <p class="kicker">무엇을 해 드리나</p>
     <h2 class="serif">어떤 지원을 하나요</h2>
