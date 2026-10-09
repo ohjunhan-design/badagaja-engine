@@ -75,12 +75,24 @@ def 글만(s):
     return _빈칸.sub(' ', s)
 
 
+class 못읽음(Exception):
+    """쪽을 못 읽었습니다 — **통과가 아닙니다** (끝난값 계약)"""
+
+
 def 쪽하나(길):
-    """걸린 자리를 (말, 앞뒤글) 로 돌려줍니다"""
+    """걸린 자리를 (말, 앞뒤글) 로 돌려줍니다.
+
+    ★ 못 읽으면 **빈 결과를 돌려주지 않습니다**
+      (2026-10-09 판정 #157 의 `거짓통과짜임` 이 잡았습니다)
+
+      전에는 `except: return []` 였습니다. 그러면 파일이 깨졌을 때
+      「선상낚시 0군데」가 되어 **조용히 통과**합니다.
+      못 잰 것은 통과가 아닙니다 — 끝난값 4(못잼)를 냅니다.
+    """
     try:
         글 = 글만(io.open(길, encoding='utf-8').read())
-    except Exception:
-        return []
+    except Exception as e:
+        raise 못읽음('%s — %s' % (길, e))
     나옴 = []
     for 말 in 배낚시말:
         i = 글.find(말)
@@ -115,7 +127,12 @@ def main():
         print('✗ 쪽이 없습니다 — 먼저 build 를 돌리세요')
         return 4                  # 못잼 (계약)
 
-    이번 = 재기()
+    try:
+        이번 = 재기()
+    except 못읽음 as e:
+        print('✗ 쪽을 못 읽었습니다 — %s' % e)
+        print('  못 잰 것은 통과가 아닙니다 (끝난값 계약).')
+        return 4                  # 못잼
     모두 = sum(이번.values())
 
     if 받아:
@@ -147,7 +164,11 @@ def main():
 
     print('  ✗ 새로 샌 것 %d쪽' % len(새것))
     for 이름 in sorted(새것)[:14]:
-        for 말, 글 in 쪽하나(os.path.join(NEW, 이름))[:2]:
+        try:
+            걸림 = 쪽하나(os.path.join(NEW, 이름))
+        except 못읽음:
+            continue      # 못 읽는 쪽은 위에서 이미 못잼으로 막습니다
+        for 말, 글 in 걸림[:2]:
             print('      %s 「%s」 … %s' % (이름, 말, 글[:60]))
     print('  → 이 사이트는 갯바위·항구에서 직접 하는 낚시만 다룹니다.')
     print('    축제 프로그램처럼 **그 축제의 사실**이면')

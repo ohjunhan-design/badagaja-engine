@@ -218,7 +218,11 @@ a.badge{min-height:44px}
 .btn--dark{background:var(--green);color:#fff;
            border-color:var(--green)}
 .btn--white{background:var(--white);border:1px solid var(--line);color:var(--ink)}
-.btn--sm{min-height:38px;padding:8px 13px;font-size:13px}
+/* ★ 44px 밑으로 내리지 않습니다 (2026-10-09 판정 #157 이 잡음)
+   처음에 38px 로 넣었더니 stats.html 단추 둘이 작아졌습니다.
+   「작게」는 **글씨와 여백**으로 하고, 누르는 자리는 그대로
+   둡니다 — 손가락은 화살표가 아닙니다 (주인 규칙 6-2). */
+.btn--sm{min-height:44px;padding:8px 13px;font-size:13px}
 .btn--on{background:var(--green);color:#fff;border-color:var(--green)}
 .btn-row{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
 

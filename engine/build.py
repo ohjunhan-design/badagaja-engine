@@ -6252,7 +6252,7 @@ def _동호회신청폼(것):
                   'location.href=f.getAttribute("data-to")'
                   '+"?subject="+encodeURIComponent("동호회 지원 신청 — "'
                   '+(m.club_name||""))'
-                  '+"&body="+encodeURIComponent(b.join("\n"));'
+                  '+"&body="+encodeURIComponent(b.join(String.fromCharCode(10)));'
                   '});})();</script>'
                   % json.dumps(dict((이, 글) for 이, 글, _g, _k, _c
                                     in _신청칸), ensure_ascii=False))
