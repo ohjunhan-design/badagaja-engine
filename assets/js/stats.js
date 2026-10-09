@@ -129,10 +129,6 @@
 
   function 그리기(d) {
     var 이제 = new Date();
-    var 두자 = function (n) { return (n < 10 ? '0' : '') + n; };
-    var 날글 = function (t) {
-      return t.getFullYear() + '-' + 두자(t.getMonth() + 1)
-           + '-' + 두자(t.getDate()); };
     var 오늘 = 날글(이제);
     var 오 = (d.days && d.days[오늘]) || { views: 0, visits: 0 };
     var 합 = d.sum || {};
@@ -229,6 +225,7 @@
       var 지움 = 찾기('stForget');
       if (지움) { 지움.hidden = false; }   // 열쇠말이 있을 때만 보입니다
       받은것 = d;
+      앞달것 = null;          // 달이 바뀌면 이어 붙일 것도 새로
       그리기(d);
     }).catch(function () {
       // 서버가 죽어도 쪽은 삽니다 — 까닭을 적고 멈춥니다
@@ -242,35 +239,67 @@
    *   숫자를 내보이지 않습니다.
    */
   var 받은것 = null;
+  var 앞달것 = null;          // 월경계를 넘을 때 쓰는 **앞 달** 자료
+
+  var 두자 = function (n) { return (n < 10 ? '0' : '') + n; };
+  function 날글(t) {
+    return t.getFullYear() + '-' + 두자(t.getMonth() + 1)
+         + '-' + 두자(t.getDate());
+  }
+  function 달글(t) {
+    return t.getFullYear() + '-' + 두자(t.getMonth() + 1);
+  }
+
+  /* ★ **「30일」이라 써놓고 9일만 세지 않습니다** (지피티 지시)
+   *   자료는 달 단위로 옵니다. 기간이 앞 달에 걸치면 **앞 달을
+   *   한 번 더 받아** 이어 붙입니다. 그래도 못 채우면 그 사실을
+   *   카드에 적습니다 — 조용히 넘기지 않습니다.
+   */
+  function 앞달받기(달, 다음) {
+    if (앞달것 && 앞달것._달 === 달) { 다음(); return; }
+    if (!열쇠) { 다음(); return; }
+    fetch('/api/stats.php?t=' + encodeURIComponent(열쇠)
+          + '&month=' + encodeURIComponent(달))
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (d && d.ok) { 앞달것 = d; 앞달것._달 = 달; }
+        다음();
+      }).catch(function () { 다음(); });
+  }
+
   function 기간셈(범위) {
     if (!받은것) { return; }
-    var d = 받은것;
-    if (범위 === 'month') { 그리기(d); return; }
-    var 이제 = new Date();
-    var 두자 = function (n) { return (n < 10 ? '0' : '') + n; };
-    var 날글 = function (t) {
-      return t.getFullYear() + '-' + 두자(t.getMonth() + 1)
-           + '-' + 두자(t.getDate()); };
+    if (범위 === 'month') { 그리기(받은것); return; }
     var 날수 = 범위 === 'today' ? 1 : (범위 === '7d' ? 7 : 30);
-    var 더함 = 0, 본날 = 0, 빠진날 = 0;
+    var 이제 = new Date();
+    var 맨앞 = new Date(이제.getTime() - (날수 - 1) * 86400000);
+    var 앞달 = 달글(맨앞);
+    if (앞달 !== (받은것.month || '')) {
+      앞달받기(앞달, function () { 기간그리기(범위, 날수); });
+    } else {
+      기간그리기(범위, 날수);
+    }
+  }
+
+  function 기간그리기(범위, 날수) {
+    var 이제 = new Date();
+    var 더함 = 0, 빠진날 = 0;
     for (var i = 0; i < 날수; i++) {
-      var t = new Date(이제.getTime() - i * 86400000);
-      var k = 날글(t);
-      if (d.days && Object.prototype.hasOwnProperty.call(d.days, k)) {
-        더함 += (d.days[k].visits || 0); 본날++;
-      } else if (k.slice(0, 7) !== (d.month || '')) {
-        빠진날++;                      // 앞 달이라 안 받은 날
-      } else { 본날++; }               // 그 달인데 기록이 없는 날
+      var k = 날글(new Date(이제.getTime() - i * 86400000));
+      var 달 = k.slice(0, 7);
+      var 그릇 = (달 === (받은것.month || '')) ? 받은것
+               : (앞달것 && 달 === (앞달것.month || '') ? 앞달것 : null);
+      if (!그릇) { 빠진날++; continue; }     // 끝내 못 받은 달
+      var v = 그릇.days && 그릇.days[k];
+      더함 += (v && v.visits) || 0;
     }
     찾기('stMonthV').textContent = 수(더함);
-    var 이름 = 찾기('stMonthV').closest('.stat-card')
-                .querySelector('.stat-label');
-    var 뜻 = 찾기('stMonthV').closest('.stat-card')
-                .querySelector('.stat-what');
-    이름.textContent = 범위 === 'today' ? '오늘 방문'
-                     : ('최근 ' + 날수 + '일 방문');
-    뜻.textContent = 빠진날
-      ? ('최근 ' + 날수 + '일 가운데 이 달에 든 ' + 본날 + '일만 셌습니다')
+    var 카드 = 찾기('stMonthV').closest('.stat-card');
+    카드.querySelector('.stat-label').textContent =
+      범위 === 'today' ? '오늘 방문' : ('최근 ' + 날수 + '일 방문');
+    카드.querySelector('.stat-what').textContent = 빠진날
+      ? ('최근 ' + 날수 + '일 가운데 ' + (날수 - 빠진날)
+         + '일만 셌습니다 — 나머지 ' + 빠진날 + '일은 못 받았습니다')
       : ('최근 ' + 날수 + '일을 더한 값입니다');
   }
 

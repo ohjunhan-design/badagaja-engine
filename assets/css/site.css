@@ -1422,22 +1422,34 @@ html[data-pcview] .pcview{display:block}
    ★ 색은 지피티 명세의 `--stats-*` 입니다 — 본체보다 조금
      더 업무용으로 정리합니다.
    ★ 「3초 안에 오늘 상태가 정상인가를 판단」하게 만듭니다.   */
+/* ★ 운영 화면은 본문 쪽보다 **조밀하게** 갑니다 (지피티)
+   「Hero 와 이 달 숫자 사이가 넓어 랜딩페이지처럼 느껴집니다.
+     PC 에서 Hero 아래 여백을 15~20% 줄여도 됩니다」
+   ★ 통계 쪽의 body 클래스는 `p-guide` 라 다른 안내 쪽과
+     **같습니다.** `.p-stats` 로 쓰면 안 먹습니다. 이 쪽에만
+     있는 `.st-top` 으로 가립니다 (기억: 쪽 종류는 쪽이 말하게). */
+body:has(.st-top) .hero{padding-bottom:0}
+body:has(.st-top) .section{padding-top:28px}
+@media (max-width:767px){
+  body:has(.st-top) .section{padding-top:24px}   /* 모바일은 그대로 */
+}
 .st-top{display:flex;flex-wrap:wrap;align-items:center;gap:10px;
-  margin-bottom:14px}
+  margin-bottom:12px}
 .st-pick{display:inline-flex;align-items:center;gap:8px;
   font-size:14px;font-weight:700;color:var(--stats-text,#263432)}
 .st-pick select{min-height:40px;padding:0 10px;border-radius:9px;
   border:1px solid var(--stats-line,#DCE6E3);background:#fff;
   font:inherit;font-size:14px}
-.st-key{display:flex;flex-wrap:wrap;align-items:center;gap:9px;
-  margin:0 0 14px;padding:14px 16px;border-radius:12px;
-  background:var(--stats-bg,#F5F8F7);
-  border:1px solid var(--stats-line,#DCE6E3)}
-.st-key label{font-size:14px;font-weight:800;
-  color:var(--stats-text,#263432)}
-.st-key input{flex:1 1 180px;min-height:44px;padding:10px 13px;
-  border:1px solid var(--stats-line,#DCE6E3);border-radius:10px;
-  background:#fff;font:inherit;font-size:15px}
+/* ★ **한 줄 보조 영역**입니다 (지피티 2026-10-09)
+   「열쇠말 칸이 핵심 지표보다 먼저 눈에 들어옵니다.
+     통계 숫자가 주인공이어야 합니다」 */
+.st-key{display:flex;flex-wrap:wrap;align-items:center;gap:8px;
+  margin:0 0 12px}
+.st-key label{font-size:13px;font-weight:700;
+  color:var(--stats-muted,#62716E)}
+.st-key input{flex:0 1 190px;min-height:40px;padding:8px 12px;
+  border:1px solid var(--stats-line,#DCE6E3);border-radius:9px;
+  background:#fff;font:inherit;font-size:14px}
 .st-msg{margin:0 0 14px;font-size:14px;color:var(--stats-muted,#62716E)}
 
 /* 기간 고르기 */
