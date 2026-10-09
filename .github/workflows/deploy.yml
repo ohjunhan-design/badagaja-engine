@@ -558,6 +558,11 @@ jobs:
         run: |
           python engine/check_deployed.py --net --strict
           python engine/smoke.py --net
+          # ★ 2026-10-09 감독팀 지시 ③ — 운영 주소에서 **직접** 다시 잽니다
+          #   「실패 시 『페이지가 보인다』로 성공 처리하지 말고 어느
+          #    항목이 안 붙었는지 명시. Pillow·확대 버튼은 운영에서
+          #    다시 재기 전까지 완료로 닫지 마세요」
+          python engine/check_live_after_deploy.py             --바라는커밋 "${GITHUB_SHA}"
 
       # ── ★ **되돌림 준비가 됐는가** — 20번을 돌린 뒤에 막습니다
       #   바깥 검수 — 「위험한가(지울것) 가 하나라도 나오면 **그 즉시
