@@ -5227,11 +5227,21 @@ body.p-travel .tv-more{display:none}
 }
 
 .cs-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
-.cs-card{padding:20px 18px;border:1px solid var(--line);border-radius:18px;
+/* radius 는 명세 14~16px — 18 이었습니다 (2026-10-09 대조) */
+.cs-card{padding:20px 18px;border:1px solid var(--line);border-radius:16px;
   background:#fff}
 .cs-card h3{margin:0 0 8px;font-family:'Noto Serif KR',serif;
   font-size:1.06rem;color:var(--ink)}
 .cs-card p{margin:0;font-size:.9rem;line-height:1.72;color:var(--muted)}
+
+/* ━━ 동호회 지원 쪽의 섹션 간격 (2026-10-09 명세 대조) ━━━━━
+   명세는 모바일 섹션 간격 36~44px 인데 사이트 공통 `.section`
+   은 모바일에서 24px 입니다. 450쪽 공통을 건드리지 않고
+   **이 쪽 틀에만** `cs-gap` 을 달아 여기서만 맞춥니다.      */
+.section.cs-gap{padding:40px 0}
+@media (max-width:767px){
+  .section.cs-gap{padding:38px 0}
+}
 
 /* ━━ 샘플 셋 — **실제 받을 결과처럼** (2026-10-09 지피티 3단계) ━━
    「예쁜 목업보다 실제 받을 결과처럼. 작은 게시글 3줄 · 로고
@@ -5328,7 +5338,8 @@ body.p-travel .tv-more{display:none}
   justify-content:center;min-width:30px;height:24px;padding:0 7px;
   border-radius:8px;background:var(--club,#2F5D57);color:#fff;
   font-size:12px;font-weight:800;letter-spacing:.02em}
-.cs-sec__d{margin:0;font-size:13.5px;line-height:1.65;
+/* 본문 글은 14px 밑으로 내리지 않습니다 (명세) — 13.5 였습니다 */
+.cs-sec__d{margin:0;font-size:14px;line-height:1.65;
   color:var(--muted);word-break:keep-all}
 .cs-sec__body{display:grid;gap:16px;margin-top:5px;
   padding-bottom:26px;border-bottom:1px solid var(--club-line,#D9E7E4)}
@@ -5375,7 +5386,8 @@ body.p-travel .tv-more{display:none}
   transition:opacity .12s ease,transform .12s ease}
 .cs-pick__t{font-size:15px;font-weight:800;letter-spacing:-.02em;
   color:var(--club-ink,#243735);word-break:keep-all}
-.cs-pick__d{font-size:12.5px;line-height:1.5;color:var(--muted);
+/* 12.5px 였습니다. 명세의 본문 최소 14px 에 맞춥니다 */
+.cs-pick__d{font-size:14px;line-height:1.5;color:var(--muted);
   word-break:keep-all}
 .cs-pick:hover{border-color:var(--club,#2F5D57)}
 .cs-pick:has(input:checked){border-color:var(--club,#2F5D57);
