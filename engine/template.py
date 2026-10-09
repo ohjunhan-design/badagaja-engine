@@ -185,6 +185,18 @@ def _빈칸지우기(s):
     return _빈구조화.sub('', s)
 
 
+def 머리문의단추(메일):
+    """머리띠 오른쪽 메일 단추. 메일이 비면 아무것도 안 냅니다."""
+    메일 = (메일 or '').strip()
+    if not 메일:
+        return ''
+    것 = html.escape(메일, quote=True)
+    return ('<a href="mailto:%s" class="badge"><svg class="bi"'
+            ' viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5.5"'
+            ' width="18" height="13" rx="2.5"/><path d="m3.8 7 8.2 6 8.2-6"/>'
+            '</svg> %s</a>' % (것, 것))
+
+
 def 그리기(이름, 값들, *, 안쓴값알림=True):
     """틀 하나를 값으로 채웁니다.
 
@@ -196,6 +208,10 @@ def 그리기(이름, 값들, *, 안쓴값알림=True):
     _짧, _날 = 지금판()
     if isinstance(값들, dict):
         값들 = dict(값들)
+        # ★ **머리띠 문의 단추** — 기본은 메일, 쪽이 '' 를 주면 안 냅니다
+        #   (2026-10-09 지피티 결정 — 동호회 지원 쪽에서만 숨깁니다.
+        #    CSS 로 가리지 않고 아예 내보내지 않습니다)
+        값들.setdefault('머리문의', 머리문의단추(값들.get('메일', '')))
         값들.setdefault('판이름', _짧)
         값들.setdefault('판날짜', _날)
         값들.setdefault('판날짜보기', _날.replace('-', '.') if _날 else '')

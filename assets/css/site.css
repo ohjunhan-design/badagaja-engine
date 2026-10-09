@@ -793,6 +793,26 @@ html.has-navi .navi:hover{filter:brightness(.94)}
    · 아이폰 아래 띠(safe-area)만큼 더 띄웁니다
    · 꼬리가 차림표에 가리지 않게 본문 아래를 비웁니다
 */
+/* ★ **눌러 뛰면 제목이 머리띠에 묻혔습니다** (2026-10-09)
+
+   지피티가 「스크롤 앵커가 하단 내비에 가리는지 확인하라」 해서
+   재 보니, 가리는 쪽은 **아래가 아니라 위**였습니다.
+
+   머리띠가 position:sticky 라 늘 화면 위에 떠 있습니다
+   (아래 PC 107px · 휴대폰 98px). 그런데 앵커로 뛰면 브라우저가
+   그 칸을 **화면 맨 위**에 맞춥니다. 머리띠가 그 위를 덮으니
+   칸 제목이 PC 45px · 휴대폰 48px 묻힙니다.
+
+   쪽 안 앵커는 #tide 171 · #points 144 · #spot/#festival/#eat/
+   #course/#catch 각 57 — **600곳이 넘습니다.** 동호회 쪽만의
+   일이 아니라 사이트 전체가 안고 있던 고장입니다.
+
+   `engine/check_anchor.py` 가 다시 새지 않게 봅니다. */
+[id]{scroll-margin-top:122px}
+@media (max-width:767px){
+  [id]{scroll-margin-top:112px}
+}
+
 .tabbar{display:none}
 @media (max-width:767px){
   .tabbar{
