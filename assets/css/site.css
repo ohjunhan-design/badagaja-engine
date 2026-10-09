@@ -5233,41 +5233,82 @@ body.p-travel .tv-more{display:none}
   font-size:1.06rem;color:var(--ink)}
 .cs-card p{margin:0;font-size:.9rem;line-height:1.72;color:var(--muted)}
 
-.cs-samples{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:18px;align-items:start}
-.cs-sample{margin:0}
+/* ━━ 샘플 셋 — **실제 받을 결과처럼** (2026-10-09 지피티 3단계) ━━
+   「예쁜 목업보다 실제 받을 결과처럼. 작은 게시글 3줄 · 로고
+     자리 · 공지/후기/출조 같은 칩을 넣으세요」
+   앞서는 회색 막대 네 줄이었습니다 — 명세 금지사항
+   「조악한 임시 그림 삽입 금지」에 걸립니다.
+   ★ 명세 값 — PC 약 300×190px · gap 16px · 모바일 1열
+   ★ 색을 여럿 쓰지 않습니다. 청록 바탕에 **칩만** 연하게 갈라
+     놓습니다.                                                  */
+.cs-samples{display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;
+  align-items:stretch}
+/* 세 카드의 **아래를 맞춥니다** — 282/190/196 으로 들쭉날쭉하면
+   어수선합니다. 게시글 3줄이 들어가는 게시판이 가장 높으니
+   그 높이에 나머지가 따라갑니다. */
+.cs-sample{margin:0;display:flex;flex-direction:column}
+.cs-sample > div{flex:1}
 .cs-sample figcaption{margin:0 0 8px;font-size:.78rem;font-weight:800;
-  letter-spacing:.03em;color:#2E6F9E}
+  letter-spacing:.03em;color:var(--club,#2F5D57)}
 
-.cs-board{border:1px solid var(--line);border-radius:14px;overflow:hidden;
-  background:#fff}
-.cs-board__top{padding:11px 14px;background:#2F5D57;color:#FFFBF3;
-  font-weight:800;font-size:.92rem}
-.cs-board__tabs{display:flex;flex-wrap:wrap;gap:6px;margin:0;
-  padding:11px 12px 9px;list-style:none;border-bottom:1px solid var(--line)}
-.cs-board__tabs li{padding:5px 11px;border-radius:999px;background:#F1F6F5;
-  font-size:.78rem;font-weight:700;color:#2F5D57}
-.cs-board__rows{padding:11px 14px 14px;display:grid;gap:9px}
-.cs-board__rows span{display:block;height:9px;border-radius:5px;
-  background:linear-gradient(90deg,#E9EEF2,#F5F8FA)}
-.cs-board__rows span:nth-child(2){width:84%}
-.cs-board__rows span:nth-child(3){width:92%}
-.cs-board__rows span:nth-child(4){width:70%}
+/* 게시판 */
+.cs-board{min-height:190px;border:1px solid var(--club-line,#D9E7E4);
+  border-radius:14px;overflow:hidden;background:#fff;
+  display:flex;flex-direction:column}
+.cs-board__top{padding:10px 13px;background:var(--club,#2F5D57);
+  color:#FFFBF3;font-weight:800;font-size:.9rem}
+.cs-board__tabs{display:flex;flex-wrap:wrap;gap:5px;margin:0;
+  padding:9px 11px 8px;list-style:none;
+  border-bottom:1px solid var(--club-line,#D9E7E4)}
+.cs-board__tabs li{padding:4px 9px;border-radius:999px;background:#F1F6F5;
+  font-size:.74rem;font-weight:700;color:var(--club,#2F5D57)}
+.cs-board__rows{flex:1;margin:0;padding:8px 11px 10px;list-style:none;
+  display:grid;gap:7px;align-content:start}
+.cs-row{display:grid;grid-template-columns:auto minmax(0,1fr);
+  gap:2px 7px;padding:4px 0;border-bottom:1px dashed #EEF3F2}
+.cs-row:last-child{border-bottom:0}
+.cs-row__t{font-size:.83rem;font-weight:700;color:var(--ink);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cs-row__m{grid-column:2;font-size:.72rem;color:var(--muted)}
+.cs-tag{grid-row:1 / span 2;align-self:center;
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:34px;height:20px;padding:0 6px;border-radius:6px;
+  font-size:.68rem;font-weight:800;letter-spacing:-.01em}
+.cs-tag--notice{background:#FDF0D8;color:#8A5E14}
+.cs-tag--review{background:#E6F0EE;color:#235A53}
+.cs-tag--trip{background:#E7EEF6;color:#27557F}
+.cs-tag--catch{background:#EDEFE6;color:#4F6031}
+.cs-tag--plain{background:#F1F3F2;color:#5A6865}
 
-.cs-banner{display:flex;flex-direction:column;justify-content:center;gap:7px;
-  min-height:148px;padding:20px 18px;border-radius:14px;color:#FFFBF3;
+/* 배너 — 가로 띠 하나. 광고처럼 화려하게 만들지 않습니다 */
+.cs-banner{display:flex;align-items:center;gap:13px;
+  min-height:190px;padding:20px 18px;border-radius:14px;color:#FFFBF3;
   background:linear-gradient(135deg,#1F4E49,#2F5D57 55%,#3C7A62)}
-.cs-banner b{font-family:'Noto Serif KR',serif;font-size:1.18rem;
-  line-height:1.35}
-.cs-banner span{font-size:.85rem;color:rgba(255,248,235,.9)}
+.cs-banner__logo{flex:0 0 auto;display:inline-flex;align-items:center;
+  justify-content:center;width:52px;height:52px;border-radius:50%;
+  border:2px solid rgba(255,248,235,.45);background:rgba(255,255,255,.1);
+  font-size:1.02rem;font-weight:800;letter-spacing:-.04em}
+.cs-banner__txt{display:grid;gap:6px;min-width:0}
+.cs-banner b{font-family:'Noto Serif KR',serif;font-size:1.1rem;
+  line-height:1.35;word-break:keep-all}
+.cs-banner span{font-size:.82rem;color:rgba(255,248,235,.9);
+  word-break:keep-all}
 
-.cs-intro{min-height:148px;padding:18px;border:1px solid var(--line);
-  border-radius:14px;background:#FFFBF3}
-.cs-intro b{display:block;margin-bottom:11px;font-family:'Noto Serif KR',serif;
-  font-size:1.08rem;color:var(--ink)}
-.cs-intro dl{display:grid;grid-template-columns:auto 1fr;gap:7px 12px;margin:0}
-.cs-intro dt{font-size:.8rem;font-weight:800;color:#2E6F9E;white-space:nowrap}
-.cs-intro dd{margin:0;font-size:.86rem;color:var(--muted);line-height:1.55}
+/* 소개 카드 */
+.cs-intro{min-height:190px;padding:18px;
+  border:1px solid var(--club-line,#D9E7E4);border-radius:14px;
+  background:#FFFBF3}
+.cs-intro__logo{display:block;width:40px;height:40px;margin-bottom:11px;
+  border-radius:11px;background:#E6EFED;
+  border:1px solid var(--club-line,#D9E7E4)}
+.cs-intro b{display:block;font-family:'Noto Serif KR',serif;
+  font-size:1.04rem;color:var(--ink);word-break:keep-all}
+.cs-intro__where{display:block;margin-top:4px;font-size:.78rem;
+  font-weight:700;color:var(--club,#2F5D57)}
+.cs-intro__say{margin-top:10px;display:grid;gap:4px}
+.cs-intro__say p{margin:0;font-size:.83rem;line-height:1.6;
+  color:var(--muted);word-break:keep-all}
 
 /* ━━ 신청 폼 세 구역 (2026-10-09 지피티 실행팀 명세) ━━━━━━━
    「10칸을 한 화면에 늘어놓지 말고 3단계처럼 보이게 만드세요.
@@ -5375,9 +5416,10 @@ body.p-travel .tv-more{display:none}
 @media (max-width:560px){
   .cs-grid{grid-template-columns:minmax(0,1fr)}
   .cs-card{padding:17px 15px}
-  .cs-banner{min-height:128px;padding:17px 15px}
-  .cs-banner b{font-size:1.06rem}
+  .cs-banner{min-height:150px;padding:17px 15px}
+  .cs-banner b{font-size:1.04rem}
   .cs-intro{min-height:0}
+  .cs-board{min-height:0}
   .cs-form{gap:26px}
   .cs-sec__h{font-size:17px}
   .cs-sec__body{gap:14px;padding-bottom:22px}

@@ -6034,6 +6034,15 @@ def _부품어디쓰나(d):
     return 어디
 
 
+_칩빛깔 = {'공지': 'notice', '후기': 'review', '출조': 'trip',
+           '조황': 'catch'}
+
+
+def _칩빛(표):
+    """갈래 칩의 빛깔 이름. 모르는 갈래는 바탕색 그대로입니다."""
+    return _칩빛깔.get((표 or '').strip(), 'plain')
+
+
 def 동호회지원쪽(d, 언어='ko'):
     """동호회 지원 신청 쪽 (2026-10-09 주인 지시 · 지피티 상세 명세)
 
@@ -6078,38 +6087,50 @@ def 동호회지원쪽(d, 언어='ko'):
         % (esc(x.get('제목', '')), esc(x.get('설명', '')))
         for x in (것.get('지원') or []))
 
-    # ── C. 샘플 — 게시판 · 배너 · 소개 카드
-    ㄱ = 것.get('게시판보기') or {}
-    게시판 = ('<figure class="cs-sample">'
-              '<figcaption>게시판</figcaption>'
-              '<div class="cs-board">'
-              '<div class="cs-board__top">%s</div>'
-              '<ul class="cs-board__tabs">%s</ul>'
-              '<div class="cs-board__rows">%s</div>'
-              '</div></figure>'
-              % (esc(ㄱ.get('이름', '')),
-                 ''.join('<li>%s</li>' % esc(x) for x in (ㄱ.get('칸') or [])),
-                 ''.join('<span></span>' for _ in range(4))))
+    # ── C. 샘플 — **실제 받을 결과처럼** (지피티 3단계 지시)
+    #
+    #   「예쁜 목업보다 실제 받을 결과처럼. 카드 안에 작은 게시글
+    #     3줄 · 로고 자리 · 공지/후기/출조 같은 칩을 넣으세요」
+    #
+    #   ★ 앞서는 `<span></span>` 네 개로 **회색 막대**를 그렸습니다.
+    #     명세 금지사항 「조악한 임시 그림 삽입 금지」에 걸립니다.
+    #   ★ 회원 수 같은 숫자는 쓰지 않습니다 — 「실제 데이터가
+    #     아니므로」. 자료에도 두지 않았습니다.
+    def _샘플하나(x):
+        갈 = x.get('갈래')
+        이름 = esc(x.get('이름', ''))
+        if 갈 == '게시판':
+            칸 = ''.join('<li>%s</li>' % esc(c) for c in (x.get('칸') or []))
+            줄 = ''.join(
+                '<li class="cs-row">'
+                '<span class="cs-tag cs-tag--%s">%s</span>'
+                '<span class="cs-row__t">%s</span>'
+                '<span class="cs-row__m">%s</span></li>'
+                % (_칩빛(g.get('표', '')), esc(g.get('표', '')),
+                   esc(g.get('제목', '')), esc(g.get('곁', '')))
+                for g in (x.get('글') or []))
+            속 = ('<div class="cs-board">'
+                  '<div class="cs-board__top">%s</div>'
+                  '<ul class="cs-board__tabs">%s</ul>'
+                  '<ul class="cs-board__rows">%s</ul></div>' % (이름, 칸, 줄))
+        elif 갈 == '배너':
+            속 = ('<div class="cs-banner">'
+                  '<span class="cs-banner__logo" aria-hidden="true">%s</span>'
+                  '<span class="cs-banner__txt"><b>%s</b><span>%s</span>'
+                  '</span></div>'
+                  % (esc(x.get('로고', '')), 이름, esc(x.get('줄', ''))))
+        else:
+            말 = ''.join('<p>%s</p>' % esc(s) for s in (x.get('소개') or []))
+            속 = ('<div class="cs-intro">'
+                  '<span class="cs-intro__logo" aria-hidden="true"></span>'
+                  '<b>%s</b><span class="cs-intro__where">%s</span>'
+                  '<div class="cs-intro__say">%s</div></div>'
+                  % (이름, esc(x.get('곁', '')), 말))
+        return ('<figure class="cs-sample"><figcaption>%s</figcaption>%s'
+                '</figure>' % (esc(x.get('표', '')), 속))
 
-    ㄴ = 것.get('배너보기') or {}
-    배너 = ('<figure class="cs-sample">'
-            '<figcaption>배너</figcaption>'
-            '<div class="cs-banner"><b>%s</b>%s</div>'
-            '</figure>'
-            % (esc(ㄴ.get('이름', '')),
-               ''.join('<span>%s</span>' % esc(x)
-                       for x in (ㄴ.get('줄') or []))))
-
-    ㄷ = 것.get('소개보기') or {}
-    소개 = ('<figure class="cs-sample">'
-            '<figcaption>소개 카드</figcaption>'
-            '<div class="cs-intro"><b>%s</b><dl>%s</dl></div>'
-            '</figure>'
-            % (esc(ㄷ.get('이름', '')),
-               ''.join('<dt>%s</dt><dd>%s</dd>' % (esc(a), esc(b))
-                       for a, b in (ㄷ.get('칸') or []))))
-
-    샘플칸 = '<div class="cs-samples">%s%s%s</div>' % (게시판, 배너, 소개)
+    샘플칸 = ('<div class="cs-samples">%s</div>'
+              % ''.join(_샘플하나(x) for x in (것.get('샘플') or [])))
 
     # ── D. 신청 폼
     신청폼 = _동호회신청폼(것)
