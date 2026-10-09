@@ -120,7 +120,10 @@ def main():
 
     if 받아:
         os.makedirs(os.path.dirname(기준길), exist_ok=True)
-        io.open(기준길, 'w', encoding='utf-8').write(
+        # ★ `newline=''` 를 안 주면 윈도에서 **CRLF** 로 써집니다.
+        #   저장소는 LF 라 돌릴 때마다 파일이 달라집니다(계약-07).
+        io.open(기준길, 'w', encoding='utf-8',
+                newline=chr(10)).write(
             json.dumps({'_왜': '차림표에 규칙이 없는 클래스. 자바스크립트가 '
                                '붙이는 것이라 알고 둡니다. 여기 없는 이름이 '
                                '새로 생기면 막습니다',
