@@ -105,6 +105,28 @@ def 재기():
     return 없는것
 
 
+_안적음 = '(아직 안 적음)'
+
+# ★ **생성이 잘못된 꼴** — 기준선에 있어도 막습니다 (총감독 ⑥)
+#   `class="p-"` 처럼 자리값이 비어 **이름이 잘린** 것입니다.
+#   「규칙이 없어도 정상」이 아니라 **만드는 쪽이 틀린 것**이라
+#   예외로 둘 수 없습니다.
+_잘린꼴 = re.compile(r'(^-)|(-$)|(--$)')
+
+
+def 잘린이름인가(이름):
+    """`p-` · `-foo` 처럼 끝이 잘려 나온 이름인가"""
+    return bool(_잘린꼴.search(이름))
+
+
+def _까닭있나(값):
+    """기준선 한 줄에 **왜 규칙이 없어도 되는지**가 적혔나"""
+    if not isinstance(값, dict):
+        return False                      # 옛 꼴(숫자만) 은 까닭 없음
+    까 = (값.get('까닭') or '').strip()
+    return bool(까) and 까 != _안적음
+
+
 def main():
     받아 = '--받아들이기' in sys.argv
     것들 = 쪽들()
@@ -118,30 +140,73 @@ def main():
 
     이번 = 재기()
 
+    기준속 = {}
+    if os.path.exists(기준길):
+        기준속 = json.load(io.open(기준길, encoding='utf-8')) or {}
+    기준 = 기준속.get('이름', {})
+
     if 받아:
+        # ★ **기준선을 혼자 늘리지 않습니다** (총감독 2026-10-10)
+        #   「baseline 을 새로 추가하려면 사람이 『왜 CSS 규칙 없어도
+        #     정상인지』 확인」. 이미 있는 것의 쪽 수만 고칩니다.
+        늘릴것 = sorted(k for k in 이번 if k not in 기준)
+        if 늘릴것 and '--정말' not in sys.argv:
+            print('✗ 기준선에 **새 이름을 혼자 더하지 않습니다** — %d가지'
+                  % len(늘릴것))
+            for k in 늘릴것[:10]:
+                print('      %-24s %d쪽' % (k, len(이번[k])))
+            print()
+            print('  왜 규칙이 없어도 정상인지 **사람이 확인**한 뒤')
+            print('  tests/golden/없는클래스.json 에 이름과 **까닭**을')
+            print('  손으로 적으세요. 쪽 수만 고치려면 그대로 돌립니다.')
+            return 1
+        남길 = {}
+        for k in sorted(이번):
+            옛값 = 기준.get(k)
+            까닭 = 옛값.get('까닭') if isinstance(옛값, dict) else None
+            남길[k] = {'쪽': len(이번[k]), '까닭': 까닭 or _안적음}
         os.makedirs(os.path.dirname(기준길), exist_ok=True)
         # ★ `newline=''` 를 안 주면 윈도에서 **CRLF** 로 써집니다.
         #   저장소는 LF 라 돌릴 때마다 파일이 달라집니다(계약-07).
         io.open(기준길, 'w', encoding='utf-8',
                 newline=chr(10)).write(
-            json.dumps({'_왜': '차림표에 규칙이 없는 클래스. 자바스크립트가 '
-                               '붙이는 것이라 알고 둡니다. 여기 없는 이름이 '
-                               '새로 생기면 막습니다',
-                        '이름': dict((k, len(v))
-                                     for k, v in sorted(이번.items()))},
+            json.dumps({'_왜': '차림표에 규칙이 없어도 **정상인** 클래스. '
+                               '사람이 하나씩 확인해 까닭을 적었습니다. '
+                               '여기 없는 이름이 새로 생기면 막습니다',
+                        '_규칙': '총감독 2026-10-10 — 새 이름은 무조건 '
+                                 '막습니다. 여기 더하려면 사람이 왜 규칙이 '
+                                 '없어도 정상인지 확인하고 까닭을 적습니다. '
+                                 'p- 처럼 생성이 잘못된 꼴은 등록 금지',
+                        '이름': 남길},
                        ensure_ascii=False, indent=1) + '\n')
         print('기준선을 깔았습니다 — 이름 %d가지' % len(이번))
         return 0
 
-    기준 = {}
-    if os.path.exists(기준길):
-        기준 = (json.load(io.open(기준길, encoding='utf-8')) or {}).get('이름', {})
-
-    새것 = {k: v for k, v in 이번.items() if k not in 기준}
+    # ⑥ 잘린 이름은 **기준선에 있어도** 새것으로 셉니다
+    새것 = {k: v for k, v in 이번.items()
+            if k not in 기준 or 잘린이름인가(k)}
 
     print('차림표에 없는 클래스 — 쪽 %d개 · 차림표 이름 %d가지'
           % (len(것들), len(있음)))
     print('  · 알고 두는 것 %d가지' % len(기준))
+
+    # ④ **쓰임없음 알림** — 쪽에서 사라진 이름이 기준선에 남으면,
+    #    다음에 같은 이름이 다시 생겨도 조용히 지나갑니다.
+    안쓰임 = sorted(k for k in 기준 if k not in 이번)
+    if 안쓰임:
+        print('  ! 기준선에 있는데 **쪽에서 사라진 이름** %d가지 — 빼세요'
+              % len(안쓰임))
+        for k in 안쓰임[:8]:
+            print('      %s' % k)
+
+    # ③ 까닭이 안 적힌 것을 알립니다 (막지는 않습니다)
+    빈까닭 = sorted(k for k, v in 기준.items() if not _까닭있나(v))
+    if 빈까닭:
+        print('  ! **까닭이 안 적힌 것** %d가지 — 왜 규칙이 없어도 되는지'
+              ' 적으세요' % len(빈까닭))
+        for k in 빈까닭[:8]:
+            print('      %s' % k)
+
     if not 새것:
         print('  ✓ 새로 생긴 것 0')
         return 0

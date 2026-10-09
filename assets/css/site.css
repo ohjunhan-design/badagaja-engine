@@ -1413,6 +1413,21 @@ html[data-pcview] .pcview{display:block}
   color:var(--muted);font-weight:700;
 }
 
+/* ━━ 경고문과 기초 링크 줄 (2026-10-10 기준선 조사) ━━━━━━━
+   총감독 지시로 기준선 21가지를 하나씩 재 보다 찾았습니다.
+   ★ `.warn-small` 은 과태료·출입통제 같은 **경고문**입니다.
+     바로 위 목록과 들여쓰기가 어긋나 튀어나온 것처럼 보였습니다.
+   ★ `.ft-more` 는 「왕초보 기초 →」 링크 넷이 공백 하나로 붙어
+     나왔습니다. 띄워서 하나씩 눌리게 합니다.                 */
+.warn-small{margin:8px 0 0;padding-left:17px;font-size:.94rem;
+  line-height:1.6;color:var(--orange-ink);font-weight:700;
+  word-break:keep-all}
+.ft-more{display:flex;flex-wrap:wrap;gap:9px 18px;margin:12px 0 0}
+.ft-more a{font-size:.9rem;font-weight:700;color:var(--green);
+  text-decoration:none;min-height:30px;display:inline-flex;
+  align-items:center;word-break:keep-all}
+.ft-more a:hover{text-decoration:underline}
+
 /* ━━ 방문 기록 쪽 (주인만 봅니다) ━━━━━━━━━━━━━━━━━━━━
    ★ 2026-10-09 — 이 쪽의 차림표가 **통째로 없었습니다.**
      `.st-*` 아홉 가지가 쪽에는 쓰이는데 규칙이 하나도 없어
