@@ -5305,6 +5305,50 @@ body.p-travel .tv-more{display:none}
 .cs-field input:focus,.cs-field textarea:focus{outline:2px solid #2E6F9E;
   outline-offset:1px}
 .cs-field--pick{border:0;margin:0;padding:0}
+/* 선택 칸임을 **라벨이 말합니다** — 지피티 기준:
+   「없으면 신청 못 하나?」라고 생각하지 않게 */
+.cs-opt{margin-left:5px;font-size:.82em;font-weight:600;color:var(--muted)}
+
+/* ━━ 02 원하는 지원 — **선택 카드** (2026-10-09 지피티 추가 기준) ━━
+   「일반 입력칸처럼 만들지 말고 4개의 선택 카드 형태로.
+     단순 체크박스 4개보다 훨씬 이해하기 쉽습니다」
+   ★ 명세 값 — PC 2×2 · 카드 높이 72~84px · 모바일은 글이 안
+     잘리는 쪽. 390px 에서 2열이면 「지역 정보 연계」가 쪼개져
+     **1열**로 둡니다.                                          */
+.cs-picks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px}
+.cs-pick{position:relative;display:grid;
+  grid-template-columns:22px minmax(0,1fr);
+  grid-template-rows:auto auto;gap:2px 11px;align-content:center;
+  min-height:78px;padding:14px 16px;
+  border:1.5px solid var(--club-line,#D9E7E4);border-radius:14px;
+  background:#fff;cursor:pointer;
+  transition:border-color .12s ease,background .12s ease}
+.cs-pick input{position:absolute;opacity:0;width:0;height:0}
+.cs-pick__box{grid-row:1 / span 2;align-self:center;
+  width:22px;height:22px;border:1.5px solid #B9CBC7;border-radius:7px;
+  background:#fff;position:relative}
+.cs-pick__box::after{content:'';position:absolute;left:6px;top:2px;
+  width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;
+  transform:rotate(42deg) scale(.5);opacity:0;
+  transition:opacity .12s ease,transform .12s ease}
+.cs-pick__t{font-size:15px;font-weight:800;letter-spacing:-.02em;
+  color:var(--club-ink,#243735);word-break:keep-all}
+.cs-pick__d{font-size:12.5px;line-height:1.5;color:var(--muted);
+  word-break:keep-all}
+.cs-pick:hover{border-color:var(--club,#2F5D57)}
+.cs-pick:has(input:checked){border-color:var(--club,#2F5D57);
+  background:#F1F6F5}
+.cs-pick:has(input:checked) .cs-pick__box{background:var(--club,#2F5D57);
+  border-color:var(--club,#2F5D57)}
+.cs-pick:has(input:checked) .cs-pick__box::after{opacity:1;
+  transform:rotate(42deg) scale(1)}
+.cs-pick:has(input:focus-visible){outline:3px solid var(--club-accent,#E5A94F);
+  outline-offset:2px}
+@media (max-width:640px){
+  .cs-picks{grid-template-columns:minmax(0,1fr);gap:10px}
+  .cs-pick{min-height:72px;padding:13px 14px}
+}
 .cs-chips{display:flex;flex-wrap:wrap;gap:9px}
 .cs-chip{display:inline-flex;align-items:center;gap:7px;min-height:44px;
   padding:0 15px;border:1px solid var(--line);border-radius:999px;

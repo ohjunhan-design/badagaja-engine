@@ -6215,12 +6215,16 @@ _신청구역 = [
         # 이 구역은 칸이 하나뿐이라 구역 제목이 곧 라벨입니다.
         # 그냥 두면 「원하는 지원 / 필요한 것만 고르셔도 됩니다 /
         # 필요한 것을 고르세요」로 **같은 말이 세 번** 나옵니다.
+        # ★ 지피티 추가 기준 — 「일반 입력칸처럼 만들지 말고 **4개의
+        #   선택 카드** 형태로. 제목 + 한 줄 설명. 단순 체크박스
+        #   넷보다 훨씬 이해하기 쉽습니다」
         ('want', '~원하는 지원 — 필요한 것을 고르세요',
-         'check', False, '지원칸에서'),
+         'pickcard', False, '지원칸에서'),
     ]),
     ('03', '연락받을 정보', [
         ('name', '담당자 이름', 'text', True, None),
-        ('contact', '연락 방법', 'text', True, None),
+        ('contact', '연락 방법 — 전화·문자·카톡·메일 가운데 하나',
+         'text', True, None),
         ('intro', '동호회 소개·그 밖에 하실 말씀', 'textarea', False, None),
     ]),
 ]
@@ -6250,9 +6254,12 @@ def _동호회신청폼(것):
     메일인가 = 받는곳.startswith('mailto:')
 
     # 고를 것을 **안내 칸에서** 끌어옵니다 — 두 곳에 적지 않습니다
-    지원이름 = [x.get('제목', '') for x in (것.get('지원') or [])
-                if x.get('제목')]
-    고를것들 = {'지원칸에서': tuple(지원이름) + ('그 밖에',)}
+    지원고를것 = [(x.get('제목', ''), x.get('한줄', ''))
+                  for x in (것.get('지원') or []) if x.get('제목')]
+    # ★ 「그 밖에」를 다섯째 카드로 두지 않습니다 — PC 2×2 에서
+    #   하나가 혼자 남아 짜임이 깨집니다. 여기 없는 것은 03 의
+    #   자유 글칸에 적게 하고, 그 길을 구역 설명에 적어 뒀습니다.
+    고를것들 = {'지원칸에서': tuple(지원고를것)}
     구역글 = 것.get('폼구역') or {}
 
     칸들 = []
@@ -6263,9 +6270,26 @@ def _동호회신청폼(것):
                 고를것 = 고를것들.get(고를것) or ()
             숨김 = 글.startswith('~')
             글 = 글[1:] if 숨김 else 글
-            표 = esc(글) + ('<em aria-hidden="true">*</em>' if 꼭 else '')
+            표 = (esc(글) +
+                  ('<em aria-hidden="true">*</em>' if 꼭
+                   else '<span class="cs-opt">(선택)</span>'))
             필 = ' required' if 꼭 else ''
-            if 갈래 in ('radio', 'check'):
+            if 갈래 == 'pickcard':
+                한칸 = ''.join(
+                    '<label class="cs-pick"><input type="checkbox"'
+                    ' name="%s[]" value="%s">'
+                    '<span class="cs-pick__box" aria-hidden="true"></span>'
+                    '<span class="cs-pick__t">%s</span>'
+                    '%s</label>'
+                    % (esc(이름), esc(제), esc(제),
+                       ('<span class="cs-pick__d">%s</span>' % esc(한))
+                       if 한 else '')
+                    for 제, 한 in (고를것 or ()))
+                속.append('<fieldset class="cs-field cs-field--pick">'
+                          '<legend%s>%s</legend>'
+                          '<div class="cs-picks">%s</div></fieldset>'
+                          % (' class="sr-only"' if 숨김 else '', 표, 한칸))
+            elif 갈래 in ('radio', 'check'):
                 한칸 = ''.join(
                     '<label class="cs-chip"><input type="%s" name="%s"'
                     ' value="%s"%s><span>%s</span></label>'
