@@ -103,3 +103,20 @@ jobs:
           echo ""
           echo "── /css/style.css (운영) ──"
           curl -s -I --max-time 25 https://badagaja.com/css/style.css || true
+
+      # ★ 2026-10-09 감독팀 지시 2 — 서버에 남은 옛 판 잔재를 셉니다
+      #   **읽기만 합니다. 아무것도 지우지 않습니다.**
+      #   배포가 --delete 를 안 써서, 옛 판이 올려 둔 쪽이 새 판에
+      #   없어도 서버에 그대로 남습니다. 실제로 /club.html 이 남아
+      #   badagaja.cloud 를 가리키고 있었습니다.
+      #
+      #   ★ 옛 판 저장소는 일꾼에 없습니다. 없으면 **건너뜁니다** —
+      #     없는 것을 「잔재 0」으로 내면 거짓 통과가 됩니다.
+      - name: 서버에 남은 옛 판 잔재를 셉니다 (읽기만)
+        run: |
+          if [ -d "${BADAGAJA_OLD:-}" ]; then
+            python engine/check_server_leftover.py || true
+          else
+            echo "옛 판 저장소가 없어 건너뜁니다 — 손으로 돌리세요:"
+            echo "  python engine/check_server_leftover.py --옛판 <자리>"
+          fi
