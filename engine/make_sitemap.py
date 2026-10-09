@@ -255,6 +255,7 @@ Allow: /
 Disallow: /api/
 Disallow: /_stage/
 Disallow: /stats.html
+Disallow: /stats-review/
 
 """
 

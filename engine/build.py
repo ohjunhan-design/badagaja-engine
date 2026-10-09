@@ -7172,6 +7172,16 @@ def main():
         if os.path.exists(바탕):
             io.copy_binary(바탕, os.path.join(나갈곳, 이름))
 
+    # ★ AI 검수 뷰 — **스냅샷이 있을 때만** 만들어집니다 (#9 P0)
+    #   자료가 없으면 쪽을 안 만듭니다. 가짜 숫자가 생기지
+    #   않습니다. 여기서 부르는 까닭은, 따로 돌리게 두면
+    #   다시 만들 때마다 빠뜨리기 때문입니다 (규칙 26).
+    from engine import build_review
+    try:
+        build_review.main()
+    except Exception as e:                              # noqa: BLE001
+        print('  검수 뷰를 못 만들었습니다 — %s' % e)
+
     # ★ 검색엔진에게 알리는 세 파일 (2026-09-28)
     #   sitemap.xml · robots.txt · llms.txt
     #   **판 지문보다 먼저** 만듭니다 — 지문이 이 셋까지 세어야
