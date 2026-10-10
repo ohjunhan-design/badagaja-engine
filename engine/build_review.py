@@ -112,6 +112,26 @@ def 기간합(날짜별, 날수, 오늘):
     return 더함, 못받음
 
 
+def 주별(날짜별):
+    """날짜를 **주 단위**로 묶습니다 (월요일 시작).
+
+    ★ 온전하지 않은 주를 속이지 않습니다. 6일치뿐인 주를 그냥
+      적으면 7일치 주와 견줄 수 없습니다. **며칠치인지 함께**
+      돌려줍니다.
+    """
+    묶음 = {}
+    for k in sorted(날짜별):
+        try:
+            t = datetime.strptime(k, '%Y-%m-%d').date()
+        except Exception:                               # noqa: BLE001
+            continue
+        월 = t - timedelta(days=t.weekday())
+        칸 = 묶음.setdefault(월.isoformat(), {'방문': 0, '날': 0})
+        칸['방문'] += int(날짜별[k].get('방문') or 0)
+        칸['날'] += 1
+    return 묶음
+
+
 def 카드(이름, 값, 뜻, 못받음=0):
     덧 = ''
     if 못받음:
@@ -180,6 +200,23 @@ def 그리기(d):
         막대 += ('<div class="rv-day%s" title="%s · 방문 %s · 조회 %s">'
                  '<i style="height:%d%%"></i><b>%s</b></div>'
                  % (빈, 날, 수(v.get('방문')), 수(조), 높, 날[-2:]))
+
+    # 주 단위 — 온전하지 않은 주는 **며칠치인지 적습니다**
+    주 = 주별(날짜별)
+    주막대 = ''
+    if len(주) >= 2:
+        주큰 = max(v['방문'] for v in 주.values()) or 1
+        for k in sorted(주):
+            v = 주[k]
+            높 = round(v['방문'] * 100.0 / 주큰)
+            덜 = '' if v['날'] >= 7 else ' is-part'
+            주막대 += ('<div class="rv-week%s" title="%s 주 · 방문 %s · '
+                       '%d일치"><i style="height:%d%%"></i>'
+                       '<b>%s</b><span>%s</span></div>'
+                       % (덜, k, 수(v['방문']), v['날'], 높,
+                          k[5:].replace('-', '/'),
+                          수(v['방문']) if v['날'] >= 7
+                          else '%s<br>(%d일)' % (수(v['방문']), v['날'])))
 
     유입칸 = ''.join(막대줄(k, int(v or 0), 유모두)
                      for k, v in 유입.items()) or \
@@ -264,6 +301,22 @@ def 그리기(d):
 /* 검수자가 날짜를 읽어야 합니다. 10px 는 작았습니다 */
 .rv-day b{font-size:11px;font-weight:700;
   color:var(--stats-muted,#62716E)}
+/* 주마다 — **7일이 안 되는 주**는 옅게 그리고 며칠치인지 적습니다.
+   온전한 주와 나란히 두면 그림이 거짓말을 합니다. */
+.rv-weeks{display:flex;align-items:flex-end;gap:10px;height:150px;
+  padding:12px 12px 0;border:1px solid var(--stats-line,#DCE6E3);
+  border-radius:12px;background:#fff;overflow-x:auto}
+.rv-week{flex:1 0 56px;display:flex;flex-direction:column;
+  align-items:center;justify-content:flex-end;height:100%;gap:5px}
+.rv-week i{display:block;width:100%;min-height:3px;
+  border-radius:4px 4px 0 0;background:var(--stats-brand,#0F5B59)}
+.rv-week.is-part i{background:repeating-linear-gradient(45deg,
+  #9FB3AF,#9FB3AF 4px,#DCE6E3 4px,#DCE6E3 8px)}
+.rv-week b{font-size:11px;font-weight:700;
+  color:var(--stats-muted,#62716E)}
+.rv-week span{font-size:11px;font-weight:800;line-height:1.3;
+  text-align:center;color:var(--stats-text,#263432)}
+.rv-week.is-part span{color:var(--stats-muted,#62716E);font-weight:700}
 .rv-bar{display:grid;grid-template-columns:72px minmax(0,1fr) 44px 60px;
   align-items:center;gap:10px;margin-bottom:8px}
 .rv-bar__t{font-size:13.5px;font-weight:700}
@@ -312,6 +365,8 @@ __알림__
 <p class="rv__sub" style="margin-top:8px">빗금은 <b>세었고 0</b> 인
   날입니다. 아예 빠진 날은 아래에 따로 적었습니다.</p>
 
+__주칸__
+
 <h2>어디서 들어왔나</h2>
 __유입__
 
@@ -336,7 +391,12 @@ __안함__
    .replace('__로봇꼴__', 로봇꼴) \
    .replace('__로봇__', esc(로봇)) \
    .replace('__카드__', 카드들) \
-   .replace('__막대__', 막대 or '<p class="rv-none">날짜 기록이 없습니다</p>') \
+   .replace('__막대__', 막대 or '<p class="rv-none">날짜 기록이 없습니다</p>')    .replace('__주칸__',
+            ('<h2>주마다</h2><div class="rv-weeks">%s</div>'
+             '<p class="rv__sub" style="margin-top:8px">옅은 막대는 '
+             '<b>7일이 안 되는 주</b>입니다. 며칠치인지 숫자 아래에 '
+             '적었습니다 — 온전한 주와 견주면 안 됩니다.</p>' % 주막대)
+            if 주막대 else '') \
    .replace('__유입__', 유입칸) \
    .replace('__인기__', 인기 or '<tr><td class="rv-none">없습니다</td></tr>') \
    .replace('__못받__',
