@@ -76,10 +76,24 @@ def main():
     print('  (2026-10-10 #9 — 주소가 샐 수 있다고 보고 만듭니다)')
     print()
 
+    자료있나 = any(
+        os.path.exists(os.path.join(ROOT, 'data', 'raw', x))
+        for x in ('stats-review.json', 'stats-review.sample.json'))
+
     if not os.path.exists(쪽길):
-        print('  · 검수 뷰가 없습니다 — 스냅샷이 없으면 안 만드는 것이')
-        print('    설계입니다. 건너뜁니다.')
-        return 0
+        # ★ **「잴 것이 없다」와 「못 쟀다」를 가릅니다** (2026-10-10)
+        #   전에는 둘 다 0 을 냈습니다. fail-closed 눈으로 보면
+        #   **못 쟀는데 통과**라, 판정 #161 의 「거짓통과실측」이
+        #   저를 잡았습니다. 맞는 지적입니다.
+        if 자료있나:
+            print('  ✗ 스냅샷 자료는 있는데 **쪽이 없습니다** —')
+            print('    engine/build_review.py 가 만들다 실패했을 수')
+            print('    있습니다. 못 쟀으므로 통과로 내지 않습니다.')
+            return 4                      # 못잼
+        print('  □ 검수 뷰도 스냅샷 자료도 없습니다 — **잴 것이')
+        print('    없습니다.** 「제대로 되어 있다」가 아닙니다.')
+        print('    스냅샷이 생기면 그때 잽니다.')
+        return 3                          # 안올림 (잴 것 없음)
 
     글 = io.open(쪽길, encoding='utf-8', errors='replace').read()
     막음, 알림 = [], []
