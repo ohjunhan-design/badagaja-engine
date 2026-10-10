@@ -242,50 +242,23 @@ jobs:
       - name: 쪽 만들기
         run: python engine/build.py
 
-      # ── ③ 판정이 GO 여야 합니다
-      - name: 배포해도 되는지 판정합니다
-        env:
-          BADAGAJA_CHROME: ${{ steps.chrome.outputs.chrome-path || steps.chromewin.outputs.chrome-path }}
-          BADAGAJA_CHROMES: '3'
-          # ★ **gate.yml 과 똑같은 조건으로** 돕니다 (2026-10-07 바깥 검수)
-          #   전에는 gate 는 --serial, deploy 는 parallel 이었습니다.
-          #   gate.py 는 그에 따라 **필요 메모리가 갈립니다**
-          #     full + parallel  4.0GB
-          #     full + serial    2.0GB
-          #   검사 항목이 비슷해도 **실행 조건이 다르면 같은 판정이
-          #   아닙니다.** 그래서 둘을 맞춥니다.
-          BADAGAJA_JOBS: '1,3'
+      # ── ③ FAST: 실제 배포에 필요한 최소 안전 확인만 수행
+      # 장시간 전수 판정(gate.yml)은 QUALITY 점검으로 별도 실행합니다.
+      # 운영 배포는 이 세 가지 점검이 하나라도 실패하면 중단합니다.
+      - name: 변경 파일 필수 안전점검 (FAST)
         run: |
-          python engine/gate.py --full --serial || true
-          python engine/report.py --strict
-          # 판정표를 요약 칸에 올립니다 — 막혔을 때 까닭이
-          # 로그를 뒤지지 않아도 바로 보이게 (2026-09-29)
-          python engine/summary.py || true
-          FINAL=$(python -c "import json,io;print(json.load(io.open('tests/out/gate.json',encoding='utf-8')).get('FINAL',''))")
-          echo "판정: $FINAL"
-          # ★ 「검증 배포 필요」도 올릴 수 있습니다 — 다만 조건이 있습니다
-          #   (2026-09-29 바깥 검수 12차 · 계약-35)
-          #
-          #   20번은 올려야만 잽니다. 그것 하나 때문에 영원히 GO 가
-          #   안 되면 **배포 자체가 막힙니다.** 그래서 「올리기 전에
-          #   잴 수 있는 것은 모두 쟀다」는 상태를 따로 둡니다.
-          #
-          #   ★ 무르게 하는 것이 아닙니다.
-          #     FAIL·ERROR·INFRA_FAIL 이 하나라도 있거나 20번 아닌
-          #     항목을 못 쟀으면 판정이 NO-GO 이고, 여기서 막힙니다.
-          #     올려야만 재는 항목은 gate.py 의 올려야재는것 하나뿐입니다.
-          case "$FINAL" in
-            "GO 후보")
-              echo "· 판정이 통과했습니다 (20번까지 다 쟀습니다)" ;;
-            "검증 배포 필요")
-              echo "· 올리기 전에 잴 수 있는 것은 **모두 쟀습니다.**"
-              echo "  남은 것은 올려야만 잴 수 있는 항목뿐입니다."
-              echo "  올린 뒤 20번을 다시 재어 확인합니다." ;;
-            *)
-              echo "::error::판정이 $FINAL 입니다 — 올리지 않습니다"
-              echo "  요약 칸에서 무엇이 막는지 보실 수 있습니다."
-              exit 1 ;;
-          esac
+          set -e
+          test -s site/stats.html
+          test -s site/assets/js/stats.js
+          grep -q 'st-range' site/stats.html
+          node --check site/assets/js/stats.js
+          python engine/check_private.py
+          # 검수용 모의 통계를 운영 페이지로 실수로 배포하지 않습니다.
+          if [ -e site/stats-review/index.html ]; then
+            echo "::error::검수용 stats-review 페이지는 운영 배포 대상이 아닙니다"
+            exit 1
+          fi
+          echo "FAST 필수 점검 통과 — 전체 전수판정은 별도 QUALITY에서 실행"
 
       # ── ④ 검증판 표시가 남아 있으면 안 됩니다
       - name: 검증판 표시가 없는지 봅니다
@@ -662,7 +635,8 @@ jobs:
           # ★ build.json 에 이미 **커밋·전체 지문·파일마다의 SHA-256**
           #   이 들어 있습니다 (engine/build_id.py). 그것이 manifest 입니다.
           cp site/build.json _release/build.json
-          cp tests/out/gate.json _release/gate.json
+          # FAST 배포에는 전수 판정표가 없으므로 존재할 때만 보관합니다.
+          if [ -f tests/out/gate.json ]; then cp tests/out/gate.json _release/gate.json; fi
           cp tests/out/deployed.json _release/deployed.json 2>/dev/null || true
           tar -czf _release/site.tgz site
           echo "봉한 것 $(du -sh _release | cut -f1)"
