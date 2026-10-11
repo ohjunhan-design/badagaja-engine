@@ -237,7 +237,33 @@
     칸.setAttribute('data-ad-state', '떴음');
   }
 
+  function 제주차량광고(칸, 배너) {
+    var a = document.createElement('a');
+    a.className = 'ad-link ad-link--jeju';
+    a.href = 배너['주소'];
+    a.target = '_blank';
+    a.rel = 'nofollow sponsored noopener';
+    a.setAttribute('aria-label', '제주패스 차량배송 서비스 알아보기 (제휴 광고, 새 창)');
+    a.innerHTML =
+      '<span class="ad-jeju-top"><span class="ad-jeju-brand">JEJUPASS <b>제주패스</b></span>' +
+      '<span class="ad-jeju-label">제휴 광고</span></span>' +
+      '<span class="ad-jeju-title">제주 도착 후, 이동도 가볍게</span>' +
+      '<span class="ad-jeju-desc">공항·숙소 차량배송 서비스 알아보기</span>' +
+      '<span class="ad-jeju-bottom"><span>렌터카 여행 준비</span>' +
+      '<strong class="ad-jeju-cta">차량배송 알아보기 <span aria-hidden="true">→</span></strong></span>';
+    칸.innerHTML = '';
+    칸.appendChild(a);
+    칸.appendChild((function () {
+      var p = document.createElement('p');
+      p.className = 'ad-note ad-jeju-disclosure';
+      p.textContent = 말('제휴문구');
+      return p;
+    })());
+    칸.setAttribute('data-ad-state', '떴음');
+  }
+
   function 링크그리기(칸, 배너) {
+    if (배너['이름'] === '제주패스') { 제주차량광고(칸, 배너); return; }
     var a = document.createElement('a');
     a.className = 'ad-link';
     a.href = 배너['주소'];
