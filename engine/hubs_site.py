@@ -827,6 +827,27 @@ def 방문기록쪽(d, 언어='ko'):
         '<tbody id="stFrom"><tr><td colspan="2" class="st-empty">열쇠말을 넣으면 보입니다</td></tr></tbody></table></div>',
         흰=False))
 
+    # ★ 사이트 **안에서** 어디로 옮겨 다니나 (2026-10-10 주인 지시)
+    #   전에는 「어디서 들어왔나」만 있어, 바깥에서 온 길은 보여도
+    #   **들어온 뒤 어디로 갔는지**가 통째로 비어 있었습니다.
+    #   `hit.php` 가 referer 를 「사이트 안」 넉 자로 뭉개 버렸기 때문입니다.
+    #   이제 길마다 셉니다 — 사람을 잇지 않고 **날짜별 합계**만입니다.
+    칸들.append(칸(
+        '어디로 가시나', '들어와서 어디로',
+        '<div class="st-table"><table class="tbl">'
+        '<thead><tr><th>처음 들어온 쪽</th><th class="st-n">방문</th></tr></thead>'
+        '<tbody id="stEntry"><tr><td colspan="2" class="st-empty">열쇠말을 넣으면 보입니다</td></tr></tbody></table></div>'
+        '<div class="st-table"><table class="tbl">'
+        '<thead><tr><th>옮겨 간 길</th><th class="st-n">횟수</th></tr></thead>'
+        '<tbody id="stMoves"><tr><td colspan="2" class="st-empty">열쇠말을 넣으면 보입니다</td></tr></tbody></table></div>'
+        '<p class="st-note" id="stLeaveNote">'
+        '「끝으로 본 쪽」은 <b>어림값</b>입니다 — 그 쪽을 본 수에서 '
+        '거기서 다른 쪽으로 옮긴 수를 뺀 것이라, 실제로 나갔는지는 '
+        '알 수 없습니다.</p>'
+        '<div class="st-table"><table class="tbl">'
+        '<thead><tr><th>끝으로 본 쪽 (어림)</th><th class="st-n">어림</th></tr></thead>'
+        '<tbody id="stLeave"><tr><td colspan="2" class="st-empty">열쇠말을 넣으면 보입니다</td></tr></tbody></table></div>'))
+
     값 = _바탕값(
         d, 쪽길, 언어,
         제목='방문 기록 | %s' % d.사이트['이름']['ko'],

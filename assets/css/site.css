@@ -1532,6 +1532,13 @@ body:has(.st-top) .section{padding-top:28px}
 .st-n{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
 .st-empty{margin:0;padding:18px;text-align:center;font-size:14px;
   color:var(--stats-muted,#62716E)}
+/* 어림값임을 밝히는 글 — 표와 표 사이에 끼므로 눈에 띄게 둡니다.
+   「끝으로 본 쪽」을 실제 이탈로 오해하면 판단이 틀어집니다 (2026-10-10) */
+.st-note{margin:14px 0 10px;padding:10px 14px;font-size:13px;line-height:1.6;
+  color:var(--stats-muted,#62716E);
+  background:rgba(15,91,89,.05);border-left:3px solid var(--stats-brand,#0F5B59);
+  border-radius:0 6px 6px 0}
+.st-note b{color:var(--stats-brand,#0F5B59)}
 
 @media (max-width:767px){
   /* 390px — 카드를 억지로 한 줄에 넣지 않습니다 (지피티 지시) */

@@ -20,6 +20,18 @@
   function 찾기(id) { return document.getElementById(id); }
   function 수(n) { return (n || 0).toLocaleString('ko-KR'); }
 
+  // 「/>/tide/」 를 「/ → /tide/」 로 읽히게 합니다 (2026-10-10)
+  // 서버는 열쇠를 "앞>뒤" 로 저장합니다. 화살표는 **보여 줄 때만** 붙입니다 —
+  // 자료에 넣으면 나중에 쪼갤 때 깨집니다.
+  function 끝손질(것) {
+    var 새 = {};
+    Object.keys(것 || {}).forEach(function (k) {
+      var 칸 = k.split('>');
+      새[칸.length === 2 ? (칸[0] + ' → ' + 칸[1]) : k] = 것[k];
+    });
+    return 새;
+  }
+
   function 줄채우기(몸, 것, 링크냐) {
     몸.innerHTML = '';
     var 열쇠들 = Object.keys(것 || {});
@@ -163,6 +175,28 @@
     막대그리기(d.days);
     줄채우기(찾기('stPages'), 합.pages, true);
     줄채우기(찾기('stFrom'), 합.from, false);
+
+    // ★ 사이트 안에서 어디로 옮겨 다니나 (2026-10-10)
+    //   서버가 moves·entry 를 안 주는 옛 자료면 빈 칸 그대로 둡니다.
+    줄채우기(찾기('stEntry'), 합.entry || {}, true);
+    줄채우기(찾기('stMoves'), 끝손질(합.moves || {}), false);
+
+    // 「끝으로 본 쪽」 — **새로 모으지 않고 빼서 구합니다.**
+    //   그 쪽을 본 수 − 거기서 다른 쪽으로 옮긴 수.
+    //   떠나는 순간을 잡으려면 사람을 따라다녀야 하는데, 그것은 하지 않습니다.
+    //   그래서 이것은 **어림값**입니다. 쪽에도 그렇게 적어 두었습니다.
+    var 나간수 = {};
+    Object.keys(합.moves || {}).forEach(function (열쇠) {
+      var 앞 = 열쇠.split('>')[0];
+      if (!앞) { return; }
+      나간수[앞] = (나간수[앞] || 0) + 합.moves[열쇠];
+    });
+    var 끝쪽 = {};
+    Object.keys(합.pages || {}).forEach(function (쪽) {
+      var 남 = 합.pages[쪽] - (나간수[쪽] || 0);
+      if (남 > 0) { 끝쪽[쪽] = 남; }
+    });
+    줄채우기(찾기('stLeave'), 끝쪽, true);
 
     var 고르기 = 찾기('stMonthPick');
     if (고르기 && !고르기.dataset.채움) {
