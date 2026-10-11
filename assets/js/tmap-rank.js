@@ -41,7 +41,11 @@
     return 'https://map.kakao.com/?q=' + encodeURIComponent(말);
   }
 
-  fetch(API + 'places.php?region=' + encodeURIComponent(자료.권역)
+  // 제주 7권역은 별도 관광빅데이터 프록시를 사용합니다.
+  // 공통 places.php 는 제주 권역을 거부하므로 그대로 호출하면 카드가 사라집니다.
+  var 제주 = /^(jejusi|aewol|jocheon|chuja|seongsan|seogwipo|daejeong)$/.test(자료.권역);
+  var 경로 = 제주 ? 'places-jeju.php' : 'places.php';
+  fetch(API + 경로 + '?region=' + encodeURIComponent(자료.권역)
         + '&type=food&limit=40')
     .then(function (r) { if (!r.ok) { throw 0; } return r.json(); })
     .then(function (d) {
