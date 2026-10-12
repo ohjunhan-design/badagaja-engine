@@ -2136,10 +2136,17 @@ def 단계그림바꾸기(글, 나갈곳):
     판짧, _판날 = template.지금판()
     차림 = ('<link rel="stylesheet" href="assets/css/site.css?v=%s">'
             % (판짧 or 'x'))
+    # ★ 옛 차림표를 **갈아 치웁니다** — 남기면 뒤에서 덮습니다
+    #   (2026-10-13 감독실이 업로드 전에 잡았습니다)
+    #   로컬에는 `css/style.css` 가 **없어** 머리띠가 통일돼 보였는데,
+    #   운영에는 106,737바이트로 **있습니다.** 둘을 같이 걸면
+    #   뒤엣것이 이겨 옛 머리띠로 되돌아가고 로고 글자가 메뉴에
+    #   가려집니다 (「차림표 맨 뒤가 이깁니다」).
+    #   공용 site.css + 쪽 안 <style> 로 충분합니다.
     if 'assets/css/site.css' not in 글:
         옛차림 = re.search(r'<link[^>]*href="css/style\.css[^"]*"[^>]*>', 글)
         if 옛차림:
-            글 = 글.replace(옛차림.group(0), 차림 + 옛차림.group(0), 1)
+            글 = 글.replace(옛차림.group(0), 차림, 1)
 
     # 머리띠를 공용 꼴로
     머리 = re.search(r'<header>.*?</header>', 글, re.S)
