@@ -7103,6 +7103,8 @@ def main():
                 continue
             쪽길 = url.fishing_levels(언어)
             글 = io.read(os.path.join(ROOT, 'template', 'fishing-levels.html'))
+            # 틀을 안 거치는 쪽이라 판 지문이 빠집니다 — 여기서 새깁니다
+            글 = template.손쪽에판새기기(글)
             수 = 0
         elif 갈 == '장비':
             쪽길, 글 = hubs_more.장비쪽(d, 언어)

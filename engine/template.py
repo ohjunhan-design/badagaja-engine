@@ -189,6 +189,36 @@ def _빈칸지우기(s):
     return _빈구조화.sub('', s)
 
 
+def 손쪽에판새기기(글):
+    """틀을 안 거치는 **손으로 만든 쪽**에 판 지문과 꼬리 표시를 넣습니다.
+
+    `그리기()` 는 틀을 채우며 판을 새기는데, 통째로 복사해 쓰는 쪽은
+    그 길을 지나가지 않습니다. 그러면 보는 사람이 **엉뚱한 단서로
+    최신 여부를 짐작**하게 됩니다 (2026-10-07 주인 지시).
+
+    이미 들어 있으면 **건드리지 않습니다** — 두 번 넣지 않습니다.
+    """
+    짧, 날 = 지금판()
+    if not 짧:
+        return 글
+
+    if 'name="badagaja-build"' not in 글:
+        메타 = '<meta name="badagaja-build" content="%s">' % 짧
+        if '</head>' in 글:
+            글 = 글.replace('</head>', 메타 + '</head>', 1)
+        else:
+            글 = 메타 + 글
+
+    if 'foot-build' not in 글 and 날:
+        보기 = 날.replace('-', '.')
+        표시 = '<span class="foot-build">사이트 업데이트 %s</span>' % 보기
+        if '</footer>' in 글:
+            글 = 글.replace('</footer>', 표시 + '</footer>', 1)
+        elif '</body>' in 글:
+            글 = 글.replace('</body>', 표시 + '</body>', 1)
+    return 글
+
+
 def 머리문의단추(메일):
     """머리띠 오른쪽 메일 단추. 메일이 비면 아무것도 안 냅니다."""
     메일 = (메일 or '').strip()
