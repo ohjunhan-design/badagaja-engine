@@ -3664,8 +3664,13 @@ details.area-group .area-list{margin-bottom:12px}
 .rm-lock{
   display:none;position:absolute;left:50%;bottom:12px;z-index:21;
   transform:translateX(-50%);border:0;border-radius:999px;
-  background:rgba(32,26,22,.86);color:#fff;padding:9px 13px;
-  font:inherit;font-size:11px;font-weight:800;white-space:nowrap;
+  background:rgba(32,26,22,.86);color:#fff;padding:0 18px;
+  /* ★ 엄지가 닿는 44px (2026-10-12) — 전에는 padding 9px 라 36px 였습니다.
+     check_thumb 는 file:/// 로 로컬을 재는데 카카오 지도가 로컬에서는
+     안 떠서 이 단추가 DOM 에 생기지 않습니다. 그래서 8px 모자란 것이
+     영영 안 잡혔습니다. 공개 서버에서 재다 찾았습니다. */
+  min-height:44px;align-items:center;justify-content:center;
+  font:inherit;font-size:12px;font-weight:800;white-space:nowrap;
   box-shadow:0 3px 12px rgba(0,0,0,.15);cursor:pointer;
 }
 
@@ -3720,14 +3725,14 @@ details.area-group .area-list{margin-bottom:12px}
   .rm-type{left:10px;top:10px}
   .rm-zoom{right:10px;top:10px}
   .rm-legend{left:auto;right:10px;bottom:10px}
-  .rm-lock{display:block}
+  .rm-lock{display:flex}        /* min-height 가 먹도록 flex 로 */
   .rm-pick{min-height:220px;height:220px}
   .rm-pick .rp-copy{left:14px;right:14px;bottom:14px}
   .rm-pick .rp-name{font-size:21px}
   .rm-pick .rp-desc{font-size:12px}
   .rm-pick .rp-count{font-size:11px;padding:6px 9px}
   .rm-pick .rp-acts{margin-top:9px}
-  .rm-pick .rp-acts a{min-height:38px}
+  .rm-pick .rp-acts a{min-height:44px}   /* 38 → 44, 엄지 기준 (2026-10-12) */
 }
 
 /* ══════════════════════════════════════════════════════════
