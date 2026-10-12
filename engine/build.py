@@ -2726,6 +2726,8 @@ def 권역쪽(d, 권역, 언어='ko'):
                        + 축제팝업(축제목록, 쪽길)
                        # ★ 요즘 많이 찾아가는 곳 (2026-09-29 주인 지적)
                        + 찾아가는곳(권역, 이름, 쪽길)
+                       # ★ 바다 가까운 묵을 곳 (2026-10-12 주인 지시 ④)
+                       + 묵을곳(권역, 이름, 쪽길)
                        + 광고움직임(쪽길, '권역')),
     }
     return 쪽길, template.그리기('region.html', 값)
@@ -2756,6 +2758,36 @@ def 찾아가는곳(권역, 이름, 쪽길):
             '<script src="%s" defer></script>'
             % (json.dumps(자료, ensure_ascii=False),
                esc(url.asset('assets/js/tmap-rank.js', 쪽길, 판번호(길)))))
+
+def 묵을곳(권역, 이름, 쪽길):
+    """★ **바다 가까운 묵을 곳** (2026-10-12 주인 지시 ④)
+
+    첫 화면이 「관광·맛집·숙소」를 약속하는데 **숙소만 없었습니다.**
+    `hubs_travel.py` 가 그 까닭을 적어 두었습니다 — 「숙소 자료가
+    없습니다 … 없는 것을 있는 척 보내면 안 됩니다」.
+
+    ★ 그런데 **자료는 있었습니다.**
+      `api/tour.php?kind=stay` 가 한국관광공사 자료로
+      전남 227곳·제주 206곳을 이미 내주고 있었습니다.
+      쪽이 쓰지 않았을 뿐입니다.
+
+    ★ **자료가 있는 22권역에만 보입니다.**
+      권역 목록을 여기 박지 않습니다 — 스크립트가 받아 보고
+      비면 칸을 지웁니다. 자료가 늘면 저절로 보입니다.
+
+    ★ 개인 숙소로 바로 보내지 않습니다 (주인 규칙 12).
+      누르면 지도 검색으로 갑니다. 예약 사이트로 안 보냅니다.
+    """
+    길 = os.path.join(ASSETS, 'js', 'stay-list.js')
+    if not os.path.isfile(길):
+        return ''
+    # api 주소는 **쪽 자리에 맞춰 셉니다** (찾아가는곳() 과 같은 까닭)
+    자료 = {'권역': 권역, '이름': 이름, 'api': url.rel(쪽길, 'api/_')[:-1]}
+    return ('<script>window.BADAGAJA_STAY=%s;</script>'
+            '<script src="%s" defer></script>'
+            % (json.dumps(자료, ensure_ascii=False),
+               esc(url.asset('assets/js/stay-list.js', 쪽길, 판번호(길)))))
+
 
 def 첫물때권역(d):
     """첫 화면이 보여 줄 물때의 기준 권역 (data/raw/site.json).
