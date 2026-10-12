@@ -429,11 +429,17 @@ def 안내쪽(d, 언어='ko'):
         '<span>법으로 정해진 것</span></a></li>'
         '<li><a href="%s"><b>채비 묶는 법</b>'
         '<span>어떤 줄에 무엇을 다나</span></a></li>'
+        # ★ 낚시 단계 쪽으로 가는 길 (2026-10-12 주인 지시)
+        #   쪽은 멀쩡한데 **찾아갈 길이 한 곳뿐**이었습니다.
+        #   「어디에 서나」는 나가기 전에 보는 것이라 여기가 제자리입니다.
+        '<li><a href="%s"><b>내 실력에 맞는 자리</b>'
+        '<span>초급·중급·고급으로 나눠 봅니다</span></a></li>'
         '<li><a href="%s"><b>무엇을 챙겨 가나</b>'
         '<span>낚싯대부터 안전장비까지</span></a></li>'
         '</ul>'
         % (esc(url.rel(쪽길, rule)),
            esc(url.rel(쪽길, url.rig_list(언어))),
+           esc(url.rel(쪽길, url.fishing_levels(언어))),
            esc(url.rel(쪽길, gear))),
         흰=(len(칸들) % 2 == 0)))
 

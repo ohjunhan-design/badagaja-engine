@@ -155,8 +155,12 @@ def _차림표뿌리(s):
 
 
 # 칸 **통째로** 비었을 때 — 그 칸을 지웁니다
+# ★ 클래스가 **더 붙어 있어도** 잡습니다 (2026-10-12)
+#   틀 11개 가운데 `club-support.html` 만 `cs-gap` 이 끼어 있어
+#   혼자 빠져 있었습니다. 글자를 통째로 맞추면 틀이 늘 때마다
+#   같은 일이 되풀이됩니다 — 가운데를 열어 둡니다.
 _빈안내칸 = re.compile(
-    r'<section class="section section--tail"><div class="wrap">\s*'
+    r'<section class="section [^"]*section--tail"><div class="wrap">\s*'
     r'<p class="notice">\s*</p>\s*'
     r'</div></section>')
 # 광고 칸처럼 **다른 것이 함께 있을 때** — 빈 글만 지웁니다.
