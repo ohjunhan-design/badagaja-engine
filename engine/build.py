@@ -2164,11 +2164,15 @@ def 단계그림바꾸기(글, 나갈곳):
 
     # og:image — 451쪽 가운데 이 쪽만 없었습니다
     if 'og:image' not in 글 and '</head>' in 글:
+        # ★ 크기를 **박지 않습니다** — 그림이 바뀌면 어긋납니다
+        #   (2026-10-13 최종본에서 1980×1416 → 1483×1061 로 바뀜)
+        _ow, _oh = 크기.get('beginner-pc', (1483, 1061))
         그림 = ('<meta property="og:image" content="https://badagaja.com/'
                 'img/fishing-levels/beginner-pc.webp">'
-                '<meta property="og:image:width" content="1980">'
-                '<meta property="og:image:height" content="1416">'
-                '<meta name="twitter:card" content="summary_large_image">')
+                '<meta property="og:image:width" content="%d">'
+                '<meta property="og:image:height" content="%d">'
+                '<meta name="twitter:card" content="summary_large_image">'
+                % (_ow, _oh))
         글 = 글.replace('</head>', 그림 + '</head>', 1)
 
     # ★ 새 그림은 **쪽 너비를 다 써야** 읽힙니다 (2026-10-13 눈으로 고침)
