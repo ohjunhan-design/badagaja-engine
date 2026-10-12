@@ -250,8 +250,26 @@ jobs:
           set -e
           test -s site/stats.html
           test -s site/assets/js/stats.js
-          grep -q 'st-range' site/stats.html
           node --check site/assets/js/stats.js
+          # ★ 쪽마다 있어야 하는 표식 — 목록은 .github/필수요소.txt 에 (2026-10-12)
+          #   전에는 `grep -q 'st-range' site/stats.html` 이 여기 박혀
+          #   있었습니다. 통계 화면을 손보면 그 이름이 바뀌고 검사는
+          #   조용히 통과합니다. 이름을 코드에서 빼 자료로 옮겼습니다.
+          MISSING=0
+          while IFS='|' read -r PAGE MARK WHY; do
+            case "$PAGE" in ''|'#'*) continue ;; esac
+            if [ ! -f "site/$PAGE" ]; then
+              echo "::error::필수요소 목록의 쪽이 없습니다 — $PAGE"
+              MISSING=1; continue
+            fi
+            if ! grep -qF "$MARK" "site/$PAGE"; then
+              echo "::error::$PAGE 에 [$MARK] 가 없습니다 — $WHY"
+              MISSING=1
+            fi
+          done < .github/필수요소.txt
+          [ "$MISSING" -eq 0 ] || exit 1
+          echo "필수요소 목록 통과"
+
           python engine/check_private.py
           # 검수용 모의 통계를 운영 페이지로 실수로 배포하지 않습니다.
           if [ -e site/stats-review/index.html ]; then
