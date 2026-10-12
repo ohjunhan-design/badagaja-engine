@@ -363,3 +363,8 @@ def tide_list(언어='ko'):
 def guide_hub(언어='ko'):
     """무엇을 잡나 — guide/index.html"""
     return _붙이기(언어, 'guide', 'index.html')
+
+
+def fishing_levels(언어='ko'):
+    """낚시 실력별 길잡이 — guide/fishing-levels.html"""
+    return _붙이기(언어, 'guide', 'fishing-levels.html')

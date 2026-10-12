@@ -5498,7 +5498,11 @@ def 어종목록(d, 갈래, 언어='ko'):
             '있고, 그 대상이 나는 권역마다 지켜야 할 것을 따로 '
             '적었습니다. 어촌계 마을어장에서는 체험 프로그램으로만 '
             '참여할 수 있는 곳이 많습니다.' % 수),
-        '안내띠': 안내띠(쪽길, 갈래),
+        '안내띠': 안내띠(쪽길, 갈래) + (
+            '<p class="ls-basic"><span>방파제부터 갯바위까지, 내 수준에 맞는 자리를 먼저 고르세요.</span>'
+            '<a class="ls-basic-btn" href="%s">초급·중급·고급 트랙 보기 →</a></p>'
+            % esc(url.rel(쪽길, url.fishing_levels(언어)))
+            if 갈래 == '낚시' and 언어 == 'ko' else ''),
         '묶음안내': '하나를 고르면 시기와 자리, 잡는 법, 금어기까지 봅니다.',
         '묶음칸': 카드,
         '찾기칸': '',
@@ -6743,6 +6747,8 @@ def 쪽주소(갈, 권역, 갈래, 언어='ko'):
         return url.tide_list(언어)
     if 갈 == '안내허브':
         return url.guide_hub(언어)
+    if 갈 == '낚시트랙':
+        return url.fishing_levels(언어)
     if 갈 == '장비':
         return url.gear(언어)
     # ★ 사이트를 밝히는 네 쪽 (2026-10-01)
@@ -6838,6 +6844,9 @@ def 만들목록(d, 만=None):
             할것.append(('금어기', None, None))
         할것.append(('물때허브', None, None))
         할것.append(('안내허브', None, None))
+        # 어종 안내가 있는 한국어판에만 낚시 실력별 길잡이를 만듭니다.
+        if d.안내('낚시'):
+            할것.append(('낚시트랙', None, None))
         할것.append(('장비', None, None))
         # ★ 사이트를 밝히는 네 쪽 (2026-10-01) — rule.html 과 **같은 구멍**
         #   438쪽 모두가 꼬리에서 about·sources·privacy·photos 를 거는데
@@ -6970,6 +6979,14 @@ def main():
             수 = 0
         elif 갈 == '안내허브':
             쪽길, 글 = hubs_more.안내쪽(d, 언어)
+            수 = 0
+        elif 갈 == '낚시트랙':
+            # 원본은 template/ 한 곳에 보관하며 site/ 는 생성물입니다.
+            # 번역판은 준비 전이므로 한국어 안내를 다른 언어로 내지 않습니다.
+            if 언어 != 'ko':
+                continue
+            쪽길 = url.fishing_levels(언어)
+            글 = io.read(os.path.join(ROOT, 'template', 'fishing-levels.html'))
             수 = 0
         elif 갈 == '장비':
             쪽길, 글 = hubs_more.장비쪽(d, 언어)
