@@ -2034,6 +2034,163 @@ def 그림크기(길):
         return 0, 0
 
 
+def 단계그림바꾸기(글, 나갈곳):
+    """단계 쪽의 SVG 도해를 새 그림(webp)으로 바꿉니다 (2026-10-13).
+
+    주인 지시 — 「이 사진으로 진행해」. 지피티가 만든 여섯 장을
+    `data/img/fishing-levels/` 에서 읽어 `img/fishing-levels/` 로
+    옮기고, 쪽의 `<figure class="fl-map">` 안쪽을 `<picture>` 로
+    갈아 끼웁니다.
+
+    ★ 쪽의 **다른 것은 건드리지 않습니다** — 단계 셋, 안전 문구,
+      링크, 꼬리표(`fl-mark`)는 그대로 둡니다. 꼬리표는 새 그림에
+      이미 그려져 있으므로 **지웁니다** (두 번 겹칩니다).
+
+    ★ 그림이 하나라도 없으면 **아무것도 안 바꿉니다.** 반쯤 바뀐
+      쪽이 나가는 것보다 옛 도해 그대로가 낫습니다.
+    """
+    import re
+    import shutil
+
+    짝 = [('beginner', 'beginner'),
+          ('middle', 'intermediate'),
+          ('advanced', 'advanced')]
+    설명 = {
+        'beginner': '초급 바다낚시 안내도 — 방파제 안쪽 안전한 발판, '
+                    '끝자리 주의, 테트라포드 위험 구간, 바위와 모래가 '
+                    '만나는 추천 자리, 물때와 안전 수칙',
+        'intermediate': '중급 바다낚시 안내도 — 외항 테두리, 낮은 갯바위, '
+                        '물골과 수중여 앞, 조류 세기와 물때, 랜딩 공간과 '
+                        '안전 수칙',
+        'advanced': '고급 바다낚시 안내도 — 곶부리와 본류, 수중여와 물골, '
+                    '포말 지대, 조류가 강한 시간, 퇴로와 동행 확보',
+    }
+
+    # 먼저 여섯 장이 다 있는지 봅니다
+    원본칸 = os.path.join(DATA, 'img', 'fishing-levels')
+    있는것 = {}
+    for _, 파일 in 짝:
+        for 갈 in ('pc', 'mobile'):
+            p = os.path.join(원본칸, '%s-%s.webp' % (파일, 갈))
+            if not os.path.isfile(p):
+                return 글          # 하나라도 없으면 그대로 둡니다
+            있는것['%s-%s' % (파일, 갈)] = p
+
+    # 옮깁니다
+    낼칸 = os.path.join(나갈곳, 'img', 'fishing-levels')
+    os.makedirs(낼칸, exist_ok=True)
+    크기 = {}
+    for 이름, 원본 in 있는것.items():
+        목적 = os.path.join(낼칸, 이름 + '.webp')
+        if (not os.path.isfile(목적)
+                or os.path.getsize(원본) != os.path.getsize(목적)):
+            shutil.copy2(원본, 목적)
+        크기[이름] = (1980, 1416) if 이름.endswith('-pc') else (1080, 1620)
+        try:
+            from PIL import Image
+            with Image.open(원본) as im:
+                크기[이름] = im.size
+        except Exception:
+            pass
+
+    for 단, 파일 in 짝:
+        i = 글.find('id="%s"' % 단)
+        if i < 0:
+            continue
+        # 끊는 자리는 **단계 id 로만** 찾습니다 — 아무 id 로 찾으면
+        # svg 안의 id 가 먼저 걸려 토막이 잘립니다
+        j = -1
+        for 다음 in ('beginner', 'middle', 'advanced'):
+            k = 글.find('id="%s"' % 다음, i + 10)
+            if k > 0 and (j < 0 or k < j):
+                j = k
+        끝 = j if j > 0 else len(글)
+        토막 = 글[i:끝]
+        m = re.search(r'<figure class="fl-map">.*?</figure>', 토막, re.S)
+        if not m:
+            continue
+        pw, ph = 크기['%s-pc' % 파일]
+        새칸 = (
+            '<figure class="fl-map fl-map--photo"><picture>'
+            '<source media="(max-width:700px)" '
+            'srcset="img/fishing-levels/%s-mobile.webp" '
+            'width="%d" height="%d">'
+            '<img src="img/fishing-levels/%s-pc.webp" alt="%s" '
+            'width="%d" height="%d" loading="lazy" decoding="async">'
+            '</picture></figure>'
+            % (파일, 크기['%s-mobile' % 파일][0],
+               크기['%s-mobile' % 파일][1],
+               파일, 설명[파일], pw, ph))
+        글 = 글[:i] + 토막.replace(m.group(0), 새칸, 1) + 글[끝:]
+
+    # ★ 머리띠를 450쪽과 같게 하고 og:image 를 넣습니다 (2026-10-13)
+    #
+    #   이 쪽만 옛 차림표 `css/style.css` 를 불러 머리띠가 통째로
+    #   달랐습니다 — 손님이 들어오면 다른 사이트처럼 보입니다.
+    #   공용 `assets/css/site.css` 를 **앞에** 걸어 머리띠를 입히고,
+    #   쪽 안 `<style>` 은 그대로 둬 `fl-*` 가 뒤에서 이기게 합니다.
+    #
+    #   ★ `site.css` **파일을 올리는 것이 아닙니다.** 운영에 이미 있는
+    #     것을 부르게만 합니다. 로컬 판에는 아직 승인 안 난 제주 광고
+    #     규칙이 들어 있어 그 파일 자체는 올리지 않습니다.
+    판짧, _판날 = template.지금판()
+    차림 = ('<link rel="stylesheet" href="assets/css/site.css?v=%s">'
+            % (판짧 or 'x'))
+    if 'assets/css/site.css' not in 글:
+        옛차림 = re.search(r'<link[^>]*href="css/style\.css[^"]*"[^>]*>', 글)
+        if 옛차림:
+            글 = 글.replace(옛차림.group(0), 차림 + 옛차림.group(0), 1)
+
+    # 머리띠를 공용 꼴로
+    머리 = re.search(r'<header>.*?</header>', 글, re.S)
+    if 머리 and 'class="header"' not in 머리.group(0):
+        로고 = 꼬리로고('../', '바다가자닷컴')
+        새머리 = (
+            '<div class="topbar"><b>바다가자닷컴</b> · 본 자료는 '
+            '참고용이며 어촌계·지자체 규정을 반드시 확인하세요. '
+            '무단 복제 시 민·형사 책임을 물을 수 있습니다.</div>'
+            '<header class="header"><div class="wrap">'
+            '<div class="header-left"><div><div class="header-title">'
+            '%s'
+            '<span class="header-sep"></span>'
+            '<span class="header-role">내 실력에 맞는 자리 고르기</span>'
+            '</div></div></div>'
+            '<div class="header-right">'
+            '<a href="guide/#regions" class="badge">권역별 안내</a>'
+            '<a href="tide/" class="badge">물때표</a>'
+            '<a href="fish/" class="badge">낚시 어종</a>'
+            '</div></div></header>' % 로고)
+        글 = 글.replace(머리.group(0), 새머리, 1)
+
+    # og:image — 451쪽 가운데 이 쪽만 없었습니다
+    if 'og:image' not in 글 and '</head>' in 글:
+        그림 = ('<meta property="og:image" content="https://badagaja.com/'
+                'img/fishing-levels/beginner-pc.webp">'
+                '<meta property="og:image:width" content="1980">'
+                '<meta property="og:image:height" content="1416">'
+                '<meta name="twitter:card" content="summary_large_image">')
+        글 = 글.replace('</head>', 그림 + '</head>', 1)
+
+    # ★ 새 그림은 **쪽 너비를 다 써야** 읽힙니다 (2026-10-13 눈으로 고침)
+    #   `fl-grid` 는 그림과 설명을 좌우로 나눕니다. 옛 SVG 도해는
+    #   꼬리표가 큼직해 좁은 칸에서도 읽혔지만, 새 그림은 한 장에
+    #   도해·물때·안전팁이 다 들어 있어 좁히면 글자가 뭉개집니다.
+    #   틀은 그대로 두고 **차림표만** 세로 쌓기로 바꿉니다.
+    규칙 = ('.fl-grid{display:block}'
+            '.fl-map--photo{margin:0 0 12px;border-radius:12px;'
+            'overflow:hidden;background:#eef4f6}'
+            '.fl-map--photo img{width:100%;height:auto;display:block}'
+            '.fl-info{display:grid;gap:10px;'
+            'grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}'
+            '@media(max-width:700px){.fl-info{grid-template-columns:1fr}}'
+            # 엄지가 닿게 — 44px (주인 규칙 6-2)
+            '.fl-cta a{min-height:44px;display:inline-flex;'
+            'align-items:center}')
+    if '.fl-map--photo{' not in 글 and '</style>' in 글:
+        글 = 글.replace('</style>', 규칙 + '</style>', 1)
+    return 글
+
+
 def 꼬리메뉴(d, 쪽길, 언어='ko'):
     """꼬리 메뉴.
 
@@ -7105,6 +7262,8 @@ def main():
             글 = io.read(os.path.join(ROOT, 'template', 'fishing-levels.html'))
             # 틀을 안 거치는 쪽이라 판 지문이 빠집니다 — 여기서 새깁니다
             글 = template.손쪽에판새기기(글)
+            # SVG 도해를 새 그림으로 (2026-10-13 주인 지시)
+            글 = 단계그림바꾸기(글, 나갈곳)
             수 = 0
         elif 갈 == '장비':
             쪽길, 글 = hubs_more.장비쪽(d, 언어)
