@@ -542,8 +542,17 @@
       var 하루 = 만들기('div', 'tide-day' + (i === 0 ? ' tide-day--today' : ''));
 
       var 머리 = 만들기('div', 'td-head');
-      머리.appendChild(만들기('span', 'td-date',
-        x.키 + ' (' + x.요일 + ')'));
+      // 날짜와 요일 — 요일만 따로 감쌉니다. **토는 파랑 · 일은 빨강**
+      // (2026-10-12 주인 지시). 달력에서 쓰는 관습이라 글자만 봐도
+      // 주말인지 바로 압니다. 색만으로 알리지 않도록 글자는 그대로 둡니다.
+      var 날칸 = 만들기('span', 'td-date', x.키 + ' (');
+      var 요일칸 = 만들기('span',
+        'td-dow' + (x.요일 === '토' ? ' td-dow--sat'
+                    : x.요일 === '일' ? ' td-dow--sun' : ''),
+        x.요일);
+      날칸.appendChild(요일칸);
+      날칸.appendChild(document.createTextNode(')'));
+      머리.appendChild(날칸);
       if (i === 0) { 머리.appendChild(만들기('span', 'td-today', '오늘')); }
       하루.appendChild(머리);
 

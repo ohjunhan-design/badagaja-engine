@@ -1122,6 +1122,15 @@ html[data-pcview] .pcview{display:block}
 .td-head{display:flex;align-items:center;gap:6px;margin-bottom:2px}
 .td-date{font-size:12px;font-weight:700;color:var(--muted)}
 .tide-day--today .td-date{color:var(--green)}
+/* 요일 — 토는 파랑 · 일은 빨강 (2026-10-12 주인 지시)
+   달력에서 쓰는 관습이라 글자만 봐도 주말인지 바로 압니다.
+   색 이름을 새로 만들지 않고 값을 직접 둡니다 — 없는 이름을 쓰면
+   그 줄이 조용히 버려집니다. 바탕이 밝아 둘 다 충분히 어둡게 잡았습니다. */
+.td-dow--sat{color:#1A5FD0}
+.td-dow--sun{color:#C62828}
+/* 오늘이 주말이면 날짜는 녹색, 요일은 제 색 — 안쪽이라 이깁니다 */
+.tide-day--today .td-dow--sat{color:#1A5FD0}
+.tide-day--today .td-dow--sun{color:#C62828}
 .td-today{
   font-size:10.5px;font-weight:800;color:#fff;background:var(--green);
   padding:2px 7px;border-radius:999px;line-height:1.5;
