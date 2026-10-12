@@ -1,0 +1,59 @@
+/* 숙소 칸과 물때 요일 색 (2026-10-12)
+ *
+ * ★ 왜 site.css 에서 떼어 냈나
+ *
+ *   이 둘은 site.css 에 들어 있었는데, 그 파일에는 아직 검증되지
+ *   않은 제주 광고 수정이 함께 섞여 있습니다. 총감독 결정으로
+ *   **site.css 는 이번 배포에서 제외**됐고, 그대로 쪽만 올리면
+ *   차림표가 없어 **글자만 남습니다**(운영 site.css 에 stay-·
+ *   td-dow- 가 0개임을 실측했습니다).
+ *
+ *   그래서 이 둘만 떼어 따로 싣습니다. **site.css 는 한 글자도
+ *   건드리지 않습니다** — 검증 안 된 것이 함께 올라가지 않습니다.
+ *
+ * ★ site.css 가 올라가면 같은 규칙이 두 곳에 있게 됩니다.
+ *   그때 이 파일에서 빼고 site.css 하나로 되돌립니다.
+ *   (두 곳에서 관리하면 반드시 어긋납니다 — 임시입니다)
+ */
+
+/* 요일 — 토는 파랑 · 일은 빨강 (2026-10-12 주인 지시)
+   달력에서 쓰는 관습이라 글자만 봐도 주말인지 바로 압니다.
+   색 이름을 새로 만들지 않고 값을 직접 둡니다 — 없는 이름을 쓰면
+   그 줄이 조용히 버려집니다. 바탕이 밝아 둘 다 충분히 어둡게 잡았습니다. */
+.td-dow--sat{color:#1A5FD0}
+.td-dow--sun{color:#C62828}
+/* 오늘이 주말이면 날짜는 녹색, 요일은 제 색 — 안쪽이라 이깁니다 */
+.tide-day--today .td-dow--sat{color:#1A5FD0}
+.tide-day--today .td-dow--sun{color:#C62828}
+
+/* 바다 가까운 묵을 곳 (2026-10-12 주인 지시 ④)
+   티맵 칸(.tr)과 같은 꼴로 둡니다 — 나란히 놓이는 칸이라
+   생김새가 다르면 한쪽만 끼워 넣은 것처럼 보입니다.
+   자료가 없는 35권역에서는 스크립트가 칸을 지웁니다. */
+.stay{
+  display:block;margin-top:26px;padding:20px 22px 18px;
+  background:var(--white,#fff);border:1px solid var(--line);
+  border-radius:var(--r-md,14px);
+}
+.stay[hidden]{display:none}
+.stay-h{margin:0;font-size:18px;font-weight:800}
+.stay-sub{margin:6px 0 0;font-size:12.5px;line-height:1.65;color:var(--muted)}
+.stay-ol{margin:14px 0 0;padding:0;list-style:none}
+.stay-ol li{border-top:1px solid var(--line)}
+.stay-ol li:first-child{border-top:0}
+.stay-ol a{
+  display:flex;align-items:center;flex-wrap:wrap;gap:4px 10px;
+  min-height:44px;padding:10px 2px;      /* 엄지가 닿는 44px */
+  color:var(--ink);text-decoration:none;
+}
+.stay-ol a:hover .stay-name{text-decoration:underline}
+.stay-name{font-size:14.5px;font-weight:700}
+.stay-type{
+  /* --sea 는 **없는 이름**이라 --green 을 씁니다.
+     없는 이름을 쓰면 그 줄이 조용히 버려져 글자가 안 보입니다. */
+  font-size:11.5px;font-weight:800;color:var(--green);
+  background:var(--sea-pale);
+  padding:3px 9px;border-radius:999px;
+}
+.stay-where{font-size:12.5px;color:var(--muted)}
+.stay-more{margin:12px 0 0;font-size:12.5px;color:var(--muted)}

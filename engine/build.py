@@ -7292,6 +7292,45 @@ def main():
         if os.path.exists(바탕):
             io.copy_binary(바탕, os.path.join(나갈곳, 이름))
 
+    # ★ 숙소·요일 색 차림표를 **쓰는 쪽에만** 겁니다 (2026-10-12 임시)
+    #
+    #   site.css 에 아직 검증 안 된 제주 광고 수정이 섞여 있어
+    #   총감독 결정으로 이번 배포에서 **제외**됐습니다. 그런데 숙소·
+    #   요일 차림표가 거기에만 있어, 쪽만 올리면 **글자만 남습니다**
+    #   (운영 site.css 에 stay-·td-dow- 가 0개임을 실측했습니다).
+    #
+    #   그래서 그 둘만 떼어 `stay-tide.css` 로 따로 싣습니다.
+    #   **site.css 는 한 글자도 안 건드립니다.**
+    #
+    #   ★ 쪽 이름으로 가리지 않습니다 — **쪽이 그 차림표를 쓰는가**로
+    #     봅니다. 새 쪽이 생겨도 저절로 걸립니다.
+    #   ★ site.css 가 올라가면 이 덩이를 통째로 지웁니다.
+    #     같은 규칙이 두 곳에 있으면 반드시 어긋납니다.
+    _임시css = os.path.join(ASSETS, 'css', 'stay-tide.css')
+    if os.path.isfile(_임시css):
+        _판 = 판번호(_임시css)
+        _건수 = 0
+        for _뿌리길, _, _파일들 in os.walk(나갈곳):
+            for _f in _파일들:
+                if not _f.endswith('.html'):
+                    continue
+                _길 = os.path.join(_뿌리길, _f)
+                _글 = io.read(_길)
+                if ('stayList' not in _글) and ('/tide.js' not in _글):
+                    continue
+                if 'stay-tide.css' in _글:
+                    continue
+                _쪽길 = os.path.relpath(_길, 나갈곳).replace(os.sep, '/')
+                _줄 = ('<link rel="stylesheet" href="%s">'
+                       % esc(url.asset('assets/css/stay-tide.css', _쪽길, _판)))
+                # site.css 바로 뒤에 넣습니다 — 뒤에 와야 덮을 수 있습니다
+                _m = re.search(r'<link rel="stylesheet" href="[^"]*site\.css[^"]*">', _글)
+                if not _m:
+                    continue
+                io.write(_길, _글[:_m.end()] + _줄 + _글[_m.end():])
+                _건수 += 1
+        print('  숙소·요일 차림표 %d쪽에 걸었습니다 (임시)' % _건수)
+
     # ★ AI 검수 뷰 — **스냅샷이 있을 때만** 만들어집니다 (#9 P0)
     #   자료가 없으면 쪽을 안 만듭니다. 가짜 숫자가 생기지
     #   않습니다. 여기서 부르는 까닭은, 따로 돌리게 두면
