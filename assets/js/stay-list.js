@@ -83,9 +83,13 @@
       if (!목록.children.length) { return 숨기기(); }
       칸.appendChild(목록);
 
-      if (d.items.length > 몇개) {
+      // ★ **보여 준 것을 뺀 나머지**를 적습니다 (2026-10-12)
+      //   전에는 전체 수를 적어 「8곳 보여 주고 42곳이 더」가 됐습니다.
+      //   손님이 세어 보면 바로 틀린 것을 압니다.
+      if (d.items.length > 목록.children.length) {
         칸.appendChild(만들기('p', 'stay-more',
-          '이 둘레에 ' + d.items.length + '곳이 더 있습니다.'));
+          '이 둘레에 ' + (d.items.length - 목록.children.length)
+          + '곳이 더 있습니다.'));
       }
       칸.hidden = false;
     })
