@@ -6379,7 +6379,7 @@ def _동호회신청폼(것):
                   'var L=%s,b=[];'
                   'for(k in L){if(m[k])b.push(L[k]+": "+m[k]);}'
                   'location.href=f.getAttribute("data-to")'
-                  '+"?subject="+encodeURIComponent("동호회 지원 신청 — "'
+                  '+"?subject="+encodeURIComponent("동호회 개설 문의 — "'
                   '+(m.club_name||""))'
                   '+"&body="+encodeURIComponent(b.join(String.fromCharCode(10)));'
                   '});})();</script>'
