@@ -6215,7 +6215,9 @@ def 동호회지원쪽(d, 언어='ko'):
         '지원칸': 지원칸,
         '샘플안내': 것.get('샘플안내', ''),
         '샘플칸': 샘플칸,
-        '신청안내': 것.get('신청안내', ''),
+        # ★ `_굵게()` 를 씁니다 — 안 쓰면 **별표가 글자로 보입니다**
+        #   (2026-10-12 화면에서 「**동호회 개설 문의**」로 보였습니다)
+        '신청안내': _굵게(것.get('신청안내', '')),
         '신청폼': 신청폼,
         '안내띠': '',
         '광고칸': 광고칸('안내'),
@@ -6391,10 +6393,41 @@ def _동호회신청폼(것):
     보냄 = ('<p class="cs-submit">'
             '<button type="submit" class="btn btn--dark">%s</button>'
             '%s</p>'
-            % ('메일 앱으로 문의 쓰기' if 메일인가 else '동호회 개설 문의하기',
-               ('<small class="cs-submit-say">누르면 적으신 내용이 담긴 '
-                '메일이 열립니다. <b>메일에서 한 번 더 보내 주셔야</b> '
-                '접수됩니다.</small>') if 메일인가 else ''))
+            % ('문의 내용 만들기' if 메일인가 else '동호회 개설 문의하기',
+               ('<small class="cs-submit-say">누르면 보낼 내용을 '
+                '<b>화면에 보여 드리고</b> 메일 앱도 열어 봅니다. '
+                '메일 앱이 없어도 괜찮습니다.</small>') if 메일인가 else ''))
+
+    # ★ 메일 앱이 없는 곳에서는 **아무 일도 안 일어났습니다** (2026-10-12)
+    #   `location.href = "mailto:…"` 는 메일 앱이 없으면 조용히
+    #   아무것도 안 합니다. 오류도 안 납니다. 그래서 손님은
+    #   **눌렀으니 보내졌다**고 여기고 떠납니다.
+    #   휴대폰 웹브라우저·회사 PC 에서 흔한 일입니다.
+    #
+    #   그래서 차례를 뒤집습니다 — **먼저 화면에 보여 주고**
+    #   그 다음 메일 앱을 열어 봅니다. 열리면 거기서 쓰시면 되고,
+    #   안 열려도 화면에 남은 것을 복사해 보내실 수 있습니다.
+    대안 = ''
+    if 메일인가:
+        주소 = 받는곳.replace('mailto:', '')
+        대안 = ('<div class="cs-fb" id="clubFallback" hidden>'
+                '<p class="cs-fb-h">✉ 아래 내용을 메일로 보내 주세요</p>'
+                '<p class="cs-fb-row">받는 곳 '
+                '<b id="cfTo">%s</b>'
+                '<button type="button" class="cs-fb-copy" data-copy="cfTo">'
+                '주소 복사</button></p>'
+                '<p class="cs-fb-row">제목 <b id="cfSub"></b>'
+                '<button type="button" class="cs-fb-copy" data-copy="cfSub">'
+                '제목 복사</button></p>'
+                '<textarea id="cfBody" class="cs-fb-body" readonly '
+                'rows="8"></textarea>'
+                '<p class="cs-fb-row">'
+                '<button type="button" class="cs-fb-copy btn btn--dark" '
+                'data-copy="cfBody">내용 복사</button>'
+                '<span class="cs-fb-said" id="cfSaid"></span></p>'
+                '<p class="cs-fb-say">메일 앱이 열렸으면 그대로 쓰셔도 '
+                '됩니다. <b>안 열렸으면</b> 위 주소로 이 내용을 '
+                '보내 주세요.</p></div>' % esc(주소))
 
     # 메일로 보낼 때는 적은 것을 **보기 좋게 담아** 메일을 엽니다.
     움직임 = ''
@@ -6410,19 +6443,50 @@ def _동호회신청폼(것):
                   'm[n]=m[n]?m[n]+" · "+v:v;});'
                   'var L=%s,b=[];'
                   'for(k in L){if(m[k])b.push(L[k]+": "+m[k]);}'
-                  'location.href=f.getAttribute("data-to")'
-                  '+"?subject="+encodeURIComponent("동호회 개설 문의 — "'
-                  '+(m.club_name||""))'
-                  '+"&body="+encodeURIComponent(b.join(String.fromCharCode(10)));'
+                  'var S="동호회 개설 문의 — "+(m.club_name||"");'
+                  'var B=b.join(String.fromCharCode(10));'
+                  'var box=document.getElementById("clubFallback");'
+                  'if(box){'
+                  'document.getElementById("cfSub").textContent=S;'
+                  'document.getElementById("cfBody").value=B;'
+                  'box.hidden=false;'
+                  'box.scrollIntoView({behavior:"smooth",block:"center"});}'
+                  'try{location.href=f.getAttribute("data-to")'
+                  '+"?subject="+encodeURIComponent(S)'
+                  '+"&body="+encodeURIComponent(B);}catch(err){}'
+                  '});'
+                  'document.addEventListener("click",function(e){'
+                  'var b=e.target.closest&&e.target.closest(".cs-fb-copy");'
+                  'if(!b)return;'
+                  'var el=document.getElementById(b.getAttribute("data-copy"));'
+                  'if(!el)return;'
+                  'var t=el.value!==undefined?el.value:el.textContent;'
+                  'var said=document.getElementById("cfSaid");'
+                  'function 말(s){if(said){said.textContent=s;'
+                  'setTimeout(function(){said.textContent="";},4000);}}'
+                  'function ok(){말("복사했습니다");}'
+                  # ★ 복사가 **막힐 수 있습니다** — 창에 포커스가 없거나
+                  #   브라우저가 막으면 조용히 실패합니다. 그러면 적어도
+                  #   글을 골라 주고 **직접 복사하시라고 말합니다.**
+                  #   아무 말 없이 넘어가면 mailto 때와 같은 일이 됩니다.
+                  'function 손으로(){var ta=document.getElementById("cfBody");'
+                  'if(el.select){el.select();}else if(ta&&ta.select){ta.select();}'
+                  '말("직접 복사해 주세요 (Ctrl+C)");}'
+                  'if(navigator.clipboard&&navigator.clipboard.writeText){'
+                  'navigator.clipboard.writeText(t).then(ok,손으로);}'
+                  'else if(el.select){el.select();'
+                  'try{document.execCommand("copy")?ok():손으로();}'
+                  'catch(err){손으로();}}'
+                  'else{손으로();}'
                   '});})();</script>'
                   % json.dumps(dict((이, 글) for 이, 글, _g, _k, _c
                                     in _신청칸), ensure_ascii=False))
 
     return ('<form class="cs-form" id="clubApply" method="post"'
             ' enctype="text/plain" action="%s" data-to="%s">'
-            '%s%s%s</form>%s'
+            '%s%s%s</form>%s%s'
             % (esc(받는곳), esc(받는곳),
-               ''.join(칸들), 동의, 보냄, 움직임))
+               ''.join(칸들), 동의, 보냄, 대안, 움직임))
 
 
 def 부품쪽(d, 언어='ko'):
