@@ -7316,7 +7316,21 @@ def main():
                     continue
                 _길 = os.path.join(_뿌리길, _f)
                 _글 = io.read(_길)
-                if ('stayList' not in _글) and ('/tide.js' not in _글):
+                # ★ **tide.js 를 싣는다고 요일 카드를 그리는 건 아닙니다.**
+                #   `tide.js:800` 이 `if (!권역) { return; }` 입니다 —
+                #   `data-region` 이 없으면 카드를 아예 안 그립니다.
+                #   첫 쪽·묶음 쪽 11곳이 그렇습니다(`data-view="mini"`).
+                #   운영 첫 쪽에서 `.td-dow` 가 **0개**인 것을 직접
+                #   확인했습니다. `#tideStrip` 만 보면 11쪽이 헛걸립니다.
+                #   `data-region` 은 다른 칸에도 쓰입니다(182쪽). 반드시
+                #   **tideStrip 안의** 것인지 봅니다 → 권역 57 + 물때 1.
+                #   ★ `data-view="mini"` 는 그래프만 그리고 **요일 카드를
+                #     안 그립니다.** 첫 쪽·묶음 쪽 11곳이 그렇습니다
+                #     (운영 첫 쪽에서 `.td-dow` 0개 확인). 빼야 합니다.
+                _칸 = re.search(r'id="tideStrip"[^>]*?>', _글, re.S)
+                _물때칸 = bool(_칸 and 'data-region=' in _칸.group(0)
+                              and 'data-view="mini"' not in _칸.group(0))
+                if ('stayList' not in _글) and not _물때칸:
                     continue
                 if 'stay-tide.css' in _글:
                     continue
