@@ -5315,7 +5315,7 @@ def 지형도해(코):
             '%s</svg>' % 속)
 
 
-def 장소칩(안내, _자료=None):
+def 장소칩(안내, _자료=None, 뿌리='../'):
     """어종이 나오는 **장소 유형**과 **던질 곳**을 냅니다.
 
     자료의 「어디서」에서 읽습니다. 하나도 못 고르면 **아무것도
@@ -5373,10 +5373,25 @@ def 장소칩(안내, _자료=None):
     #   날짜·수위·물때 번호를 지어내지 않고 보편 전략만 적은 뒤
     #   가실 곳의 물때표로 보냅니다.
     언제 = art.말of(안내, '언제') or ''
-    물때칸 = ('<p class="fs-tide"><b>좋은 시간</b> %s'
-              '<br><span class="fs-dim">실제 만조·간조 시각은 '
-              '<b>포인트마다 다릅니다</b> — 가실 곳의 물때표에서 '
-              '확인하세요.</span></p>' % esc(언제)) if 언제 else ''
+    물때칸 = ''
+    if 언제:
+        # ★ **단정하지 않습니다** (감독실 ①)
+        #   「간조 전후에 반드시 활발」처럼 못 박으면 거짓이 됩니다.
+        #   포인트마다 지형도 조류도 달라 그대로 들어맞지 않습니다.
+        #   자료에 적힌 것만 그대로 전하고, 나머지는 「살피세요」로
+        #   둡니다.
+        # ★ **갈 길을 줍니다.** 「물때표에서 확인하세요」라고만 하고
+        #   링크가 없으면 약속만 하고 안 지키는 것입니다.
+        물때칸 = (
+            '<p class="fs-tide"><b>좋은 때</b> %s'
+            '<br>바닥에 붙어 사는 대상이라 <b>바닥층</b>을 노리고, '
+            '물이 움직이는 때와 바닥이 바뀌는 자리를 함께 살피면 '
+            '좋습니다.'
+            '<br><span class="fs-dim">만조·간조 시각은 '
+            '<b>곳마다 다릅니다</b> — 가실 곳의 물때를 꼭 확인하세요.'
+            '</span>'
+            '<br><a class="fs-go" href="%stide/">물때표 보러 가기</a>'
+            '</p>' % (esc(언제), 뿌리))
 
     if not (곳칸 or 던질칸 or 물때칸):
         return ''
@@ -5418,6 +5433,11 @@ def 장소칩(안내, _자료=None):
             '.fs-tide{margin:14px 0 0;padding:12px 14px;border-radius:10px;'
             'background:#f3f7f5;font-size:13.5px;line-height:1.7}'
             '.fs-dim{color:#6a6a6a;font-size:12.5px;font-weight:400}'
+            '.fs-go{display:inline-flex;align-items:center;'
+            'min-height:44px;margin:8px 0 0;padding:0 16px;'
+            'border-radius:999px;background:#2563eb;color:#fff;'
+            'font-weight:700;font-size:14px;text-decoration:none}'
+            '.fs-go:hover,.fs-go:focus{background:#1d4ed8;color:#fff}'
             '@media(max-width:700px){'
             '.fs-cards{grid-template-columns:repeat(2,1fr)!important;'
             'gap:9px}'
@@ -5427,6 +5447,88 @@ def 장소칩(안내, _자료=None):
     return ('%s<div class="fs-box"><h3>%s가 나오는 곳</h3>%s%s%s%s</div>'
             % (꾸밈, esc(art.말of(안내, '이름') or '이 어종'),
                곳칸, 던질칸, 위험, 물때칸))
+
+
+# ★ 붕장어 쪽 **상단 탭** — 기존 칸으로 가는 앵커입니다 (감독실 ④)
+#
+#   시안 맨 위에 「어디서? · 어떻게? · 물때 · 채비 · 팁」 다섯 알약이
+#   있습니다. 그런데 **없는 기능을 그리면 안 됩니다** — 그래서
+#   쪽에 **실제로 있는 제목만** 찾아 걸고, 없으면 그 탭을 뺍니다.
+#
+#   ★ 공통 틀을 안 건드립니다. 붕장어 쪽 글만 후처리합니다.
+#   ★ 누름자리는 휴대폰에서 44px 이상입니다 (감독실 ④).
+_붕장어탭 = [
+    ('bj-where', '어디서?', '어디로 가면 될까요'),
+    ('bj-how', '어떻게?', '이렇게 잡습니다'),
+    ('bj-gear', '채비', '이 순서로'),
+    ('bj-safe', '안전', '잡기 전에 꼭 보세요'),
+]
+
+
+def 붕장어탭(글):
+    """제목에 자리표를 달고 그리로 가는 알약을 머리 아래 놓습니다.
+
+    ★ **찾은 것만** 냅니다. 제목이 없으면 그 탭을 안 냅니다 —
+      눌러도 아무 데도 안 가는 단추를 두지 않습니다.
+    ★ 이미 자리표가 있으면 덮지 않습니다.
+    """
+    import re as _re
+    쓸것 = []
+    for 표, 이름, 조각 in _붕장어탭:
+        m = _re.search(r'<h2([^>]*)>([^<]*%s[^<]*)</h2>'
+                       % _re.escape(조각), 글)
+        if not m:
+            continue
+        if 'id=' in m.group(1):
+            continue
+        글 = 글.replace(m.group(0),
+                        '<h2 id="%s"%s>%s</h2>'
+                        % (표, m.group(1), m.group(2)), 1)
+        쓸것.append((표, 이름))
+    if len(쓸것) < 2:
+        return 글          # 둘도 못 찾으면 탭을 안 냅니다
+
+    알약 = ''.join('<a class="bjt-a" href="#%s">%s</a>' % (표, 이름)
+                   for 표, 이름 in 쓸것)
+    띠 = ('<style>'
+          '.bjt{position:sticky;top:0;z-index:30;background:#fff;'
+          'border-bottom:1px solid #e8e3d8;padding:8px 0;'
+          'margin:0 0 4px}'
+          '.bjt-in{display:flex;gap:8px;overflow-x:auto;'
+          'padding:0 16px;scrollbar-width:none;'
+          '-webkit-overflow-scrolling:touch}'
+          '.bjt-in::-webkit-scrollbar{display:none}'
+          '.bjt-a{flex:0 0 auto;min-height:44px;display:inline-flex;'
+          'align-items:center;padding:0 16px;border-radius:999px;'
+          'border:1.5px solid #dfe3e8;background:#f8fafc;color:#1f2937;'
+          'font-weight:700;font-size:14px;text-decoration:none}'
+          '.bjt-a:hover,.bjt-a:focus{border-color:#2563eb;color:#1d4ed8;'
+          'background:#eff6ff}'
+          '@media(min-width:900px){.bjt-in{justify-content:center}}'
+          '</style>'
+          '<nav class="bjt" aria-label="이 쪽 안에서 바로 가기">'
+          '<div class="bjt-in">%s</div></nav>' % 알약)
+
+    # ★ 머리가 **끝난 뒤**에 놓습니다 (2026-10-13 눈으로 보고 고침)
+    #
+    #   겪은 일 — 처음에 `<main` → `<div class="wrap"` 차례로
+    #   찾게 했더니, 이 쪽에는 `<main` 이 없어 **머리 안쪽의
+    #   wrap** 이 걸렸습니다. 탭이 머리 속으로 들어가 로고가
+    #   세로로 찌그러지고 단추가 겹쳤습니다.
+    #   검사(links·mobile)는 **전부 0 이었습니다.** 화면을 눈으로
+    #   보지 않았으면 그대로 나갈 뻔했습니다 (주인 규칙 6-2).
+    #
+    #   ★ 끼울 자리는 **여는 태그가 아니라 닫는 태그 뒤**로
+    #     잡습니다. 여는 태그는 어디 안쪽인지 알 수 없습니다.
+    for 표적 in ('</header>', '<main', '<body'):
+        i = 글.find(표적)
+        if i < 0:
+            continue
+        끝 = (i + len(표적)) if 표적.startswith('</') else 글.find('>', i) + 1
+        if 끝 <= 0:
+            continue
+        return 글[:끝] + 띠 + 글[끝:]
+    return 글
 
 
 def 어종쪽(d, 안내, 언어='ko'):
@@ -5538,7 +5640,7 @@ def 어종쪽(d, 안내, 언어='ko'):
             #   조건을 안 걸면 18종이 한꺼번에 바뀌어 범위를 넘습니다.
             _이번쪽 = (안내.get('id') or '')
             if _이번쪽 == 'bungjangeo':
-                어디그림 = 장소칩(안내, d)
+                어디그림 = 장소칩(안내, d, 뿌리)
             else:
                 어디그림 = art.자리그림(안내, 쪽길)
             # ★ **채비도를 함께 넣습니다** (2026-09-30 주인 지시)
@@ -5947,7 +6049,10 @@ def 어종쪽(d, 안내, 언어='ko'):
         '알림글': '본 자료는 참고용입니다. 금어기·포획 금지 체장은 해양수산부 고시를 따릅니다.',
         '쪽스크립트': 광고움직임(쪽길, '어종'),
     }
-    return 쪽길, template.그리기('guide.html', 값)
+    글 = template.그리기('guide.html', 값)
+    if (안내.get('id') or '') == 'bungjangeo':
+        글 = 붕장어탭(글)
+    return 쪽길, 글
 
 
 def 철묶기(달들):
