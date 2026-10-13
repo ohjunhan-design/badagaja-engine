@@ -117,3 +117,50 @@
     white-space:normal;overflow-wrap:anywhere;text-align:right
   }
 }
+
+/* ── 권역 카드의 간조·만조 칸 — 오른쪽이 잘리던 것 ──────────
+   (2026-10-13 감독실 전달 · 운영 320px 실측)
+
+   ★ 앞서 제가 놓친 자리입니다.
+     아래쪽 날짜 카드(.tide-day)만 보고 「고쳤다」고 했는데,
+     **맨 위 권역 카드는 다른 칸**이었습니다. 운영에서 재 보니
+     `.tp-ev-h`(「127cm」)가 카드 밖으로 **17px** 나갑니다.
+
+   ★ 무엇이 잘못됐나 — 320px 에서 잰 값
+
+       .tp-events  격자 2열이 141.6px 씩 · 부모는 247px
+                   → 290px 가 필요한데 자리가 없습니다
+       .tp-ev      자식 42+46+42 = 130 + 틈16 + 안여백24 = 170px
+                   → 칸은 142px, **28px 모자랍니다**
+
+     뿌리는 **`min-width:0` 이 없는 것**입니다. 격자 칸이 내용
+     최소 폭 아래로 줄지 못해 억지로 벌어지고, 그 안에서 마지막
+     조각이 밖으로 밀려납니다. 날짜 카드와 같은 뿌리입니다.
+
+   ★ 2열은 그대로 두고 **시각을 크게 한 줄**, cm 은 아랫줄로. */
+
+/* 격자 칸이 내용 최소 폭 **아래로도** 줄어들게 합니다 —
+   이것 하나가 넘침의 뿌리입니다. 폭을 더 줄여도 다시 안 납니다. */
+.tp-events{grid-template-columns:repeat(2,minmax(0,1fr))}
+.tp-events > *{min-width:0;max-width:100%;box-sizing:border-box}
+
+@media (max-width:430px){
+  .tp-events{gap:6px}
+  .tp-events .tp-ev{
+    display:grid;grid-template-columns:auto 1fr;
+    column-gap:5px;row-gap:1px;
+    padding:8px 9px;min-width:0;align-items:center;
+  }
+  .tp-events .tp-ev > *{
+    min-width:0;max-width:100%;box-sizing:border-box;
+    overflow-wrap:anywhere;flex:none
+  }
+  /* ▼간조·▲만조 와 시각은 **한 줄**, 시각이 가장 큽니다 */
+  .tp-events .tp-ev .tp-ev-k{grid-row:1;grid-column:1}
+  .tp-events .tp-ev .tp-ev-t{grid-row:1;grid-column:2;justify-self:start}
+  /* 물높이는 **아랫줄 보조** */
+  .tp-events .tp-ev .tp-ev-h{
+    grid-row:2;grid-column:1 / span 2;justify-self:end;
+    white-space:normal;text-align:right
+  }
+}
