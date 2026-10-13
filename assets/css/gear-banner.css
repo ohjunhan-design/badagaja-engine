@@ -93,3 +93,13 @@
   .gearb-a{transition:none}
   .gearb-a:hover{transform:none}
 }
+
+
+/* ── 포인트 목록 안내문 옆 작은 길 (2026-10-13 · 미리보기) ──
+   ★ 자리는 아직 **임시**입니다. 모습을 정하면 알맞은 파일로
+     옮깁니다 — 이 파일 이름은 「준비물 배너」라 뜻이 어긋납니다. */
+.notice-go{display:inline-block;margin-left:8px;padding:2px 9px;
+  border-radius:999px;background:rgba(47,93,87,.1);
+  color:#2F5D57;font-size:12.5px;font-weight:700;
+  text-decoration:none;white-space:nowrap;vertical-align:baseline}
+.notice-go:hover{background:rgba(47,93,87,.17)}
