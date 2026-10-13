@@ -611,7 +611,45 @@
     //   세기는 이미 실제 조차로 재 두었습니다. 그것으로 고릅니다.
     두칸.appendChild(언제갈까(날들));
     칸.appendChild(두칸);
-    칸.appendChild(줄);
+
+    /* ★ **날짜 카드를 접습니다** (2026-10-14 주인 직접 지시)
+     *
+     *   주인 — 수도권 쪽에서 10일치 카드가 늘 펼쳐져 있어
+     *   휴대폰 스크롤이 길어집니다. 전 권역 묶음 쪽 공통으로
+     *   **기본 접힘**으로 두고, 눌러서 폅니다.
+     *
+     *   ★ 쪽이 `data-fold` 를 말할 때만 접습니다. 권역 쪽·
+     *     물때 쪽·첫 쪽은 그 속성이 없어 **전과 똑같습니다.**
+     *   ★ 자료는 한 숫자도 안 건드립니다 — 14일치를 그대로
+     *     그리고 **보이는 것만** 가립니다. 자바스크립트가 죽어도
+     *     카드가 다 보일 뿐 깨지지 않습니다 (계약-23).
+     *   ★ **그릴 때부터 접힌 채로** 만듭니다 — 펼쳤다 접히는
+     *     깜빡임이 없습니다.
+     */
+    var 접나 = 칸.getAttribute('data-fold');
+    if (접나) {
+      var 접칸 = 만들기('div', 'td-fold');
+      접칸.id = 'tdFold';
+      var 폄단추 = 만들기('button', 'td-fold-b');
+      폄단추.type = 'button';
+      폄단추.setAttribute('aria-expanded', 'false');
+      폄단추.setAttribute('aria-controls', 'tdFold');
+      폄단추.appendChild(만들기('span', 'td-fold-t', '2주 물때 자세히 보기'));
+      폄단추.appendChild(만들기('span', 'td-fold-i', '\u25BC'));
+      폄단추.addEventListener('click', function () {
+        var 폄 = 접칸.classList.toggle('is-open');
+        폄단추.setAttribute('aria-expanded', 폄 ? 'true' : 'false');
+        폄단추.querySelector('.td-fold-t').textContent =
+          폄 ? '2주 물때 접기' : '2주 물때 자세히 보기';
+        폄단추.querySelector('.td-fold-i').textContent =
+          폄 ? '\u25B2' : '\u25BC';
+      });
+      칸.appendChild(폄단추);
+      접칸.appendChild(줄);
+      칸.appendChild(접칸);
+    } else {
+      칸.appendChild(줄);
+    }
 
     // ★ **처음에는 10일만 보입니다** (2026-10-02 바깥 검수 지시)
     //   「14일치가 한 화면에 너무 촘촘하게 들어가 있어 간조·만조
@@ -662,7 +700,11 @@
               더글(줄.classList.contains('tide-days--all'));
           });
       } catch (e) { /* 옛 브라우저는 그대로 둡니다 */ }
-      칸.appendChild(더);
+      /* ★ 접히는 쪽이면 이 단추도 **접힘 안**에 둡니다
+           접힌 채로 「나머지 4일 보기」가 떠 있으면 무엇을 펴는
+           단추인지 헷갈립니다 (2026-10-14 주인 직접 지시). */
+      var _접칸 = 칸.querySelector('.td-fold');
+      (_접칸 || 칸).appendChild(더);
     }
     요약채우기(날들[0]);
   }

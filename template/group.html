@@ -45,9 +45,14 @@
   </div>
   <nav class="tide-regions" id="tideRegions"
        aria-label="권역 고르기">{{{권역단추}}}</nav>
+  <!-- ★ `data-fold` — 이 쪽의 날짜 카드는 **기본 접힘**입니다
+       (2026-10-14 주인 직접 지시 · 총감독 전달)
+       수도권 쪽에서 10일치가 늘 펼쳐져 휴대폰 스크롤이 길었습니다.
+       ★ 쪽 이름으로 가리지 않습니다 — **쪽이 스스로 말합니다.**
+         권역 57쪽·물때 쪽·첫 쪽에는 이 속성이 없어 그대로입니다. -->
   <div class="tide-strip" id="tideStrip"
        data-region="{{첫권역}}" data-station="{{첫관측소}}"
-       data-days="14"></div>
+       data-days="14" data-fold="2주"></div>
   <div class="tide-graph" id="tideGraph"></div>
   <p class="tide-more"><a href="{{첫권역주소}}#tide">물때표 2주 전체 보기 →</a></p>
 </div></section>

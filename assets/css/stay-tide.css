@@ -260,3 +260,40 @@
    주인 — 「이거 글자 약간만 더 키우자」
    13.5 → 15.5px. 한 줄에 그대로 들어가는 것을 재어 확인했습니다. */
 .tm-pick .tp-next{font-size:15.5px}
+
+/* ── 2주 물때 날짜 카드 — **기본 접힘** ─────────────────────
+   (2026-10-14 주인 직접 지시 · 총감독 전달)
+
+   주인 — 수도권 쪽에서 10일치 카드가 늘 펼쳐져 있어 휴대폰
+   스크롤이 길어집니다. 전 권역 묶음 쪽 공통으로 접습니다.
+
+   ★ **접힘이 기본**이라 차림표에 적습니다
+     자바스크립트가 클래스를 붙이기 전에 이미 접혀 있어야
+     펼쳤다 접히는 깜빡임(CLS)이 없습니다.
+   ★ 자바스크립트가 꺼져 있으면 이 틀 자체가 안 만들어지므로
+     카드가 그대로 다 보입니다 — 깨지지 않습니다 (계약-23).
+   ★ 쪽이 `data-fold` 를 말한 쪽에만 이 틀이 생깁니다.
+     권역 57쪽·물때 쪽·첫 쪽에는 `.td-fold` 가 아예 없습니다. */
+
+.td-fold{display:none}
+.td-fold.is-open{display:block}
+
+.td-fold-b{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;
+  /* ★ 손가락이 닿는 크기 (주인 규칙 6-2 — 44px 이상) */
+  min-height:48px;
+  margin:14px 0 0;padding:12px 18px;
+  border:1.5px solid rgba(47,93,87,.35);border-radius:12px;
+  background:#fff;color:var(--green,#2F5D57);
+  font-size:15px;font-weight:800;letter-spacing:-.02em;
+  cursor:pointer;
+}
+.td-fold-b:hover{background:rgba(47,93,87,.06)}
+/* 키보드로 왔을 때 어디 있는지 보입니다 */
+.td-fold-b:focus-visible{outline:3px solid rgba(47,93,87,.45);
+  outline-offset:2px}
+.td-fold-i{font-size:11px;line-height:1}
+
+/* 펼친 뒤 카드가 단추에 붙지 않게 */
+.td-fold.is-open > .tide-days{margin-top:12px}
