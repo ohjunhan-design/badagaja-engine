@@ -181,6 +181,54 @@ def 계약04():
          '어김' if 나쁜것 else '지킴',
          ' · '.join(나쁜것) if 나쁜것 else '틀 %d개에 박힌 숫자가 없습니다'
          % len(glob.glob(os.path.join(ROOT, 'template', '*.html'))))
+    머리로고검사()
+
+
+def 머리로고검사():
+    """★ **머리 로고가 모든 쪽에서 같은가** (2026-10-13 주인 지적)
+
+    주인 — 「헤더 로고가 변경됐다 … 어딘가 잔재가 남아 계속 이어진다」
+
+    제가 단계 쪽 머리띠를 만들며 `꼬리로고()` 를 머리에 썼습니다.
+    꼬리의 물방울 로고가 머리에 올라가 451쪽 가운데 **그 쪽만**
+    달랐습니다. 눈으로는 「로고가 있네」 하고 지나치기 쉽습니다.
+
+    머리 로고는 `build.로고()` 가, 꼬리 로고는 `build.꼬리로고()` 가
+    냅니다. 둘을 바꿔 쓰면 여기서 걸립니다.
+
+    쪽을 **읽기만** 합니다.
+    """
+    import collections
+    셈 = collections.Counter()
+    어긋 = []
+    머리꼴 = re.compile(r'<header.*?</header>', re.S)
+    뿌리 = os.path.join(ROOT, 'site')
+    for 터, _, 들 in os.walk(뿌리):
+        for f in 들:
+            if not f.endswith('.html'):
+                continue
+            p = os.path.join(터, f)
+            쪽 = os.path.relpath(p, 뿌리).replace(os.sep, '/')
+            글 = io.read(p, default='')
+            m = 머리꼴.search(글)
+            if not m:
+                셈['머리 없음'] += 1
+                어긋.append('%s(머리 없음)' % 쪽)
+                continue
+            머 = m.group(0)
+            if 'brand--foot' in 머 or '2F5D57' in 머:
+                셈['꼬리 로고 섞임'] += 1
+                어긋.append('%s(꼬리 로고)' % 쪽)
+            elif 'logo-mark' in 머 and '03C75A' in 머:
+                셈['표준'] += 1
+            else:
+                셈['그 밖'] += 1
+                어긋.append('%s(그 밖)' % 쪽)
+    모두 = sum(셈.values())
+    적기('04', '머리 로고가 모든 쪽에서 같다',
+         '어김' if 어긋 else '지킴',
+         ('%d쪽 어긋남 — %s' % (len(어긋), ' · '.join(어긋[:5])))
+         if 어긋 else '%d쪽 모두 표준 머리 로고입니다' % 모두)
 
 
 # ── 계약-05 · 묶음 합계 = 전국 합계 ────────────────────────
