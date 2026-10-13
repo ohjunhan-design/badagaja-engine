@@ -2202,6 +2202,24 @@ def 단계그림바꾸기(글, 나갈곳):
         if _레드:
             글 = 글.replace(_레드.group(0), '</p>' + 칩줄 + '</section>', 1)
 
+    # ★ **방문 기록** — 이 쪽만 빠져 있었습니다 (2026-10-13)
+    #   451쪽 가운데 450쪽이 `/api/hit.php` 로 방문을 보내는데
+    #   이 쪽만 안 보냈습니다. 기록 코드가 `_footer.html` 에 있고
+    #   이 쪽은 그 조각을 안 거치는 손 쪽이기 때문입니다.
+    #   그 바람에 이 쪽 방문·이동이 **통계에 영영 안 잡혔습니다.**
+    #
+    #   ★ 베껴 적지 않고 **꼬리 조각에서 떼어 씁니다.** 같은 코드를
+    #     두 곳에 두면 한쪽만 고쳐져 갈라집니다 (규칙 26).
+    #   ★ 보내는 것은 그대로 셋 — 어느 쪽(p) · 어디서(r) · 첫 탭인가(n).
+    #     **새 수집 항목을 더하지 않습니다.**
+    if 'hit.php' not in 글:
+        _꼬리 = io.read(os.path.join(ROOT, 'template', '_footer.html'),
+                        default='')
+        _m = re.search(r'<script>\(function\(\)\{[^<]*?hit\.php.*?'
+                       r'</script>', _꼬리, re.S)
+        if _m and '</body>' in 글:
+            글 = 글.replace('</body>', _m.group(0) + '</body>', 1)
+
     # ★ 아래 탭바 — 표준 쪽에는 있고 이 쪽에만 없었습니다
     #   `template/_footer.html` 의 것과 **같은 꼴**로 둡니다.
     if 'class="tabbar"' not in 글:
