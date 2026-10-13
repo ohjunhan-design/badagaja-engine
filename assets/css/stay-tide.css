@@ -178,3 +178,85 @@
   font-size:10px;padding:4px 7px;gap:3px
 }
 .td-body .td-flow .td-flow-ic{width:10px;height:10px;flex:none}
+
+/* ── 물때표 지도를 키웁니다 (주인 지시 2026-10-13) ───────────
+   주인 — 「물때표에서 지도크기를 좀 키우자 가로 10% 세로 20%」
+
+   ★ 잰 값 (창 1261px 기준)
+       전  지도 666×500 · 고르는 칸 400×500
+       후  지도 733×600 · 고르는 칸 333×600
+       가로 +10.1% · 세로 +20%  ← 지시대로입니다
+
+   ★ 고정 px 로 박지 않고 **비율**로 둡니다
+     733px 로 박으면 창이 좁아질 때 고르는 칸이 먼저 찌그러집니다.
+     1.25:0.75 였던 것을 **1.375:0.625** 로 옮기면 어느 폭에서든
+     같은 비율로 커집니다.
+
+   ★ 761px 이상에만 겁니다
+     그 아래는 원래 1열로 쌓이고 `.tm-shell{min-height:340px}` 가
+     따로 있습니다. 거기를 건드리면 휴대폰이 쓸데없이 길어집니다.
+
+   ★ 고르는 칸이 333px 로 좁아지는데 깨지지 않는 것을 재어
+     확인했습니다 — 칸 밖으로 나간 것 0 · 글자 겹침 0 ·
+     세로 스크롤 안 생김. */
+@media (min-width:761px){
+  .tide-explorer{
+    grid-template-columns:minmax(0,1.375fr) minmax(300px,.625fr)
+  }
+  .tm-shell{min-height:600px}
+}
+
+/* ★ 지도를 키우니 알약이 좁아져 「708cm」이 밖으로 나갔습니다
+     (2026-10-13 주인이 잡아 주셨습니다 — 「아니야 넘침 발생해」)
+
+   ★ 제 잘못 — 바깥 칸(`.tm-pick`)만 재고 **알약 안쪽을 안 쟀습니다.**
+     칸 밖으로 나간 것 0 이라 괜찮은 줄 알았는데, 알약 경계로
+     재니 「127cm」·「708cm」이 **23.2px** 삐져나가 있었습니다.
+
+   ★ 잰 값 (창 1261px)
+       지도 확대 끄면  고르는 칸 400px · 알약 180px · 넘침 0
+       지도 확대 켜면  고르는 칸 333px · 알약 147px · 넘침 4곳
+     지도를 10% 키운 만큼 알약이 33px 좁아진 것입니다.
+
+   ★ 휴대폰에서 한 것과 **같은 방법**으로 풉니다 — 딱지를 숨기고
+     시각·물높이를 한 줄에. 그러면 147px 에도 들어갑니다. */
+@media (min-width:761px){
+  .tp-events .tp-ev{
+    display:grid;grid-template-columns:auto 1fr;
+    column-gap:6px;padding:8px 10px;min-width:0;align-items:baseline
+  }
+  .tp-events .tp-ev > *{
+    min-width:0;max-width:100%;box-sizing:border-box;flex:none
+  }
+  /* 딱지(▼ 간조) — **화면에서만** 숨깁니다 (기계는 읽습니다).
+     간조·만조는 알약 배경색이 그대로 가립니다. */
+  .tp-events .tp-ev .tp-ev-k{
+    position:absolute;width:1px;height:1px;
+    margin:-1px;padding:0;overflow:hidden;
+    clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0
+  }
+  .tp-events .tp-ev .tp-ev-t{
+    grid-row:1;grid-column:1;font-size:16px;letter-spacing:-.02em
+  }
+  .tp-events .tp-ev .tp-ev-h{
+    grid-row:1;grid-column:2;justify-self:end;
+    font-size:12px;white-space:nowrap
+  }
+}
+
+/* ── 지도를 바로 쓰게 합니다 (주인 지시 2026-10-13) ──────────
+   주인 — 「눌러서 확대축소 절차 삭제해버려 … 바로 손가락으로」
+
+   ★ 「지도 이동 켜기」 단추를 **없앱니다.** 지도는 처음부터
+     휠·손가락으로 바로 움직입니다 (map-provider.js).
+
+   ★ 쪽 넘기기는 `touch-action` 으로 지킵니다
+     한 손가락 세로 쓸기는 **쪽이 넘어가고**, 두 손가락
+     오므리기만 지도가 확대됩니다. 잠그지 않고도 됩니다. */
+.tm-lock,.rm-lock{display:none !important}
+.tm-shell,.rm-shell,.tm-canvas{touch-action:pan-y pinch-zoom}
+
+/* 「다음 간조까지 …」 — 글자를 조금 키웁니다 (주인 지시 2026-10-13)
+   주인 — 「이거 글자 약간만 더 키우자」
+   13.5 → 15.5px. 한 줄에 그대로 들어가는 것을 재어 확인했습니다. */
+.tm-pick .tp-next{font-size:15.5px}
