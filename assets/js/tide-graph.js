@@ -368,7 +368,9 @@
     box.appendChild(el('p', 'tg-foot', '물높이 예보를 불러오는 중…'));
     var T = window.BADAGAJA_TIDE, cache = {}, tidePromise = null;
     var 알린적있나 = false;
+    var 지금날 = 0;
     function load(day) {
+      지금날 = day;
       var dt = new Date(); dt.setDate(dt.getDate() + day);
       var sun = (T && opt.coords) ? T.sunTimes(dt, opt.coords[0], opt.coords[1]) : null;
       /* ★ **받은 자료를 밖에도 알립니다** (2026-10-08 바깥 검수 지시)
@@ -415,6 +417,38 @@
       }).catch(function () { 물때알리기(null); go(null); });
     }
     load(0);
+
+    /* ★ **폭이 바뀌면 다시 그립니다** (2026-10-13 주인 지시)
+     *
+     *   그릴 때 폭에 맞춰 치수를 키워 두는데(좁을수록 크게),
+     *   창이 넓어져도 다시 안 그려 그 큰 치수가 그대로
+     *   확대됐습니다 — 360px 에서 그린 뒤 1400px 로 넓히면
+     *   글자가 화면에 **46.2px** 로 보였습니다(제 크기는 12px).
+     *
+     *   ★ 계산식은 **한 글자도 안 바꿉니다.** 「바뀌면 다시
+     *     계산하라」만 더합니다. 그래서 각 폭에서 나오는 값은
+     *     전과 똑같습니다.
+     *   ★ 자료는 **다시 안 받습니다** — load() 가 cache 를 봅니다.
+     */
+    var 지난폭 = 0, 짬 = null;
+    function 다시그릴까() {
+      var w = Math.round(box.getBoundingClientRect().width);
+      if (!w) return;                 // 접혀 있으면 넘어갑니다
+      if (Math.abs(w - 지난폭) < 2) return;   // 안 바뀌었으면 그대로
+      지난폭 = w;
+      load(지금날 || 0);
+    }
+    function 바뀜() {
+      if (짬) clearTimeout(짬);
+      짬 = setTimeout(다시그릴까, 200);   // 끄는 동안 수십 번 불리는 것을 막습니다
+    }
+    지난폭 = Math.round(box.getBoundingClientRect().width);
+    if (window.ResizeObserver) {
+      try { new ResizeObserver(바뀜).observe(box); } catch (e) {}
+    } else {
+      window.addEventListener('resize', 바뀜);
+    }
+
     return { load: load };
   }
   window.BADAGAJA_TIDEGRAPH = { mount: mount };
