@@ -5169,15 +5169,36 @@ _장소유형 = [
 _위험말 = ('테트라포드', '테트라')
 
 
+# ★ **어디에 던지나** — 자료에 적힌 바닥·지형만 (감독실 ③-b)
+#   초보가 설 수 있는 안전한 발판 쪽을 먼저 둡니다.
+#   없는 말을 만들지 않습니다 — 못 고르면 안 냅니다.
+_던질곳 = [
+    ('물골', ('물골', '수로', '골')),
+    ('모래와 바위가 만나는 자리', ('모래', '사니질', '자갈')),
+    ('구조물 둘레', ('테트라', '초석', '기둥', '제방', '방파제')),
+    ('조류가 갈리는 경계', ('조류', '물살', '본류', '홈통')),
+    ('해조밭 가장자리', ('해조', '여밭', '암초')),
+]
+
+
 def 장소칩(안내):
-    """어종이 나오는 **장소 유형**을 칩으로 냅니다.
+    """어종이 나오는 **장소 유형**과 **던질 곳**을 냅니다.
 
     자료의 「어디서」에서 읽습니다. 하나도 못 고르면 **아무것도
     안 냅니다** — 빈 칸을 남기지 않습니다.
+
+    ★ 장소는 **최대 셋**만 냅니다 (감독실 ③-a).
+      다 강조하면 강조가 아닙니다. 여덟 가지를 모두 「여기가 좋다」로
+      보이면 손님이 고를 수가 없습니다.
+
+    ★ 물때는 **수치를 적지 않습니다** (감독실 ③-c).
+      조석 자료는 권역이 있어야 받는데 어종 쪽에는 권역이 없습니다.
+      날짜·수위·물때 번호를 지어내지 않고, 보편 전략과
+      「포인트마다 다릅니다」만 적은 뒤 권역 물때표로 보냅니다.
     """
     어디 = art.말of(안내, '어디서') or ''
     고른것 = [(코, 이름) for 코, 이름, 말들 in _장소유형
-              if any(w in 어디 for w in 말들)]
+              if any(w in 어디 for w in 말들)][:3]
     if not 고른것:
         return ''
     칩 = ''.join('<span class="fs-chip">%s</span>' % esc(이름)
@@ -5199,13 +5220,35 @@ def 장소칩(안내):
             'font-weight:700;font-size:14px}'
             '.fs-warn{margin:12px 0 0;padding:10px 12px;border-radius:10px;'
             'background:#fdf0e8;color:#9a3b11;font-size:13px;line-height:1.6}'
+            '.fs-sub{margin:14px 0 8px;font-size:13px;font-weight:700;'
+            'color:#555}'
+            '.fs-chip--sm{min-height:36px;font-size:13px;padding:0 13px;'
+            'border-color:#cfc6b4;color:#5a5245}'
+            '.fs-tide{margin:14px 0 0;padding:12px 14px;border-radius:10px;'
+            'background:#f3f7f5;font-size:13.5px;line-height:1.7}'
+            '.fs-dim{color:#6a6a6a;font-size:12.5px}'
             '</style>')
     # ★ 「어디서」 글을 **다시 적지 않습니다** (2026-10-13 눈으로 고침)
     #   바로 위 칸에 이미 그 글이 있습니다. 칩 칸에서 또 내면
     #   같은 문단이 연달아 두 번 나옵니다.
+    # ★ 어디에 던지나 — 자료에서 고릅니다 (없으면 안 냅니다)
+    던질 = [이름 for 이름, 말들 in _던질곳
+            if any(w in 어디 for w in 말들)][:3]
+    던질칸 = ('<p class="fs-sub">이런 곳을 노립니다</p>'
+              '<div class="fs-chips fs-chips--sm">%s</div>'
+              % ''.join('<span class="fs-chip fs-chip--sm">%s</span>'
+                        % esc(x) for x in 던질)) if 던질 else ''
+
+    # ★ 물때 — **수치를 적지 않습니다.** 보편 전략과 「다릅니다」만.
+    언제 = art.말of(안내, '언제') or ''
+    물때칸 = ('<p class="fs-tide"><b>좋은 시간</b> %s'
+              '<br><span class="fs-dim">실제 만조·간조 시각은 '
+              '<b>포인트마다 다릅니다</b> — 가실 곳의 물때표에서 '
+              '확인하세요.</span></p>' % esc(언제)) if 언제 else ''
+
     return ('%s<div class="fs-box"><h3>어디서 노리나</h3>'
-            '<div class="fs-chips">%s</div>%s</div>'
-            % (꾸밈, 칩, 위험))
+            '<div class="fs-chips">%s</div>%s%s%s</div>'
+            % (꾸밈, 칩, 던질칸, 위험, 물때칸))
 
 
 def 어종쪽(d, 안내, 언어='ko'):
