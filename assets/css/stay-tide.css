@@ -58,59 +58,55 @@
 .stay-where{font-size:12.5px;color:var(--muted)}
 .stay-more{margin:12px 0 0;font-size:12.5px;color:var(--muted)}
 
-/* ── 물때 날짜 카드 — 한 줄로 (2026-10-13 주인 지시) ────────
-
-   ★ 처음엔 두 줄로 나눴다가 **되돌렸습니다**
-
-     좁은 폭에서 「▲+534」가 잘리기에 수위·증감을 아랫줄로
-     내렸습니다. 넘침은 0이 됐는데, 주인이 화면을 보시고
-     「가시성이 너무 떨어지는데 텍스트가 분산되어보여」 하셨습니다.
-     **맞는 말씀입니다.** 기계로 「넘침 0」을 만든 것과 사람이
-     편하게 보는 것은 다릅니다 (주인 규칙 6-2).
+/* ── 물때 카드 — 한 줄로 (2026-10-13 주인 지시) ─────────────
 
    ★ 주인 지시 — 「간조만조 빼버리고 시간, 물높이 증감 이렇게
-     한줄로 만들자. 글씨크기도 줄이고 시간크기를」
+     한줄로 만들자. 글씨크기도 줄이고 시간크기를」 · 「한줄로가자」
+     그리고 PC 를 보시고 — 「넘침은 없지만 겹침이 존재하네」
 
-   ★ 자리 셈 (320px · 카드 안쪽 109px)
-       딱지 20 + 시각 44 + 수위 21 + 증감 34 + 틈 21 = 140  ✗
-       시각 36 + 수위 17 + 증감 28 + 틈 12          =  93  ✓
+   ★ 겹침은 넘침과 **다른 것**이었습니다
+     저는 「오른쪽으로 나가는가」만 쟀습니다. PC 는 카드가 144px
+     인데 내용이 140px 라 밖으로는 안 나가지만 **글자끼리 포개져**
+     「661▲+534」가 한 덩어리로 보였습니다.
+     요소 사각형이 아니라 **진짜 글자 상자**(Range)로 재니
+     1440px 에서 28곳, 1024px 에서 53곳이 잡혔습니다.
 
-     딱지가 가장 많이 잡아먹었습니다. 그것을 빼고 글씨를 줄이니
-     한 줄에 **16px 남기고** 들어갑니다.
+   ★ 자리 셈 (PC 카드 144px · 안쪽 128px)
+       딱지 20 + 시각 44 + 수위 21 + 증감 34 + 틈 21 = 140  ✗ 12px 모자람
+       딱지 빼면      44 + 21 + 34 + 틈 14            = 113  ✓ 15px 남음
 
-   ★ 간조·만조는 **색으로** 가립니다
-     딱지를 지워도 구분은 남아야 합니다. 간조는 녹색, 만조는
-     주황 — 이미 쓰던 색을 시각 글자에 옮깁니다.
-     ★ 색만으로는 색각이 다른 분이 못 가리므로, 글자는 지우지
-       않고 **화면에서만 숨깁니다.** 읽어 주는 기계는 그대로
+     **딱지 하나만 빼도** PC 겹침이 풀립니다. 그래서 글씨 줄이기는
+     좁은 폭에만 두고, 딱지 숨김과 색 구분은 **모든 폭**에 둡니다.
+
+   ★ 간조·만조는 **시각 글자 색**으로 가립니다
+     ★ 색만으로는 색각이 다른 분이 못 가리므로 글자는 지우지 않고
+       **화면에서만 숨깁니다.** 읽어 주는 기계는 그대로
        「간조 02:13」으로 읽습니다. */
 
+/* 격자 칸이 내용 최소 폭 아래로도 줄어들게 — 넘침의 뿌리입니다 */
 .td-t > *{min-width:0;max-width:100%;box-sizing:border-box}
 
+/* ── 모든 폭 — 딱지를 숨기고 색으로 가립니다 ── */
+.td-body .td-t{
+  grid-template-columns:auto auto 1fr;
+  column-gap:7px;
+}
+.td-body .td-t .tt-k{
+  position:absolute;width:1px;height:1px;
+  margin:-1px;padding:0;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0
+}
+.td-body .td-t--low  .tt-v{color:#2F5D57}   /* 간조 — 녹색 */
+.td-body .td-t--high .tt-v{color:#B8761C}   /* 만조 — 주황 */
+.td-body .td-t .tt-cm{justify-self:start}
+.td-body .td-t .tt-d{justify-self:end;white-space:nowrap}
+
+/* ── 좁은 폭 — 글씨까지 줄입니다 ── */
 @media (max-width:430px){
-  .td-body .td-t{
-    display:grid;
-    grid-template-columns:auto auto 1fr;
-    column-gap:6px;row-gap:0;
-    align-items:baseline;
-    padding:4px 0;
-  }
-  /* ① 간·만 딱지 — **화면에서만** 숨깁니다 (기계는 읽습니다) */
-  .td-body .td-t .tt-k{
-    position:absolute;width:1px;height:1px;
-    margin:-1px;padding:0;overflow:hidden;
-    clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0
-  }
-  /* ② 시각 — 줄입니다(17 → 14). 색으로 간·만을 가립니다 */
+  .td-body .td-t{column-gap:6px;row-gap:0;padding:4px 0}
   .td-body .td-t .tt-v{font-size:14px;letter-spacing:-.02em}
-  .td-body .td-t--low  .tt-v{color:#2F5D57}   /* 간조 — 녹색 */
-  .td-body .td-t--high .tt-v{color:#B8761C}   /* 만조 — 주황 */
-  /* ③ 물높이·증감 — 더 작게, 오른쪽 끝에 */
-  .td-body .td-t .tt-cm{font-size:11px;justify-self:start}
-  .td-body .td-t .tt-d{
-    font-size:11px;justify-self:end;
-    white-space:nowrap;overflow-wrap:normal
-  }
+  .td-body .td-t .tt-cm{font-size:11px}
+  .td-body .td-t .tt-d{font-size:11px}
 }
 
 /* ── 권역 카드의 간조·만조 칸 — 한 줄로 (주인 지시 2026-10-13) ──
