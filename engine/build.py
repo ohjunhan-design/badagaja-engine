@@ -825,7 +825,7 @@ def 축제미니(d, 쪽길, 언어='ko'):
     return ('<section class="hm-fes" aria-labelledby="hmFesT">'
             '<p class="hm-fes-t" id="hmFesT">바다 근처 축제</p>'
             '<ul class="hm-fes-list" id="hmFesList">%s</ul>'
-            '<a class="hm-fes-all" href="%s">축제 달력 모두 보기</a>'
+            '<a class="hm-fes-all" href="%s">전국 축제 일정 확인하기 →</a>'
             '</section>%s'
             % (''.join(칸), esc(url.rel(쪽길, url.festival_list(언어))),
                움직임))

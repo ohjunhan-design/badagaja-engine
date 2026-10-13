@@ -756,9 +756,25 @@ footer.site-footer .footer-bottom{padding-bottom:calc(64px + env(safe-area-inset
   background:var(--green);color:#fff;font-size:.88rem;font-weight:800}
 .hm-fes-by{font-size:.68rem;color:var(--foam-dim,#7B8A93)}
 /* ★ 44px — 애플·구글이 함께 권하는 누름자리 (check_render 가 잡음) */
-.hm-fes-all{display:flex;align-items:center;justify-content:center;
-  min-height:44px;font-size:.8rem;font-weight:700;color:#2E6F9E;
-  text-decoration:none}
+/* ★ **단추로** 바꿨습니다 (2026-10-13 주인 지시)
+   주인 — 「축제달력 모두보기 > 전국 축제일정 확인하기로 바꾸고
+           버튼으로 만들고 눈에 띄게 포인트줘」
+
+   바로 위 「축제 보러가기」가 **진한 녹색 채움**이라, 이것까지
+   같은 꼴이면 둘 다 묻힙니다. 그래서 **테두리 단추 + 바탕 옅은
+   강조색**으로 둡니다 — 눈에는 띄되 위 단추를 가리지 않습니다.
+   누름자리는 그대로 44px 이상입니다. */
+.hm-fes-all{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  min-height:46px;margin-top:10px;padding:0 14px;
+  border-radius:12px;border:1.5px solid var(--green);
+  background:#EDF6F2;color:var(--green);
+  font-size:.86rem;font-weight:800;text-decoration:none;
+  transition:background .15s,border-color .15s;
+}
+.hm-fes-all:hover,.hm-fes-all:focus-visible{
+  background:var(--green);color:#fff;border-color:var(--green)
+}
 /* ★ 차례가 중요합니다 — 이 규칙들이 **파일 뒤**에 있어
    앞쪽 469줄의 768px 규칙(1열)을 덮습니다. 그래서 768 을
    여기서 다시 적습니다. (기억: 차림표 맨 뒤가 이깁니다) */
@@ -768,4 +784,25 @@ footer.site-footer .footer-bottom{padding-bottom:calc(64px + env(safe-area-inset
 @media (max-width:768px){
   .hm{grid-template-columns:minmax(0,1fr)}
   .hm-fes-a img{height:150px}
+}
+
+/* ── 「볼 수 있는 것」을 넓히고 축제를 줄입니다 (주인 지시) ──
+   주인 — 「한줄로 수정해. 이걸 크기를 늘리고 축제 크기를 좀 줄여」
+
+   ★ 왜 — 칸 안쪽이 230px 인데 가장 긴 칩 쌍
+     「해루질 대상 17가지(154) + 낚시 어종 18가지(140)」가 301px 라
+     **칩이 한 줄에 하나씩** 떨어지고 제목도 두 줄로 깨졌습니다.
+
+   ★ 잰 값 (창 1261px)
+       전  지도 299 · 차림표 276 · 축제 403   칩 1줄에 1개 · 제목 2줄
+       후  지도 299 · 차림표 349 · 축제 330   칩 1줄에 2개 · 제목 1줄
+
+   ★ 비율로 둡니다. 차림표에 `minmax(349px,…)` 를 주어 좁아져도
+     칩 두 개가 한 줄을 지킵니다. 1440·1261·1100·981·900 다섯 폭에서
+     네 묶음 모두 한 줄에 둘씩인 것을 재어 확인했습니다. */
+@media (min-width:981px){
+  .hm{
+    grid-template-columns:
+      .3059fr minmax(349px,.3569fr) minmax(300px,.3371fr)
+  }
 }
