@@ -2101,8 +2101,8 @@ def 단계그림바꾸기(글, 나갈곳):
       링크, 꼬리표(`fl-mark`)는 그대로 둡니다. 꼬리표는 새 그림에
       이미 그려져 있으므로 **지웁니다** (두 번 겹칩니다).
 
-    ★ 그림이 하나라도 없으면 **아무것도 안 바꿉니다.** 반쯤 바뀐
-      쪽이 나가는 것보다 옛 도해 그대로가 낫습니다.
+    ★ 그림이 하나라도 없거나 도해 자리가 바뀌면 빌드를 중단합니다.
+      예전 도해가 조용히 되살아나는 회귀를 막습니다.
     """
     import re
     import shutil
@@ -2128,8 +2128,16 @@ def 단계그림바꾸기(글, 나갈곳):
         for 갈 in ('pc', 'mobile'):
             p = os.path.join(원본칸, '%s-%s.webp' % (파일, 갈))
             if not os.path.isfile(p):
-                return 글          # 하나라도 없으면 그대로 둡니다
+                raise FileNotFoundError('낚시 트랙 필수 이미지 누락: %s' % p)
             있는것['%s-%s' % (파일, 갈)] = p
+
+    # 같은 바이트 수의 새 그림도 놓치지 않도록 내용 지문으로 비교합니다.
+    def 그림지문(경로):
+        지문 = hashlib.sha256()
+        with open(경로, 'rb') as f:
+            for 묶음 in iter(lambda: f.read(1024 * 1024), b''):
+                지문.update(묶음)
+        return 지문.digest()
 
     # 옮깁니다
     낼칸 = os.path.join(나갈곳, 'img', 'fishing-levels')
@@ -2138,7 +2146,8 @@ def 단계그림바꾸기(글, 나갈곳):
     for 이름, 원본 in 있는것.items():
         목적 = os.path.join(낼칸, 이름 + '.webp')
         if (not os.path.isfile(목적)
-                or os.path.getsize(원본) != os.path.getsize(목적)):
+                or os.path.getsize(원본) != os.path.getsize(목적)
+                or 그림지문(원본) != 그림지문(목적)):
             shutil.copy2(원본, 목적)
         크기[이름] = (1980, 1416) if 이름.endswith('-pc') else (1080, 1620)
         try:
@@ -2163,7 +2172,7 @@ def 단계그림바꾸기(글, 나갈곳):
         토막 = 글[i:끝]
         m = re.search(r'<figure class="fl-map">.*?</figure>', 토막, re.S)
         if not m:
-            continue
+            raise ValueError('낚시 트랙 %s 도해 자리를 찾지 못했습니다' % 단)
         pw, ph = 크기['%s-pc' % 파일]
         새칸 = (
             '<figure class="fl-map fl-map--photo"><picture>'
