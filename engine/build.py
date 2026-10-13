@@ -8292,6 +8292,43 @@ def main():
                 _건수 += 1
         print('  준비물 배너 차림표 %d쪽에 걸었습니다' % _건수)
 
+    # ★ 어종 카드 사진을 **자르지 않는** 차림표 (2026-10-13)
+    #
+    #   주인 운영 화면 지적 — 「숭어·우럭 카드 머리·꼬리 잘림」.
+    #   `site.css` 의 `object-fit:cover` 가 4:3 칸에 맞추려고
+    #   사진을 잘라 냅니다. 그런데 그 파일은 미검증 광고 규칙
+    #   때문에 **배포에서 빠져 있어** 거기서 고치면 운영에
+    #   반영되지 않습니다. 그래서 따로 싣고 뒤에서 덮습니다.
+    #
+    #   ★ 쪽 이름으로 가리지 않습니다 — **그 카드가 쪽에 있는가**로
+    #     봅니다. 어종 목록이 다른 쪽에도 생기면 저절로 걸립니다.
+    _어종css = os.path.join(ASSETS, 'css', 'fish-card.css')
+    if os.path.isfile(_어종css):
+        _판 = 판번호(_어종css)
+        _건수 = 0
+        for _뿌리길, _, _파일들 in os.walk(나갈곳):
+            for _f in _파일들:
+                if not _f.endswith('.html'):
+                    continue
+                _길 = os.path.join(_뿌리길, _f)
+                _글 = io.read(_길)
+                if 'fish-pick-photo' not in _글:
+                    continue
+                if 'fish-card.css' in _글:
+                    continue
+                _쪽길 = os.path.relpath(_길, 나갈곳).replace(os.sep, '/')
+                _줄 = ('<link rel="stylesheet" href="%s">'
+                       % esc(url.asset('assets/css/fish-card.css',
+                                       _쪽길, _판)))
+                # site.css 바로 뒤에 — 뒤에 와야 덮을 수 있습니다
+                _m = re.search(
+                    r'<link rel="stylesheet" href="[^"]*site\.css[^"]*">', _글)
+                if not _m:
+                    continue
+                io.write(_길, _글[:_m.end()] + _줄 + _글[_m.end():])
+                _건수 += 1
+        print('  어종 카드 차림표 %d쪽에 걸었습니다' % _건수)
+
     # ★ AI 검수 뷰 — **스냅샷이 있을 때만** 만들어집니다 (#9 P0)
     #   자료가 없으면 쪽을 안 만듭니다. 가짜 숫자가 생기지
     #   않습니다. 여기서 부르는 까닭은, 따로 돌리게 두면
