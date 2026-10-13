@@ -88,8 +88,8 @@
     조작단추();
     핀찍기();
     맞추기();
-    setTimeout(맞추기, 300);
-    setTimeout(맞추기, 1200);
+    setTimeout(function () { 맞추기(); }, 300);
+    setTimeout(function () { 맞추기(); }, 1200);
 
     // 배율이 바뀔 때마다 핀 꼴을 바꿉니다
     if (window.kakao && kakao.maps) {
@@ -122,8 +122,10 @@
   /* ★ 손님이 지도를 직접 움직였으면 **다시 안 맞춥니다** */
   var 손댔나 = false;
 
-  function 맞추기() {
-    if (!지도 || 손댔나) { return; }
+  function 맞추기(강제) {
+    /* `강제` 는 손님이 **묶음을 고른** 경우입니다. 앞서 지도를
+       끌었든 아니든 「서해」를 골랐으면 서해로 맞춰 줘야 합니다. */
+    if (!지도 || (손댔나 && !강제)) { return; }
     지도.맞추기(보일것().map(function (r) { return [r.위도, r.경도]; }));
     // 그린 뒤에 **눈에 보이는 크기로 확인**합니다
     window.setTimeout(꽉채우기, 150);
@@ -143,7 +145,7 @@
    *     되돌립니다 — 하나라도 안 보이면 더 나쁩니다.
    */
   function 꽉채우기() {
-    if (!지도 || !지도.날것 || 손댔나) { return; }
+    if (!지도 || !지도.날것) { return; }
     var 틀 = 칸.getBoundingClientRect();
     if (!틀.width || !틀.height) { return; }
 
@@ -272,7 +274,10 @@
       var b = 만들기('button', 'tm-zoom-b', x[0]);
       b.type = 'button';
       b.setAttribute('aria-label', x[2]);
-      b.addEventListener('click', function () { 지도.확대(x[1]); 꼴고치기(); });
+      b.addEventListener('click', function () {
+        손댔나 = true;                 // 손님이 배율을 골랐습니다
+        지도.확대(x[1]); 꼴고치기();
+      });
       배율칸.appendChild(b);
     });
     칸.appendChild(배율칸);
@@ -293,15 +298,27 @@
       켜기.setAttribute('aria-pressed', String(켬));
     });
     칸.appendChild(켜기);
-    /* 손님이 지도를 끌거나 확대하면 **그 뒤로는 안 맞춥니다** */
-    if (지도.날것 && window.kakao && kakao.maps) {
+    /* ★ 손님이 지도를 **직접 움직였는지**는 손님의 입력으로 봅니다
+     *   (2026-10-13 고침)
+     *
+     *   처음엔 카카오의 `zoom_changed`·`dragend` 로 잡았습니다.
+     *   그런데 **우리가 부르는 `setBounds` 도 `zoom_changed` 를
+     *   냅니다.** 리스너가 첫 맞춤보다 먼저 걸리므로 지도를 띄우는
+     *   순간 `손댔나` 가 켜져, 꽉채우기와 재맞춤이 전부 건너뛰었습니다.
+     *   운영에서 세로가 47% 그대로였던 까닭입니다.
+     *
+     *   손가락·마우스·휠은 **손님만** 냅니다. 지도 알맹이
+     *   (`.tm-canvas`) 안에서 난 것만 세므로 바깥 단추는 안 섞입니다.
+     */
+    var 알맹이 = 칸.querySelector('.tm-canvas') || 칸;
+    ['mousedown', 'touchstart', 'wheel'].forEach(function (종) {
       try {
-        kakao.maps.event.addListener(지도.날것, 'dragend',
-          function () { 손댔나 = true; });
-        kakao.maps.event.addListener(지도.날것, 'zoom_changed',
-          function () { 손댔나 = true; });
-      } catch (e) {}
-    }
+        알맹이.addEventListener(종, function () { 손댔나 = true; },
+                                { capture: true, passive: true });
+      } catch (e) {
+        알맹이.addEventListener(종, function () { 손댔나 = true; }, true);
+      }
+    });
     지도.누를때(function () {
       if (!켬 && window.innerWidth > 760) { 켬 = true; 지도.조작(true); }
     });
@@ -324,7 +341,7 @@
                                   || r.묶음이름 === 지금묶음);
               }
             });
-            맞추기();
+            맞추기(true);     // 고른 묶음에 맞춰 줍니다
           });
         });
     }
