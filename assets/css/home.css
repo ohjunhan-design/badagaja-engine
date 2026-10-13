@@ -259,16 +259,22 @@
      이 사이트가 이미 열다섯 군데에서 쓰는 방식입니다.
      글씨 크기는 시안(31px)을 윗값으로 두고, 칸이 좁으면
      거기 맞춰 줄입니다. 시안의 색·굵기·자간은 그대로입니다. */
+/* ★ 글씨를 줄였습니다 (2026-10-13 주인 지시)
+     주인 — 「글씨를 좀 줄이자 너무 빡빡한 느낌이 들어」
+     278px 칸에 31px 제목이 **네 줄**을 채워 숨이 막혔습니다.
+     25px 로 낮추니 **세 줄**이 되고 칸이 630 → 596px 로
+     34px 숨통이 트였습니다. 줄간도 1.28 → 1.34 로 벌렸습니다.
+     색·굵기·자간은 시안 그대로입니다. */
 .club-support-banner__title{
-  margin:0;font-size:clamp(23px,2.4vw,31px);line-height:1.28;
+  margin:0;font-size:clamp(21px,2vw,25px);line-height:1.34;
   font-weight:900;letter-spacing:-.03em;color:#fffaf0;
   word-break:keep-all;overflow-wrap:anywhere}
 .club-support-banner__desc{
-  margin:0;font-size:16px;line-height:1.68;color:rgba(255,248,235,.92)}
+  margin:0;font-size:14.5px;line-height:1.7;color:rgba(255,248,235,.92)}
 .club-support-banner__list{
   margin:2px 0 0;padding:0;list-style:none;display:grid;gap:10px}
 .club-support-banner__list li{
-  position:relative;padding-left:16px;font-size:15px;line-height:1.55;
+  position:relative;padding-left:16px;font-size:13.5px;line-height:1.62;
   color:rgba(255,248,235,.96)}
 .club-support-banner__list li::before{
   content:"";position:absolute;left:0;top:.72em;width:6px;height:6px;
@@ -277,12 +283,12 @@
 .club-support-banner__cta{
   display:flex;align-items:center;justify-content:center;min-height:52px;
   padding:0 16px;border-radius:16px;text-decoration:none;font-weight:900;
-  text-align:center;background:#e0a84d;color:#2b2317;
+  text-align:center;background:#e0a84d;color:#2b2317;font-size:15px;
   border:2px solid rgba(40,33,24,.75);
   box-shadow:inset 0 0 0 2px rgba(255,255,255,.22)}
 .club-support-banner__cta:hover{background:#e8b15b}
 .club-support-banner__footnote{
-  margin:2px 0 0;font-size:14px;line-height:1.5;
+  margin:2px 0 0;font-size:12.5px;line-height:1.6;
   color:rgba(244,234,214,.88)}
 @media (max-width:390px){
   .club-support-banner__inner{padding:18px 16px;border-radius:20px;gap:12px}
