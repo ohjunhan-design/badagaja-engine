@@ -156,3 +156,25 @@
     font-size:12px;white-space:nowrap
   }
 }
+
+/* ── 「8물」과 「물 많이 빠짐」을 한 줄로 (주인 지시 2026-10-13) ──
+
+   주인 — 「8물 이거 글자 줄이고 물 많이 빠짐 이것도 그 옆에
+           오도록 위치를 바꾸자」 · 「이것도 한줄로」
+
+   ★ 자리 셈 (PC 카드 144px · 안쪽 128px)
+       지금      물때 124(블록) + 알약 99 = 두 줄
+       줄인 뒤   물때 41 + 틈 5 + 알약 76 = 122  ✓ 6px 남음
+
+     두 자리 물때(「15물」)가 가장 깁니다. 그것으로 맞췄습니다 —
+     한 자리로 맞추면 10물부터 줄이 바뀝니다.
+     14장을 모두 재어 **두 줄로 내려간 것 0** 을 확인했습니다. */
+.td-body .td-mul{
+  display:inline-block;vertical-align:middle;
+  font-size:19px;margin:2px 5px 8px 0;line-height:1.1;letter-spacing:-.02em
+}
+.td-body .td-flow{
+  display:inline-flex;vertical-align:middle;margin:0 0 8px;
+  font-size:10px;padding:4px 7px;gap:3px
+}
+.td-body .td-flow .td-flow-ic{width:10px;height:10px;flex:none}
