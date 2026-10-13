@@ -2160,7 +2160,8 @@ def 단계그림바꾸기(글, 나갈곳):
     for 단, 파일 in 짝:
         i = 글.find('id="%s"' % 단)
         if i < 0:
-            continue
+            # 단계 하나라도 빠지면 조용히 예전 도해를 배포하지 않습니다.
+            raise ValueError('낚시 트랙 필수 단계 누락: %s' % 단)
         # 끊는 자리는 **단계 id 로만** 찾습니다 — 아무 id 로 찾으면
         # svg 안의 id 가 먼저 걸려 토막이 잘립니다
         j = -1
@@ -2186,6 +2187,17 @@ def 단계그림바꾸기(글, 나갈곳):
                크기['%s-mobile' % 파일][1],
                파일, 설명[파일], pw, ph))
         글 = 글[:i] + 토막.replace(m.group(0), 새칸, 1) + 글[끝:]
+
+    # 생성 결과에도 세 단계의 PC/모바일 이미지가 모두 있어야 합니다.
+    # 템플릿 구조 변경 시 옛 SVG가 되살아나면 즉시 빌드를 멈춥니다.
+    if 글.count('class="fl-map fl-map--photo"') != len(짝):
+        raise ValueError('낚시 트랙 도해 변환 개수 오류 (초급·중급·고급)')
+    for _, 파일 in 짝:
+        for 갈 in ('pc', 'mobile'):
+            if ('img/fishing-levels/%s-%s.webp' % (파일, 갈)) not in 글:
+                raise ValueError('낚시 트랙 출력 이미지 누락: %s-%s' % (파일, 갈))
+    if re.search(r'<figure class="fl-map">', 글):
+        raise ValueError('낚시 트랙 구형 SVG 도해 잔존')
 
     # ★ 머리띠를 450쪽과 같게 하고 og:image 를 넣습니다 (2026-10-13)
     #
