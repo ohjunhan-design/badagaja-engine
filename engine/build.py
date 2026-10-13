@@ -2431,6 +2431,27 @@ def 단계그림바꾸기(글, 나갈곳):
             '.fl-rig-t small{font-size:12.5px}}')
     if '.fl-map--photo{' not in 글 and '</style>' in 글:
         글 = 글.replace('</style>', 규칙 + '</style>', 1)
+
+    # 이 쪽은 guide/ 아래에 있습니다. <base href="../"> 에 기대면
+    # 브라우저에서는 맞지만 정적 링크/자산 검사와 file:// 검수에서는
+    # guide/guide/, guide/img/ 처럼 잘못 읽힙니다.
+    # 주소·콘텐츠는 그대로 두고 이 쪽의 상대경로만 명시적으로 ../ 로
+    # 바꿔 모든 환경에서 같은 파일을 보게 합니다.
+    글 = re.sub(r'<base\\s+href="\\.\\./"\\s*/?>', '', 글, count=1)
+
+    def _단계상대경로(m):
+        앞, 값 = m.group(1), m.group(2)
+        if 값.startswith(('https://', 'http://', '//', '#', 'data:',
+                           'mailto:', 'tel:', '../', '/')):
+            return m.group(0)
+        if 값 == './':
+            값 = ''
+        elif 값.startswith('./'):
+            값 = 값[2:]
+        return 앞 + '../' + 값 + '"'
+
+    글 = re.sub(r'(\\b(?:href|src|srcset)=")([^"]*)"',
+                _단계상대경로, 글)
     return 글
 
 
