@@ -442,11 +442,31 @@
       if (짬) clearTimeout(짬);
       짬 = setTimeout(다시그릴까, 200);   // 끄는 동안 수십 번 불리는 것을 막습니다
     }
+    /* ★ **둘 다 겁니다** (2026-10-13 운영 실측으로 고침)
+     *
+     *   처음에는 ResizeObserver 가 있으면 그것만 걸고 없을 때만
+     *   resize 를 걸었습니다. 그런데 운영에서 재 보니
+     *   **observe 는 되는데 콜백이 한 번도 안 왔습니다.**
+     *   제가 같은 요소에 새로 건 감시도 똑같이 0번이었습니다 —
+     *   요소는 화면에 보이고 폭도 720→332 로 실제 바뀌었는데도요.
+     *   (브라우저가 그 창의 그리기를 멈춘 상태로 보입니다.
+     *    기억 「rAF 는 숨은 탭에서 멈춘다」와 같은 뿌리입니다)
+     *
+     *   ★ **한 가지에만 기대지 않습니다.** 창 크기 변경은
+     *     `resize` 로도 옵니다. 주인이 겪으신 것이 바로 창을
+     *     넓혔을 때였습니다. 둘 다 걸면 하나가 안 와도 다른
+     *     하나가 잡습니다.
+     *   ★ 두 번 불려도 **헛돌지 않습니다** — `다시그릴까()` 가
+     *     폭이 실제로 달라졌을 때만 다시 그립니다.
+     */
     지난폭 = Math.round(box.getBoundingClientRect().width);
     if (window.ResizeObserver) {
       try { new ResizeObserver(바뀜).observe(box); } catch (e) {}
-    } else {
-      window.addEventListener('resize', 바뀜);
+    }
+    window.addEventListener('resize', 바뀜);
+    /* 글꼴이 늦게 와서 칸 폭이 바뀌는 일도 있습니다 */
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(바뀜).catch(function () {});
     }
 
     return { load: load };

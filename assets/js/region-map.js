@@ -96,7 +96,10 @@
     종류칸.setAttribute('aria-label', '지도 종류');
     var 기억 = null;
     try { 기억 = localStorage.getItem('badagaja.map-type'); } catch (e) { /* 막혀 있으면 그만 */ }
-    var 첫것 = (기억 === '위성') ? 1 : 0;
+    /* ★ **처음에는 위성** (2026-10-13 주인 지시 · 세 곳 중 셋째)
+       같은 판단이 map-type·tide-map·region-map 에 흩어져 있어
+       한 곳만 고치면 쪽마다 다르게 뜹니다. 셋을 맞춥니다. */
+    var 첫것 = (기억 === '일반') ? 0 : 1;
     var 종류들 = [];
     ['일반', '위성'].forEach(function (이름, i) {
       var b = 만들기('button', 'rm-type-b' + (i === 첫것 ? ' on' : ''), 이름);
