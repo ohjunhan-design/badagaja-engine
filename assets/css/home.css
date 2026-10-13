@@ -827,3 +827,19 @@ footer.site-footer .footer-bottom{padding-bottom:calc(64px + env(safe-area-inset
       .3059fr minmax(349px,.3569fr) minmax(300px,.3371fr)
   }
 }
+
+
+/* ── 축제 카드 센터 맞추기 (2026-10-13 주인 지시) ───────────
+   주인 — 「센터가 잘 안맞아」
+
+   ★ 카드가 칸을 다 못 채워 **왼쪽으로 쏠려** 있었습니다.
+     잰 값 — 카드 안쪽 194px (오른쪽 120px 가 빔)
+             아래 단추만 298px
+     사진·제목·「축제 보러가기」가 왼쪽에 몰리고 아래 단추만
+     넓어, 가운데가 안 맞아 보였습니다.
+
+   ★ 카드가 칸 너비를 **그대로 채우게** 합니다.
+     고친 뒤 넷 모두 298px · 왼쪽 16 · 오른쪽 16 으로 같습니다. */
+.hm-fes-list{width:100%}
+.hm-fes-item{width:100%}
+.hm-fes-a{width:100%}
