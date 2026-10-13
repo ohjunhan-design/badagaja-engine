@@ -1,0 +1,95 @@
+/* ══════════════════════════════════════════════════════════
+   준비물 배너 — 「지금 잡히는 것들」 제목 옆 (2026-10-13 주인 지시)
+
+   주인 — 「여기서 베너를 만들자 2개로 해루질, 낚시」
+          「초보자를 위한 해루질 준비물 1개 초보자를 위한 낚시
+            준비물 이렇게 2개의 베너를 만들어 바로가기까지 연결」
+          「이미지도 배경으로 좀 깔아줘」
+          「제목만 잘 보이면됨」 — 설명 글은 넣지 않습니다
+          「전체 권역에 동시적용해줘」
+
+   ★ 왜 따로 파일인가
+     site.css 에 아직 검증 안 된 제주 광고 수정이 섞여 배포에서
+     빠져 있습니다. 거기 넣으면 **글자만 남습니다.** 물때 차림표
+     (stay-tide.css)에 끼워 넣는 것도 안 됩니다 — 이름이 뜻을
+     속이면 다음 사람이 찾지 못합니다.
+
+   ★ 가시성은 **재어서** 맞췄습니다
+     처음 안은 덮개가 오른쪽으로 옅어지는데 제목이 그 중간까지
+     걸쳐, 밝은 사진(바지락)에서 글 뒤가 밝아졌습니다.
+     글자를 숨긴 판을 따로 찍어 **글자 획이 안 섞인** 배경만 재니
+         고치기 전   해루질 6.60:1 · 낚시 6.05:1
+         고친 뒤     해루질 6.39:1~ · 낚시 4.99:1~   (가장 밝은 자리 기준)
+     모두 기준(4.5:1)을 넘습니다. 글 놓이는 왼쪽 50% 는 사진을
+     덮고, 거기서부터 사진이 드러나게 했습니다.
+
+   ★ 글자 그림자를 둔 까닭
+     사진은 자료가 바뀌면 함께 바뀝니다. 지금 사진에 맞춰 겨우
+     넘기면 다음 달에 밝은 사진이 와서 무너집니다. 그림자는
+     **어떤 사진이 와도** 버티게 합니다.
+
+   ★ 사진은 자료에서 읽습니다 (주인 규칙 6-1)
+     해루질 bajirak · 낚시 doldom. 지어내지 않고, 촬영자를 밝힙니다.
+   ══════════════════════════════════════════════════════════ */
+
+.gearb{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0 0}
+
+.gearb-a{position:relative;display:flex;flex-direction:column;
+  justify-content:center;overflow:hidden;isolation:isolate;
+  text-decoration:none;border-radius:14px;min-height:96px;
+  padding:14px 44px 14px 17px;color:#fff;
+  transition:transform .14s ease,box-shadow .14s ease}
+.gearb-a:hover{transform:translateY(-1px);
+  box-shadow:0 4px 14px rgba(26,42,40,.18)}
+
+/* 사진 — 맨 뒤에 깔립니다 */
+.gearb-bg{position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;z-index:-2}
+
+/* 색 덮개 — 왼쪽 50% 는 불투명, 거기서부터 사진이 드러납니다 */
+.gearb-a::before{content:"";position:absolute;inset:0;z-index:-1}
+.gearb-a--sea::before{background:linear-gradient(100deg,
+  #16403A 0%,#16403A 50%,rgba(22,64,58,.55) 74%,rgba(22,64,58,.14) 100%)}
+.gearb-a--fish::before{background:linear-gradient(100deg,
+  #8A4E10 0%,#8A4E10 50%,rgba(138,78,16,.55) 74%,rgba(138,78,16,.14) 100%)}
+
+.gearb-in{display:block;position:relative}
+.gearb-k{display:block;font-style:normal;font-size:11.5px;font-weight:700;
+  letter-spacing:.01em;color:rgba(255,255,255,.88);
+  text-shadow:0 1px 2px rgba(0,0,0,.4)}
+.gearb-t{display:block;margin-top:2px;font-size:22px;font-weight:900;
+  letter-spacing:-.035em;white-space:nowrap;line-height:1.2;
+  text-shadow:0 1px 3px rgba(0,0,0,.45)}
+.gearb-go{position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  font-size:20px;font-weight:900;color:#fff;
+  text-shadow:0 1px 3px rgba(0,0,0,.45)}
+/* 촬영자 — 밝히되 작게 (주인 규칙 5·6) */
+.gearb-by{position:absolute;right:11px;bottom:6px;font-size:9.5px;
+  letter-spacing:-.02em;color:rgba(255,255,255,.55)}
+
+/* 넓은 화면 — 제목 오른쪽에 나란히
+   ★ `.section-head` 는 사이트 전체가 쓰는 공용 차림입니다.
+     그대로 건드리면 다른 칸까지 흔들리므로 **배너를 담은
+     머리글에만** 겁니다. */
+@media (min-width:981px){
+  .section-head--gear{display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,560px);
+    gap:30px;align-items:center}
+  .section-head--gear .kicker,
+  .section-head--gear h2,
+  .section-head--gear .lead{grid-column:1}
+  .section-head--gear .gearb{grid-column:2;grid-row:1 / span 3;margin:0}
+}
+
+/* 좁은 화면 — 아래로 쌓습니다. 한 줄에 둘이면 제목이 깨집니다 */
+@media (max-width:560px){
+  .gearb{grid-template-columns:1fr;gap:10px}
+  .gearb-a{min-height:84px;padding:12px 40px 12px 15px}
+  .gearb-t{font-size:20px}
+}
+
+/* 움직임을 싫어하는 분에게는 들썩이지 않습니다 */
+@media (prefers-reduced-motion:reduce){
+  .gearb-a{transition:none}
+  .gearb-a:hover{transform:none}
+}

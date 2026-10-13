@@ -2277,7 +2277,11 @@ def 단계그림바꾸기(글, 나갈곳):
             #   「채비 하나로 조황이 바뀝니다」를 고르셨습니다.
             #   숫자는 자료에서 셉니다 — 채비가 늘면 따라갑니다.
             '<span class="fl-rig-t"><b>채비 하나로 조황이 바뀝니다</b>'
-            '<small>원투·찌낚시·에기 %d가지, 그림 보고 따라 매기</small>'
+            # ★ 주인 지시 2026-10-13 — 「설명 문구 바꾸자
+            #   16가지 채비법 그림보고 따라하기」
+            #   숫자는 자료에서 셉니다 (규칙 29). 채비가 늘면
+            #   글도 따라 바뀝니다.
+            '<small>%d가지 채비법 그림보고 따라하기</small>'
             '</span>'
             '<span class="fl-rig-go" aria-hidden="true">→</span></a>'
             % _채비수())
@@ -2336,8 +2340,13 @@ def 단계그림바꾸기(글, 나갈곳):
             'border:1px solid #d9d2c4;background:#fff;'
             'text-decoration:none;font-weight:700;font-size:14px}'
             # ★ 채비법 **가로 배너** — 줄을 꽉 채워 눈에 띕니다
+            # ★ `box-sizing` 이 빠져 **8px 넘쳤습니다** (2026-10-13)
+            #   `width:100%` 에 좌우 여백 20px 씩이 **더해져**
+            #   일곱 폭 전부에서 오른쪽이 밖으로 나갔습니다.
+            #   손님에게는 쪽이 좌우로 흔들리는 것으로 보입니다.
             '.fl-rig{display:flex;align-items:center;gap:14px;'
-            'width:100%;margin:14px 0 0;padding:14px 20px;'
+            'width:100%;box-sizing:border-box;margin:14px 0 0;'
+            'padding:14px 20px;'
             'border-radius:16px;border:0;text-decoration:none;'
             # ★ **녹색을 고집하지 않습니다** (2026-10-13 주인 지시)
             #   쪽 바탕과 둘레가 온통 녹색이라 녹색 배너는 묻힙니다.
@@ -3072,6 +3081,7 @@ def 권역쪽(d, 권역, 언어='ko'):
         '포인트칸': ''.join(포인트칸),
         '통제': 통제,
         '어종칸': ''.join(어종칸) or '<p class="notice">제철 어종을 정리하는 중입니다.</p>',
+        '준비물배너': 준비물배너(d, 쪽길),
         '먹거리칸': 먹거리칸,
         '명소칸': 명소칸,
         '풍경칸': 풍경칸,
@@ -3510,6 +3520,66 @@ def 안전안내(쪽길):
         '119 로 이어집니다.</p>'
         + ('<p class="ft-more">%s</p>' % ' '.join(더보기) if 더보기 else '')
         + '</div></details>')
+
+
+def 준비물배너(d, 쪽길):
+    """「지금 잡히는 것들」 제목 옆 **준비물 배너 둘** (2026-10-13 주인 지시).
+
+    주인 — 「베너를 만들자 2개로 해루질, 낚시」
+           「초보자를 위한 해루질 준비물 1개 초보자를 위한 낚시 준비물
+             이렇게 2개의 베너를 만들어 바로가기까지 연결하자」
+           「이미지도 배경으로 좀 깔아줘」
+           「제목만 잘 보이면됨」 — 설명 글은 넣지 않습니다
+           「권역 > 상세권역 모두 적용해야해」
+
+    ★ **묶음 쪽과 상세 권역 쪽이 이 함수 하나를 씁니다.**
+      두 곳에 따로 쓰면 한쪽만 고치고 잊습니다 (규칙 26).
+
+    ★ 사진은 **자료에서 읽습니다** (규칙 6-1). 없으면 배너를 안 냅니다 —
+      배경 없는 배너는 주인이 지시하신 것이 아닙니다.
+
+    ★ 가는 쪽 — 해루질 준비물은 `catch/gear.html`, 낚시 준비물은 `rig/`.
+      메인 가이드 칸과 **같은 자리**를 가리킵니다. 둘이 어긋나면
+      같은 이름의 단추가 다른 곳으로 갑니다.
+    """
+    둘 = (
+        ('sea', 'bajirak', '해루질 준비물', 'catch/gear.html'),
+        ('fish', 'doldom', '낚시 준비물', 'rig/'),
+    )
+    칸 = []
+    for 결, 어종, 제목, 갈곳 in 둘:
+        한장 = d.어종사진(어종)
+        if not (한장 and 한장.get('파일')):
+            continue
+        찍은이 = (한장.get('촬영자') or '').strip()
+        # ★ **끝 슬래시를 지킵니다.** `url.rel` 이 `rig/` 를
+        #   `../rig` 로 줄이는데, 그러면 서버가 301 로 다시 보냅니다
+        #   (운영에서 확인: `/rig` → 301, `/rig/` → 200).
+        #   누를 때마다 한 번 더 왕복합니다. `url.rel` 은 여러 곳이
+        #   쓰므로 건드리지 않고 여기서만 되돌려 붙입니다.
+        갈주소 = url.rel(쪽길, 갈곳)
+        if 갈곳.endswith('/') and not 갈주소.endswith('/'):
+            갈주소 += '/'
+        칸.append(
+            '<a class="gearb-a gearb-a--%s" href="%s">'
+            '<img class="gearb-bg" src="%s" alt="%s" loading="lazy" '
+            'decoding="async">'
+            '<span class="gearb-in">'
+            '<em class="gearb-k">초보자를 위한</em>'
+            '<b class="gearb-t">%s</b>'
+            '</span>'
+            '<span class="gearb-go" aria-hidden="true">→</span>'
+            '%s'
+            '</a>'
+            % (결, esc(갈주소),
+               esc(url.rel(쪽길, 한장['파일'])),
+               esc(한장.get('제목') or 어종),
+               esc(제목),
+               ('<span class="gearb-by">사진 · %s</span>' % esc(찍은이))
+               if 찍은이 else ''))
+    if len(칸) < 2:
+        return ''
+    return '<div class="gearb">%s</div>' % ''.join(칸)
 
 
 def 그래프차림표(쪽길):
@@ -4190,6 +4260,7 @@ def 묶음쪽(d, 묶음, 언어='ko'):
         '첫권역주소': (url.rel(쪽길, url.region(첫['id'], 언어))
                        if 첫 else './'),
         '어종칸': 어종칸 or '<p class="notice">제철 어종을 정리하는 중입니다.</p>',
+        '준비물배너': 준비물배너(d, 쪽길),
         '코스칸': ''.join(코스칸),
         '코스수': len(코스칸),
         '로고': 로고(뿌리, d.사이트['이름'].get(언어) or d.사이트['이름']['ko']),
@@ -8173,6 +8244,40 @@ def main():
                 io.write(_길, _글[:_m.end()] + _줄 + _글[_m.end():])
                 _건수 += 1
         print('  숙소·요일 차림표 %d쪽에 걸었습니다 (임시)' % _건수)
+
+    # ★ 준비물 배너 차림표를 **쓰는 쪽에만** 겁니다 (2026-10-13)
+    #
+    #   ★ 쪽 이름으로 가리지 않습니다 — **쪽에 배너가 있는가**로
+    #     봅니다. 새 쪽이 생겨도 저절로 걸리고, 쪽 이름이 바뀌어도
+    #     따라옵니다 (기억 「쪽 종류는 쪽이 말하게」).
+    #   ★ site.css 에 넣지 않은 까닭은 gear-banner.css 머리말에
+    #     적어 두었습니다 — 그 파일이 배포에서 빠져 있습니다.
+    _배너css = os.path.join(ASSETS, 'css', 'gear-banner.css')
+    if os.path.isfile(_배너css):
+        _판 = 판번호(_배너css)
+        _건수 = 0
+        for _뿌리길, _, _파일들 in os.walk(나갈곳):
+            for _f in _파일들:
+                if not _f.endswith('.html'):
+                    continue
+                _길 = os.path.join(_뿌리길, _f)
+                _글 = io.read(_길)
+                if 'class="gearb"' not in _글:
+                    continue
+                if 'gear-banner.css' in _글:
+                    continue
+                _쪽길 = os.path.relpath(_길, 나갈곳).replace(os.sep, '/')
+                _줄 = ('<link rel="stylesheet" href="%s">'
+                       % esc(url.asset('assets/css/gear-banner.css',
+                                       _쪽길, _판)))
+                # site.css 바로 뒤에 — 뒤에 와야 덮을 수 있습니다
+                _m = re.search(
+                    r'<link rel="stylesheet" href="[^"]*site\.css[^"]*">', _글)
+                if not _m:
+                    continue
+                io.write(_길, _글[:_m.end()] + _줄 + _글[_m.end():])
+                _건수 += 1
+        print('  준비물 배너 차림표 %d쪽에 걸었습니다' % _건수)
 
     # ★ AI 검수 뷰 — **스냅샷이 있을 때만** 만들어집니다 (#9 P0)
     #   자료가 없으면 쪽을 안 만듭니다. 가짜 숫자가 생기지
