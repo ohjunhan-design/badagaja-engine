@@ -5138,6 +5138,162 @@ def _펼칠것정해서(덩이):
         return ''
     return ''.join(틀 % '' for _묶음, _합, 틀 in 덩이)
 
+# ── 어종 쪽 · 장소 칩 ─────────────────────────────────────
+#
+# ★ 왜 (2026-10-13 주인 승인)
+#
+#   어종 18종이 저마다 회색 도해를 갖고 있었는데, 실은 **뼈대
+#   3가지를 돌려쓰고** 있었습니다. 어종을 바꿔 봐도 같은 그림이면
+#   손님은 「대충 만든 쪽」으로 읽습니다.
+#
+#   장소가 같으면 노리는 법도 비슷합니다. 그림을 **장소에 두고**
+#   어종은 자기 장소를 **가리키게** 합니다.
+#
+# ★ 지어내지 않습니다
+#   `guide.json` 의 「어디서」 글에 **실제로 적힌 낱말**로만 고릅니다.
+#   맞는 것이 없으면 칩을 안 냅니다.
+#
+# ★ 테트라포드는 **장소가 아니라 경고**입니다 (주인 규칙 · 안전)
+#   「추천 발판」으로 세우지 않습니다.
+_장소유형 = [
+    ('harbor-in', '방파제 내항', ('내항', '항내', '선착장', '내만', '제방')),
+    ('harbor-out', '방파제 외항', ('외항', '방파제 끝', '끝자락', '끝머리',
+                                   '모서리', '홈통')),
+    ('rock-low', '낮은 갯바위', ('낮은 갯바위', '갯바위')),
+    ('rock-point', '곶부리·외곽 갯바위', ('곶부리', '본류', '수중여',
+                                          '물골', '포말')),
+    ('sand', '모래사장·사니질', ('모래', '사니질', '백사장', '펄', '진흙')),
+    ('estuary', '하구·수로', ('하구', '강', '수로', '기수')),
+    ('weed', '여밭·해초대·수중여', ('해조', '여밭', '암초', '자갈밭')),
+]
+_위험말 = ('테트라포드', '테트라')
+
+
+# ★ **어디에 던지나** — 자료에 적힌 바닥·지형만 (감독실 ③-b)
+#   초보가 설 수 있는 안전한 발판 쪽을 먼저 둡니다.
+#   없는 말을 만들지 않습니다 — 못 고르면 안 냅니다.
+_던질곳 = [
+    ('물골', ('물골', '수로', '골')),
+    ('모래와 바위가 만나는 자리', ('모래', '사니질', '자갈')),
+    ('구조물 둘레', ('테트라', '초석', '기둥', '제방', '방파제')),
+    ('조류가 갈리는 경계', ('조류', '물살', '본류', '홈통')),
+    ('해조밭 가장자리', ('해조', '여밭', '암초')),
+]
+
+
+def 장소칩(안내):
+    """어종이 나오는 **장소 유형**과 **던질 곳**을 냅니다.
+
+    자료의 「어디서」에서 읽습니다. 하나도 못 고르면 **아무것도
+    안 냅니다** — 빈 칸을 남기지 않습니다.
+
+    ★ 장소는 **최대 셋**만 냅니다 (감독실 ③-a).
+      다 강조하면 강조가 아닙니다. 여덟 가지를 모두 「여기가 좋다」로
+      보이면 손님이 고를 수가 없습니다.
+
+    ★ 물때는 **수치를 적지 않습니다** (감독실 ③-c).
+      조석 자료는 권역이 있어야 받는데 어종 쪽에는 권역이 없습니다.
+      날짜·수위·물때 번호를 지어내지 않고, 보편 전략과
+      「포인트마다 다릅니다」만 적은 뒤 권역 물때표로 보냅니다.
+    """
+    어디 = art.말of(안내, '어디서') or ''
+    고른것 = [(코, 이름) for 코, 이름, 말들 in _장소유형
+              if any(w in 어디 for w in 말들)][:3]
+    if not 고른것:
+        return ''
+    칩 = ''.join('<span class="fs-chip">%s</span>' % esc(이름)
+                 for _, 이름 in 고른것)
+    위험 = ('<p class="fs-warn">⚠ <b>테트라포드</b>는 파도가 강하고 '
+            '미끄러워 매우 위험합니다. 올라서지 마세요.</p>'
+            if any(w in 어디 for w in _위험말) else '')
+    # 차림표는 **이 쪽 안에만** 둡니다 — 공용 site.css 를 안 건드립니다
+    꾸밈 = ('<style>'
+            '.fs-box{margin:0 0 18px;padding:14px 16px;border-radius:12px;'
+            'border:1px solid #e4ddd0;background:#fff}'
+            '.fs-box h3{margin:0 0 6px;font-size:16px}'
+            '.fs-src{margin:0 0 12px;font-size:13.5px;color:#555;'
+            'line-height:1.65}'
+            '.fs-chips{display:flex;flex-wrap:wrap;gap:8px}'
+            '.fs-chip{min-height:44px;display:inline-flex;'
+            'align-items:center;padding:0 16px;border-radius:999px;'
+            'border:1.5px solid #2F5D57;color:#2F5D57;background:#fff;'
+            'font-weight:700;font-size:14px}'
+            '.fs-warn{margin:12px 0 0;padding:10px 12px;border-radius:10px;'
+            'background:#fdf0e8;color:#9a3b11;font-size:13px;line-height:1.6}'
+            '.fs-sub{margin:14px 0 8px;font-size:13px;font-weight:700;'
+            'color:#555}'
+            '.fs-chip--sm{min-height:36px;font-size:13px;padding:0 13px;'
+            'border-color:#cfc6b4;color:#5a5245}'
+            '.fs-tide{margin:14px 0 0;padding:12px 14px;border-radius:10px;'
+            'background:#f3f7f5;font-size:13.5px;line-height:1.7}'
+            '.fs-dim{color:#6a6a6a;font-size:12.5px}'
+            '.fs-shot{margin:0 0 14px;border-radius:10px;overflow:hidden;'
+            'background:#eef4f6}'
+            '.fs-shot img{width:100%;height:auto;display:block}'
+            '</style>')
+    # ★ 「어디서」 글을 **다시 적지 않습니다** (2026-10-13 눈으로 고침)
+    #   바로 위 칸에 이미 그 글이 있습니다. 칩 칸에서 또 내면
+    #   같은 문단이 연달아 두 번 나옵니다.
+    # ★ **그림 슬롯** — 지피티가 주면 여기 들어갑니다 (2026-10-13)
+    #   없으면 **아무것도 안 그립니다.** 빈 네모도 「준비 중」도
+    #   두지 않습니다 — 손님에게는 없는 것이 그냥 없어야 합니다.
+    #   크기는 파일에서 읽습니다. 박으면 그림이 바뀔 때 어긋납니다.
+    그림칸 = ''
+    _아이디 = (안내.get('id') or '')
+    if _아이디:
+        import shutil
+        _원본칸 = os.path.join(DATA, 'img', 'fish-spots')
+        _피시 = os.path.join(_원본칸, '%s-pc.webp' % _아이디)
+        _모바 = os.path.join(_원본칸, '%s-mobile.webp' % _아이디)
+        if os.path.isfile(_피시) and os.path.isfile(_모바):
+            _낼칸 = os.path.join(나갈곳, 'img', 'fish-spots')
+            os.makedirs(_낼칸, exist_ok=True)
+            _크기 = {}
+            for _이름, _원 in (('pc', _피시), ('mobile', _모바)):
+                _목 = os.path.join(_낼칸, '%s-%s.webp' % (_아이디, _이름))
+                if (not os.path.isfile(_목)
+                        or os.path.getsize(_원) != os.path.getsize(_목)):
+                    shutil.copy2(_원, _목)
+                _크기[_이름] = (1480, 1060)
+                try:
+                    from PIL import Image
+                    with Image.open(_원) as _im:
+                        _크기[_이름] = _im.size
+                except Exception:
+                    pass
+            그림칸 = (
+                '<figure class="fs-shot"><picture>'
+                '<source media="(max-width:700px)" '
+                'srcset="img/fish-spots/%s-mobile.webp" '
+                'width="%d" height="%d">'
+                '<img src="img/fish-spots/%s-pc.webp" alt="%s 노리는 자리 '
+                '안내도 — 장소와 던질 곳, 안전 주의" '
+                'width="%d" height="%d" loading="lazy" decoding="async">'
+                '</picture></figure>'
+                % (_아이디, _크기['mobile'][0], _크기['mobile'][1],
+                   _아이디, esc(art.말of(안내, '이름') or ''),
+                   _크기['pc'][0], _크기['pc'][1]))
+
+    # ★ 어디에 던지나 — 자료에서 고릅니다 (없으면 안 냅니다)
+    던질 = [이름 for 이름, 말들 in _던질곳
+            if any(w in 어디 for w in 말들)][:3]
+    던질칸 = ('<p class="fs-sub">이런 곳을 노립니다</p>'
+              '<div class="fs-chips fs-chips--sm">%s</div>'
+              % ''.join('<span class="fs-chip fs-chip--sm">%s</span>'
+                        % esc(x) for x in 던질)) if 던질 else ''
+
+    # ★ 물때 — **수치를 적지 않습니다.** 보편 전략과 「다릅니다」만.
+    언제 = art.말of(안내, '언제') or ''
+    물때칸 = ('<p class="fs-tide"><b>좋은 시간</b> %s'
+              '<br><span class="fs-dim">실제 만조·간조 시각은 '
+              '<b>포인트마다 다릅니다</b> — 가실 곳의 물때표에서 '
+              '확인하세요.</span></p>' % esc(언제)) if 언제 else ''
+
+    return ('%s<div class="fs-box"><h3>어디서 노리나</h3>%s'
+            '<div class="fs-chips">%s</div>%s%s%s</div>'
+            % (꾸밈, 그림칸, 칩, 던질칸, 위험, 물때칸))
+
+
 def 어종쪽(d, 안내, 언어='ko'):
     """어종 안내 쪽 하나 — 어디서·언제·채비·순서·금어기까지"""
     이름 = 안내['이름'].get(언어) or 안내['이름']['ko']
@@ -5232,7 +5388,24 @@ def 어종쪽(d, 안내, 언어='ko'):
         else:
             # ★ **쪽길을 넘깁니다** — 사진 상대 주소를 url.rel 이
             #   셈합니다. `../` 로 짐작하지 않습니다 (규칙 6-1).
-            어디그림 = art.자리그림(안내, 쪽길)
+            # ★ 회색 도해 대신 **장소 칩** (2026-10-13 주인 지시)
+            #   「어종별 페이지만 한정해서 작업」 — 이 자리는
+            #   `어종쪽()` 안이고 갈래가 '낚시' 일 때만 지나므로
+            #   `site/fish/*.html` 밖에는 영향이 없습니다.
+            #   (451쪽 해시 대조로 증명합니다)
+            #
+            #   ★ 매핑은 자료에서 읽습니다 — 지어내지 않습니다.
+            #   ★ 지피티 완제품이 오면 이것을 버리고 그것을 씁니다.
+            # ★ **붕장어 한 쪽만** 바꿉니다 (2026-10-13 총감독 지시)
+            #   「붕장어 상세 페이지 1개만 재개·완성 … 붕장어 검수
+            #    완료 후 어종별 18종 전체 동결」
+            #   검수가 끝나고 재개 지시가 오면 이 조건을 풉니다.
+            #   조건을 안 걸면 18종이 한꺼번에 바뀌어 범위를 넘습니다.
+            _이번쪽 = (안내.get('id') or '')
+            if _이번쪽 == 'bungjangeo':
+                어디그림 = 장소칩(안내)
+            else:
+                어디그림 = art.자리그림(안내, 쪽길)
             # ★ **채비도를 함께 넣습니다** (2026-09-30 주인 지시)
             #   「반유동 찌낚시 채비 홈페이지에 적용」
             #
