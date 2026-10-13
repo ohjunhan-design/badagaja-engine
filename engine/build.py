@@ -2067,6 +2067,28 @@ def 그림크기(길):
         return 0, 0
 
 
+_채비수_기억 = [None]
+
+
+def _채비수():
+    """채비가 몇 가지인지 **자료에서 셉니다** (주인 규칙 29).
+
+    ★ 손으로 적지 않습니다. 채비가 늘면 배너 숫자도 저절로
+      따라갑니다. 쪽 제목(`rig/index.html`)도 같은 자료를 세므로
+      둘이 어긋나지 않습니다.
+    ★ `parts`(부품)는 채비가 아니라 쪽만 따로 있는 것이라
+      `rigs.json` 의 「채비」에 없습니다 — 그래서 안 세집니다.
+    """
+    if _채비수_기억[0] is None:
+        try:
+            것 = io.read_json(os.path.join(DATA, 'raw', 'rigs.json'),
+                              default={}) or {}
+            _채비수_기억[0] = len(것.get('채비') or {})
+        except Exception:
+            _채비수_기억[0] = 0
+    return _채비수_기억[0]
+
+
 def 단계그림바꾸기(글, 나갈곳):
     """단계 쪽의 SVG 도해를 새 그림(webp)으로 바꿉니다 (2026-10-13).
 
@@ -2250,10 +2272,15 @@ def 단계그림바꾸기(글, 나갈곳):
             #   배너**로 바꿉니다 — PC·휴대폰 모두 같은 꼴입니다.
             '<a class="fl-rig" href="rig/">'
             '<span class="fl-rig-i" aria-hidden="true">🎣</span>'
-            '<span class="fl-rig-t"><b>채비법 보기</b>'
-            '<small>낚싯대·릴·채비, 무엇을 챙기고 어떻게 매나</small>'
+            # ★ 문구는 **주인이 고르셨습니다** (2026-10-13)
+            #   「좀더 킥을 할수 있는 말이 없을까?」 → 넷을 올려
+            #   「채비 하나로 조황이 바뀝니다」를 고르셨습니다.
+            #   숫자는 자료에서 셉니다 — 채비가 늘면 따라갑니다.
+            '<span class="fl-rig-t"><b>채비 하나로 조황이 바뀝니다</b>'
+            '<small>원투·찌낚시·에기 %d가지, 그림 보고 따라 매기</small>'
             '</span>'
-            '<span class="fl-rig-go" aria-hidden="true">→</span></a>')
+            '<span class="fl-rig-go" aria-hidden="true">→</span></a>'
+            % _채비수())
     if 'fl-jump' not in 글:
         _레드 = re.search(r'</p>\s*</section>', 글)
         if _레드:
