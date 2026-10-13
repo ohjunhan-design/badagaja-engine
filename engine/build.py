@@ -773,33 +773,42 @@ def 축제미니(d, 쪽길, 언어='ko'):
                 if (d.히어로(x['권역']) or {}).get('파일')]
         if not 것들:
             continue
-        x = 것들[0]            # 아이디 차례 첫째 — 다시 만들어도 같습니다
-        한장 = d.히어로(x['권역'])
-        제목 = _사진이름(한장)
-        찍은이 = (한장.get('촬영자') or '').strip()
-        넓, 높 = 한장.get('가로'), 한장.get('세로')
-        크기 = (' width="%d" height="%d"' % (넓, 높)) if (넓 and 높) else ''
-        권역이름 = (d.권역(x['권역']) or {}).get('이름')
-        권역이름 = (권역이름.get(언어) or 권역이름.get('ko')) \
-            if isinstance(권역이름, dict) else (권역이름 or x['권역'])
-        한줄 = (x.get('한줄') or '').strip()
-        칸.append(
-            '<li class="hm-fes-item" data-month="%d">'
-            '<a class="hm-fes-a" href="%s">'
-            '<img src="%s" alt="%s"%s loading="lazy" decoding="async">'
-            '<span class="hm-fes-when">%s · %d월</span>'
-            '<strong class="hm-fes-name">%s</strong>'
-            '%s'
-            '<span class="hm-fes-go">축제 보러가기 →</span>'
-            '<span class="hm-fes-by">사진 · %s</span>'
-            '</a></li>'
-            % (m, esc(url.rel(쪽길, url.festival(x['id'], 언어))),
-               esc(url.rel(쪽길, 한장['파일'])), esc(제목), 크기,
-               esc(권역이름), m,
-               esc(x['이름'].get(언어) or x['이름']['ko']),
-               ('<span class="hm-fes-say">%s</span>' % esc(카드글(한줄, 38)))
-               if 한줄 else '',
-               esc('%s · %s' % (제목, 찍은이) if 찍은이 else 제목)))
+        # ★ **달마다 다섯 장**을 담습니다 (2026-10-13 주인 지시)
+        #   「다른 축제들도 롤링으로 보이게끔」
+        #   아이디 차례 앞에서 끊으므로 다시 만들어도 같습니다
+        #   (계약-08). 무작위를 쓰지 않습니다.
+        for 번째, x in enumerate(것들[:5]):
+            한장 = d.히어로(x['권역'])
+            제목 = _사진이름(한장)
+            찍은이 = (한장.get('촬영자') or '').strip()
+            넓, 높 = 한장.get('가로'), 한장.get('세로')
+            크기 = ((' width="%d" height="%d"' % (넓, 높))
+                    if (넓 and 높) else '')
+            권역이름 = (d.권역(x['권역']) or {}).get('이름')
+            권역이름 = (권역이름.get(언어) or 권역이름.get('ko')) \
+                if isinstance(권역이름, dict) else (권역이름 or x['권역'])
+            한줄 = (x.get('한줄') or '').strip()
+            # ★ 사진은 **첫 장만 바로** 받습니다. 열두 달 × 다섯 장을
+            #   한꺼번에 받으면 첫 화면이 느려집니다.
+            늦게 = ' loading="lazy"' if (m > 1 or 번째 > 0) else ''
+            칸.append(
+                '<li class="hm-fes-item" data-month="%d" data-i="%d">'
+                '<a class="hm-fes-a" href="%s">'
+                '<img src="%s" alt="%s"%s%s decoding="async">'
+                '<span class="hm-fes-when">%s · %d월</span>'
+                '<strong class="hm-fes-name">%s</strong>'
+                '%s'
+                '<span class="hm-fes-go">축제 보러가기 →</span>'
+                '<span class="hm-fes-by">사진 · %s</span>'
+                '</a></li>'
+                % (m, 번째,
+                   esc(url.rel(쪽길, url.festival(x['id'], 언어))),
+                   esc(url.rel(쪽길, 한장['파일'])), esc(제목), 크기, 늦게,
+                   esc(권역이름), m,
+                   esc(x['이름'].get(언어) or x['이름']['ko']),
+                   ('<span class="hm-fes-say">%s</span>'
+                    % esc(카드글(한줄, 38))) if 한줄 else '',
+                   esc('%s · %s' % (제목, 찍은이) if 찍은이 else 제목)))
     if not 칸:
         return ''
     # ★ 스크립트를 **여기 함께** 둡니다 — 쪽과 움직임이 한 곳에
@@ -815,12 +824,36 @@ def 축제미니(d, 쪽길, 언어='ko'):
     #   ★ querySelector 로 [data-month="…"] 를 찾지 않습니다 —
     #     따옴표가 세 겹이라 도구를 거치며 조용히 깨집니다.
     #     children 을 도는 쪽이 따옴표 한 겹이라 안전합니다.
+    # ★ **이번 달 것들을 돌립니다** (2026-10-13 주인 지시)
+    #   주인 — 「다른 축제들도 롤링으로 보이게끔」
+    #
+    #   · 자바스크립트가 죽으면 첫 장이 보입니다 (계약-23) — 전과 같습니다
+    #   · 움직임을 싫어하는 분(prefers-reduced-motion)에게는
+    #     **안 돌립니다.** 첫 장만 보입니다 (WCAG 2.2.2)
+    #   · 숨은 탭에서는 건너뜁니다 — 안 보이는데 바꾸면 배터리만 씁니다
+    #   · 손이 올라가 있으면 멈춥니다 — 읽는 중에 바뀌면 성가십니다
     움직임 = ('<script>(function(){'
               'var L=document.getElementById("hmFesList");if(!L)return;'
-              'var m=new Date().getMonth()+1,x=L.children,i;'
+              'var m=new Date().getMonth()+1,x=L.children,i,R=[];'
               'for(i=0;i<x.length;i++){'
-              'if(x[i].getAttribute("data-month")==m){'
-              'x[i].className+=" is-on";L.className+=" js-on";break;}}'
+              'if(x[i].getAttribute("data-month")==m)R.push(x[i]);}'
+              'if(!R.length)return;'
+              'R[0].className+=" is-on";L.className+=" js-on";'
+              'if(R.length<2)return;'
+              'var q=window.matchMedia&&'
+              'window.matchMedia("(prefers-reduced-motion: reduce)");'
+              'if(q&&q.matches)return;'
+              'var n=0,멈=false;'
+              'L.addEventListener("mouseenter",function(){멈=true;});'
+              'L.addEventListener("mouseleave",function(){멈=false;});'
+              'L.addEventListener("focusin",function(){멈=true;});'
+              'L.addEventListener("focusout",function(){멈=false;});'
+              'setInterval(function(){'
+              'if(멈||document.hidden)return;'
+              'R[n].className=R[n].className.replace(" is-on","");'
+              'n=(n+1)%R.length;'
+              'R[n].className+=" is-on";'
+              '},5000);'
               '})();</script>')
     return ('<section class="hm-fes" aria-labelledby="hmFesT">'
             '<p class="hm-fes-t" id="hmFesT">바다 근처 축제</p>'

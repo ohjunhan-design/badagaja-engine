@@ -758,8 +758,17 @@ footer.site-footer .footer-bottom{padding-bottom:calc(64px + env(safe-area-inset
 .hm-fes-say{font-size:.82rem;line-height:1.6;color:var(--muted);
   word-break:keep-all}
 .hm-fes-go{margin-top:auto;display:flex;align-items:center;
-  justify-content:center;min-height:44px;border-radius:12px;
-  background:var(--green);color:#fff;font-size:.88rem;font-weight:800}
+  justify-content:center;min-height:38px;border-radius:10px;
+  /* ★ 강조를 **뒤집었습니다** (2026-10-13 주인 지시)
+     주인 — 「축제 보러가기 버튼을 좀 줄이고 전국축제일정확인하기가
+             메인처럼 보이게 … 지금은 축제보러가기가 메인처럼 보여」
+             「전국축제일정이 메인이야 저 카드에서는」
+     이 단추는 **한 축제**로 가고, 아래 것은 **전국 일정**으로
+     갑니다. 카드의 주인공은 아래쪽이라 그쪽에 채움을 줍니다.
+     여기는 **테두리만** 두어 한 걸음 물러섭니다. */
+  background:transparent;color:var(--green);
+  border:1.5px solid rgba(47,93,87,.45);
+  font-size:.82rem;font-weight:700}
 .hm-fes-by{font-size:.68rem;color:var(--foam-dim,#7B8A93)}
 /* ★ 44px — 애플·구글이 함께 권하는 누름자리 (check_render 가 잡음) */
 /* ★ **단추로** 바꿨습니다 (2026-10-13 주인 지시)
@@ -770,16 +779,22 @@ footer.site-footer .footer-bottom{padding-bottom:calc(64px + env(safe-area-inset
    같은 꼴이면 둘 다 묻힙니다. 그래서 **테두리 단추 + 바탕 옅은
    강조색**으로 둡니다 — 눈에는 띄되 위 단추를 가리지 않습니다.
    누름자리는 그대로 44px 이상입니다. */
+/* ★ 이 카드의 **주인공**입니다 (2026-10-13 주인 지시)
+   주인 — 「전국축제일정이 메인이야 저 카드에서는」
+   위 「축제 보러가기」는 한 축제로, 이것은 **전국 일정**으로
+   갑니다. 그래서 채움은 이쪽이 가집니다. */
 .hm-fes-all{
   display:flex;align-items:center;justify-content:center;gap:6px;
-  min-height:46px;margin-top:10px;padding:0 14px;
-  border-radius:12px;border:1.5px solid var(--green);
-  background:#EDF6F2;color:var(--green);
-  font-size:.86rem;font-weight:800;text-decoration:none;
-  transition:background .15s,border-color .15s;
+  min-height:50px;margin-top:12px;padding:0 16px;
+  border-radius:14px;border:0;
+  background:var(--green);color:#fff;
+  font-size:.95rem;font-weight:900;letter-spacing:-.01em;
+  text-decoration:none;
+  box-shadow:0 2px 8px rgba(47,93,87,.22);
+  transition:background .15s,box-shadow .15s;
 }
 .hm-fes-all:hover,.hm-fes-all:focus-visible{
-  background:var(--green);color:#fff;border-color:var(--green)
+  background:#24504B;box-shadow:0 3px 12px rgba(47,93,87,.3)
 }
 /* ★ 차례가 중요합니다 — 이 규칙들이 **파일 뒤**에 있어
    앞쪽 469줄의 768px 규칙(1열)을 덮습니다. 그래서 768 을
