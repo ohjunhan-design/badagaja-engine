@@ -2164,13 +2164,16 @@ def 단계그림바꾸기(글, 나갈곳):
             '<header class="header"><div class="wrap">'
             '<div class="header-left"><div><div class="header-title">'
             '%s'
-            '<span class="header-sep"></span>'
-            '<span class="header-role">내 실력에 맞는 자리 고르기</span>'
             '</div></div></div>'
+            # ★ 오른쪽은 **단추 하나**만 (2026-10-13 감독실 모바일 375 검수)
+            #   알약을 셋 두었더니 375px 에서 자리가 모자라
+            #   **로고 알약이 세로로 찌그러져** 「바 다 가 자 닷 컴」이
+            #   한 글자씩 줄바꿈됐습니다. 제 캡처는 390 이라 넘어갔습니다 —
+            #   **좁은 쪽에서 먼저 깨집니다.**
+            #   표준 쪽(yeosu.html)도 「← 전국 바다」 + 메일 둘뿐이고,
+            #   이 쪽은 메일을 안 내므로 하나만 둡니다.
             '<div class="header-right">'
-            '<a href="guide/#regions" class="badge">권역별 안내</a>'
-            '<a href="tide/" class="badge">물때표</a>'
-            '<a href="fish/" class="badge">낚시 어종</a>'
+            '<a href="../" class="badge">← 전국 바다</a>'
             '</div></div></header>' % 로고)
         글 = 글.replace(머리.group(0), 새머리, 1)
 
@@ -2187,6 +2190,28 @@ def 단계그림바꾸기(글, 나갈곳):
                 % (_ow, _oh))
         글 = 글.replace('</head>', 그림 + '</head>', 1)
 
+    # ★ 머리에서 뺀 세 링크를 **본문으로 내립니다** (2026-10-13)
+    #   머리 오른쪽에서 뺐다고 길을 없애면 안 됩니다. 손님이 쓰던
+    #   곳이므로 머리말 바로 아래 칩 줄로 둡니다.
+    칩줄 = ('<p class="fl-jump">'
+            '<a href="guide/#regions">권역별 안내</a>'
+            '<a href="tide/">물때표</a>'
+            '<a href="fish/">낚시 어종</a></p>')
+    if 'fl-jump' not in 글:
+        _레드 = re.search(r'</p>\s*</section>', 글)
+        if _레드:
+            글 = 글.replace(_레드.group(0), '</p>' + 칩줄 + '</section>', 1)
+
+    # ★ 아래 탭바 — 표준 쪽에는 있고 이 쪽에만 없었습니다
+    #   `template/_footer.html` 의 것과 **같은 꼴**로 둡니다.
+    if 'class="tabbar"' not in 글:
+        _탭 = io.read(os.path.join(ROOT, 'template', '_footer.html'),
+                      default='')
+        _m = re.search(r'<nav class="tabbar".*?</nav>', _탭, re.S)
+        if _m and '</body>' in 글:
+            _바 = _m.group(0).replace('{{뿌리}}', '../')
+            글 = 글.replace('</body>', _바 + '</body>', 1)
+
     # ★ 새 그림은 **쪽 너비를 다 써야** 읽힙니다 (2026-10-13 눈으로 고침)
     #   `fl-grid` 는 그림과 설명을 좌우로 나눕니다. 옛 SVG 도해는
     #   꼬리표가 큼직해 좁은 칸에서도 읽혔지만, 새 그림은 한 장에
@@ -2201,7 +2226,13 @@ def 단계그림바꾸기(글, 나갈곳):
             '@media(max-width:700px){.fl-info{grid-template-columns:1fr}}'
             # 엄지가 닿게 — 44px (주인 규칙 6-2)
             '.fl-cta a{min-height:44px;display:inline-flex;'
-            'align-items:center}')
+            'align-items:center}'
+            # 머리에서 내려온 칩 줄
+            '.fl-jump{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0}'
+            '.fl-jump a{min-height:44px;display:inline-flex;'
+            'align-items:center;padding:0 14px;border-radius:999px;'
+            'border:1px solid #d9d2c4;background:#fff;'
+            'text-decoration:none;font-weight:700;font-size:14px}')
     if '.fl-map--photo{' not in 글 and '</style>' in 글:
         글 = 글.replace('</style>', 규칙 + '</style>', 1)
     return 글
