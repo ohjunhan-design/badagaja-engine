@@ -5181,7 +5181,141 @@ _던질곳 = [
 ]
 
 
-def 장소칩(안내):
+# ── 어종이 **실제로** 나오는 지형 (자료에서 셉니다) ──────────
+#
+# ★ 왜 이렇게 (2026-10-13 총감독 결정)
+#   시안은 장소를 여덟으로 나눴지만, 그 가운데 「하구·수로」
+#   「수중 지형」 「내항/외항 구분」은 **자료에 근거가 없습니다.**
+#   없는 것을 그려 넣으면 손님을 속이는 것입니다.
+#
+#   대신 포인트 자료의 `지형` 칸을 셉니다. 그러면 「갯바위」가
+#   아니라 **「갯바위 207곳」** 이라고 말할 수 있습니다.
+#   숫자가 있으면 손님이 고를 수 있습니다.
+#
+# ★ 묶는 차례가 곧 보이는 차례입니다 — 많은 것부터가 아니라
+#   **여기 적힌 차례**로 냅니다. 자료가 늘어도 쪽이 안 흔들립니다.
+_지형묶음 = [
+    ('harbor', '방파제·항포구', ('방파제', '포구')),
+    ('rock', '갯바위', ('갯바위',)),
+    ('beach', '해변·연안', ('해변', '연안')),
+    ('pier', '선착장', ('선착장',)),
+    ('bank', '제방·방조제', ('제방', '방조제')),
+    ('flat', '갯벌', ('갯벌',)),
+]
+
+_지형셈 = {}
+
+
+def 어종지형(d, 어종아이디):
+    """그 어종이 나오는 포인트를 **지형별로 셉니다.**
+
+    ★ 배로 가는 곳은 뺍니다 (주인 규칙 10 — 선상낚시는 안 다룹니다).
+    ★ 통제구역도 뺍니다 — 가면 안 되는 곳을 권할 수 없습니다.
+    ★ 셈은 `d.포인트들` **한 곳에서만** 합니다 (주인 규칙 29).
+
+    돌려주는 것 — (전체곳수, 권역수, [(코, 이름, 곳수), ...])
+    """
+    if 어종아이디 in _지형셈:
+        return _지형셈[어종아이디]
+    셈, 권역 = {}, set()
+    모두 = 0
+    for p in d.포인트들:
+        대상 = p.get('대상') or []
+        if isinstance(대상, dict):
+            대상 = 대상.get('ko') or []
+        if isinstance(대상, str):
+            대상 = [x.strip() for x in 대상.split('·')]
+        if 어종아이디 not in [str(x).strip() for x in 대상]:
+            continue
+        if p.get('배로가나'):
+            continue
+        땅 = str(p.get('지형') or '')
+        if '통제' in 땅:
+            continue
+        for 코, _이름, 말들 in _지형묶음:
+            if any(w in 땅 for w in 말들):
+                셈[코] = 셈.get(코, 0) + 1
+                권역.add(p.get('권역'))
+                모두 += 1
+                break
+    줄 = [(코, 이름, 셈[코]) for 코, 이름, _ in _지형묶음 if 셈.get(코)]
+    _지형셈[어종아이디] = (모두, len(권역), 줄)
+    return _지형셈[어종아이디]
+
+
+# ★ 지형 도해 — **그림이 아니라 그려진 글자**입니다 (총감독 ③)
+#   작은 사진을 억지로 키우면 뭉개집니다. 선으로 그리면
+#   어느 크기에서도 선명하고, 파일도 따로 안 받습니다.
+#   물 빛깔은 시안을 따릅니다(#dbeafe 바다 · #2563eb 강조).
+#
+#   ★ 붕장어는 **바닥 어종**입니다. 그래서 도해마다
+#     「바닥 어디에 채비가 놓이는가」를 점선 화살표로 보입니다.
+_도해 = {
+    'harbor': (  # 방파제·항포구 — 벽을 따라 떨어뜨립니다
+        '<rect x="0" y="34" width="120" height="46" fill="#dbeafe"/>'
+        '<path d="M0 34 H54 V80 H0 Z" fill="#cbd5e1"/>'
+        '<path d="M0 30 H54 V34 H0 Z" fill="#94a3b8"/>'
+        '<path d="M60 36 L70 64" stroke="#2563eb" stroke-width="2.5"'
+        ' stroke-dasharray="4 3" fill="none"/>'
+        '<path d="M66 58 L70 66 L74 59" fill="#2563eb"/>'
+        '<path d="M0 72 H120" stroke="#a8a29e" stroke-width="3"/>'),
+    'rock': (  # 갯바위 — 바위 사이 골을 노립니다
+        '<rect x="0" y="34" width="120" height="46" fill="#dbeafe"/>'
+        '<path d="M0 46 L16 28 L30 44 L42 32 L52 48 V80 H0 Z"'
+        ' fill="#a8a29e"/>'
+        '<path d="M62 38 L74 64" stroke="#2563eb" stroke-width="2.5"'
+        ' stroke-dasharray="4 3" fill="none"/>'
+        '<path d="M70 58 L74 66 L78 59" fill="#2563eb"/>'
+        '<path d="M52 72 H120" stroke="#78716c" stroke-width="3"/>'),
+    'beach': (  # 해변·연안 — 모래가 끝나고 깊어지는 자리
+        '<rect x="0" y="34" width="120" height="46" fill="#dbeafe"/>'
+        '<path d="M0 44 Q34 48 56 62 Q78 74 120 78 V80 H0 Z"'
+        ' fill="#e7d9bd"/>'
+        '<path d="M66 38 L84 62" stroke="#2563eb" stroke-width="2.5"'
+        ' stroke-dasharray="4 3" fill="none"/>'
+        '<path d="M80 56 L84 64 L88 57" fill="#2563eb"/>'),
+    'pier': (  # 선착장 — 기둥 둘레
+        '<rect x="0" y="34" width="120" height="46" fill="#dbeafe"/>'
+        '<rect x="10" y="30" width="86" height="7" fill="#94a3b8"/>'
+        '<rect x="22" y="37" width="7" height="34" fill="#a8a29e"/>'
+        '<rect x="76" y="37" width="7" height="34" fill="#a8a29e"/>'
+        '<path d="M50 42 L56 64" stroke="#2563eb" stroke-width="2.5"'
+        ' stroke-dasharray="4 3" fill="none"/>'
+        '<path d="M52 58 L56 66 L60 59" fill="#2563eb"/>'
+        '<path d="M0 72 H120" stroke="#a8a29e" stroke-width="3"/>'),
+    'bank': (  # 제방·방조제 — 긴 사면 아래
+        '<rect x="0" y="34" width="120" height="46" fill="#dbeafe"/>'
+        '<path d="M0 26 H40 L66 72 H0 Z" fill="#cbd5e1"/>'
+        '<path d="M74 40 L82 64" stroke="#2563eb" stroke-width="2.5"'
+        ' stroke-dasharray="4 3" fill="none"/>'
+        '<path d="M78 58 L82 66 L86 59" fill="#2563eb"/>'
+        '<path d="M0 74 H120" stroke="#a8a29e" stroke-width="3"/>'),
+    'flat': (  # 갯벌 — 펄 사이로 물이 빠져나가는 **골** 하나
+        '<rect x="0" y="34" width="120" height="46" fill="#dbeafe"/>'
+        '<path d="M0 50 H120 V80 H0 Z" fill="#b8a98c"/>'
+        '<path d="M46 50 Q50 66 40 80 H80 Q70 66 74 50 Z"'
+        ' fill="#7fb3dd"/>'
+        '<path d="M46 50 Q50 66 40 80" stroke="#5a8fbd"'
+        ' stroke-width="1.5" fill="none"/>'
+        '<path d="M74 50 Q70 66 80 80" stroke="#5a8fbd"'
+        ' stroke-width="1.5" fill="none"/>'
+        '<path d="M60 36 L60 60" stroke="#2563eb" stroke-width="2.5"'
+        ' stroke-dasharray="4 3" fill="none"/>'
+        '<path d="M56 54 L60 63 L64 55" fill="#2563eb"/>'),
+}
+
+
+def 지형도해(코):
+    """지형 하나를 선으로 그립니다. 없는 코면 **아무것도 안 냅니다.**"""
+    속 = _도해.get(코)
+    if not 속:
+        return ''
+    return ('<svg class="fs-dia" viewBox="0 0 120 80" width="120"'
+            ' height="80" aria-hidden="true" focusable="false">'
+            '%s</svg>' % 속)
+
+
+def 장소칩(안내, _자료=None):
     """어종이 나오는 **장소 유형**과 **던질 곳**을 냅니다.
 
     자료의 「어디서」에서 읽습니다. 하나도 못 고르면 **아무것도
@@ -5197,84 +5331,32 @@ def 장소칩(안내):
       「포인트마다 다릅니다」만 적은 뒤 권역 물때표로 보냅니다.
     """
     어디 = art.말of(안내, '어디서') or ''
-    고른것 = [(코, 이름) for 코, 이름, 말들 in _장소유형
-              if any(w in 어디 for w in 말들)][:3]
-    if not 고른것:
-        return ''
-    칩 = ''.join('<span class="fs-chip">%s</span>' % esc(이름)
-                 for _, 이름 in 고른것)
-    위험 = ('<p class="fs-warn">⚠ <b>테트라포드</b>는 파도가 강하고 '
-            '미끄러워 매우 위험합니다. 올라서지 마세요.</p>'
-            if any(w in 어디 for w in _위험말) else '')
-    # 차림표는 **이 쪽 안에만** 둡니다 — 공용 site.css 를 안 건드립니다
-    꾸밈 = ('<style>'
-            '.fs-box{margin:0 0 18px;padding:14px 16px;border-radius:12px;'
-            'border:1px solid #e4ddd0;background:#fff}'
-            '.fs-box h3{margin:0 0 6px;font-size:16px}'
-            '.fs-src{margin:0 0 12px;font-size:13.5px;color:#555;'
-            'line-height:1.65}'
-            '.fs-chips{display:flex;flex-wrap:wrap;gap:8px}'
-            '.fs-chip{min-height:44px;display:inline-flex;'
-            'align-items:center;padding:0 16px;border-radius:999px;'
-            'border:1.5px solid #2F5D57;color:#2F5D57;background:#fff;'
-            'font-weight:700;font-size:14px}'
-            '.fs-warn{margin:12px 0 0;padding:10px 12px;border-radius:10px;'
-            'background:#fdf0e8;color:#9a3b11;font-size:13px;line-height:1.6}'
-            '.fs-sub{margin:14px 0 8px;font-size:13px;font-weight:700;'
-            'color:#555}'
-            '.fs-chip--sm{min-height:36px;font-size:13px;padding:0 13px;'
-            'border-color:#cfc6b4;color:#5a5245}'
-            '.fs-tide{margin:14px 0 0;padding:12px 14px;border-radius:10px;'
-            'background:#f3f7f5;font-size:13.5px;line-height:1.7}'
-            '.fs-dim{color:#6a6a6a;font-size:12.5px}'
-            '.fs-shot{margin:0 0 14px;border-radius:10px;overflow:hidden;'
-            'background:#eef4f6}'
-            '.fs-shot img{width:100%;height:auto;display:block}'
-            '</style>')
-    # ★ 「어디서」 글을 **다시 적지 않습니다** (2026-10-13 눈으로 고침)
-    #   바로 위 칸에 이미 그 글이 있습니다. 칩 칸에서 또 내면
-    #   같은 문단이 연달아 두 번 나옵니다.
-    # ★ **그림 슬롯** — 지피티가 주면 여기 들어갑니다 (2026-10-13)
-    #   없으면 **아무것도 안 그립니다.** 빈 네모도 「준비 중」도
-    #   두지 않습니다 — 손님에게는 없는 것이 그냥 없어야 합니다.
-    #   크기는 파일에서 읽습니다. 박으면 그림이 바뀔 때 어긋납니다.
-    그림칸 = ''
-    _아이디 = (안내.get('id') or '')
-    if _아이디:
-        import shutil
-        _원본칸 = os.path.join(DATA, 'img', 'fish-spots')
-        _피시 = os.path.join(_원본칸, '%s-pc.webp' % _아이디)
-        _모바 = os.path.join(_원본칸, '%s-mobile.webp' % _아이디)
-        if os.path.isfile(_피시) and os.path.isfile(_모바):
-            _낼칸 = os.path.join(나갈곳, 'img', 'fish-spots')
-            os.makedirs(_낼칸, exist_ok=True)
-            _크기 = {}
-            for _이름, _원 in (('pc', _피시), ('mobile', _모바)):
-                _목 = os.path.join(_낼칸, '%s-%s.webp' % (_아이디, _이름))
-                if (not os.path.isfile(_목)
-                        or os.path.getsize(_원) != os.path.getsize(_목)):
-                    shutil.copy2(_원, _목)
-                _크기[_이름] = (1480, 1060)
-                try:
-                    from PIL import Image
-                    with Image.open(_원) as _im:
-                        _크기[_이름] = _im.size
-                except Exception:
-                    pass
-            그림칸 = (
-                '<figure class="fs-shot"><picture>'
-                '<source media="(max-width:700px)" '
-                'srcset="img/fish-spots/%s-mobile.webp" '
-                'width="%d" height="%d">'
-                '<img src="img/fish-spots/%s-pc.webp" alt="%s 노리는 자리 '
-                '안내도 — 장소와 던질 곳, 안전 주의" '
-                'width="%d" height="%d" loading="lazy" decoding="async">'
-                '</picture></figure>'
-                % (_아이디, _크기['mobile'][0], _크기['mobile'][1],
-                   _아이디, esc(art.말of(안내, '이름') or ''),
-                   _크기['pc'][0], _크기['pc'][1]))
+    아이디 = (안내.get('id') or '')
 
-    # ★ 어디에 던지나 — 자료에서 고릅니다 (없으면 안 냅니다)
+    # ── 1. 나오는 곳 — **자료에서 셉니다** ─────────────────
+    모두, _권역수, 줄들 = 어종지형(_자료, 아이디) if _자료 else (0, 0, [])
+    곳칸 = ''
+    if 줄들:
+        큰 = max(n for _, _, n in 줄들) or 1
+        카드 = []
+        for 코, 이름, n in 줄들:
+            카드.append(
+                '<li class="fs-card">%s'
+                '<div class="fs-card-t">%s</div>'
+                '<div class="fs-bar"><i style="width:%d%%"></i></div>'
+                '<div class="fs-num"><b>%s</b>곳</div></li>'
+                % (지형도해(코), esc(이름), max(6, round(n * 100.0 / 큰)),
+                   '{:,}'.format(n)))
+        곳칸 = (
+            '<p class="fs-lead">%s를 노릴 수 있는 포인트 '
+            '<b>%s곳</b> <span class="fs-dim">· 배로 나가야 하는 곳은 '
+            '뺐습니다</span></p>'
+            '<ul class="fs-cards" style="grid-template-columns:'
+            'repeat(%d,1fr)">%s</ul>'
+            % (esc(art.말of(안내, '이름') or ''), '{:,}'.format(모두),
+               min(3, max(1, len(줄들))), ''.join(카드)))
+
+    # ── 2. 이런 곳을 노립니다 — 자료 글에서만 고릅니다 ──────
     던질 = [이름 for 이름, 말들 in _던질곳
             if any(w in 어디 for w in 말들)][:3]
     던질칸 = ('<p class="fs-sub">이런 곳을 노립니다</p>'
@@ -5282,16 +5364,69 @@ def 장소칩(안내):
               % ''.join('<span class="fs-chip fs-chip--sm">%s</span>'
                         % esc(x) for x in 던질)) if 던질 else ''
 
-    # ★ 물때 — **수치를 적지 않습니다.** 보편 전략과 「다릅니다」만.
+    위험 = ('<p class="fs-warn">⚠ <b>테트라포드</b>는 파도가 강하고 '
+            '미끄러워 매우 위험합니다. 올라서지 마세요.</p>'
+            if any(w in 어디 for w in _위험말) else '')
+
+    # ── 3. 물때 — **수치를 적지 않습니다** (총감독 ① ㄱ) ────
+    #   조석은 권역이 있어야 받는데 어종 쪽에는 권역이 없습니다.
+    #   날짜·수위·물때 번호를 지어내지 않고 보편 전략만 적은 뒤
+    #   가실 곳의 물때표로 보냅니다.
     언제 = art.말of(안내, '언제') or ''
     물때칸 = ('<p class="fs-tide"><b>좋은 시간</b> %s'
               '<br><span class="fs-dim">실제 만조·간조 시각은 '
               '<b>포인트마다 다릅니다</b> — 가실 곳의 물때표에서 '
               '확인하세요.</span></p>' % esc(언제)) if 언제 else ''
 
-    return ('%s<div class="fs-box"><h3>어디서 노리나</h3>%s'
-            '<div class="fs-chips">%s</div>%s%s%s</div>'
-            % (꾸밈, 그림칸, 칩, 던질칸, 위험, 물때칸))
+    if not (곳칸 or 던질칸 or 물때칸):
+        return ''
+
+    # 차림표는 **이 쪽 안에만** 둡니다 — 공용 site.css 를 안 건드립니다.
+    # 색은 시안을 따릅니다 (바다 #dbeafe · 강조 #2563eb).
+    꾸밈 = ('<style>'
+            '.fs-box{margin:0 0 18px;padding:16px 18px;border-radius:14px;'
+            'border:1px solid #e4ddd0;background:#fff}'
+            '.fs-box h3{margin:0 0 4px;font-size:17px}'
+            '.fs-lead{margin:0 0 14px;font-size:14px;color:#444;'
+            'line-height:1.6}'
+            '.fs-lead b{font-size:16px;color:#1d4ed8}'
+            '.fs-cards{list-style:none;margin:0 0 4px;padding:0;'
+            'display:grid;grid-template-columns:repeat(4,1fr);gap:10px}'
+            '.fs-card{border:1px solid #e3e8ef;border-radius:12px;'
+            'padding:10px;background:#f8fafc;text-align:center}'
+            '.fs-dia{display:block;width:100%;height:auto;'
+            'border-radius:8px;background:#eff6ff;margin:0 0 7px}'
+            '.fs-card-t{font-weight:700;font-size:13px;line-height:1.35;'
+            'color:#1f2937}'
+            '.fs-bar{height:5px;border-radius:3px;background:#e5e9f0;'
+            'margin:7px 0 5px;overflow:hidden}'
+            '.fs-bar i{display:block;height:100%;border-radius:3px;'
+            'background:#2563eb}'
+            '.fs-num{font-size:12.5px;color:#555}'
+            '.fs-num b{font-size:15px;color:#1f2937}'
+            '.fs-chips{display:flex;flex-wrap:wrap;gap:8px}'
+            '.fs-chip{min-height:44px;display:inline-flex;'
+            'align-items:center;padding:0 16px;border-radius:999px;'
+            'border:1.5px solid #2F5D57;color:#2F5D57;background:#fff;'
+            'font-weight:700;font-size:14px}'
+            '.fs-warn{margin:12px 0 0;padding:10px 12px;border-radius:10px;'
+            'background:#fdf0e8;color:#9a3b11;font-size:13px;line-height:1.6}'
+            '.fs-sub{margin:16px 0 8px;font-size:13px;font-weight:700;'
+            'color:#555}'
+            '.fs-chip--sm{min-height:36px;font-size:13px;padding:0 13px;'
+            'border-color:#cfc6b4;color:#5a5245}'
+            '.fs-tide{margin:14px 0 0;padding:12px 14px;border-radius:10px;'
+            'background:#f3f7f5;font-size:13.5px;line-height:1.7}'
+            '.fs-dim{color:#6a6a6a;font-size:12.5px;font-weight:400}'
+            '@media(max-width:700px){'
+            '.fs-cards{grid-template-columns:repeat(2,1fr)!important;'
+            'gap:9px}'
+            '.fs-box{padding:14px}}'
+            '</style>')
+
+    return ('%s<div class="fs-box"><h3>%s가 나오는 곳</h3>%s%s%s%s</div>'
+            % (꾸밈, esc(art.말of(안내, '이름') or '이 어종'),
+               곳칸, 던질칸, 위험, 물때칸))
 
 
 def 어종쪽(d, 안내, 언어='ko'):
@@ -5403,7 +5538,7 @@ def 어종쪽(d, 안내, 언어='ko'):
             #   조건을 안 걸면 18종이 한꺼번에 바뀌어 범위를 넘습니다.
             _이번쪽 = (안내.get('id') or '')
             if _이번쪽 == 'bungjangeo':
-                어디그림 = 장소칩(안내)
+                어디그림 = 장소칩(안내, d)
             else:
                 어디그림 = art.자리그림(안내, 쪽길)
             # ★ **채비도를 함께 넣습니다** (2026-09-30 주인 지시)
