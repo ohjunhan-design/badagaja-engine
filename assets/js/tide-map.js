@@ -119,9 +119,65 @@
     return 권역들.filter(function (r) { return r.묶음이름 === 지금묶음; });
   }
 
+  /* ★ 손님이 지도를 직접 움직였으면 **다시 안 맞춥니다** */
+  var 손댔나 = false;
+
   function 맞추기() {
-    if (!지도) { return; }
+    if (!지도 || 손댔나) { return; }
     지도.맞추기(보일것().map(function (r) { return [r.위도, r.경도]; }));
+    // 그린 뒤에 **눈에 보이는 크기로 확인**합니다
+    window.setTimeout(꽉채우기, 150);
+  }
+
+  /* ★ 한반도가 칸을 **꽉 채우게** 합니다 (2026-10-13 주인 지시)
+   *
+   *   주인 — 「이 정도 확대에서 시작하게끔」 · 「위치도 이렇게」
+   *
+   *   운영에서 재어 보니 핀이 세로 47% · 가로 28% 만 차지하고
+   *   위아래로 160px 씩 비어 있었습니다. 카카오 배율은 **단계**라
+   *   담을 범위가 한 단계에 안 들어가면 다음 단계(두 배 넓게)로
+   *   갑니다. 그래서 `setBounds` 만으로는 헐겁습니다.
+   *
+   *   ★ 짐작하지 않고 **화면에서 재어** 고칩니다.
+   *   ★ **한 번만** 당깁니다. 당긴 뒤 핀이 칸 밖으로 나가면
+   *     되돌립니다 — 하나라도 안 보이면 더 나쁩니다.
+   */
+  function 꽉채우기() {
+    if (!지도 || !지도.날것 || 손댔나) { return; }
+    var 틀 = 칸.getBoundingClientRect();
+    if (!틀.width || !틀.height) { return; }
+
+    function 비율() {
+      var 핀 = 칸.querySelectorAll('.tm-pin');
+      if (핀.length < 2) { return null; }
+      var x1 = 1e9, x2 = -1e9, y1 = 1e9, y2 = -1e9;
+      for (var i = 0; i < 핀.length; i++) {
+        var r = 핀[i].getBoundingClientRect();
+        if (!r.width) { continue; }
+        var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+        if (cx < x1) { x1 = cx; } if (cx > x2) { x2 = cx; }
+        if (cy < y1) { y1 = cy; } if (cy > y2) { y2 = cy; }
+      }
+      if (x2 < x1) { return null; }
+      return {
+        가로: (x2 - x1) / 틀.width, 세로: (y2 - y1) / 틀.height,
+        밖으로: (x1 < 틀.left - 4 || x2 > 틀.right + 4 ||
+                 y1 < 틀.top - 4 || y2 > 틀.bottom + 4)
+      };
+    }
+
+    var 전 = 비율();
+    if (!전 || 전.밖으로) { return; }
+    // 가로·세로 중 **큰 쪽**이 62% 도 안 되면 한 단계 당깁니다
+    if (Math.max(전.가로, 전.세로) >= 0.62) { return; }
+
+    var 옛배 = 지도.날것.getLevel();
+    지도.날것.setLevel(옛배 - 1);
+    window.setTimeout(function () {
+      var 후 = 비율();
+      // 당겼더니 핀이 칸 밖으로 나가면 **되돌립니다**
+      if (!후 || 후.밖으로) { 지도.날것.setLevel(옛배); }
+    }, 160);
   }
 
   // ── 배율에 따라 핀 꼴 바꾸기 (옛 것 그대로) ──────────────
@@ -221,6 +277,15 @@
       켜기.setAttribute('aria-pressed', String(켬));
     });
     칸.appendChild(켜기);
+    /* 손님이 지도를 끌거나 확대하면 **그 뒤로는 안 맞춥니다** */
+    if (지도.날것 && window.kakao && kakao.maps) {
+      try {
+        kakao.maps.event.addListener(지도.날것, 'dragend',
+          function () { 손댔나 = true; });
+        kakao.maps.event.addListener(지도.날것, 'zoom_changed',
+          function () { 손댔나 = true; });
+      } catch (e) {}
+    }
     지도.누를때(function () {
       if (!켬 && window.innerWidth > 760) { 켬 = true; 지도.조작(true); }
     });

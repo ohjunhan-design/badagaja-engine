@@ -2226,10 +2226,34 @@ def 단계그림바꾸기(글, 나갈곳):
     # ★ 머리에서 뺀 세 링크를 **본문으로 내립니다** (2026-10-13)
     #   머리 오른쪽에서 뺐다고 길을 없애면 안 됩니다. 손님이 쓰던
     #   곳이므로 머리말 바로 아래 칩 줄로 둡니다.
+    # ★ **채비법 단추**를 같은 줄 오른쪽에 둡니다 (2026-10-13 주인 지시)
+    #   주인 — 「눈에 잘 띄게 채비법 버튼 하나 만들어, 아니면
+    #           배너도 좋아」
+    #
+    #   ★ 왜 이 자리인가 — 이 쪽은 「어디에 서서 노릴까」를 다룹니다.
+    #     자리를 고른 다음에 필요한 것이 **채비**입니다. 그래서
+    #     같은 줄 끝에 두어 다음 걸음으로 이어지게 합니다.
+    #   ★ 옆 칩들과 **구분되는 채움**을 줍니다. 테두리만 두면
+    #     셋 가운데 묻혀 안 보입니다.
+    #   ★ 넓으면 오른쪽 끝에 붙고, 좁으면 아랫줄로 자연스럽게
+    #     내려갑니다 (`margin-left:auto` + `flex-wrap`).
     칩줄 = ('<p class="fl-jump">'
             '<a href="guide/#regions">권역별 안내</a>'
             '<a href="tide/">물때표</a>'
-            '<a href="fish/">낚시 어종</a></p>')
+            '<a href="fish/">낚시 어종</a>'
+            '</p>'
+            # ★ **가로 배너**로 둡니다 (2026-10-13 주인 지시)
+            #   주인 — 「눈에 잘 띄게 채비법 버튼 하나 만들어,
+            #           아니면 배너도 좋아」 · 「가시성 떨어져」
+            #   처음엔 칩 줄 오른쪽에 작은 단추로 두었는데
+            #   160px 밖에 안 돼 묻혔습니다. **줄을 꽉 채우는
+            #   배너**로 바꿉니다 — PC·휴대폰 모두 같은 꼴입니다.
+            '<a class="fl-rig" href="rig/">'
+            '<span class="fl-rig-i" aria-hidden="true">🎣</span>'
+            '<span class="fl-rig-t"><b>채비법 보기</b>'
+            '<small>낚싯대·릴·채비, 무엇을 챙기고 어떻게 매나</small>'
+            '</span>'
+            '<span class="fl-rig-go" aria-hidden="true">→</span></a>')
     if 'fl-jump' not in 글:
         _레드 = re.search(r'</p>\s*</section>', 글)
         if _레드:
@@ -2283,7 +2307,71 @@ def 단계그림바꾸기(글, 나갈곳):
             '.fl-jump a{min-height:44px;display:inline-flex;'
             'align-items:center;padding:0 14px;border-radius:999px;'
             'border:1px solid #d9d2c4;background:#fff;'
-            'text-decoration:none;font-weight:700;font-size:14px}')
+            'text-decoration:none;font-weight:700;font-size:14px}'
+            # ★ 채비법 **가로 배너** — 줄을 꽉 채워 눈에 띕니다
+            '.fl-rig{display:flex;align-items:center;gap:14px;'
+            'width:100%;margin:14px 0 0;padding:14px 20px;'
+            'border-radius:16px;border:0;text-decoration:none;'
+            # ★ **녹색을 고집하지 않습니다** (2026-10-13 주인 지시)
+            #   쪽 바탕과 둘레가 온통 녹색이라 녹색 배너는 묻힙니다.
+            #   사이트가 이미 쓰는 **브랜드 주황(#C07B22)** 으로
+            #   둡니다 — 새 색을 만들지 않고, 녹색 사이에서 확실히
+            #   튑니다. 흰 글씨와의 대비도 충분합니다.
+            'background:linear-gradient(100deg,#C07B22,#A8641A);'
+            'color:#fff;box-shadow:0 3px 12px rgba(154,95,20,.3);'
+            'transition:box-shadow .15s,transform .15s}'
+            '.fl-rig:hover,.fl-rig:focus-visible{'
+            'box-shadow:0 5px 18px rgba(154,95,20,.4);'
+            'transform:translateY(-1px)}'
+            # ★ **빛이 훑고 지나갑니다** (2026-10-13 주인 지시
+            #   「플레쉬 효과좀 줘봐」)
+            #   3초에 한 번, 흰 빛줄기가 왼쪽에서 오른쪽으로.
+            #   ★ 눈을 피곤하게 하지 않게 **옅게(투명도 .28)**
+            #     그리고 **띄엄띄엄** 지나가게 둡니다.
+            #   ★ 움직임을 싫어하는 분에게는 **안 보입니다**
+            #     (prefers-reduced-motion · WCAG 2.2.2).
+            #   ★ `overflow:hidden` 과 `position:relative` 가
+            #     있어야 빛이 배너 밖으로 안 샙니다.
+            '.fl-rig{position:relative;overflow:hidden;isolation:isolate}'
+            '.fl-rig::after{content:"";position:absolute;z-index:-1;'
+            'top:-60%;bottom:-60%;left:-30%;width:28%;'
+            'background:linear-gradient(100deg,'
+            'rgba(255,255,255,0),rgba(255,255,255,.28),'
+            'rgba(255,255,255,0));'
+            'transform:skewX(-18deg);'
+            'animation:flRigFlash 3.2s ease-in-out infinite}'
+            '@keyframes flRigFlash{'
+            '0%,62%{left:-30%}'
+            '92%,100%{left:118%}}'
+            '@media(prefers-reduced-motion:reduce){'
+            '.fl-rig::after{animation:none;opacity:0}}'
+            '.fl-rig-i{flex:0 0 auto;width:42px;height:42px;'
+            'display:flex;align-items:center;justify-content:center;'
+            'border-radius:12px;background:rgba(255,255,255,.14);'
+            'font-size:21px}'
+            # ★ 제목과 설명을 **한 줄**에 (2026-10-13 주인 지시
+            #   「한줄로 걸어」). 두 줄로 쌓으면 배너가 두꺼워지고
+            #   글이 흩어져 보입니다.
+            '.fl-rig-t{flex:1 1 auto;display:flex;align-items:baseline;'
+            'flex-wrap:wrap;gap:4px 10px;min-width:0}'
+            # ★ **또렷하게** 합니다 (2026-10-13 주인 지시
+            #   「글씨체도 좀 눈에 잘 안보여 좀 흐리게보여」)
+            #   설명이 11.5~12.5px 에 투명도 0.88 이라 흐렸습니다.
+            #   · 투명도를 **없앱니다** — 흰색을 그대로 씁니다
+            #   · 굵기를 500 → 600 으로
+            #   · 크기를 12.5 → 13.5px
+            #   흐린 글씨는 밖에서 햇빛 아래 특히 안 읽힙니다.
+            '.fl-rig-t b{font-size:18px;font-weight:900;color:#fff;'
+            'letter-spacing:-.01em;white-space:nowrap}'
+            '.fl-rig-t small{font-size:13.5px;font-weight:600;'
+            'color:#F2F8F5;line-height:1.45}'
+            '.fl-rig-go{flex:0 0 auto;font-size:21px;font-weight:900;'
+            'color:#fff}'
+            '@media(max-width:520px){'
+            '.fl-rig{gap:11px;padding:12px 15px}'
+            '.fl-rig-i{width:36px;height:36px;font-size:18px}'
+            '.fl-rig-t b{font-size:16px}'
+            '.fl-rig-t small{font-size:12.5px}}')
     if '.fl-map--photo{' not in 글 and '</style>' in 글:
         글 = 글.replace('</style>', 규칙 + '</style>', 1)
     return 글
