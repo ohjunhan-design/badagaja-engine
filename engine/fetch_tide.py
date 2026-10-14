@@ -32,6 +32,7 @@
     드러나면 **누구든 정부 호출을 태울 수** 있습니다.
 """
 import argparse
+import datetime
 import io
 import json
 import os
@@ -238,16 +239,63 @@ def 한권역(권역, 이름, 날수, 조용히=False):
             len(빈) + max(0, 모자람))
 
 
+def 서울오늘():
+    """한국 날짜의 `달/일` 키.
+
+    ★ 윈도는 이미 한국 시간입니다. `TZ=` 를 주면 아홉 시간
+      빠져 **어제가 오늘이 됩니다.** 그래서 그냥 씁니다.
+    """
+    t = datetime.datetime.now()
+    return '%d/%d' % (t.month, t.day)
+
+
+def 남은날세기(자료):
+    """오늘부터 **이어지는** 날이 며칠인가. 오늘이 없으면 0."""
+    날들 = (자료 or {}).get('days') or []
+    키들 = [날짜키(x) for x in 날들]
+    오늘 = 서울오늘()
+    if 오늘 not in 키들:
+        return 0
+    return len(날들) - 키들.index(오늘)
+
+
 def 저장(권역, d):
-    """★ 다 찬 것만 여기까지 옵니다."""
+    """★ 다 찬 것만 여기까지 옵니다.
+
+    ★ **날 수가 줄면 쓰지 않습니다** (2026-10-14 감독실 승인)
+
+      겪은 일: `data/tide/` 의 samcheok·ulleung 이 **30일 → 14일**로
+      덮여 있었고, 조금 뒤 gangneung·gwgoseong 은 **50일 → 14일**
+      이었습니다. 구간 받기가 일부만 성공하면 짧은 것이 그대로
+      쓰입니다. 조용히 덮으니 아무도 모릅니다.
+
+      조석은 변하지 않으므로 **긴 것이 언제나 낫습니다.**
+      줄어드는 쓰기는 **잃는 일**이지 고치는 일이 아닙니다.
+      그래서 **거부하고 까닭을 말합니다** — 조용히 지나가면
+      다음에 또 당합니다.
+    """
     os.makedirs(낼곳, exist_ok=True)
     p = os.path.join(낼곳, '%s.json' % 권역)
     글 = json.dumps(d, ensure_ascii=False, separators=(',', ':'))
     옛 = None
+    옛자료 = None
     if os.path.isfile(p):
         옛 = io.open(p, encoding='utf-8').read()
+        try:
+            옛자료 = json.loads(옛)
+        except Exception:
+            옛자료 = None          # 깨진 파일은 덮어도 됩니다
     if 옛 == 글:
         return '같습니다'
+
+    if 옛자료 is not None:
+        옛남 = 남은날세기(옛자료)
+        새남 = 남은날세기(d)
+        if 새남 < 옛남:
+            return ('★ 쓰지 않았습니다 — 날이 줄어듭니다 '
+                    '(지금 %d일 → 쓸 것 %d일). 조석은 변하지 않으니 '
+                    '긴 것이 낫습니다' % (옛남, 새남))
+
     io.open(p, 'w', encoding='utf-8', newline='\n').write(글)
     return '새로 썼습니다' if 옛 is None else '바꿨습니다'
 
