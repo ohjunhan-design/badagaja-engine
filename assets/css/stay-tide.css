@@ -470,3 +470,45 @@
   .tnow--state{background:transparent;border:0;padding:0;margin-top:-4px}
   .tnow--state .tnow-cap{display:none}
 }
+
+
+/* ⑪ 3카드 최종 — 물빠짐 · 언제 갈까 · 시간별 물높이
+   (2026-10-14 총감독 확정)
+
+   ★ 「지금 상태」 독립 카드는 **없습니다.** 그 내용은 물빠짐
+     카드 안에 그대로 있습니다.
+   ★ 셋째 칸의 그래프는 **아래 큰 패널을 옮겨 온 같은 요소**라
+     중복이 없습니다. */
+
+@media (min-width:981px){
+  .tide-two{
+    display:grid;
+    grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) minmax(0,1.25fr);
+    gap:14px;align-items:stretch;
+  }
+  .tide-two > *{min-width:0;margin:0}
+  /* 세 카드의 높이를 맞춥니다 */
+  .tide-two .tnow,
+  .tide-two .tide-graph--card{display:flex;flex-direction:column;
+    justify-content:center}
+  /* 카드 안에 들어온 그래프 — 칸에 맞춰 줄입니다 */
+  .tide-two .tide-graph--card{margin:0;min-width:0;overflow:hidden}
+  .tide-two .tide-graph--card svg{width:100%;height:auto;display:block}
+}
+
+/* 토글은 **3카드 바로 아래 한 줄 전체폭** */
+.td-fold-b{width:100%}
+
+/* 태블릿 — 3열을 **강제하지 않습니다** (2 + 1) */
+@media (min-width:761px) and (max-width:980px){
+  .tide-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:12px}
+  .tide-two > :nth-child(3){grid-column:1 / -1}
+}
+
+/* 모바일 — 세로로 쌓입니다. 그래프도 전처럼 전폭입니다 */
+@media (max-width:760px){
+  .tide-two{display:block}
+  .tide-two > *{margin-bottom:10px}
+  .tide-two .tide-graph--card{margin-bottom:0}
+}
