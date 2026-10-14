@@ -72,6 +72,53 @@
   }
 
   // 다시 그릴 때 **먼저 지웁니다** — 그래프·범례·알약 셋이 한 벌입니다
+  /* ── 시간 제한을 두고 받습니다 ──────────────────────────
+   *
+   *   ★ 2026-10-14 주인 화면 — 서천 쪽이 「물높이 예보를 불러오는
+   *     중…」에서 **멈춰 있었습니다.**
+   *
+   *   까닭은 `fetch` 에 **시간 제한이 없던 것**입니다. 응답이
+   *   안 오면 약속(Promise)이 영영 끝나지 않아, 성공도 실패도
+   *   아닌 채 로딩 글만 남습니다. 끝이 없는 기다림은 손님에게
+   *   **고장과 같습니다.**
+   *
+   *   ★ 재어 보니 자료 서버는 빠를 때 0.03초, 느릴 때 **6.3초**
+   *     였습니다(목포). 그래서 7초를 기다리고, 한 번만 더
+   *     해 봅니다 — 잠깐 막힌 것은 대개 두 번째에 풀립니다.
+   *   ★ 두 번 다 안 되면 **실패로 끝냅니다.** 영원히 기다리지
+   *     않습니다. */
+  var 기다릴시간 = 7000;
+
+  function 시간제한받기(주소, 남은기회) {
+    if (남은기회 == null) { 남은기회 = 1; }
+    return new Promise(function (풀기, 깨기) {
+      var 끝났나 = false;
+      var 멈추개 = (typeof AbortController !== 'undefined')
+        ? new AbortController() : null;
+      var 시계 = setTimeout(function () {
+        if (끝났나) return;
+        끝났나 = true;
+        if (멈추개) { try { 멈추개.abort(); } catch (e) {} }
+        if (남은기회 > 0) {
+          시간제한받기(주소, 남은기회 - 1).then(풀기, 깨기);
+        } else {
+          깨기(new Error('시간이 지났습니다'));
+        }
+      }, 기다릴시간);
+      fetch(주소, 멈추개 ? { signal: 멈추개.signal } : undefined)
+        .then(function (r) {
+          if (끝났나) return;
+          끝났나 = true; clearTimeout(시계); 풀기(r);
+        }, function (e) {
+          if (끝났나) return;
+          끝났나 = true; clearTimeout(시계);
+          if (남은기회 > 0) {
+            시간제한받기(주소, 남은기회 - 1).then(풀기, 깨기);
+          } else { 깨기(e); }
+        });
+    });
+  }
+
   function 지우기(box) {
     ['.tg-plot', '.tg-note'].forEach(function (c) {
       var e = box.querySelector(c); if (e) { e.remove(); }
@@ -425,9 +472,9 @@
         알리기(d, ev);
       };
       if (cache[day]) return go(cache[day].d, cache[day].ev);
-      if (!tidePromise) tidePromise = fetch(API + 'tide-cache.php?region=' + region).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
+      if (!tidePromise) tidePromise = 시간제한받기(API + 'tide-cache.php?region=' + region).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
       Promise.all([
-        fetch(API + 'marine.php?kind=series&region=' + region + '&day=' + day).then(function (r) { if (!r.ok) throw 0; return r.json(); }),
+        시간제한받기(API + 'marine.php?kind=series&region=' + region + '&day=' + day).then(function (r) { if (!r.ok) throw 0; return r.json(); }),
         tidePromise
       ]).then(function (a) {
         var ev = a[1] && a[1].days && a[1].days[day] ? a[1].days[day].events : null;

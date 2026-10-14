@@ -3237,7 +3237,10 @@ def 물높이그래프(쪽길, 권역):
             'b.textContent="다시 불러오기";'
             'b.addEventListener("click",function(){location.reload();});'
             '칸.appendChild(b);}'
-            '},6000);});</script>'
+            # ★ 15초 — 7초 기다리고 **한 번 더** 해 보므로
+            #   최대 14초가 걸립니다. 6초에 실패라 말하면
+            #   **느리기만 한 곳을 고장이라 부르게 됩니다.**
+            '},15000);});</script>'
             % (esc(주소), _js문자열(권역), _js문자열(api뿌리),
                _js문자열(권역)))
 

@@ -900,12 +900,48 @@
   if (!권역) { return; }
   var 주소 = 'https://badagaja.com/api/tide-cache.php?region='
            + encodeURIComponent(권역);
+  /* ★ 2026-10-14 — **시간 제한을 두고 한 번 더 해 봅니다**
+   *   `fetch` 에 제한이 없어, 응답이 안 오면 약속이 영영
+   *   끝나지 않았습니다. 재어 보니 자료 서버는 빠를 때 0.03초,
+   *   느릴 때 **6.3초**였습니다(목포). 그래서 7초를 기다리고
+   *   한 번만 더 해 봅니다. 두 번 다 안 되면 실패로 끝냅니다.
+   *   ★ 알림은 **재시도까지 지난 뒤**(15초) 띄웁니다 —
+   *     6초에 띄우면 느리기만 한 곳을 실패라고 말하게 됩니다. */
+  function 시간제한받기(주소, 남은기회) {
+    if (남은기회 == null) { 남은기회 = 1; }
+    return new Promise(function (풀기, 깨기) {
+      var 끝났나 = false;
+      var 멈추개 = (typeof AbortController !== 'undefined')
+        ? new AbortController() : null;
+      var 시계 = setTimeout(function () {
+        if (끝났나) return;
+        끝났나 = true;
+        if (멈추개) { try { 멈추개.abort(); } catch (e) {} }
+        if (남은기회 > 0) {
+          시간제한받기(주소, 남은기회 - 1).then(풀기, 깨기);
+        } else { 깨기(new Error('시간이 지났습니다')); }
+      }, 7000);
+      var 옵션 = { cache: 'no-store' };
+      if (멈추개) { 옵션.signal = 멈추개.signal; }
+      fetch(주소, 옵션).then(function (r) {
+        if (끝났나) return;
+        끝났나 = true; clearTimeout(시계); 풀기(r);
+      }, function (e) {
+        if (끝났나) return;
+        끝났나 = true; clearTimeout(시계);
+        if (남은기회 > 0) {
+          시간제한받기(주소, 남은기회 - 1).then(풀기, 깨기);
+        } else { 깨기(e); }
+      });
+    });
+  }
+
   var 꺼짐 = setTimeout(function () {
     알리기('물때 번호와 사리·조금은 계산으로 늘 나옵니다. '
            + '간조·만조 시각은 지금 불러오지 못했습니다.');
-  }, 6000);
+  }, 15000);
 
-  fetch(주소, { cache: 'no-store' })
+  시간제한받기(주소)
     .then(function (r) { return r.ok ? r.json() : null; })
     .then(function (나온것) {
       clearTimeout(꺼짐);
