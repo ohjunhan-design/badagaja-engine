@@ -1101,3 +1101,19 @@ svg.adc-art{
   font:inherit;font-size:13px;font-weight:800;cursor:pointer;
 }
 .tg-retry:hover{border-color:var(--ink)}
+
+/* ㉖ 실패했을 때의 **차례**를 바로잡습니다
+   (2026-10-14 — 찍어 보니 「다시 불러오기」가 제목 **위**에 있었습니다)
+
+   ★ PC 3카드에서 셋째 칸은 `flex` 이고, 제가 ㉑ 에서
+     머리글 1 · 그래프 3 · 칩 4 로 차례를 못박아 두었습니다.
+     그런데 실패 때 생기는 **까닭 글과 단추는 차례가 없어**
+     기본값 0 이 되어 **맨 앞으로 올라갔습니다.**
+     기계로는 「카드가 남았다」로 통과하지만, 사람 눈에는
+     **단추가 제목보다 먼저 나오는 이상한 칸**입니다.
+
+   ★ 제목 → 까닭 → 단추 로 바로잡습니다. */
+@media (min-width:981px){
+  .tide-two .tide-graph--card.tg-fail .tg-foot{order:5}
+  .tide-two .tide-graph--card .tg-retry{order:6;align-self:flex-start}
+}
