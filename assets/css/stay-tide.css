@@ -722,11 +722,22 @@ stroke='%232F5D57' stroke-width='2.2' stroke-linecap='round'>\
   .tide-two .tide-graph--card .tg-head{
     display:block;order:1;margin:0 0 10px;
   }
-  /* ① 「○○ 관측소 기준」을 머리글에서 빼 **그래프 위 작은 글자**로 */
+  /* ★ ① 「○○ 관측소 기준」 — **머리글 밖으로** (2026-10-14 주인 표시)
+     앞서 `order:2` 를 줬는데 **안 먹었습니다.** `.tg-station` 이
+     `.tg-head` **안**에 있어서 그 격자의 자식이 아니었습니다.
+     주인이 화면에 동그라미로 짚어 주셨고, 그 자리에 있어야 할
+     「>」 가 밀려나 있었습니다.
+     ★ 머리글 줄에서 **떼어 내** 그래프 바로 위로 내립니다.
+       `position:absolute` 로 흐름에서 빼고 그래프 위에 놓으면
+       DOM 을 안 건드리고 자리만 바뀝니다 — 자료는 그대로입니다. */
+  .tide-two .tide-graph--card .tg-head{position:relative}
   .tide-two .tide-graph--card .tg-station{
-    display:block;order:2;margin:0 0 4px;
-    font-size:10.5px;text-align:right;opacity:.75;
+    position:absolute;left:0;right:0;top:100%;
+    margin:2px 0 0;font-size:10.5px;text-align:right;opacity:.75;
+    pointer-events:none;
   }
+  /* 관측소 글이 내려앉을 자리를 머리글 아래에 둡니다 */
+  .tide-two .tide-graph--card .tg-head{margin:0 0 24px}
   .tide-two .tide-graph--card .tg-plot{order:3}
   .tide-two .tide-graph--card .tg-when{order:4}
 
