@@ -8396,7 +8396,10 @@ def main():
     물때칸 = os.path.join(DATA, 'tide')
     if os.path.isdir(물때칸):
         import shutil as _sh
-        낼물때 = os.path.join(나갈곳, 'data', 'tide')
+        # ★ `/data/` 는 서버가 직접 읽기를 막습니다(403) —
+        #   조사 메모가 들어 있는 보호된 자리입니다.
+        #   공개 자리인 `assets/` 아래에 냅니다.
+        낼물때 = os.path.join(나갈곳, 'assets', 'tide')
         os.makedirs(낼물때, exist_ok=True)
         옮긴것 = 0
         빈날합 = 0

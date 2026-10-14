@@ -525,7 +525,7 @@
       /* ★ 미리 받아 둔 파일을 먼저 봅니다 (2026-10-14)
          없거나 못 읽으면 지금까지 쓰던 길로 갑니다. */
       if (!tidePromise) tidePromise = 시간제한받기(
-          '/data/tide/' + encodeURIComponent(region) + '.json', 0)
+          '/assets/tide/' + encodeURIComponent(region) + '.json', 0)
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (d) {
           var 맞춘것 = 오늘부터(d);

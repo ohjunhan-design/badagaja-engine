@@ -910,7 +910,10 @@
    *   미리 받은 파일은 우리 서버의 **그냥 파일**이라 정부와 무관하게
    *   늘 빠릅니다. 없거나 못 읽으면 **지금까지 쓰던 길**로 갑니다 —
    *   손님에게 나빠지는 경우는 없습니다. */
-  var 미리받은곳 = '/data/tide/'
+  /* ★ `/data/` 는 서버가 **직접 읽기를 막습니다**(403) —
+   *   조사 메모 같은 것이 들어 있어 막아 둔 자리입니다.
+   *   그래서 공개 자리인 `/assets/` 아래에 둡니다. */
+  var 미리받은곳 = '/assets/tide/'
                  + encodeURIComponent(권역) + '.json';
   var 주소 = 'https://badagaja.com/api/tide-cache.php?region='
            + encodeURIComponent(권역);
