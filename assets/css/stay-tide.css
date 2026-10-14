@@ -297,3 +297,61 @@
 
 /* 펼친 뒤 카드가 단추에 붙지 않게 */
 .td-fold.is-open > .tide-days{margin-top:12px}
+
+
+/* ══════════════════════════════════════════════════════════
+   묶음 쪽 모바일·지도 UX (2026-10-14 주인 직접 지시 · 총감독 전달)
+
+   범위는 **권역 묶음 쪽**입니다. 이 차림표는 묶음 쪽과 권역 쪽이
+   함께 싣지만, 아래 고르개는 모두 묶음 쪽에만 있는 것들입니다
+   (`.gh-mo`·`.btn-row--pc`·`.gm-layout`). 다른 쪽에는 그 요소가
+   없어 **아무 일도 일어나지 않습니다.**
+   ══════════════════════════════════════════════════════════ */
+
+/* ① 제목 — PC 는 두 줄, 휴대폰은 한 줄 */
+.gh-mo{display:none}
+@media (max-width:760px){
+  .gh-pc{display:none}
+  .gh-mo{display:block;font-size:clamp(26px,7.2vw,34px);line-height:1.25;
+    letter-spacing:-.03em;white-space:nowrap}
+}
+
+/* ② 휴대폰에서 본문 검색칸·중복 단추를 숨깁니다 (PC 는 그대로)
+      머리의 전국 이동 동선은 **그대로 둡니다.** */
+@media (max-width:760px){
+  .btn-row--pc{display:none}
+  /* 쪽에서 실제로 쓰는 이름을 **확인하고** 적었습니다 —
+     `gs-box`(검색칸) · `gs-quick`(많이 찾는).
+     짐작으로 적으면 그 줄이 조용히 아무 일도 안 합니다. */
+  .gs-box,.gs-quick,.gs-out{display:none}
+}
+
+/* ④ PC 지도 — **가로 +20% · 세로 +10%**
+
+      ★ 세로를 따로 맞춰야 합니다
+        `site.css` 의 `.gm-map` 은 `aspect-ratio:3/4` 라
+        **높이가 폭에 묶여 있습니다.** 가로만 20% 늘리면
+        세로도 20% 늘어 요구(10%)를 넘깁니다.
+        그래서 비율 자체를 바꿔 둘을 따로 맞춥니다.
+
+            전   380 × 507   (3/4)
+            후   456 × 557   (가로 +20% · 세로 +10%)
+            비율 456/557
+
+      ★ `minmax(0,...)` 로 두어 화면이 좁아지면 지도가 먼저
+        줄고, 오른쪽 정보 칸이 눌리거나 가로 스크롤이 나지
+        않습니다. */
+@media (min-width:981px){
+  .gm-layout{grid-template-columns:minmax(0,456px) minmax(0,1fr)}
+  .gm-map{aspect-ratio:456/557}
+}
+
+/* ⑤ 터치 — **폭으로 끄지 않습니다**
+      태블릿이 PC 차림으로 잡혀도 두 손가락 핀치·한 손가락 끌기가
+      됩니다. 한 손가락 세로 쓸기는 쪽이 받아 스크롤이 막히지
+      않습니다. */
+.gm-map,.gm-canvas{touch-action:pan-y pinch-zoom}
+/* 잠금 덮개는 이제 만들지 않지만, 옛 쪽이 남아 있어도 안 덮이게 */
+.gm-map .map-lock{display:none !important}
+/* 핀은 눌려야 합니다 */
+.gm-map .gmp{pointer-events:auto}

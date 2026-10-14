@@ -47,8 +47,19 @@
       center: new kakao.maps.LatLng(있는것[0].위도, 있는것[0].경도),
       level: 10
     });
-    // 쪽을 넘기다 실수로 확대되지 않게 — 처음에는 잠가 둡니다
-    지도.setZoomable(false);
+    /* ★ **첫 표시부터 바로 조작됩니다** (2026-10-14 주인 직접 지시)
+     *
+     *   전에는 `setZoomable(false)` 로 잠가 두고 「눌러서 켜기」
+     *   오버레이를 덮었습니다. 주인 — 「사람들은 참아, 불편한
+     *   것보다 귀찮음을 더 싫어해」. 물때 쪽에서 이미 없앤
+     *   절차이며, 묶음 쪽도 같게 맞춥니다.
+     *
+     *   ★ 쪽 세로 스크롤과 부딪히지 않게 `touch-action` 을
+     *     차림표에서 `pan-y pinch-zoom` 으로 둡니다 — 한 손가락
+     *     세로 쓸기는 쪽이 받고, 두 손가락 핀치는 지도가 받습니다.
+     */
+    지도.setZoomable(true);
+    지도.setDraggable(true);
     지도.addControl(new kakao.maps.ZoomControl(),
                     kakao.maps.ControlPosition.RIGHT);
 
@@ -59,15 +70,9 @@
     //   화면이 멋대로 확대됩니다. 그래서 포인트 지도와 같은 방식으로,
     //   한 번 누르면 그때부터 휠이 듣게 합니다
     //   (assets/js/point-list.js 의 `map-lock` 과 같은 짜임).
-    var 잠금 = document.createElement('button');
-    잠금.type = 'button';
-    잠금.className = 'map-lock';
-    잠금.setAttribute('aria-label', '지도를 눌러 확대·이동을 켭니다');
-    칸.appendChild(잠금);
-    function 풀기() { 지도.setZoomable(true); 잠금.hidden = true; }
-    잠금.addEventListener('click', 풀기);
-    kakao.maps.event.addListener(지도, 'click', 풀기);
-    kakao.maps.event.addListener(지도, 'dragstart', 풀기);
+    /* ★ 잠금 오버레이를 **두지 않습니다** (2026-10-14)
+       위에서 이미 열어 두었습니다. 덮개를 두면 첫 누름이
+       지도에 안 닿아 핀도 못 누릅니다. */
 
     if (window.BADAGAJA_MAPTYPE) {
       window.BADAGAJA_MAPTYPE.달기(지도, 칸);

@@ -4,9 +4,22 @@
 
 <section class="section hero section--soft"><div class="wrap">
   <div class="badge badge--orange"><svg class="bi" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9c2.5 0 2.5 2.4 5 2.4S9.5 9 12 9s2.5 2.4 5 2.4S19.5 9 22 9M2 15.6c2.5 0 2.5 2.4 5 2.4s2.5-2.4 5-2.4 2.5 2.4 5 2.4 2.5-2.4 5-2.4"/></svg> {{한줄}}</div>
-  <h1 class="serif">{{큰제목}}<br><span class="accent">{{큰제목뒷줄}}</span></h1>
+  <!-- ★ **휴대폰에서는 한 줄 제목**입니다 (2026-10-14 주인 직접 지시)
+       「전남 바다 / 15권역을 한눈에」처럼 여러 줄이면 글자가 잘리고
+       첫 화면이 제목으로만 찹니다. 좁은 화면에서는
+       **「전남 바다 · 15권역」** 한 줄로 바꿔 보여 줍니다.
+       ★ PC 는 **전과 똑같습니다** — 차림표가 폭으로 가릅니다.
+       ★ 글은 **지우지 않습니다.** 읽어 주는 기계는 둘 다 읽습니다. -->
+  <h1 class="serif">
+    <span class="gh-pc">{{큰제목}}<br><span class="accent">{{큰제목뒷줄}}</span></span>
+    <span class="gh-mo">{{묶음이름}} 바다 · {{권역수}}권역</span>
+  </h1>
   <p class="hero-lead">{{소개글}}</p>
-  <div class="btn-row">
+  <!-- ★ 휴대폰에서는 이 두 단추를 숨깁니다 (2026-10-14 주인 직접 지시)
+       「권역 보기」는 바로 아래 지도가 하는 일이라 겹치고,
+       「전국 바다」는 **머리에 이미 있습니다.** 손가락으로 쓰는
+       화면에서 같은 길을 두 번 두면 첫 화면만 길어집니다. -->
+  <div class="btn-row btn-row--pc">
     <a href="#gwonyeok" class="btn btn--dark">{{권역수}}권역 보기</a>
     <a href="{{전국주소}}" class="btn btn--white">전국 바다</a>
   </div>
