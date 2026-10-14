@@ -4137,19 +4137,34 @@ def 묶음쪽(d, 묶음, 언어='ko'):
     # ★ 검색 — 이 묶음 안의 것을 이름으로 찾습니다 (2026-09-28)
     찾을것 = 묶음검색자료(d, 묶음, 권역들, 쪽길, 언어)
     빠른말 = 많이찾는말(d, 권역들, 언어)
+    # ★ **소형 검색** — 제목 줄 오른쪽에 붙습니다
+    #   (2026-10-14 총감독 P0 · 주인 직접 지시)
+    #
+    #   전에는 큰 검색칸이 제 줄을, 「많이 찾는」 칩이 또 한 줄을
+    #   차지해 첫 화면에서 **약 100px** 을 먹었습니다.
+    #
+    #   ★ 검색 기능은 **그대로 둡니다.** 머리의 돋보기는 진짜
+    #     검색창이 아니라 **첫 화면으로 가는 로고**이므로(로고()
+    #     함수 참고), 이 칸을 지우면 이 쪽에서 찾을 길이 없어집니다.
+    #   ★ 칩 줄은 지우되 그 말들은 **datalist 로 살립니다** —
+    #     줄을 차지하지 않으면서 눌러 고를 수 있습니다.
+    #     group-search.js 는 `if (빠른칸)` 으로 감싸져 있어
+    #     칩이 없어도 아무 일도 나지 않습니다.
+    #   ★ 이름표(label)는 그대로 둡니다 — 읽어 주는 기계가 씁니다.
     검색칸 = (
-        '<div class="gs"><label class="sr-only" for="groupSearch">'
+        '<div class="gs gs--mini"><label class="sr-only" '
+        'for="groupSearch">'
         '%s 권역·포인트·제철 해산물·축제·명소를 찾을 수 있습니다</label>'
         '<div class="gs-box">'
         '<svg class="gs-ic" viewBox="0 0 24 24" aria-hidden="true">'
         '<circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg>'
         '<input id="groupSearch" type="search" autocomplete="off" '
-        'placeholder="%s 권역·포인트·제철 해산물·축제·명소 찾기"></div>'
-        '<div class="gs-quick" id="groupQuick"><span>많이 찾는</span>%s</div>'
+        'list="groupQuickList" placeholder="%s에서 찾기"></div>'
+        '<datalist id="groupQuickList">%s</datalist>'
         '<div class="gs-out" id="groupSearchOut" hidden></div></div>'
         % (esc(이름), esc(이름),
-           ''.join('<button type="button" data-q="%s">%s</button>'
-                   % (esc(말), esc(말)) for 말 in 빠른말)))
+           ''.join('<option value="%s"></option>' % esc(말)
+                   for 말 in 빠른말)))
 
     # ★ 숫자 요약 — **자료에서 셉니다** (주인 규칙 29)
     _명소 = sum(len(d.여행(r['id'])['명소']) for r in 권역들)
@@ -4249,9 +4264,12 @@ def 묶음쪽(d, 묶음, 언어='ko'):
         '한줄': '%s 바다 안내' % 이름,
         '큰제목': '%s 바다' % 이름,
         '큰제목뒷줄': '%d권역을 한눈에' % len(권역들),
-        '소개글': '%s 해안 %d권역의 포인트 %d곳과 제철 어종, 축제를 모았습니다. '
-                  '권역을 고르면 그곳의 물때와 자세한 안내가 나옵니다.'
-                  % (이름, len(권역들), 수),
+        # ★ 설명문은 **한 줄**입니다 (2026-10-14 총감독 P0)
+        #   전에는 두 줄이라 첫 화면에서 약 50px 을 더 먹었습니다.
+        #   숫자(권역·포인트)는 바로 아래 숫자 요약에 크게 있고,
+        #   머리 이름표에도 있습니다 — 값은 하나도 잃지 않습니다.
+        '소개글': '%s %d권역의 물때·포인트·제철 어종·축제·명소를 '
+                  '지도에서 살펴보세요.' % (이름, len(권역들)),
         '권역수': len(권역들),
         '전국주소': 뿌리 or './',
         '권역안내': '권역마다 물때 기준 관측소와 규정이 다릅니다. '
