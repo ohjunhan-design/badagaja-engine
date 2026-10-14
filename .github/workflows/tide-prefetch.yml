@@ -36,7 +36,10 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  받기:
+  prefetch:        # ★ 작업 ID 는 **영문만** 됩니다
+            #   한글(`받기`)로 두었더니 워크플로가 통째로
+            #   무효가 되어 **0초 만에 실패**했습니다.
+            #   (아래 단계의 `name:` 은 한글이어도 됩니다)
     runs-on: ubuntu-latest
     timeout-minutes: 300
     steps:
