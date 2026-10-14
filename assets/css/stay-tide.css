@@ -512,3 +512,26 @@
   .tide-two > *{margin-bottom:10px}
   .tide-two .tide-graph--card{margin-bottom:0}
 }
+
+/* ⑪ 3카드 머리글 — 주인 승인 시안에 맞춰 **세 카드를 같은 꼴**로
+   (2026-10-14 · 시안 `사용자_승인시안_3카드_…png`)
+
+   시안에서 세 카드가 모두 「아이콘 + 이름」 머리글을 답니다 —
+   물빠짐 · 언제 갈까 · 시간별 물높이. 글자 크기·색·여백을 맞춥니다. */
+
+.card-k{
+  margin:0 0 10px;font-size:13px;font-weight:800;
+  letter-spacing:-.02em;color:var(--green,#2F5D57);
+}
+/* 셋째 칸(그래프)의 눈썹글은 시안에 없습니다 — 제목만 남깁니다 */
+@media (min-width:981px){
+  .tide-two .tide-graph--card .tg-eyebrow,
+  .tide-two .tide-graph--card .tg-kicker{display:none}
+  .tide-two .tide-graph--card .tg-title,
+  .tide-two .tide-graph--card h3{
+    margin:0 0 10px;font-size:13px;font-weight:800;
+    letter-spacing:-.02em;color:var(--green,#2F5D57);
+  }
+  /* 세 카드 높이·안쪽 여백 통일 */
+  .tide-two > *{padding:16px 18px;box-sizing:border-box}
+}

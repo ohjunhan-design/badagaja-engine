@@ -251,7 +251,8 @@
   function 언제갈까(날들) {
     var 볼것 = 날들.slice(0, 7);
     var 칸 = 만들기('div', 'when');
-    칸.appendChild(만들기('p', 'when-k', '이번 주 언제 갈까'));
+    // ★ 시안 글 그대로 — 「언제 갈까」 (2026-10-14 주인 승인 시안)
+    칸.appendChild(만들기('p', 'when-k card-k', '언제 갈까'));
 
     var 가장 = null;
     볼것.forEach(function (d, i) {
@@ -356,6 +357,9 @@
   function 오늘한눈에(오늘치) {
     if (!오늘치) { return null; }
     var 한눈 = 만들기('div', 'tnow');
+    /* ★ 머리글 — 주인 승인 시안에 세 카드가 **같은 꼴의 머리글**을
+       답니다(물빠짐 · 언제 갈까 · 시간별 물높이). 그 결을 맞춥니다. */
+    한눈.appendChild(만들기('p', 'card-k', '물빠짐'));
 
     var 위 = 만들기('div', 'tnow-head');
     var 물 = 만들기('div', 'tnow-num');
