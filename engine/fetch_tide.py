@@ -40,6 +40,7 @@ import sys
 import time
 import urllib.error
 import urllib.request
+from engine import kst
 
 여기 = os.path.dirname(os.path.abspath(__file__))
 뿌리 = os.path.dirname(여기)
@@ -245,8 +246,11 @@ def 서울오늘():
     ★ 윈도는 이미 한국 시간입니다. `TZ=` 를 주면 아홉 시간
       빠져 **어제가 오늘이 됩니다.** 그래서 그냥 씁니다.
     """
-    t = datetime.datetime.now()
-    return '%d/%d' % (t.month, t.day)
+    # ★ **한국 날짜**로 못 박습니다 (2026-10-14).
+    #   처음에는 「윈도는 이미 한국 시간이니 그냥 쓴다」고
+    #   적었는데 **반쪽만 맞았습니다** — 판정은 우분투(UTC)
+    #   에서 돕니다. 어느 컴퓨터에서든 같아야 합니다.
+    return kst.오늘키()
 
 
 def 남은날세기(자료):

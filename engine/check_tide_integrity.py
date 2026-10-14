@@ -51,6 +51,8 @@ import sys
 import urllib.error
 import urllib.request
 
+from engine import kst
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 서버앞 = 'https://badagaja.com/assets/tide/'
 손님앞 = 'https://badagaja.com/api/tide-cache.php'
@@ -354,7 +356,9 @@ def main():
     p.add_argument('--strict', action='store_true')
     a = p.parse_args()
 
-    오늘 = datetime.date.today()
+    # ★ **한국 날짜**로 못 박습니다 — 판정은 우분투(UTC)에서
+    #   돌기 때문입니다 (2026-10-14). engine/kst.py 참고.
+    오늘 = kst.오늘()
 
     # ── 대조 모드 ────────────────────────────────────────
     if a.대조:

@@ -67,11 +67,14 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 sys.path.insert(0, ROOT)
 from engine import fetch_tide as ft   # noqa: E402
+from engine import kst               # noqa: E402
 
 
 def 오늘키():
-    t = datetime.datetime.now()
-    return '%d/%d' % (t.month, t.day)
+    # ★ **한국 날짜**로 못 박습니다 (2026-10-14).
+    #   판정은 우분투(UTC)에서 도는데, `now()` 를 그냥 쓰면
+    #   한국 새벽에 날짜가 하루 어긋납니다.
+    return kst.오늘키()
 
 
 def 남은날(자료, 오늘):

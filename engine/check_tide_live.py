@@ -23,6 +23,8 @@ import os
 import sys
 import time
 import urllib.request
+
+from engine import kst
 from datetime import datetime, timedelta
 
 여기 = os.path.dirname(os.path.abspath(__file__))
@@ -44,8 +46,10 @@ def 권역목록():
 
 
 def 오늘엠디():
-    t = datetime.now()
-    return '%d/%d' % (t.month, t.day)
+    # ★ **한국 날짜**로 못 박습니다 (2026-10-14 · engine/kst.py)
+    #   판정은 우분투(UTC)에서 돕니다. `now()` 를 그냥 쓰면
+    #   한국 새벽에 하루 어긋나 「폴백 임박」을 잘못 알립니다.
+    return kst.오늘키()
 
 
 def 받기(권역):
@@ -116,7 +120,7 @@ def 서버상태():
           % (가장적은, 빈합, 모자람합))
     if 가장적은 is not None:
         남을날 = max(0, 가장적은 - 폴백임박 + 1)
-        그날 = datetime.now() + timedelta(days=남을날)
+        그날 = kst.지금() + timedelta(days=남을날)
         print('→ 아무것도 안 하면 **%d/%d 무렵부터 폴백**입니다'
               % (그날.month, 그날.day))
     # ★ 감독실이 그대로 옮겨 적을 수 있는 한 줄
@@ -211,7 +215,7 @@ def main():
 
     print('-' * 68)
     if 가장적은남은 is not None:
-        t = datetime.now()
+        t = kst.지금()
         폴백날 = t + timedelta(days=max(0, 가장적은남은 - 폴백임박 + 1))
         print('가장 적게 남은 곳 **%d일** (만료 %s)'
               % (가장적은남은, 가장빠른만료))

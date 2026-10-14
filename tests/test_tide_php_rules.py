@@ -27,6 +27,10 @@ import datetime
 import json
 import sys
 import urllib.request
+import os as _os
+sys.path.insert(0, _os.path.dirname(_os.path.dirname(
+    _os.path.abspath(__file__))))
+from engine import kst
 
 sys.stdout.reconfigure(encoding='utf-8')
 
@@ -141,7 +145,12 @@ def 받기(n):
         return json.loads(r.read().decode('utf-8'))
 
 
-오늘 = datetime.date.today()
+# ★ **한국 날짜**로 못 박습니다 (2026-10-14).
+#   서버 PHP 는 `date_default_timezone_set('Asia/Seoul')` 로
+#   고정돼 있습니다. 거울이 로컬 시각을 쓰면 **판정이 도는
+#   우분투(UTC)** 에서 한국 새벽에 날짜가 하루 어긋나
+#   「운영 57곳이 전부 막힌다」는 거짓 보고가 납니다.
+오늘 = kst.오늘()
 print('① 운영 57곳이 새 검증을 통과하는가')
 print('-' * 58)
 잡힌곳, 못읽음, 알림수, 빈합 = [], [], 0, 0
@@ -254,3 +263,67 @@ if not 모두잡았나:
 print('★ 운영 자료는 **통과하고**, 망가뜨린 것은 **모두 잡습니다.**')
 print('  PHP 문법은 서버에 올려 봐야 압니다 — 감독실이 올린 직후')
 print('  응답 코드와 status=1 을 봐 주셔야 합니다.')
+
+# ── 시간대 — **판정은 우분투(UTC)에서 돕니다** ─────────────
+#
+# ★ 2026-10-14 감독실이 서버 PHP 에서 같은 함정을 찾았습니다.
+#   `date()` 가 서버 기본 시간대를 따라 UTC 였다면, **한국
+#   00~09시 아홉 시간 동안** 「오늘」이 어제가 되어 검증이
+#   전부 떨어지고 **갱신이 통째로 멈췄을** 것입니다.
+#   PHP 는 `date_default_timezone_set('Asia/Seoul')` 로 고쳤고,
+#   파이썬 쪽은 `engine/kst.py` 로 못 박았습니다.
+#
+#   여기서는 **정말 못 박혔는지** 잽니다. 그냥 돌리면 낮에는
+#   UTC 와 한국 날짜가 같아 **구별이 안 됩니다** — 그래서
+#   한국 새벽을 흉내 내어 잽니다.
+def 시간대시험():
+    import datetime as _dt
+    from engine import kst as _kst
+
+    탈 = []
+    KST = _dt.timezone(_dt.timedelta(hours=9))
+    UTC = _dt.timezone.utc
+
+    # 한국 새벽 02:30 — UTC 로는 전날 17:30 입니다
+    for 달, 날 in ((1, 1), (3, 15), (10, 15), (12, 31)):
+        새벽 = _dt.datetime(2026, 달, 날, 2, 30, tzinfo=KST)
+        유 = 새벽.astimezone(UTC)
+        if 유.date() == 새벽.date():
+            탈.append('%d/%d 흉내가 잘못됐습니다' % (달, 날))
+            continue
+        # 로컬 시각을 그냥 쓰면 UTC 날짜가 나옵니다 — 하루 어긋남
+        로컬식 = '%d/%d' % (유.month, 유.day)
+        못박음 = '%d/%d' % (새벽.month, 새벽.day)
+        if 로컬식 == 못박음:
+            탈.append('%s 에서 차이가 안 납니다 (시험이 헛돕니다)' % 못박음)
+
+    # 진짜 함수가 **시간대가 붙은** 값을 쓰는가
+    지금 = _kst.지금()
+    if 지금.tzinfo is None:
+        탈.append('kst.지금() 에 시간대가 안 붙어 있습니다')
+    elif 지금.utcoffset() != _dt.timedelta(hours=9):
+        탈.append('kst 가 +9 가 아닙니다 (%s)' % 지금.utcoffset())
+
+    # 물때를 다루는 셋이 **같은 날**을 봐야 합니다
+    from engine import fetch_tide as _ft
+    from engine import merge_live_tide as _ml
+    것 = {_kst.오늘키(), _ft.서울오늘(), _ml.오늘키()}
+    if len(것) != 1:
+        탈.append('세 도구가 다른 날을 봅니다: %s' % 것)
+
+    return 탈
+
+
+print()
+print('④ 시간대가 못 박혔는가 (판정은 UTC 에서 돕니다)')
+print('-' * 58)
+_탈 = 시간대시험()
+if _탈:
+    for _x in _탈:
+        print('   ✗ %s' % _x)
+else:
+    print('   · 한국 새벽을 흉내 내어도 **한국 날짜**를 봅니다')
+    print('   · kst 는 +9 로 시간대가 붙어 있습니다')
+    print('   · 물때를 다루는 세 도구가 같은 날을 봅니다')
+if _탈:
+    sys.exit(1)

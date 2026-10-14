@@ -35,6 +35,7 @@ import re
 import sys
 import urllib.request
 from datetime import datetime, timedelta
+from engine import kst
 
 여기 = os.path.dirname(os.path.abspath(__file__))
 뿌리 = os.path.dirname(여기)
@@ -57,7 +58,8 @@ def 권역목록():
 
 
 def 오늘엠디():
-    t = datetime.now()
+    # ★ **한국 날짜**로 못 박습니다 (2026-10-14 · engine/kst.py)
+    t = kst.지금()
     return '%d/%d' % (t.month, t.day)
 
 
