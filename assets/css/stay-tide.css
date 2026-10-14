@@ -1117,3 +1117,26 @@ svg.adc-art{
   .tide-two .tide-graph--card.tg-fail .tg-foot{order:5}
   .tide-two .tide-graph--card .tg-retry{order:6;align-self:flex-start}
 }
+
+/* ㉗ 축제 달력 — **설명문을 빼고 조밀하게** (2026-10-14 총감독)
+
+   달마다 설명이 두세 줄씩 붙어 카드가 길었습니다. 달·축제 이름만
+   두면 **한눈에 훑고** 궁금한 것만 눌러 보게 됩니다.
+
+   ★ 설명은 **지우지 않았습니다** — 팝업과 상세 쪽에 그대로 있습니다.
+     카드에서 **보여 주지 않을** 뿐입니다.
+   ★ 긴 이름은 자연스럽게 줄바꿈합니다 — **글자를 자르지 않습니다.**
+   ★ 축제가 없는 달은 작게 「등록된 축제 없음」을 적습니다.
+     빈 칸만 두면 자료를 못 불러온 것처럼 보입니다. */
+.months .month{min-height:0;padding:11px 13px}
+.months .month-item{margin:5px 0 0;min-height:24px}
+.months .month-name{
+  margin-top:4px;font-size:13px;line-height:1.4;
+  overflow-wrap:break-word;word-break:keep-all;
+}
+.months .month-none{
+  display:block;margin-top:5px;font-size:11.5px;line-height:1.5;
+  color:var(--dim,#8A9794);
+}
+/* 혹시 옛 쪽이 남아 있어도 설명 줄은 내지 않습니다 */
+.months .month-desc{display:none}

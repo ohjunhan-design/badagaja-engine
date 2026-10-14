@@ -3724,18 +3724,24 @@ def 달력칸(축제들, 쪽길, 언어='ko', 쪽찾기=None):
             #   깨진 링크보다 단추가 없는 편이 낫습니다.
             '주소': _축제주소(x, 쪽찾기, 쪽길, 언어),
         })
+        # ★ **설명문은 카드에 내지 않습니다** (2026-10-14 총감독)
+        #   달마다 설명이 두세 줄씩 붙어 카드가 길어졌습니다.
+        #   달·축제 이름만 두면 한눈에 훑을 수 있습니다.
+        #   ★ 설명은 **지우지 않았습니다** — 바로 위 `목록` 에
+        #     그대로 들어가 팝업과 상세 쪽에서 나옵니다.
         return ('<button type="button" class="month-item" data-fest="%d">'
-                '<span class="month-name">%s</span>%s</button>'
-                % (번호, esc(이름),
-                   '<span class="month-desc">%s</span>' % esc(설명)
-                   if 설명 else ''))
+                '<span class="month-name">%s</span></button>'
+                % (번호, esc(이름)))
 
     나옴 = ''
     for 달 in range(1, 13):
         것들 = 달표.get(달) or []
+        # ★ 축제가 없는 달은 **작게 「없음」**을 적습니다
+        #   빈 칸만 두면 자료를 못 불러온 것처럼 보입니다.
         나옴 += ('<div class="month%s"><div class="month-num">%d월</div>%s</div>'
                  % (' month--on' if 것들 else '', 달,
-                    ''.join(한개(x) for x in 것들)))
+                    ''.join(한개(x) for x in 것들) if 것들
+                    else '<span class="month-none">등록된 축제 없음</span>'))
     남은 = 달표.get(0) or []
     if 남은:
         나옴 += ('<div class="month month--on">'
