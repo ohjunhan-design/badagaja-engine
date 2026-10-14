@@ -665,3 +665,24 @@ stroke='%232F5D57' stroke-width='2.2' stroke-linecap='round'>\
 <path d='M4 20V10M10 20V4M16 20v-7M22 20V7'/></svg>");
   }
 }
+
+/* ⑭ 셋째 카드가 높이를 잡고 있었습니다 (2026-10-14 미리보기에서 봄)
+
+   미리보기를 찍어 보니 첫 카드 아래에 큰 빈 자리가 있었습니다.
+   까닭은 **셋째 카드의 출처가 세 줄**이라 거기에 맞춰 세 카드가
+   함께 늘어난 것입니다.
+
+   ★ 글을 **지우지 않습니다.** PC 3카드에서만 **색 설명 한 줄**을
+     접습니다 — 칩에 이미 「간조」·「만조」 글자가 있어 **같은 말**
+     입니다. 자료 출처와 「실제 지점과 다를 수 있습니다」는
+     **그대로 둡니다** (정확성·안전 고지).
+   ★ 모바일과 다른 쪽에서는 세 줄 그대로 나옵니다. */
+
+@media (min-width:981px){
+  .tide-two .tide-graph--card .tg-note{display:none}
+  /* 남은 두 줄을 한 줄로 모읍니다 */
+  .tide-two .tide-graph--card .tg-foot{
+    display:flex;flex-wrap:wrap;gap:4px 10px;
+    margin:8px 0 0;font-size:10.5px;line-height:1.4;
+  }
+}
