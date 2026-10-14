@@ -8383,6 +8383,43 @@ def main():
     except Exception as e:                              # noqa: BLE001
         print('  검수 뷰를 못 만들었습니다 — %s' % e)
 
+    # ★ **미리 받아 둔 물때**를 사이트로 옮깁니다 (2026-10-14)
+    #
+    #   간조·만조는 천문 계산값이라 변하지 않습니다. 그래서
+    #   `engine/fetch_tide.py` 가 가끔 받아 `data/tide/` 에 두고,
+    #   손님은 그 파일만 읽습니다(정부 API 를 안 거칩니다).
+    #
+    #   ★ 없으면 **아무 일도 하지 않습니다** — 그 경우 물때 스크립트가
+    #     지금까지 쓰던 길로 갑니다. 손님에게 나빠지지 않습니다.
+    #   ★ 판 지문보다 **먼저** 옮깁니다 — 지문이 이것까지 세어야
+    #     올린 것이 내가 만든 그것인지 증명됩니다.
+    물때칸 = os.path.join(DATA, 'tide')
+    if os.path.isdir(물때칸):
+        import shutil as _sh
+        낼물때 = os.path.join(나갈곳, 'data', 'tide')
+        os.makedirs(낼물때, exist_ok=True)
+        옮긴것 = 0
+        빈날합 = 0
+        for 이름 in sorted(os.listdir(물때칸)):
+            if not 이름.endswith('.json'):
+                continue
+            원본 = os.path.join(물때칸, 이름)
+            목적 = os.path.join(낼물때, 이름)
+            if (not os.path.isfile(목적)
+                    or os.path.getsize(원본) != os.path.getsize(목적)):
+                _sh.copy2(원본, 목적)
+            옮긴것 += 1
+            try:
+                _d = json.load(io.open(원본, encoding='utf-8'))
+                빈날합 += sum(1 for _x in (_d.get('days') or [])
+                              if not (_x.get('events') or []))
+            except Exception:
+                pass
+        if 옮긴것:
+            print('  미리 받은 물때 %d곳%s'
+                  % (옮긴것,
+                     ' · 아직 빈 날 %d개' % 빈날합 if 빈날합 else ''))
+
     # ★ 검색엔진에게 알리는 세 파일 (2026-09-28)
     #   sitemap.xml · robots.txt · llms.txt
     #   **판 지문보다 먼저** 만듭니다 — 지문이 이 셋까지 세어야

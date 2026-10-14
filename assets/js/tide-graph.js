@@ -472,7 +472,18 @@
         알리기(d, ev);
       };
       if (cache[day]) return go(cache[day].d, cache[day].ev);
-      if (!tidePromise) tidePromise = 시간제한받기(API + 'tide-cache.php?region=' + region).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
+      /* ★ 미리 받아 둔 파일을 먼저 봅니다 (2026-10-14)
+         없거나 못 읽으면 지금까지 쓰던 길로 갑니다. */
+      if (!tidePromise) tidePromise = 시간제한받기(
+          '/data/tide/' + encodeURIComponent(region) + '.json', 0)
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) {
+          if (d && d.days && d.days.length) { return d; }
+          throw new Error('미리 받은 것 없음');
+        })
+        .catch(function () {
+          return 시간제한받기(API + 'tide-cache.php?region=' + region).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
+        });
       Promise.all([
         시간제한받기(API + 'marine.php?kind=series&region=' + region + '&day=' + day).then(function (r) { if (!r.ok) throw 0; return r.json(); }),
         tidePromise

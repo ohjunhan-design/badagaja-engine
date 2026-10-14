@@ -1,0 +1,279 @@
+# -*- coding: utf-8 -*-
+"""물때를 **미리 받아 파일로 저장합니다** (2026-10-14 주인 의견 · 총감독 지휘)
+
+★ 왜 만드나
+  손님이 올 때마다 서버가 정부 API 를 **하루치씩 30번** 부르는
+  구조였습니다. 재어 보니 정부 API 는 건강할 때 **70ms** 인데
+  **간헐적으로 응답이 아예 없거나 오류**가 납니다. 그걸 손님이
+  그대로 맞아, 강화에서 **32초**를 기다린 손님이 있었습니다.
+
+  간조·만조는 **천문 계산값**이라 내년 시각도 이미 정해져 있습니다.
+  날씨처럼 자주 받을 까닭이 없습니다. 그래서 **미리 받아 두고**
+  손님은 그 파일만 읽게 합니다.
+
+★ 여기서 하는 일
+  · 57권역에 대해 서버의 미리받기 통로를 불러 **30일치**를 받습니다
+  · **빈 날이 있으면 다시 받습니다** — 아무도 안 기다리므로
+    끈질기게 해도 됩니다(손님이 기다릴 때는 두 번이 한계였습니다)
+  · **날짜가 모두 찬 것만** 파일을 바꿉니다.
+    일부만 찼으면 **옛 파일을 그대로 둡니다** — 반쪽짜리로
+    덮어쓰면 어제까지 멀쩡하던 것이 나빠집니다.
+
+★ 쓰는 법
+    python -m engine.fetch_tide                # 전부
+    python -m engine.fetch_tide --권역 taean   # 한 곳만
+    python -m engine.fetch_tide --날수 14      # 일수 바꾸기
+    python -m engine.fetch_tide --확인         # 받지 않고 지금 상태만
+
+  암호는 환경변수 `BADAGAJA_TIDE_KEY` 로 줍니다(깃허브 비밀값).
+  없으면 기본값을 씁니다 — 이 암호는 **정부 열쇠가 아니라**
+  호출 한도를 지키려는 문지기입니다.
+"""
+import argparse
+import io
+import json
+import os
+import sys
+import time
+import urllib.error
+import urllib.request
+
+여기 = os.path.dirname(os.path.abspath(__file__))
+뿌리 = os.path.dirname(여기)
+낼곳 = os.path.join(뿌리, 'data', 'tide')
+
+통로 = 'https://badagaja.com/api/tide-cache2.php'
+암호 = os.environ.get('BADAGAJA_TIDE_KEY', 'bdg-prefetch-20261014')
+
+기본날수 = 30
+한번에기다릴초 = 200        # ★ 재어 보니 같은 주소가 **1.97초~133초** 로
+                            #   들쑥날쑥합니다. 아무도 안 기다리므로
+                            #   넉넉히 줍니다.
+권역사이쉼 = 1.2            # 정부 API 를 몰아치지 않습니다
+재시도 = 1                  # 한 번만 더 — 나머지는 **합치기**가 맡습니다
+재시도쉼 = 5.0
+
+
+def 권역목록():
+    """생성기가 쓰는 **같은 자료**에서 셉니다 (규칙 29)."""
+    sys.path.insert(0, 뿌리)
+    from engine import build
+    d = build.자료()
+    것 = []
+    for r in d.권역들:
+        이름 = (r.get('이름') or {}).get('ko') or r['id']
+        것.append((r['id'], 이름))
+    return 것
+
+
+def 한번받기(권역, 날수):
+    주소 = '%s?region=%s&days=%d&t=%s' % (통로, 권역, 날수, 암호)
+    요청 = urllib.request.Request(
+        주소, headers={'User-Agent': 'badagaja-prefetch/1.0'})
+    t0 = time.time()
+    try:
+        몸 = urllib.request.urlopen(
+            요청, timeout=한번에기다릴초).read().decode('utf-8', 'replace')
+    except Exception as e:
+        return None, time.time() - t0, '못 받음(%s)' % type(e).__name__
+    try:
+        d = json.loads(몸)
+    except Exception:
+        return None, time.time() - t0, '글이 깨졌습니다'
+    return d, time.time() - t0, None
+
+
+def 빈날세기(d, 날수):
+    날 = d.get('days') or []
+    빈 = [x.get('date') for x in 날 if not (x.get('events') or [])]
+    return 날, 빈
+
+
+def 날짜키(x):
+    return x.get('date') or ''
+
+
+def 합치기(옛자료, 새자료):
+    """★ **조석은 변하지 않습니다** — 그래서 합쳐도 됩니다.
+
+    10/19 의 간조·만조는 어제 받든 오늘 받든 **같은 값**입니다.
+    그러니 한 번만 성공하면 그 날은 영영 채워진 것입니다.
+
+    정부 API 가 들쑥날쑥해서 받을 때마다 **다른 날이 빕니다.**
+    한 번에 다 채우려 하면 오래 걸리고 그래도 못 채웁니다.
+    대신 **채워진 것만 모아 두면** 몇 번에 걸쳐 저절로 다 찹니다.
+
+    ★ 그래서 이 방식은 **절대 나빠지지 않습니다.**
+      새로 받은 것이 비어 있어도 옛 값을 지우지 않습니다.
+    """
+    모음 = {}
+    for 묶음 in (옛자료, 새자료):
+        if not 묶음:
+            continue
+        for x in (묶음.get('days') or []):
+            키 = 날짜키(x)
+            if not 키:
+                continue
+            찬것 = bool(x.get('events'))
+            if 키 not in 모음 or (찬것 and not 모음[키].get('events')):
+                모음[키] = x
+    return 모음
+
+
+def 차례대로(모음, 새자료, 날수):
+    """새로 받은 **날짜 차례**를 기준으로 줄 세웁니다.
+
+    지난 날짜는 빠지고 새 날짜가 들어옵니다 — 늘 오늘부터 N일입니다.
+    """
+    차례 = [날짜키(x) for x in (새자료.get('days') or [])]
+    줄 = []
+    for 키 in 차례[:날수]:
+        if 키 in 모음:
+            줄.append(모음[키])
+    return 줄
+
+
+def 한권역(권역, 이름, 날수, 조용히=False):
+    """돌려주는 것: (저장할 자료, 말, 빈 날 수)"""
+    옛 = 옛파일읽기(권역)
+    쌓임 = None
+    마지막새것 = None
+    말들 = []
+    for 차례 in range(1 + 재시도):
+        d, 초, 탈 = 한번받기(권역, 날수)
+        if 탈:
+            말들.append('%d번째 %s(%.0f초)' % (차례 + 1, 탈, 초))
+            if 차례 < 재시도:
+                time.sleep(재시도쉼)
+            continue
+        마지막새것 = d
+        모음 = 합치기(쌓임 or 옛, d)
+        줄 = 차례대로(모음, d, 날수)
+        쌓임 = dict(d)
+        쌓임['days'] = 줄
+        빈 = [날짜키(x) for x in 줄 if not x.get('events')]
+        말들.append('%d번째 %d일중 빈%d (%.0f초)'
+                    % (차례 + 1, len(줄), len(빈), 초))
+        if len(줄) >= 날수 and not 빈:
+            return 쌓임, ' · '.join(말들) + ' → **다 참**', 0
+        if 차례 < 재시도:
+            time.sleep(재시도쉼)
+
+    if 쌓임 is None:
+        # 한 번도 못 받았습니다 — 옛 파일을 건드리지 않습니다
+        return None, ' · '.join(말들) + ' → **못 받음, 안 바꿈**', -1
+
+    빈 = [날짜키(x) for x in 쌓임['days'] if not x.get('events')]
+    # ★ 빈 날이 남아도 **합친 것**이라 옛 파일보다 나쁘지 않습니다
+    return 쌓임, ' · '.join(말들) + ' → 빈 날 %d개 남음' % len(빈), len(빈)
+
+
+def 옛파일읽기(권역):
+    p = os.path.join(낼곳, '%s.json' % 권역)
+    if not os.path.isfile(p):
+        return None
+    try:
+        return json.load(io.open(p, encoding='utf-8'))
+    except Exception:
+        return None
+
+
+def 저장(권역, d):
+    """★ 다 찬 것만 여기까지 옵니다."""
+    os.makedirs(낼곳, exist_ok=True)
+    p = os.path.join(낼곳, '%s.json' % 권역)
+    글 = json.dumps(d, ensure_ascii=False, separators=(',', ':'))
+    옛 = None
+    if os.path.isfile(p):
+        옛 = io.open(p, encoding='utf-8').read()
+    if 옛 == 글:
+        return '같습니다'
+    io.open(p, 'w', encoding='utf-8', newline='\n').write(글)
+    return '새로 썼습니다' if 옛 is None else '바꿨습니다'
+
+
+def 지금상태(것, 날수):
+    print('지금 저장된 것 (%s)' % 낼곳)
+    있 = 0
+    for 권역, 이름 in 것:
+        p = os.path.join(낼곳, '%s.json' % 권역)
+        if not os.path.isfile(p):
+            print('   %-12s **없습니다**' % 이름)
+            continue
+        있 += 1
+        d = json.load(io.open(p, encoding='utf-8'))
+        날, 빈 = 빈날세기(d, 날수)
+        첫 = (날[0].get('date') if 날 else '-')
+        끝 = (날[-1].get('date') if 날 else '-')
+        print('   %-12s %2d일 (%s~%s) · 빈 날 %d개 · %.1fKB'
+              % (이름, len(날), 첫, 끝, len(빈),
+                 os.path.getsize(p) / 1024.0))
+    print('\n%d곳 중 **%d곳**이 저장되어 있습니다' % (len(것), 있))
+
+
+def main():
+    p = argparse.ArgumentParser()
+    p.add_argument('--권역', default='')
+    p.add_argument('--날수', type=int, default=기본날수)
+    p.add_argument('--확인', action='store_true')
+    a = p.parse_args()
+
+    것 = 권역목록()
+    if a.권역:
+        것 = [x for x in 것 if x[0] == a.권역]
+        if not 것:
+            print('그런 권역이 없습니다: %s' % a.권역)
+            return 1
+
+    if a.확인:
+        지금상태(것, a.날수)
+        return 0
+
+    print('물때를 미리 받습니다 — %d곳 × %d일' % (len(것), a.날수))
+    print('통로 %s' % 통로)
+    print('(빈 날이 있으면 최대 %d번 더 해 봅니다)\n' % 재시도)
+
+    다찬곳 = 0
+    남은빈날 = 0
+    못받은곳 = []
+    바뀐것 = 0
+    시작 = time.time()
+    for i, (권역, 이름) in enumerate(것, 1):
+        d, 말, 빈수 = 한권역(권역, 이름, a.날수)
+        if d is not None:
+            어찌 = 저장(권역, d)
+            if 어찌 != '같습니다':
+                바뀐것 += 1
+            if 빈수 == 0:
+                다찬곳 += 1
+            else:
+                남은빈날 += 빈수
+            print('%3d/%d %-12s %s · %s' % (i, len(것), 이름, 말, 어찌))
+        else:
+            못받은곳.append((이름, 말))
+            print('%3d/%d %-12s %s' % (i, len(것), 이름, 말))
+        if i < len(것):
+            time.sleep(권역사이쉼)
+
+    걸린 = time.time() - 시작
+    print('')
+    print('-' * 56)
+    print('%d일이 **다 찬 곳 %d/%d** · 파일이 바뀐 곳 %d · %.1f분'
+          % (a.날수, 다찬곳, len(것), 바뀐것, 걸린 / 60.0))
+    if 남은빈날:
+        print('아직 빈 날 모두 %d개 — **다음 번에 채워집니다**'
+              % 남은빈날)
+        print('  조석은 변하지 않으므로 한 번만 성공하면 그 날은 끝입니다')
+    if 못받은곳:
+        print('')
+        print('한 번도 못 받은 곳 %d곳 — **옛 파일 그대로 둡니다**'
+              % len(못받은곳))
+        for 이름, 말 in 못받은곳:
+            print('   %-12s %s' % (이름, 말))
+    print('')
+    print('※ 못 채워도 손님 화면은 멀쩡합니다 — 옛 파일이 있고,')
+    print('  그것도 없으면 지금까지 쓰던 길로 갑니다.')
+    return 1 if (못받은곳 and len(못받은곳) == len(것)) else 0
+
+if __name__ == '__main__':
+    sys.exit(main())

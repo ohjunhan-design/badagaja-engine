@@ -898,6 +898,20 @@
   };
 
   if (!권역) { return; }
+  /* ★ **미리 받아 둔 파일을 먼저 봅니다** (2026-10-14 주인 의견)
+   *
+   *   간조·만조는 천문 계산값이라 **변하지 않습니다.** 그래서
+   *   가끔 한 번 받아 파일로 두고 손님은 그것만 읽으면 됩니다.
+   *
+   *   재어 보니 정부 API 는 건강할 때 70ms 인데 **간헐적으로
+   *   응답이 없습니다** — 같은 주소가 1.97초였다 133초였다 합니다.
+   *   그걸 손님이 그대로 맞아 강화에서 **32초**를 기다렸습니다.
+   *
+   *   미리 받은 파일은 우리 서버의 **그냥 파일**이라 정부와 무관하게
+   *   늘 빠릅니다. 없거나 못 읽으면 **지금까지 쓰던 길**로 갑니다 —
+   *   손님에게 나빠지는 경우는 없습니다. */
+  var 미리받은곳 = '/data/tide/'
+                 + encodeURIComponent(권역) + '.json';
   var 주소 = 'https://badagaja.com/api/tide-cache.php?region='
            + encodeURIComponent(권역);
   /* ★ 2026-10-14 — **시간 제한을 두고 한 번 더 해 봅니다**
@@ -941,8 +955,23 @@
            + '간조·만조 시각은 지금 불러오지 못했습니다.');
   }, 15000);
 
-  시간제한받기(주소)
-    .then(function (r) { return r.ok ? r.json() : null; })
+  /* 미리 받은 파일 → 없으면 지금까지 쓰던 길 */
+  function 자료받기() {
+    return 시간제한받기(미리받은곳, 0)
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (d && d.days && d.days.length) { return d; }
+        return null;
+      })
+      .catch(function () { return null; })
+      .then(function (d) {
+        if (d) { return d; }
+        return 시간제한받기(주소)
+          .then(function (r) { return r.ok ? r.json() : null; });
+      });
+  }
+
+  자료받기()
     .then(function (나온것) {
       clearTimeout(꺼짐);
       if (!나온것 || !나온것.days || !나온것.days.length) {
