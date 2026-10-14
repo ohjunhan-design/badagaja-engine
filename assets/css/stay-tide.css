@@ -1028,3 +1028,76 @@ svg.adc-art{
 @media (max-width:767px){
   svg.adc-art{height:auto}
 }
+
+/* ㉕ 자료를 못 받았을 때 **셋째 카드가 사라지지 않게**
+   (2026-10-14 주인 화면 — 수도권 쪽이 2카드로 보였습니다)
+
+   ★ 무엇이 보였나
+     「간조·만조 시각은 지금 불러오지 못했습니다」가 뜨면서
+     셋째 카드(시간별 물높이)가 **통째로 없어져** 있었습니다.
+
+   ★ 재현해 확인한 것 (자료 받기를 일부러 실패시켜 쟀습니다)
+       3카드 칸 있음 · 자식 **3개** (카드는 남아 있었습니다)
+       그런데 그래프 칸 **높이 0px · 보임 아니오** · 칩 0개
+     즉 카드는 지워진 게 아니라 **속이 비어 높이가 0** 이었습니다.
+     빈 칸은 눈에 안 보이니 손님에게는 사라진 것과 같습니다.
+
+   ★ 이제 그 자리에 무슨 일인지 적습니다(`tide.js` 의 `못받았음()`).
+     **없는 값을 지어내지 않습니다.** 물때 번호·사리·조금은
+     계산으로 늘 나오므로 앞 두 카드는 그대로입니다.
+   ★ 「다시 불러오기」는 엄지가 닿게 **44px** 로 둡니다. */
+.tide-graph--none{
+  display:flex;flex-direction:column;align-items:flex-start;gap:6px;
+}
+.tide-graph--none .tg-none-k{
+  margin:4px 0 0;font-size:14px;font-weight:700;color:var(--ink);
+  line-height:1.5;
+}
+.tide-graph--none .tg-none-s{
+  margin:0;font-size:12.5px;line-height:1.6;color:var(--dim,#6B7B79);
+}
+.tide-graph--none .tg-none-b{
+  margin-top:4px;min-height:44px;padding:10px 16px;
+  border:1px solid var(--line);border-radius:10px;
+  background:var(--white,#fff);color:var(--ink);
+  font:inherit;font-size:13px;font-weight:800;cursor:pointer;
+}
+.tide-graph--none .tg-none-b:hover{border-color:var(--ink)}
+/* PC 3카드 안에서는 앞 두 카드와 높이를 맞춥니다 */
+@media (min-width:981px){
+  .tide-two .tide-graph--none{justify-content:flex-start}
+  .tide-two .tide-graph--none .tg-head{margin:0 0 8px}
+}
+
+/* ㉕ 자료를 못 받았을 때 **셋째 카드가 사라지지 않게**
+   (2026-10-14 주인 화면 — 수도권 쪽이 2카드로 보였습니다)
+
+   ★ 재현해 확인한 것 (자료 받기를 일부러 실패시켜 쟀습니다)
+       3카드 칸 있음 · 자식 3개 — 카드는 **남아 있었습니다**
+       그런데 그래프 칸 **높이 0px · 보임 아니오** · 칩 0개
+     카드가 지워진 게 아니라 **속이 비어 높이가 0** 이었습니다.
+     빈 칸은 눈에 안 보이니 손님에게는 사라진 것과 같습니다.
+
+   ★ 왜 메시지도 안 보였나 — **제가 숨겨 놓았습니다.**
+     3카드를 조밀하게 만들 때 출처 줄(`.tg-foot`)을 PC 에서
+     `display:none` 했는데, 그래프 스크립트는 실패 메시지를
+     **바로 그 줄에** 적습니다. 그래서 「불러오지 못했어요」가
+     적혀 있어도 화면에 안 나왔습니다.
+     ⇒ 실패했을 때(`.tg-fail`)만 그 줄을 **다시 보입니다.**
+
+   ★ 없는 값은 지어내지 않습니다. 물때 번호·사리·조금은 계산으로
+     늘 나오므로 앞 두 카드는 그대로입니다.
+   ★ 「다시 불러오기」는 엄지가 닿게 **44px** 로 둡니다. */
+.tide-graph.tg-fail{min-height:132px}
+.tide-two .tide-graph--card.tg-fail .tg-foot{
+  display:block;margin:6px 0 0;font-size:13px;line-height:1.6;
+  font-weight:700;color:var(--ink);
+}
+.tg-retry{
+  display:inline-flex;align-items:center;justify-content:center;
+  margin-top:10px;min-height:44px;padding:10px 16px;
+  border:1px solid var(--line);border-radius:10px;
+  background:var(--white,#fff);color:var(--ink);
+  font:inherit;font-size:13px;font-weight:800;cursor:pointer;
+}
+.tg-retry:hover{border-color:var(--ink)}

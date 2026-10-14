@@ -395,8 +395,30 @@
       };
       var go = function (d, ev) {
         if (!d || !d.ok) {
+          /* ★ 2026-10-14 주인 화면 — 수도권 쪽이 **2카드**로 보였습니다.
+           *   자료를 못 받으면 이 칸이 **높이 0** 이 되어 눈에서
+           *   사라졌습니다(재어 보니 0px · 칩 0개). 카드를 지우지
+           *   않고 **무슨 일인지 말해 주고 다시 누를 길**을 둡니다.
+           *   ★ 없는 값을 지어내지 않습니다 — 물때 번호·사리·조금은
+           *     계산으로 늘 나오므로 앞 두 카드는 그대로입니다. */
+          box.classList.add('tg-fail');
           box.querySelector('.tg-foot').textContent = '물높이 예보를 불러오지 못했어요.';
-          지우기(box); 알리기(null, null); return;
+          지우기(box); 알리기(null, null);
+          if (!box.querySelector('.tg-retry')) {
+            var 다시 = el('button', 'tg-retry', '다시 불러오기');
+            다시.type = 'button';
+            다시.addEventListener('click', function () {
+              location.reload();
+            });
+            box.appendChild(다시);
+          }
+          return;
+        }
+        /* 다시 받아졌으면 알림을 걷습니다 */
+        box.classList.remove('tg-fail');
+        var 옛단추 = box.querySelector('.tg-retry');
+        if (옛단추 && 옛단추.parentNode) {
+          옛단추.parentNode.removeChild(옛단추);
         }
         draw(box, d, { dark: opt.dark, sun: sun, today: day === 0, events: ev,
                        mode: opt.mode });

@@ -3218,8 +3218,25 @@ def 물높이그래프(쪽길, 권역):
             'var T=window.BADAGAJA_TIDE;'
             'window.BADAGAJA_TIDEGRAPH.mount(칸,%s,'
             '{api:%s,coords:(T&&T.coords)?T.coords[%s]:null});'
+            # ★ 2026-10-14 주인 화면 — 수도권 쪽이 **2카드**로 보였습니다.
+            #   여기서 6초 안에 그래프가 없으면 칸을 **통째로 숨겼고**,
+            #   그래서 셋째 카드(시간별 물높이)가 사라져 있었습니다.
+            #   숨기면 손님은 **고장인지 원래 없는 것인지 모릅니다.**
+            #   이제 자리를 지키고 **무슨 일인지 말해 주고
+            #   다시 누를 길**을 둡니다.
+            #   ★ 없는 값은 지어내지 않습니다 — 물때 번호·사리·조금은
+            #     계산으로 늘 나오므로 앞 두 카드는 그대로입니다.
             'setTimeout(function(){'
-            'if(!칸.querySelector(".tg-plot"))칸.style.display="none";'
+            'if(칸.querySelector(".tg-plot"))return;'
+            '칸.classList.add("tg-fail");'
+            'var f=칸.querySelector(".tg-foot");'
+            'if(f)f.textContent="물높이 예보를 불러오지 못했어요.";'
+            'if(!칸.querySelector(".tg-retry")){'
+            'var b=document.createElement("button");'
+            'b.type="button";b.className="tg-retry";'
+            'b.textContent="다시 불러오기";'
+            'b.addEventListener("click",function(){location.reload();});'
+            '칸.appendChild(b);}'
             '},6000);});</script>'
             % (esc(주소), _js문자열(권역), _js문자열(api뿌리),
                _js문자열(권역)))
