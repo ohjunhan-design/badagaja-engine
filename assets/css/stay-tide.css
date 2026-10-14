@@ -398,3 +398,48 @@
   .hero-stats .hs b{font-size:17px}
   .hero-stats .hs span{font-size:9.5px}
 }
+
+
+/* ⑦ PC 「오늘의 바다」 — **1행 3카드** (2026-10-14 주인 직접 지시)
+
+   좌 오늘 물때(9물·진행 바) · 가운데 지금 상태(다음 간조·남은 시간)
+   · 우 이번 주 언제 갈까
+
+   ★ 모바일은 **건드리지 않습니다** — 981px 이상에만 겁니다.
+     좁은 화면에서는 지금처럼 세로로 쌓입니다(방금 올린 압축 UI 유지).
+   ★ `minmax(0,...)` 라 좁아지면 칸이 줄 뿐 **가로 스크롤이
+     나지 않습니다.** 강제 고정폭을 쓰지 않습니다. */
+
+@media (min-width:981px){
+  .tide-two{
+    display:grid;
+    grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,1fr);
+    gap:14px;align-items:stretch;
+  }
+  /* 세 카드의 높이·안쪽 여백을 맞춥니다 */
+  .tide-two > *{min-width:0;margin:0}
+  .tide-two .tnow{display:flex;flex-direction:column;justify-content:center}
+}
+
+/* 태블릿(761~980) — 2 + 1 로 자연스럽게 */
+@media (min-width:761px) and (max-width:980px){
+  .tide-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:12px}
+  .tide-two > :nth-child(3){grid-column:1 / -1}
+}
+
+/* 가운데 카드 — 왼쪽 카드와 같은 결로 */
+.tnow--state .tnow-cap{
+  margin:0 0 10px;font-size:12.5px;font-weight:700;
+  letter-spacing:-.02em;color:var(--dim,#6B7B79);
+}
+.tnow--state .tnow-next{
+  /* 떼어 온 덩이라 위 테두리가 남아 있습니다 — 카드 안에서는
+     그 선이 어색하므로 지웁니다. 글과 값은 그대로입니다. */
+  border-top:0;margin-top:0;padding-top:0;
+}
+/* 좁은 화면에서는 가운데 카드를 따로 두지 않고 전처럼 보입니다 */
+@media (max-width:760px){
+  .tnow--state{background:transparent;border:0;padding:0;margin-top:-4px}
+  .tnow--state .tnow-cap{display:none}
+}
