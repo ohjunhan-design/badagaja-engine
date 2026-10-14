@@ -822,3 +822,29 @@ stroke='%232F5D57' stroke-width='2.2' stroke-linecap='round'>\
     white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   }
 }
+
+/* ⑱ 그래프 높이 −10% (2026-10-14 주인 — 「살짝 10%정도만 더 높이
+   줄일 수 있을까? 옆 카드들이랑 높이 맞추고 싶은데」)
+
+   셋째 카드가 가장 길어서 나머지 둘이 거기 맞춰 늘어나
+   빈 자리가 생겼습니다. 그래프를 줄이면 세 카드가 함께 줄어
+   빈 자리가 작아집니다.
+       128px → **115px** (−10.2%) */
+
+@media (min-width:981px){
+  .tide-two .tide-graph--card .tg-plot{height:115px}
+}
+
+/* ⑲ 셋째 카드 **줄 사이 간격**을 줄입니다
+   (2026-10-14 주인 — 「물높이에서 줄별 간격도 살짝 줄이고」)
+
+   머리글 ↔ 그래프 ↔ 칩 사이를 좁혀 카드를 더 낮춥니다.
+   글자 크기와 수치는 건드리지 않습니다. */
+
+@media (min-width:981px){
+  .tide-two .tide-graph--card{gap:0}
+  .tide-two .tide-graph--card .tg-head{margin:0 0 8px}
+  .tide-two .tide-graph--card .tg-plot{margin:0 0 6px}
+  .tide-two .tide-graph--card .tg-when{margin:0;gap:4px}
+  .tide-two .tide-graph--card .tg-when > *{padding:6px 2px}
+}
