@@ -53,7 +53,7 @@ jobs:
         env:
           # ★ 이 암호는 **정부 열쇠가 아닙니다.** 호출 한도를 지키려는
           #   문지기입니다. 비밀값에 두면 주소에 안 드러납니다.
-          BADAGAJA_TIDE_KEY: ${{ secrets.BADAGAJA_TIDE_KEY }}
+          BADAGAJA_TIDE_ADMIN: ${{ secrets.BADAGAJA_TIDE_ADMIN }}
         run: |
           ARGS=""
           if [ -n "${{ github.event.inputs.region }}" ]; then

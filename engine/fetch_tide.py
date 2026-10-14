@@ -25,9 +25,11 @@
     python -m engine.fetch_tide --날수 14      # 일수 바꾸기
     python -m engine.fetch_tide --확인         # 받지 않고 지금 상태만
 
-  암호는 환경변수 `BADAGAJA_TIDE_KEY` 로 줍니다(깃허브 비밀값).
-  없으면 기본값을 씁니다 — 이 암호는 **정부 열쇠가 아니라**
-  호출 한도를 지키려는 문지기입니다.
+  ★ 관리용 암호는 환경변수 **`BADAGAJA_TIDE_ADMIN`** 으로만
+    받습니다. **없으면 오류로 끝냅니다** — 코드에 기본값을
+    두지 않습니다(이 저장소는 공개입니다).
+    이 암호는 정부 열쇠가 아니라 호출 한도를 지키는 문지기이지만,
+    드러나면 **누구든 정부 호출을 태울 수** 있습니다.
 """
 import argparse
 import io
@@ -43,7 +45,13 @@ import urllib.request
 낼곳 = os.path.join(뿌리, 'data', 'tide')
 
 통로 = 'https://badagaja.com/api/tide-cache2.php'
-암호 = os.environ.get('BADAGAJA_TIDE_KEY', 'bdg-prefetch-20261014')
+# ★ **관리용 암호는 코드에 두지 않습니다** (2026-10-14 보안 조치)
+#   전에는 기본값으로 박아 두었는데, 이 저장소는 **공개**라
+#   그대로 드러났습니다. 그 암호로는 간격을 건너뛰고 정부 API
+#   호출을 태울 수 있었습니다.
+#   ★ 기본값을 두지 않습니다. 없으면 **오류로 끝냅니다** —
+#     조용히 안 되는 것보다 크게 멈추는 편이 낫습니다.
+암호 = os.environ.get('BADAGAJA_TIDE_ADMIN', '')
 
 기본날수 = 30
 한번에기다릴초 = 200        # ★ 재어 보니 같은 주소가 **1.97초~133초** 로
@@ -269,6 +277,13 @@ def main():
     p.add_argument('--날수', type=int, default=기본날수)
     p.add_argument('--확인', action='store_true')
     a = p.parse_args()
+
+    if not 암호:
+        print('관리용 암호가 없습니다.')
+        print('환경변수 **BADAGAJA_TIDE_ADMIN** 에 넣고 다시 하십시오.')
+        print('(암호는 저장소에 두지 않습니다 — 감독실 작업 폴더에')
+        print(' 있습니다. 코드·문서·메시지에 적지 마십시오)')
+        return 2
 
     것 = 권역목록()
     if a.권역:
