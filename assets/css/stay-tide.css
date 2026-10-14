@@ -483,7 +483,8 @@
 @media (min-width:981px){
   .tide-two{
     display:grid;
-    grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) minmax(0,1.25fr);
+    /* ★ 총감독 코드 값 그대로 — 1.1 : 1 : 1.12 */
+    grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) minmax(0,1.12fr);
     gap:14px;align-items:stretch;
   }
   .tide-two > *{min-width:0;margin:0}
@@ -557,21 +558,23 @@
     display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
     gap:5px;margin:0 0 8px;
   }
+  /* ★ 총감독 코드 값 — 12px · padding 8px 2px */
   .tide-two .tide-graph--card .tg-when > *{
-    min-width:0;text-align:center;
-    padding:5px 2px;font-size:11.5px;letter-spacing:-.04em;
-    white-space:nowrap;overflow:hidden;text-overflow:clip;
+    min-width:0;box-sizing:border-box;text-align:center;
+    padding:8px 2px;font-size:12px;letter-spacing:-.04em;
+    white-space:nowrap;overflow:hidden;
   }
 
   /* 출처·안내는 **맨 아래 작은 한두 줄**로 */
   .tide-two .tide-graph--card .tg-note{
-    margin:6px 0 0;font-size:10px;line-height:1.4;
+    margin:0;font-size:11px;line-height:1.45;
   }
   .tide-two .tide-graph--card .tg-note br{display:none}
 
   /* 카드 높이를 콘텐츠에 맞춥니다 — 억지 고정값을 두지 않습니다 */
   .tide-two{align-items:stretch}
-  .tide-two > *{padding:14px 16px}
+  /* ★ 총감독 코드 값 — 카드 안쪽 여백 20px */
+  .tide-two > *{padding:20px;gap:16px}
 
   /* 첫 카드 — 제목·9물·진행 바·다음 간조를 **위에서부터** 쌓습니다 */
   .tide-two .tnow{gap:0}
@@ -583,6 +586,8 @@
   .tide-two .when-k{margin:0 0 8px}
 
   /* 그래프는 카드 폭에 맞춰 또렷하게 */
-  .tide-two .tide-graph--card .tg-plot,
-  .tide-two .tide-graph--card svg{width:100%;height:auto}
+  /* ★ 총감독 코드 값 — 차트 높이 128px */
+  .tide-two .tide-graph--card .tg-plot{height:128px;min-width:0}
+  .tide-two .tide-graph--card .tg-plot > *,
+  .tide-two .tide-graph--card svg{width:100%;height:100%}
 }
