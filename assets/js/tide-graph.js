@@ -119,6 +119,56 @@
     });
   }
 
+
+  /* ★ 미리 받은 파일을 **오늘부터**로 맞춥니다 (2026-10-14)
+   *
+   *   이 파일은 **만든 날부터** 30일이 들어 있습니다. 사흘에 한 번
+   *   만들면, 만든 지 이틀 된 파일의 **첫 항목은 그제**입니다.
+   *   그래프는 `days[0]` 을 「오늘」로 꺼내므로 그대로 두면
+   *   **그제 물때를 오늘 것으로** 보여 줍니다.
+   *   물때는 **언제 들어가고 언제 나올지**를 정하는 값입니다.
+   *   틀린 시각을 보여 주는 것은 안 됩니다.
+   *
+   *   ★ 그래서 읽은 **그 자리에서** 오늘 이전을 잘라냅니다.
+   *   ★ 오늘이 아예 없거나(파일이 너무 낡음) 남은 날이 7일도
+   *     안 되면 **이 파일을 버리고** 지금까지 쓰던 길로 갑니다.
+   *     낡은 값을 쓰느니 조금 늦는 편이 낫습니다. */
+  function 서울오늘() {
+    try {
+      var 조각 = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'Asia/Seoul', month: 'numeric', day: 'numeric'
+      }).formatToParts(new Date());
+      var 달 = '', 날 = '';
+      for (var i = 0; i < 조각.length; i++) {
+        if (조각[i].type === 'month') { 달 = 조각[i].value; }
+        if (조각[i].type === 'day') { 날 = 조각[i].value; }
+      }
+      if (달 && 날) { return 달 + '/' + 날; }
+    } catch (e) {}
+    var t = new Date();
+    return (t.getMonth() + 1) + '/' + t.getDate();
+  }
+
+  function 오늘부터(자료) {
+    if (!자료 || !자료.days || !자료.days.length) { return null; }
+    var 오늘 = 서울오늘();
+    var 몇째 = -1;
+    for (var i = 0; i < 자료.days.length; i++) {
+      if (String(자료.days[i].date) === 오늘) { 몇째 = i; break; }
+    }
+    if (몇째 < 0) { return null; }              // 오늘이 없습니다
+    var 남은 = 자료.days.slice(몇째);
+    if (남은.length < 7) { return null; }       // 너무 적습니다
+    var 새것 = {};
+    for (var 키 in 자료) {
+      if (Object.prototype.hasOwnProperty.call(자료, 키)) {
+        새것[키] = 자료[키];
+      }
+    }
+    새것.days = 남은;
+    return 새것;
+  }
+
   function 지우기(box) {
     ['.tg-plot', '.tg-note'].forEach(function (c) {
       var e = box.querySelector(c); if (e) { e.remove(); }
@@ -478,8 +528,9 @@
           '/data/tide/' + encodeURIComponent(region) + '.json', 0)
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (d) {
-          if (d && d.days && d.days.length) { return d; }
-          throw new Error('미리 받은 것 없음');
+          var 맞춘것 = 오늘부터(d);
+          if (맞춘것) { return 맞춘것; }
+          throw new Error('미리 받은 것이 없거나 낡았습니다');
         })
         .catch(function () {
           return 시간제한받기(API + 'tide-cache.php?region=' + region).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
