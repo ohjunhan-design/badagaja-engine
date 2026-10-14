@@ -61,10 +61,82 @@ def 받기(권역):
         return None, b'', time.time() - t0, type(e).__name__
 
 
+def 서버상태():
+    """★ 서버가 적어 둔 `_status.json` 을 읽습니다.
+
+    57번 두드리지 않고 **한 번**에 전체 상태를 봅니다.
+    자가 갱신이 켜진 뒤로는 이쪽이 더 정확합니다 — 서버가
+    방금 바꾼 것까지 들어 있습니다.
+    """
+    주소 = 'https://badagaja.com/api/tide-refresh.php?status=1'
+    try:
+        q = urllib.request.Request(
+            주소, headers={'User-Agent': 'badagaja-live'})
+        d = json.loads(urllib.request.urlopen(q, timeout=25)
+                       .read().decode('utf-8', 'replace'))
+    except Exception as e:
+        print('서버 상태를 못 읽었습니다 — %s' % type(e).__name__)
+        return 1
+    if not d:
+        print('서버가 아직 아무것도 적지 않았습니다 (한 걸음도 안 돌았습니다)')
+        return 0
+
+    목표 = d.get('목표일수') or 60
+    권역 = d.get('권역') or {}
+    마지막 = d.get('마지막걸음')
+    print('서버가 적어 둔 물때 상태 — 목표 %d일 · %d곳'
+          % (목표, len(권역)))
+    if 마지막:
+        지난 = int(time.time()) - int(마지막)
+        print('마지막 걸음: %d분 전 · %s'
+              % (지난 // 60, d.get('마지막결과') or '-'))
+    print('-' * 56)
+
+    줄 = sorted(권역.items(), key=lambda kv: (kv[1].get('남은') or 0,
+                                              -(kv[1].get('빈') or 0)))
+    가장적은 = None
+    빈합 = 0
+    모자람합 = 0
+    for 이름, v in 줄:
+        남 = v.get('남은') or 0
+        빈 = v.get('빈') or 0
+        빈합 += 빈
+        모자람합 += max(0, 목표 - 남)
+        if 가장적은 is None or 남 < 가장적은:
+            가장적은 = 남
+        표 = ''
+        if 남 < 폴백임박:
+            표 = '  ← **폴백 임박**'
+        elif 남 < 갱신경고:
+            표 = '  ← 갈아 줄 때'
+        print('   %-14s 남은 %2d일 · 빈 %2d%s' % (이름, 남, 빈, 표))
+
+    print('-' * 56)
+    print('가장 적게 남은 곳 **%s일** · 빈 날 합계 %d · 모자란 날 합계 %d'
+          % (가장적은, 빈합, 모자람합))
+    if 가장적은 is not None:
+        남을날 = max(0, 가장적은 - 폴백임박 + 1)
+        그날 = datetime.now() + timedelta(days=남을날)
+        print('→ 아무것도 안 하면 **%d/%d 무렵부터 폴백**입니다'
+              % (그날.month, 그날.day))
+    # ★ 감독실이 그대로 옮겨 적을 수 있는 한 줄
+    print()
+    print('[한 줄 요약] 물때 %d곳 · 가장 적은 곳 %s일 · 빈 날 %d개 · %s'
+          % (len(권역), 가장적은, 빈합,
+             '넉넉합니다' if (가장적은 or 0) >= 갱신경고
+             else '**갈아 줄 때입니다**'))
+    return 1 if (가장적은 is not None and 가장적은 < 폴백임박) else 0
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument('--빠르게', action='store_true')
+    p.add_argument('--서버', action='store_true',
+                   help='서버가 적어 둔 상태(_status.json)만 읽습니다')
     a = p.parse_args()
+
+    if a.서버:
+        return 서버상태()
 
     오늘 = 오늘엠디()
     것 = 권역목록()
