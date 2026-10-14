@@ -686,3 +686,66 @@ stroke='%232F5D57' stroke-width='2.2' stroke-linecap='round'>\
     margin:8px 0 0;font-size:10.5px;line-height:1.4;
   }
 }
+
+/* ⑮ 주인 직접 수정 지시 (2026-10-14 · 스크린샷 표시)
+
+   ① 셋째 머리글에서 「○○ 관측소 기준」을 빼고, 세 머리글 오른쪽
+      끝에 시안대로 작은 「>」 장식
+   ② 칩 아래 출처 두 줄 삭제 (PC 3카드만) — 안전 고지는 접힘 안으로
+   ③ 칩을 두 줄로: 위에 작은 「간조/만조」, 아래 큰 시각
+   ④ 높이를 콘텐츠에 맞춰 다시 고르게 */
+
+/* 접힘 안으로 옮긴 안전 고지 */
+.td-fold-note{
+  margin:10px 2px 0;font-size:11.5px;line-height:1.5;
+  color:var(--dim,#6B7B79);
+}
+
+@media (min-width:981px){
+  /* ① 머리글 오른쪽 끝 「>」 — 주인이 시안 그대로 원하셔서 넣습니다.
+        누르는 곳이 아니므로 **장식**으로만 둡니다(스크린리더는 건너뜀). */
+  .card-k,
+  .tide-two .tide-graph--card .tg-title,
+  .tide-two .tide-graph--card h3{position:relative;padding-right:16px}
+  .card-k::after,
+  .tide-two .tide-graph--card .tg-title::after,
+  .tide-two .tide-graph--card h3::after{
+    content:"";position:absolute;right:0;top:50%;
+    width:6px;height:6px;margin-top:-4px;
+    border-right:1.8px solid currentColor;
+    border-bottom:1.8px solid currentColor;
+    transform:rotate(-45deg);opacity:.45;
+  }
+  /* 머리글 줄을 카드 폭 전체로 (「>」가 오른쪽 끝에 가게) */
+  .tide-two .tnow .card-k,
+  .tide-two .when .card-k{width:100%}
+  .tide-two .tide-graph--card .tg-head{
+    display:block;order:1;margin:0 0 10px;
+  }
+  /* ① 「○○ 관측소 기준」을 머리글에서 빼 **그래프 위 작은 글자**로 */
+  .tide-two .tide-graph--card .tg-station{
+    display:block;order:2;margin:0 0 4px;
+    font-size:10.5px;text-align:right;opacity:.75;
+  }
+  .tide-two .tide-graph--card .tg-plot{order:3}
+  .tide-two .tide-graph--card .tg-when{order:4}
+
+  /* ② 칩 아래 출처 두 줄 — PC 3카드에서만 뺍니다
+        (쪽 위 설명문에 출처·기준 관측소가 이미 있고,
+         「실제와 다를 수 있습니다」는 접힘 안으로 옮겼습니다) */
+  .tide-two .tide-graph--card .tg-foot{display:none}
+
+  /* ③ 칩을 **두 줄**로 — 위에 작은 「간조/만조」, 아래 큰 시각 */
+  .tide-two .tide-graph--card .tg-when > *{
+    display:flex;flex-direction:column;align-items:center;
+    justify-content:center;gap:1px;
+    padding:7px 2px;border-radius:9px;
+  }
+  .tide-two .tide-graph--card .tg-when .tg-w-k{
+    font-size:10.5px;font-style:normal;opacity:.8;line-height:1.1;
+  }
+  .tide-two .tide-graph--card .tg-when .tg-w-t{
+    font-size:15px;font-weight:800;letter-spacing:-.03em;
+    line-height:1.15;
+  }
+}
