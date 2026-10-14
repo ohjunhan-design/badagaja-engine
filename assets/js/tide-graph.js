@@ -149,6 +149,23 @@
     return (t.getMonth() + 1) + '/' + t.getDate();
   }
 
+  /* ★ **상세 권역 쪽에서도 부탁합니다** (2026-10-14 감사 지적)
+   *   전에는 묶음 쪽(`tide.js`)에만 있었습니다. 상세 쪽만 보는
+   *   손님이 아무리 많이 와도 **갱신이 안 일어났습니다.**
+   *   공개 암호라 `only=` 를 못 쓰고 간격도 지키므로, 두 곳에서
+   *   불러도 **서버가 할 일이 늘지 않습니다.** */
+  var 갱신부탁했나 = false;
+
+  function 갱신부탁(남은날) {
+    if (갱신부탁했나 || 남은날 >= 30) { return; }
+    갱신부탁했나 = true;
+    try {
+      fetch('/api/tide-refresh.php?t=bdg-refresh-pub-20261014',
+            { mode: 'no-cors', cache: 'no-store', keepalive: true })
+        .catch(function () {});
+    } catch (e) {}
+  }
+
   function 오늘부터(자료) {
     if (!자료 || !자료.days || !자료.days.length) { return null; }
     var 오늘 = 서울오늘();
@@ -166,6 +183,7 @@
       }
     }
     새것.days = 남은;
+    갱신부탁(남은.length);      // 얇아졌으면 뒤에서 채워 달라고
     return 새것;
   }
 
@@ -530,9 +548,11 @@
         .then(function (d) {
           var 맞춘것 = 오늘부터(d);
           if (맞춘것) { return 맞춘것; }
+          갱신부탁(0);          // 없거나·낡거나·짧습니다
           throw new Error('미리 받은 것이 없거나 낡았습니다');
         })
         .catch(function () {
+          갱신부탁(0);          // 못 읽었습니다 — 채워 달라고
           return 시간제한받기(API + 'tide-cache.php?region=' + region).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
         });
       Promise.all([
