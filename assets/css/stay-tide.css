@@ -760,3 +760,65 @@ stroke='%232F5D57' stroke-width='2.2' stroke-linecap='round'>\
     line-height:1.15;
   }
 }
+
+/* ⑯ 세 머리글을 **같은 높이 한 줄**로 (2026-10-14 주인 「상단은 줄 맞춰」)
+
+   셋째 머리글이 「관측소 기준」 글 때문에 줄 높이가 달라
+   첫째·둘째보다 위로 떠 보였습니다. 세 줄을 같은 높이로 묶고
+   본문 시작선도 같게 맞춥니다. */
+
+@media (min-width:981px){
+  .tide-two .tnow .card-k,
+  .tide-two .when .card-k,
+  .tide-two .tide-graph--card .tg-head{
+    display:flex;align-items:center;
+    min-height:22px;margin:0 0 12px;
+  }
+  /* 셋째 머리글 안의 제목도 같은 줄 높이로 */
+  .tide-two .tide-graph--card .tg-head-l{
+    display:flex;align-items:center;width:100%;
+  }
+  .tide-two .tide-graph--card .tg-title,
+  .tide-two .tide-graph--card h3{
+    margin:0;min-height:22px;display:flex;align-items:center;
+    width:100%;
+  }
+  /* 관측소 글은 머리글 **아래** — 줄 높이에 안 끼어듭니다 */
+  .tide-two .tide-graph--card .tg-station{top:100%;margin:1px 0 0}
+  /* 본문 시작선을 셋이 같게 */
+  .tide-two .tnow .tnow-head,
+  .tide-two .when .when-head,
+  .tide-two .tide-graph--card .tg-station{margin-top:0}
+}
+
+/* ⑰ 「>」를 **다 지웁니다** · 관측소 글을 그 자리로
+   (2026-10-14 주인 — 「표시 다 지우고 링크 걸 필요 없어,
+    그리고 그래프 자리에 송공항 올리고」)
+
+   ★ 누를 곳이 아니므로 화살표를 두지 않습니다. 주인 결정입니다.
+   ★ 셋째 머리글 오른쪽 끝에 「송공항 관측소 기준」을 되돌립니다 —
+     아래로 내렸던 것을 머리글 줄로 올립니다. */
+
+@media (min-width:981px){
+  /* 「>」 장식 제거 */
+  .card-k::after,
+  .tide-two .tide-graph--card .tg-title::after,
+  .tide-two .tide-graph--card h3::after{content:none}
+  .card-k,
+  .tide-two .tide-graph--card .tg-title,
+  .tide-two .tide-graph--card h3{padding-right:0}
+
+  /* 관측소 글을 **머리글 줄 오른쪽 끝**으로 */
+  .tide-two .tide-graph--card .tg-head{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:8px;position:static;margin:0 0 12px;min-height:22px;
+  }
+  .tide-two .tide-graph--card .tg-head-l{width:auto;flex:0 0 auto}
+  .tide-two .tide-graph--card .tg-title,
+  .tide-two .tide-graph--card h3{width:auto}
+  .tide-two .tide-graph--card .tg-station{
+    position:static;margin:0;flex:0 1 auto;min-width:0;
+    font-size:10.5px;text-align:right;opacity:.75;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+}
