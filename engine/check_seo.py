@@ -52,6 +52,12 @@ DATA = os.environ.get('BADAGAJA_DATA', os.path.join(ROOT, 'data'))
 #   알림 — 살펴볼 만한 것. 막지 않습니다
 막음, 알림 = [], []
 탈 = collections.defaultdict(list)
+# ★ 겹침은 **묶음 수**이지 쪽수가 아닙니다 (2026-10-15)
+#   전에는 그림 72가지를 「72쪽」이라 찍었습니다. 같은 것을 재는
+#   map_images 는 「그림 72가지 → 겹친 쪽 297장」이라 하니 두
+#   도구가 서로 다른 말을 했습니다 — [[one-source-of-truth]].
+#   그래서 겹침 항목은 쪽을 따로 모아 **둘 다** 냅니다.
+겹친쪽 = collections.defaultdict(set)
 
 
 def 적기(이름, 어디, 막는가=True):
@@ -328,14 +334,17 @@ def main():
     for 제목, fs in 제목별.items():
         if len(fs) > 1:
             적기('제목이 겹침', '%s … %d쪽' % (제목[:30], len(fs)))
+            겹친쪽['제목이 겹침'].update(fs)
     for 설명, fs in 설명별.items():
         if len(fs) > 1:
             적기('설명이 겹침', '%s … %d쪽' % (설명[:30], len(fs)))
+            겹친쪽['설명이 겹침'].update(fs)
     for 주소, fs in 사진별.items():
         if len(fs) > 1:
             적기('og 사진이 여러 쪽에 겹침',
                  '%s … %d쪽' % (os.path.basename(주소), len(fs)),
                  막는가=False)
+            겹친쪽['og 사진이 여러 쪽에 겹침'].update(fs)
 
     if not 탈:
         print('쪽 %d개가 검색 기준을 모두 지킵니다.' % len(쪽들))
@@ -353,13 +362,19 @@ def main():
         print('%s' % 갈래)
         for k in sorted(목록, key=lambda x: -len(탈[x])):
             v = 탈[k]
-            print('  %s %-30s %4d쪽' % ('✗' if 갈래 == '손볼 곳' else '~',
-                                         k, len(v)))
+            if k in 겹친쪽:
+                print('  %s %-30s %4d가지 · 쪽 %d장'
+                      % ('✗' if 갈래 == '손볼 곳' else '~',
+                         k, len(v), len(겹친쪽[k])))
+            else:
+                print('  %s %-30s %4d쪽'
+                      % ('✗' if 갈래 == '손볼 곳' else '~', k, len(v)))
             if 보일것:
                 for x in v[:6]:
                     print('        %s' % x)
                 if len(v) > 6:
-                    print('        … 그 밖 %d쪽' % (len(v) - 6))
+                    print('        … 그 밖 %d%s'
+                          % (len(v) - 6, '가지' if k in 겹친쪽 else '쪽'))
         print('')
 
     if 막을것:
