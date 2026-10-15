@@ -2326,18 +2326,43 @@ def 부품사진(이름):
       [[origin-is-not-the-main-repo]]. 안내도(`data/img/rig/*.webp`)가
       이미 그 규칙을 씁니다 — 같은 길을 따릅니다.
 
+    ★ 파일 이름은 **영문**입니다 — 자료가 짝을 들고 있습니다
+      한글 파일 이름은 FTP 로 올릴 때 깨질 위험이 있습니다.
+      그래서 `rigs.json` 의 부품마다 「사진」 칸에 영문 이름을
+      적어 두고 **거기서 읽습니다.** 코드에 사전을 두면 자료와
+      두 곳이 되어 언젠가 어긋납니다 [[one-source-of-truth]].
+
     돌려주는 것은 (원본 길, 쪽 아래 길) 둘입니다. 복사는 쪽을
     만드는 쪽(`build.py`)이 합니다 — 안내도와 같은 방식입니다.
 
     없으면 (None, None) — 그러면 지금까지처럼 SVG 를 그립니다.
     그래서 **한 장씩 들어와도 쪽이 깨지지 않습니다.**
     """
+    영 = 사진이름(이름)
+    if not 영:
+        return None, None
     뿌 = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    원본 = os.path.join(뿌, 'data', 'img', 'rig', 'parts',
-                        '%s.webp' % 이름)
+    원본 = os.path.join(뿌, 'data', 'img', 'rig', 'parts', '%s.webp' % 영)
     if not os.path.isfile(원본):
         return None, None
-    return 원본, 'img/rig/parts/%s.webp' % 이름
+    return 원본, 'img/rig/parts/%s.webp' % 영
+
+
+_사진이름표 = None
+
+
+def 사진이름(부품):
+    """그 부품의 **영문 사진 이름**. 자료의 「사진」 칸에서 읽습니다."""
+    global _사진이름표
+    if _사진이름표 is None:
+        import json
+        뿌 = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        with open(os.path.join(뿌, 'data', 'raw', 'rigs.json'),
+                  encoding='utf-8') as f:
+            d = json.load(f)
+        _사진이름표 = {k: (v.get('사진') or '')
+                       for k, v in (d.get('부품') or {}).items()}
+    return _사진이름표.get(부품) or ''
 
 
 def 수심그림(갈래, 채비자료):

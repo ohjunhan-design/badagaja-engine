@@ -41,15 +41,31 @@ import sys
 품질 = 88
 
 
-def 부품들():
+def 부품표():
+    """부품 이름 → **영문 사진 이름**. 자료가 짝을 들고 있습니다.
+
+    ★ 파일 이름을 **영문**으로 두는 까닭 (2026-10-15 총감독 결정)
+      한글 파일 이름은 FTP 로 올릴 때 깨질 위험이 있습니다. 쪽에서는
+      브라우저가 알아서 인코딩해 로컬에서는 잘 되지만, 서버로 가는
+      길에 조용히 망가지면 **그림만 안 뜹니다.**
+      짝은 `rigs.json` 의 「사진」 칸 **한 곳에만** 둡니다.
+    """
     길 = os.path.join(뿌리, 'data', 'raw', 'rigs.json')
-    return list(json.load(io.open(길, encoding='utf-8'))['부품'].keys())
+    d = json.load(io.open(길, encoding='utf-8'))['부품']
+    return {k: (v.get('사진') or '') for k, v in d.items()}
+
+
+def 부품들():
+    return list(부품표().keys())
 
 
 def 목록내기():
     것 = sorted(os.listdir(칸)) if os.path.isdir(칸) else []
-    모두 = 부품들()
-    든것 = [os.path.splitext(x)[0] for x in 것 if x.endswith('.webp')]
+    표 = 부품표()
+    모두 = list(표.keys())
+    파일들 = [os.path.splitext(x)[0] for x in 것 if x.endswith('.webp')]
+    # 파일은 영문, 부품은 한글입니다 — 자료의 짝으로 맞댑니다
+    든것 = [b for b in 모두 if 표.get(b) and 표[b] in 파일들]
     print('부품 사진이 들어온 자리 — %s' % os.path.relpath(칸, 뿌리))
     print('=' * 60)
     print('  자료의 부품 %d가지 · 사진이 온 것 %d가지'
@@ -59,10 +75,12 @@ def 목록내기():
         있 = b in 든것
         크 = ''
         if 있:
-            p = os.path.join(칸, b + '.webp')
-            크 = ' %.1fKB' % (os.path.getsize(p) / 1024.0)
+            p = os.path.join(칸, 표[b] + '.webp')
+            크 = ' %-20s %.1fKB' % (표[b] + '.webp',
+                                    os.path.getsize(p) / 1024.0)
         print('  %s %-14s%s' % ('✓' if 있 else '·', b, 크))
-    덤 = [x for x in 든것 if x not in 모두]
+    쓴파일 = {표[b] for b in 든것}
+    덤 = [x for x in 파일들 if x not in 쓴파일]
     if 덤:
         print()
         print('  ★ 자료에 없는 이름의 사진 %d장 — 쪽에 안 나옵니다' % len(덤))
@@ -87,7 +105,8 @@ def main():
         print('★ 어느 부품인지 알려 주십시오 (두 번째 값)')
         return 1
 
-    모두 = 부품들()
+    표 = 부품표()
+    모두 = list(표.keys())
     if a.부품 not in 모두:
         print('★ 「%s」는 자료에 없는 부품입니다 — 넣어도 쪽에 안 나옵니다'
               % a.부품)
@@ -100,7 +119,12 @@ def main():
         print('★ 받은 그림이 없습니다 — %s' % a.원본)
         return 1
 
-    목적 = os.path.join(칸, '%s.webp' % a.부품)
+    영 = 표.get(a.부품)
+    if not 영:
+        print('★ 「%s」에 사진 이름(영문)이 자료에 없습니다 — '
+              'rigs.json 의 「사진」 칸을 먼저 채우십시오' % a.부품)
+        return 1
+    목적 = os.path.join(칸, '%s.webp' % 영)
     if os.path.isfile(목적) and not a.덮기:
         print('★ 이미 있습니다 — %s' % os.path.relpath(목적, 뿌리))
         print('   덮어쓰려면 --덮기 를 붙이십시오')
@@ -122,7 +146,7 @@ def main():
     im.resize((낼크기, 낼크기), Image.LANCZOS).save(
         목적, 'WEBP', quality=품질, method=6)
 
-    print('부품 사진을 넣었습니다 — %s' % a.부품)
+    print('부품 사진을 넣었습니다 — %s (%s.webp)' % (a.부품, 영))
     print('  받은 것  %dx%d · %.0fKB'
           % (w, h, os.path.getsize(a.원본) / 1024.0))
     print('  넣은 것  %dx%d · %.1fKB  →  %s'
