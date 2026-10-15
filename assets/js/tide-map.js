@@ -137,14 +137,104 @@
     맞춤대기 = window.setTimeout(function () {
       맞춤대기 = null;
       if (!지도 || (손댔나 && !강제)) { return; }
+      if (한번에맞추기()) { return; }      // ★ 한 번에 됐으면 끝입니다
+      /* 못 했을 때만 옛 길로 갑니다 (projection 이 없는 경우 등) */
       지도.맞추기(보일것().map(function (r) { return [r.위도, r.경도]; }));
-      /* 그린 뒤에 **눈에 보이는 크기로 확인**합니다.
-         ★ 전에는 150ms 를 기다렸습니다. 그 사이가 손님 눈에
-           「한 번 더 움직이는 틈」으로 보였습니다. 이제 꽉채우기가
-           **되돌리지 않으므로** 짧게 기다려도 됩니다 — 핀 DOM 이
-           새 자리에 그려질 만큼만(다음 프레임 두어 번). */
       window.setTimeout(꽉채우기, 60);
     }, 40);
+  }
+
+  /* ★ **배율을 미리 셈해 한 번에 맞춥니다** (2026-10-15 주인 지시)
+   *
+   *   주인 — 「아직도 두번 깜빡이는데?」
+   *
+   *   앞서 되돌림은 없앴지만 **전국(첫 화면)** 이 그대로였습니다.
+   *   `setBounds` 가 목표보다 한 단계 멀리(14) 갔다가 꽉채우기가
+   *   도로 당겨(13) 와서, 배율이 **두 번** 움직였습니다. 첫 화면이
+   *   바로 그 길이라 손님은 **올 때마다** 봅니다.
+   *
+   *   ★ 이제 `setBounds` 를 쓰지 않습니다. 대신
+   *     ① 지금 배율에서 핀을 **화면 좌표로 바꿔** 범위를 재고
+   *        (`containerPointFromCoords` 는 **칸 밖 점도** 줍니다 —
+   *         운영에서 확인했습니다. 그래서 사라진 핀에 안 속습니다)
+   *     ② 꽉 채우는 데 몇 배가 필요한지 셈하고
+   *     ③ 한 단계가 **정확히 2배**이므로(운영 실측 1.996·2.002)
+   *        당길 단계 = floor(log2(배수))
+   *     ④ 중심과 배율을 **한 번에** 적용합니다
+   *
+   *   ★ 지금과 같으면 **아무것도 하지 않습니다.** 전국 첫 화면이
+   *     그렇습니다 — 배율 13 이 이미 정답이라 움직임이 **0번**입니다.
+   */
+  var 여백비 = 0.95;        // 가장자리에 5% 를 남깁니다
+
+  function 한번에맞추기() {
+    if (!지도 || !지도.날것 || !window.kakao || !kakao.maps) { return false; }
+    var 날 = 지도.날것;
+    if (typeof 날.getProjection !== 'function') { return false; }
+    var 것들 = 보일것();
+    if (!것들.length) { return false; }
+    var 틀 = 칸.getBoundingClientRect();
+    if (!틀.width || !틀.height) { return false; }
+
+    var pj;
+    try { pj = 날.getProjection(); } catch (e) { return false; }
+    if (!pj || typeof pj.containerPointFromCoords !== 'function'
+        || typeof pj.coordsFromContainerPoint !== 'function') { return false; }
+
+    var x1 = 1e9, x2 = -1e9, y1 = 1e9, y2 = -1e9, 셈함 = 0;
+    for (var i = 0; i < 것들.length; i++) {
+      var p;
+      try {
+        p = pj.containerPointFromCoords(
+          new kakao.maps.LatLng(것들[i].위도, 것들[i].경도));
+      } catch (e2) { continue; }
+      if (!p || isNaN(p.x) || isNaN(p.y)) { continue; }
+      if (p.x < x1) { x1 = p.x; } if (p.x > x2) { x2 = p.x; }
+      if (p.y < y1) { y1 = p.y; } if (p.y > y2) { y2 = p.y; }
+      셈함++;
+    }
+    if (!셈함) { return false; }
+
+    var 지금배 = 날.getLevel();
+    var 목표배 = 지금배;
+    if (셈함 >= 2 && (x2 - x1) > 0.5 && (y2 - y1) > 0.5) {
+      var 배수 = Math.min(틀.width * 여백비 / (x2 - x1),
+                          틀.height * 여백비 / (y2 - y1));
+      if (배수 > 0 && isFinite(배수)) {
+        목표배 = 지금배 - Math.floor(Math.log2(배수));
+      }
+    } else {
+      /* 한 곳만 고른 경우 — 범위가 없어 셈할 수 없습니다.
+         배율은 그대로 두고 가운데만 옮깁니다. */
+      목표배 = 지금배;
+    }
+    /* 카카오 배율은 1~14 입니다. 벗어나면 안 됩니다. */
+    if (목표배 < 1) { 목표배 = 1; }
+    if (목표배 > 14) { 목표배 = 14; }
+
+    var 가운데;
+    try {
+      가운데 = pj.coordsFromContainerPoint(
+        new kakao.maps.Point((x1 + x2) / 2, (y1 + y2) / 2));
+    } catch (e3) { return false; }
+    if (!가운데) { return false; }
+
+    /* ★ 이미 맞으면 **손대지 않습니다** — 움직임 0번
+         (가운데가 2px 안쪽이면 같은 것으로 봅니다) */
+    var 지금가운데 = 날.getCenter();
+    var 지금점 = pj.containerPointFromCoords(지금가운데);
+    var 어긋남 = Math.abs(지금점.x - (x1 + x2) / 2)
+               + Math.abs(지금점.y - (y1 + y2) / 2);
+    if (목표배 === 지금배 && 어긋남 < 2) { return true; }
+
+    /* 가운데와 배율을 **같은 틱에** 줍니다. 브라우저가 한 프레임에
+       그려 중간 모습이 안 보입니다. 애니메이션도 끕니다. */
+    날.setCenter(가운데);
+    if (목표배 !== 지금배) {
+      try { 날.setLevel(목표배, { animate: false }); }
+      catch (e4) { 날.setLevel(목표배); }
+    }
+    return true;
   }
 
   /* ★ 한반도가 칸을 **꽉 채우게** 합니다 (2026-10-13 주인 지시)
