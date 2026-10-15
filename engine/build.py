@@ -7531,7 +7531,24 @@ def 부품쪽(d, 언어='ko'):
     for 갈래, 것들묶음 in 묶음:
         카드 = []
         for 이름, 것 in 것들묶음:
-            그림 = art.부품그림(이름)
+            # ★ 실제 사진이 있으면 사진을, 없으면 그리던 그림을
+            #   (2026-10-15 기획팀 부품 사진 · 한 장씩 들어옵니다)
+            #   묶음 쪽 64×64 는 `채우기=True` 라 그대로 SVG 입니다.
+            원본, 쪽아래 = art.부품사진(이름)
+            if 원본:
+                # 안내도와 **같은 방식**으로 옮깁니다 (`안내도()` 참고)
+                import shutil
+                낼칸 = os.path.join(나갈곳, 'img', 'rig', 'parts')
+                os.makedirs(낼칸, exist_ok=True)
+                목적 = os.path.join(낼칸, os.path.basename(원본))
+                if (not os.path.isfile(목적)
+                        or os.path.getmtime(원본) > os.path.getmtime(목적)):
+                    shutil.copy2(원본, 목적)
+                그림 = ('<img src="%s" alt="%s" width="118" height="118"'
+                        ' loading="lazy" decoding="async">'
+                        % (esc(url.rel(쪽길, 쪽아래)), esc(이름)))
+            else:
+                그림 = art.부품그림(이름)
             크기 = ('<span class="pt-mm">%dmm 안팎</span>' % 것['크기mm']
                     if 것.get('크기mm') else '')
             종류 = ''

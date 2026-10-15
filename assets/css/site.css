@@ -3230,7 +3230,12 @@ details.area-group .area-list{margin-bottom:12px}
     padding:14px;border:1px solid var(--line);border-radius:14px;
     background:var(--paper)}
 .pt-art{align-self:start}
-.pt-art svg{display:block;width:118px;height:118px}
+.pt-art svg,.pt-art img{display:block;width:118px;height:118px}
+/* 사진이 온 부품은 <img>, 아직 안 온 것은 <svg> 입니다.
+   한 줄에 함께 적습니다 — 따로 적으면 뒤에 붙는 규칙이 앞을
+   조용히 덮습니다. 사진은 순백 바탕이라 둥근 모서리를
+   맞춰 줍니다(SVG 는 rx=12 로 스스로 둥급니다). */
+.pt-art img{border-radius:12px;object-fit:contain}
 .pt-body{min-width:0}
 .pt-name{margin:0 0 6px;font-size:1.06rem;font-weight:700;
          display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
@@ -3250,7 +3255,7 @@ details.area-group .area-list{margin-bottom:12px}
 .pt-in a:hover{text-decoration:underline}
 @media (max-width:560px){
   .pt{grid-template-columns:86px minmax(0,1fr);gap:11px;padding:11px}
-  .pt-art svg{width:86px;height:86px}
+  .pt-art svg,.pt-art img{width:86px;height:86px}
 }
 
 /* 채비법 쪽 → 부품 쪽 바로가기 띠 */
